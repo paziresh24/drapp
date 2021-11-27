@@ -1,0 +1,28 @@
+{
+  "root": "apps/drapp-e2e",
+  "sourceRoot": "apps/drapp-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/drapp-e2e/cypress.json",
+        "devServerTarget": "drapp:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "drapp:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/drapp-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["drapp"]
+}

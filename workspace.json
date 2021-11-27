@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "drapp": "apps/drapp",
+    "drapp-e2e": "apps/drapp-e2e"
+  }
+}
