@@ -15,9 +15,9 @@
         "polyfills": "apps/drapp/src/polyfills.ts",
         "tsConfig": "apps/drapp/tsconfig.app.json",
         "assets": ["apps/drapp/src/favicon.ico", "apps/drapp/src/assets"],
-        "styles": ["apps/drapp/src/styles.scss"],
+        "styles": [],
         "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
+        "webpackConfig": "apps/drapp/webpack.config"
       },
       "configurations": {
         "production": {
