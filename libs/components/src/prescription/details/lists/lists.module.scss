@@ -1,0 +1,284 @@
+.otp-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    > :first-child {
+        margin-top: 0 !important;
+    }
+
+    > :last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+.countInput {
+    border-radius: 0.6rem;
+    width: 100%;
+    height: 2rem;
+    outline: 0;
+    color: #3f4079;
+    background-color: transparent;
+    font-weight: 500;
+}
+
+.descriptionWrapper {
+    svg {
+        display: inline-block;
+        margin-right: 1rem;
+    }
+}
+
+.nameService {
+    width: auto;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 0.8rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.5s ease-in-out;
+    font-size: 1.4rem;
+
+    .actionBar {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 0.1rem;
+
+        & > * {
+            margin: 0 0.3rem;
+        }
+
+        & > :first-child {
+            margin-right: 0;
+        }
+
+        & > :last-child {
+            margin-left: 0;
+        }
+    }
+
+    .amounts {
+        font-size: 1.4rem;
+        display: flex;
+        margin-top: 0.5rem;
+        flex-flow: row wrap;
+        grid-gap: 0.8rem;
+    }
+}
+
+.wrapper {
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 0.8rem;
+
+        & > * {
+            margin: 0.3rem 0;
+        }
+
+        & > :first-child {
+            margin-top: 0;
+        }
+
+        & > :last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.detailsForm {
+    display: flex;
+    flex-flow: row wrap;
+    grid-gap: 1rem;
+
+    & > * {
+        flex: 1 1 162px;
+    }
+}
+
+.addPrescriptionButton {
+    display: flex;
+    align-items: center;
+
+    svg {
+        width: 2.5rem;
+    }
+
+    span {
+        color: #27bda0;
+        font-weight: 500;
+        font-size: 1.5rem;
+    }
+
+    & > * {
+        margin: 0 0.5rem;
+    }
+
+    &:first-child {
+        margin-right: 0;
+    }
+
+    &:last-child {
+        margin-left: 0;
+    }
+}
+
+.servicesList {
+    position: relative;
+
+    td,
+    th {
+        text-align: right;
+        padding: 0.7rem 1rem;
+        position: relative;
+        color: #3f3f79;
+        font-weight: 500;
+        font-size: 1.3rem;
+        vertical-align: middle;
+
+        * {
+            span {
+                user-select: unset;
+            }
+        }
+    }
+
+    td {
+        border-bottom: 0.06rem solid #e3e7f0;
+    }
+
+    tbody {
+        background: #fff;
+    }
+
+    th {
+        background: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 1 !important;
+        height: 5rem;
+        border-top: 1px dashed #c9cddbd7;
+        border-bottom: 1px solid #e3e7f0;
+    }
+
+    tr {
+        transition: all 0.5s ease-in-out;
+
+        &:hover {
+            background-color: rgba(230, 235, 240, 0.525);
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        border: 0;
+        colgroup {
+            display: none;
+        }
+
+        tbody {
+            display: flex;
+            flex-direction: column;
+            // @include gap(0.8rem, false);
+            background: transparent;
+        }
+
+        thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        tr {
+            display: block;
+            background: #fff;
+            // box-shadow: 0 21px 30px #2525470a;
+        }
+
+        td {
+            display: flex;
+        }
+
+        td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            margin-left: 1rem;
+            white-space: nowrap;
+        }
+
+        td:last-child {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    .head-title {
+        background: #dde6ee;
+        width: 100%;
+
+        @media screen and (max-width: 426px) {
+            display: flex;
+        }
+
+        td {
+            all: unset;
+            display: table-cell;
+            vertical-align: middle;
+            padding: 0.5rem 2rem;
+            color: #3f3f79;
+            font-weight: 500;
+
+            @media screen and (max-width: 426px) {
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+
+    .action {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        & > * {
+            margin: 0 0.5rem;
+        }
+
+        & > :first-child {
+            margin-right: 0;
+        }
+
+        & > :last-child {
+            margin-left: 0;
+        }
+
+        .removeAction {
+            cursor: pointer;
+        }
+
+        .descriptionAction {
+            cursor: pointer;
+        }
+    }
+}
+
+.calendarWrap {
+    box-shadow: unset !important;
+    margin: 0 auto !important;
+}

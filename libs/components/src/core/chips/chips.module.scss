@@ -1,0 +1,35 @@
+.wrapper {
+    padding: 0.3rem 2rem;
+    border-radius: 100px;
+    display: inline-block;
+    white-space: nowrap;
+
+    .text {
+        font-size: 1.3rem;
+        font-weight: 500;
+    }
+
+    &.sucsess {
+        background: rgba(0, 255, 133, 0.11);
+
+        .text {
+            color: #2f938d;
+        }
+    }
+
+    &.error {
+        background: rgba(255, 0, 0, 0.08);
+
+        .text {
+            color: #c73636;
+        }
+    }
+
+    &.gray {
+        background: #c8d6e240;
+
+        .text {
+            color: #8394a3;
+        }
+    }
+}

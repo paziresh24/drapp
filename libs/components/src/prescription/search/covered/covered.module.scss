@@ -1,0 +1,23 @@
+.wrapper {
+   display: flex;
+   align-items: center;
+   grid-gap: 1rem;
+
+   .line {
+      width: 2.5rem;
+      height: 0.3rem;
+      border-radius: 100rem;
+      background-color: #dddddd;
+
+      &.negative {
+         background-color: #f20e4a;
+      }
+      &.positive {
+         background-color: #27ae60;
+      }
+   }
+
+   .title {
+      font-size: 0.8em;
+   }
+}

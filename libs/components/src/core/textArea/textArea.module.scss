@@ -1,0 +1,83 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+
+    &.disabled {
+        opacity: 0.5;
+    }
+}
+
+.input {
+    border: 1px solid #d3dbe2;
+    border-radius: 0.6rem;
+    width: 100%;
+    padding: 1.5rem 1rem;
+    max-width: 100%;
+    min-width: 100%;
+    height: 10rem;
+    max-height: 10rem;
+    min-height: 5rem;
+    outline: 0;
+    color: #3f4079;
+    transition: border 0.5s;
+    font-size: 1em;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+// .input[type='number'] {
+//     direction: ltr;
+//     -moz-appearance: textfield;
+// }
+
+.input[type='tel'] {
+    direction: ltr;
+}
+
+.label {
+    position: absolute;
+    right: 1rem;
+    top: 1.2rem;
+    white-space: nowrap;
+    transform: translate(0, 0);
+    transition: transform 120ms ease-in;
+    padding: 0 1rem;
+    color: #91a5b6;
+    font-weight: 500;
+    cursor: text;
+    user-select: none;
+}
+
+.input:focus {
+    border-color: #d3dbe2;
+}
+
+.input:not(:placeholder-shown) {
+    border-color: #d3dbe2;
+}
+
+.input:not(:placeholder-shown) + .label {
+    transform: translate(1rem, -2.5rem) scale(0.8);
+    background: #fff;
+    cursor: unset;
+    color: #3f3f79;
+}
+
+.input:focus + .label {
+    transform: translate(1rem, -2.5rem) scale(0.8);
+    background: #fff;
+    cursor: unset;
+    color: #3f3f79;
+}
+
+.error {
+    border-color: #ffdad4 !important;
+}
+
+.error + .label {
+    color: #ce7667 !important;
+}

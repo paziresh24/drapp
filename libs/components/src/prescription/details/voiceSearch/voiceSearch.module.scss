@@ -1,0 +1,150 @@
+.speechWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    flex-direction: column;
+}
+
+.speechFooter {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    font-size: 1.5rem;
+    @include gap(0.5rem, false);
+    padding-top: 0;
+
+    span {
+        color: rgba(63, 63, 121, 0.84);
+        font-weight: 500;
+    }
+}
+
+.recordIcon {
+    height: 18rem;
+    margin-bottom: 2rem;
+    margin-right: 0.5rem;
+    width: 5rem;
+    min-width: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0.1rem;
+    cursor: pointer;
+
+    svg {
+        z-index: 2;
+    }
+
+    &::after {
+        content: '';
+        width: 15rem;
+        height: 15rem;
+        z-index: 1;
+        position: absolute;
+        background: #1659df11;
+        border-radius: 100%;
+        -webkit-animation: pulsate-fwd 0.5s ease-in-out infinite both;
+        animation: pulsate-fwd 0.5s ease-in-out infinite both;
+    }
+
+    &::before {
+        content: '';
+        width: 10rem;
+        height: 10rem;
+        z-index: 0;
+        position: absolute;
+        background-color: #1659df13;
+        border-radius: 100%;
+        -webkit-animation: pulsate-fwd 0.5s infinite both;
+        animation: pulsate-fwd 0.5s infinite both;
+    }
+}
+
+.recordPlaceholder {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: rgba(63, 63, 121, 0.34);
+}
+
+.recordValue {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: rgb(63, 63, 121);
+}
+
+@-webkit-keyframes pulsate-fwd {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+@keyframes pulsate-fwd {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+.resultWrapper {
+    height: 40rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: -1rem;
+
+    & > div {
+        width: 100%;
+        position: unset;
+        margin: 0;
+        height: 100%;
+        max-width: 100%;
+        min-height: 100%;
+        border-radius: 1.5rem;
+        position: relative;
+        top: 0rem;
+    }
+}
+
+.spechToTextButtton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    min-width: 5rem;
+    border: 2px solid #1659df;
+    border-radius: 0.6rem;
+    margin-right: 1rem;
+    background: #1659df13;
+    cursor: pointer;
+    position: relative;
+
+    &::after {
+        content: 'Beta';
+        background-color: #1659df;
+        color: #fff;
+        position: absolute;
+        top: -7px;
+        padding: 0 0.5rem;
+        padding-top: 0.2rem;
+        left: -1rem;
+        font-size: 1.19rem;
+        border-radius: 100rem;
+    }
+}

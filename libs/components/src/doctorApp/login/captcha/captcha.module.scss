@@ -1,0 +1,12 @@
+.captcha {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    @include gap(0.5rem);
+
+    .captcha-image {
+        border-radius: 0.6rem;
+        overflow: hidden;
+        height: 5rem;
+    }
+}

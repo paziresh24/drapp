@@ -1,0 +1,89 @@
+.wrapper {
+    .info-box {
+        background: #fff;
+        box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+        border-radius: 0.8rem;
+        padding: 1.2rem;
+        margin-bottom: 3rem;
+        .head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            .title {
+                font-size: 1.6rem;
+                color: #3f3f79;
+                font-weight: bold;
+                span {
+                    font-weight: normal;
+                }
+            }
+            .value {
+                font-size: 2.4rem;
+                color: #3f3f79;
+                font-weight: bold;
+            }
+        }
+    }
+    .section-title {
+        font-weight: bold;
+        font-size: 1.6rem;
+        color: #3f3f79;
+        margin-bottom: 1.5rem;
+    }
+    .atable {
+        display: flex;
+        flex-direction: column;
+        @include gap(1rem, false);
+        .head,
+        .item {
+            width: 100%;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            border-spacing: 0;
+            background: #fff;
+            box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+            border-radius: 1rem;
+            padding: 1.4rem 1.2rem;
+            span {
+                width: 100%;
+                span {
+                    font-weight: normal;
+                }
+            }
+            svg {
+                position: absolute;
+                left: 1.5rem;
+            }
+        }
+        .item-wrapper {
+            position: relative;
+            .item-content {
+                border-top: 1px solid #f3f7fa;
+                color: #3f3f79;
+                font-weight: 400;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+                border-bottom-left-radius: 1rem;
+                border-bottom-right-radius: 1rem;
+                padding: 1.4rem 1.2rem;
+                display: none;
+                &.open {
+                    display: flex;
+                }
+            }
+            .item {
+                cursor: pointer;
+                &.open {
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+            }
+        }
+    }
+}

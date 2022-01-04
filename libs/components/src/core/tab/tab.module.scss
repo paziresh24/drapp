@@ -1,0 +1,65 @@
+.tab-buttons {
+    display: flex;
+    justify-content: flex-start;
+    // margin-bottom: 1.5rem;
+    background: #ffffff;
+    border-bottom: 1px solid #e3e7f0;
+    // border-radius: 0.6rem;
+    height: 5rem;
+    overflow: auto;
+
+    div {
+        position: relative;
+    }
+
+    button {
+        font-size: 1.5rem;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-weight: 500;
+        cursor: pointer;
+        color: #3f3f7a;
+        opacity: 0.5;
+        transition: all ease-in-out 0.3s;
+        border-bottom: 2px solid transparent;
+        padding: 0 2rem;
+        min-width: fit-content;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            background-color: rgba(230, 235, 240, 0.801);
+            border-bottom: 2px solid rgba(129, 143, 160, 0.685);
+        }
+
+        .badge {
+            min-width: 20px;
+            height: 20px;
+            background: #d9dde3;
+            color: #3f3f79;
+            border-radius: 123px;
+            margin-right: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            transition: all ease-in-out 0.3s;
+        }
+
+        &.active {
+            opacity: 1;
+            border-bottom: 2px solid #27bda0;
+            color: #27bda0;
+
+            &:hover {
+                background-color: rgba(39, 189, 159, 0.123);
+            }
+
+            .badge {
+                background-color: #27bda0;
+                color: #fff;
+            }
+        }
+    }
+}

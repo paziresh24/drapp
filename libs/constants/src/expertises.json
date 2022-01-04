@@ -1,0 +1,4405 @@
+[
+    {
+        "code": "101103",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "1",
+        "name": "اتاق عمل"
+    },
+    {
+        "code": "101155",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "2",
+        "name": "بهداشت حرفه ای"
+    },
+    {
+        "code": "101156",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "3",
+        "name": "بهداشت دهان"
+    },
+    {
+        "code": "101158",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "4",
+        "name": "بهداشت عمومی"
+    },
+    {
+        "code": "101160",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "5",
+        "name": "بهداشت محیط"
+    },
+    {
+        "code": "101161",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "6",
+        "name": "بهداشت مدارس"
+    },
+    {
+        "code": "101163",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "7",
+        "name": "بهداشتکار دهان و دندان"
+    },
+    {
+        "code": "101192",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "8",
+        "name": "پرستاری"
+    },
+    {
+        "code": "101196",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "9",
+        "name": "پرستاری دندانپزشکی"
+    },
+    {
+        "code": "101204",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "10",
+        "name": "پروتزهای دندانی"
+    },
+    {
+        "code": "101231",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "11",
+        "name": "تکنولوژی پرتودرمانی- رادیوتراپی"
+    },
+    {
+        "code": "101232",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "12",
+        "name": "تکنولوژی پرتوشناسی- رادیولوژی"
+    },
+    {
+        "code": "101233",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "13",
+        "name": "تکنولوژی پزشکی هسته ای"
+    },
+    {
+        "code": "101324",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "14",
+        "name": "صنایع ایمنی صنعتی"
+    },
+    {
+        "code": "101340",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "15",
+        "name": "علوم آزمایشگاهی"
+    },
+    {
+        "code": "101358",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "16",
+        "name": "فوریتهای پزشکی"
+    },
+    {
+        "code": "101381",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "17",
+        "name": "مامایی"
+    },
+    {
+        "code": "101382",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "18",
+        "name": "مدارک پزشکی"
+    },
+    {
+        "code": "101422",
+        "degree_id": "1",
+        "degree_name": "کاردان",
+        "expertise_id": "19",
+        "name": "هوشبری"
+    },
+    {
+        "code": "111103",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "1",
+        "name": "اتاق عمل"
+    },
+    {
+        "code": "111117",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "20",
+        "name": "بینایی سنجی"
+    },
+    {
+        "code": "111120",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "21",
+        "name": "اعضای مصنوعی و وسایل کمکی"
+    },
+    {
+        "code": "111158",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "4",
+        "name": "بهداشت عمومی"
+    },
+    {
+        "code": "111192",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "8",
+        "name": "پرستاری"
+    },
+    {
+        "code": "111229",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "22",
+        "name": "تکنولوژی پرتودرمانی"
+    },
+    {
+        "code": "111232",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "12",
+        "name": "تکنولوژی پرتوشناسی- رادیولوژی"
+    },
+    {
+        "code": "111233",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "13",
+        "name": "تکنولوژی پزشکی هسته ای"
+    },
+    {
+        "code": "111262",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "23",
+        "name": "حشره شناسی پزشکی و مبارزه با ناقلین"
+    },
+    {
+        "code": "111266",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "24",
+        "name": "داروسازی"
+    },
+    {
+        "code": "111285",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "25",
+        "name": "رشد و پرورش کودکان پیش دبستانی"
+    },
+    {
+        "code": "111292",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "26",
+        "name": "روانشناسی بالینی"
+    },
+    {
+        "code": "111293",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "27",
+        "name": "روانشناسی عمومی"
+    },
+    {
+        "code": "111307",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "28",
+        "name": "ساخت پروتزهای دندانی"
+    },
+    {
+        "code": "111321",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "29",
+        "name": "شنوایی شناسی"
+    },
+    {
+        "code": "111338",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "30",
+        "name": "علوم اجتماعی- خدمات اجتماعی"
+    },
+    {
+        "code": "111340",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "15",
+        "name": "علوم آزمایشگاهی"
+    },
+    {
+        "code": "111343",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "31",
+        "name": "علوم تغذیه"
+    },
+    {
+        "code": "111348",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "32",
+        "name": "علوم و صنایع غذایی- کنترل کیفی و بهداشتی"
+    },
+    {
+        "code": "111355",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "33",
+        "name": "فناوری اطلاعات سلامت"
+    },
+    {
+        "code": "111358",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "16",
+        "name": "فوریتهای پزشکی"
+    },
+    {
+        "code": "111360",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "34",
+        "name": "فیزیوتراپی"
+    },
+    {
+        "code": "111367",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "35",
+        "name": "کاردرمانی"
+    },
+    {
+        "code": "111369",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "36",
+        "name": "کتابداری در شاخه پزشکی"
+    },
+    {
+        "code": "111374",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "37",
+        "name": "گفتار درمانی"
+    },
+    {
+        "code": "111381",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "17",
+        "name": "مامایی"
+    },
+    {
+        "code": "111382",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "18",
+        "name": "مدارک پزشکی"
+    },
+    {
+        "code": "111383",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "38",
+        "name": "مددکاری اجتماعی"
+    },
+    {
+        "code": "111390",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "39",
+        "name": "مدیریت خدمات بهداشتی درمانی"
+    },
+    {
+        "code": "111394",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "40",
+        "name": "مشاوره"
+    },
+    {
+        "code": "111401",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "41",
+        "name": "مهندسی بهداشت حرفه ای"
+    },
+    {
+        "code": "111402",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "42",
+        "name": "مهندسی بهداشت محیط"
+    },
+    {
+        "code": "111405",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "43",
+        "name": "مهندسی پزشکی- بیوالکتریک"
+    },
+    {
+        "code": "111407",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "44",
+        "name": "مهندسی پزشکی بالینی"
+    },
+    {
+        "code": "111408",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "45",
+        "name": "مهندسی صنایع- ایمنی صنعتی"
+    },
+    {
+        "code": "111422",
+        "degree_id": "2",
+        "degree_name": "کارشناس",
+        "expertise_id": "19",
+        "name": "هوشبری"
+    },
+    {
+        "code": "141102",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "46",
+        "name": "اپیدمیولوژی"
+    },
+    {
+        "code": "141103",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "1",
+        "name": "اتاق عمل"
+    },
+    {
+        "code": "141106",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "47",
+        "name": "اخلاق پزشکی"
+    },
+    {
+        "code": "141111",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "48",
+        "name": "ارزیابی فناوری سلامت- H.T.A"
+    },
+    {
+        "code": "141112",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "49",
+        "name": "ارگونومی"
+    },
+    {
+        "code": "141119",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "50",
+        "name": "اعضاء مصنوعی"
+    },
+    {
+        "code": "141121",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "51",
+        "name": "اقتصاد بهداشت"
+    },
+    {
+        "code": "141128",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "52",
+        "name": "اکولوژی انسانی"
+    },
+    {
+        "code": "141130",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "53",
+        "name": "انفورماتیک پزشکی"
+    },
+    {
+        "code": "141133",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "54",
+        "name": "انگل شناسی پزشکی"
+    },
+    {
+        "code": "141135",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "55",
+        "name": "ایمنی شناسی پزشکی"
+    },
+    {
+        "code": "141143",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "56",
+        "name": "آمار زیستی"
+    },
+    {
+        "code": "141144",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "57",
+        "name": "آموزش بهداشت"
+    },
+    {
+        "code": "141146",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "58",
+        "name": "آموزش پزشکی"
+    },
+    {
+        "code": "141147",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "59",
+        "name": "آموزش جامعه نگر در نظام سلامت"
+    },
+    {
+        "code": "141149",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "60",
+        "name": "بافت شناسی"
+    },
+    {
+        "code": "141151",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "61",
+        "name": "باکتری شناسی پزشکی"
+    },
+    {
+        "code": "141152",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "62",
+        "name": "برنامه‌ریزی یادگیری الکترونیکی در علوم پزشکی"
+    },
+    {
+        "code": "141154",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "63",
+        "name": "بهداشت پرتوها"
+    },
+    {
+        "code": "141157",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "64",
+        "name": "بهداشت روان"
+    },
+    {
+        "code": "141162",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "65",
+        "name": "بهداشت و ایمنی مواد غذایی"
+    },
+    {
+        "code": "141177",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "20",
+        "name": "بینایی سنجی"
+    },
+    {
+        "code": "141178",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "66",
+        "name": "بیهوشی"
+    },
+    {
+        "code": "141184",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "67",
+        "name": "بیوشیمی بالینی"
+    },
+    {
+        "code": "141192",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "8",
+        "name": "پرستاری"
+    },
+    {
+        "code": "141193",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "68",
+        "name": "پرستاری اورژانس"
+    },
+    {
+        "code": "141194",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "69",
+        "name": "پرستاری توانبخشی"
+    },
+    {
+        "code": "141195",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "70",
+        "name": "پرستاری داخلی- جراحی"
+    },
+    {
+        "code": "141197",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "71",
+        "name": "پرستاری سالمندی"
+    },
+    {
+        "code": "141198",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "72",
+        "name": "پرستاری سلامت جامعه"
+    },
+    {
+        "code": "141199",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "73",
+        "name": "پرستاری کودکان"
+    },
+    {
+        "code": "141200",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "74",
+        "name": "پرستاری مراقبت های ویژه"
+    },
+    {
+        "code": "141201",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "75",
+        "name": "پرستاری مراقبت های ویژه نوزادان"
+    },
+    {
+        "code": "141202",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "76",
+        "name": "پرستاری نظامی"
+    },
+    {
+        "code": "141217",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "77",
+        "name": "پزشکی ورزشی"
+    },
+    {
+        "code": "141219",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "78",
+        "name": "پیشگیری از آسیب های اجتماعی"
+    },
+    {
+        "code": "141224",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "79",
+        "name": "تاریخ علوم پزشکی"
+    },
+    {
+        "code": "141225",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "80",
+        "name": "ترکیبات طبیعی و دارویی دریایی"
+    },
+    {
+        "code": "141235",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "81",
+        "name": "تکنولوژی گردش خون"
+    },
+    {
+        "code": "141262",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "23",
+        "name": "حشره شناسی پزشکی و مبارزه با ناقلین"
+    },
+    {
+        "code": "141263",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "82",
+        "name": "خون شناسی آزمایشگاهی و بانک خون"
+    },
+    {
+        "code": "141280",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "83",
+        "name": "رادیوبیولوژی و حفاظت پرتویی"
+    },
+    {
+        "code": "141286",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "84",
+        "name": "رفاه اجتماعی"
+    },
+    {
+        "code": "141287",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "85",
+        "name": "روان پرستاری"
+    },
+    {
+        "code": "141292",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "26",
+        "name": "روانشناسی بالینی"
+    },
+    {
+        "code": "141293",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "27",
+        "name": "روانشناسی عمومی"
+    },
+    {
+        "code": "141295",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "86",
+        "name": "روانشناسی وآموزش کودکان استثنایی"
+    },
+    {
+        "code": "141301",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "87",
+        "name": "زیست فناوری پزشکی"
+    },
+    {
+        "code": "141305",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "88",
+        "name": "ژنتیک انسانی"
+    },
+    {
+        "code": "141312",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "89",
+        "name": "سلامت سالمندی"
+    },
+    {
+        "code": "141313",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "90",
+        "name": "سلامت و رسانه"
+    },
+    {
+        "code": "141315",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "91",
+        "name": "سم شناسی"
+    },
+    {
+        "code": "141317",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "92",
+        "name": "سم شناسی محیط"
+    },
+    {
+        "code": "141321",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "29",
+        "name": "شنوایی شناسی"
+    },
+    {
+        "code": "141322",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "93",
+        "name": "شیمی داروئی"
+    },
+    {
+        "code": "141330",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "94",
+        "name": "طب سنتی ایرانی"
+    },
+    {
+        "code": "141341",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "95",
+        "name": "علوم بهداشتی در تغذیه"
+    },
+    {
+        "code": "141342",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "96",
+        "name": "علوم تشریحی"
+    },
+    {
+        "code": "141343",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "31",
+        "name": "علوم تغذیه"
+    },
+    {
+        "code": "141344",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "97",
+        "name": "علوم تغذیه در بحران و حوادث غیرمترقبه"
+    },
+    {
+        "code": "141345",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "98",
+        "name": "علوم داروهای پرتوزا"
+    },
+    {
+        "code": "141347",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "99",
+        "name": "علوم کتابداری و اطلاع رسانی"
+    },
+    {
+        "code": "141348",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "32",
+        "name": "علوم و صنایع غذایی- کنترل کیفی و بهداشتی"
+    },
+    {
+        "code": "141355",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "33",
+        "name": "فناوری اطلاعات سلامت"
+    },
+    {
+        "code": "141356",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "100",
+        "name": "فناوری تصویربرداری پزشکی- MRI"
+    },
+    {
+        "code": "141357",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "101",
+        "name": "فناوری تصویربرداری پزشکی- سیتی اسکن"
+    },
+    {
+        "code": "141359",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "102",
+        "name": "فیزیک پزشکی"
+    },
+    {
+        "code": "141360",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "34",
+        "name": "فیزیوتراپی"
+    },
+    {
+        "code": "141361",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "103",
+        "name": "فیزیوتراپی ورزشی"
+    },
+    {
+        "code": "141362",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "104",
+        "name": "فیزیولوژی"
+    },
+    {
+        "code": "141364",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "105",
+        "name": "قارچ شناسی پزشکی"
+    },
+    {
+        "code": "141367",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "106",
+        "name": "کار درمانی"
+    },
+    {
+        "code": "141368",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "107",
+        "name": "کارآفرینی در نظام سلامت"
+    },
+    {
+        "code": "141372",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "108",
+        "name": "کنترل مواد خوراکی و اشامیدنی"
+    },
+    {
+        "code": "141374",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "109",
+        "name": "گفتاردرمانی"
+    },
+    {
+        "code": "141381",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "17",
+        "name": "مامایی"
+    },
+    {
+        "code": "141382",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "18",
+        "name": "مدارک پزشکی"
+    },
+    {
+        "code": "141383",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "38",
+        "name": "مددکاری اجتماعی"
+    },
+    {
+        "code": "141384",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "110",
+        "name": "مدیریت MBA"
+    },
+    {
+        "code": "141387",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "111",
+        "name": "مدیریت پسماند"
+    },
+    {
+        "code": "141389",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "112",
+        "name": "مدیریت توانبخشی"
+    },
+    {
+        "code": "141390",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "39",
+        "name": "مدیریت خدمات بهداشتی درمانی"
+    },
+    {
+        "code": "141391",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "113",
+        "name": "مدیریت سلامت، ایمنی و محیط زیست"
+    },
+    {
+        "code": "141394",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "40",
+        "name": "مشاوره"
+    },
+    {
+        "code": "141396",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "114",
+        "name": "مشاوره در مامایی"
+    },
+    {
+        "code": "141399",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "115",
+        "name": "مهندسی ایمنی صنعتی"
+    },
+    {
+        "code": "141401",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "41",
+        "name": "مهندسی بهداشت حرفه ای"
+    },
+    {
+        "code": "141403",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "116",
+        "name": "مهندسی بیمارستان"
+    },
+    {
+        "code": "141405",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "43",
+        "name": "مهندسی پزشکی- بیوالکتریک"
+    },
+    {
+        "code": "141406",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "117",
+        "name": "مهندسی پزشکی- زیست مواد"
+    },
+    {
+        "code": "141411",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "118",
+        "name": "میکروبشناسی"
+    },
+    {
+        "code": "141412",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "119",
+        "name": "میکروبشناسی مواد غذایی"
+    },
+    {
+        "code": "141417",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "120",
+        "name": "نانوفناوری پزشکی"
+    },
+    {
+        "code": "141418",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "121",
+        "name": "نظارت بر امور دارویی"
+    },
+    {
+        "code": "141424",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "122",
+        "name": "ویروس شناسی پزشکی"
+    },
+    {
+        "code": "141492",
+        "degree_id": "3",
+        "degree_name": "کارشناس ارشد",
+        "expertise_id": "42",
+        "name": "مهندسی بهداشت محیط"
+    },
+    {
+        "code": "150212",
+        "degree_id": "4",
+        "degree_name": "دانشجوی دکترای",
+        "expertise_id": "123",
+        "name": "پزشکی"
+    },
+    {
+        "code": "151212",
+        "degree_id": "5",
+        "degree_name": "دکترای",
+        "expertise_id": "123",
+        "name": "پزشکی"
+    },
+    {
+        "code": "151266",
+        "degree_id": "5",
+        "degree_name": "دکترای",
+        "expertise_id": "24",
+        "name": "داروسازی"
+    },
+    {
+        "code": "151275",
+        "degree_id": "5",
+        "degree_name": "دکترای",
+        "expertise_id": "124",
+        "name": "دندانپزشکی"
+    },
+    {
+        "code": "151340",
+        "degree_id": "5",
+        "degree_name": "دکترای",
+        "expertise_id": "15",
+        "name": "علوم آزمایشگاهی"
+    },
+    {
+        "code": "170102",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "46",
+        "name": "اپیدمیولوژی"
+    },
+    {
+        "code": "170108",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "125",
+        "name": "ارتوپدی"
+    },
+    {
+        "code": "170110",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "126",
+        "name": "ارتودانتیکس"
+    },
+    {
+        "code": "170129",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "127",
+        "name": "اندودانتیکس"
+    },
+    {
+        "code": "170141",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "128",
+        "name": "آسیب شناسی"
+    },
+    {
+        "code": "170159",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "129",
+        "name": "بهداشت مادر و کودک"
+    },
+    {
+        "code": "170165",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "130",
+        "name": "بیماریهای پوست"
+    },
+    {
+        "code": "170166",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "131",
+        "name": "بیماریهای داخلی"
+    },
+    {
+        "code": "170168",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "132",
+        "name": "بیماریهای دهان وفک و صورت"
+    },
+    {
+        "code": "170172",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "133",
+        "name": "بیماریهای عفونی و گرمسیری"
+    },
+    {
+        "code": "170174",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "134",
+        "name": "بیماریهای قلب و عروق"
+    },
+    {
+        "code": "170176",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "135",
+        "name": "بیماریهای مغز و اعصاب"
+    },
+    {
+        "code": "170178",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "66",
+        "name": "بیهوشی"
+    },
+    {
+        "code": "170189",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "136",
+        "name": "پاتولوژی دهان و فک- آسیب شناسی دهان و دندان"
+    },
+    {
+        "code": "170191",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "137",
+        "name": "پرتودرمانی"
+    },
+    {
+        "code": "170204",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "10",
+        "name": "پروتزهای دندانی"
+    },
+    {
+        "code": "170211",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "138",
+        "name": "پریودانتیکس"
+    },
+    {
+        "code": "170213",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "139",
+        "name": "پزشکی اجتماعی"
+    },
+    {
+        "code": "170214",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "140",
+        "name": "پزشکی قانونی"
+    },
+    {
+        "code": "170216",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "141",
+        "name": "پزشکی هسته ای"
+    },
+    {
+        "code": "170217",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "77",
+        "name": "پزشکی ورزشی"
+    },
+    {
+        "code": "170245",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "142",
+        "name": "جراحی دهان و فک و صورت"
+    },
+    {
+        "code": "170250",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "143",
+        "name": "جراحی عمومی"
+    },
+    {
+        "code": "170255",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "144",
+        "name": "جراحی کلیه و مجاری ادراری تناسلی"
+    },
+    {
+        "code": "170257",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "145",
+        "name": "جراحی مغز و اعصاب"
+    },
+    {
+        "code": "170260",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "146",
+        "name": "چشم پزشکی"
+    },
+    {
+        "code": "170267",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "147",
+        "name": "داروسازی بالینی- کلینیکال فارماسی"
+    },
+    {
+        "code": "170278",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "148",
+        "name": "دندانپزشکی ترمیمی"
+    },
+    {
+        "code": "170279",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "149",
+        "name": "دندانپزشکی کودکان"
+    },
+    {
+        "code": "170281",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "150",
+        "name": "رادیولوژی"
+    },
+    {
+        "code": "170283",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "151",
+        "name": "رادیولوژی دهان و فک و صورت"
+    },
+    {
+        "code": "170288",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "152",
+        "name": "روانپزشکی"
+    },
+    {
+        "code": "170300",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "153",
+        "name": "زنان و زایمان"
+    },
+    {
+        "code": "170325",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "154",
+        "name": "طب اورژانس"
+    },
+    {
+        "code": "170329",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "155",
+        "name": "طب سالمندی"
+    },
+    {
+        "code": "170331",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "156",
+        "name": "طب فیزیکی و توانبخشی"
+    },
+    {
+        "code": "170332",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "157",
+        "name": "طب کار"
+    },
+    {
+        "code": "170335",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "158",
+        "name": "طب هوا و فضا و زیر سطحی"
+    },
+    {
+        "code": "170373",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "159",
+        "name": "کودکان"
+    },
+    {
+        "code": "170378",
+        "degree_id": "6",
+        "degree_name": "دانشجوی تخصص",
+        "expertise_id": "160",
+        "name": "گوش و حلق و بینی و جراحی سر و گردن"
+    },
+    {
+        "code": "171102",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "46",
+        "name": "اپیدمیولوژی"
+    },
+    {
+        "code": "171108",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "125",
+        "name": "ارتوپدی"
+    },
+    {
+        "code": "171110",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "126",
+        "name": "ارتودانتیکس"
+    },
+    {
+        "code": "171129",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "127",
+        "name": "اندودانتیکس"
+    },
+    {
+        "code": "171141",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "128",
+        "name": "آسیب شناسی"
+    },
+    {
+        "code": "171159",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "129",
+        "name": "بهداشت مادر و کودک"
+    },
+    {
+        "code": "171165",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "130",
+        "name": "بیماریهای پوست"
+    },
+    {
+        "code": "171166",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "131",
+        "name": "بیماریهای داخلی"
+    },
+    {
+        "code": "171168",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "132",
+        "name": "بیماریهای دهان وفک و صورت"
+    },
+    {
+        "code": "171172",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "133",
+        "name": "بیماریهای عفونی و گرمسیری"
+    },
+    {
+        "code": "171174",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "134",
+        "name": "بیماریهای قلب و عروق"
+    },
+    {
+        "code": "171176",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "135",
+        "name": "بیماریهای مغز و اعصاب"
+    },
+    {
+        "code": "171178",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "66",
+        "name": "بیهوشی"
+    },
+    {
+        "code": "171189",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "136",
+        "name": "پاتولوژی دهان و فک- آسیب شناسی دهان و دندان"
+    },
+    {
+        "code": "171191",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "137",
+        "name": "پرتودرمانی"
+    },
+    {
+        "code": "171204",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "10",
+        "name": "پروتزهای دندانی"
+    },
+    {
+        "code": "171211",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "138",
+        "name": "پریودانتیکس"
+    },
+    {
+        "code": "171213",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "139",
+        "name": "پزشکی اجتماعی"
+    },
+    {
+        "code": "171214",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "140",
+        "name": "پزشکی قانونی"
+    },
+    {
+        "code": "171216",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "141",
+        "name": "پزشکی هسته ای"
+    },
+    {
+        "code": "171217",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "77",
+        "name": "پزشکی ورزشی"
+    },
+    {
+        "code": "171245",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "142",
+        "name": "جراحی دهان و فک و صورت"
+    },
+    {
+        "code": "171250",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "143",
+        "name": "جراحی عمومی"
+    },
+    {
+        "code": "171255",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "144",
+        "name": "جراحی کلیه و مجاری ادراری تناسلی"
+    },
+    {
+        "code": "171257",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "145",
+        "name": "جراحی مغز و اعصاب"
+    },
+    {
+        "code": "171260",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "146",
+        "name": "چشم پزشکی"
+    },
+    {
+        "code": "171267",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "147",
+        "name": "داروسازی بالینی- کلینیکال فارماسی"
+    },
+    {
+        "code": "171278",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "148",
+        "name": "دندانپزشکی ترمیمی"
+    },
+    {
+        "code": "171279",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "149",
+        "name": "دندانپزشکی کودکان"
+    },
+    {
+        "code": "171281",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "150",
+        "name": "رادیولوژی"
+    },
+    {
+        "code": "171283",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "151",
+        "name": "رادیولوژی دهان و فک و صورت"
+    },
+    {
+        "code": "171288",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "152",
+        "name": "روانپزشکی"
+    },
+    {
+        "code": "171300",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "153",
+        "name": "زنان و زایمان"
+    },
+    {
+        "code": "171325",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "154",
+        "name": "طب اورژانس"
+    },
+    {
+        "code": "171329",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "155",
+        "name": "طب سالمندی"
+    },
+    {
+        "code": "171331",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "156",
+        "name": "طب فیزیکی و توانبخشی"
+    },
+    {
+        "code": "171332",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "157",
+        "name": "طب کار"
+    },
+    {
+        "code": "171335",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "158",
+        "name": "طب هوا و فضا و زیر سطحی"
+    },
+    {
+        "code": "171373",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "159",
+        "name": "کودکان"
+    },
+    {
+        "code": "171378",
+        "degree_id": "7",
+        "degree_name": "متخصص",
+        "expertise_id": "160",
+        "name": "گوش و حلق و بینی و جراحی سر و گردن"
+    },
+    {
+        "code": "190102",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "46",
+        "name": "اپیدمیولوژی"
+    },
+    {
+        "code": "190106",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "47",
+        "name": "اخلاق پزشکی"
+    },
+    {
+        "code": "190119",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "161",
+        "name": "اعضای مصنوعی"
+    },
+    {
+        "code": "190122",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "162",
+        "name": "اقتصاد سلامت"
+    },
+    {
+        "code": "190123",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "163",
+        "name": "اقتصاد و مدیریت دارو"
+    },
+    {
+        "code": "190130",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "53",
+        "name": "انفورماتیک پزشکی"
+    },
+    {
+        "code": "190133",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "54",
+        "name": "انگل شناسی پزشکی"
+    },
+    {
+        "code": "190135",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "55",
+        "name": "ایمنی شناسی پزشکی"
+    },
+    {
+        "code": "190143",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "56",
+        "name": "آمار زیستی"
+    },
+    {
+        "code": "190145",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "164",
+        "name": "آموزش بهداشت و ارتقاء سلامت"
+    },
+    {
+        "code": "190146",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "58",
+        "name": "آموزش پزشکی"
+    },
+    {
+        "code": "190150",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "165",
+        "name": "بافت شناسی پزشکی"
+    },
+    {
+        "code": "190151",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "61",
+        "name": "باکتری شناسی پزشکی"
+    },
+    {
+        "code": "190153",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "166",
+        "name": "بهداشت باروری"
+    },
+    {
+        "code": "190177",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "20",
+        "name": "بینایی سنجی"
+    },
+    {
+        "code": "190184",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "67",
+        "name": "بیوشیمی بالینی"
+    },
+    {
+        "code": "190185",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "167",
+        "name": "بیولوژی تولیدمثل"
+    },
+    {
+        "code": "190192",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "8",
+        "name": "پرستاری"
+    },
+    {
+        "code": "190207",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "168",
+        "name": "پروتئومیکس کاربردی"
+    },
+    {
+        "code": "190215",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "169",
+        "name": "پزشکی مولکولی"
+    },
+    {
+        "code": "190224",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "79",
+        "name": "تاریخ علوم پزشکی"
+    },
+    {
+        "code": "190236",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "170",
+        "name": "توکسین‌های میکروبی"
+    },
+    {
+        "code": "190262",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "23",
+        "name": "حشره شناسی پزشکی و مبارزه با ناقلین"
+    },
+    {
+        "code": "190268",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "171",
+        "name": "داروسازی سنتی"
+    },
+    {
+        "code": "190291",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "172",
+        "name": "روانشناسی نظامی"
+    },
+    {
+        "code": "190292",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "26",
+        "name": "روانشناسی بالینی"
+    },
+    {
+        "code": "190302",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "173",
+        "name": "زیست فناوری پزشکی- بیوتکنولوژی پزشکی"
+    },
+    {
+        "code": "190303",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "174",
+        "name": "زیست فناوری دارویی- بیوتکنولوژی دارویی"
+    },
+    {
+        "code": "190304",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "175",
+        "name": "زیست مواد دارویی"
+    },
+    {
+        "code": "190306",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "176",
+        "name": "ژنتیک پزشکی"
+    },
+    {
+        "code": "190308",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "177",
+        "name": "سالمند شناسی"
+    },
+    {
+        "code": "190310",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "178",
+        "name": "سلامت در بلایا و فوریت ها"
+    },
+    {
+        "code": "190311",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "179",
+        "name": "سلامت دهان و دندانپزشکی اجتماعی"
+    },
+    {
+        "code": "190314",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "180",
+        "name": "سلامت و رفاه اجتماعی"
+    },
+    {
+        "code": "190315",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "91",
+        "name": "سم شناسی"
+    },
+    {
+        "code": "190319",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "181",
+        "name": "سیاست گذاری سلامت"
+    },
+    {
+        "code": "190320",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "182",
+        "name": "سیاستهای غذا و تغذیه"
+    },
+    {
+        "code": "190321",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "29",
+        "name": "شنوایی شناسی"
+    },
+    {
+        "code": "190322",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "183",
+        "name": "شیمی دارویی"
+    },
+    {
+        "code": "190323",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "184",
+        "name": "شیمی مواد خوراکی و آبشناسی پزشکی"
+    },
+    {
+        "code": "190330",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "94",
+        "name": "طب سنتی ایرانی"
+    },
+    {
+        "code": "190339",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "185",
+        "name": "علوم اعصاب"
+    },
+    {
+        "code": "190342",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "96",
+        "name": "علوم تشریحی"
+    },
+    {
+        "code": "190343",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "31",
+        "name": "علوم تغذیه"
+    },
+    {
+        "code": "190346",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "186",
+        "name": "علوم سلولی کاربردی"
+    },
+    {
+        "code": "190348",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "32",
+        "name": "علوم و صنایع غذایی- کنترل کیفی و بهداشتی"
+    },
+    {
+        "code": "190352",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "187",
+        "name": "فارماسیوتیکس"
+    },
+    {
+        "code": "190353",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "188",
+        "name": "فارماکوگنوزی"
+    },
+    {
+        "code": "190354",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "189",
+        "name": "فرآورده های بیولوژیک"
+    },
+    {
+        "code": "190359",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "102",
+        "name": "فیزیک پزشکی"
+    },
+    {
+        "code": "190360",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "34",
+        "name": "فیزیوتراپی"
+    },
+    {
+        "code": "190362",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "104",
+        "name": "فیزیولوژی"
+    },
+    {
+        "code": "190363",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "190",
+        "name": "فیزیولوژی ورزش"
+    },
+    {
+        "code": "190364",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "105",
+        "name": "قارچ شناسی پزشکی"
+    },
+    {
+        "code": "190367",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "106",
+        "name": "کار درمانی"
+    },
+    {
+        "code": "190369",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "191",
+        "name": "داروسازی هسته ای"
+    },
+    {
+        "code": "190371",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "192",
+        "name": "کنترل دارو"
+    },
+    {
+        "code": "190374",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "37",
+        "name": "گفتار درمانی"
+    },
+    {
+        "code": "190383",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "38",
+        "name": "مددکاری اجتماعی"
+    },
+    {
+        "code": "190386",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "193",
+        "name": "مدیریت اطلاعات سلامت"
+    },
+    {
+        "code": "190388",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "194",
+        "name": "مدیریت تحقیقات و فناوری در نظام سلامت"
+    },
+    {
+        "code": "190390",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "39",
+        "name": "مدیریت خدمات بهداشتی درمانی"
+    },
+    {
+        "code": "190395",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "195",
+        "name": "مشاوره توانبخشی"
+    },
+    {
+        "code": "190397",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "196",
+        "name": "مطالعات اعتیاد"
+    },
+    {
+        "code": "190400",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "197",
+        "name": "مهندسی بافت"
+    },
+    {
+        "code": "190401",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "41",
+        "name": "مهندسی بهداشت حرفه ای"
+    },
+    {
+        "code": "190402",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "42",
+        "name": "مهندسی بهداشت محیط"
+    },
+    {
+        "code": "190404",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "198",
+        "name": "مهندسی پزشکی"
+    },
+    {
+        "code": "190405",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "43",
+        "name": "مهندسی پزشکی- بیوالکتریک"
+    },
+    {
+        "code": "190409",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "199",
+        "name": "مواد دندانی"
+    },
+    {
+        "code": "190410",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "200",
+        "name": "میکروب شناسی پزشکی"
+    },
+    {
+        "code": "190416",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "201",
+        "name": "نانو فناوری دارویی- نانوتکنولوژی دارویی"
+    },
+    {
+        "code": "190417",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "120",
+        "name": "نانوفناوری پزشکی"
+    },
+    {
+        "code": "190421",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "202",
+        "name": "هماتولوژی آزمایشگاهی و بانک خون"
+    },
+    {
+        "code": "190424",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "122",
+        "name": "ویروس شناسی پزشکی"
+    },
+    {
+        "code": "190429",
+        "degree_id": "8",
+        "degree_name": "دانشجوی دکترای تخصصی",
+        "expertise_id": "203",
+        "name": "فارماکولوژی"
+    },
+    {
+        "code": "191102",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "46",
+        "name": "اپیدمیولوژی"
+    },
+    {
+        "code": "191106",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "47",
+        "name": "اخلاق پزشکی"
+    },
+    {
+        "code": "191119",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "161",
+        "name": "اعضای مصنوعی"
+    },
+    {
+        "code": "191122",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "162",
+        "name": "اقتصاد سلامت"
+    },
+    {
+        "code": "191123",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "163",
+        "name": "اقتصاد و مدیریت دارو"
+    },
+    {
+        "code": "191130",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "53",
+        "name": "انفورماتیک پزشکی"
+    },
+    {
+        "code": "191133",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "54",
+        "name": "انگل شناسی پزشکی"
+    },
+    {
+        "code": "191135",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "55",
+        "name": "ایمنی شناسی پزشکی"
+    },
+    {
+        "code": "191143",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "56",
+        "name": "آمار زیستی"
+    },
+    {
+        "code": "191145",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "164",
+        "name": "آموزش بهداشت و ارتقاء سلامت"
+    },
+    {
+        "code": "191146",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "58",
+        "name": "آموزش پزشکی"
+    },
+    {
+        "code": "191150",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "165",
+        "name": "بافت شناسی پزشکی"
+    },
+    {
+        "code": "191151",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "61",
+        "name": "باکتری شناسی پزشکی"
+    },
+    {
+        "code": "191153",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "166",
+        "name": "بهداشت باروری"
+    },
+    {
+        "code": "191158",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "204",
+        "name": "دکتری تخصصی بهداشت عمومی"
+    },
+    {
+        "code": "191177",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "20",
+        "name": "بینایی سنجی"
+    },
+    {
+        "code": "191184",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "67",
+        "name": "بیوشیمی بالینی"
+    },
+    {
+        "code": "191185",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "167",
+        "name": "بیولوژی تولیدمثل"
+    },
+    {
+        "code": "191192",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "8",
+        "name": "پرستاری"
+    },
+    {
+        "code": "191207",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "168",
+        "name": "پروتئومیکس کاربردی"
+    },
+    {
+        "code": "191215",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "169",
+        "name": "پزشکی مولکولی"
+    },
+    {
+        "code": "191224",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "79",
+        "name": "تاریخ علوم پزشکی"
+    },
+    {
+        "code": "191236",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "170",
+        "name": "توکسین‌های میکروبی"
+    },
+    {
+        "code": "191262",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "23",
+        "name": "حشره شناسی پزشکی و مبارزه با ناقلین"
+    },
+    {
+        "code": "191268",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "171",
+        "name": "داروسازی سنتی"
+    },
+    {
+        "code": "191291",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "172",
+        "name": "روانشناسی نظامی"
+    },
+    {
+        "code": "191292",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "26",
+        "name": "روانشناسی بالینی"
+    },
+    {
+        "code": "191302",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "173",
+        "name": "زیست فناوری پزشکی- بیوتکنولوژی پزشکی"
+    },
+    {
+        "code": "191303",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "174",
+        "name": "زیست فناوری دارویی- بیوتکنولوژی دارویی"
+    },
+    {
+        "code": "191304",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "175",
+        "name": "زیست مواد دارویی"
+    },
+    {
+        "code": "191306",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "176",
+        "name": "ژنتیک پزشکی"
+    },
+    {
+        "code": "191308",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "177",
+        "name": "سالمند شناسی"
+    },
+    {
+        "code": "191310",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "178",
+        "name": "سلامت در بلایا و فوریت ها"
+    },
+    {
+        "code": "191311",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "179",
+        "name": "سلامت دهان و دندانپزشکی اجتماعی"
+    },
+    {
+        "code": "191314",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "180",
+        "name": "سلامت و رفاه اجتماعی"
+    },
+    {
+        "code": "191315",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "91",
+        "name": "سم شناسی"
+    },
+    {
+        "code": "191319",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "181",
+        "name": "سیاست گذاری سلامت"
+    },
+    {
+        "code": "191320",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "182",
+        "name": "سیاستهای غذا و تغذیه"
+    },
+    {
+        "code": "191321",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "29",
+        "name": "شنوایی شناسی"
+    },
+    {
+        "code": "191322",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "183",
+        "name": "شیمی دارویی"
+    },
+    {
+        "code": "191323",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "184",
+        "name": "شیمی مواد خوراکی و آبشناسی پزشکی"
+    },
+    {
+        "code": "191330",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "94",
+        "name": "طب سنتی ایرانی"
+    },
+    {
+        "code": "191339",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "185",
+        "name": "علوم اعصاب"
+    },
+    {
+        "code": "191342",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "96",
+        "name": "علوم تشریحی"
+    },
+    {
+        "code": "191343",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "31",
+        "name": "علوم تغذیه"
+    },
+    {
+        "code": "191346",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "186",
+        "name": "علوم سلولی کاربردی"
+    },
+    {
+        "code": "191348",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "32",
+        "name": "علوم و صنایع غذایی- کنترل کیفی و بهداشتی"
+    },
+    {
+        "code": "191352",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "187",
+        "name": "فارماسیوتیکس"
+    },
+    {
+        "code": "191353",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "188",
+        "name": "فارماکوگنوزی"
+    },
+    {
+        "code": "191354",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "189",
+        "name": "فرآورده های بیولوژیک"
+    },
+    {
+        "code": "191359",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "102",
+        "name": "فیزیک پزشکی"
+    },
+    {
+        "code": "191360",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "34",
+        "name": "فیزیوتراپی"
+    },
+    {
+        "code": "191362",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "104",
+        "name": "فیزیولوژی"
+    },
+    {
+        "code": "191363",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "190",
+        "name": "فیزیولوژی ورزش"
+    },
+    {
+        "code": "191364",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "105",
+        "name": "قارچ شناسی پزشکی"
+    },
+    {
+        "code": "191367",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "106",
+        "name": "کار درمانی"
+    },
+    {
+        "code": "191369",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "191",
+        "name": "داروسازی هسته ای"
+    },
+    {
+        "code": "191371",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "192",
+        "name": "کنترل دارو"
+    },
+    {
+        "code": "191374",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "37",
+        "name": "گفتار درمانی"
+    },
+    {
+        "code": "191383",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "38",
+        "name": "مددکاری اجتماعی"
+    },
+    {
+        "code": "191386",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "193",
+        "name": "مدیریت اطلاعات سلامت"
+    },
+    {
+        "code": "191388",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "194",
+        "name": "مدیریت تحقیقات و فناوری در نظام سلامت"
+    },
+    {
+        "code": "191390",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "39",
+        "name": "مدیریت خدمات بهداشتی درمانی"
+    },
+    {
+        "code": "191395",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "195",
+        "name": "مشاوره توانبخشی"
+    },
+    {
+        "code": "191397",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "196",
+        "name": "مطالعات اعتیاد"
+    },
+    {
+        "code": "191400",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "197",
+        "name": "مهندسی بافت"
+    },
+    {
+        "code": "191401",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "41",
+        "name": "مهندسی بهداشت حرفه ای"
+    },
+    {
+        "code": "191402",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "42",
+        "name": "مهندسی بهداشت محیط"
+    },
+    {
+        "code": "191404",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "198",
+        "name": "مهندسی پزشکی"
+    },
+    {
+        "code": "191405",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "43",
+        "name": "مهندسی پزشکی- بیوالکتریک"
+    },
+    {
+        "code": "191409",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "199",
+        "name": "مواد دندانی"
+    },
+    {
+        "code": "191410",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "200",
+        "name": "میکروب شناسی پزشکی"
+    },
+    {
+        "code": "191416",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "201",
+        "name": "نانو فناوری دارویی- نانوتکنولوژی دارویی"
+    },
+    {
+        "code": "191417",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "120",
+        "name": "نانوفناوری پزشکی"
+    },
+    {
+        "code": "191421",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "202",
+        "name": "هماتولوژی آزمایشگاهی و بانک خون"
+    },
+    {
+        "code": "191424",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "122",
+        "name": "ویروس شناسی پزشکی"
+    },
+    {
+        "code": "191429",
+        "degree_id": "9",
+        "degree_name": "دکترای تخصصی",
+        "expertise_id": "203",
+        "name": "فارماکولوژی"
+    },
+    {
+        "code": "200137",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "205",
+        "name": "ایمونولوژی و آلرژی بالینی"
+    },
+    {
+        "code": "200169",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "206",
+        "name": "بیماریهای ریه"
+    },
+    {
+        "code": "200174",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "134",
+        "name": "بیماریهای قلب و عروق"
+    },
+    {
+        "code": "200237",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "207",
+        "name": "جراحی اطفال"
+    },
+    {
+        "code": "200239",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "208",
+        "name": "جراحی پلاستیک، ترمیمی و سوختگی"
+    },
+    {
+        "code": "200249",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "209",
+        "name": "جراحی عروق"
+    },
+    {
+        "code": "200253",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "210",
+        "name": "جراحی قفسه صدری"
+    },
+    {
+        "code": "200254",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "211",
+        "name": "جراحی قلب و عروق"
+    },
+    {
+        "code": "200264",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "212",
+        "name": "خون و سرطان اطفال"
+    },
+    {
+        "code": "200265",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "213",
+        "name": "خون و سرطان بالغین"
+    },
+    {
+        "code": "200289",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "214",
+        "name": "روانپزشکی اطفال"
+    },
+    {
+        "code": "200290",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "215",
+        "name": "روانپزشکی کودک و نوجوان"
+    },
+    {
+        "code": "200296",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "216",
+        "name": "روماتولوژی"
+    },
+    {
+        "code": "200297",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "217",
+        "name": "روماتولوژی کودکان"
+    },
+    {
+        "code": "200299",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "218",
+        "name": "ریه کودکان"
+    },
+    {
+        "code": "200334",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "219",
+        "name": "طب نوزادی و پیرامون تولد"
+    },
+    {
+        "code": "200336",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "220",
+        "name": "عفونی اطفال"
+    },
+    {
+        "code": "200337",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "221",
+        "name": "عفونی بالغین"
+    },
+    {
+        "code": "200350",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "222",
+        "name": "غدد درون ریز و متابولیسم"
+    },
+    {
+        "code": "200351",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "223",
+        "name": "غدد درون ریز و متابولیسم کودکان"
+    },
+    {
+        "code": "200366",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "224",
+        "name": "قلب اطفال"
+    },
+    {
+        "code": "200370",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "225",
+        "name": "کلیه اطفال"
+    },
+    {
+        "code": "200376",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "226",
+        "name": "گوارش اطفال"
+    },
+    {
+        "code": "200377",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "227",
+        "name": "گوارش و کبد بالغین"
+    },
+    {
+        "code": "200398",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "228",
+        "name": "مغز و اعصاب کودکان"
+    },
+    {
+        "code": "200419",
+        "degree_id": "10",
+        "degree_name": "دانشجوی فوق تخصص",
+        "expertise_id": "229",
+        "name": "نفرولوژی"
+    },
+    {
+        "code": "201137",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "205",
+        "name": "ایمونولوژی و آلرژی بالینی"
+    },
+    {
+        "code": "201169",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "206",
+        "name": "بیماریهای ریه"
+    },
+    {
+        "code": "201174",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "134",
+        "name": "بیماریهای قلب و عروق"
+    },
+    {
+        "code": "201237",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "207",
+        "name": "جراحی اطفال"
+    },
+    {
+        "code": "201239",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "208",
+        "name": "جراحی پلاستیک، ترمیمی و سوختگی"
+    },
+    {
+        "code": "201249",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "209",
+        "name": "جراحی عروق"
+    },
+    {
+        "code": "201253",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "210",
+        "name": "جراحی قفسه صدری"
+    },
+    {
+        "code": "201254",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "211",
+        "name": "جراحی قلب و عروق"
+    },
+    {
+        "code": "201264",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "212",
+        "name": "خون و سرطان اطفال"
+    },
+    {
+        "code": "201265",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "213",
+        "name": "خون و سرطان بالغین"
+    },
+    {
+        "code": "201289",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "214",
+        "name": "روانپزشکی اطفال"
+    },
+    {
+        "code": "201290",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "215",
+        "name": "روانپزشکی کودک و نوجوان"
+    },
+    {
+        "code": "201296",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "216",
+        "name": "روماتولوژی"
+    },
+    {
+        "code": "201297",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "217",
+        "name": "روماتولوژی کودکان"
+    },
+    {
+        "code": "201299",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "218",
+        "name": "ریه کودکان"
+    },
+    {
+        "code": "201334",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "219",
+        "name": "طب نوزادی و پیرامون تولد"
+    },
+    {
+        "code": "201336",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "220",
+        "name": "عفونی اطفال"
+    },
+    {
+        "code": "201337",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "221",
+        "name": "عفونی بالغین"
+    },
+    {
+        "code": "201350",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "222",
+        "name": "غدد درون ریز و متابولیسم"
+    },
+    {
+        "code": "201351",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "223",
+        "name": "غدد درون ریز و متابولیسم کودکان"
+    },
+    {
+        "code": "201366",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "224",
+        "name": "قلب اطفال"
+    },
+    {
+        "code": "201370",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "225",
+        "name": "کلیه اطفال"
+    },
+    {
+        "code": "201376",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "226",
+        "name": "گوارش اطفال"
+    },
+    {
+        "code": "201377",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "227",
+        "name": "گوارش و کبد بالغین"
+    },
+    {
+        "code": "201398",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "228",
+        "name": "مغز و اعصاب کودکان"
+    },
+    {
+        "code": "201419",
+        "degree_id": "11",
+        "degree_name": "فوق تخصص",
+        "expertise_id": "229",
+        "name": "نفرولوژی"
+    },
+    {
+        "code": "210101",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "230",
+        "name": "HIV/AIDS  بالینی"
+    },
+    {
+        "code": "210104",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "231",
+        "name": "اتولوژی و نورواتولوژی"
+    },
+    {
+        "code": "210105",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "232",
+        "name": "اختلالات کف لگن در زنان"
+    },
+    {
+        "code": "210107",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "233",
+        "name": "ارتو سرجری"
+    },
+    {
+        "code": "210109",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "234",
+        "name": "ارتوپدی کودکان"
+    },
+    {
+        "code": "210113",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "235",
+        "name": "اروانکولوژی"
+    },
+    {
+        "code": "210114",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "236",
+        "name": "ارولوژی اطفال"
+    },
+    {
+        "code": "210115",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "237",
+        "name": "ارولوژی ترمیمی"
+    },
+    {
+        "code": "210116",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "238",
+        "name": "ارولوژی زنان و زایمان"
+    },
+    {
+        "code": "210117",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "239",
+        "name": "استرابیسم"
+    },
+    {
+        "code": "210118",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "240",
+        "name": "استریوتاکسی"
+    },
+    {
+        "code": "210124",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "241",
+        "name": "اقدامات مداخله‌ای قلب بزرگسال"
+    },
+    {
+        "code": "210125",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "242",
+        "name": "اقدامات مداخله‌ای قلب و عروق کودکان"
+    },
+    {
+        "code": "210126",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "243",
+        "name": "اکو کاردیوگرافی"
+    },
+    {
+        "code": "210127",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "244",
+        "name": "اکولو پلاستیک"
+    },
+    {
+        "code": "210131",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "245",
+        "name": "انکولوژی زنان"
+    },
+    {
+        "code": "210132",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "246",
+        "name": "انکولوژی دهان و فک و صورت"
+    },
+    {
+        "code": "210134",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "247",
+        "name": "ایمپلنت"
+    },
+    {
+        "code": "210139",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "248",
+        "name": "اینترونشنال کاردیولوژی"
+    },
+    {
+        "code": "210140",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "249",
+        "name": "اینترونشنال کاردیولوژی درکودکان ونوجوانان"
+    },
+    {
+        "code": "210142",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "250",
+        "name": "آسیب شناسی پوست"
+    },
+    {
+        "code": "210148",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "251",
+        "name": "آندویورولوژی"
+    },
+    {
+        "code": "210164",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "252",
+        "name": "بوی بد دهان"
+    },
+    {
+        "code": "210170",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "253",
+        "name": "بیماریهای سطح چشم"
+    },
+    {
+        "code": "210171",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "254",
+        "name": "بیماریهای عفونی در بیماران مبتلا به نقص ایمنی و پیوند"
+    },
+    {
+        "code": "210173",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "255",
+        "name": "بیماریهای قرنیه و خارج چشمی"
+    },
+    {
+        "code": "210175",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "256",
+        "name": "بیماریهای مادرزادی قلب در بالغین"
+    },
+    {
+        "code": "210179",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "257",
+        "name": "بیهوشی پیوند اعضاء داخلی شکم"
+    },
+    {
+        "code": "210180",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "258",
+        "name": "بیهوشی در جراحی مغز و اعصاب"
+    },
+    {
+        "code": "210181",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "259",
+        "name": "بیهوشی قلب"
+    },
+    {
+        "code": "210182",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "260",
+        "name": "بیهوشی کودکان"
+    },
+    {
+        "code": "210186",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "261",
+        "name": "بیولوژی دهان"
+    },
+    {
+        "code": "210187",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "262",
+        "name": "پاتولوژی اطفال"
+    },
+    {
+        "code": "210188",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "263",
+        "name": "پاتولوژی چشم"
+    },
+    {
+        "code": "210190",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "264",
+        "name": "پاتولوژی مولکولاروسیتوژنتیک"
+    },
+    {
+        "code": "210203",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "265",
+        "name": "پروتز- ایمپلنت"
+    },
+    {
+        "code": "210205",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "266",
+        "name": "پروتزهای فک و صورت"
+    },
+    {
+        "code": "210206",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "267",
+        "name": "پروتزهای ماکزیلوفیشیال"
+    },
+    {
+        "code": "210208",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "268",
+        "name": "پروستو ایمپلنت"
+    },
+    {
+        "code": "210209",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "269",
+        "name": "پریناتولوژی"
+    },
+    {
+        "code": "210210",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "270",
+        "name": "پریو- ایمپلنت"
+    },
+    {
+        "code": "210218",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "271",
+        "name": "پیس میکرو اینترونشنال- الکتروفیزیولوژی"
+    },
+    {
+        "code": "210220",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "272",
+        "name": "پیشگیری و کنترل عفونت‌های بیمارستانی"
+    },
+    {
+        "code": "210221",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "273",
+        "name": "پیوند کبد"
+    },
+    {
+        "code": "210222",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "274",
+        "name": "پیوند کلیه"
+    },
+    {
+        "code": "210223",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "275",
+        "name": "پیوند کلیه و اوروانکولوژی"
+    },
+    {
+        "code": "210226",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "276",
+        "name": "ترومای دندانی"
+    },
+    {
+        "code": "210227",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "277",
+        "name": "ترومای جراحی عمومی"
+    },
+    {
+        "code": "210238",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "278",
+        "name": "جراحی پستان"
+    },
+    {
+        "code": "210240",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "279",
+        "name": "جراحی پیشرفته- ایمپلنت"
+    },
+    {
+        "code": "210241",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "280",
+        "name": "جراحی ترمیمی دهان و فک و صورت"
+    },
+    {
+        "code": "210242",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "281",
+        "name": "جراحی ترومای فک و صورت"
+    },
+    {
+        "code": "210243",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "282",
+        "name": "جراحی درون بین زنان"
+    },
+    {
+        "code": "210244",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "283",
+        "name": "جراحی دست"
+    },
+    {
+        "code": "210246",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "284",
+        "name": "جراحی ستون فقرات"
+    },
+    {
+        "code": "210247",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "285",
+        "name": "جراحی سر و گردن"
+    },
+    {
+        "code": "210248",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "286",
+        "name": "جراحی سرطان"
+    },
+    {
+        "code": "210249",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "209",
+        "name": "جراحی عروق"
+    },
+    {
+        "code": "210251",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "287",
+        "name": "جراحی عمومی درون بین- لاپاراسکوپی"
+    },
+    {
+        "code": "210252",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "288",
+        "name": "جراحی فک و صورت کرانیوفاسیال و کودکان"
+    },
+    {
+        "code": "210256",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "289",
+        "name": "جراحی کولورکتال"
+    },
+    {
+        "code": "210258",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "290",
+        "name": "جراحی زانو"
+    },
+    {
+        "code": "210259",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "291",
+        "name": "چشم اطفال"
+    },
+    {
+        "code": "210261",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "292",
+        "name": "چشم پزشکی کودکان و انحراف چشم"
+    },
+    {
+        "code": "210270",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "293",
+        "name": "درد"
+    },
+    {
+        "code": "210271",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "294",
+        "name": "دردهای مزمن دهانی- صورتی"
+    },
+    {
+        "code": "210272",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "295",
+        "name": "درماتو پاتولوژی"
+    },
+    {
+        "code": "210273",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "296",
+        "name": "درمان بین رشته‌‌ای ترمیم‌های زیبایی مبتنی بر باندینگ"
+    },
+    {
+        "code": "210276",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "297",
+        "name": "دندانپزشکی بیمارستانی- عمومی"
+    },
+    {
+        "code": "210277",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "298",
+        "name": "دندانپزشکی بیمارستانی- کودکان"
+    },
+    {
+        "code": "210284",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "299",
+        "name": "رادیولوژی مداخله ای"
+    },
+    {
+        "code": "210291",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "300",
+        "name": "روانپزشکی نظامی"
+    },
+    {
+        "code": "210298",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "301",
+        "name": "رینولوژی"
+    },
+    {
+        "code": "210309",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "302",
+        "name": "سرطانهای دستگاه ادراری- تناسلی"
+    },
+    {
+        "code": "210316",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "303",
+        "name": "سم شناسی بالینی و مسمومیتها"
+    },
+    {
+        "code": "210318",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "304",
+        "name": "سوختگی"
+    },
+    {
+        "code": "210326",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "305",
+        "name": "طب تسکینی"
+    },
+    {
+        "code": "210327",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "306",
+        "name": "طب خواب"
+    },
+    {
+        "code": "210328",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "307",
+        "name": "طب روان تنی"
+    },
+    {
+        "code": "210333",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "308",
+        "name": "طب مادر و جنین"
+    },
+    {
+        "code": "210365",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "309",
+        "name": "قرنیه- سگمان قدامی"
+    },
+    {
+        "code": "210375",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "310",
+        "name": "گلوکوم"
+    },
+    {
+        "code": "210379",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "311",
+        "name": "لارینگولوژی"
+    },
+    {
+        "code": "210380",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "312",
+        "name": "لیزر"
+    },
+    {
+        "code": "210392",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "313",
+        "name": "مراقبت های ویژه پزشکی- ICU"
+    },
+    {
+        "code": "210393",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "314",
+        "name": "مراقبت های ویژه کودکان"
+    },
+    {
+        "code": "210413",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "315",
+        "name": "ناباروری"
+    },
+    {
+        "code": "210414",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "316",
+        "name": "نارسایی قلب"
+    },
+    {
+        "code": "210415",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "317",
+        "name": "نازایی- IVF"
+    },
+    {
+        "code": "210420",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "318",
+        "name": "نوروفیزیولوژی بالینی کودکان"
+    },
+    {
+        "code": "210423",
+        "degree_id": "12",
+        "degree_name": "دانشجوی فلوشیپ",
+        "expertise_id": "319",
+        "name": "ویتره ورتین- سگمان خلفی"
+    },
+    {
+        "code": "211101",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "230",
+        "name": "HIV/AIDS  بالینی"
+    },
+    {
+        "code": "211104",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "231",
+        "name": "اتولوژی و نورواتولوژی"
+    },
+    {
+        "code": "211105",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "232",
+        "name": "اختلالات کف لگن در زنان"
+    },
+    {
+        "code": "211107",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "233",
+        "name": "ارتو سرجری"
+    },
+    {
+        "code": "211109",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "234",
+        "name": "ارتوپدی کودکان"
+    },
+    {
+        "code": "211113",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "235",
+        "name": "اروانکولوژی"
+    },
+    {
+        "code": "211114",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "236",
+        "name": "ارولوژی اطفال"
+    },
+    {
+        "code": "211115",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "237",
+        "name": "ارولوژی ترمیمی"
+    },
+    {
+        "code": "211116",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "238",
+        "name": "ارولوژی زنان و زایمان"
+    },
+    {
+        "code": "211117",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "239",
+        "name": "استرابیسم"
+    },
+    {
+        "code": "211118",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "240",
+        "name": "استریوتاکسی"
+    },
+    {
+        "code": "211124",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "241",
+        "name": "اقدامات مداخله‌ای قلب بزرگسال"
+    },
+    {
+        "code": "211125",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "242",
+        "name": "اقدامات مداخله‌ای قلب و عروق کودکان"
+    },
+    {
+        "code": "211126",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "243",
+        "name": "اکو کاردیوگرافی"
+    },
+    {
+        "code": "211127",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "244",
+        "name": "اکولو پلاستیک"
+    },
+    {
+        "code": "211131",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "245",
+        "name": "انکولوژی زنان"
+    },
+    {
+        "code": "211132",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "246",
+        "name": "انکولوژی دهان و فک و صورت"
+    },
+    {
+        "code": "211134",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "247",
+        "name": "ایمپلنت"
+    },
+    {
+        "code": "211139",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "248",
+        "name": "اینترونشنال کاردیولوژی"
+    },
+    {
+        "code": "211140",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "249",
+        "name": "اینترونشنال کاردیولوژی درکودکان ونوجوانان"
+    },
+    {
+        "code": "211142",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "250",
+        "name": "آسیب شناسی پوست"
+    },
+    {
+        "code": "211148",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "251",
+        "name": "آندویورولوژی"
+    },
+    {
+        "code": "211164",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "252",
+        "name": "بوی بد دهان"
+    },
+    {
+        "code": "211170",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "253",
+        "name": "بیماریهای سطح چشم"
+    },
+    {
+        "code": "211171",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "254",
+        "name": "بیماریهای عفونی در بیماران مبتلا به نقص ایمنی و پیوند"
+    },
+    {
+        "code": "211173",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "255",
+        "name": "بیماریهای قرنیه و خارج چشمی"
+    },
+    {
+        "code": "211175",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "256",
+        "name": "بیماریهای مادرزادی قلب در بالغین"
+    },
+    {
+        "code": "211179",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "257",
+        "name": "بیهوشی پیوند اعضاء داخلی شکم"
+    },
+    {
+        "code": "211180",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "258",
+        "name": "بیهوشی در جراحی مغز و اعصاب"
+    },
+    {
+        "code": "211181",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "259",
+        "name": "بیهوشی قلب"
+    },
+    {
+        "code": "211182",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "260",
+        "name": "بیهوشی کودکان"
+    },
+    {
+        "code": "211186",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "261",
+        "name": "بیولوژی دهان"
+    },
+    {
+        "code": "211187",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "262",
+        "name": "پاتولوژی اطفال"
+    },
+    {
+        "code": "211188",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "263",
+        "name": "پاتولوژی چشم"
+    },
+    {
+        "code": "211190",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "264",
+        "name": "پاتولوژی مولکولاروسیتوژنتیک"
+    },
+    {
+        "code": "211203",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "320",
+        "name": "پروتز-ایمپلنت"
+    },
+    {
+        "code": "211205",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "266",
+        "name": "پروتزهای فک و صورت"
+    },
+    {
+        "code": "211206",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "267",
+        "name": "پروتزهای ماکزیلوفیشیال"
+    },
+    {
+        "code": "211208",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "268",
+        "name": "پروستو ایمپلنت"
+    },
+    {
+        "code": "211209",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "269",
+        "name": "پریناتولوژی"
+    },
+    {
+        "code": "211210",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "270",
+        "name": "پریو- ایمپلنت"
+    },
+    {
+        "code": "211218",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "271",
+        "name": "پیس میکرو اینترونشنال- الکتروفیزیولوژی"
+    },
+    {
+        "code": "211220",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "272",
+        "name": "پیشگیری و کنترل عفونت‌های بیمارستانی"
+    },
+    {
+        "code": "211221",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "273",
+        "name": "پیوند کبد"
+    },
+    {
+        "code": "211222",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "274",
+        "name": "پیوند کلیه"
+    },
+    {
+        "code": "211223",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "275",
+        "name": "پیوند کلیه و اوروانکولوژی"
+    },
+    {
+        "code": "211226",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "276",
+        "name": "ترومای دندانی"
+    },
+    {
+        "code": "211227",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "277",
+        "name": "ترومای جراحی عمومی"
+    },
+    {
+        "code": "211238",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "278",
+        "name": "جراحی پستان"
+    },
+    {
+        "code": "211240",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "279",
+        "name": "جراحی پیشرفته- ایمپلنت"
+    },
+    {
+        "code": "211241",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "280",
+        "name": "جراحی ترمیمی دهان و فک و صورت"
+    },
+    {
+        "code": "211242",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "281",
+        "name": "جراحی ترومای فک و صورت"
+    },
+    {
+        "code": "211243",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "282",
+        "name": "جراحی درون بین زنان"
+    },
+    {
+        "code": "211244",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "283",
+        "name": "جراحی دست"
+    },
+    {
+        "code": "211246",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "284",
+        "name": "جراحی ستون فقرات"
+    },
+    {
+        "code": "211247",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "285",
+        "name": "جراحی سر و گردن"
+    },
+    {
+        "code": "211248",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "286",
+        "name": "جراحی سرطان"
+    },
+    {
+        "code": "211249",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "209",
+        "name": "جراحی عروق"
+    },
+    {
+        "code": "211251",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "287",
+        "name": "جراحی عمومی درون بین- لاپاراسکوپی"
+    },
+    {
+        "code": "211252",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "288",
+        "name": "جراحی فک و صورت کرانیوفاسیال و کودکان"
+    },
+    {
+        "code": "211256",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "289",
+        "name": "جراحی کولورکتال"
+    },
+    {
+        "code": "211258",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "290",
+        "name": "جراحی زانو"
+    },
+    {
+        "code": "211259",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "291",
+        "name": "چشم اطفال"
+    },
+    {
+        "code": "211261",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "292",
+        "name": "چشم پزشکی کودکان و انحراف چشم"
+    },
+    {
+        "code": "211270",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "293",
+        "name": "درد"
+    },
+    {
+        "code": "211271",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "294",
+        "name": "دردهای مزمن دهانی- صورتی"
+    },
+    {
+        "code": "211272",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "295",
+        "name": "درماتو پاتولوژی"
+    },
+    {
+        "code": "211273",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "296",
+        "name": "درمان بین رشته‌‌ای ترمیم‌های زیبایی مبتنی بر باندینگ"
+    },
+    {
+        "code": "211276",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "297",
+        "name": "دندانپزشکی بیمارستانی- عمومی"
+    },
+    {
+        "code": "211277",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "298",
+        "name": "دندانپزشکی بیمارستانی- کودکان"
+    },
+    {
+        "code": "211284",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "299",
+        "name": "رادیولوژی مداخله ای"
+    },
+    {
+        "code": "211291",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "300",
+        "name": "روانپزشکی نظامی"
+    },
+    {
+        "code": "211298",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "301",
+        "name": "رینولوژی"
+    },
+    {
+        "code": "211309",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "302",
+        "name": "سرطانهای دستگاه ادراری- تناسلی"
+    },
+    {
+        "code": "211316",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "303",
+        "name": "سم شناسی بالینی و مسمومیتها"
+    },
+    {
+        "code": "211318",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "304",
+        "name": "سوختگی"
+    },
+    {
+        "code": "211326",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "305",
+        "name": "طب تسکینی"
+    },
+    {
+        "code": "211327",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "306",
+        "name": "طب خواب"
+    },
+    {
+        "code": "211328",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "307",
+        "name": "طب روان تنی"
+    },
+    {
+        "code": "211333",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "308",
+        "name": "طب مادر و جنین"
+    },
+    {
+        "code": "211365",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "309",
+        "name": "قرنیه- سگمان قدامی"
+    },
+    {
+        "code": "211375",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "310",
+        "name": "گلوکوم"
+    },
+    {
+        "code": "211379",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "311",
+        "name": "لارینگولوژی"
+    },
+    {
+        "code": "211380",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "312",
+        "name": "لیزر"
+    },
+    {
+        "code": "211392",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "313",
+        "name": "مراقبت های ویژه پزشکی- ICU"
+    },
+    {
+        "code": "211393",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "314",
+        "name": "مراقبت های ویژه کودکان"
+    },
+    {
+        "code": "211413",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "315",
+        "name": "ناباروری"
+    },
+    {
+        "code": "211414",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "316",
+        "name": "نارسایی قلب"
+    },
+    {
+        "code": "211415",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "317",
+        "name": "نازایی- IVF"
+    },
+    {
+        "code": "211420",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "318",
+        "name": "نوروفیزیولوژی بالینی کودکان"
+    },
+    {
+        "code": "211423",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "319",
+        "name": "ویتره ورتین- سگمان خلفی"
+    },
+    {
+        "code": "211425",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "321",
+        "name": "بیماری صرع"
+    },
+    {
+        "code": "211426",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "322",
+        "name": "بیماری MS"
+    },
+    {
+        "code": "211427",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "323",
+        "name": "کاشت حلزون"
+    },
+    {
+        "code": "211428",
+        "degree_id": "13",
+        "degree_name": "فلوشیپ",
+        "expertise_id": "324",
+        "name": "جراحی شانه"
+    },
+    {
+        "code": "0",
+        "degree_id": "14",
+        "degree_name": "نامشخص",
+        "expertise_id": "325",
+        "name": "نامشخص"
+    },
+    {
+        "code": "0",
+        "degree_id": "15",
+        "degree_name": "مشاور",
+        "expertise_id": "326",
+        "name": "سلامت جنسی"
+    }
+]

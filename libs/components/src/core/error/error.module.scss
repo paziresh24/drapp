@@ -1,0 +1,33 @@
+main {
+    display: flex;
+    height: 100vh;
+    min-height: -webkit-fill-available;
+    justify-content: center;
+    text-align: right;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #fff;
+    z-index: 999;
+
+    .status-code {
+        font-size: 3rem;
+        font-weight: 900;
+        color: #cb0c3e;
+    }
+    .error {
+        font-size: 1.9rem;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.4);
+    }
+    .message {
+        font-size: 1.5rem;
+        border-right: 3px solid #f56262;
+        padding-right: 0.8rem;
+        margin-top: 1rem;
+        max-width: 25rem;
+        overflow-wrap: break-word;
+    }
+}

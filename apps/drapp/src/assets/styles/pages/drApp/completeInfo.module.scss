@@ -1,0 +1,51 @@
+.wrapper {
+    .form {
+        display: flex;
+        flex-direction: column;
+        @include gap(1.6rem, false);
+    }
+    .register-form {
+        background: #fff;
+        box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+        border-radius: 1rem;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        @include gap(1rem, false);
+        font-weight: bold;
+        font-size: 1.4rem;
+        color: #3f3f79;
+        .form-control {
+            display: flex;
+            flex-direction: column;
+            @include gap(2rem, false);
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .title {
+            font-weight: 800;
+        }
+        .sub-title {
+            font-weight: 500;
+        }
+    }
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    > * {
+        margin: 0 1rem;
+    }
+
+    > :first-child {
+        margin-right: 0;
+    }
+
+    > :last-child {
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,249 @@
+.addItemLoading {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    width: 100%;
+
+    > * {
+        margin: 1rem 0;
+    }
+
+    :first-child {
+        margin-top: 0 !important;
+    }
+
+    :last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+.favoritePrescriptionsName-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        margin: 0.5rem 0;
+    }
+
+    :first-child {
+        margin-top: 0 !important;
+    }
+
+    :last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+.addItemDetails {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    width: 100%;
+    overflow: scroll;
+    padding-bottom: 15rem;
+
+    .items {
+        > * {
+            margin: 0.5rem 0;
+        }
+
+        :first-child {
+            margin-top: 0 !important;
+        }
+
+        :last-child {
+            margin-bottom: 0 !important;
+        }
+        .item {
+            padding: 1.5rem;
+            border-radius: 0.6rem;
+            cursor: pointer;
+            border: 1px solid #dce7ef;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 1.5rem;
+                width: 100%;
+
+                .type {
+                    font-size: 1.4rem;
+                    opacity: 0.7;
+                }
+
+                .chips {
+                    padding: 0.3rem 2rem;
+                    border-radius: 100rem;
+                    font-weight: 500;
+                    font-size: 1.3rem;
+
+                    &.error {
+                        background: #e2111117;
+                        color: #b64646;
+                    }
+
+                    &.success {
+                        background: #11e27e1c;
+                        color: #119e87;
+                    }
+                }
+            }
+
+            .name {
+                font-size: 1.3rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+            }
+
+            .message {
+                font-size: 1.25rem;
+                margin-bottom: 0.8rem;
+
+                &.E {
+                    color: crimson;
+                }
+
+                &.W {
+                    color: #dc7e14;
+                }
+            }
+        }
+    }
+
+    > * {
+        margin: 1rem 0;
+    }
+
+    :first-child {
+        margin-top: 0 !important;
+    }
+
+    :last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+.searchWrapper {
+    margin-bottom: 1rem;
+}
+
+.add-item {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    border: 1px dashed #bac5cc;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    span {
+        color: #50616b !important;
+        margin-left: 1rem;
+    }
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    height: 20rem;
+    max-height: 20rem;
+
+    > * {
+        margin: 0.5rem 0;
+    }
+
+    :first-child {
+        margin-top: 0;
+    }
+
+    :last-child {
+        margin-bottom: 0;
+    }
+
+    .item {
+        padding: 1.5rem;
+        border-radius: 0.6rem;
+        cursor: pointer;
+        border: 1px solid #dce7ef;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1.3rem;
+
+        .item_icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2rem;
+            margin-right: 1rem;
+        }
+
+        .item-text {
+            width: 100%;
+            font-size: 1.35rem;
+        }
+    }
+}
+
+.open-modal {
+    overflow: hidden;
+    padding-right: 15px;
+}
+
+.info-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        margin: 0.6rem 0;
+    }
+    > :first-child {
+        margin-top: 0;
+    }
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+.box-message {
+    padding: 1rem;
+    border-radius: 0.6rem;
+    font-size: 1.4rem;
+
+    &.error {
+        box-shadow: 0 11px 30px -9px #cd4c4c85;
+        background: #de5f5f;
+    }
+    &.submitted {
+        box-shadow: 0 11px 30px -9px #4f9c4b85;
+        background: #27bd60;
+    }
+
+    span {
+        color: #fff;
+    }
+}

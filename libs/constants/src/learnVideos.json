@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "name": "ورود به سامانه",
+        "length": "00:33",
+        "src": "/content/videos/login.mp4"
+    },
+    {
+        "id": 2,
+        "name": "احراز هویت بیمه",
+        "length": "00:49",
+        "src": "/content/videos/verify.mp4"
+    },
+    {
+        "id": 3,
+        "name": "پروفایل",
+        "length": "01:02",
+        "src": "/content/videos/profile.mp4"
+    },
+    {
+        "id": 4,
+        "name": "ثبت نسخه",
+        "length": "06:05",
+        "src": "/content/videos/submit-prescription.mp4"
+    },
+    {
+        "id": 5,
+        "name": "تجویز نسخه",
+        "length": "01:12",
+        "src": "/content/videos/prescribe.mp4"
+    },
+    {
+        "id": 6,
+        "name": "یک پیشنهاد!",
+        "length": "00:46",
+        "src": "/content/videos/recommend.mp4"
+    },
+    {
+        "id": 7,
+        "name": "ایمپورت نسخه های پراستفاده",
+        "length": "01:02",
+        "src": "/content/videos/import.mp4"
+    },
+    {
+        "id": 8,
+        "name": "وضعیت نسخه",
+        "length": "01:14",
+        "src": "/content/videos/status.mp4"
+    },
+    {
+        "id": 9,
+        "name": "پشتیبانی",
+        "length": "00:29",
+        "src": "/content/videos/support.mp4"
+    }
+]

@@ -1,0 +1,37 @@
+import axios from 'axios';
+import queryString from 'querystring';
+
+const isProduction = process.env.NODE_ENV === 'production';
+const isMainDomain = window.location.host === process.env.REACT_APP_MAIN_DOMAIN;
+
+const client = axios.create({
+    baseURL:
+        isProduction && !isMainDomain
+            ? window.location.origin + process.env.REACT_APP_DR_APP_ROUTE
+            : process.env.REACT_APP_DR_APP_API
+});
+
+client.interceptors.request.use(
+    config => {
+        const token = queryString.parse(window.location.search).access_token;
+        if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+            config.headers['Content-Type'] = 'application/json';
+        }
+        return config;
+    },
+    err => {
+        return Promise.reject(err);
+    }
+);
+
+client.interceptors.response.use(
+    res => {
+        return res.data;
+    },
+    err => {
+        return Promise.reject(err);
+    }
+);
+
+export { client };

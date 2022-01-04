@@ -1,0 +1,47 @@
+.replies {
+    background-color: #dee8ef;
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+
+    .feedback-text {
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+
+    .actionWrapper {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .action {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            > * {
+                margin: 0 0.3rem;
+                color: #27bda0;
+            }
+
+            :first-child {
+                margin-right: 0;
+            }
+
+            :last-child {
+                margin-left: 0;
+            }
+        }
+
+        > * {
+            margin: 0 0.5rem;
+        }
+
+        :first-child {
+            margin-right: 0;
+        }
+
+        :last-child {
+            margin-left: 0;
+        }
+    }
+}

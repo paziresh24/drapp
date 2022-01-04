@@ -1,0 +1,30 @@
+.menu-item {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: #fff;
+    padding: 1.5rem 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
+    @include gap(1rem);
+    height: 5.5rem;
+    opacity: 0.7;
+    &:focus {
+        text-decoration: none;
+    }
+    &.active {
+        // background-color: #1c1d569d;
+        opacity: 1;
+    }
+
+    .menu-item-content {
+        display: flex;
+        align-items: center;
+        > * {
+            margin: 0 1rem;
+        }
+    }
+}

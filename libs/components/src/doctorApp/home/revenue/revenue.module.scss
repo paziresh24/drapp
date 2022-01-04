@@ -1,0 +1,26 @@
+.revenue {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    @include gap(1rem, false);
+    .title {
+        font-size: 1.6rem;
+        color: #3f3f79;
+    }
+    .price-number {
+        font-weight: bold;
+        font-size: 2.4rem;
+    }
+    .price-type {
+        font-size: 1.2rem;
+        color: #3f3f79;
+    }
+    .red {
+        color: #c81818;
+    }
+    .green {
+        color: #27bda0;
+    }
+}

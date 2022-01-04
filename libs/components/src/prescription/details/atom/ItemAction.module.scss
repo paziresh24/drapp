@@ -1,0 +1,12 @@
+.actions {
+    display: flex;
+    grid-gap: 1rem;
+    align-items: center;
+
+    .action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+}

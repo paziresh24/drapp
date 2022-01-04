@@ -1,0 +1,309 @@
+.userInfoWrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    @include gap(1rem, false);
+    padding: 3rem;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0px 14px 34px rgba(216, 223, 228, 0.39);
+
+    .info {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        @include gap(1rem);
+        cursor: pointer;
+
+        img {
+            width: 10rem;
+            height: 10rem;
+            border: 4px solid rgba(255, 255, 255, 0.12);
+            border-radius: 100%;
+        }
+
+        .user-name {
+            font-weight: 500;
+            font-size: 1.8rem;
+            color: #3f4079;
+            display: flex;
+            align-items: center;
+            @include gap;
+        }
+    }
+
+    .user-profile-complete-score {
+        width: 100%;
+        font-size: 1.2rem;
+        font-weight: bold;
+
+        .status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+                color: #3f4079;
+            }
+
+            svg {
+                cursor: pointer;
+            }
+        }
+
+        .status-bar {
+            margin-top: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            @include gap(0.5rem);
+            width: 100%;
+            // background-color: rgba(255, 255, 255, 0.5);
+            background-color: #cedbe6;
+
+            border-radius: 2rem;
+            overflow: hidden;
+
+            span {
+                height: 0.5rem;
+                border-radius: 1rem;
+                background: #27bda0;
+            }
+        }
+    }
+}
+
+.support-wrapper {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    padding: 4rem;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    background-color: #3f4079;
+    min-width: 28rem;
+
+    > * {
+        margin: 0 0.7rem;
+    }
+
+    :first-child {
+        margin-right: 0;
+    }
+
+    :last-child {
+        margin-left: 0;
+    }
+
+    .support-content {
+        display: flex;
+        flex-direction: column;
+
+        > * {
+            margin: 0.1rem 0;
+            color: rgba(255, 255, 255, 0.56);
+        }
+
+        :first-child {
+            margin-top: 0;
+        }
+
+        :last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.sidebar-open {
+    overflow: hidden;
+}
+
+.badge {
+    .red {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: #ff5252;
+        font-size: 1.6rem;
+        margin-left: 0.35rem;
+        font-weight: 400;
+        color: #fff;
+        line-height: 1;
+        border-radius: 0.5rem;
+        padding: 0 0.5rem;
+        min-width: 2rem;
+        min-height: 2rem;
+    }
+}
+
+.bannerWrapper {
+    width: 100%;
+    padding: 2.5rem;
+    padding-top: 0;
+    filter: drop-shadow(0px 5px 32px rgba(67, 109, 218, 0.5));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectWrapper {
+    width: 100%;
+
+    input {
+        height: 5rem;
+        border: 1px solid #91a5b6;
+    }
+}
+
+.centerSelectInput {
+    background: rgba(224, 233, 239, 0.63);
+    height: 4.5rem;
+    width: 100%;
+    min-width: 100%;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    justify-content: space-between;
+
+    .chevronIcon {
+        margin-left: 1rem;
+    }
+
+    span {
+        width: 100%;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
+
+    * {
+        user-select: unset !important;
+    }
+}
+
+.selectCenter {
+    position: relative;
+    width: 100%;
+}
+
+.selectWrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    top: 5rem;
+    width: 100%;
+    box-shadow: 0 11px 40px 0 #697b8940;
+    border-radius: 1rem;
+    padding: 1rem;
+    overflow: hidden;
+    z-index: 999;
+
+    & > * {
+        margin: 0.5rem 0;
+    }
+
+    & > :first-child {
+        margin-top: 0;
+    }
+
+    & > :last-child {
+        margin-bottom: 0;
+    }
+
+    .centerItem {
+        display: flex;
+        height: 7rem;
+        align-items: center;
+        font-weight: 500;
+        padding: 2rem;
+        border-radius: 0.8rem;
+        cursor: pointer;
+        border: 1px solid rgba(224, 233, 239, 0.63);
+        justify-content: space-between;
+
+        span {
+            user-select: unset !important;
+        }
+
+        &.select {
+            background: rgba(224, 233, 239, 0.63);
+        }
+
+        & > * {
+            margin: 0 0.5rem;
+        }
+
+        & > :first-child {
+            margin-right: 0;
+        }
+
+        & > :last-child {
+            margin-left: 0;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+
+            svg {
+                min-width: 3rem;
+            }
+
+            & > * {
+                margin: 0 0.5rem;
+            }
+
+            & > :first-child {
+                margin-right: 0;
+            }
+
+            & > :last-child {
+                margin-left: 0;
+            }
+        }
+
+        .centerDetails {
+            display: flex;
+            flex-direction: column;
+
+            .centerName {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 0.3rem;
+                width: auto;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+            }
+
+            .centerAddress {
+                font-size: 1.2rem;
+                font-weight: 500;
+                width: auto;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+            }
+        }
+
+        .activeOfficeType {
+            color: #fff;
+            background-color: #27bda0;
+            box-shadow: 0px 8px 35px rgba(39, 189, 159, 0.281);
+            padding: 0.6rem 2rem;
+            border-radius: 100rem;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+    }
+}

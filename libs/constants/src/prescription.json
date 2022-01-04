@@ -1,0 +1,40 @@
+{
+    "providers": {
+        "tamin": "tamin",
+        "salamat": "salamat"
+    },
+    "toastType": {
+        "I": "info",
+        "E": "error",
+        "W": "warning"
+    },
+    "drugTypes": {
+        "A": "سی‌سی",
+        "I": "واحد",
+        "G": "قطره",
+        "C": "عدد",
+        "T": "عدد",
+        "R": "پاف",
+        "O": "",
+        "S": "سی‌سی",
+        "Z": "بار"
+    },
+    "excludes": {
+        "addButton": {
+            "tamin": ["10", "09", "15"],
+            "salamat": []
+        },
+        "drugs": {
+            "tamin": [],
+            "salamat": [7]
+        },
+        "visitItem": {
+            "tamin": ["16"],
+            "salamat": []
+        }
+    },
+    "drugServices": {
+        "tamin": [1],
+        "salamat": [1]
+    }
+}

@@ -1,0 +1,27 @@
+.turn-box {
+    background: #fff;
+    box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+    border-radius: 8px;
+    padding: 0 2.5rem;
+    min-height: 16rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    @include gap(1.5rem, false);
+    position: relative;
+    overflow: hidden;
+
+    .title {
+        font-weight: bold;
+        font-size: 1.6rem;
+        color: #3f3f79;
+    }
+    .sub-title {
+        font-size: 2.4rem;
+        color: #3f3f79;
+        line-height: 1;
+        font-weight: 500;
+    }
+}

@@ -1,0 +1,84 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    @include gap(1.5rem, false);
+    color: #3f3f79;
+    max-width: 768px;
+    margin: auto;
+    margin-top: 5rem;
+    padding: 0 15px;
+
+    .inner {
+        background: #fff;
+        box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+        border-radius: 0.6rem;
+        padding: 1rem;
+        z-index: 99;
+        display: flex;
+        flex-direction: column;
+        color: #3f3f79;
+        @include gap(1rem, false);
+
+        .complaint-card {
+            background: #f3f7fa;
+            border-radius: 1rem;
+            padding: 1rem;
+            min-height: 14.5rem;
+            position: relative;
+
+            .description {
+                font-weight: 500;
+            }
+
+            .date-time-wrap {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                bottom: 0.5rem;
+                left: 1rem;
+                span {
+                    line-height: normal;
+                    margin: 0 0.25rem;
+                }
+            }
+        }
+    }
+
+    .badge-wrap {
+        display: flex;
+        @include gap;
+
+        .badge {
+            user-select: none;
+            box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 0.6rem;
+            align-items: center;
+            color: #3f4079c7;
+            font-size: 1.6rem;
+            font-weight: 500;
+            display: flex;
+            z-index: 99;
+            width: min-content;
+            white-space: nowrap;
+
+            .red {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                background: #ff5252;
+                font-size: 1.6rem;
+                font-weight: 400;
+                color: #fff;
+                line-height: 1;
+                border-radius: 0.5rem;
+                padding: 0 0.5rem;
+                min-width: 2rem;
+                min-height: 2.25rem;
+                margin-right: 1rem;
+            }
+        }
+    }
+}

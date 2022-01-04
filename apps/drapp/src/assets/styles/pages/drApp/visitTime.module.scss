@@ -1,0 +1,10 @@
+#visitTime {
+    display: flex;
+    flex-direction: column;
+    @include gap(1rem, false);
+    background: #fff;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: #3f3f79;
+}

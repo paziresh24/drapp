@@ -1,0 +1,109 @@
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 9999999;
+    transition: all 0.3s;
+
+    > * {
+        margin: 1.5rem 0;
+    }
+
+    &.blur {
+        backdrop-filter: blur(3px);
+        background: rgba(14, 22, 27, 0.596);
+
+        * {
+            stroke: #fff;
+        }
+    }
+
+    .wrapper {
+        display: inline-block;
+        position: relative;
+        width: 85px;
+        height: 85px;
+
+        > .dot {
+            position: absolute;
+            top: 33px;
+            width: 15px;
+            height: 15px;
+            background-color: #3f4079;
+            border-radius: 50%;
+            animation-duration: 0.6s;
+            animation-iteration-count: infinite;
+
+            &:nth-child(1) {
+                left: 8px;
+                animation-name: dot1;
+            }
+            &:nth-child(2) {
+                left: 8px;
+                animation-name: dot2;
+            }
+            &:nth-child(3) {
+                left: 32px;
+                animation-name: dot2;
+            }
+            &:nth-child(4) {
+                left: 56px;
+                animation-name: dot3;
+            }
+        }
+    }
+}
+
+:global {
+    .fade-loading-exit-active {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+    .fade-loading-exit-done {
+        display: none;
+    }
+}
+
+@keyframes dot1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes dot2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+@keyframes dot3 {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+.open-modal {
+    overflow: hidden;
+    // padding-right: 15px;
+}
+
+.brandName {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-top: -0.5rem;
+    user-select: none;
+}

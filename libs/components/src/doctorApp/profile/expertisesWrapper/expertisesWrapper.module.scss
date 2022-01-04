@@ -1,0 +1,28 @@
+.expertises_row {
+    display: flex;
+    > * {
+        margin: 0 0.5rem;
+    }
+    > :first-child {
+        margin-right: 0;
+        // width: 20rem;
+    }
+    > :last-child {
+        margin-left: 0;
+    }
+}
+
+.confirmModal-row {
+    display: flex;
+    align-items: center;
+
+    > * {
+        margin: 0 0.5rem;
+    }
+    > :first-child {
+        margin-right: 0;
+    }
+    > :last-child {
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,140 @@
+.itemsWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+    position: relative;
+    padding-bottom: 9rem;
+
+    @media screen and (min-width: 426px) {
+        height: 22rem;
+        min-height: 22rem;
+    }
+
+    .item {
+        margin: 0.5rem 0;
+        border: 1px solid #68789033;
+        border-radius: 0.8rem;
+        padding: 1.5rem;
+        font-size: 1.4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        .itemInfo {
+            opacity: 0.6;
+        }
+    }
+
+    > :first-child {
+        margin-top: 0;
+    }
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+.confirmModal-row {
+    display: flex;
+    grid-gap: 1rem;
+}
+
+.actionsWrapper {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+//
+
+.cbx {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    display: flex;
+}
+.cbx > span {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translate3d(0, 0, 0);
+    margin-left: 1rem;
+}
+.cbx > span:first-child {
+    position: relative;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transform: scale(1);
+    vertical-align: middle;
+    border: 1px solid #b9b8c3;
+    transition: all 0.2s ease;
+}
+.cbx > span:first-child svg {
+    position: absolute;
+    z-index: 1;
+    top: 7px;
+    left: 5px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 16px;
+    stroke-dashoffset: 16px;
+    transition: all 0.3s ease;
+    transition-delay: 0.1s;
+    transform: translate3d(0, 0, 0);
+}
+.cbx > span:first-child:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #119e87;
+    display: block;
+    transform: scale(0);
+    opacity: 1;
+    border-radius: 50%;
+    transition-delay: 0.2s;
+}
+.cbx > span:last-child {
+    margin-left: 8px;
+}
+.cbx > span:last-child:after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: #b9b8c3;
+    transform-origin: 0 0;
+    transform: scaleX(0);
+}
+.cbx:hover > span:first-child {
+    border-color: #119e8783;
+}
+
+.inp-cbx:checked + .cbx > span:first-child {
+    border-color: #119e87;
+    background: #119e87;
+    animation: check 0.6s ease;
+}
+.inp-cbx:checked + .cbx > span:first-child svg {
+    stroke-dashoffset: 0;
+}
+.inp-cbx:checked + .cbx > span:first-child:before {
+    transform: scale(2.2);
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+@keyframes check {
+    50% {
+        transform: scale(1.2);
+    }
+}

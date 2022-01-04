@@ -1,0 +1,16 @@
+.wrapper {
+   width: 20%;
+   height: 100%;
+   border-left: 1px solid rgba(63, 63, 121, 0.161);
+}
+
+.titleBar {
+   height: 6rem;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0 2rem;
+   background-color: #fff;
+   border-bottom: 1px solid rgba(63, 63, 121, 0.161);
+   font-weight: 500;
+}

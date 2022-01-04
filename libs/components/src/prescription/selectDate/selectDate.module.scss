@@ -1,0 +1,46 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 1rem;
+    width: 100%;
+
+    &.simple {
+        .input {
+            border: 0;
+            height: 2rem;
+            padding: 0;
+            background-color: transparent;
+            border: 1px solid rgba(145, 165, 182, 0.35) !important;
+            padding: 1.5rem 1rem;
+        }
+    }
+
+    .input {
+        direction: ltr;
+        border: 1px solid #dce7ef;
+        border-radius: 0.6rem;
+        width: 100%;
+        padding: 0 1.5rem;
+        height: 5rem;
+        outline: 0;
+        color: #3f4079;
+        transition: border 0.5s;
+        font-size: 1em;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+}
+
+.label {
+    color: #91a5b6 !important;
+    font-weight: 500;
+}
+
+.calendarWrap {
+    box-shadow: unset !important;
+    margin: 0 auto !important;
+}

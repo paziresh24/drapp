@@ -1,0 +1,91 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    // align-items: center;
+    cursor: pointer;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(145, 165, 182, 0.149);
+    transition: all 0.3s;
+
+    &.selected {
+        background-color: rgba(230, 235, 240, 0.525);
+    }
+
+    &:hover {
+        background-color: rgba(230, 235, 240, 0.525);
+    }
+
+    .type {
+        background-color: rgba(136, 166, 192, 0.302);
+        color: #526d81;
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+    }
+
+    .title {
+        font-size: 0.8em;
+        padding: 0.5rem 1rem;
+        // width: 100%;
+        font-weight: 500;
+        line-height: 3.6rem;
+        // display: inline-block;
+        // direction: ltr;
+        text-align: right;
+        overflow-wrap: anywhere;
+
+        &.ltr {
+            text-align: left;
+            direction: ltr;
+        }
+
+        .name {
+            direction: ltr;
+            text-align: right;
+            overflow-wrap: anywhere;
+            display: inline-block;
+        }
+    }
+
+    .icon {
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        border-top: 1px solid #dce7ef;
+        box-sizing: content-box;
+
+        hr {
+            border: 0;
+            width: 1px;
+            background-color: #dce7ef;
+            height: 100%;
+        }
+
+        .actionButton {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+            grid-gap: 0.5rem;
+            font-size: 0.9em;
+        }
+
+        .actionButtonStar {
+            display: flex;
+            min-width: 5rem;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+            grid-gap: 0.5rem;
+            font-size: 0.9em;
+            opacity: 0.5;
+        }
+    }
+}

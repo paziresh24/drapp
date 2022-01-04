@@ -1,0 +1,21 @@
+.wrapper {
+    @media screen and (max-width: 992px) {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        padding: 1.5rem;
+        transition: all 0.5s ease;
+        transform: translateY(20rem);
+        z-index: 20;
+        background-color: #fff;
+        border-top: 1px solid rgb(232, 236, 240);
+        // box-shadow: 0 -5px 35px rgba(63, 63, 121, 0.055);
+    }
+    width: 100%;
+    display: flex;
+    grid-gap: 1rem;
+}
+
+.show {
+    transform: translateY(0);
+}

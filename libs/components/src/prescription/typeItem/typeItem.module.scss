@@ -1,0 +1,123 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    padding: 1.5rem 2.5rem;
+    box-shadow: 0 5px 35px rgba(63, 63, 121, 0.055);
+    font-size: 0.9em;
+    width: 100%;
+    min-height: 6.5rem;
+    flex-grow: 1;
+    // justify-content: center;
+    cursor: pointer;
+
+    &.selected {
+        opacity: 0.4;
+    }
+
+    &.search {
+        padding: 1.5rem;
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        font-weight: 500;
+
+        .action {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            .showItems {
+                display: flex;
+                align-items: center;
+                margin-left: 1rem;
+                opacity: 0.8;
+                font-weight: 500;
+
+                > * {
+                    margin: 0 0.5rem;
+                }
+
+                :first-child {
+                    margin-right: 0 !important;
+                }
+
+                :last-child {
+                    margin-left: 0 !important;
+                }
+            }
+
+            .actionButton {
+                width: 9rem;
+            }
+        }
+    }
+
+    .items {
+        display: none;
+        flex-direction: column;
+        grid-gap: 0.7rem;
+        padding-top: 1.8rem;
+        width: 100%;
+
+        &.show {
+            display: flex;
+        }
+
+        &.search {
+            padding-top: 0 !important;
+        }
+
+        & .groupItem:last-child {
+            padding-bottom: 0;
+            border-bottom: 0 !important;
+        }
+
+        .groupItem {
+            display: flex;
+            flex-direction: column;
+            grid-gap: 0.7rem;
+            width: 100%;
+            padding-bottom: 1rem;
+            margin-bottom: 0.3rem;
+            border-bottom: 1px solid #d4deed;
+        }
+    }
+}
+
+.item {
+    background-color: #eef2f8;
+    padding: 1rem;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    font-weight: 500;
+
+    .item-text {
+        font-size: 1.35rem;
+    }
+}
+
+.parTarefs-list {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1rem;
+
+    li {
+        background: #eff3f7;
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        height: 5rem;
+        border-radius: 0.8rem;
+    }
+}
+
+.confirmModal-row {
+    display: flex;
+    grid-gap: 1rem;
+}

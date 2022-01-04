@@ -1,0 +1,33 @@
+.wrapper {
+    width: 100%;
+    position: relative;
+
+    .input {
+        width: 100%;
+        padding: 0 1.5rem;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        color: #3f4079;
+        font-weight: 500;
+        cursor: pointer;
+        outline: 0;
+        direction: ltr;
+        text-align: right;
+        border: 1px solid #d3dbe2;
+        border-radius: 0.6rem;
+    }
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.chevronIcon {
+    position: absolute;
+    left: 2rem;
+    transition: transform 150ms ease-in;
+}

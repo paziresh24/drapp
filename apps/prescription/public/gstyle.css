@@ -1,0 +1,7 @@
+div#btn-close-chat {
+    display: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}

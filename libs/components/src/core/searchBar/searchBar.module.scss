@@ -1,0 +1,31 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    @include gap(1rem);
+    width: 100%;
+    border-radius: 0.6rem;
+    z-index: 1;
+    padding-right: 1.5rem;
+    background: #a7b7cf33;
+
+    .input {
+        direction: rtl;
+        background: rgba(255,255,255,0);
+        border: 0;
+        height: 5rem;
+        outline: 0;
+        color: #3f4079;
+        font-size: 0.9em;
+        width: 100%;
+        font-weight: 500;
+
+        &::placeholder {
+            color: #8e92ac;
+        }
+    }
+
+    .icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}

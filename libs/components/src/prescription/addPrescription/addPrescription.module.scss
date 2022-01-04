@@ -1,0 +1,46 @@
+.button {
+    border-radius: 100rem;
+    min-width: 15.5rem;
+    min-height: 5rem;
+    background-color: #27bda0;
+    outline: 0;
+    border: 0;
+    position: fixed;
+    bottom: 7rem;
+    box-shadow: 0 6px 40px #1b9a8273;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 0.8rem;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    transform: translateY(20rem);
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    span {
+        color: #fff;
+        font-size: 1.2em;
+        font-weight: 700;
+    }
+
+    .icon {
+        width: 2rem;
+        height: 2rem;
+        * {
+            fill: #fff;
+        }
+    }
+}
+
+.wrapper {
+    display: grid;
+    grid-gap: 1.5rem;
+}
+
+.show {
+    transform: translateY(0);
+}

@@ -1,0 +1,18 @@
+{
+    "drugs": {
+        "tamin": [79],
+        "salamat": [1]
+    },
+    "lab": {
+        "tamin": [80],
+        "salamat": [2]
+    },
+    "imaging": {
+        "tamin": [81, 83, 84, 85],
+        "salamat": [3]
+    },
+    "others": {
+        "tamin": [82, 86, 87, 88, 89, 90, 91, 92, 93, 95, "others"],
+        "salamat": [4, 5, 6, "others"]
+    }
+}

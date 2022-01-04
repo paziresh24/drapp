@@ -1,0 +1,65 @@
+.wrapper {
+    display: flex;
+    .article {
+        width: 100%;
+        margin-right: auto;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+
+        @media screen and (max-width: 992px) {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+
+            & {
+                width: 100%;
+            }
+        }
+        &.open {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        .inner {
+            flex-grow: 1;
+            overflow: auto;
+            position: relative;
+
+            &.turning {
+                max-width: 100%;
+            }
+        }
+    }
+
+    .inner {
+        flex-grow: 1;
+        height: 100%;
+        overflow: auto;
+        position: relative;
+
+        margin: {
+            left: auto;
+            right: auto;
+        }
+
+        &.full {
+            max-width: 100% !important;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &.prescription {
+            max-width: 100% !important;
+        }
+
+        &.turning {
+            max-width: 100%;
+        }
+        width: 100%;
+    }
+}

@@ -1,0 +1,59 @@
+.confirmModal-col {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1rem;
+
+    .deliverItems {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 1rem;
+        overflow: auto;
+
+        .deliverItem {
+            width: 100%;
+            padding: 1.5rem;
+            border: 1px solid #dce7ef;
+            border-radius: 0.6rem;
+            margin-bottom: 1rem;
+
+            display: flex;
+            flex-direction: column;
+
+            .deliver_name {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+            }
+
+            .deliver_price {
+                display: flex;
+                flex-direction: column;
+
+                > * {
+                    margin: 0.3rem 0;
+                }
+
+                :first-child {
+                    margin-top: 0;
+                }
+
+                :last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .deliverDetails {
+        padding-bottom: 10rem;
+        border-top: 1px solid #dce7ef;
+        padding-top: 1.5rem;
+
+        .deliverDetails_row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+    }
+}

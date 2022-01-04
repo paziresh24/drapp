@@ -1,0 +1,92 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &.disabled {
+        opacity: 0.5;
+    }
+}
+
+.input {
+    all: unset;
+    box-sizing: border-box;
+    cursor: text;
+    border: 1px solid #dce7ef;
+    border-radius: 0.6rem;
+    width: 100%;
+    padding: 0 1rem;
+    height: 5rem;
+    outline: 0;
+    color: #3f4079;
+    transition: border 0.5s;
+    font-size: 1em;
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+// .input::-webkit-outer-spin-button,
+// .input::-webkit-inner-spin-button {
+//     -webkit-appearance: none;
+//     margin: 0;
+// }
+
+// .input[type='number'] {
+//     direction: ltr;
+//     -moz-appearance: textfield;
+// }
+
+.input[type='tel'] {
+    direction: ltr;
+}
+
+.label {
+    position: absolute;
+    right: 1rem;
+    top: 1.2rem;
+    white-space: nowrap;
+    transform: translate(0, 0);
+    transition: transform 120ms ease-in;
+    padding: 0 1rem;
+    color: #91a5b6;
+    font-weight: 500;
+    cursor: text;
+    user-select: none;
+}
+
+.input:focus {
+    border: 1px solid #dce7ef;
+}
+
+.input:not(:placeholder-shown) {
+    border: 1px solid #dce7ef;
+}
+
+.input:not(:placeholder-shown) + .label {
+    transform: translate(1rem, -2.5rem) scale(0.8);
+    background: #fff;
+    cursor: unset;
+    color: #3f3f79;
+}
+
+.input:focus + .label {
+    transform: translate(1rem, -2.5rem) scale(0.8);
+    background: #fff;
+    cursor: unset;
+    color: #3f3f79;
+}
+
+.error {
+    border-color: #ffdad4 !important;
+}
+
+.error + .label {
+    color: #ce7667 !important;
+}
+
+.error-text {
+    font-size: 1.5rem;
+    margin-top: 0.8rem;
+    color: #ce4b33;
+}

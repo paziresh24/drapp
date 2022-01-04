@@ -1,0 +1,17 @@
+.row {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    display: flex;
+
+    .col {
+        display: flex;
+        grid-gap: 1rem;
+        width: 50%;
+
+        .title {
+            font-weight: 500;
+            opacity: 0.6;
+            white-space: nowrap;
+        }
+    }
+}

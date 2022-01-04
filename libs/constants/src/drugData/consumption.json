@@ -1,0 +1,251 @@
+{
+    "tamin": [
+        {
+            "id": 232,
+            "name": "يک بار در روز",
+            "latinName": null
+        },
+        {
+            "id": 233,
+            "name": "دو بار در روز",
+            "latinName": null
+        },
+        {
+            "id": 234,
+            "name": "سه بار در روز",
+            "latinName": null
+        },
+        {
+            "id": 235,
+            "name": "چهار بار در روز",
+            "latinName": null
+        },
+        {
+            "id": 236,
+            "name": "هر 4 ساعت",
+            "latinName": null
+        },
+        {
+            "id": 237,
+            "name": "هر 8 ساعت",
+            "latinName": null
+        },
+        {
+            "id": 238,
+            "name": "هر 6 ساعت",
+            "latinName": null
+        },
+        {
+            "id": 239,
+            "name": "هر 12 ساعت",
+            "latinName": null
+        },
+        {
+            "id": 240,
+            "name": "يک روز در ميان",
+            "latinName": null
+        },
+        {
+            "id": 241,
+            "name": "هر 24 ساعت",
+            "latinName": null
+        },
+        {
+            "id": 242,
+            "name": "قبل از خواب",
+            "latinName": null
+        },
+        {
+            "id": 243,
+            "name": "هر روز صبح",
+            "latinName": null
+        },
+        {
+            "id": 244,
+            "name": "هفته اي يک بار",
+            "latinName": null
+        },
+        {
+            "id": 245,
+            "name": "هر دو هفته يک بار",
+            "latinName": null
+        },
+        {
+            "id": 246,
+            "name": "هر سه هفته يک بار",
+            "latinName": null
+        },
+        {
+            "id": 247,
+            "name": "هر چهار هفته يک بار",
+            "latinName": null
+        },
+        {
+            "id": 248,
+            "name": "در صورت نياز",
+            "latinName": null
+        },
+        {
+            "id": 249,
+            "name": "طبق دستور",
+            "latinName": null
+        },
+        {
+            "id": 250,
+            "name": "ماهي يک بار",
+            "latinName": null
+        },
+        {
+            "id": 251,
+            "name": "سالي يک بار",
+            "latinName": null
+        },
+        {
+            "id": 252,
+            "name": "ساير",
+            "latinName": null
+        }
+    ],
+    "salamat": [
+        {
+            "id": 1,
+            "name": "هر 2 ساعت",
+            "latinName": "Every two hours"
+        },
+        {
+            "id": 2,
+            "name": "هر 3 ساعت",
+            "latinName": "Every three hours"
+        },
+        {
+            "id": 3,
+            "name": "هر 4 ساعت",
+            "latinName": "Every four hours"
+        },
+        {
+            "id": 4,
+            "name": "هر 6 ساعت",
+            "latinName": "Every six hours"
+        },
+        {
+            "id": 5,
+            "name": "هر 8 ساعت",
+            "latinName": "Every eight hours"
+        },
+        {
+            "id": 6,
+            "name": "هر 12 ساعت",
+            "latinName": "Every twelve hours"
+        },
+        {
+            "id": 7,
+            "name": "هر 36 ساعت",
+            "latinName": "Every thirty six hours"
+        },
+        {
+            "id": 8,
+            "name": "روزی یک عدد",
+            "latinName": "Once a day"
+        },
+        {
+            "id": 9,
+            "name": "یک روز در میان",
+            "latinName": "Every other day"
+        },
+        {
+            "id": 10,
+            "name": "یک شب در میان",
+            "latinName": "Every other night"
+        },
+        {
+            "id": 11,
+            "name": "2 بار در روز",
+            "latinName": "Twice a day"
+        },
+        {
+            "id": 12,
+            "name": "3 بار در روز",
+            "latinName": "Three times a day"
+        },
+        {
+            "id": 13,
+            "name": "4 بار در روز",
+            "latinName": "Four times a day"
+        },
+        {
+            "id": 14,
+            "name": "هر 10 روز",
+            "latinName": "Every ten days"
+        },
+        {
+            "id": 15,
+            "name": "هر 28 روز",
+            "latinName": "Every twenty eight days"
+        },
+        {
+            "id": 16,
+            "name": "هر ساعت",
+            "latinName": "Every hour"
+        },
+        {
+            "id": 17,
+            "name": "هر هفته",
+            "latinName": "Every week"
+        },
+        {
+            "id": 18,
+            "name": "هر ماه",
+            "latinName": "Every month"
+        },
+        {
+            "id": 19,
+            "name": "هر سال",
+            "latinName": "Every year"
+        },
+        {
+            "id": 20,
+            "name": "هر صبح",
+            "latinName": "Every morning"
+        },
+        {
+            "id": 21,
+            "name": "هر شب",
+            "latinName": "Every night"
+        },
+        {
+            "id": 22,
+            "name": "هر دو هفته",
+            "latinName": "Every other week"
+        },
+        {
+            "id": 23,
+            "name": "هر سه هفته",
+            "latinName": "Every three weeks"
+        },
+        {
+            "id": 24,
+            "name": "دو روز در هفته",
+            "latinName": "Twice a week"
+        },
+        {
+            "id": 25,
+            "name": "هر سه ماه",
+            "latinName": "Every three months"
+        },
+        {
+            "id": 26,
+            "name": "هر شش ماه",
+            "latinName": "Every six months"
+        },
+        {
+            "id": 27,
+            "name": "پنج روز در هفته",
+            "latinName": "Five days a week"
+        },
+        {
+            "id": 29,
+            "name": "در مواقع لازم",
+            "latinName": "As needed"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+@include mixin-font('IRANSans', 'IRANSansWeb(FaNum)_UltraLight', 100, $path-fonts);
+@include mixin-font('IRANSans', 'IRANSansWeb(FaNum)_Light', 300, $path-fonts);
+@include mixin-font('IRANSans', 'IRANSansWeb(FaNum)', 400, $path-fonts);
+@include mixin-font('IRANSans', 'IRANSansWeb(FaNum)_Medium', 500, $path-fonts);
+@include mixin-font('IRANSans', 'IRANSansWeb(FaNum)_Bold', 700, $path-fonts);
+@include mixin-font('IRANSans', 'IRANSansWeb(FaNum)_Black', 900, $path-fonts);

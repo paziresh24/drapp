@@ -1,0 +1,29 @@
+.datepicker {
+    cursor: pointer;
+    outline: 0;
+    background: #fff;
+    border-radius: 0.6rem;
+    border: none;
+    padding: 0 1.5rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // @include gap(2rem);
+    grid-gap: 1rem;
+    color: #3f3f79;
+    font-weight: bold;
+    font-size: 1.4rem;
+    width: 100%;
+    &.low-space {
+        width: fit-content;
+        @include gap(0.75rem);
+    }
+    &.border {
+        border: 1px solid rgba(63, 63, 121, 0.15);
+    }
+}
+.calendarWrap {
+    box-shadow: unset !important;
+    margin: 0 auto !important;
+}

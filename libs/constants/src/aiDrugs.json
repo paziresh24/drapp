@@ -1,0 +1,1078 @@
+{
+    "زنان": [
+        {
+            "name": "Clotrimazole",
+            "fa_name": "کلوتریمازول",
+            "shape": "Vaginal oint&Supp/Topical oint",
+            "brand": null
+        },
+        {
+            "name": "Clindamycin",
+            "fa_name": "کلیندامایسین",
+            "shape": "Vaginal oint&Supp",
+            "brand": "Dalavag"
+        },
+        {
+            "name": "Vitamin D3",
+            "fa_name": "ویتامین د 3",
+            "shape": "Pearl",
+            "brand": null
+        },
+        {
+            "name": "Prenatal",
+            "fa_name": "پریناتال",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Povidone-iodine",
+            "fa_name": "پوویدون آیداین",
+            "shape": "Vaginal sol",
+            "brand": null
+        },
+        {
+            "name": "Fluconazole",
+            "fa_name": "فلوکونازول",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Conjugated estrogens",
+            "fa_name": "استروژن کونژوگه",
+            "shape": "Oint",
+            "brand": null
+        },
+        {
+            "name": "Progesterone",
+            "fa_name": "پروژسترون",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "HCG",
+            "fa_name": "اچ سی جی",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "HMG",
+            "fa_name": "اچ ام جی",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "Zinc",
+            "fa_name": "زینک ",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Iron",
+            "fa_name": "آهن",
+            "shape": "Tab",
+            "brand": "Ferrofort gyn"
+        },
+        {
+            "name": "Rokin",
+            "fa_name": "روکین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Contraceptive LD",
+            "fa_name": "ال دی",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Contraceptive HD",
+            "fa_name": "اچ دی",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Triptorelin",
+            "fa_name": "تریپتورلین",
+            "shape": "Amp",
+            "brand": "Diphereline"
+        },
+        {
+            "name": "Betamethasone",
+            "fa_name": "بتامتازون",
+            "shape": "Amp/Topical oint",
+            "brand": null
+        },
+        {
+            "name": "Itraconazole",
+            "fa_name": "ایتراکونازول",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": " Calcium ",
+            "fa_name": "کلسیم ",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Diclofenac",
+            "fa_name": "دیکلوفناک",
+            "shape": "Cap/Supp",
+            "brand": "Voltaren"
+        },
+        {
+            "name": "Ibuprofen",
+            "fa_name": "ایبوپروفن",
+            "shape": "Tab/Cap",
+            "brand": "Gelofen"
+        },
+        {
+            "name": "Mefenamic acid",
+            "fa_name": "مفنامیک اسید",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Tranexamic acid",
+            "fa_name": "ترانگزامیک اسید",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Prime rose",
+            "fa_name": "روغن گل مغربی",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Ondansetron",
+            "fa_name": "اندانسترون",
+            "shape": "Tab/Amp",
+            "brand": "Demitron"
+        },
+        {
+            "name": "Metoclopramide",
+            "fa_name": "متوکلوپرامید",
+            "shape": "Tab/Amp",
+            "brand": "Plasil"
+        },
+        {
+            "name": "Vitamin B6",
+            "fa_name": "ب 6",
+            "shape": "Tab/Amp",
+            "brand": null
+        },
+        {
+            "name": "Hydrocortisone",
+            "fa_name": "هیدرکورتیزون",
+            "shape": "Oint",
+            "brand": null
+        },
+        {
+            "name": "Medroxyprogesterone",
+            "fa_name": "مدروکسی پروژسترون",
+            "shape": "Tab/Amp",
+            "brand": null
+        }
+    ],
+    "اطفال": [
+        {
+            "name": "Acetaminophen",
+            "fa_name": "استامینوفن",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Diphenhydramine",
+            "fa_name": "دیفن هیدرامین",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Cefixime",
+            "fa_name": "سفیکسیم",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Amoxicillin",
+            "fa_name": "آموکسی سیلین",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Azithromycin",
+            "fa_name": "آزیترومایسین",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Amoxicillin/Clavulanic acid",
+            "fa_name": "آموکسی سیلین+کلاوولانیک اسید",
+            "shape": "Syr",
+            "brand": "Co-Amoxicluv"
+        },
+        {
+            "name": "Iron",
+            "fa_name": "آهن",
+            "shape": "Drop",
+            "brand": null
+        },
+        {
+            "name": "Vitamin A+D",
+            "fa_name": "ویتامین آ+د",
+            "shape": "Drop",
+            "brand": "Adokid"
+        },
+        {
+            "name": " Calcium ",
+            "fa_name": "کلسیم ",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Multi vitamin",
+            "fa_name": "مولتی ویتامین",
+            "shape": "Drop/Syr",
+            "brand": null
+        },
+        {
+            "name": "Esomeprazole",
+            "fa_name": "اس امپرازول",
+            "shape": "Cap/Sachet",
+            "brand": "Ezonium"
+        },
+        {
+            "name": "Metronidazole",
+            "fa_name": "مترونیدازول",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Trimethoprim / Sulfamethoxazole",
+            "fa_name": "کوتریموکسازول",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Pedilact",
+            "fa_name": "پدی لاکت",
+            "shape": "Drop",
+            "brand": null
+        },
+        {
+            "name": "Biolact",
+            "fa_name": "بایولاکت",
+            "shape": "Drop",
+            "brand": null
+        },
+        {
+            "name": "Colic aid",
+            "fa_name": "کولیک اید",
+            "shape": "Drop",
+            "brand": null
+        },
+        {
+            "name": "Colic Ez",
+            "fa_name": "کولیک از",
+            "shape": "Drop",
+            "brand": null
+        },
+        {
+            "name": "Gripe mixture",
+            "fa_name": "گرایپ میکسچر",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Gripe water",
+            "fa_name": "گرایپ واتر",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Cefalexin",
+            "fa_name": "سفالکسین",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Cetirizine",
+            "fa_name": "ستیریزین",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Ketotifen",
+            "fa_name": "کتوتیفن",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Pediatric grippe",
+            "fa_name": "سرماخوردگی کودکان",
+            "shape": "Syr",
+            "brand": "Corizan"
+        },
+        {
+            "name": "Sulfacetamide",
+            "fa_name": "سولفاستامید",
+            "shape": "Eye drop",
+            "brand": "Bactimide"
+        }
+    ],
+    "چشم": [
+        {
+            "name": "Artificial tear",
+            "fa_name": "اشک مصنوعی",
+            "shape": "Eye drop",
+            "brand": "Eye gel"
+        },
+        {
+            "name": "Artificial tear",
+            "fa_name": "اشک مصنوعی",
+            "shape": "Eye drop",
+            "brand": "Hye"
+        },
+        {
+            "name": "Artificial tear",
+            "fa_name": "اشک مصنوعی",
+            "shape": "Eye drop",
+            "brand": "Snow tears"
+        },
+        {
+            "name": "Artificial tear",
+            "fa_name": "اشک مصنوعی",
+            "shape": "Eye drop",
+            "brand": "Artipic"
+        },
+        {
+            "name": "Artificial tear",
+            "fa_name": "اشک مصنوعی",
+            "shape": "Eye drop",
+            "brand": "Artipic advanced"
+        },
+        {
+            "name": "Artificial tear",
+            "fa_name": "اشک مصنوعی",
+            "shape": "Eye drop",
+            "brand": "Artelac"
+        },
+        {
+            "name": "Artificial tear",
+            "fa_name": "اشک مصنوعی",
+            "shape": "Eye drop",
+            "brand": "Artelac advanced"
+        },
+        {
+            "name": "Artificial tear",
+            "fa_name": "اشک مصنوعی",
+            "shape": "Eye drop",
+            "brand": "Tearlose"
+        },
+        {
+            "name": "Ciprofloxacin",
+            "fa_name": "سیپروفلوکساسین",
+            "shape": "Eye drop",
+            "brand": "Ciplex"
+        },
+        {
+            "name": "Diclofenac",
+            "fa_name": "دیکلوفناک",
+            "shape": "Eye drop",
+            "brand": null
+        },
+        {
+            "name": "Naphazoline",
+            "fa_name": "نفازولین",
+            "shape": "Eye drop",
+            "brand": null
+        },
+        {
+            "name": "Naphazoline/Antazoline",
+            "fa_name": "نفازولین/آنتازولین",
+            "shape": "Eye drop",
+            "brand": null
+        },
+        {
+            "name": "Chloramphenicol",
+            "fa_name": "کلرامفنیکل",
+            "shape": "Eye drop",
+            "brand": "Chlobiotic"
+        },
+        {
+            "name": "Betamethasone",
+            "fa_name": "بتامتازون",
+            "shape": "Eye drop/Ophthalmic oint",
+            "brand": null
+        },
+        {
+            "name": "Dorzolamide",
+            "fa_name": "دورزولامید",
+            "shape": "Eye drop",
+            "brand": null
+        },
+        {
+            "name": "Pilocarpine",
+            "fa_name": "پیلوکارپین",
+            "shape": "Eye drop",
+            "brand": null
+        },
+        {
+            "name": "Timolol",
+            "fa_name": "تیمولول",
+            "shape": "Eye drop",
+            "brand": null
+        },
+        {
+            "name": "Latanoprost",
+            "fa_name": "لاتانوپروست",
+            "shape": "Eye drop",
+            "brand": "Xalatan"
+        },
+        {
+            "name": "Dorzolamide / Timolol",
+            "fa_name": "دورزولامید/تیمولول",
+            "shape": "Eye drop",
+            "brand": "Co-Biosopt"
+        },
+        {
+            "name": "Fluorometholone",
+            "fa_name": "فلورومتولون",
+            "shape": "Eye drop",
+            "brand": "Flucort"
+        },
+        {
+            "name": "Hydrocortisone",
+            "fa_name": "هیدر,کورتیزون",
+            "shape": "Ophtalmic oint",
+            "brand": null
+        },
+        {
+            "name": "Ketotifen",
+            "fa_name": "کتوتیفن",
+            "shape": "Eye drop",
+            "brand": null
+        },
+        {
+            "name": "Sulfacetamide",
+            "fa_name": "سولفاستامید",
+            "shape": "Eye drop",
+            "brand": "Bactimide"
+        }
+    ],
+    "جراحی": [
+        {
+            "name": "Anaheal",
+            "fa_name": "آناهیل",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Cefalexin",
+            "fa_name": "سفالکسین",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Ciprofloxacin",
+            "fa_name": "سیپروفلوکساسین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Metronidazole",
+            "fa_name": "مترونیدازول",
+            "shape": "Tab/Vial",
+            "brand": null
+        },
+        {
+            "name": "Levofloxacin",
+            "fa_name": "لووفلوکساسین",
+            "shape": "Tab",
+            "brand": "Tavanex"
+        },
+        {
+            "name": "Diclofenac",
+            "fa_name": "دیکلوفناک",
+            "shape": "Cap/Supp",
+            "brand": "Voltaren"
+        },
+        {
+            "name": "Celecoxib",
+            "fa_name": "سلکوکسیب",
+            "shape": "Cap",
+            "brand": "Celebrex"
+        },
+        {
+            "name": "Avodin",
+            "fa_name": "آوودین",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Cefixime",
+            "fa_name": "سفیکسیم",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Ketorolac",
+            "fa_name": "کتورولاک",
+            "shape": "Tab/Amp",
+            "brand": null
+        },
+        {
+            "name": "Meloxicam",
+            "fa_name": "ملوکسیکام",
+            "shape": "Tab",
+            "brand": "Mobic"
+        },
+        {
+            "name": "Cefazolin",
+            "fa_name": "سفازولین",
+            "shape": "Vial",
+            "brand": null
+        },
+        {
+            "name": "Ceftriaxone",
+            "fa_name": "سفتریاکسون",
+            "shape": "Vial",
+            "brand": null
+        }
+    ],
+    "اورتوپدی": [
+        {
+            "name": " Calcium D",
+            "fa_name": "کلسیم دی",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Calcium+Magnesium+Zinc",
+            "fa_name": "کلسیم منیزیم زینک",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Vitamin D3",
+            "fa_name": "ویتامین د 3",
+            "shape": "Pearl",
+            "brand": null
+        },
+        {
+            "name": "Zinc",
+            "fa_name": "زینک ",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Iron",
+            "fa_name": "آهن",
+            "shape": "Tab",
+            "brand": "Ferrofort gyn"
+        },
+        {
+            "name": "Gabapentin",
+            "fa_name": "گاباپنتین",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Pregabalin",
+            "fa_name": "پرگابالین",
+            "shape": "Tab/Cap",
+            "brand": null
+        },
+        {
+            "name": "Naproxen",
+            "fa_name": "ناپروکسن",
+            "shape": "Tab/Supp",
+            "brand": null
+        },
+        {
+            "name": "Meloxicam",
+            "fa_name": "ملوکسیکام",
+            "shape": "Tab",
+            "brand": "Mobic"
+        },
+        {
+            "name": "Diclofenac",
+            "fa_name": "دیکلوفناک",
+            "shape": "Cap/Supp",
+            "brand": "Voltaren"
+        },
+        {
+            "name": "Methotrexate",
+            "fa_name": "متوترکسات",
+            "shape": "Tab/Amp",
+            "brand": "Ebetrex"
+        },
+        {
+            "name": "Glucosamine",
+            "fa_name": "مکمل های گلوکزامین",
+            "shape": "Tab/Cap",
+            "brand": null
+        },
+        {
+            "name": "Hyaluronic acid",
+            "fa_name": "هیالورونیک اسید",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "Indomethacin",
+            "fa_name": "ایندومتاسین",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Methylprednisolone",
+            "fa_name": "متیل پردنیزولون",
+            "shape": "Amp",
+            "brand": "Depomedrol"
+        },
+        {
+            "name": "Alendronate",
+            "fa_name": "آلندرونیت",
+            "shape": "Tab",
+            "brand": "Osteofos"
+        },
+        {
+            "name": "Avodin",
+            "fa_name": "آوودین",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Celecoxib",
+            "fa_name": "سلکوکسیب",
+            "shape": "Cap",
+            "brand": "Celebrex"
+        },
+        {
+            "name": "Ketorolac",
+            "fa_name": "کتورولاک",
+            "shape": "Tab/Amp",
+            "brand": null
+        }
+    ],
+    "عمومی": [
+        {
+            "name": "Adult cold",
+            "fa_name": "سرماخوردگی بزرگسالان",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Azithromycin",
+            "fa_name": "آزیترومایسین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Amoxicillin",
+            "fa_name": "آموکسی سیلین",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Diphenhydramine",
+            "fa_name": "دیفن هیدرامین",
+            "shape": "Syr",
+            "brand": null
+        },
+        {
+            "name": "Penicillin",
+            "fa_name": "پنی سیلین",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "Amoxicillin/Clavulanic acid",
+            "fa_name": "آموکسی سیلین+کلاوولانیک اسید",
+            "shape": "Tab",
+            "brand": "Co-Amoxicluv"
+        },
+        {
+            "name": "Omeprazole",
+            "fa_name": "امپرازول",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Betamethasone",
+            "fa_name": "بتامتازون",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "Dexamethasone",
+            "fa_name": "دگزامتازون",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "Sodium chloride",
+            "fa_name": "سدیم کلراید",
+            "shape": "Serum",
+            "brand": null
+        },
+        {
+            "name": "Normal saline",
+            "fa_name": "نرمال سالین",
+            "shape": "Serum",
+            "brand": null
+        },
+        {
+            "name": "Dextrose saline",
+            "fa_name": "دکستروز سالین",
+            "shape": "Serum",
+            "brand": null
+        },
+        {
+            "name": "Hyoscine",
+            "fa_name": "هیوسین",
+            "shape": "Tab/Amp",
+            "brand": null
+        },
+        {
+            "name": "Acetaminophen",
+            "fa_name": "استامینوفن",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Diphenoxylate",
+            "fa_name": "دیفنوکسیلات",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Metoclopramide",
+            "fa_name": "متوکلوپرامید",
+            "shape": "Tab/Amp",
+            "brand": "Plasil"
+        },
+        {
+            "name": "Ondansetron",
+            "fa_name": "اندانسترون",
+            "shape": "Tab/Amp",
+            "brand": "Demitron"
+        },
+        {
+            "name": "B complex",
+            "fa_name": "ویتامین ب کمپلکس",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "B 12",
+            "fa_name": "ویتامین ب 12",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "Neurobion",
+            "fa_name": "ویتامین ب 1+ب 6+ ب 12",
+            "shape": "Amp",
+            "brand": "نوروبیون"
+        },
+        {
+            "name": "Ceftriaxone",
+            "fa_name": "سفتریاکسون",
+            "shape": "Vial",
+            "brand": null
+        },
+        {
+            "name": "Chlorphenamine",
+            "fa_name": "کلرفنیرامین",
+            "shape": "Tab/Amp",
+            "brand": null
+        },
+        {
+            "name": "Ketorolac",
+            "fa_name": "کتورولاک",
+            "shape": "Tab/Amp",
+            "brand": null
+        },
+        {
+            "name": "Piroxicam",
+            "fa_name": "پیروسیکام",
+            "shape": "Amp",
+            "brand": null
+        },
+        {
+            "name": "Acetaminophen+Codeine",
+            "fa_name": "استامینوفن+کدئین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Cefazolin",
+            "fa_name": "سفازولین",
+            "shape": "Vial",
+            "brand": null
+        },
+        {
+            "name": "Cefixime",
+            "fa_name": "سفیکسیم",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Cetirizine",
+            "fa_name": "ستیریزین",
+            "shape": "Tab",
+            "brand": null
+        }
+    ],
+    "مغز و اعصاب": [
+        {
+            "name": "Citalopram",
+            "fa_name": "سیتالوپرام",
+            "shape": "Tab",
+            "brand": "Cipralex"
+        },
+        {
+            "name": "Escitalopram",
+            "fa_name": "اس سیتالوپرام",
+            "shape": "Tab",
+            "brand": "Escitover"
+        },
+        {
+            "name": "Fluoxetine",
+            "fa_name": "فلوکستین",
+            "shape": "Cap",
+            "brand": "Prozac"
+        },
+        {
+            "name": "Fluvoxamine",
+            "fa_name": "فلووکسامین",
+            "shape": "Tab",
+            "brand": "Luvox"
+        },
+        {
+            "name": "Paroxetine",
+            "fa_name": "پاروکستین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Sertraline",
+            "fa_name": "سرترالین",
+            "shape": "Tab",
+            "brand": "Asentra"
+        },
+        {
+            "name": "Dapoxetine",
+            "fa_name": "داپوکستین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Duloxetine",
+            "fa_name": "دولوکستین",
+            "shape": "Cap",
+            "brand": "Cymbalta"
+        },
+        {
+            "name": "Venlafaxine",
+            "fa_name": "ونلافاکسین",
+            "shape": "Tab",
+            "brand": "Alventa"
+        },
+        {
+            "name": "Amitriptyline",
+            "fa_name": "آمی تریپتیلین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Desipramine",
+            "fa_name": "دزیپرامین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Imipramine",
+            "fa_name": "ایمی پرامین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Trimipramine",
+            "fa_name": "تریمیپرامین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Doxepin",
+            "fa_name": "دوکسپین",
+            "shape": "Tab/Cap",
+            "brand": null
+        },
+        {
+            "name": "Nortriptyline",
+            "fa_name": "نورتریپتیلین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Gabapentin",
+            "fa_name": "گاباپنتین",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Pregabalin",
+            "fa_name": "پرگابالین",
+            "shape": "Tab/Cap",
+            "brand": null
+        },
+        {
+            "name": "Methylphenidate",
+            "fa_name": "متیل فنیدات",
+            "shape": "Tab",
+            "brand": "Ritalin"
+        },
+        {
+            "name": "Atomoxetine",
+            "fa_name": "آتوموکستین",
+            "shape": "Tab/Cap",
+            "brand": "Stramox"
+        },
+        {
+            "name": "Alprazolam",
+            "fa_name": "آلپرازولام",
+            "shape": "Tab",
+            "brand": "Xanax"
+        },
+        {
+            "name": "Chlordiazepoxide",
+            "fa_name": "کلردیازپوکساید",
+            "shape": "Tab",
+            "brand": "Librium"
+        },
+        {
+            "name": "Clonazepam",
+            "fa_name": "کلونازپام",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Diazepam",
+            "fa_name": "دیازپام",
+            "shape": "Tab/Amp",
+            "brand": null
+        },
+        {
+            "name": "Flurazepam",
+            "fa_name": "فلورازپام",
+            "shape": "Tab/Cap",
+            "brand": null
+        },
+        {
+            "name": "Oxazepam",
+            "fa_name": "اگزازپام",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Lorazepam",
+            "fa_name": "لورازپام",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Sodium valproate",
+            "fa_name": "سدیم والپروات",
+            "shape": "Tab",
+            "brand": "Depakin"
+        },
+        {
+            "name": "Donepezil",
+            "fa_name": "دونپزیل",
+            "shape": "Tab",
+            "brand": "Yasnal"
+        },
+        {
+            "name": "Biperiden",
+            "fa_name": "بی پریدن",
+            "shape": "Tab/Amp",
+            "brand": null
+        },
+        {
+            "name": "Benserazide/Levodopa",
+            "fa_name": "لوودوپا+بنسرازید",
+            "shape": "Cap",
+            "brand": "Madopar"
+        },
+        {
+            "name": "Carbidopa / Levodopa",
+            "fa_name": "لوودوپا+کربی دوپا",
+            "shape": "Tab",
+            "brand": "Parkin C fort"
+        },
+        {
+            "name": "Phenytoin",
+            "fa_name": "فنی توئین",
+            "shape": "Cap",
+            "brand": null
+        },
+        {
+            "name": "Lamotrigine",
+            "fa_name": "لاموتریژین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Topiramate",
+            "fa_name": "توپیرامات",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Carbamazepine",
+            "fa_name": "کاربامازپین",
+            "shape": "Tab",
+            "brand": "Tegretol/Tegatard"
+        },
+        {
+            "name": "Oxcarbazepine",
+            "fa_name": "اکس کاربازپین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Phenobarbital",
+            "fa_name": "فنوباربیتال",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Galantamine",
+            "fa_name": "گالانتامین",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Rivastigmine",
+            "fa_name": "ریواستیگمین",
+            "shape": "Tab",
+            "brand": "Exelon"
+        },
+        {
+            "name": "Zolpidem",
+            "fa_name": "زولپیدم",
+            "shape": "Tab",
+            "brand": null
+        },
+        {
+            "name": "Zaleplon",
+            "fa_name": "زالپلون",
+            "shape": "Tab",
+            "brand": null
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+.wrapper-content {
+    display: flex;
+    flex-direction: column;
+    @include gap(2.5rem, false);
+
+    @media screen and (max-width: 426px) {
+        padding: 1.5rem;
+    }
+
+    .boxes-wrapper {
+        display: flex;
+        @include gap(2.5rem);
+        flex-direction: row;
+        width: 100%;
+
+        @media screen and (max-width: 992px) {
+            @include gap(2.5rem, false);
+            flex-direction: column;
+        }
+    }
+    .box-wrapper {
+        display: flex;
+        flex-direction: column;
+        @include gap(1.5rem, false);
+        width: 100%;
+    }
+}

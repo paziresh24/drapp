@@ -1,0 +1,19 @@
+.wrapper {
+    position: fixed;
+    z-index: 99999999999999999;
+    border-radius: 100px;
+    left: 0;
+    display: flex;
+    padding: 1rem 2rem;
+    background: #fff;
+    bottom: 0;
+    margin: 3rem;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    span {
+        font-weight: 500;
+        margin-right: 1rem;
+    }
+}

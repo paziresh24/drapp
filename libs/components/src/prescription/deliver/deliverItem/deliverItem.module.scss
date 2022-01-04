@@ -1,0 +1,55 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 0.8rem;
+    border: 1px solid #dce7ef;
+    border-radius: 0.6rem;
+
+    &.disabled {
+        opacity: 0.6;
+    }
+
+    .title {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9em;
+        grid-gap: 1rem;
+        padding: 1em;
+        width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .icon {
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        border-top: 1px solid #dce7ef;
+        box-sizing: content-box;
+
+        .actionButton {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+            grid-gap: 0.5rem;
+            font-size: 0.9em;
+        }
+    }
+}
+
+.confirmModal-row {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1.5rem;
+}

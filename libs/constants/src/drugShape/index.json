@@ -1,0 +1,54 @@
+{
+    "salamat_drug_shapes": [
+        {
+            "id": 1,
+            "title": "A",
+            "description": "آمپول"
+        },
+        {
+            "id": 2,
+            "title": "I",
+            "description": "انسولین"
+        },
+        {
+            "id": 3,
+            "title": "T",
+            "description": "قرص"
+        },
+        {
+            "id": 4,
+            "title": "C",
+            "description": "کپسول"
+        },
+        {
+            "id": 5,
+            "title": "R",
+            "description": "اسپری"
+        },
+        {
+            "id": 6,
+            "title": "Z",
+            "description": "ژل"
+        },
+        {
+            "id": 7,
+            "title": "G",
+            "description": "قطره"
+        },
+        {
+            "id": 8,
+            "title": "D",
+            "description": "پودر"
+        },
+        {
+            "id": 9,
+            "title": "S",
+            "description": "شربت"
+        },
+        {
+            "id": 10,
+            "title": "O",
+            "description": "سایر"
+        }
+    ]
+}

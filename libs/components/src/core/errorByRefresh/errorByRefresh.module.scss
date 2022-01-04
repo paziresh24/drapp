@@ -1,0 +1,78 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    position: fixed;
+    z-index: 999;
+    background: #fff;
+
+    .text {
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+
+    .reloadButton {
+        display: flex;
+        align-items: center;
+        background-color: rgba(224, 233, 239, 0.63);
+        height: 4.5rem;
+        border-radius: 100rem;
+        padding: 0 1.6rem;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        font-size: 1.4rem;
+        cursor: pointer;
+
+        > * {
+            margin: 0 0.3rem;
+            user-select: none;
+        }
+
+        > :first-child {
+            margin-right: 0;
+        }
+
+        > :last-child {
+            margin-left: 0;
+        }
+    }
+}
+
+.support-wrapper {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 5rem;
+
+    > * {
+        margin: 0 0.7rem;
+    }
+
+    :first-child {
+        margin-right: 0;
+    }
+
+    :last-child {
+        margin-left: 0;
+    }
+
+    .support-content {
+        display: flex;
+        flex-direction: column;
+
+        > * {
+            margin: 0.1rem 0;
+            color: rgba(41, 41, 84, 0.534);
+        }
+
+        :first-child {
+            margin-top: 0;
+        }
+
+        :last-child {
+            margin-bottom: 0;
+        }
+    }
+}

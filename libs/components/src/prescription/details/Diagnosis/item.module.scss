@@ -1,0 +1,66 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 1rem;
+
+    .type {
+        background-color: #91a5b64d;
+        color: #516371;
+        padding: 0.5rem;
+        border-radius: 0.4rem;
+        margin-left: 1rem;
+    }
+
+    .title {
+        font-size: 0.8em;
+        width: 100%;
+        overflow-wrap: anywhere;
+        font-weight: 500;
+    }
+
+    .icon {
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        border-top: 1px solid #dce7ef;
+        box-sizing: content-box;
+
+        hr {
+            border: 0;
+            width: 1px;
+            background-color: #dce7ef;
+            height: 100%;
+        }
+
+        .actionButton {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+            grid-gap: 0.5rem;
+            font-size: 0.9em;
+        }
+
+        .actionButtonStar {
+            display: flex;
+            min-width: 5rem;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+            grid-gap: 0.5rem;
+            font-size: 0.9em;
+            opacity: 0.5;
+        }
+    }
+}

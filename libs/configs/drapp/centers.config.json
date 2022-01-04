@@ -1,0 +1,10 @@
+{
+    "dr.paziresh24.com": {},
+    "nobat.mui.ac.ir": {},
+    "nobat.sums.ac.ir": {
+        "logo": "/centersLogo/sums.jpg",
+        "logoWhite": "/centersLogo/sums-white.jpg",
+        "hideDownloadBox": true,
+        "hideSupportCell": true
+    }
+}

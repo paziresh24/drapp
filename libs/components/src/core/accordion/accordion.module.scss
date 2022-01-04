@@ -1,0 +1,40 @@
+.accordion {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    background: #fff;
+    box-shadow: 0 4px 40px rgba(63, 63, 121, 0.13);
+    border-radius: 0.6rem;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: #3f3f79;
+    user-select: none;
+    .inner {
+        padding: 1.1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        cursor: pointer;
+
+        &.open {
+            padding-bottom: 1.5rem;
+        }
+    }
+    .inside {
+        display: flex;
+        align-items: center;
+        @include gap(1rem);
+    }
+    .content {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        @include gap(1.5rem, false);
+        user-select: none;
+        border-top: 1px solid #f3f7fa;
+        position: relative;
+        overflow: hidden;
+    }
+}

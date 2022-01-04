@@ -1,0 +1,55 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1.5rem;
+    background-color: #fff;
+    padding: 2.5rem;
+    box-shadow: 0px 4px 60px rgba(63, 63, 121, 0.1);
+    margin-bottom: 0.8rem;
+    z-index: 1;
+    width: 100%;
+
+    .type {
+        color: rgba(63, 63, 121, 0.54);
+        font-size: 1em;
+    }
+
+    .shape {
+        margin-right: 1rem;
+        background: #b4cfee9c;
+        color: #1b5771;
+        padding: 0.3rem 2rem;
+        border-radius: 110px;
+        font-weight: 500;
+        font-size: 1.4rem;
+    }
+    .skeleton-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        & > * {
+            margin: 1rem 0;
+
+            > :first-child {
+                margin-top: 0rem;
+            }
+
+            > :last-child {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .skeleton {
+            height: 1.2rem;
+            background: rgba(76, 96, 125, 0.2);
+            border-radius: 100rem;
+            animation: skeleton 0.8s ease-in-out infinite both;
+        }
+    }
+
+    .title {
+        font-size: 0.9em;
+        font-weight: 500;
+        direction: auto;
+    }
+}

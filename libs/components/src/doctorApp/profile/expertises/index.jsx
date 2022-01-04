@@ -1,0 +1,194 @@
+import styles from './expertises.module.scss';
+import { Select, Option } from '../../../core/Selecte';
+import degreeData from '@paziresh24/constants/degree.json';
+import expertisesData from '@paziresh24/constants/expertises.json';
+import TextField from '../../../core/textField';
+import { useEffect, useState } from 'react';
+import { useDeleteExpertises } from '@paziresh24/hooks/drapp/profile';
+import Modal from '../../../core/modal';
+import Button from '../../../core/button';
+import { PlusLineIcon, CloseIcon } from '../../../icons';
+import isEmpty from 'lodash/isEmpty';
+
+export const Expertises = props => {
+    const [degree, setDegree] = useState(props.degree);
+    const [expertise, setExpertise] = useState(props.expertise);
+    const [expertiseSelect, setExpertiseSelect] = useState();
+    const [aliasTitle, setAliasTitle] = useState(props.aliasTitle);
+    const deleteExpertises = useDeleteExpertises();
+    const [deleteExpertisesModal, setDeleteExpertisesModal] = useState(false);
+
+    useEffect(() => {
+        if (degree !== props.degree) {
+            setExpertise('');
+            setExpertiseSelect('');
+        }
+        if (degree) {
+            setTimeout(() => {
+                setExpertiseSelect(
+                    expertisesData.filter(expertise => expertise.degree_id === degree)
+                );
+                let visitesList = [...props.expertises];
+                visitesList[props.index] = {
+                    id: props.id,
+                    degree: {
+                        id: degree
+                    },
+                    expertise: {
+                        id: expertise
+                    },
+                    alias_title: aliasTitle
+                };
+                setTimeout(() => {
+                    props.setExpertise(visitesList);
+                });
+            });
+        }
+
+        if (expertise) {
+            setTimeout(() => {
+                let visitesList = [...props.expertises];
+                visitesList[props.index] = {
+                    id: props.id,
+                    degree: {
+                        id: degree
+                    },
+                    expertise: {
+                        id: expertise
+                    },
+                    alias_title: aliasTitle
+                };
+                setTimeout(() => {
+                    props.setExpertise(visitesList);
+                });
+            });
+        }
+    }, [degree, expertise, aliasTitle]);
+
+    const deleteAction = () => {
+        if (props.id) {
+            return deleteExpertises.mutate(
+                { id: props.id },
+                {
+                    onSuccess: () => {
+                        setDeleteExpertisesModal(false);
+                        let visitesList = [...props.expertises];
+                        visitesList.splice(props.index, 1);
+                        if (isEmpty(visitesList)) {
+                            visitesList.push({
+                                alias_title: '',
+                                degree: { id: 0, name: '' },
+                                expertise: { id: 0, name: '' },
+                                id: ''
+                            });
+                        }
+                        props.setExpertise(visitesList);
+                    }
+                }
+            );
+        }
+        setDeleteExpertisesModal(false);
+        let visitesList = [...props.expertises];
+        visitesList.splice(props.index, 1);
+        if (isEmpty(visitesList))
+            visitesList.push({
+                alias_title: '',
+                degree: { id: 0, name: '' },
+                expertise: { id: 0, name: '' },
+                id: ''
+            });
+
+        props.setExpertise(visitesList);
+    };
+
+    return (
+        <>
+            <div className={styles['expertises_row']}>
+                <CloseIcon onClick={() => setDeleteExpertisesModal(true)} />
+                {props.isLastItem && (
+                    <PlusLineIcon
+                        color="#22282F"
+                        onClick={() =>
+                            props.setExpertise(prev => [
+                                ...prev,
+                                {
+                                    alias_title: '',
+                                    degree: { id: 0, name: '' },
+                                    expertise: { id: 0, name: '' },
+                                    id: ''
+                                }
+                            ])
+                        }
+                    />
+                )}
+            </div>
+            {degree && (
+                <>
+                    <div className={styles['expertises_row']}>
+                        <Select
+                            label="درجه علمی"
+                            searchble
+                            value={setDegree}
+                            default-value={degree}
+                        >
+                            {degreeData.map(degree => (
+                                <Option key={degree.id} title={degree.name} value={degree.id}>
+                                    {degree.name}
+                                </Option>
+                            ))}
+                        </Select>
+                        {expertiseSelect && (
+                            <Select
+                                label="تخصص"
+                                searchble
+                                value={setExpertise}
+                                default-value={expertise}
+                            >
+                                {expertiseSelect.map(expertise => (
+                                    <Option
+                                        key={expertise?.expertise_id}
+                                        title={expertise?.name}
+                                        value={expertise?.expertise_id}
+                                    >
+                                        {expertise.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        )}
+                    </div>
+                    <TextField
+                        onChange={e => setAliasTitle(e.target.value)}
+                        label="عنوان تخصص"
+                        defaultValue={aliasTitle}
+                    />
+                </>
+            )}
+
+            <Modal
+                title="آیا از حذف تخصص مطمئن هستید؟"
+                onClose={setDeleteExpertisesModal}
+                isOpen={deleteExpertisesModal}
+            >
+                <div className={styles['confirmModal-row']}>
+                    <Button
+                        block
+                        variant="primary"
+                        theme="error"
+                        onClick={deleteAction}
+                        loading={deleteExpertises.isLoading}
+                    >
+                        بله و حذف
+                    </Button>
+                    <Button
+                        block
+                        variant="secondary"
+                        theme="error"
+                        onClick={() => setDeleteExpertisesModal(false)}
+                    >
+                        لغو عملیات
+                    </Button>
+                </div>
+            </Modal>
+        </>
+    );
+};

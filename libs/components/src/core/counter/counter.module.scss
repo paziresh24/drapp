@@ -1,0 +1,39 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1rem;
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        grid-gap: 1rem;
+
+        .input {
+            border: 1px solid #dce7ef;
+            border-radius: 0.8rem;
+            height: 4rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            outline: 0;
+            // direction: ltr;
+        }
+        input[data-type='time'] {
+            direction: unset;
+        }
+        .button {
+            height: 4rem;
+            padding: 0 1.5rem;
+            border-radius: 0.8rem;
+            border: 0;
+            border: 2px solid #27bda0;
+            color: #3f3f79;
+            background: rgba(39, 189, 160, 0.12);
+            display: flex;
+            align-items: center;
+            grid-gap: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    }
+}

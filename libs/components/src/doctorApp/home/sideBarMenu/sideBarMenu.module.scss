@@ -1,0 +1,10 @@
+.sidebar-menu {
+    display: flex;
+    border-bottom: 1px solid #606199;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    &.no-border {
+        border-bottom: none;
+    }
+}

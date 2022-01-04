@@ -1,0 +1,7 @@
+.turn-type-wrapper {
+    display: flex;
+    @include gap(1rem);
+    position: relative;
+    border-radius: 0.6rem;
+    height: 100%;
+}

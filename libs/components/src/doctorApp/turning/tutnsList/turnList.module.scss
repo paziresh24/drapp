@@ -1,0 +1,136 @@
+.row {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+
+    .col {
+        display: flex;
+        @include gap(1rem);
+
+        .title {
+            font-weight: 500;
+            opacity: 0.6;
+            white-space: nowrap;
+        }
+    }
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.turnsList {
+    position: relative;
+
+    td,
+    th {
+        text-align: right;
+        border-bottom: 1px solid #e6e6e683;
+        padding: 1.2rem 2rem;
+        position: relative;
+        color: #3f3f79;
+        font-weight: 500;
+        font-size: 1.5rem;
+        vertical-align: middle;
+    }
+
+    tbody {
+        background: #fff;
+    }
+
+    th {
+        background: #e8eef4;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+    }
+
+    @media screen and (max-width: 600px) {
+        border: 0;
+        colgroup {
+            display: none;
+        }
+
+        tbody {
+            display: flex;
+            flex-direction: column;
+            @include gap(0.8rem, false);
+            background: rgba(255, 255, 255, 0);
+        }
+
+        thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        tr {
+            display: block;
+            background: #fff;
+            box-shadow: 0 21px 30px #2525470a;
+        }
+
+        td {
+            display: flex;
+        }
+
+        td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+
+        td:last-child {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    .head-title {
+        background: #dde6ee;
+        width: 100%;
+
+        @media screen and (max-width: 426px) {
+            display: flex;
+        }
+
+        td {
+            all: unset;
+            display: table-cell;
+            vertical-align: middle;
+            padding: 0.5rem 2rem;
+            color: #3f3f79;
+            font-weight: 500;
+            font-size: 1.4rem;
+
+            @media screen and (max-width: 426px) {
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+}
+
+.otp-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    > :first-child {
+        margin-top: 0 !important;
+    }
+
+    > :last-child {
+        margin-bottom: 0 !important;
+    }
+}

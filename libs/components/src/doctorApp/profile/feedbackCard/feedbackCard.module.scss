@@ -1,0 +1,73 @@
+.feedback-card {
+    display: flex;
+    flex-direction: column;
+    @include gap(1rem, false);
+    width: 100%;
+
+    .info-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 1rem;
+
+        .info-wrapper__row {
+            display: flex;
+            align-items: center;
+            @include gap(1rem);
+
+            img {
+                width: 4.5rem;
+                height: 4.5rem;
+                border-radius: 100%;
+            }
+
+            .inner {
+                display: flex;
+                flex-direction: column;
+                align-items: unset;
+
+                .date {
+                    font-size: 1.2rem;
+                    opacity: 0.8;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    .feedback-text {
+        font-size: 1.5rem;
+        font-weight: 400;
+    }
+
+    .actionWrapper {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .action {
+            display: flex;
+            align-items: center;
+            color: #27bda0;
+            font-size: 1.4rem;
+            @include gap(0.5rem);
+            cursor: pointer;
+
+            span {
+                color: #27bda0;
+            }
+        }
+
+        > * {
+            margin: 0 1rem;
+        }
+
+        :first-child {
+            margin-right: 0;
+        }
+
+        :last-child {
+            margin-left: 0;
+        }
+    }
+}

@@ -1,0 +1,212 @@
+@media screen and (min-width: 426px) {
+    .root {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .wrap {
+            top: 18rem;
+            bottom: unset !important;
+            right: unset !important;
+            left: unset !important;
+            border-radius: 1rem !important;
+            width: 100%;
+            max-width: 50rem;
+            max-height: 50rem;
+            transform: translateY(calc(-100% - 13rem)) !important;
+
+            &.fullPage {
+                height: 100vh;
+                border-radius: 0 !important;
+                top: 0;
+                min-width: 100%;
+            }
+        }
+    }
+}
+
+.root {
+    .mask {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 1001;
+        height: 100%;
+        // backdrop-filter: blur(3px);
+        background: rgba(14, 22, 27, 0.596);
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    .wrap {
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        border-radius: 1rem 1rem 0 0;
+        // bottom: 0;
+        // left: 0;
+        outline: 0;
+        overflow: auto;
+        position: fixed;
+        // right: 0;
+        z-index: 1001;
+        transition: transform 0.4s;
+        transform: translateY(100%);
+
+        &.fullPage {
+            height: 100vh;
+            border-radius: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+
+            .title-wraper {
+                display: grid;
+                grid-gap: 1rem;
+                grid-auto-flow: column;
+
+                .title {
+                    font-weight: 700;
+                    font-size: 1em;
+                }
+            }
+
+            .close-button {
+                cursor: pointer;
+                transition: opacity 0.5s ease;
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        .body {
+            display: flex;
+            flex-direction: column;
+            grid-gap: 1.5rem;
+
+            &.scrollable {
+                overflow-y: auto;
+            }
+        }
+    }
+}
+
+.open-modal {
+    overflow: hidden;
+    // padding-right: 15px;
+}
+
+@media screen and (max-width: 425px) {
+    // .open-modal {
+    //     // padding-right: 0;
+    // }
+}
+
+.show {
+    .mask {
+        opacity: 1;
+    }
+    .wrap {
+        transform: translateY(0) !important;
+    }
+}
+
+.searchBar {
+    width: 100%;
+    border-bottom: 1px solid #e5e9f0;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #fff;
+
+    input {
+        outline: 0;
+        height: 6rem;
+        font-size: 1.6rem;
+        border: 0;
+        width: 100%;
+        direction: ltr;
+        text-align: right;
+    }
+
+    .searchIcon {
+        height: 6rem;
+        min-width: 6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            opacity: 0.8;
+        }
+    }
+    .loadingIcon {
+        height: 6rem;
+        min-width: 6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.wrap-float {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    outline: 0;
+    overflow: auto;
+    position: absolute;
+    right: 0;
+    top: 4.5rem;
+    width: 48rem;
+    z-index: 1001;
+    max-height: 35rem;
+    margin-top: 1rem;
+    box-shadow: 0 1px 6px 0 #0000000a, 0 -8px 32px -4px #00000014, 0 16px 24px -6px #0000000a;
+
+    @media screen and (max-width: 600px) {
+        width: 100%;
+        max-height: 100%;
+        z-index: 999;
+        margin-top: 0;
+        inset: 0;
+        position: fixed;
+    }
+
+    &::-webkit-scrollbar {
+        width: 0.4rem;
+    }
+    &::scrollbar {
+        width: 0.4rem;
+    }
+    &::-webkit-scrollbar-track {
+        background: rgb(236, 240, 243);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgb(212, 217, 221);
+        border-radius: 100px;
+    }
+}
+* .searchItems {
+    position: relative;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}

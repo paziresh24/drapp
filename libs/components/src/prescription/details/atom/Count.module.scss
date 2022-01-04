@@ -1,0 +1,27 @@
+.countInput {
+    min-width: 10rem;
+    max-width: 10rem;
+    width: 10rem;
+
+    &.simple {
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
+        input {
+            border: 0;
+            height: 2rem;
+            background-color: transparent;
+            border: 1px solid rgba(145, 165, 182, 0.35) !important;
+            padding: 1.5rem 0.5rem;
+        }
+
+        span {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        width: 100%;
+        max-width: 100%;
+    }
+}
