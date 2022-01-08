@@ -246,7 +246,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                         aria-hidden
                         style={{ cursor: 'pointer' }}
                     >
-                        <Chips theme="gray">نوبت</Chips>{' '}
+                        {/* <Chips theme="gray">نوبت</Chips>{' '} */}
                         <span>{turn.display_name !== '' ? turn.display_name : '-'}</span>
                     </td>
                     <td data-label="شماره موبایل:">

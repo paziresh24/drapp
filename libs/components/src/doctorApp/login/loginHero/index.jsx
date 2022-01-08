@@ -8,6 +8,7 @@ import { useSupport } from '@paziresh24/context/core/supportChat';
 import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
 import taminLogo from '@paziresh24/assets/images/drapp/provider/tamin.png';
 import salamatLogo from '@paziresh24/assets/images/drapp/provider/salamat.png';
+import govLogo from '@paziresh24/assets/images/drapp/provider/gov.png';
 
 const LoginHero = ({ focus, setFocus }) => {
     const [, setOpenState] = useSupport(false);
@@ -142,9 +143,9 @@ const LoginHero = ({ focus, setFocus }) => {
                             alt=""
                         />
                     )}
-
                     <img src={taminLogo} alt="" />
                     <img src={salamatLogo} alt="" />
+                    <img src={govLogo} alt="" style={{ maxWidth: '9rem' }} />
                 </div>
             </div>
             {/* {focus && (

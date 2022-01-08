@@ -53,6 +53,10 @@ const DrugsDetails = () => {
     const [consumptionFiledError, setConsumptionFiledError] = useState(false);
 
     // focus field
+    const [countFieldFocus, setCountFieldFocus] = useState(false);
+    const [instructionsFiledFocus, setInstructionsFiledFocus] = useState(false);
+    const [amountsFiledFocus, setAmountsFiledFocus] = useState(false);
+
     // const [consumptionFieldFocus, setConsumptionFieldFocus] = useState(false);
     const [instructionsFiledError, setInstructionsFiledError] = useState(false);
     const [amountsFiledError, setAmountsFiledError] = useState(false);
@@ -158,6 +162,7 @@ const DrugsDetails = () => {
                         onChange={value => {
                             setSearchFiledError(false);
                             selectItem(value);
+                            setCountFieldFocus(true);
                         }}
                         defaultValue={item}
                     />
@@ -198,6 +203,8 @@ const DrugsDetails = () => {
                             setCount(value);
                         }}
                         defaultValue={count}
+                        focus={countFieldFocus}
+                        setFocus={setCountFieldFocus}
                     />
                     {prescriptionInfo.insuranceType === 'tamin' && (
                         <Count
@@ -211,6 +218,7 @@ const DrugsDetails = () => {
                         onChange={value => {
                             setConsumptionFiledError(false);
                             setConsumption(value);
+                            value.id && setInstructionsFiledFocus(true);
                         }}
                         defaultValue={item?.defaultValue?.use_time}
                         reset={!consumption}
@@ -220,8 +228,11 @@ const DrugsDetails = () => {
                         onChange={value => {
                             setInstructionsFiledError(false);
                             setInstructions(value);
+                            value.id && setAmountsFiledFocus(true);
                         }}
                         defaultValue={item?.defaultValue?.how_to_use}
+                        focus={instructionsFiledFocus}
+                        setFocus={setInstructionsFiledFocus}
                     />
                     <Amounts
                         error={amountsFiledError}
@@ -235,6 +246,8 @@ const DrugsDetails = () => {
                             +item?.shape?.id === 9 &&
                             item?.shape?.id
                         }
+                        focus={amountsFiledFocus}
+                        setFocus={setAmountsFiledFocus}
                     />
                     {prescriptionInfo.insuranceType === 'salamat' && (
                         <SelectDate
@@ -301,7 +314,7 @@ const DrugsDetails = () => {
                 </div>
 
                 <div className={styles.left}>
-                    <StarService
+                    {/* <StarService
                         service={{
                             use_instruction: amounts?.id,
                             use_time: consumption?.id,
@@ -311,7 +324,7 @@ const DrugsDetails = () => {
                             description: description,
                             number_of_period: +repeat
                         }}
-                    />
+                    /> */}
                     <Button size="small" onClick={addServiceAction}>
                         افزودن
                     </Button>

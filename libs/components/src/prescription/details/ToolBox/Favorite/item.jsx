@@ -40,7 +40,8 @@ const Item = ({ service, setFavoriteListSelect, favoriteListSelect }) => {
                 ...item,
                 id: id + 1,
                 service_type: item.service_type,
-                item_id: item.service.id
+                item_id: item.service.id,
+                favorite_item: item
             }
         ]);
         sendEvent('clickfavorite', 'prescription', 'clickfavorite');

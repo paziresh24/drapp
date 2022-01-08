@@ -1,6 +1,8 @@
 export const baseURL = key => {
     const isProduction = process.env.NODE_ENV === 'production';
-    const isMainDomain = window.location.host === process.env.REACT_APP_MAIN_DOMAIN;
+    const isMainDomain =
+        window.location.host === process.env.REACT_APP_MAIN_DOMAIN ||
+        window.location.hostname === 'localhost';
 
     if (key === 'DRAPP_API') {
         if (isProduction && !isMainDomain) {

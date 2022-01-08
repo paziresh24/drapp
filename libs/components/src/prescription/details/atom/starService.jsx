@@ -4,18 +4,28 @@ import { useAddFavoriteServices, useDeleteFavoriteServices } from '@paziresh24/h
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { useServices } from '@paziresh24/context/prescription/services-context';
 
 const StarService = ({ service }) => {
     const [prescriptionInfo] = useSelectPrescription();
-
+    const [services, setServices] = useServices();
     const [favoriteItem, setFavoriteItem] = useFavoriteItem();
     const addFavoriteServices = useAddFavoriteServices();
     const deleteFavoriteServices = useDeleteFavoriteServices();
     const [stared, setStared] = useState(false);
 
     useEffect(() => {
-        if (!service.service) setStared(false);
-    }, [service.service]);
+        console.log(favoriteItem);
+        console.log(service);
+
+        favoriteItem.find(item => item.id === service.favorite_item?.id)
+            ? setStared(true)
+            : setStared(false);
+    }, [service, favoriteItem]);
+
+    // useEffect(() => {
+    //     if (!service.service) setStared(false);
+    // }, [service.service]);
 
     const starHandler = () => {
         if (!stared) {
@@ -41,21 +51,29 @@ const StarService = ({ service }) => {
                 },
                 {
                     onSuccess: data => {
+                        const newServices = services.map(item =>
+                            item.id === service.id ? { ...item, favorite_item: data } : item
+                        );
+                        setServices(newServices);
                         setFavoriteItem(prev => [...prev, data]);
                     }
                 }
             );
         }
-        if (stared && addFavoriteServices?.data?.id) {
+        if (stared && (addFavoriteServices?.data?.id || service?.favorite_item)) {
             setStared(false);
             return deleteFavoriteServices.mutate(
                 {
-                    id: addFavoriteServices.data.id
+                    id: addFavoriteServices?.data?.id ?? service?.favorite_item?.id
                 },
                 {
                     onSuccess: data => {
-                        const services = favoriteItem.filter(item => item.id !== data.id);
-                        setFavoriteItem(services);
+                        const newServices = services.map(item =>
+                            item.id === service.id ? { ...item, favorite_item: undefined } : item
+                        );
+                        setServices(newServices);
+                        const FavoriteServices = favoriteItem.filter(item => item.id !== data.id);
+                        setFavoriteItem(FavoriteServices);
                     }
                 }
             );

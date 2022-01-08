@@ -224,6 +224,7 @@
     bottom: 4rem;
     left: 4rem;
     opacity: 0.8;
+    @include gap(1rem);
 
     img {
         max-width: 70px;

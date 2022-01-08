@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+    drapp-client-local-center:
+        container_name: drapp-client-local-center
+        # image: dockerhub.paziresh24.com/drapp-client-local
+        build:
+            context: .
+            dockerfile: Dockerfile.localCenter
+        environment:
+            - NODE_ENV=production
+            - PUBLIC_URL=/doctorapp
+        ports:
+            - '4030:80'

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import amountData from '@paziresh24/constants/drugData/amounts.json';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 
-const Amounts = ({ onChange, defaultValue, simple, shape, error }) => {
+const Amounts = ({ onChange, defaultValue, simple, shape, error, focus, setFocus }) => {
     const [prescriptionInfo] = useSelectPrescription();
     const [amount, setAmount] = useState([]);
 
@@ -24,6 +24,8 @@ const Amounts = ({ onChange, defaultValue, simple, shape, error }) => {
 
     return (
         <Select
+            focus={focus}
+            setFocus={setFocus}
             error={error}
             defaultValue={defaultValue}
             onChange={onChange}

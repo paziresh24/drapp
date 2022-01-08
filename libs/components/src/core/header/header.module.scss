@@ -18,7 +18,7 @@
         display: flex;
         align-items: center;
         gap: 1rem;
-        z-index: 999;
+        // z-index: 999;
 
         @media screen and (max-width: 992px) {
             display: none;
@@ -52,7 +52,7 @@
     right: 0;
     bottom: 0;
     background: rgba(14, 22, 27, 0.596);
-    z-index: 999;
+    z-index: 9;
 }
 // @media screen and (max-width: 992px) {
 
@@ -68,9 +68,9 @@
         justify-content: center;
         width: 4.5rem;
         height: 4.5rem;
-        background-color: rgba(224, 233, 239, 0.63);
-        margin-left: 1rem;
-        border-radius: 100%;
+        background-color: #ebeff8;
+        margin-left: 0.5rem;
+        border-radius: 0.6rem;
         cursor: pointer;
 
         svg {
@@ -78,6 +78,7 @@
             height: 2.2rem;
             * {
                 fill: #415266;
+                stroke: #415266;
             }
         }
     }
@@ -198,11 +199,11 @@
 }
 
 .centerSelectInput {
-    background: rgba(224, 233, 239, 0.63);
+    background: #ebeff8;
     height: 4.5rem;
     width: 32rem;
     min-width: 32rem;
-    border-radius: 100rem;
+    border-radius: 0.6rem;
     display: flex;
     align-items: center;
     padding: 0 2rem;
@@ -217,6 +218,7 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
         overflow: hidden;
+        color: #415266;
     }
 
     * {
@@ -231,14 +233,17 @@
     background-color: #fff;
     top: 5rem;
     width: 45rem;
-    box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(15, 23, 42, 0.1) 0px 0px 0px 1px,
-        rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+    // box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(15, 23, 42, 0.1) 0px 0px 0px 1px,
+    //     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+    border: 1px solid rgba(226, 226, 226, 0.685);
+    box-shadow: 0px 4px 25px rgba(65, 65, 65, 0.123);
     border-radius: 0.8rem;
     padding: 1rem;
     overflow: hidden;
     opacity: 0;
     transition: all 0.3s;
     transform: translateY(2rem);
+    z-index: 999;
 
     &.dropdown_enter {
         opacity: 0;
@@ -363,7 +368,7 @@
 }
 
 .header_dropdown {
-    background: rgba(224, 233, 239, 0.63);
+    background: #ebeff8;
     height: 4.5rem;
     width: 25rem;
     min-width: 25rem;
@@ -377,7 +382,7 @@
     gap: 1rem;
     position: relative;
     justify-content: space-between;
-    border-radius: 100rem;
+    border-radius: 0.6rem;
 
     // &:hover {
     //     & ~ .items_dropdown {
@@ -419,8 +424,10 @@
     z-index: 999;
     background-color: #fff;
     width: 26rem;
-    box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(15, 23, 42, 0.1) 0px 0px 0px 1px,
-        rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+    border: 1px solid rgba(226, 226, 226, 0.685);
+    box-shadow: 0px 4px 25px rgba(65, 65, 65, 0.123);
+    // box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(15, 23, 42, 0.1) 0px 0px 0px 1px,
+    //     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
     border-radius: 0.8rem;
     flex-direction: column;
     overflow: hidden;
@@ -447,7 +454,7 @@
         display: flex;
         align-items: center;
         @include gap(1rem);
-        border-bottom: 1px solid rgb(226, 226, 226);
+        border-bottom: 1px solid rgba(226, 226, 226, 0.404);
         padding: 1.5rem;
         width: 100%;
 

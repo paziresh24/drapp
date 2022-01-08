@@ -7,6 +7,7 @@
 // import { baseURL } from '@paziresh24/utils/baseUrl';
 // import { useDrApp } from '@paziresh24/context/drapp';
 
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import Prescriptions from '@paziresh24/apps/prescription/pages/prescription/home';
 
 const Prescription = () => {

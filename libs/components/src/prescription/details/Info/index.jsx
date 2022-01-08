@@ -110,36 +110,39 @@ const Info = () => {
 
                     <Default>
                         <div className={styles.row}>
-                            <span className={styles['title']}>نام بیمار:</span>
+                            {/* <span className={styles['title']}>نام بیمار:</span> */}
                             <span className={styles['value']}>
                                 {prescriptionInfo.patientAdditionalData.name +
                                     ' ' +
                                     prescriptionInfo.patientAdditionalData.lastName}
                             </span>
+                            {prescriptionInfo.patientAdditionalData?.gender === 'زن' ? (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="#aaa"
+                                    viewBox="0 0 30 30"
+                                    width="30px"
+                                    height="30px"
+                                >
+                                    <path d="M5,27c0-5,6.957-4.174,8-6.999V19c-3.778,0-5.914-1.884-5.914-1.884C9.06,15.473,6.326,4.043,13.049,4.043 c0,0,0.907-1.043,2.08-1.043c8.218,0,5.51,12.41,7.635,14.154c0,0-1.968,1.846-5.765,1.846v1.001C18.043,22.826,25,22,25,27H5z" />
+                                </svg>
+                            ) : (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="#aaa"
+                                    viewBox="0 0 30 30"
+                                    width="30px"
+                                    height="30px"
+                                >
+                                    <path d="M18,19v-2c0.45-0.223,1.737-1.755,1.872-2.952c0.354-0.027,0.91-0.352,1.074-1.635c0.088-0.689-0.262-1.076-0.474-1.198 c0,0,0.528-1.003,0.528-2.214c0-2.428-0.953-4.5-3-4.5c0,0-0.711-1.5-3-1.5c-4.242,0-6,2.721-6,6c0,1.104,0.528,2.214,0.528,2.214 c-0.212,0.122-0.562,0.51-0.474,1.198c0.164,1.283,0.72,1.608,1.074,1.635C10.263,15.245,11.55,16.777,12,17v2c-1,3-9,1-9,8h24 C27,20,19,22,18,19z" />
+                                </svg>
+                            )}
                         </div>
                         <div className={styles.row}>
                             <span className={styles['title']}>بیمه:</span>
                             <span className={styles['value']}>
                                 {prescriptionInfo.patientAdditionalData.issuerType ?? '-'}
                             </span>
-                        </div>
-                        <div
-                            className={styles['row']}
-                            id="p_cell"
-                            onClick={() => {
-                                setUpdateCellPhoneModal(true);
-                            }}
-                            style={{ cursor: 'pointer' }}
-                            aria-hidden
-                            data-tip
-                            data-for="editPhone"
-                        >
-                            <span className={styles['title']}>شماره موبایل: </span>
-                            <span className={styles['value']}>{cellPhone}</span>
-                            <EditIcon />
-                            <ReactTooltip id="editPhone" place="top" type="dark" effect="solid">
-                                شماره موبایلی که پیامک ثبت نسخه برای آن ارسال می شود
-                            </ReactTooltip>
                         </div>
                     </Default>
                 </div>
@@ -269,42 +272,60 @@ const Info = () => {
                             </span>
                         </div>
                         <div className={styles['col']}>
-                            <span className={styles['title']}>نسبت با سرپرست</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.relationType ?? '-'}
-                            </span>
-                        </div>
-                    </div>
-                    <div className={styles['row']}>
-                        <div className={styles['col']}>
                             <span className={styles['title']}>جنسیت</span>
                             <span className={styles['value']}>
                                 {prescriptionInfo.patientAdditionalData?.gender ?? '-'}
                             </span>
                         </div>
+                        {/* <div className={styles['col']}>
+                            <span className={styles['title']}>نسبت با سرپرست</span>
+                            <span className={styles['value']}>
+                                {prescriptionInfo.patientAdditionalData?.relationType ?? '-'}
+                            </span>
+                        </div> */}
+                    </div>
+                    <div className={styles['row']}>
                         <div className={styles['col']}>
                             <span className={styles['title']}>تاریخ تولد</span>
                             <span className={styles['value']}>
                                 {prescriptionInfo.patientAdditionalData?.birthDate ?? '-'}
                             </span>
                         </div>
-                    </div>
-                    <div className={styles['row']}>
                         <div className={styles['col']}>
                             <span className={styles['title']}>اعتبار بیمه</span>
                             <span className={styles['value']}>
                                 {prescriptionInfo.patientAdditionalData?.accountValidto ?? '-'}
                             </span>
                         </div>
+                    </div>
+                    <div className={styles['row']}>
                         <div className={styles['col']}>
                             <span className={styles['title']}>کدملی</span>
                             <span className={styles['value']}>
                                 {prescriptionInfo.patientNationalCode ?? '-'}
                             </span>
                         </div>
+                        <div
+                            className={styles['col']}
+                            id="p_cell"
+                            onClick={() => {
+                                setUpdateCellPhoneModal(true);
+                            }}
+                            style={{ cursor: 'pointer' }}
+                            aria-hidden
+                            data-tip
+                            data-for="editPhone"
+                        >
+                            <span className={styles['title']}>شماره موبایل: </span>
+                            <span className={styles['value']}>{cellPhone}</span>
+                            <EditIcon />
+                            <ReactTooltip id="editPhone" place="top" type="dark" effect="solid">
+                                شماره موبایلی که پیامک ثبت نسخه برای آن ارسال می شود
+                            </ReactTooltip>
+                        </div>
                     </div>
 
-                    <div className={styles['row']}>
+                    {/* <div className={styles['row']}>
                         <div className={styles['col']}>
                             <span className={styles['title']}>وضعیت تاهل</span>
                             <span className={styles['value']}>
@@ -317,17 +338,8 @@ const Info = () => {
                                 {prescriptionInfo.patientAdditionalData?.familyPhysician ?? 'ندارد'}
                             </span>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={styles['row']}>
-                        <div className={styles['col']} data-tip data-for="geoInfo">
-                            <span className={styles['title']}>محل تولد</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.geoInfo ?? '-'}
-                            </span>
-                            <ReactTooltip id="geoInfo" place="top" type="dark" effect="solid">
-                                {prescriptionInfo.patientAdditionalData?.geoInfo ?? '-'}
-                            </ReactTooltip>
-                        </div>
                         {prescriptionInfo.patientAdditionalData?.productId && (
                             <div className={styles['col']}>
                                 <span className={styles['title']}>صندوق بیمه</span>
@@ -336,6 +348,15 @@ const Info = () => {
                                 </span>
                             </div>
                         )}
+                        {/* <div className={styles['col']} data-tip data-for="geoInfo">
+                            <span className={styles['title']}>محل تولد</span>
+                            <span className={styles['value']}>
+                                {prescriptionInfo.patientAdditionalData?.geoInfo ?? '-'}
+                            </span>
+                            <ReactTooltip id="geoInfo" place="top" type="dark" effect="solid">
+                                {prescriptionInfo.patientAdditionalData?.geoInfo ?? '-'}
+                            </ReactTooltip>
+                        </div> */}
                     </div>
                     {prescriptionInfo.insuranceType === 'salamat' && prescriptionInfo.finalized && (
                         <div className={styles['row']}>

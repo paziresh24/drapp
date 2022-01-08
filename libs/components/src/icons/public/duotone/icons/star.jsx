@@ -8,11 +8,13 @@ const StarIcon = props => {
             xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
-            <path
-                d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1 3-6z"
-                fill={props.color}
-                fillOpacity={0.16}
-            />
+            {props.fill && (
+                <path
+                    d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1 3-6z"
+                    fill={props.color}
+                    // fillOpacity={0.16}
+                />
+            )}
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"

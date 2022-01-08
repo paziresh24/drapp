@@ -27,6 +27,7 @@ const TextField = forwardRef((props, ref) => {
                 onKeyDown={props.onKeyDown}
                 autoComplete="off"
                 inputMode={props.inputMode}
+                min={props.min}
             />
             <span className={styles['label']}>{props.label}</span>
             {props.errorText && props.error && (

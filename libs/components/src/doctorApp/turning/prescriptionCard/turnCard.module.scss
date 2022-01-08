@@ -170,6 +170,10 @@
     > td > span {
         opacity: 0.5;
     }
+
+    > td > div > span {
+        opacity: 0.5;
+    }
 }
 
 .card {
@@ -216,4 +220,19 @@
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+}
+
+.details {
+    .row {
+        display: flex;
+        flex-direction: column;
+        @include gap(1rem, false);
+
+        .col {
+            display: flex;
+            flex-direction: row !important;
+            align-items: center;
+            @include gap(1rem);
+        }
+    }
 }

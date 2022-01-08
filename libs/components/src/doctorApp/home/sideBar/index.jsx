@@ -179,7 +179,7 @@ const SideBar = () => {
                 name: 'آموزش سامانه',
                 icon: <LearnIcon color="#fff" />,
                 link: '/learn'
-            },
+            }
 
             // {
             //     id: 3,
@@ -218,7 +218,7 @@ const SideBar = () => {
             //         ]
             //     })
             // },
-            { id: 9, name: 'خروج', icon: <ExitIcon />, link: '/logout' }
+            // { id: 9, name: 'خروج', icon: <ExitIcon />, link: '/logout' }
 
             // {
             //     id: 5,
@@ -264,19 +264,19 @@ const SideBar = () => {
     };
 
     return (
-        // eslint-disable-next-line react/jsx-no-useless-fragment
-        <div style={{ display: 'flex' }} onMouseLeave={() => setOpen(false)}>
+        <div style={{ display: 'flex', overflow: 'hidden' }} onMouseLeave={() => setOpen(false)}>
             <div
                 className={styles.menuBar}
                 style={{
-                    background: '#1C1D56',
+                    // overflow: 'hidden',
+                    background: '#3F4079',
                     display: 'flex',
                     flexDirection: 'column',
                     padding: '0.5rem',
                     gap: '1rem',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    zIndex: '9999'
+                    zIndex: '10'
                     // paddingTop: '17rem'
                 }}
                 onMouseOver={() => setOpen(true)}
@@ -369,13 +369,13 @@ const SideBar = () => {
                             setOpenSubMenu={setOpenSubMenu}
                             noborder
                         >
-                            {/* {!getFeedbacks.isLoading && (
+                            {!getFeedbacks.isLoading && (
                                 <span className={styles['badge']} aria-hidden>
                                     <span className={styles['red']}>
                                         {calculateNoReplyComments()}
                                     </span>
                                 </span>
-                            )} */}
+                            )}
                         </SideBarMenu>
                     </div>
 

@@ -115,7 +115,16 @@ const Form = ({ focus, setFocus }) => {
                 />
             </svg>
             <div className={styles['head']}>
-                <span className={styles['title']}>ورود/ثبت نام پزشکان</span>
+                {step === 'USERNAME' && (
+                    <span className={styles['title']}>ورود/ثبت نام پزشکان</span>
+                )}
+                {step === 'REGISTER' && <span className={styles['title']}>ثبت نام پزشک</span>}
+                {step === 'PASSWORD' && <span className={styles['title']}>ورود پزشک</span>}
+                {step === 'FORGOTPASSWORD' && (
+                    <span className={styles['title']}>فراموشی رمزعبور</span>
+                )}
+                {step === 'CHANGEPASSWORD' && <span className={styles['title']}>رمزعبور جدید</span>}
+
                 {step !== 'USERNAME' && (
                     <button
                         className={styles['change-number']}

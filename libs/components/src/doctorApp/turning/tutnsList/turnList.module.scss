@@ -30,7 +30,7 @@
         border-bottom: 1px solid #e6e6e683;
         padding: 1.2rem 2rem;
         position: relative;
-        color: #3f3f79;
+        // color: #3f3f79;
         font-weight: 500;
         font-size: 1.5rem;
         vertical-align: middle;
@@ -41,7 +41,7 @@
     }
 
     th {
-        background: #e8eef4;
+        background: #fff;
         position: sticky;
         top: 0;
         z-index: 5;
@@ -94,7 +94,7 @@
     }
 
     .head-title {
-        background: #dde6ee;
+        background: #f6f8fb;
         width: 100%;
 
         @media screen and (max-width: 426px) {
@@ -105,10 +105,10 @@
             all: unset;
             display: table-cell;
             vertical-align: middle;
-            padding: 0.5rem 2rem;
-            color: #3f3f79;
-            font-weight: 500;
-            font-size: 1.4rem;
+            padding: 1rem 2rem;
+            color: #68778d;
+            font-weight: 700;
+            font-size: 1.3rem;
 
             @media screen and (max-width: 426px) {
                 padding: 0.5rem 1rem;

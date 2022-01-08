@@ -49,8 +49,9 @@ const Types = () => {
         setType('drugs');
 
         return () => {
+            getItemServices.remove();
             setType('drugs');
-            // setServices([]);
+            setServices([]);
             // setFavoriteItem([]);
             // setTemplateItem([]);
             setPrescriptionInfo(null);

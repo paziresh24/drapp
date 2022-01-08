@@ -22,9 +22,21 @@ const SideBarMenu = ({ menuItems, noborder, setOpenSubMenu, openSubMenu, childre
                                 toolTip={toolTip}
                                 tourStep={tourStep}
                             >
-                                {/* {icon} */}
-                                {name}
-                                {badge && children}
+                                <div
+                                    style={{
+                                        height: '5.5rem',
+                                        width: '5.5rem',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        position: 'relative',
+                                        opacity: 1
+                                    }}
+                                >
+                                    {badge && children}
+                                    {icon}
+                                </div>
+                                <span>{name}</span>
                             </MenuItem>
                             {subMenu &&
                                 subMenu.map(({ name, icon, link, external }) => (

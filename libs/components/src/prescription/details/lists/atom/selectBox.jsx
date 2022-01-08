@@ -8,15 +8,25 @@ import consumptionData from '@paziresh24/constants/drugData/consumption.json';
 import amountData from '@paziresh24/constants/drugData/amounts.json';
 import instructionsData from '@paziresh24/constants/drugData/instructions.json';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
+import { useState, useEffect } from 'react';
 
 const SelectBox = ({ serviceId, value, editable = true, field, type, service, simple = true }) => {
     const [prescriptionInfo] = useSelectPrescription();
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        if (!value) {
+            return setError(true);
+        }
+        setError(false);
+    }, [value]);
 
     const [services, setServices] = useServices();
     const changeAction = select => {
-        if (select) {
+        if (select.id) {
             services[services.findIndex(item => item.id === serviceId)][field] = select.id;
             setServices(services);
+            setError(false);
         }
     };
 
@@ -28,6 +38,7 @@ const SelectBox = ({ serviceId, value, editable = true, field, type, service, si
                         simple={simple}
                         onChange={value => changeAction(value)}
                         defaultValue={value}
+                        error={error}
                     />
                 ) : (
                     <span>
@@ -45,6 +56,7 @@ const SelectBox = ({ serviceId, value, editable = true, field, type, service, si
                         simple={simple}
                         onChange={value => changeAction(value)}
                         defaultValue={value}
+                        error={error}
                     />
                 ) : (
                     <span>
@@ -63,6 +75,7 @@ const SelectBox = ({ serviceId, value, editable = true, field, type, service, si
                         onChange={value => changeAction(value)}
                         defaultValue={value}
                         shape={+service?.service?.shape?.id === 9 && service.service.shape.id}
+                        error={error}
                     />
                 ) : (
                     <span>

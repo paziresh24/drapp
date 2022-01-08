@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { lazy } from 'react';
 import Learn from './learn';
 import PrescriptionId from '@paziresh24/apps/prescription/pages/prescription/types';

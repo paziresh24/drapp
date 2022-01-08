@@ -1,4 +1,4 @@
-const PlusLineIcon = ({ color, onClick }) => {
+const PlusLineIcon = ({ color, onClick, ...rest }) => {
     return (
         <svg
             width="23"
@@ -7,6 +7,7 @@ const PlusLineIcon = ({ color, onClick }) => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             onClick={onClick}
+            {...rest}
         >
             <path
                 fillRule="evenodd"

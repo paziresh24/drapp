@@ -136,13 +136,13 @@ const LabsDetails = () => {
                 </div>
 
                 <div className={styles.left}>
-                    <StarService
+                    {/* <StarService
                         service={{
                             service: item,
                             count: count,
                             description: description
                         }}
-                    />
+                    /> */}
                     <Button size="small" onClick={addServiceAction}>
                         افزودن
                     </Button>
