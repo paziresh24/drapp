@@ -434,7 +434,7 @@ const StatusBar = props => {
             <Default>
                 <FixedWrapBottom>
                     <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
-                        {info.center.is_active_booking && info.center.type_id === 1 && (
+                        {/* {info.center.is_active_booking && info.center.type_id === 1 && (
                             <Button
                                 style={{ maxWidth: '5.5rem' }}
                                 variant="secondary"
@@ -442,7 +442,7 @@ const StatusBar = props => {
                                 icon={<SettingIcon />}
                                 onClick={() => setMoveDeleteModal(true)}
                             />
-                        )}
+                        )} */}
                         {/* <Button
                             variant="secondary"
                             // className={styles['ping']}

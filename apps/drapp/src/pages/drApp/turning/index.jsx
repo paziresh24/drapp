@@ -369,15 +369,7 @@ const Turning = () => {
                 refetchData={refetchData}
             />
             <div className={styles['wrapper']}>
-                <div
-                    style={{
-                        display: 'flex',
-                        gap: '2rem',
-                        justifyContent: 'center',
-                        marginBottom: '1rem',
-                        paddingTop: '3rem'
-                    }}
-                >
+                <div className={styles.statistics}>
                     <div
                         style={{
                             // width: '25rem',
@@ -573,12 +565,12 @@ const Turning = () => {
                                     )}
                             </div>
                         </div>
-                        {/* <StatusBar
+                        <StatusBar
                             isOpen={moveDeleteModal}
                             setMoveDeleteModal={setMoveDeleteModal}
                             setOpenNewTurn={setOpenNewTurn}
                             refetchData={refetchData}
-                        /> */}
+                        />
                     </div>
                 )}
 

@@ -336,7 +336,7 @@ const Header = () => {
 
                 {/* <img src={Logo} alt="logo" /> */}
 
-                {/* <div className={styles['actions']}>
+                <div className={styles['actions']}>
                     <div className={styles.action} onClick={openGoftinoAction} aria-hidden>
                         <svg viewBox="0 0 29 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -363,91 +363,93 @@ const Header = () => {
                     >
                         هر روز از 7 تا 24 پاسخگوی شما هستیم.
                     </div>
-                    <div
-                        className={styles.wrapper_dropdown}
-                        onMouseOut={() => setIsDropDownOpen(false)}
-                    >
+                    {!isMobile && (
                         <div
-                            className={styles.header_dropdown}
-                            onMouseOver={() => setIsDropDownOpen(true)}
-                        >
-                            <div className={styles.name}>
-                                <UserIcon color="#415266" />
-                                <span>{`${info.doctor.name} ${info.doctor.family}`}</span>
-                            </div>
-
-                            <ChevronIcon
-                                className={styles.chevron_dropdown}
-                                color="#758599"
-                                dir={isDropDownOpen ? 'top' : 'bottom'}
-                            />
-                        </div>
-                        <CSSTransition
-                            in={isDropDownOpen}
-                            timeout={300}
-                            classNames={{
-                                enter: styles.dropdown_enter,
-                                enterActive: styles.dropdown_enter_active,
-                                enterDone: styles.dropdown_enter_done,
-                                exitActive: styles.dropdown_exit_active
-                            }}
-                            unmountOnExit
+                            className={styles.wrapper_dropdown}
+                            onMouseOut={() => setIsDropDownOpen(false)}
                         >
                             <div
-                                className={`${styles.items_dropdown} ${
-                                    isDropDownOpen === 'open' ? styles.open : ''
-                                } ${isDropDownOpen === 'closing' ? styles.closing : ''}`}
+                                className={styles.header_dropdown}
                                 onMouseOver={() => setIsDropDownOpen(true)}
                             >
-                                <div className={styles.info_dropdown}>
-                                    <img
-                                        src={
-                                            info.doctor.image
-                                                ? baseURL('UPLOADER') + info.doctor.image
-                                                : null ?? NoImage
-                                        }
-                                        alt="avatar"
-                                    />
-                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <span
-                                            style={{
-                                                fontSize: '1.6rem',
-                                                fontWeight: 'bold',
-                                                marginBottom: '0.5rem'
-                                            }}
-                                        >{`${info.doctor.name} ${info.doctor.family}`}</span>
-                                        {info.doctor.expertises.length > 0 && (
-                                            <span style={{ fontSize: '1.4rem' }}>
-                                                {info.doctor.expertises[0].alias_title
-                                                    ? info.doctor.expertises[0].alias_title
-                                                    : `${
-                                                          info.doctor.expertises[0].degree?.name ??
-                                                          ''
-                                                      } ${
-                                                          info.doctor.expertises[0].expertise
-                                                              ?.name ?? ''
-                                                      }`}
-                                            </span>
-                                        )}
-                                    </div>
+                                <div className={styles.name}>
+                                    <UserIcon color="#415266" />
+                                    <span>{`${info.doctor.name} ${info.doctor.family}`}</span>
                                 </div>
-                                <ul>
-                                    <li onClick={() => history.push('/profile')}>
-                                        <UserIcon color="#758599" />
-                                        <span>پروفایل من</span>
-                                    </li>
 
-                                    <li onClick={() => history.push('/logout')}>
-                                        <ExitIcon color="#758599" />
-                                        <span>خروج از حساب کاربری</span>
-                                    </li>
-                                </ul>
+                                <ChevronIcon
+                                    className={styles.chevron_dropdown}
+                                    color="#758599"
+                                    dir={isDropDownOpen ? 'top' : 'bottom'}
+                                />
                             </div>
-                        </CSSTransition>
-                    </div> */}
-                {/* </div> */}
+                            <CSSTransition
+                                in={isDropDownOpen}
+                                timeout={300}
+                                classNames={{
+                                    enter: styles.dropdown_enter,
+                                    enterActive: styles.dropdown_enter_active,
+                                    enterDone: styles.dropdown_enter_done,
+                                    exitActive: styles.dropdown_exit_active
+                                }}
+                                unmountOnExit
+                            >
+                                <div
+                                    className={`${styles.items_dropdown} ${
+                                        isDropDownOpen === 'open' ? styles.open : ''
+                                    } ${isDropDownOpen === 'closing' ? styles.closing : ''}`}
+                                    onMouseOver={() => setIsDropDownOpen(true)}
+                                >
+                                    <div className={styles.info_dropdown}>
+                                        <img
+                                            src={
+                                                info.doctor.image
+                                                    ? baseURL('UPLOADER') + info.doctor.image
+                                                    : null ?? NoImage
+                                            }
+                                            alt="avatar"
+                                        />
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <span
+                                                style={{
+                                                    fontSize: '1.6rem',
+                                                    fontWeight: 'bold',
+                                                    marginBottom: '0.5rem'
+                                                }}
+                                            >{`${info.doctor.name} ${info.doctor.family}`}</span>
+                                            {info.doctor.expertises.length > 0 && (
+                                                <span style={{ fontSize: '1.4rem' }}>
+                                                    {info.doctor.expertises[0].alias_title
+                                                        ? info.doctor.expertises[0].alias_title
+                                                        : `${
+                                                              info.doctor.expertises[0].degree
+                                                                  ?.name ?? ''
+                                                          } ${
+                                                              info.doctor.expertises[0].expertise
+                                                                  ?.name ?? ''
+                                                          }`}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li onClick={() => history.push('/profile')}>
+                                            <UserIcon color="#758599" />
+                                            <span>پروفایل من</span>
+                                        </li>
 
-                <Button
+                                        <li onClick={() => history.push('/logout')}>
+                                            <ExitIcon color="#758599" />
+                                            <span>خروج از حساب کاربری</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CSSTransition>
+                        </div>
+                    )}
+                </div>
+
+                {/* <Button
                     // variant="secondary"
                     // size="small"
                     id="add-turn"
@@ -462,7 +464,7 @@ const Header = () => {
                     size="medium"
                 >
                     افزودن بیمار
-                </Button>
+                </Button> */}
 
                 {isOpen && (
                     <div
