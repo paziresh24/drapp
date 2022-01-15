@@ -9,7 +9,7 @@ import { useBackPage } from '@paziresh24/context/core/backPage';
 import { sendEvent } from '@paziresh24/utils';
 import { toast } from 'react-toastify';
 import Modal from '../../../core/modal';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { DeliverCase } from '../../deliver/deliverCase';
 import TextArea from '../../../core/textArea';
 import FormAuth from '../../auth/form';
@@ -110,8 +110,6 @@ const Finalize = () => {
     }, [services]);
 
     const submitServices = async () => {
-        // return console.log(services);
-        // console.log(isServicesOfDoctors);
         insurances.remove();
 
         // return;

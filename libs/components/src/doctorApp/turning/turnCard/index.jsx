@@ -132,11 +132,11 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
         window.open(
             `${
                 process.env.NODE_ENV === 'production'
-                    ? window.location.hostname === process.env.REACT_APP_MAIN_DOMAIN
-                        ? process.env.REACT_APP_BASE_URL_PRESCRIPTION_API
+                    ? window.location.hostname === window._env_.P24_MAIN_DOMAIN
+                        ? window._env_.P24_BASE_URL_PRESCRIPTION_API
                         : (info.center?.local_base_url ?? window.location.origin) +
                           process.env.REACT_APP_BASE_URL_PRESCRIPTION_ROUTE
-                    : process.env.REACT_APP_BASE_URL_PRESCRIPTION_API
+                    : window._env_.P24_BASE_URL_PRESCRIPTION_API
             }/pdfs/` + (prescription?.data?.pdf ?? turn.prescription.pdf)
         );
     };

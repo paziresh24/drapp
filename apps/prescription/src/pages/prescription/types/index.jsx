@@ -28,6 +28,7 @@ import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.context';
 import { useLocation } from 'react-router';
 import LabsList from '@paziresh24/components/prescription/details/lists/lab.list';
+import { useBulkItems } from '@paziresh24/hooks/prescription/types';
 
 const Types = () => {
     const [me] = useMe();
@@ -39,6 +40,8 @@ const Types = () => {
     const getItemServices = useGetItemServices({
         prescriptionId: prescriptionId ?? prescriptionInfo?.id
     });
+    const bulkItems = useBulkItems();
+
     const [favoriteItem, setFavoriteItem] = useFavoriteItem();
     const [templateItem, setTemplateItem] = useTemplateItem();
 
@@ -51,10 +54,10 @@ const Types = () => {
         return () => {
             getItemServices.remove();
             setType('drugs');
-            setServices([]);
             // setFavoriteItem([]);
             // setTemplateItem([]);
             setPrescriptionInfo(null);
+            setServices([]);
         };
     }, []);
 
@@ -111,6 +114,8 @@ const Types = () => {
             // getFavoriteServices.remove();
         }
     }, [getFavoriteServices.status]);
+
+    console.log(services);
 
     useEffect(() => {
         if (getItemServices.isSuccess && !_.isEmpty(getItemServices.data && prescriptionInfo)) {

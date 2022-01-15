@@ -16,7 +16,7 @@ const ConsultTerm = () => {
         <div className={styles['iframeWrapper']}>
             {loading && <Overlay />}
             <iframe
-                src={`${process.env.REACT_APP_BASE_URL_CONSULT}/home/talking-with-consult-patient/`}
+                src={`${window._env_.P24_BASE_URL_CONSULT}/home/talking-with-consult-patient/`}
                 title="consult"
                 ref={iframe}
                 className={styles['iframe']}

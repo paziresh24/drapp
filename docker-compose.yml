@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-    drapp-client-local-center:
+    drapp-local:
         container_name: drapp-client-local-center
         # image: dockerhub.paziresh24.com/drapp-client-local
         build:

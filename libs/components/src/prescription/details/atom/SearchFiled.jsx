@@ -107,7 +107,7 @@ const SearchFiled = ({
                 }}
                 // readOnly
             />
-            {(window.location.host === process.env.REACT_APP_MAIN_DOMAIN ||
+            {(window.location.host === window._env_.P24_MAIN_DOMAIN ||
                 window.location.hostname === 'localhost') &&
                 window?.webkitSpeechRecognition && (
                     <VoiceSearch

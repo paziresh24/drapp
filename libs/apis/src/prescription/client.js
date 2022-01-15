@@ -4,16 +4,16 @@ import queryString from 'querystring';
 const client = axios.create({
     baseURL:
         process.env.NODE_ENV === 'production'
-            ? window.location.host === process.env.REACT_APP_MAIN_DOMAIN
+            ? window.location.host === window._env_.P24_MAIN_DOMAIN
                 ? queryString.parse(window.location.search)?.baseURL
                     ? queryString.parse(window.location.search)?.baseURL + '/prescription-api'
-                    : process.env.REACT_APP_BASE_URL_PRESCRIPTION_API
+                    : window._env_.P24_BASE_URL_PRESCRIPTION_API
                 : queryString.parse(window.location.search)?.baseURL
                 ? queryString.parse(window.location.search)?.baseURL + '/prescription-api'
                 : `${window.location.origin}/prescription-api`
             : queryString.parse(window.location.search)?.baseURL
             ? queryString.parse(window.location.search)?.baseURL + '/prescription-api'
-            : process.env.REACT_APP_BASE_URL_PRESCRIPTION_API
+            : window._env_.P24_BASE_URL_PRESCRIPTION_API
 });
 
 client.interceptors.response.use(

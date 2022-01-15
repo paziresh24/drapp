@@ -2,11 +2,11 @@
 FROM node:14.17.5-alpine as build
 WORKDIR /app
 COPY package.json ./
-COPY yarn.lock .
-RUN yarn
+COPY package-lock.json .
+RUN npm install --silent --legacy-peer-deps
 COPY . .
 ENV PUBLIC_URL /doctorapp
-RUN yarn build
+RUN yarn build drapp
 
 # => Run container
 FROM nginx:alpine
@@ -22,7 +22,7 @@ COPY --from=build /app/dist/apps/drapp /usr/share/nginx/html/
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html
 COPY ./apps/drapp/env.sh .
-COPY .env .
+COPY ./apps/drapp/.env .
 
 # Add bash
 RUN apk add --no-cache bash

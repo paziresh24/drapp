@@ -15,7 +15,7 @@ import Create from './prescription/create';
 const SmsPanel = lazy(() => import('./smsPanel'));
 const FillInfo = lazy(() => import('./fillInfo'));
 const Auth = lazy(() => import('./auth'));
-const Profile = lazy(() => import('./profile'));
+import Profile from './profile';
 const Feedbacks = lazy(() => import('./feedbacks'));
 const Complaints = lazy(() => import('./complaints'));
 const Setting = lazy(() => import('./setting'));

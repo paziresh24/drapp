@@ -2,36 +2,5 @@
     "root": "apps/prescription",
     "sourceRoot": "apps/prescription/src",
     "projectType": "application",
-    "targets": {
-        "build": {
-            "executor": "@nrwl/workspace:run-commands",
-            "outputs": ["apps/prescription/build"],
-            "options": {
-                "cwd": "apps/prescription",
-                "command": "node ../../node_modules/@craco/craco/bin/craco.js build"
-            }
-        },
-        "serve": {
-            "executor": "@nrwl/workspace:run-commands",
-            "options": {
-                "cwd": "apps/prescription",
-                "command": "node ../../node_modules/@craco/craco/bin/craco.js start"
-            }
-        },
-        "lint": {
-            "executor": "@nrwl/workspace:run-commands",
-            "options": {
-                "cwd": "apps/prescription",
-                "command": "node ../../node_modules/.bin/eslint src/**/*.tsx src/**/*.ts"
-            }
-        },
-        "test": {
-            "executor": "@nrwl/workspace:run-commands",
-            "options": {
-                "cwd": "apps/prescription",
-                "command": "node ../../node_modules/@craco/craco/bin/craco.js test --watchAll=false"
-            }
-        }
-    },
     "tags": []
 }

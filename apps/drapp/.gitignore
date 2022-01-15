@@ -42,3 +42,5 @@ docs
 
 #videos
 /public/content/videos
+
+env-config.js

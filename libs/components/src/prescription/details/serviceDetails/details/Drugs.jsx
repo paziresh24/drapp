@@ -4,7 +4,7 @@ import Amounts from '../../atom/Amounts';
 import SearchFiled from '../../atom/SearchFiled';
 import Consumption from '../../atom/Consumption';
 import Button from '@paziresh24/components/core/button';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useServices } from '@paziresh24/context/prescription/services-context';
 import TextArea from '@paziresh24/components/core/textArea';
 import { useAddFavoriteServices } from '@paziresh24/hooks/prescription';
@@ -25,6 +25,7 @@ import isEmpty from 'lodash/isEmpty';
 
 const DrugsDetails = () => {
     const [isOpen, setIsOpen] = useToolBox();
+    const detailsRef = useRef();
 
     const [services, setServices] = useServices();
     const [item, selectItem] = useState();
@@ -77,6 +78,21 @@ const DrugsDetails = () => {
             setBrands(getBrands.data ?? []);
         }
     }, [getBrands.status]);
+
+    const func = event => {
+        if (event.keyCode === 13) {
+            var e = event || window.event,
+                target = e.target || e.srcElement;
+
+            if (target.tagName.toUpperCase() == 'INPUT') return;
+            addServiceAction();
+        }
+        document.body.removeEventListener('keydown', func);
+    };
+    useEffect(() => {
+        if (item?.id && count && consumption?.id && instructions?.id && amounts?.id)
+            document.body.addEventListener('keydown', func);
+    }, [item, count, consumption?.id, instructions?.id, amounts?.id]);
 
     const addServiceAction = () => {
         if (!item?.id) {
@@ -152,7 +168,7 @@ const DrugsDetails = () => {
     };
 
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} ref={detailsRef}>
             <div className={styles.base}>
                 <div className="row">
                     <SearchFiled

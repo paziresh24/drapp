@@ -15,9 +15,6 @@ const StarService = ({ service }) => {
     const [stared, setStared] = useState(false);
 
     useEffect(() => {
-        console.log(favoriteItem);
-        console.log(service);
-
         favoriteItem.find(item => item.id === service.favorite_item?.id)
             ? setStared(true)
             : setStared(false);

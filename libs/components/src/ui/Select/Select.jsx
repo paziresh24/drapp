@@ -80,18 +80,21 @@ const Select = ({ items, onChange, defaultValue, simple, error, focus, setFocus,
 
     const input = useRef();
 
-    useEffect(() => {
-        input.current.addEventListener('keydown', e => {
-            if (showOptions) {
-                if (e.keyCode === 13) {
-                    setValue({
-                        name: options[selectHover]?.name,
-                        id: options[selectHover]?.value
-                    });
-                    setShowOptopns(false);
-                }
+    const func = event => {
+        if (showOptions) {
+            if (event.keyCode === 13) {
+                setValue({
+                    name: options[selectHover]?.name,
+                    id: options[selectHover]?.value
+                });
+                setShowOptopns(false);
             }
-        });
+        }
+        input.current.removeEventListener('keydown', func);
+    };
+
+    useEffect(() => {
+        input.current.addEventListener('keydown', func);
     }, [showOptions, options, selectHover]);
 
     useEffect(() => {

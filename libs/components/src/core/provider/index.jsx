@@ -2,30 +2,15 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
 import { TransitionGroup } from 'react-transition-group';
 import { useEffect } from 'react';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 import TagManager from 'react-gtm-module';
 
-const isProduction = process.env.NODE_ENV === 'production';
-const isMainDomain = window.location.host === process.env.REACT_APP_MAIN_DOMAIN;
-
-if (isProduction && isMainDomain) {
-    TagManager.initialize({
-        gtmId: 'GTM-P5RPLDP'
-    });
-}
-
-if (!isProduction) {
-    TagManager.initialize({
-        gtmId: 'GTM-P5RPLDP'
-    });
-}
-
 toast.configure({
-    position: 'bottom-right',
-    autoClose: 3000,
+    position: 'top-right',
+    autoClose: 10000,
     hideProgressBar: false,
     newestOnTop: true,
     closeOnClick: true,
@@ -34,7 +19,8 @@ toast.configure({
     draggable: true,
     pauseOnHover: false,
     closeButton: true,
-    limit: 3
+    limit: 3,
+    theme: 'colored'
 });
 
 export const queryClient = new QueryClient({
@@ -46,9 +32,12 @@ export const queryClient = new QueryClient({
     }
 });
 
+const isProduction = process.env.NODE_ENV === 'production';
+const isMainDomain = location.host === window._env_.P24_MAIN_DOMAIN;
+
 if (isProduction && isMainDomain) {
     Sentry.init({
-        dsn: 'https://cf12c705f54f4d4ba6e963e4b52476bb@p24guard.paziresh24.com/13',
+        dsn: 'https://e61a90738da845c19044453cacd98d94@p24guard.paziresh24.com/9',
         integrations: [new Integrations.BrowserTracing()],
         tracesSampleRate: 1.0,
         environment: process.env.NODE_ENV
@@ -57,22 +46,46 @@ if (isProduction && isMainDomain) {
 
 if (!isProduction) {
     Sentry.init({
-        dsn: 'https://cf12c705f54f4d4ba6e963e4b52476bb@p24guard.paziresh24.com/13',
+        dsn: 'https://e61a90738da845c19044453cacd98d94@p24guard.paziresh24.com/9',
         integrations: [new Integrations.BrowserTracing()],
         tracesSampleRate: 1.0,
         environment: process.env.NODE_ENV
     });
 }
 
+if (isProduction && isMainDomain) {
+    TagManager.initialize({
+        gtmId: 'GTM-P5RPLDP'
+    });
+}
+
+if (!isProduction) {
+    TagManager.initialize({
+        gtmId: 'GTM-P5RPLDP'
+    });
+}
+
+window.addEventListener('goftino_ready', function () {
+    window.__goftino_ready = true;
+    Goftino.setWidget({
+        cssUrl: '/style/gstyle.css',
+        hasIcon: false,
+        hasSound: true
+    });
+});
+
+if (localStorage.getItem('APP_VERSION')) {
+    console.log('---------------- DrApp PWA ----------------');
+    console.log(`v${localStorage.getItem('APP_VERSION')}`);
+    console.log('-------------------------------------------');
+    window.__drapp = {
+        version: localStorage.getItem('APP_VERSION')
+    };
+}
+
 const Provider = ({ children }) => {
     return (
-        <Router
-            basename={
-                window.location.host === process.env.REACT_APP_MAIN_DOMAIN
-                    ? ''
-                    : process.env.PUBLIC_URL
-            }
-        >
+        <Router basename={location.host === 'dr.paziresh24.com' ? '' : process.env.PUBLIC_URL}>
             <ScrollToTop />
             <QueryClientProvider client={queryClient}>
                 <TransitionGroup>{children}</TransitionGroup>
@@ -80,6 +93,7 @@ const Provider = ({ children }) => {
         </Router>
     );
 };
+
 const ScrollToTop = () => {
     const { pathname } = useLocation();
 

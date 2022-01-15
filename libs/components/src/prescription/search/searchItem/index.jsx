@@ -47,8 +47,6 @@ const SearchItem = props => {
         }
     }, [props.selectHover, props.selectHoverId]);
 
-    console.log(props);
-
     return (
         <div
             className={classNames({

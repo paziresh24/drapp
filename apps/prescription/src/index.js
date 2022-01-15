@@ -5,7 +5,7 @@ import './assets/styles/reset.scss';
 import './assets/styles/base.scss';
 import './assets/styles/tailwind.css';
 import { App } from './App';
-import { Provider } from './components/core/provider';
+// import { Provider } from './components/core/provider';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { TourProvider } from '@reactour/tour';
 

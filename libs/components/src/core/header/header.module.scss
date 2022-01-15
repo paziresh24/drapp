@@ -51,7 +51,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(14, 22, 27, 0.596);
+    background: rgba(38, 46, 62, 0.49);
     z-index: 9;
 }
 // @media screen and (max-width: 992px) {
@@ -232,6 +232,7 @@
     flex-direction: column;
     background-color: #fff;
     top: 5rem;
+    left: 2rem;
     width: 45rem;
     // box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(15, 23, 42, 0.1) 0px 0px 0px 1px,
     //     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;

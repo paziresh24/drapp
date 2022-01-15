@@ -56,11 +56,11 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
         window.open(
             `${
                 process.env.NODE_ENV === 'production'
-                    ? window.location.hostname === process.env.REACT_APP_MAIN_DOMAIN
-                        ? process.env.REACT_APP_BASE_URL_PRESCRIPTION
+                    ? window.location.hostname === window._env_.P24_MAIN_DOMAIN
+                        ? window._env_.P24_BASE_URL_PRESCRIPTION_API
                         : (queryString.parse(window.location.search)?.baseURL ??
                               window.location.origin) + '/prescription-api'
-                    : process.env.REACT_APP_BASE_URL_PRESCRIPTION
+                    : window._env_.P24_BASE_URL_PRESCRIPTION_API
             }/pdfs/` + turn.pdf
         );
     };

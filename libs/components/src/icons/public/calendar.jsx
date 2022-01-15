@@ -1,4 +1,4 @@
-const CalendarIcon = () => {
+const CalendarIcon = ({ ...rest }) => {
     return (
         <svg
             width="20"
@@ -6,6 +6,7 @@ const CalendarIcon = () => {
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            {...rest}
         >
             <rect
                 x="2.63989"

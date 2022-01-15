@@ -21,7 +21,7 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
     const updateTaminDoctor = useUpdateTaminDoctor();
     const [isOpen, setIsOpen] = useState(false);
     const [importModal, setImportModal] = useState(false);
-    const [isImport, setIsImport] = useState(true);
+    const [isImport, setIsImport] = useState(false);
     const [isAuthentication, setIsAuthentication] = useState(false);
     const [info] = useDrApp();
 
@@ -201,15 +201,15 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                             <label className={`${styles.checkbox} ${styles.bounce}`}>
                                 <input
                                     type="checkbox"
-                                    id="a"
-                                    defaultChecked
+                                    id="taminImportCheckbox"
+                                    value={isImport}
                                     onChange={() => setIsImport(prev => !prev)}
                                 />
                                 <svg viewBox="0 0 21 21">
                                     <polyline points="5 10.75 8.5 14.25 16 6" />
                                 </svg>
                             </label>
-                            <label htmlFor="a" className={styles.importLabel}>
+                            <label htmlFor="taminImportCheckbox" className={styles.importLabel}>
                                 انتقال پراستفاده های من از پنل تامین اجتماعی
                             </label>
                         </div>

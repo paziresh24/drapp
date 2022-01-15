@@ -27,7 +27,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
     const [otpConfirm, setOtpConfirm] = useState(false);
     const checkOtp = useCheckOtp();
     const [userName, setUserName] = useState();
-    const [isImport, setIsImport] = useState(true);
+    const [isImport, setIsImport] = useState(false);
     const [importModal, setImportModal] = useState(false);
     const [info] = useDrApp();
 
@@ -235,15 +235,15 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                             <label className={`${styles.checkbox} ${styles.bounce}`}>
                                 <input
                                     type="checkbox"
-                                    id="a"
-                                    defaultChecked
+                                    id="salamatImportCheckbox"
+                                    value={isImport}
                                     onChange={() => setIsImport(prev => !prev)}
                                 />
                                 <svg viewBox="0 0 21 21">
                                     <polyline points="5 10.75 8.5 14.25 16 6" />
                                 </svg>
                             </label>
-                            <label htmlFor="a" className={styles.importLabel}>
+                            <label htmlFor="salamatImportCheckbox" className={styles.importLabel}>
                                 انتقال پراستفاده های من از پنل سلامت
                             </label>
                         </div>

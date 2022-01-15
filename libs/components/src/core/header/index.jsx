@@ -79,6 +79,7 @@ const Header = () => {
     return (
         <>
             <header className={styles['header']}>
+                <span className={styles.pageTitle}>{page.title}</span>
                 <div className={styles.right}>
                     {/* <Default>
                         <div
@@ -106,14 +107,17 @@ const Header = () => {
                         </div>
                     </Default> */}
 
-                    <Mobile>
-                        <span className={styles.pageTitle}>{page.title}</span>
-                    </Mobile>
+                    {/* <Mobile> */}
+                    {/* </Mobile> */}
 
                     <div
                         className={styles.selectCenter}
                         onMouseOut={() => setIsCenterSelectOpen(false)}
                     >
+                        <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
+                        <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
+                            از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب کنید
+                        </ReactTooltip>
                         <div
                             className={styles.centerSelectInput}
                             onMouseOver={() => setIsCenterSelectOpen(true)}
@@ -134,10 +138,7 @@ const Header = () => {
                                 dir={isCenterSelectOpen ? 'top' : 'bottom'}
                             />
                         </div>
-                        <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
-                        <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
-                            از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب کنید
-                        </ReactTooltip>
+
                         <CSSTransition
                             in={isCenterSelectOpen}
                             timeout={300}
@@ -336,7 +337,7 @@ const Header = () => {
 
                 {/* <img src={Logo} alt="logo" /> */}
 
-                <div className={styles['actions']}>
+                {/* <div className={styles['actions']}>
                     <div className={styles.action} onClick={openGoftinoAction} aria-hidden>
                         <svg viewBox="0 0 29 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -362,8 +363,8 @@ const Header = () => {
                         })}
                     >
                         هر روز از 7 تا 24 پاسخگوی شما هستیم.
-                    </div>
-                    {!isMobile && (
+                    </div> */}
+                {/* {!isMobile && (
                         <div
                             className={styles.wrapper_dropdown}
                             onMouseOut={() => setIsDropDownOpen(false)}
@@ -446,8 +447,8 @@ const Header = () => {
                                 </div>
                             </CSSTransition>
                         </div>
-                    )}
-                </div>
+                    )} */}
+                {/* </div> */}
 
                 {/* <Button
                     // variant="secondary"

@@ -66,13 +66,13 @@ export const schema = {
         {
             title: 'تعداد',
             meta: {
-                width: '2%'
+                width: '5%'
             }
         },
         {
             title: 'تاریخ موثر',
             meta: {
-                width: '5%'
+                width: '10%'
             }
         }
     ],
@@ -91,13 +91,13 @@ export const schema = {
         {
             title: 'تعداد',
             meta: {
-                width: '2%'
+                width: '5%'
             }
         },
         {
             title: 'تاریخ موثر',
             meta: {
-                width: '5%'
+                width: '10%'
             }
         }
     ],
@@ -116,13 +116,13 @@ export const schema = {
         {
             title: 'تعداد',
             meta: {
-                width: '2%'
+                width: '5%'
             }
         },
         {
             title: 'تاریخ موثر',
             meta: {
-                width: '5%'
+                width: '10%'
             }
         }
     ]

@@ -31,10 +31,10 @@ const Goftino = ({ openState = false, smsSupport = true }) => {
 
     useEffect(() => {
         if (isOpen) {
-            window.location.host !== process.env.REACT_APP_MAIN_DOMAIN &&
+            window.location.host !== window._env_.P24_MAIN_DOMAIN &&
                 smsSupport &&
                 shortLink.mutate();
-            (window.location.host === process.env.REACT_APP_MAIN_DOMAIN ||
+            (window.location.host === window._env_.P24_MAIN_DOMAIN ||
                 window.location.hostname === 'localhost') &&
                 openGoftino();
             isDesktop && document.body.classList.add(styles['open-chat']);
@@ -70,7 +70,7 @@ const Goftino = ({ openState = false, smsSupport = true }) => {
                     aria-hidden
                 />
             </div>
-            {window.location.host !== process.env.REACT_APP_MAIN_DOMAIN &&
+            {window.location.host !== window._env_.P24_MAIN_DOMAIN &&
                 window.location.hostname !== 'localhost' &&
                 smsSupport && (
                     <Modal

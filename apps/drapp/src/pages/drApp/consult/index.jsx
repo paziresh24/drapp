@@ -33,7 +33,7 @@ const Consult = () => {
             {loading && <Overlay />}
             <iframe
                 src={`${
-                    process.env.REACT_APP_BASE_URL_CONSULT
+                    window._env_.P24_BASE_URL_CONSULT
                 }/panel/doctor/?drapp_embed=1&access_token=${token}${
                     room_id ? `&drapp_embed_success_insurance=${room_id}` : ''
                 }#consult`}

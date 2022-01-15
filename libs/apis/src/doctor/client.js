@@ -2,7 +2,7 @@ import axios from 'axios';
 import queryString from 'querystring';
 
 const isProduction = process.env.NODE_ENV === 'production';
-const isMainDomain = window.location.host === process.env.REACT_APP_MAIN_DOMAIN;
+const isMainDomain = window.location.host === window._env_.P24_MAIN_DOMAIN;
 
 const client = axios.create({
     baseURL:
