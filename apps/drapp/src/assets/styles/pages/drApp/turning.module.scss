@@ -3,7 +3,10 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    padding: 2rem;
+
+    @media screen and (min-width: 768px) {
+        padding: 2rem;
+    }
 
     .info-box-wrapper {
         display: flex;
@@ -133,6 +136,12 @@
         padding-bottom: 16rem;
         flex-grow: 1;
         align-items: center;
+
+        @media screen and (min-width: 768px) {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 35px rgba(37, 37, 71, 0.06);
+        }
 
         > * {
             margin: 0.2rem 0;

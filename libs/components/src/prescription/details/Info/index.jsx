@@ -244,24 +244,6 @@ const Info = () => {
                                     {prescriptionInfo.patientAdditionalData.issuerType ?? '-'}
                                 </span>
                             </div>
-                            <div
-                                className={styles.col}
-                                id="p_cell"
-                                onClick={() => {
-                                    setUpdateCellPhoneModal(true);
-                                }}
-                                style={{ width: '100%' }}
-                                aria-hidden
-                                data-tip
-                                data-for="editPhone"
-                            >
-                                <span className={styles['title']}>شماره موبایل: </span>
-                                <span className={styles['value']}>{cellPhone}</span>
-                                <EditIcon />
-                                <ReactTooltip id="editPhone" place="top" type="dark" effect="solid">
-                                    شماره موبایلی که پیامک ثبت نسخه برای آن ارسال می شود
-                                </ReactTooltip>
-                            </div>
                         </div>
                     </Mobile>
                     <div className={styles['row']}>

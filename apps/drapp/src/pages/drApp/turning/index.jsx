@@ -577,10 +577,7 @@ const Turning = () => {
                 <div
                     className={styles['turn-cards']}
                     style={{
-                        overflow: getTurn.isLoading && 'hidden',
-                        background: '#fff',
-                        borderRadius: '1rem',
-                        boxShadow: '0 10px 35px rgba(37, 37, 71, 0.06)'
+                        overflow: getTurn.isLoading && 'hidden'
                     }}
                 >
                     {error && (
