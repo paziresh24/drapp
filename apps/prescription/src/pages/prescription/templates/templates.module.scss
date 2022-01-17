@@ -1,0 +1,29 @@
+.wrapper {
+    padding: 5rem;
+    display: flex;
+    flex-direction: column;
+    @include gap(3rem, false);
+    align-items: flex-end;
+
+    @media screen and (max-width: 768px) {
+        padding: 0rem;
+        @include gap(0, false);
+    }
+
+    .templatesWrapper {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        background: #ffffff;
+        box-shadow: 0px 4px 135px rgba(63, 63, 121, 0.07);
+        border-radius: 1rem;
+
+        & > div {
+            border-bottom: 1px solid rgba(63, 63, 121, 0.123);
+        }
+
+        & > :last-child {
+            border: 0;
+        }
+    }
+}

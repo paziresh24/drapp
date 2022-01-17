@@ -1,5 +1,3 @@
-import styles from '../lists.module.scss';
-import { useServices } from '@paziresh24/context/prescription/services-context';
 import Consumption from './../../atom/Consumption';
 import Instructions from './../../atom/Instructions';
 import Amounts from './../../atom/Amounts';
@@ -7,26 +5,23 @@ import Amounts from './../../atom/Amounts';
 import consumptionData from '@paziresh24/constants/drugData/consumption.json';
 import amountData from '@paziresh24/constants/drugData/amounts.json';
 import instructionsData from '@paziresh24/constants/drugData/instructions.json';
-import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
-import { useState, useEffect } from 'react';
 
-const SelectBox = ({ serviceId, value, editable = true, field, type, service, simple = true }) => {
-    const [prescriptionInfo] = useSelectPrescription();
-    const [error, setError] = useState(false);
-
-    useEffect(() => {
-        if (!value) {
-            return setError(true);
-        }
-        setError(false);
-    }, [value]);
-
-    const [services, setServices] = useServices();
+const SelectBox = ({
+    serviceId,
+    value,
+    editable = true,
+    field,
+    type,
+    service,
+    simple = true,
+    insuranceType,
+    services,
+    setServices
+}) => {
     const changeAction = select => {
-        if (select.id) {
+        if (select) {
             services[services.findIndex(item => item.id === serviceId)][field] = select.id;
             setServices(services);
-            setError(false);
         }
     };
 
@@ -38,12 +33,12 @@ const SelectBox = ({ serviceId, value, editable = true, field, type, service, si
                         simple={simple}
                         onChange={value => changeAction(value)}
                         defaultValue={value}
-                        error={error}
+                        insuranceType={insuranceType}
                     />
                 ) : (
                     <span>
                         {
-                            consumptionData[prescriptionInfo.insuranceType].find(
+                            consumptionData[insuranceType].find(
                                 consumption => +consumption.id === +value
                             )?.name
                         }
@@ -56,12 +51,12 @@ const SelectBox = ({ serviceId, value, editable = true, field, type, service, si
                         simple={simple}
                         onChange={value => changeAction(value)}
                         defaultValue={value}
-                        error={error}
+                        insuranceType={insuranceType}
                     />
                 ) : (
                     <span>
                         {
-                            instructionsData[prescriptionInfo.insuranceType].find(
+                            instructionsData[insuranceType].find(
                                 instructions => +instructions.id === +value
                             )?.name
                         }
@@ -75,15 +70,11 @@ const SelectBox = ({ serviceId, value, editable = true, field, type, service, si
                         onChange={value => changeAction(value)}
                         defaultValue={value}
                         shape={+service?.service?.shape?.id === 9 && service.service.shape.id}
-                        error={error}
+                        insuranceType={insuranceType}
                     />
                 ) : (
                     <span>
-                        {
-                            amountData[prescriptionInfo.insuranceType].find(
-                                amount => +amount.id === +value
-                            )?.name
-                        }
+                        {amountData[insuranceType].find(amount => +amount.id === +value)?.name}
                     </span>
                 ))}
         </>

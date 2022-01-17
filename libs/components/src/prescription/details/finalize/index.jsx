@@ -137,8 +137,8 @@ const Finalize = () => {
                         number_of_period,
                         prescription_id,
                         use_instruction,
-                        use_time,
-                        active_from
+                        use_time
+                        // active_from
                     }) => ({
                         brand,
                         count,
@@ -149,8 +149,8 @@ const Finalize = () => {
                         number_of_period,
                         prescription_id,
                         use_instruction,
-                        use_time,
-                        active_from
+                        use_time
+                        // active_from
                     })
                 );
             const { items } = await addItemToPrescription(servicesWithOutNullItem);

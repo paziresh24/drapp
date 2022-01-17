@@ -233,13 +233,13 @@ const Turning = () => {
                         error.response.data.message ===
                         'بیمار دارای بیمه تامین اجتماعی می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
                     ) {
-                        history.push('/prescription/providers');
+                        history.push('/providers');
                     }
                     if (
                         error.response.data.message ===
                         'بیمار دارای بیمه سلامت می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
                     ) {
-                        history.push('/prescription/providers');
+                        history.push('/providers');
                     }
                 }
             }
@@ -286,13 +286,13 @@ const Turning = () => {
                         error.response.data.message ===
                         'بیمار دارای بیمه تامین اجتماعی می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
                     ) {
-                        history.push('/prescription/providers');
+                        history.push('/providers');
                     }
                     if (
                         error.response.data.message ===
                         'بیمار دارای بیمه سلامت می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
                     ) {
-                        history.push('/prescription/providers');
+                        history.push('/providers');
                     }
                 }
             }
@@ -403,7 +403,7 @@ const Turning = () => {
                         </span>
                         {/* </div>   */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
-                            {getTurn.isSuccess && getTurn.data?.data.length} بیمار
+                            {getTurn.isSuccess && getTurn?.data?.data.length} بیمار
                         </span>
                     </div>
                     <div
@@ -453,7 +453,7 @@ const Turning = () => {
                         {/* </div> */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
                             {getTurn.isSuccess &&
-                                getTurn.data?.data.filter(item =>
+                                getTurn?.data?.data.filter(item =>
                                     item.type === 'prescription'
                                         ? item.finalized
                                         : item.prescription?.finalized
@@ -589,24 +589,19 @@ const Turning = () => {
                         </div>
                     )}
 
-                    {getTurn.isSuccess && isEmpty(getTurn.data.data) && (
+                    {getTurn.isSuccess && isEmpty(getTurn?.data?.data) && (
                         <EmptyState text="نوبتی وجود ندارد" />
                     )}
 
-                    {getTurn.isError &&
-                        getTurn.error.response.data === "Center's server is off ..." && (
-                            <EmptyState text="مرکز فعال نمی باشد." />
-                        )}
-
-                    {getTurn.isError && getTurn.error.message !== "Center's server is off ..." && (
+                    {getTurn.isError && (
                         <Error
-                            error={getTurn.error.response.data.message}
+                            error={getTurn.error?.response?.data?.message}
                             message={`خطا در دریافت نوبت های ${info.center.name}`}
                         />
                     )}
 
                     <TurnsList
-                        turns={getTurn.isSuccess && getTurn.data?.data}
+                        turns={getTurn.isSuccess ? getTurn?.data?.data : []}
                         loading={getTurn.isLoading}
                         refetchData={refetchData}
                     />

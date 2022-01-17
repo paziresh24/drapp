@@ -23,11 +23,10 @@ import moment from 'jalali-moment';
 import { utils } from '@hassanmojab/react-modern-calendar-datepicker';
 import isEmpty from 'lodash/isEmpty';
 
-const DrugsDetails = () => {
+const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) => {
     const [isOpen, setIsOpen] = useToolBox();
     const detailsRef = useRef();
 
-    const [services, setServices] = useServices();
     const [item, selectItem] = useState();
     const [count, setCount] = useState(item?.defaultValue?.count);
     const [consumption, setConsumption] = useState();
@@ -41,7 +40,6 @@ const DrugsDetails = () => {
         service: item?.id
     });
 
-    const [prescriptionInfo] = useSelectPrescription();
     const addFavoriteServices = useAddFavoriteServices();
 
     const [brands, setBrands] = useState([]);
@@ -119,17 +117,21 @@ const DrugsDetails = () => {
             setAmountsFiledError(true);
             return toast.warn('مقادیر مصرف دارو را انتخاب نمایید.');
         }
+        const dateFormat = date
+            ? moment
+                  .from(`${date.year}/${date.month}/${date.day}`, 'fa', 'YYYY/MM/DD')
+                  .format('YYYY-MM-DD')
+            : null;
 
-        if (services.find(service => service.item_id === item?.id)) {
+        if (
+            services.find(
+                service => service?.service?.id === item?.id && service?.date_do === dateFormat
+            )
+        ) {
             return toast.warn('این دارو قبلا اضافه شده است.');
         }
 
         if (item) {
-            const dateFormat = date
-                ? moment
-                      .from(`${date.year}/${date.month}/${date.day}`, 'fa', 'YYYY/MM/DD')
-                      .format('YYYY-MM-DD')
-                : null;
             setServices(service => [
                 ...service,
                 {
@@ -143,7 +145,7 @@ const DrugsDetails = () => {
                     brand: brand?.id,
                     description: description,
                     number_of_period: +repeat,
-                    active_from: dateFormat,
+                    date_do: dateFormat,
                     service_type: item.serviceType.id
                 }
             ]);
@@ -163,7 +165,7 @@ const DrugsDetails = () => {
         setBrands([]);
         setShowBrands(false);
         setShowDescription(false);
-        prescriptionInfo.insuranceType === 'salamat' && setDate(utils('fa').getToday());
+        insuranceType === 'salamat' && setDate(utils('fa').getToday());
         addFavoriteServices.reset();
     };
 
@@ -181,6 +183,7 @@ const DrugsDetails = () => {
                             setCountFieldFocus(true);
                         }}
                         defaultValue={item}
+                        insuranceType={insuranceType}
                     />
                     {isMobile && (
                         <div
@@ -222,11 +225,12 @@ const DrugsDetails = () => {
                         focus={countFieldFocus}
                         setFocus={setCountFieldFocus}
                     />
-                    {prescriptionInfo.insuranceType === 'tamin' && (
+                    {insuranceType === 'tamin' && (
                         <Count
                             label="دوره تکرار"
                             onChange={value => setRepeat(value)}
                             defaultValue={repeat ?? 1}
+                            insuranceType={insuranceType}
                         />
                     )}
                     <Consumption
@@ -238,6 +242,7 @@ const DrugsDetails = () => {
                         }}
                         defaultValue={item?.defaultValue?.use_time}
                         reset={!consumption}
+                        insuranceType={insuranceType}
                     />
                     <Instructions
                         error={instructionsFiledError}
@@ -249,6 +254,7 @@ const DrugsDetails = () => {
                         defaultValue={item?.defaultValue?.how_to_use}
                         focus={instructionsFiledFocus}
                         setFocus={setInstructionsFiledFocus}
+                        insuranceType={insuranceType}
                     />
                     <Amounts
                         error={amountsFiledError}
@@ -258,14 +264,13 @@ const DrugsDetails = () => {
                         }}
                         defaultValue={item?.defaultValue?.use_instruction}
                         shape={
-                            prescriptionInfo.insuranceType === 'salamat' &&
-                            +item?.shape?.id === 9 &&
-                            item?.shape?.id
+                            insuranceType === 'salamat' && +item?.shape?.id === 9 && item?.shape?.id
                         }
                         focus={amountsFiledFocus}
                         setFocus={setAmountsFiledFocus}
+                        insuranceType={insuranceType}
                     />
-                    {prescriptionInfo.insuranceType === 'salamat' && (
+                    {insuranceType === 'salamat' && !noDate && (
                         <SelectDate
                             label="تاریخ موثر"
                             onChange={value => setDate(value)}

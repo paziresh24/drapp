@@ -23,7 +23,8 @@ const Item = ({ service, setItemsSelect, itemsSelect }) => {
                 ...service,
                 item_id: service.service.id,
                 id: id + 1,
-                service_type: service.service_type.id
+                service_type: service.service_type.id,
+                date_do: null
             }
         ]);
         isMobile && setIsOpenToolBox(false);
@@ -44,7 +45,8 @@ const Item = ({ service, setItemsSelect, itemsSelect }) => {
                         ...service,
                         id: +id + 1,
                         service_type: service.service_type.id,
-                        item_id: service.service.id
+                        item_id: service.service.id,
+                        date_do: null
                     }
                 ]);
             } else {
@@ -64,7 +66,7 @@ const Item = ({ service, setItemsSelect, itemsSelect }) => {
             onClick={() => !isMobile && addItemService()}
             aria-hidden
         >
-            <label htmlFor={service.id} className="w-full">
+            <label htmlFor={service.id} className="w-full" style={{ width: '100%' }}>
                 {service.service.name}
             </label>
             {!services.some(item => item.service.id === service.service.id) && isMobile && (

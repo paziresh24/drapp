@@ -6,7 +6,7 @@ import Search from './../Search/Search';
 import { isMobile } from 'react-device-detect';
 import { sendEvent } from '@paziresh24/utils';
 
-const VoiceSearch = ({ onChange, type, typeId, label }) => {
+const VoiceSearch = ({ onChange, type, typeId, label, insuranceType }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const [prescriptionInfo] = useSelectPrescription();
@@ -14,12 +14,7 @@ const VoiceSearch = ({ onChange, type, typeId, label }) => {
     const [searchValue, setSearchValue] = useState('');
 
     const recognition = new window.webkitSpeechRecognition();
-    recognition.lang =
-        prescriptionInfo.insuranceType === 'salamat'
-            ? 'fa-IR'
-            : type === 'drugs'
-            ? 'en-US'
-            : 'fa-IR';
+    recognition.lang = insuranceType === 'salamat' ? 'fa-IR' : type === 'drugs' ? 'en-US' : 'fa-IR';
     recognition.continuous = true;
     recognition.interimResults = true;
 
@@ -149,6 +144,7 @@ const VoiceSearch = ({ onChange, type, typeId, label }) => {
                                     `voiceSearchSuccess - ${value?.name}`
                                 );
                             }}
+                            insuranceType={insuranceType}
                         />
                     </div>
                 </div>

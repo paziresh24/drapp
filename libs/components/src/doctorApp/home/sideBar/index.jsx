@@ -24,6 +24,7 @@ import {
     HouseIcon,
     UserIcon
 } from '../../../icons';
+import { StarIcon } from '../../../icons/public/duotone';
 import { isMobile } from 'react-device-detect';
 import { useMenu } from '@paziresh24/context/core/menu';
 import { useGoogleSheet, useSendMessageTelegram } from '@paziresh24/hooks/core';
@@ -37,6 +38,8 @@ import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
+import { MenuItem } from '../menuItem';
+import { isEmpty } from 'lodash';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
@@ -108,18 +111,6 @@ const SideBar = () => {
 
     useEffect(() => {
         setMenuItems([
-            // { id: 1, name: 'خانه', icon: <HomeIcon />, link: '/' },
-            // { id: 2, name: 'پروفایل کاربری', icon: <UserIcon />, link: '/drapp/profile' },
-            // {
-            //     id: 2,
-            //     name: 'صدور نسخه',
-            //     icon: <PrescriptionIcon color="#fff" />,
-            //     link: '/drapp/prescription',
-            //     subMenu: [
-            //         { name: 'لیست نسخه ها', link: '/drapp/prescription' },
-            //         { name: 'بیمه های من', link: '/drapp/prescription/providers' }
-            //     ]
-            // },
             {
                 id: 'turnning-list-step',
                 name: 'لیست بیماران',
@@ -136,17 +127,21 @@ const SideBar = () => {
                 icon: <PrescriptionMenuIcon color="#3F3F79" />,
                 link: '/prescription'
             },
-            info.center.id === '5532' && {
-                id: 4,
-                name: 'چت',
-                icon: <ChatIcon color="#3F3F79" />,
-                link: '/consult'
+            {
+                id: 25,
+                name: 'پراستفاده ها',
+                icon: <StarIcon color="#3F3F79" />,
+                link: '/favorite/templates',
+                subMenu: [
+                    { name: 'نسخه پراستفاده', link: '/favorite/templates' },
+                    { name: 'اقلام پراستفاده', link: '/favorite/service-favorite' }
+                ]
             },
             {
                 id: 'provider-step',
                 name: 'بیمه های من',
                 icon: <PrescriptionIcon color="#3F3F79" />,
-                link: `/prescription/providers`,
+                link: `/providers`,
                 tourStep: {
                     key: 1,
                     value: '?learn=true'
@@ -158,80 +153,39 @@ const SideBar = () => {
                 icon: <MessageIcon color="#3F3F79" />,
                 link: '/feedbacks',
                 badge: true
-            },
-            // (info.center.id === '5532' || info.center.type_id === 1) && {
-            //     id: 13,
-            //     name: 'شکایات بیماران',
-            //     icon: <ComplaintsIcon color="#3F3F79" />,
-            //     link: '/complaints'
-            // },
-            (info.center.id === '5532' || info.center.type_id === 1) && {
-                id: 6,
-                name: 'تسویه حساب',
-                icon: <CardIcon color="#3F3F79" />,
-                link: '/financial'
-            },
-            info.center.id === '5532' && {
-                id: 7,
-                name: 'قوانین مشاوره',
-                icon: <InfoIcon color="#3F3F79" />,
-                link: '/consult-term'
             }
-            // {
-            //     id: 8,
-            //     name: 'آموزش سامانه',
-            //     icon: <LearnIcon color="#3F3F79" />,
-            //     link: '/learn'
-            // }
-
-            // {
-            //     id: 3,
-            //     name: 'نوبت دهی مطب',
-            //     icon: <TurningIcon color="#fff" />,
-            //     link: '/drapp/turning',
-            //     subMenu: [
-            //         ({ name: 'نوبت های من', link: '/drapp/turning' },
-            //         { name: 'تقویم کاری', link: '/drapp/turning/setting' })
-            //     ]
-            // },
-            // },
-
-            // {
-            //     id: 4,
-            //     name: 'مشاوره آنلاین',
-            //     icon: <ConsultIcon color="#fff" />,
-            //     link: '/drapp/consult',
-            //     modal: () => _.isEmpty(info.centerConsult) && setPromoteConsult(true),
-            //     ...(!_.isEmpty(info.centerConsult) && {
-            //         subMenu: [
-            //             { name: 'چت', link: '/drapp/consult' },
-            //             ...(info.onlyConsult
-            //                 ? [
-            //                       {
-            //                           name: 'لیست نوبت ها',
-            //                           link: '/drapp/consult-turning'
-            //                       }
-            //                   ]
-            //                 : []),
-            //             // { name: 'نوبت های من', link: '/drapp/consult-turning' },
-            //             {
-            //                 name: 'تسویه حساب',
-            //                 link: '/drapp/financial'
-            //             }
-            //         ]
-            //     })
-            // },
-            // { id: 9, name: 'خروج', icon: <ExitIcon />, link: '/logout' }
-
-            // {
-            //     id: 5,
-            //     name: 'مدیریت مالی',
-            //     icon: <CardIcon />,
-            //     link: '/drapp/financial'
-            // }
-            // { id: 6, name: 'شارژ پنل پیامکی', icon: <MessageIcon />, link: '/drapp/smspanel' }
         ]);
+
+        if (info.center.id === '5532') {
+            setMenuItems(prev => [
+                ...prev,
+                {
+                    id: 7,
+                    name: 'قوانین مشاوره',
+                    icon: <InfoIcon color="#3F3F79" />,
+                    link: '/consult-term'
+                },
+                {
+                    id: 4,
+                    name: 'چت',
+                    icon: <ChatIcon color="#3F3F79" />,
+                    link: '/consult'
+                }
+            ]);
+            if (info.center.type_id === 1) {
+                setMenuItems(prev => [
+                    ...prev,
+                    {
+                        id: 6,
+                        name: 'تسویه حساب',
+                        icon: <CardIcon color="#3F3F79" />,
+                        link: '/financial'
+                    }
+                ]);
+            }
+        }
     }, [info.center]);
+
     const sendMessageTelegram = useSendMessageTelegram();
 
     const promoteConsultAction = () => {
@@ -417,59 +371,9 @@ const SideBar = () => {
                     </div>
 
                     <div>
-                        {menuItems.map(
-                            item =>
-                                item && (
-                                    <NavLink
-                                        key={item.id}
-                                        to={item.link}
-                                        exact
-                                        className={styles.menuBarItem}
-                                        activeClassName={styles['active']}
-                                        style={{
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center'
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                cursor: 'pointer',
-                                                height: '5.5rem',
-                                                width: '5.5rem',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                position: 'relative'
-                                            }}
-                                        >
-                                            {item.icon}
-                                            {!getFeedbacks.isLoading && item.badge && (
-                                                <span className={styles['badge']} aria-hidden>
-                                                    <span className={styles['red']}>
-                                                        {calculateNoReplyComments()}
-                                                    </span>
-                                                </span>
-                                            )}
-                                        </div>
-
-                                        {/* {open && ( */}
-                                        <span
-                                            style={{
-                                                position: 'absolute',
-                                                right: open ? '6rem' : '0',
-                                                transition: 'all 0.3s',
-                                                transitionDelay: !open ? 'unset' : '0.2s',
-                                                opacity: open ? '1' : '0',
-                                                fontWeight: '500'
-                                            }}
-                                        >
-                                            {item.name}
-                                        </span>
-                                        {/* )} */}
-                                    </NavLink>
-                                )
-                        )}
+                        {menuItems.map(item => (
+                            <MenuItem key={item.id} item={item} />
+                        ))}
                     </div>
                 </div>
 
@@ -606,7 +510,7 @@ const SideBar = () => {
                                 </div>
                             )}
                         </div> */}
-                        <SideBarMenu
+                        {/* <SideBarMenu
                             menuItems={menuItems}
                             openSubMenu={openSubMenu}
                             setOpenSubMenu={setOpenSubMenu}
@@ -619,7 +523,7 @@ const SideBar = () => {
                                     </span>
                                 </span>
                             )}
-                        </SideBarMenu>
+                        </SideBarMenu> */}
                     </div>
 
                     {/* {!centersConfig[window.location.hostname]?.hideDownloadBox && (

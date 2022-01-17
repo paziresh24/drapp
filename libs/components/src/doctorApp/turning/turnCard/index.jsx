@@ -86,13 +86,13 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                     e.response.data.message ===
                     'بیمار دارای بیمه تامین اجتماعی می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
                 ) {
-                    history.push('/prescription/providers');
+                    history.push('/providers');
                 }
                 if (
                     e.response.data.message ===
                     'بیمار دارای بیمه سلامت می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
                 ) {
-                    history.push('/prescription/providers');
+                    history.push('/providers');
                 }
             }
         }
@@ -220,13 +220,13 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                     e.response.data.message ===
                     'بیمار دارای بیمه تامین اجتماعی می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
                 ) {
-                    history.push('/prescription/providers');
+                    history.push('/providers');
                 }
                 if (
                     e.response.data.message ===
                     'بیمار دارای بیمه سلامت می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
                 ) {
-                    history.push('/prescription/providers');
+                    history.push('/providers');
                 }
             }
         }

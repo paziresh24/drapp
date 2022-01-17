@@ -19,33 +19,34 @@ const Import = ({ isOpen, onClose, provider, taminId }) => {
 
     const importRequests = useImportRequests();
     const importStatus = useImportStatus({
-        provider: prescriptionInfo?.insuranceType,
+        provider: prescriptionInfo?.insuranceType ?? provider,
         _sort: 'created_at:DESC'
     });
     const updateTaminDoctor = useUpdateTaminDoctor();
 
     const importRequestAction = data => {
-        updateTaminDoctor.mutate(
-            {
-                // TODO: tamin doctor not exited in visotor api
-                id: prescriptionInfo?.doctor?.tamin_doctor ?? taminId,
-                username: toEnglishNumber(data.username),
-                password: toEnglishNumber(data.password)
-            },
-            {
-                onSuccess: () => {
-                    return;
+        (prescriptionInfo?.doctor?.tamin_doctor ?? taminId) &&
+            updateTaminDoctor.mutate(
+                {
+                    // TODO: tamin doctor not exited in visotor api
+                    id: prescriptionInfo?.doctor?.tamin_doctor ?? taminId,
+                    username: toEnglishNumber(data.username),
+                    password: toEnglishNumber(data.password)
                 },
-                onError: error => {
-                    const statusCode = error.response?.status;
-                    if (statusCode === 401) {
-                        toast.error('اطلاعات وارد شده نادرست می باشد.');
-                    } else {
-                        toast.error(error.response.data.message);
+                {
+                    onSuccess: () => {
+                        return;
+                    },
+                    onError: error => {
+                        const statusCode = error.response?.status;
+                        if (statusCode === 401) {
+                            toast.error('اطلاعات وارد شده نادرست می باشد.');
+                        } else {
+                            toast.error(error.response.data.message);
+                        }
                     }
                 }
-            }
-        );
+            );
         importRequests.mutate(
             {
                 provider: prescriptionInfo?.insuranceType ?? provider,

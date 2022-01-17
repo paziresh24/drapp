@@ -53,6 +53,7 @@ const ToolBox = () => {
             <div className={`${styles.wrapper} ${styles.mobile}`}>
                 <div
                     className="absolute top-[1.3rem] left-[1.2rem]"
+                    style={{ position: 'absolute', top: '1.3rem', left: '1.2rem' }}
                     onClick={() => setIsOpen(false)}
                     aria-hidden
                 >

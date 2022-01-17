@@ -6,21 +6,20 @@ import { useSelectPrescription } from '@paziresh24/context/prescription/selectPr
 import { extractTypeFromName, translateType } from '@paziresh24/utils';
 import isEmpty from 'lodash/isEmpty';
 
-const Frequent = ({ type, typeId, ...props }) => {
-    const [prescriptionInfo] = useSelectPrescription();
+const Frequent = ({ type, typeId, insuranceType, ...props }) => {
     const getFrequentItems = useGetFrequentItems({
-        provider: prescriptionInfo?.insuranceType,
+        provider: insuranceType,
         ...(type === 'drugs' && {
-            serviceType: prescriptionInfo?.insuranceType === 'tamin' ? 79 : 1
+            serviceType: insuranceType === 'tamin' ? 79 : 1
         }),
         ...(type === 'lab' && {
-            serviceType_in: prescriptionInfo?.insuranceType === 'tamin' ? 80 : 2
+            serviceType_in: insuranceType === 'tamin' ? 80 : 2
         }),
         ...(type === 'imaging' && {
-            serviceType_in: prescriptionInfo?.insuranceType === 'tamin' ? typeId : 3
+            serviceType_in: insuranceType === 'tamin' ? typeId : 3
         }),
         ...(type === 'others' && {
-            serviceType_nin: prescriptionInfo?.insuranceType === 'tamin' ? [79, 80] : [1, 2]
+            serviceType_nin: insuranceType === 'tamin' ? [79, 80] : [1, 2]
         })
     });
 

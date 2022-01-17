@@ -2,11 +2,9 @@ import styles from './details.module.scss';
 import SearchFiled from '../../atom/SearchFiled';
 import Button from '@paziresh24/components/core/button';
 import { useState, useEffect } from 'react';
-import { useServices } from '@paziresh24/context/prescription/services-context';
 import TextArea from '@paziresh24/components/core/textArea';
 import { useAddFavoriteServices } from '@paziresh24/hooks/prescription';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
-import { StarIcon } from '@paziresh24/components/icons/public/duotone';
 import { toast } from 'react-toastify';
 import { MinusLineIcon, PlusLineIcon } from '@paziresh24/components/icons';
 import Count from '../../atom/Count';
@@ -14,32 +12,33 @@ import SelectDate from './../../../selectDate/index';
 import moment from 'jalali-moment';
 import { isMobile } from 'react-device-detect';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
-import StarService from './../../atom/starService';
 
-const LabsDetails = () => {
+const LabsDetails = ({ services, setServices, insuranceType, noDate = false }) => {
     const [isOpen, setIsOpen] = useToolBox();
-    const [services, setServices] = useServices();
     const [item, selectItem] = useState();
     const [count, setCount] = useState(1);
     const [date, setDate] = useState();
     const [description, setDescription] = useState();
 
-    const [prescriptionInfo] = useSelectPrescription();
     const addFavoriteServices = useAddFavoriteServices();
 
     const [showDescription, setShowDescription] = useState(false);
 
     const addServiceAction = () => {
         if (item) {
-            if (services.find(service => service.item_id === item?.id)) {
-                return toast.warn('این آزمایش قبلا اضافه شده است.');
-            }
-
             const dateFormat = date
                 ? moment
                       .from(`${date.year}/${date.month}/${date.day}`, 'fa', 'YYYY/MM/DD')
                       .format('YYYY-MM-DD')
                 : null;
+
+            if (
+                services.find(
+                    service => service?.service?.id === item?.id && service?.date_do === dateFormat
+                )
+            ) {
+                return toast.warn('این آزمایش قبلا اضافه شده است.');
+            }
 
             setServices(service => [
                 ...service,
@@ -73,6 +72,7 @@ const LabsDetails = () => {
                         label="انتخاب آزمایش"
                         onChange={value => selectItem(value)}
                         defaultValue={item}
+                        insuranceType={insuranceType}
                     />
                     {isMobile && (
                         <div
@@ -104,12 +104,14 @@ const LabsDetails = () => {
                 </div>
                 <div className={styles['amount-bar']}>
                     <Count onChange={value => setCount(value)} defaultValue={count} />
-                    <SelectDate
-                        label="تاریخ موثر"
-                        onChange={value => setDate(value)}
-                        default-value={item?.defaultValue?.dateDo}
-                        today
-                    />
+                    {!noDate && (
+                        <SelectDate
+                            label="تاریخ موثر"
+                            onChange={value => setDate(value)}
+                            default-value={item?.defaultValue?.dateDo}
+                            today
+                        />
+                    )}
                 </div>
             </div>
             {showDescription && (

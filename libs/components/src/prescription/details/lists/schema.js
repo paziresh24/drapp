@@ -47,7 +47,8 @@ export const schema = {
             title: 'تاریخ موثر',
             meta: {
                 width: '4%',
-                provider: 'salamat'
+                provider: 'salamat',
+                notShowReadOnly: true
             }
         }
     ],
@@ -72,7 +73,8 @@ export const schema = {
         {
             title: 'تاریخ موثر',
             meta: {
-                width: '10%'
+                width: '10%',
+                notShowReadOnly: true
             }
         }
     ],
@@ -97,7 +99,8 @@ export const schema = {
         {
             title: 'تاریخ موثر',
             meta: {
-                width: '10%'
+                width: '10%',
+                notShowReadOnly: true
             }
         }
     ],
@@ -122,7 +125,8 @@ export const schema = {
         {
             title: 'تاریخ موثر',
             meta: {
-                width: '10%'
+                width: '10%',
+                notShowReadOnly: true
             }
         }
     ]

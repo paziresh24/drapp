@@ -16,7 +16,8 @@ const SearchFiled = ({
     id,
     nextStep,
     error,
-    typeId
+    typeId,
+    insuranceType
 }) => {
     const [showSerch, setShowSearch] = useState(false);
     const [selectItem, setSelectItem] = useState();
@@ -32,6 +33,11 @@ const SearchFiled = ({
             setItem(selectItem);
         }
     }, [selectItem]);
+
+    useEffect(() => {
+        setSearchValue('');
+        searchRef.current.value = '';
+    }, [insuranceType]);
 
     const setItem = item => {
         searchRef.current.value = item?.name;
@@ -118,6 +124,7 @@ const SearchFiled = ({
                         type={type}
                         typeId={typeId}
                         label={label}
+                        insuranceType={insuranceType}
                     />
                 )}
             <Search
@@ -133,6 +140,7 @@ const SearchFiled = ({
                 label={label}
                 setResults={setResults}
                 typeId={typeId}
+                insuranceType={insuranceType}
             />
         </div>
     );

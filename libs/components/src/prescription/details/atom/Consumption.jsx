@@ -1,10 +1,8 @@
 import Select from '../../../ui/Select/Select';
 import { useEffect, useState } from 'react';
 import consumptionData from '@paziresh24/constants/drugData/consumption.json';
-import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 
-const Consumption = ({ onChange, defaultValue, simple, error, focus }) => {
-    const [prescriptionInfo] = useSelectPrescription();
+const Consumption = ({ onChange, defaultValue, simple, error, focus, insuranceType }) => {
     const [consumption, setConsumption] = useState([]);
 
     useEffect(() => {
@@ -12,7 +10,7 @@ const Consumption = ({ onChange, defaultValue, simple, error, focus }) => {
     }, []);
 
     const reformatData = () => {
-        const reformat = consumptionData[prescriptionInfo.insuranceType].map(consumption => ({
+        const reformat = consumptionData[insuranceType].map(consumption => ({
             name: consumption.name.includes('ي')
                 ? consumption.name.replace(/ي/g, 'ی')
                 : consumption.name,

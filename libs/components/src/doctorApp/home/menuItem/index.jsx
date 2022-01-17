@@ -1,78 +1,79 @@
 import styles from './menuItem.module.scss';
-import { Link, NavLink } from 'react-router-dom';
-import { ChevronIcon, HelpIcon } from '../../../icons';
+import { Link, NavLink, useHistory } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
+import { useState } from 'react';
 import { useMenu } from '@paziresh24/context/core/menu';
-import { isMobile } from 'react-device-detect';
-import ReactTooltip from 'react-tooltip';
-import { useTour } from '@reactour/tour';
 
-const MenuItem = ({
-    children,
-    link,
-    external,
-    submenu,
-    openSubMenu,
-    setOpenSubMenu,
-    id,
-    modal,
-    toolTip,
-    tourStep
-}) => {
-    const [, setOpenSideBar] = useMenu();
-    const { currentStep, isOpen, setIsOpen } = useTour();
+const MenuItem = ({ item }) => {
+    const [open, setOpen] = useMenu();
+    const history = useHistory();
+    const [isDropDownOpen, setIsDropDownOpen] = useState();
 
     return (
-        <>
-            {!external && !submenu ? (
-                <NavLink
-                    to={`${link}/${
-                        tourStep && currentStep === tourStep?.key && isOpen ? tourStep?.value : ''
-                    }`}
-                    id={id}
-                    exact
-                    className={styles['menu-item']}
-                    activeClassName={styles['active']}
-                    onClick={e => {
-                        if (modal) {
-                            modal();
-                            e.preventDefault();
-                        }
-                        setOpenSubMenu(false);
-                        setIsOpen(false);
-                        isMobile && setOpenSideBar(false);
+        <div className={styles.menuBarItem}>
+            <NavLink
+                key={item?.id}
+                to={item?.link}
+                className={styles.menuContent}
+                activeClassName={styles['active']}
+                style={{
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center'
+                }}
+                onMouseOver={() => item?.subMenu && setIsDropDownOpen(true)}
+                onMouseLeave={() => item?.subMenu && setIsDropDownOpen(false)}
+            >
+                <div className={styles.menuIcon}>
+                    {item?.icon}
+                    {/* {!getFeedbacks.isLoading && item.badge && (
+                    <span className={styles['badge']} aria-hidden>
+                        <span className={styles['red']}>{calculateNoReplyComments()}</span>
+                    </span>
+                )} */}
+                </div>
+
+                {/* {open && ( */}
+                <span
+                    style={{
+                        right: open ? '6rem' : '0',
+                        transitionDelay: !open ? 'unset' : '0.2s',
+                        opacity: open ? '1' : '0'
                     }}
+                    className={styles.menuName}
                 >
-                    <div className={styles['menu-item-content']}>
-                        {children}{' '}
-                        {toolTip && !isMobile && <HelpIcon data-tip data-for="providerhint" />}
-                        <ReactTooltip id="providerhint" place="top" type="dark" effect="solid">
-                            قبل از شروع نسخه نویسی از این قسمت احراز هویت بیمه ها را انجام دهید
-                        </ReactTooltip>
+                    {item?.name}
+                </span>
+                {/* )} */}
+            </NavLink>
+            {item.subMenu && (
+                <CSSTransition
+                    in={isDropDownOpen}
+                    timeout={300}
+                    classNames={{
+                        enter: styles.dropdown_enter,
+                        enterActive: styles.dropdown_enter_active,
+                        enterDone: styles.dropdown_enter_done,
+                        exitActive: styles.dropdown_exit_active
+                    }}
+                    unmountOnExit
+                >
+                    <div
+                        className={`${styles.items_dropdown} ${
+                            isDropDownOpen === 'open' ? styles.open : ''
+                        } ${isDropDownOpen === 'closing' ? styles.closing : ''}`}
+                        onMouseOver={() => setIsDropDownOpen(true)}
+                        onMouseLeave={() => setIsDropDownOpen(false)}
+                    >
+                        {item.subMenu.map(item => (
+                            <Link to={item.link}>
+                                <span>{item.name}</span>
+                            </Link>
+                        ))}
                     </div>
-                </NavLink>
-            ) : (
-                <Link
-                    to={submenu[0].link}
-                    className={`${styles['menu-item']} ${openSubMenu[id] ? styles['active'] : ''}`}
-                    onClick={() =>
-                        !openSubMenu[id]
-                            ? setOpenSubMenu({ [id]: true })
-                            : setOpenSubMenu({ [id]: false })
-                    }
-                    aria-hidden
-                >
-                    <div className={styles['menu-item-content']}>{children}</div>
-                    {submenu && (
-                        <ChevronIcon dir={openSubMenu[id] ? 'bottom' : 'left'} color="#fff" />
-                    )}
-                </Link>
+                </CSSTransition>
             )}
-            {external && (
-                <a href={link} className={styles['menu-item']}>
-                    {children}
-                </a>
-            )}
-        </>
+        </div>
     );
 };
 

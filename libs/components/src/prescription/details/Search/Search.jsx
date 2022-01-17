@@ -25,6 +25,7 @@ const Search = ({
     selectHover,
     typeId,
     noSearchBar,
+    insuranceType,
     ...props
 }) => {
     const [results, setResults] = useState([]);
@@ -34,20 +35,25 @@ const Search = ({
     const [page, setPage] = useState(0);
 
     const search = useSearch(`${prescriptionInfo?.id ?? prescriptionInfo?.id}`, {
-        _q: prescriptionInfo?.insuranceType === 'salamat' && !searchValue ? 'a' : searchValue,
+        _q: insuranceType === 'salamat' && !searchValue ? 'a' : searchValue,
         _start: page,
         _limit: 10,
-        ...(type === 'drugs' && { type: serviceTypeList[type][prescriptionInfo.insuranceType] }),
-        ...(type === 'lab' && { type: serviceTypeList[type][prescriptionInfo.insuranceType] }),
+        ...(type === 'drugs' && { type: serviceTypeList[type][insuranceType] }),
+        ...(type === 'lab' && { type: serviceTypeList[type][insuranceType] }),
         ...(type === 'imaging' && {
-            type: prescriptionInfo?.insuranceType === 'tamin' ? typeId : 3
+            type: insuranceType === 'tamin' ? typeId : 3
         }),
         ...(type === 'others' && {
-            type_nin:
-                prescriptionInfo?.insuranceType === 'tamin' ? [79, 80, 81, 83, 84, 85] : [1, 2, 3]
-        })
+            type_nin: insuranceType === 'tamin' ? [79, 80, 81, 83, 84, 85] : [1, 2, 3]
+        }),
+        provider: insuranceType
     });
     const searchInput = useRef();
+
+    useEffect(() => {
+        search.remove();
+        setResults([]);
+    }, [insuranceType]);
 
     useEffect(() => {
         props.setResults && props.setResults(results);
@@ -93,7 +99,7 @@ const Search = ({
                         () => {
                             search.refetch();
                         },
-                        prescriptionInfo.insuranceType === 'salamat' ? 1000 : 300
+                        insuranceType === 'salamat' ? 1000 : 300
                     )
                 );
             } else {
@@ -103,7 +109,7 @@ const Search = ({
                         () => {
                             search.refetch();
                         },
-                        prescriptionInfo.insuranceType === 'salamat' ? 1000 : 300
+                        insuranceType === 'salamat' ? 1000 : 300
                     )
                 );
             }
@@ -154,12 +160,13 @@ const Search = ({
                         typeId={typeId}
                         onClose={onClose}
                         setSelectItem={setSelectItem}
+                        insuranceType={insuranceType}
                     />
                 )}
                 {results.length > 0 && searchValue && (
                     <>
                         <div className={styles['searchItems']}>
-                            {prescriptionInfo.insuranceType === 'tamin'
+                            {insuranceType === 'tamin'
                                 ? results.map((result, i) => (
                                       <SearchItem
                                           key={result.id}

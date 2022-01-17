@@ -1,13 +1,11 @@
 import { StarIcon } from '@paziresh24/components/icons/public/duotone';
 import { useFavoriteItem } from '@paziresh24/context/prescription/favoriteItem.context';
 import { useAddFavoriteServices, useDeleteFavoriteServices } from '@paziresh24/hooks/prescription';
-import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useServices } from '@paziresh24/context/prescription/services-context';
 
-const StarService = ({ service }) => {
-    const [prescriptionInfo] = useSelectPrescription();
+const StarService = ({ service, insuranceType }) => {
     const [services, setServices] = useServices();
     const [favoriteItem, setFavoriteItem] = useFavoriteItem();
     const addFavoriteServices = useAddFavoriteServices();
@@ -43,7 +41,7 @@ const StarService = ({ service }) => {
                     count: service.count,
                     description: service.description,
                     ...(service.number_of_period && { number_of_period: service.number_of_period }),
-                    provider: prescriptionInfo.insuranceType,
+                    provider: insuranceType,
                     type: undefined
                 },
                 {

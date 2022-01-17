@@ -15,10 +15,9 @@ import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
 import { isMobile } from 'react-device-detect';
 import StarService from './../../atom/starService';
 
-const OthersDetails = () => {
+const OthersDetails = ({ services, setServices, insuranceType, noDate = false }) => {
     const [isOpen, setIsOpen] = useToolBox();
 
-    const [services, setServices] = useServices();
     const [item, selectItem] = useState();
     const [count, setCount] = useState(1);
     const [date, setDate] = useState();
@@ -29,15 +28,19 @@ const OthersDetails = () => {
 
     const addServiceAction = () => {
         if (item) {
-            if (services.find(service => service.item_id === item?.id)) {
-                return toast.warn('این پاراکلینیک قبلا اضافه شده است.');
-            }
-
             const dateFormat = date
                 ? moment
                       .from(`${date.year}/${date.month}/${date.day}`, 'fa', 'YYYY/MM/DD')
                       .format('YYYY-MM-DD')
                 : null;
+
+            if (
+                services.find(
+                    service => service?.service?.id === item?.id && service?.date_do === dateFormat
+                )
+            ) {
+                return toast.warn('این پاراکلینیک قبلا اضافه شده است.');
+            }
 
             setServices(service => [
                 ...service,
@@ -71,6 +74,7 @@ const OthersDetails = () => {
                         label="انتخاب فیزیوتراپی، خدمات پزشکی"
                         onChange={value => selectItem(value)}
                         defaultValue={item}
+                        insuranceType={insuranceType}
                     />
                     {isMobile && (
                         <div
@@ -102,12 +106,14 @@ const OthersDetails = () => {
                 </div>
                 <div className={styles['amount-bar']}>
                     <Count onChange={value => setCount(value)} defaultValue={count} />
-                    <SelectDate
-                        label="تاریخ موثر"
-                        today
-                        onChange={value => setDate(value)}
-                        default-value={item?.defaultValue?.dateDo}
-                    />
+                    {!noDate && (
+                        <SelectDate
+                            label="تاریخ موثر"
+                            today
+                            onChange={value => setDate(value)}
+                            default-value={item?.defaultValue?.dateDo}
+                        />
+                    )}
                 </div>
             </div>
             {showDescription && (

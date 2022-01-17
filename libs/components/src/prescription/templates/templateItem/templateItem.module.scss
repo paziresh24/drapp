@@ -1,0 +1,93 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        padding: 4rem;
+        justify-content: space-between;
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.6;
+        }
+
+        @media screen and (max-width: 768px) {
+            padding: 4rem 2rem;
+        }
+
+        .title {
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .actionWrapper {
+            display: flex;
+            @include gap(1rem);
+
+            div {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.searchFilterWrapper {
+    display: flex;
+    @include gap(1rem);
+    overflow: auto;
+    padding-left: 1rem;
+    padding-right: 3.5rem;
+    margin-bottom: 2rem;
+
+    .searchFilterButton {
+        padding: 0 1.5rem;
+        background: #27bda021;
+        border-radius: 100rem;
+        font-size: 1.4rem;
+        height: 3rem;
+        color: #107c6a;
+        font-weight: 500;
+        border: 1px solid #119e87;
+        opacity: 0.5;
+        min-width: fit-content;
+        transition: all 0.5s;
+        outline: 0;
+
+        &.selected {
+            opacity: 1;
+            border-color: #119e87;
+        }
+    }
+}
+
+.providerWrapper {
+    padding: 0 4rem;
+    display: flex;
+    align-items: center;
+    @include gap(1rem);
+    margin-bottom: 2rem;
+}
+
+.providerButton {
+    padding: 0 1.5rem;
+    background: #1659df13;
+    border-radius: 100rem;
+    font-size: 1.4rem;
+    height: 3rem;
+    color: #1659df;
+    font-weight: 500;
+    border: 1px solid #1659df83;
+    opacity: 0.5;
+    min-width: fit-content;
+    transition: all 0.5s;
+    outline: 0;
+
+    &.selected {
+        opacity: 1;
+        border-color: #1659df;
+    }
+}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './tab.module.scss';
 
-const Tabs = ({ children, id, center, activeTab }) => {
+const Tabs = ({ children, id, center, activeTab, onChange }) => {
     const [selected, setSelected] = useState(0);
     const select = i => setSelected(i);
 
@@ -15,8 +15,14 @@ const Tabs = ({ children, id, center, activeTab }) => {
         }
     }, [activeTab]);
 
+    useEffect(() => {
+        if (select) {
+            onChange && onChange(children[selected].props.keyTab);
+        }
+    }, [selected]);
+
     return (
-        <div>
+        <>
             <div className={styles['tab-buttons']} style={{ justifyContent: center && 'center' }}>
                 {children.map((tab, i) => (
                     <button
@@ -35,7 +41,7 @@ const Tabs = ({ children, id, center, activeTab }) => {
                 ))}
             </div>
             {children[selected]}
-        </div>
+        </>
     );
 };
 

@@ -2,6 +2,10 @@
 import { lazy } from 'react';
 import Learn from './learn';
 import PrescriptionId from '@paziresh24/apps/prescription/pages/prescription/types';
+import Templates from '@paziresh24/apps/prescription/pages/prescription/templates';
+import AddTemplate from '@paziresh24/apps/prescription/pages/prescription/templates/addTemplates';
+import EditTemplate from '@paziresh24/apps/prescription/pages/prescription/templates/editTemplates';
+import ServiceFavorite from '@paziresh24/apps/prescription/pages/prescription/serviceFavorite';
 
 // import pages
 import DrApp from './home';
@@ -154,7 +158,7 @@ export const routes = [
         exact: true
     },
     {
-        path: '/prescription/providers',
+        path: '/providers',
         name: 'PrescriptionProviders',
         title: 'بیمه های من',
         component: Providers,
@@ -166,6 +170,38 @@ export const routes = [
         name: 'PrescriptionCreate',
         title: 'صدور نسخه',
         component: Create,
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/favorite/templates',
+        name: 'PrescriptionTemplate',
+        title: 'نسخه پراستفاده های من',
+        component: Templates,
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/favorite/templates/add',
+        name: 'PrescriptionTemplate',
+        title: 'افزودن نسخه پراستفاده',
+        component: AddTemplate,
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/favorite/templates/:prescriptionId',
+        name: 'PrescriptionTemplate',
+        title: 'ویرایش نسخه پراستفاده',
+        component: EditTemplate,
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/favorite/service-favorite',
+        name: 'ServiceFavorite',
+        title: 'اقلام پراستفاده',
+        component: ServiceFavorite,
         isPrivate: true,
         exact: true
     },

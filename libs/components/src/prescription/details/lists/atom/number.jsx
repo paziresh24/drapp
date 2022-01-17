@@ -1,10 +1,15 @@
-import styles from '../lists.module.scss';
-import { useServices } from '@paziresh24/context/prescription/services-context';
 import Count from './../../atom/Count';
 
-const Number = ({ serviceId, value, editable = true, field, label, simple = true }) => {
-    const [services, setServices] = useServices();
-
+const Number = ({
+    serviceId,
+    value,
+    editable = true,
+    field,
+    label,
+    simple = true,
+    services,
+    setServices
+}) => {
     const editNumber = number => {
         if (number) {
             services[services.findIndex(item => item.id === serviceId)][field] = number;

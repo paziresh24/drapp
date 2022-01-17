@@ -41,7 +41,8 @@ const Item = ({ service, setFavoriteListSelect, favoriteListSelect }) => {
                 id: id + 1,
                 service_type: item.service_type,
                 item_id: item.service.id,
-                favorite_item: item
+                favorite_item: item,
+                date_do: null
             }
         ]);
         sendEvent('clickfavorite', 'prescription', 'clickfavorite');
@@ -64,7 +65,8 @@ const Item = ({ service, setFavoriteListSelect, favoriteListSelect }) => {
                         ...service,
                         id: +id + 1,
                         service_type: service.service_type,
-                        item_id: service.service.id
+                        item_id: service.service.id,
+                        date_do: null
                     }
                 ]);
             } else {
@@ -99,8 +101,11 @@ const Item = ({ service, setFavoriteListSelect, favoriteListSelect }) => {
                 >
                     <RemoveIcon />
                 </div>
-                <div className="flex w-full cursor-pointer">
-                    <label htmlFor={service.id} className="w-full">
+                <div
+                    className="flex w-full cursor-pointer"
+                    style={{ display: 'flex', width: '100%', cursor: 'pointer' }}
+                >
+                    <label htmlFor={service.id} className="w-full" style={{ width: '100%' }}>
                         <span
                             className={styles.serviceName}
                             data-tip

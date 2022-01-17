@@ -2,10 +2,7 @@ import styles from './details.module.scss';
 import SearchFiled from '../../atom/SearchFiled';
 import Button from '@paziresh24/components/core/button';
 import { useState, useEffect } from 'react';
-import { useServices } from '@paziresh24/context/prescription/services-context';
 import TextArea from '../../../../core/textArea';
-import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
-import { StarIcon } from '@paziresh24/components/icons/public/duotone';
 import { toast } from 'react-toastify';
 import { MinusLineIcon, PlusLineIcon } from '@paziresh24/components/icons';
 import Count from '../../atom/Count';
@@ -13,17 +10,13 @@ import SelectDate from './../../../selectDate/index';
 import moment from 'jalali-moment';
 import { isMobile } from 'react-device-detect';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
-import StarService from './../../atom/starService';
 
-const ImagingDetails = () => {
+const ImagingDetails = ({ services, setServices, insuranceType, noDate = false }) => {
     const [isOpen, setIsOpen] = useToolBox();
-    const [services, setServices] = useServices();
     const [item, selectItem] = useState();
     const [count, setCount] = useState(1);
     const [date, setDate] = useState();
     const [description, setDescription] = useState();
-
-    const [prescriptionInfo] = useSelectPrescription();
 
     const [showDescription, setShowDescription] = useState(false);
     const filterButton = [
@@ -57,15 +50,19 @@ const ImagingDetails = () => {
 
     const addServiceAction = () => {
         if (item) {
-            if (services.find(service => service.item_id === item?.id)) {
-                return toast.warn('این خدمت قبلا اضافه شده است.');
-            }
-
             const dateFormat = date
                 ? moment
                       .from(`${date.year}/${date.month}/${date.day}`, 'fa', 'YYYY/MM/DD')
                       .format('YYYY-MM-DD')
                 : null;
+
+            if (
+                services.find(
+                    service => service?.service?.id === item?.id && service?.date_do === dateFormat
+                )
+            ) {
+                return toast.warn('این خدمت قبلا اضافه شده است.');
+            }
 
             setServices(service => [
                 ...service,
@@ -93,7 +90,7 @@ const ImagingDetails = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.base}>
-                {prescriptionInfo.insuranceType === 'tamin' && (
+                {insuranceType === 'tamin' && (
                     <div className={styles.searchFilterWrapper}>
                         {filterButton.map(item => (
                             <button
@@ -113,12 +110,11 @@ const ImagingDetails = () => {
                         type="imaging"
                         typeId={selectedFilter.id}
                         label={`انتخاب ${
-                            prescriptionInfo.insuranceType === 'tamin'
-                                ? selectedFilter.title
-                                : 'تصویربرداری'
+                            insuranceType === 'tamin' ? selectedFilter.title : 'تصویربرداری'
                         }`}
                         onChange={value => selectItem(value)}
                         defaultValue={item}
+                        insuranceType={insuranceType}
                     />
                     {isMobile && (
                         <div
@@ -150,12 +146,14 @@ const ImagingDetails = () => {
                 </div>
                 <div className={styles['amount-bar']}>
                     <Count onChange={value => setCount(value)} defaultValue={count} />
-                    <SelectDate
-                        label="تاریخ موثر"
-                        onChange={value => setDate(value)}
-                        default-value={item?.defaultValue?.dateDo}
-                        today
-                    />
+                    {!noDate && (
+                        <SelectDate
+                            label="تاریخ موثر"
+                            onChange={value => setDate(value)}
+                            default-value={item?.defaultValue?.dateDo}
+                            today
+                        />
+                    )}
                 </div>
             </div>
             {showDescription && (

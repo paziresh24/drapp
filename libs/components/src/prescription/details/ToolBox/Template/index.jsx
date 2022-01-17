@@ -7,6 +7,7 @@ import { Overlay } from '@paziresh24/components/core/overlay';
 import Item from './item';
 import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.context';
 import ImportStatus from './../ImportStatus/index';
+import isEmpty from 'lodash/isEmpty';
 
 const Template = () => {
     const [prescriptionInfo] = useSelectPrescription();
@@ -29,7 +30,7 @@ const Template = () => {
                 {templateItem.length > 0 &&
                     templateItem.map(
                         prescription =>
-                            prescription[prescriptionInfo.insuranceType + 'Items'] &&
+                            !isEmpty(prescription[prescriptionInfo.insuranceType + 'Items']) &&
                             prescription.name
                                 .toLowerCase()
                                 .replace(/ي/g, 'ی')

@@ -115,8 +115,6 @@ const Types = () => {
         }
     }, [getFavoriteServices.status]);
 
-    console.log(services);
-
     useEffect(() => {
         if (getItemServices.isSuccess && !_.isEmpty(getItemServices.data && prescriptionInfo)) {
             const services_clone = getItemServices.data.map((service, i) => ({
@@ -240,7 +238,12 @@ const Types = () => {
                                     <Service type="others" />
                                 </Tab>
                             </Tabs>
-                            <LabsList type={type} />
+                            <LabsList
+                                services={services}
+                                setServices={setServices}
+                                insuranceType={prescriptionInfo.insuranceType}
+                                type={type}
+                            />
                         </>
                     )}
                 </div>
