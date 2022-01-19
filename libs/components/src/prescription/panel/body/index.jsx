@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import styles from './body.module.scss';
 import classNames from 'classnames';
 

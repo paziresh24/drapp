@@ -1,25 +1,18 @@
-/* eslint-disable jsx-a11y/media-has-caption */
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './sideBar.module.scss';
-import { SideBarMenu } from '../../../doctorApp/home/sideBarMenu';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { useSubMenu } from '@paziresh24/context/core/subMenu.js';
 import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
 import Modal from '../../../core/modal';
 import Button from '../../../core/button';
 
 import {
-    PenIcon,
     CardIcon,
     PrescriptionIcon,
-    TurningIcon,
     InfoIcon,
     ExitIcon,
-    LearnIcon,
     ChatIcon,
     MessageIcon,
-    ComplaintsIcon,
     PrescriptionMenuIcon,
     HouseIcon,
     UserIcon
@@ -27,53 +20,28 @@ import {
 import { StarIcon } from '../../../icons/public/duotone';
 import { isMobile } from 'react-device-detect';
 import { useMenu } from '@paziresh24/context/core/menu';
-import { useGoogleSheet, useSendMessageTelegram } from '@paziresh24/hooks/core';
+import { useSendMessageTelegram } from '@paziresh24/hooks/core';
 import { toast } from 'react-toastify';
-import Select from '../../Select';
-import { useGetFeedbacks, useComplaintsSummary } from '@paziresh24/hooks/drapp/profile';
+import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { baseURL } from '@paziresh24/utils/baseUrl';
-import ReactTooltip from 'react-tooltip';
 import classNames from 'classnames';
-import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
-import { Link } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { MenuItem } from '../menuItem';
-import { isEmpty } from 'lodash';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
     // const doctorInfo = useGetDoctorInfo();
-    const googleSheet = useGoogleSheet();
     const history = useHistory();
     const [info, setInfo] = useDrApp();
-    const [openSubMenu, setOpenSubMenu] = useSubMenu(false);
     const [promoteConsult, setPromoteConsult] = useState(false);
-    const [learnModal, setLearnModal] = useState(false);
 
     const getFeedbacks = useGetFeedbacks({ center_id: info.center.id });
-    const complaintsSummary = useComplaintsSummary();
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-
-    // useEffect(() => {
-    //     if (_.isEmpty(info)) {
-    //         doctorInfo.refetch();
-    //     }
-    // }, []);
 
     useEffect(() => {
         if (open && isMobile) return document.body.classList.add(styles['sidebar-open']);
         document.body.classList.remove(styles['sidebar-open']);
     }, [open]);
-
-    // useEffect(() => {
-    //     if (doctorInfo.isSuccess) {
-    //         setInfo(prev => ({
-    //             ...prev,
-    //             doctor: doctorInfo.data.data ?? {}
-    //         }));
-    //     }
-    // }, [doctorInfo.status]);
 
     useEffect(() => {
         if (info) {
@@ -88,26 +56,6 @@ const SideBar = () => {
     const [userCompleteProfile, setUserCompleteProfile] = useState(0);
 
     const [menuItems, setMenuItems] = useState([]);
-
-    const [appMenu] = useState([
-        // {
-        //     id: 7,
-        //     name: 'پرسش و پاسخ',
-        //     icon: <QaIcon color="#fff" />,
-        //     link: '/qa'
-        // }
-    ]);
-
-    const [otherMenu] = useState([
-        // {
-        //     id: 1,
-        //     name: 'راهنمای اپلیکیشن',
-        //     icon: <InfoIcon />,
-        //     link: 'https://www.paziresh24.com//home/faq/',
-        //     external: true
-        // },
-        // { id: 8, name: 'خروج', icon: <ExitIcon />, link: '/logout' }
-    ]);
 
     useEffect(() => {
         setMenuItems([

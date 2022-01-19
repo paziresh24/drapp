@@ -9,7 +9,6 @@ import queryString from 'querystring';
 
 // hooks
 import { createRef, useEffect, useState } from 'react';
-import _ from 'lodash';
 import { toast } from 'react-toastify';
 import Button from '../../core/button/index';
 import { ChevronIcon } from '../../icons';

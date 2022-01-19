@@ -14,7 +14,7 @@ import {
     useDeletePrescription,
     useGetPrescriptions
 } from '@paziresh24/hooks/prescription';
-import _, { get } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useServices } from '@paziresh24/context/prescription/services-context';
 import { Overlay } from '../../core/overlay';
 import { EmptyState } from '../emptyState';
@@ -125,7 +125,7 @@ const PatientCase = ({ isOpen, onClose }) => {
                                         )
                                 )
                             )}
-                            {_.isEmpty(getItemServices.data) && (
+                            {isEmpty(getItemServices.data) && (
                                 <EmptyState text="سابقه ای وجود ندارد" />
                             )}
                         </div>

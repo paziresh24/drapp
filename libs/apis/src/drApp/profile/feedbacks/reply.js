@@ -1,6 +1,6 @@
 import { client } from '../../../client';
-import _ from 'lodash';
+import omit from 'lodash/omit';
 
 export const replyFeedbacks = async params => {
-    return await client.post(`/doctor/feedbacks/${params.id}/reply`, _.omit(params, 'id'));
+    return await client.post(`/doctor/feedbacks/${params.id}/reply`, omit(params, 'id'));
 };

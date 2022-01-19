@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import _ from 'lodash';
+import isEmpty from 'lodash/lodash';
 
 // HOOKS
 import { useEffect } from 'react';
@@ -45,7 +45,7 @@ const Create = () => {
 
     useEffect(() => {
         if (getPrescription.isSuccess) {
-            if (_.isEmpty(getPrescription.data) || !params.book_id) {
+            if (isEmpty(getPrescription.data) || !params.book_id) {
                 addPrescription.mutate(
                     {
                         patientNationalCode: params.patient_nationalcode,
@@ -76,7 +76,7 @@ const Create = () => {
         }
     }, [addPrescription.status]);
 
-    if (_.isEmpty(validParams)) {
+    if (isEmpty(validParams)) {
         return <Error code="400" error="Bad Request" message="مقادیر ارسالی نامعتبر است" />;
     }
 

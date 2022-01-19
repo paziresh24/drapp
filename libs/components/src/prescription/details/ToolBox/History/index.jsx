@@ -10,7 +10,7 @@ import {
     useDeletePrescription,
     useGetPrescriptions
 } from '@paziresh24/hooks/prescription';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useServices } from '@paziresh24/context/prescription/services-context';
 import { Overlay } from '@paziresh24/components/core/overlay';
 import { useLearnTour } from '@paziresh24/hooks/learn';
@@ -156,7 +156,7 @@ const History = ({ isOpen, onClose }) => {
                                       ))
                         )}
 
-                        {_.isEmpty(getItemServices.data) && (
+                        {isEmpty(getItemServices.data) && (
                             <div className={styles.emptyState}>
                                 <svg
                                     width="72"

@@ -5,6 +5,7 @@
     "private": true,
     "homepage": "https://dr.paziresh24.com",
     "scripts": {
+        "analyze": "source-map-explorer 'dist/apps/drapp/static/js/*.js'",
         "start": "nx serve",
         "build": "nx build",
         "test": "nx test"
@@ -48,6 +49,7 @@
         "react-tooltip": "4.2.21",
         "react-transition-group": "4.4.1",
         "regenerator-runtime": "0.13.7",
+        "source-map-explorer": "^2.5.2",
         "styled-components": "5.3.3",
         "tslib": "2.0.0",
         "uuid": "8.3.2",

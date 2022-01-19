@@ -5,7 +5,7 @@ import { DeliverItemFactor } from '../deliverItemFactor';
 import FixedWrapBottom from '@paziresh24/components/prescription/fixedWrapBottom';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useDeliverPrescription } from '@paziresh24/hooks/prescription';
 import { toast } from 'react-toastify';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
@@ -41,7 +41,7 @@ const DeliverFactor = props => {
             {
                 onSuccess: data => {
                     props.onClose(false);
-                    if (_.isEmpty(backPage)) {
+                    if (isEmpty(backPage)) {
                         window.parent.postMessage(
                             {
                                 drappEvent: ['backToTurning', 'successFinalize'],

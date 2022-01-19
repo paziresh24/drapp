@@ -4,9 +4,7 @@ import { sendEvent } from '@paziresh24/utils';
 import Button from '../../core/button';
 import Modal from '../../core/modal';
 import TextField from '../../core/textField';
-import PatientCase from '../patientCase';
 import { useState } from 'react';
-import { useMe } from '../../../context/prescription/me-context';
 import { useServices } from '@paziresh24/context/prescription/services-context';
 import { useBulkItems, useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
@@ -15,7 +13,7 @@ import { useFinalizePrescription } from '../../../hooks/prescription';
 import { toast } from 'react-toastify';
 import FixedWrapBottom from '../fixedWrapBottom';
 import { useBackPage } from '../../../context/core/backPage';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { toastType } from '@paziresh24/constants/prescription.json';
 import { EditIcon } from '../../icons';
 import { useForm } from 'react-hook-form';
@@ -59,7 +57,7 @@ const PatientInfo = ({
     } = useForm();
 
     useEffect(() => {
-        if (!_.isEmpty(prescriptionInfo)) {
+        if (!isEmpty(prescriptionInfo)) {
             setCellPhone(prescriptionInfo?.cellPhoneNumber ?? prescriptionInfo?.patientCell);
         }
     }, [prescriptionInfo]);
@@ -97,7 +95,7 @@ const PatientInfo = ({
                 who_stem_id: diagnosis.id
             });
         }
-        const isServicesOfDoctors = !_.isEmpty(
+        const isServicesOfDoctors = !isEmpty(
             services.filter(item => item.isServicesOfDoctors === true)
         );
         bulkItems.mutate(
@@ -128,7 +126,7 @@ const PatientInfo = ({
                                         setPrescriptionInfo(data);
                                         return setDeliverConfirmModal(true);
                                     }
-                                    if (_.isEmpty(backPage)) {
+                                    if (isEmpty(backPage)) {
                                         window.parent.postMessage(
                                             {
                                                 drappEvent: ['backToTurning', 'successFinalize'],
@@ -168,11 +166,11 @@ const PatientInfo = ({
                 },
                 onError: error => {
                     if (error.response.data.messages) {
-                        !_.isEmpty(error.response.data.messages) &&
+                        !isEmpty(error.response.data.messages) &&
                             error.response.data?.messages.map(item => {
                                 toast[toastType[item.type]](item.text);
                             });
-                        _.isEmpty(error.response.data.messages) &&
+                        isEmpty(error.response.data.messages) &&
                             !toast.isActive('sendOtherItem') &&
                             toast.error('خطا', {
                                 toastId: 'sendOtherItem'
@@ -209,7 +207,7 @@ const PatientInfo = ({
         <div className={styles['wrapper']} id="p_info">
             <div>
                 <div className={styles['info']}>
-                    {_.isEmpty(prescriptionInfo) && (
+                    {isEmpty(prescriptionInfo) && (
                         <div className="skeleton-wrapper">
                             <div className="skeleton-row">
                                 <div
@@ -236,7 +234,7 @@ const PatientInfo = ({
                         </div>
                     )}
 
-                    {!_.isEmpty(prescriptionInfo) && (
+                    {!isEmpty(prescriptionInfo) && (
                         <>
                             <Image
                                 image={prescriptionInfo.patientAdditionalData?.memberImage}
@@ -273,7 +271,7 @@ const PatientInfo = ({
                         </>
                     )}
                 </div>
-                {!_.isEmpty(prescriptionInfo) && (
+                {!isEmpty(prescriptionInfo) && (
                     <div
                         className={[styles['main'], styles['more-info']].join(' ')}
                         style={{ marginRight: 0, marginTop: '1rem', lineHeight: '3rem' }}
@@ -376,7 +374,7 @@ const PatientInfo = ({
                     </div>
                 )}
             </div>
-            {!_.isEmpty(prescriptionInfo) && (
+            {!isEmpty(prescriptionInfo) && (
                 <Modal title="اطلاعات بیمار" isOpen={detailsModal} onClose={setDetailsModal}>
                     <div className={styles['patientInfo__modal-wrapper']}>
                         <div className={styles['row']}>
@@ -488,7 +486,7 @@ const PatientInfo = ({
                     </div>
                 </Modal>
             )}
-            {_.isEmpty(prescriptionInfo) && (
+            {isEmpty(prescriptionInfo) && (
                 <FixedWrapBottom>
                     <div className="skeleton-wrapper">
                         <div
@@ -503,7 +501,7 @@ const PatientInfo = ({
                 </FixedWrapBottom>
             )}
 
-            {!_.isEmpty(prescriptionInfo) && !prescriptionInfo.finalized && (
+            {!isEmpty(prescriptionInfo) && !prescriptionInfo.finalized && (
                 <FixedWrapBottom>
                     <Button
                         block
@@ -516,7 +514,7 @@ const PatientInfo = ({
                 </FixedWrapBottom>
             )}
 
-            {!_.isEmpty(prescriptionInfo) &&
+            {!isEmpty(prescriptionInfo) &&
                 prescriptionInfo.finalized &&
                 services.some(item => item.isServicesOfDoctors === true) && (
                     <FixedWrapBottom>
@@ -567,7 +565,7 @@ const PatientInfo = ({
                     </Button>
                 </div>
             </Modal>
-            {!_.isEmpty(prescriptionInfo) && (
+            {!isEmpty(prescriptionInfo) && (
                 <DeliverCase
                     isOpen={deliverModal}
                     onClose={setDeliverModal}

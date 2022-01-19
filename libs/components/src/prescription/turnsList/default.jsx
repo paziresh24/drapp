@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import styles from './turnList.module.scss';
 import { Item } from '../item';
 import { useState } from 'react';

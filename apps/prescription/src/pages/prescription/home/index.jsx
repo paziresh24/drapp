@@ -23,7 +23,8 @@ import Button from '@paziresh24/components/core/button';
 import { Calendar } from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import moment from 'jalali-moment';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import TexFiled from '@paziresh24/components/core/textField';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -109,9 +110,6 @@ const Home = props => {
     const linkFetchPrescriptionClick = createRef();
 
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
-    // const [prescriptionSuccessedModal, setPrescriptionSuccessedModal] = useState(
-    //     _.isEmpty(location.state?.trackingCode) === false
-    // );
 
     const addPrescription = useAddPrescription();
 
@@ -210,7 +208,7 @@ const Home = props => {
 
         if (getPrescriptionByPrintcode.isSuccess) {
             if (
-                !_.isEmpty(getPrescriptionByPrintcode.data.data) &&
+                !isEmpty(getPrescriptionByPrintcode.data.data) &&
                 !getPrescriptionByPrintcode.data.patientData?.isReferenceable
             ) {
                 return setDeliverConfirmModal(true);
@@ -260,7 +258,7 @@ const Home = props => {
                 toast.info(getPrescriptionReference.error.response.data.message, {
                     toastId: 'getPrescriptionReference'
                 });
-            if (!_.isEmpty(getPrescriptionByPrintcode.data.data)) {
+            if (!isEmpty(getPrescriptionByPrintcode.data.data)) {
                 return setDeliverConfirmModal(true);
             }
         }
@@ -322,15 +320,15 @@ const Home = props => {
         }
 
         if (gender === 'All') {
-            data = _.omit(data, ['gender']);
+            data = omit(data, ['gender']);
         }
 
         if (insuranceType === 'All') {
-            data = _.omit(data, ['insuranceType']);
+            data = omit(data, ['insuranceType']);
         }
 
         if (type === null) {
-            data = _.omit(data, ['type']);
+            data = omit(data, ['type']);
         }
 
         setParams(data);
@@ -352,7 +350,7 @@ const Home = props => {
         setGender('All');
         setInsuranceType('All');
         setType(null);
-        setParams(_.omit(params, ['created_at_lte', 'created_at_gte', 'gender', 'type']));
+        setParams(omit(params, ['created_at_lte', 'created_at_gte', 'gender', 'type']));
     };
 
     const prescriptionByPrintcodeAction = data => {

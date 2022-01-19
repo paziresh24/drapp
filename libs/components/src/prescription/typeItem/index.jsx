@@ -14,13 +14,14 @@ import {
 } from '../../../hooks/prescription';
 import { useMe } from '../../../context/prescription/me-context';
 import { providers, excludes } from '../../../constants/prescription.json';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import last from 'lodash/last';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
-import { ChevronIcon, CirclePlusIcon } from '../../icons';
+import { ChevronIcon } from '../../icons';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { useSelectType } from '../../../context/prescription/selectType-context';
-import { isDesktop, isMobile } from 'react-device-detect';
+import { isDesktop } from 'react-device-detect';
 
 const TypeItem = props => {
     const [me] = useMe();
@@ -113,8 +114,8 @@ const TypeItem = props => {
             setSelectType(id);
             return history.push(
                 `/${params.prescriptionId ?? prescriptionInfo?.id}/${id}?bulkId=${
-                    props.items['7'] && _.last(Object.keys(props.items['7']))
-                        ? +_.last(Object.keys(props.items['7'])) + 1
+                    props.items['7'] && last(Object.keys(props.items['7']))
+                        ? +last(Object.keys(props.items['7'])) + 1
                         : 1
                 }`
             );
@@ -164,7 +165,7 @@ const TypeItem = props => {
                                         توضیحات
                                     </Button>
                                 )}
-                                {!_.isEmpty(props.items) &&
+                                {!isEmpty(props.items) &&
                                     !props.search &&
                                     !excludes.drugs[prescriptionInfo.insuranceType].includes(
                                         props.itemId
@@ -179,7 +180,7 @@ const TypeItem = props => {
                                             <ChevronIcon dir={showItems ? 'top' : 'bottom'} />
                                         </div>
                                     )}
-                                {!_.isEmpty(props.items[props.itemId]) &&
+                                {!isEmpty(props.items[props.itemId]) &&
                                     !props.search &&
                                     excludes.drugs[prescriptionInfo.insuranceType].includes(
                                         props.itemId

@@ -16,7 +16,7 @@ import {
 
 // COMPONENTS
 import Error from '@paziresh24/components/core/error';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { useServices } from '@paziresh24/context/prescription/services-context';
 import Service from '@paziresh24/components/prescription/details/service';
@@ -95,7 +95,7 @@ const Types = () => {
 
     useEffect(() => {
         // getFavoriteServices.remove();
-        if (!_.isEmpty(prescriptionInfo)) {
+        if (!isEmpty(prescriptionInfo)) {
             getFavoriteServices.refetch();
             getFavoritePrescriptions.refetch();
         }
@@ -116,7 +116,7 @@ const Types = () => {
     }, [getFavoriteServices.status]);
 
     useEffect(() => {
-        if (getItemServices.isSuccess && !_.isEmpty(getItemServices.data && prescriptionInfo)) {
+        if (getItemServices.isSuccess && !isEmpty(getItemServices.data && prescriptionInfo)) {
             const services_clone = getItemServices.data.map((service, i) => ({
                 ...service,
                 id: i,
@@ -125,7 +125,7 @@ const Types = () => {
             }));
             setServices(services_clone);
 
-            if (_.isEmpty(services_clone)) {
+            if (isEmpty(services_clone)) {
                 return setType('drugs');
             }
 

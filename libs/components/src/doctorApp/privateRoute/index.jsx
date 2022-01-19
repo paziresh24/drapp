@@ -1,13 +1,12 @@
 import styles from 'assets/styles/pages/drApp/index.module.scss';
 
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { setToken } from '@paziresh24/utils/localstorage';
 import { useEffect, useState } from 'react';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Loading } from '../../core/loading';
 import { useGetCenterInfo, useGetDoctorInfo } from '@paziresh24/hooks/drapp/profile';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import Modal from '@paziresh24/components/core/modal';
 // HOOKS
 import { Route, useHistory, useLocation } from 'react-router-dom';
@@ -18,15 +17,12 @@ import { useGetUserGoftino, useSetUserGoftino } from '@paziresh24/hooks/drapp/go
 import Helmet from 'react-helmet';
 import * as Sentry from '@sentry/browser';
 import { ChatSupport } from '@paziresh24/utils/services/chatSupport';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import Button from '@paziresh24/components/core/button';
 import { useGetLatestVersion } from '@paziresh24/hooks/core';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import * as serviceWorkerRegistration from 'apps/drapp/src/serviceWorkerRegistration';
 import { usePage } from '@paziresh24/context/core/page';
 import { CSSTransition } from 'react-transition-group';
 import LearnControl from './../learnControl/index';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import ErrorByRefresh from '@paziresh24/components/core/errorByRefresh';
 
 const PrivateRoute = props => {
@@ -53,7 +49,7 @@ const PrivateRoute = props => {
 
     useEffect(() => {
         setPage(props);
-        if (_.isEmpty(info) && !_.isEmpty(getToken())) {
+        if (isEmpty(info) && !isEmpty(getToken())) {
             centerInfo.refetch();
             getUserGoftino.refetch();
             if (isProduction && isMainDomain) {
@@ -70,7 +66,7 @@ const PrivateRoute = props => {
             let center;
 
             if (
-                _.isEmpty(
+                isEmpty(
                     centerInfo.data.data.find(item => item.id === localStorage.getItem('center_id'))
                 )
             ) {
@@ -83,7 +79,7 @@ const PrivateRoute = props => {
             }
             const centers = centerInfo.data.data;
             const centerConsult = centerInfo.data.data.find(center => center.id === '5532') ?? {};
-            const onlyConsult = centerConsult.id === '5532' && _.isEmpty(center);
+            const onlyConsult = centerConsult.id === '5532' && isEmpty(center);
             setCentersDoctor(prev => [...prev, centers[0]]);
 
             setInfo({
@@ -96,7 +92,7 @@ const PrivateRoute = props => {
     }, [centerInfo.status]);
 
     useEffect(() => {
-        if (!_.isEmpty(centersDoctor)) {
+        if (!isEmpty(centersDoctor)) {
             doctorInfo.refetch();
         }
     }, [centersDoctor]);
@@ -155,7 +151,7 @@ const PrivateRoute = props => {
         }
     }, [getLatestVersion.status]);
 
-    if (_.isEmpty(getToken()))
+    if (isEmpty(getToken()))
         history.replace(
             `/auth${props.path !== '/' ? '?url=' + encodeURIComponent(window.location.href) : ''}`
         );

@@ -10,7 +10,7 @@ import {
 } from '@paziresh24/hooks/prescription';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { DeliverFactor } from '../deliverFactor';
 
@@ -75,7 +75,7 @@ const DeliverCase = props => {
                         <Button
                             block
                             variant="primary"
-                            disabled={_.isEmpty(subscriptions)}
+                            disabled={isEmpty(subscriptions)}
                             loading={deliverPrescriptionPriceInfo.isLoading}
                             onClick={submit}
                         >

@@ -1,5 +1,4 @@
 import { toast } from 'react-toastify';
-import _ from 'lodash';
 import { client } from '../../../apis/prescription/client';
 import styles from '../../prescription/auth/form/form.module.scss';
 
@@ -154,14 +153,6 @@ const PrivateRoute = props => {
         );
     };
 
-    // if (_.isEmpty(localStorage.getItem('prescription_token'))) {
-    //     history.replace('/prescription/providers/');
-    //     return null;
-    // }
-
-    // if (clinicLogin.isLoading || getMe.isLoading) return <Loading />;
-
-    // if (token === null || _.isEmpty(me)) return null;
     return (
         <>
             {!otpConfirm && token && <Route {...props} />}

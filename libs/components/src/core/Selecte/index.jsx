@@ -7,7 +7,7 @@ import Modal from '../modal';
 import TextArea from '../textArea';
 import Button from '../button';
 import { ChevronIcon, CloseIcon } from '../../icons/';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { createPortal } from 'react-dom';
 
 const Select = props => {
@@ -60,7 +60,7 @@ const Select = props => {
             <div className={styles['wrapper']}>
                 <label>{props.label}</label>
                 <button className={styles['input']} onClick={openSelectModalToggle}>
-                    <span>{!_.isEmpty(item) ? item.children : 'انتخاب کنید'}</span>
+                    <span>{!isEmpty(item) ? item.children : 'انتخاب کنید'}</span>
                     <ChevronIcon dir="bottom" />
                 </button>
             </div>
@@ -112,7 +112,7 @@ const SelectModal = ({
                 </div>
                 <hr />
                 <ul>
-                    {!_.isEmpty(item) && (
+                    {!isEmpty(item) && (
                         <li className={styles['selected']}>
                             {item.children}
                             <span

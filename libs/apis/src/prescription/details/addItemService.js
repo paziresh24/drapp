@@ -1,9 +1,9 @@
 import { client } from '../client';
-import _ from 'lodash';
+import omit from 'lodash/omit';
 
 export const addItemService = async param => {
     return await client.post(
         `/insurance/prescription/${param.prescriptionId}/prescription-item`,
-        _.omit(param, ['prescriptionId'])
+        omit(param, ['prescriptionId'])
     );
 };

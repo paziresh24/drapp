@@ -1,6 +1,6 @@
 import styles from './itemInfo.module.scss';
 import providers from '@paziresh24/constants/prescription.json';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 
 const ItemInfo = props => {
@@ -46,7 +46,7 @@ const ItemInfo = props => {
                                 ? props.data.type.description
                                 : props.data.serviceType.description}
                         </span>
-                        {!_.isEmpty(props.data.shape) && (
+                        {!isEmpty(props.data.shape) && (
                             <span className={styles['shape']}>
                                 {prescriptionInfo?.insuranceType === providers.salamat &&
                                 props.from === 'edit'
