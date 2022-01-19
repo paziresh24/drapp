@@ -9,7 +9,6 @@ import Modal from '../../core/modal';
 import QRCode from 'qrcode.react';
 import Button from '../../core/button';
 
-import chatSupport from '@paziresh24/assets/videos/drapp/chatSupport.gif';
 import { useShortLink } from '@paziresh24/hooks/core';
 import { Overlay } from '../../core/overlay';
 import { toast } from 'react-toastify';
@@ -116,8 +115,6 @@ const Goftino = ({ openState = false, smsSupport = true }) => {
                                 </Button>
                                 {shortLink.isLoading && <Overlay />}
                             </div>
-
-                            <img src={chatSupport} alt="" />
                         </div>
                     </Modal>
                 )}

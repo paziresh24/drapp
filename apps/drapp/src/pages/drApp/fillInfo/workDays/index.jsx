@@ -11,7 +11,6 @@ import { toast } from 'react-toastify';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useDuration } from '@paziresh24/context/drapp/duration';
 import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
-import heroFinal from '@assets/image/hero-final-step.png';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 
@@ -195,7 +194,6 @@ const WorkDays = () => {
                             شروع نوبت دهی
                         </Button>
                     </div>
-                    <img className={styles['hero-image']} src={heroFinal} alt="" />
                 </div>
             </Modal>
             {/* <Modal
