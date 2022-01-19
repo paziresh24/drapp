@@ -1,55 +1,32 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { lazy } from 'react';
-import Learn from './learn';
-import PrescriptionId from '@paziresh24/apps/prescription/pages/prescription/types';
-import Templates from '@paziresh24/apps/prescription/pages/prescription/templates';
-import AddTemplate from '@paziresh24/apps/prescription/pages/prescription/templates/addTemplates';
-import EditTemplate from '@paziresh24/apps/prescription/pages/prescription/templates/editTemplates';
-import ServiceFavorite from '@paziresh24/apps/prescription/pages/prescription/serviceFavorite';
-import Create from '@paziresh24/apps/prescription/pages/prescription/create';
-
-// import pages
-import DrApp from './home';
-import Consult from './consult';
-import Turning from './turning';
-import LogOut from './logout';
-import GChat from './gchat';
-import Prescription from './prescription';
-import Providers from '@paziresh24/apps/prescription/pages/prescription/providers';
-const SmsPanel = lazy(() => import('./smsPanel'));
-const FillInfo = lazy(() => import('./fillInfo'));
-const Auth = lazy(() => import('./auth'));
-import Profile from './profile';
-const Feedbacks = lazy(() => import('./feedbacks'));
-const Complaints = lazy(() => import('./complaints'));
-const Setting = lazy(() => import('./setting'));
-const Financial = lazy(() => import('./financial'));
-const Qa = lazy(() => import('./qa'));
-const NotFoundPage = lazy(() => import('../../pages/404'));
-const ConsultTurning = lazy(() => import('./consult/consult-turning'));
-const ConsultTerm = lazy(() => import('./consult/term'));
-const SueperMenu = lazy(() => import('./superMenu'));
 
 export const routes = [
     {
         path: '/auth/',
         name: 'Auth',
-        component: Auth,
+        component: lazy(() => import('./auth')),
         isPrivate: false,
         exact: true
     },
     {
         path: '/p24auth/',
         name: 'Auth',
-        component: Auth,
+        component: lazy(() => import('./auth')),
         isPrivate: false,
         exact: true
     },
     {
         path: '/',
         name: 'DrApp',
-        title: 'خانه',
-        component: DrApp,
+        isPrivate: true,
+        component: lazy(() => import('./turning')),
+        exact: true
+    },
+    {
+        path: '/turning/',
+        name: 'Turning',
+        title: 'لیست بیماران',
+        component: lazy(() => import('./turning')),
         isPrivate: true,
         exact: true
     },
@@ -57,23 +34,7 @@ export const routes = [
         path: '/Services',
         name: 'Services',
         title: 'پذیرش24',
-        component: SueperMenu,
-        isPrivate: true,
-        exact: true
-    },
-    {
-        path: '/gchat',
-        name: 'GChat',
-        title: 'پشتیبانی',
-        component: GChat,
-        isPrivate: true,
-        exact: true
-    },
-    {
-        path: '/turning/',
-        name: 'Turning',
-        title: 'لیست بیماران',
-        component: Turning,
+        component: lazy(() => import('./superMenu')),
         isPrivate: true,
         exact: true
     },
@@ -81,7 +42,7 @@ export const routes = [
         path: '/turning/setting/',
         name: 'Setting',
         title: 'تقویم کاری',
-        component: Setting,
+        component: lazy(() => import('./setting')),
         isPrivate: true,
         exact: false
     },
@@ -89,7 +50,7 @@ export const routes = [
         path: '/profile/',
         name: 'Profile',
         title: 'پروفایل کاربری',
-        component: Profile,
+        component: lazy(() => import('./profile')),
         isPrivate: true,
         exact: true
     },
@@ -97,7 +58,7 @@ export const routes = [
         path: '/feedbacks/',
         name: 'Feedbacks',
         title: 'نظرات بیماران',
-        component: Feedbacks,
+        component: lazy(() => import('./feedbacks')),
         isPrivate: true,
         exact: true
     },
@@ -105,7 +66,7 @@ export const routes = [
         path: '/complaints/',
         name: 'Complaints',
         title: 'شکایات',
-        component: Complaints,
+        component: lazy(() => import('./complaints')),
         isPrivate: true,
         exact: true
     },
@@ -113,15 +74,7 @@ export const routes = [
         path: '/consult/',
         name: 'Consult',
         title: 'چت مشاوره',
-        component: Consult,
-        isPrivate: true,
-        exact: true
-    },
-    {
-        path: '/consult-turning/',
-        name: 'ConsultTurning',
-        title: 'نوبت های مشاوره',
-        component: ConsultTurning,
+        component: lazy(() => import('./consult')),
         isPrivate: true,
         exact: true
     },
@@ -129,7 +82,7 @@ export const routes = [
         path: '/consult-term/',
         name: 'ConsultTerm',
         title: 'قوانین و مقررات',
-        component: ConsultTerm,
+        component: lazy(() => import('./consult/term')),
         isPrivate: true,
         exact: true
     },
@@ -137,7 +90,7 @@ export const routes = [
         path: '/qa/',
         name: 'Qa',
         title: 'پرسش و پاسخ',
-        component: Qa,
+        component: lazy(() => import('./qa')),
         isPrivate: true,
         exact: true
     },
@@ -145,7 +98,7 @@ export const routes = [
         path: '/prescription/',
         name: 'Prescription',
         title: 'نسخه های ثبت شده',
-        component: Prescription,
+        component: lazy(() => import('./prescription')),
         isPrivate: true,
         exact: true
     },
@@ -153,7 +106,7 @@ export const routes = [
         path: '/prescription/patient/:prescriptionId',
         name: 'PrescriptionId',
         title: 'نسخه نویسی',
-        component: PrescriptionId,
+        component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/types')),
         isPrivate: true,
         exact: true
     },
@@ -161,7 +114,7 @@ export const routes = [
         path: '/providers',
         name: 'PrescriptionProviders',
         title: 'بیمه های من',
-        component: Providers,
+        component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/providers')),
         isPrivate: true,
         exact: true
     },
@@ -169,7 +122,7 @@ export const routes = [
         path: '/prescription/create',
         name: 'PrescriptionCreate',
         title: 'صدور نسخه',
-        component: Create,
+        component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/create')),
         isPrivate: true,
         exact: true
     },
@@ -177,7 +130,7 @@ export const routes = [
         path: '/favorite/templates',
         name: 'PrescriptionTemplate',
         title: 'نسخه پراستفاده های من',
-        component: Templates,
+        component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/templates')),
         isPrivate: true,
         exact: true
     },
@@ -185,7 +138,9 @@ export const routes = [
         path: '/favorite/templates/add',
         name: 'PrescriptionTemplate',
         title: 'افزودن نسخه پراستفاده',
-        component: AddTemplate,
+        component: lazy(() =>
+            import('@paziresh24/apps/prescription/pages/prescription/templates/addTemplates')
+        ),
         isPrivate: true,
         exact: true
     },
@@ -193,7 +148,9 @@ export const routes = [
         path: '/favorite/templates/:prescriptionId',
         name: 'PrescriptionTemplate',
         title: 'ویرایش نسخه پراستفاده',
-        component: EditTemplate,
+        component: lazy(() =>
+            import('@paziresh24/apps/prescription/pages/prescription/templates/editTemplates')
+        ),
         isPrivate: true,
         exact: true
     },
@@ -201,14 +158,9 @@ export const routes = [
         path: '/favorite/service-favorite',
         name: 'ServiceFavorite',
         title: 'اقلام پراستفاده',
-        component: ServiceFavorite,
-        isPrivate: true,
-        exact: true
-    },
-    {
-        path: '/smspanel/',
-        name: 'SmsPanel',
-        component: SmsPanel,
+        component: lazy(() =>
+            import('@paziresh24/apps/prescription/pages/prescription/serviceFavorite')
+        ),
         isPrivate: true,
         exact: true
     },
@@ -216,7 +168,7 @@ export const routes = [
         path: '/fill-info/',
         name: 'FillInfo',
         title: 'فعال سازی نوبت دهی',
-        component: FillInfo,
+        component: lazy(() => import('./fillInfo')),
         isPrivate: true,
         exact: false
     },
@@ -224,7 +176,7 @@ export const routes = [
         path: '/financial/',
         name: 'Financial',
         title: 'مدیریت مالی',
-        component: Financial,
+        component: lazy(() => import('./financial')),
         isPrivate: true,
         exact: false
     },
@@ -232,34 +184,20 @@ export const routes = [
         path: '/learn/',
         name: 'Learn',
         title: 'آموزش سامانه',
-        component: Learn,
+        component: lazy(() => import('./learn')),
         isPrivate: true,
         exact: false
     },
     {
         path: '/logout',
         name: 'logout',
-        component: LogOut,
-        exact: true
-    },
-    // {
-    //     path: '/wallet',
-    //     name: 'wallet',
-    //     title: 'کیف پول',
-    //     component: Wallet,
-    //     isPrivate: true,
-    //     exact: true
-    // },
-    {
-        path: '/drapp/',
-        name: 'drapp',
-        component: '',
+        component: lazy(() => import('./logout')),
         exact: true
     },
     {
         path: '*',
         name: '404',
-        component: NotFoundPage,
+        component: lazy(() => import('../../pages/404')),
         exact: true
     }
 ];

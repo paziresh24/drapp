@@ -21,9 +21,7 @@ const DoctorApp = () => {
                 >
                     <Switch>
                         {routes.map(route =>
-                            route.path === '/drapp/' ? (
-                                <Redirect key={route.path} to="/" /> // redirect /drapp to /
-                            ) : route.isPrivate ? (
+                            route.isPrivate ? (
                                 <PrivateRoute key={route.path} {...route} />
                             ) : (
                                 <Route key={route.path} {...route} />
