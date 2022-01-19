@@ -1,5 +1,5 @@
 import { getLatestVersion } from 'apis/core/getLatestVersion';
-import * as serviceWorkerRegistration from 'serviceWorkerRegistration';
+import * as serviceWorkerRegistration from 'apps/drapp/src/serviceWorkerRegistration';
 import { captureMessage } from '@sentry/react';
 
 export const checkVersion = () => {

@@ -1,0 +1,19 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.paziresh24.dr",
+            "sha256_cert_fingerprints": [
+                "9C:4D:33:B7:F5:B1:9B:11:26:D6:DE:6C:F0:76:C3:C7:AB:9D:DC:F3:6B:AB:B7:94:C9:44:BB:91:DF:C5:09:93"
+            ]
+        }
+    },
+    {
+        "relation": ["check_validation"],
+        "target": {
+            "namespace": "cafebazaar_twa",
+            "package_name": "com.paziresh24.dr"
+        }
+    }
+]

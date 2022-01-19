@@ -17,5 +17,15 @@
     <body dir="rtl">
         <noscript>برای اجرای اپلیکیشن لطفا Javascript مرورگر خود را فعال کنید.</noscript>
         <div id="root"></div>
+        <script>
+            window.addEventListener('load', function () {
+                let vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            });
+            window.addEventListener('resize', function () {
+                let vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            });
+        </script>
     </body>
 </html>

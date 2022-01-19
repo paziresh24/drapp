@@ -6,6 +6,7 @@ import Templates from '@paziresh24/apps/prescription/pages/prescription/template
 import AddTemplate from '@paziresh24/apps/prescription/pages/prescription/templates/addTemplates';
 import EditTemplate from '@paziresh24/apps/prescription/pages/prescription/templates/editTemplates';
 import ServiceFavorite from '@paziresh24/apps/prescription/pages/prescription/serviceFavorite';
+import Create from '@paziresh24/apps/prescription/pages/prescription/create';
 
 // import pages
 import DrApp from './home';
@@ -15,7 +16,6 @@ import LogOut from './logout';
 import GChat from './gchat';
 import Prescription from './prescription';
 import Providers from '@paziresh24/apps/prescription/pages/prescription/providers';
-import Create from './prescription/create';
 const SmsPanel = lazy(() => import('./smsPanel'));
 const FillInfo = lazy(() => import('./fillInfo'));
 const Auth = lazy(() => import('./auth'));

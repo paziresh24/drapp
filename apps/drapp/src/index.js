@@ -8,6 +8,7 @@ import './assets/styles/tailwind.scss';
 import { App } from './app';
 import { Provider } from '@paziresh24/components/core/provider';
 import { TourProvider } from '@reactour/tour';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const steps = [
     {
@@ -123,3 +124,5 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
+
+serviceWorkerRegistration.register();

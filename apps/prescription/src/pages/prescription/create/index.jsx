@@ -1,24 +1,19 @@
 import queryString from 'query-string';
 import _ from 'lodash';
-import { providers } from '../../../constants/prescription.json';
 
 // HOOKS
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useAddPrescription, useGetMe, useGetPrescriptions } from '../../../hooks/prescription/';
+import { useAddPrescription, useGetMe, useGetPrescriptions } from '@paziresh24/hooks/prescription/';
 import { v4 as uuid } from 'uuid';
 import { getToken, setToken } from '@paziresh24/utils/localstorage.js';
-import {
-    GETـPRESCRIPTIONـTOKEN,
-    CLEAR_PRESCRIPTIONـTOKEN
-} from '@paziresh24/utils/services/prescription/localstorage.js';
 import { toEnglishNumber } from '@paziresh24/utils';
 
 // COMPONENTS
-import { Loading } from '../../../components/prescription/loading';
-import Error from '../../../components/core/error';
+import { Loading } from '@paziresh24/components/prescription/loading';
+import Error from '@paziresh24/components/core/error';
 import { toast } from 'react-toastify';
-import { useBackPage } from 'context/core/backPage';
+import { useBackPage } from '@paziresh24/context/core/backPage';
 
 const Create = () => {
     const { search } = useLocation();
@@ -33,6 +28,7 @@ const Create = () => {
     const uuidInstance = uuid();
     const [, setBackPage] = useBackPage();
 
+    const validParams = params.patient_nationalcode && params.patient_cell;
     useEffect(() => {
         addPrescription.reset();
         getPrescription.remove();
@@ -40,35 +36,24 @@ const Create = () => {
             setToken(params.token);
         }
 
+        if (validParams) {
+            getPrescription.refetch();
+        }
+
         setBackPage(params.back_page ?? null);
     }, []);
 
-    const validParams = params.patient_nationalcode && params.patient_cell;
-
-    useEffect(() => {
-        if (getMe.isSuccess) {
-            if (
-                !_.isEmpty(getMe.data['salamat_doctor']) ||
-                !_.isEmpty(getMe.data['tamin_doctor'])
-            ) {
-                return getPrescription.refetch();
-            }
-            history.replace(`/providers`);
-        }
-    }, [getMe.status]);
-
     useEffect(() => {
         if (getPrescription.isSuccess) {
-            if (_.isEmpty(getPrescription.data)) {
+            if (_.isEmpty(getPrescription.data) || !params.book_id) {
                 addPrescription.mutate(
                     {
                         patientNationalCode: params.patient_nationalcode,
                         patientCell: !toEnglishNumber(params.patient_cell).startsWith('0')
                             ? `0${toEnglishNumber(params.patient_cell)}`
                             : toEnglishNumber(params.patient_cell),
-                        issuer_center: params.provider,
                         identifier: params.book_id ?? uuidInstance,
-                        tags: JSON.parse(params.tags) ?? null
+                        ...(params.tags && { tags: JSON.parse(params.tags) })
                     },
                     {
                         onError: err => {
@@ -77,7 +62,7 @@ const Create = () => {
                     }
                 );
             } else {
-                return history.replace(`/${getPrescription.data[0]?.id}`);
+                return history.replace(`/prescription/patient/${getPrescription.data[0]?.id}`);
             }
         }
     }, [getPrescription.status]);
@@ -87,7 +72,7 @@ const Create = () => {
             addPrescription.isSuccess &&
             addPrescription.data?.message !== 'کد تایید دو مرحله‌ای را ارسال کنید'
         ) {
-            return history.replace(`/${addPrescription.data.result?.id}`);
+            return history.replace(`/prescription/patient/${addPrescription.data.result?.id}`);
         }
     }, [addPrescription.status]);
 

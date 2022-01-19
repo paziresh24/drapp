@@ -22,7 +22,7 @@ import { ChatSupport } from '@paziresh24/utils/services/chatSupport';
 import Button from '@paziresh24/components/core/button';
 import { useGetLatestVersion } from '@paziresh24/hooks/core';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-// import * as serviceWorkerRegistration from 'apps/drapp/src/serviceWorkerRegistration';
+import * as serviceWorkerRegistration from 'apps/drapp/src/serviceWorkerRegistration';
 import { usePage } from '@paziresh24/context/core/page';
 import { CSSTransition } from 'react-transition-group';
 import LearnControl from './../learnControl/index';
@@ -36,6 +36,7 @@ const PrivateRoute = props => {
     const centerInfo = useGetCenterInfo();
     const doctorInfo = useGetDoctorInfo({
         center_id: centersDoctor?.[centersDoctor?.length - 1]?.id
+        // center_id: 5532
     });
     const history = useHistory();
     const { search } = useLocation();
@@ -144,7 +145,7 @@ const PrivateRoute = props => {
                 caches.keys().then(keys =>
                     keys.forEach(key =>
                         caches.delete(key).then(() => {
-                            // serviceWorkerRegistration.unregister();
+                            serviceWorkerRegistration.unregister();
                             window.location.reload();
                         })
                     )

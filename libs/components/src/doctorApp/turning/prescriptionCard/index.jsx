@@ -88,6 +88,7 @@ const PrescriptionCard = ({
     const deletePrescriptionAction = async () => {
         sendEvent('deletepriscription', 'prescription', 'deletepriscription');
 
+        console.log(turn);
         deletePrescription.mutate(
             { baseURL: info.center.local_base_url, id: turn.id },
             {

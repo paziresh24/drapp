@@ -3,8 +3,10 @@ import { getToken } from '@paziresh24/utils/localstorage';
 import { useEffect, useRef, useState } from 'react';
 import { Overlay } from '@paziresh24/components/core/overlay';
 import { useHistory, useLocation } from 'react-router';
+import { useDrApp } from '@paziresh24/context/drapp/index';
 
 const Consult = () => {
+    const [info] = useDrApp();
     const token = getToken();
     const history = useHistory();
     const location = useLocation();
@@ -22,7 +24,7 @@ const Consult = () => {
         window.addEventListener('message', function (e) {
             if (e.data.drappEvent && e.data.drappEvent?.action === 'CREATE_PRESCRIPTION') {
                 history.push(
-                    `/prescription/create?patient_nationalcode=${e.data.drappEvent.patient_nationalcode}&patient_cell=${e.data.drappEvent.patient_cell}&book_id=${e.data.drappEvent.book_Id}&back_page=${e.data.drappEvent.room_id}`
+                    `/prescription/create?patient_nationalcode=${e.data.drappEvent.patient_nationalcode}&patient_cell=${e.data.drappEvent.patient_cell}&book_id=${e.data.drappEvent.book_Id}&back_page=${e.data.drappEvent.room_id}&tags=[{type: "center_id", value: ${info.center.id}}]`
                 );
             }
         });

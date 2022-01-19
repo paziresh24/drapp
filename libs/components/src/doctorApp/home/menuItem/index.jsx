@@ -66,7 +66,7 @@ const MenuItem = ({ item }) => {
                         onMouseLeave={() => setIsDropDownOpen(false)}
                     >
                         {item.subMenu.map(item => (
-                            <Link to={item.link}>
+                            <Link key={item.link} to={item.link}>
                                 <span>{item.name}</span>
                             </Link>
                         ))}
