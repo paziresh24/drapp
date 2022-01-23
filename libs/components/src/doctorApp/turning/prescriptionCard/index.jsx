@@ -209,28 +209,6 @@ const PrescriptionCard = ({
                                 >
                                     نسخه ثبت شده است
                                 </ReactTooltip>
-                                {turn?.insuranceType === 'tamin' &&
-                                    turn[turn?.insuranceType + '_prescription'].map(item => (
-                                        <span
-                                            style={{ fontSize: '1.4rem', marginRight: '1rem' }}
-                                            key={item.head_EPRSC_ID}
-                                        >
-                                            {item.head_EPRSC_ID ?? '-'}
-                                        </span>
-                                    ))}
-                                {turn?.insuranceType === 'salamat' && (
-                                    <span
-                                        style={{ fontSize: '1.4rem', marginRight: '1rem' }}
-                                        key={
-                                            turn[
-                                                turn?.prescription?.insuranceType + '_prescription'
-                                            ]?.trackingCode
-                                        }
-                                    >
-                                        {turn[turn?.insuranceType + '_prescription']
-                                            ?.trackingCode ?? ''}
-                                    </span>
-                                )}
                             </>
                         ) : turn.status === null ? (
                             <>

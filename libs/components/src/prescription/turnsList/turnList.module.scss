@@ -164,6 +164,8 @@
 
 .turnsList {
     position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
 
     td,
     th {
@@ -182,7 +184,7 @@
     }
 
     th {
-        background: #e8eef4;
+        background: #fff;
         position: sticky;
         top: 0;
         z-index: 5;

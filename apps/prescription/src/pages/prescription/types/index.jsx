@@ -243,6 +243,10 @@ const Types = () => {
                                 setServices={setServices}
                                 insuranceType={prescriptionInfo.insuranceType}
                                 type={type}
+                                readOnly={
+                                    prescriptionInfo.insuranceType === 'tamin' &&
+                                    prescriptionInfo.finalized
+                                }
                             />
                         </>
                     )}

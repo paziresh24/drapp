@@ -84,94 +84,211 @@ const Info = () => {
     return (
         <>
             <div className={styles.wrapper}>
-                <div className={styles.infoDetails}>
-                    <div
-                        onClick={() => setIsOpen(prev => !prev)}
-                        aria-hidden
-                        className={styles.toggleMore}
-                        data-tip
-                        data-for="toggleMore"
-                    >
-                        <ChevronIcon dir={isOpen ? 'top' : 'bottom'} />
+                <div className={styles.topBar}>
+                    <div className={styles.infoDetails}>
+                        <div
+                            onClick={() => setIsOpen(prev => !prev)}
+                            aria-hidden
+                            className={styles.toggleMore}
+                            data-tip
+                            data-for="toggleMore"
+                        >
+                            <ChevronIcon dir={isOpen ? 'top' : 'bottom'} />
 
-                        {!isOpen && (
-                            <ReactTooltip id="toggleMore" place="top" type="dark" effect="solid">
-                                اطلاعات بیشتر بیمار
-                            </ReactTooltip>
-                        )}
-                    </div>
-                    <Mobile>
-                        <span className={styles.patientName}>
-                            {prescriptionInfo.patientAdditionalData.name +
-                                ' ' +
-                                prescriptionInfo.patientAdditionalData.lastName}
-                        </span>
-                    </Mobile>
-
-                    <Default>
-                        <div className={styles.row}>
-                            {/* <span className={styles['title']}>نام بیمار:</span> */}
-                            {prescriptionInfo.patientAdditionalData?.gender === 'زن' ? (
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="#a9b7c2"
-                                    viewBox="0 0 30 30"
-                                    width="30px"
-                                    height="30px"
+                            {!isOpen && (
+                                <ReactTooltip
+                                    id="toggleMore"
+                                    place="top"
+                                    type="dark"
+                                    effect="solid"
                                 >
-                                    <path d="M5,27c0-5,6.957-4.174,8-6.999V19c-3.778,0-5.914-1.884-5.914-1.884C9.06,15.473,6.326,4.043,13.049,4.043 c0,0,0.907-1.043,2.08-1.043c8.218,0,5.51,12.41,7.635,14.154c0,0-1.968,1.846-5.765,1.846v1.001C18.043,22.826,25,22,25,27H5z" />
-                                </svg>
-                            ) : (
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="#a9b7c2"
-                                    viewBox="0 0 30 30"
-                                    width="30px"
-                                    height="30px"
-                                >
-                                    <path d="M18,19v-2c0.45-0.223,1.737-1.755,1.872-2.952c0.354-0.027,0.91-0.352,1.074-1.635c0.088-0.689-0.262-1.076-0.474-1.198 c0,0,0.528-1.003,0.528-2.214c0-2.428-0.953-4.5-3-4.5c0,0-0.711-1.5-3-1.5c-4.242,0-6,2.721-6,6c0,1.104,0.528,2.214,0.528,2.214 c-0.212,0.122-0.562,0.51-0.474,1.198c0.164,1.283,0.72,1.608,1.074,1.635C10.263,15.245,11.55,16.777,12,17v2c-1,3-9,1-9,8h24 C27,20,19,22,18,19z" />
-                                </svg>
+                                    اطلاعات بیشتر بیمار
+                                </ReactTooltip>
                             )}
-                            <span className={styles['value']}>
+                        </div>
+                        <Mobile>
+                            <span className={styles.patientName}>
                                 {prescriptionInfo.patientAdditionalData.name +
                                     ' ' +
                                     prescriptionInfo.patientAdditionalData.lastName}
                             </span>
+                        </Mobile>
+
+                        <Default>
+                            <div className={styles.row}>
+                                {/* <span className={styles['title']}>نام بیمار:</span> */}
+                                {prescriptionInfo.patientAdditionalData?.gender === 'زن' ? (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M8.20094 13.3872L5.42786 12.0508C5.42786 12.0508 6.12948 11.1487 6.26312 6.1371L6.24085 6.73849C6.24085 3.47538 8.88029 0.835938 12.1434 0.835938C15.4065 0.835938 18.046 3.47538 18.046 6.73849L18.0125 6.12596C18.135 11.1376 18.8367 12.0396 18.8367 12.0396L16.0636 13.3761"
+                                            stroke="#2b2f33"
+                                            strokeWidth="1.5"
+                                            strokeMiterlimit="10"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                        <path
+                                            d="M3.25 21C3.25 21.4142 3.58579 21.75 4 21.75C4.41421 21.75 4.75 21.4142 4.75 21L3.25 21ZM19.25 21C19.25 21.4142 19.5858 21.75 20 21.75C20.4142 21.75 20.75 21.4142 20.75 21L19.25 21ZM4.75 21C4.75 19.9966 4.95288 19.2731 5.27209 18.7402C5.58887 18.2113 6.05265 17.8157 6.66876 17.5188C7.94488 16.9038 9.78439 16.75 12 16.75L12 15.25C9.79733 15.25 7.63684 15.3871 6.01753 16.1675C5.18592 16.5683 4.47813 17.1466 3.98527 17.9694C3.49483 18.7882 3.25 19.7943 3.25 21L4.75 21ZM12 16.75C14.2156 16.75 16.0551 16.9038 17.3312 17.5188C17.9473 17.8157 18.4111 18.2113 18.7279 18.7402C19.0471 19.2731 19.25 19.9966 19.25 21L20.75 21C20.75 19.7943 20.5052 18.7882 20.0147 17.9694C19.5219 17.1466 18.8141 16.5683 17.9825 16.1675C16.3632 15.3871 14.2027 15.25 12 15.25L12 16.75Z"
+                                            fill="#2b2f33"
+                                        />
+                                    </svg>
+                                ) : (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M17.1996 0.835938C16.8209 0.847074 16.0079 3.6313 13.3128 2.71807L11.8761 1.93849C9.04737 0.824801 7.065 2.28373 7.065 5.06796V8.30879C7.065 11.093 9.34806 13.3761 12.1323 13.3761C14.9165 13.3761 17.1996 11.093 17.1996 8.30879V1.13663"
+                                            stroke="#2b2f33"
+                                            strokeWidth="1.5"
+                                            strokeMiterlimit="10"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                        <path
+                                            d="M3.25 21C3.25 21.4142 3.58579 21.75 4 21.75C4.41421 21.75 4.75 21.4142 4.75 21L3.25 21ZM19.25 21C19.25 21.4142 19.5858 21.75 20 21.75C20.4142 21.75 20.75 21.4142 20.75 21L19.25 21ZM4.75 21C4.75 19.9966 4.95288 19.2731 5.27209 18.7402C5.58887 18.2113 6.05265 17.8157 6.66876 17.5188C7.94488 16.9038 9.78439 16.75 12 16.75L12 15.25C9.79733 15.25 7.63684 15.3871 6.01753 16.1675C5.18592 16.5683 4.47813 17.1466 3.98527 17.9694C3.49483 18.7882 3.25 19.7943 3.25 21L4.75 21ZM12 16.75C14.2156 16.75 16.0551 16.9038 17.3312 17.5188C17.9473 17.8157 18.4111 18.2113 18.7279 18.7402C19.0471 19.2731 19.25 19.9966 19.25 21L20.75 21C20.75 19.7943 20.5052 18.7882 20.0147 17.9694C19.5219 17.1466 18.8141 16.5683 17.9825 16.1675C16.3632 15.3871 14.2027 15.25 12 15.25L12 16.75Z"
+                                            fill="#2b2f33"
+                                        />
+                                    </svg>
+                                )}
+                                <span className={styles['value']}>
+                                    {prescriptionInfo.patientAdditionalData.name +
+                                        ' ' +
+                                        prescriptionInfo.patientAdditionalData.lastName}
+                                </span>
+                            </div>
+                            <div className={styles.row}>
+                                <span className={styles['title']}>بیمه:</span>
+                                <span className={styles['value']}>
+                                    {prescriptionInfo.patientAdditionalData.issuerType ?? '-'}
+                                </span>
+                            </div>
+                        </Default>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                width: '5rem',
+                                height: '5rem'
+                            }}
+                            onClick={() => setFavoriteFolderNameModal(true)}
+                            aria-hidden
+                            data-tip
+                            data-for="template"
+                        >
+                            <PrescriptionIcon />
+                            <ReactTooltip id="template" place="top" type="dark" effect="solid">
+                                <p>
+                                    بعد از اینکه نسخه را کامل کردید، <br />
+                                    از این قسمت میتوانید آن را جزو نسخ پر استفاده خود ذخیره کنید{' '}
+                                    <br />
+                                    تا برای بیمار بعدی، بتوانید کل این نسخه را فقط با یک کلیک صادر
+                                    کنید.
+                                </p>
+                            </ReactTooltip>
                         </div>
-                        <div className={styles.row}>
-                            <span className={styles['title']}>بیمه:</span>
+                        <Finalize />
+                    </div>
+                </div>
+
+                {isOpen && (
+                    <div className={styles.moreInfoWrapper}>
+                        <Mobile>
+                            <div className={styles.col} style={{ width: '100%' }}>
+                                <span className={styles['title']}>بیمه:</span>
+                                <span className={styles['value']}>
+                                    {prescriptionInfo.patientAdditionalData.issuerType ?? '-'}
+                                </span>
+                            </div>
+                        </Mobile>
+                        <Default></Default>
+                        <div className={styles['col']}>
+                            <span className={styles['title']}>سن</span>
                             <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData.issuerType ?? '-'}
+                                {prescriptionInfo.patientAdditionalData?.age ?? '-'}
                             </span>
                         </div>
-                    </Default>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            width: '5rem',
-                            height: '5rem'
-                        }}
-                        onClick={() => setFavoriteFolderNameModal(true)}
-                        aria-hidden
-                        data-tip
-                        data-for="template"
-                    >
-                        <PrescriptionIcon />
-                        <ReactTooltip id="template" place="top" type="dark" effect="solid">
-                            <p>
-                                بعد از اینکه نسخه را کامل کردید، <br />
-                                از این قسمت میتوانید آن را جزو نسخ پر استفاده خود ذخیره کنید <br />
-                                تا برای بیمار بعدی، بتوانید کل این نسخه را فقط با یک کلیک صادر کنید.
-                            </p>
-                        </ReactTooltip>
+                        <div className={styles['col']}>
+                            <span className={styles['title']}>اعتبار بیمه</span>
+                            <span className={styles['value']}>
+                                {prescriptionInfo.patientAdditionalData?.accountValidto ?? '-'}
+                            </span>
+                        </div>
+                        <div className={styles['col']}>
+                            <span className={styles['title']}>کدملی</span>
+                            <span className={styles['value']}>
+                                {prescriptionInfo.patientNationalCode ?? '-'}
+                            </span>
+                        </div>
+                        <div
+                            className={styles['col']}
+                            id="p_cell"
+                            onClick={() => {
+                                setUpdateCellPhoneModal(true);
+                            }}
+                            style={{ cursor: 'pointer' }}
+                            aria-hidden
+                            data-tip
+                            data-for="editPhone"
+                        >
+                            <span className={styles['title']}>شماره موبایل: </span>
+                            <span className={styles['value']}>{cellPhone}</span>
+                            <EditIcon />
+                            <ReactTooltip id="editPhone" place="top" type="dark" effect="solid">
+                                شماره موبایلی که پیامک ثبت نسخه برای آن ارسال می شود
+                            </ReactTooltip>
+                        </div>
+
+                        {prescriptionInfo.patientAdditionalData?.productId && (
+                            <div className={styles['col']}>
+                                <span className={styles['title']}>صندوق بیمه</span>
+                                <span className={styles['value']}>
+                                    {prescriptionInfo.patientAdditionalData?.productId ?? '-'}
+                                </span>
+                            </div>
+                        )}
+                        {prescriptionInfo.insuranceType === 'salamat' &&
+                            prescriptionInfo.finalized && (
+                                <>
+                                    <div className={styles['col']} data-tip data-for="geoInfo">
+                                        <span className={styles['title']}>کد پیگیری</span>
+                                        <span className={styles['value']}>
+                                            {prescriptionInfo.salamat_prescription?.trackingCode ??
+                                                '-'}
+                                        </span>
+                                    </div>
+                                    <div className={styles['col']}>
+                                        <span className={styles['title']}>کد توالی</span>
+                                        <span className={styles['value']}>
+                                            {prescriptionInfo.salamat_prescription
+                                                ?.sequenceNumber ?? '-'}
+                                        </span>
+                                    </div>
+                                </>
+                            )}
+                        {prescriptionInfo.patientAdditionalData?.specialAccount && (
+                            <div className={styles['col']}>
+                                <span className={styles['title']}>بیماری خاص</span>
+                                <span className={styles['value']}>
+                                    {prescriptionInfo.patientAdditionalData?.specialAccount ?? '-'}
+                                </span>
+                            </div>
+                        )}
                     </div>
-                    <Finalize />
-                </div>
+                )}
                 <Modal
                     title="نسخه پراستفاده"
                     isOpen={favoriteFolderNameModal}
@@ -226,148 +343,6 @@ const Info = () => {
                     </form>
                 </Modal>
             </div>
-            {isOpen && (
-                <div className={styles.moreInfoWrapper}>
-                    <Mobile>
-                        <div className={styles.baseInfo}>
-                            <div className={styles.col} style={{ width: '100%' }}>
-                                <span className={styles['title']}>نام بیمار:</span>
-                                <span className={styles['value']}>
-                                    {prescriptionInfo.patientAdditionalData.name +
-                                        ' ' +
-                                        prescriptionInfo.patientAdditionalData.lastName}
-                                </span>
-                            </div>
-                            <div className={styles.col} style={{ width: '100%' }}>
-                                <span className={styles['title']}>بیمه:</span>
-                                <span className={styles['value']}>
-                                    {prescriptionInfo.patientAdditionalData.issuerType ?? '-'}
-                                </span>
-                            </div>
-                        </div>
-                    </Mobile>
-                    <div className={styles['row']}>
-                        <div className={styles['col']}>
-                            <span className={styles['title']}>سن</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.age ?? '-'}
-                            </span>
-                        </div>
-                        <div className={styles['col']}>
-                            <span className={styles['title']}>جنسیت</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.gender ?? '-'}
-                            </span>
-                        </div>
-                        {/* <div className={styles['col']}>
-                            <span className={styles['title']}>نسبت با سرپرست</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.relationType ?? '-'}
-                            </span>
-                        </div> */}
-                    </div>
-                    <div className={styles['row']}>
-                        {/* <div className={styles['col']}>
-                            <span className={styles['title']}>تاریخ تولد</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.birthDate ?? '-'}
-                            </span>
-                        </div> */}
-                        <div className={styles['col']}>
-                            <span className={styles['title']}>اعتبار بیمه</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.accountValidto ?? '-'}
-                            </span>
-                        </div>
-                        <div className={styles['col']}>
-                            <span className={styles['title']}>کدملی</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientNationalCode ?? '-'}
-                            </span>
-                        </div>
-                    </div>
-                    <div className={styles['row']}>
-                        <div
-                            className={styles['col']}
-                            id="p_cell"
-                            onClick={() => {
-                                setUpdateCellPhoneModal(true);
-                            }}
-                            style={{ cursor: 'pointer' }}
-                            aria-hidden
-                            data-tip
-                            data-for="editPhone"
-                        >
-                            <span className={styles['title']}>شماره موبایل: </span>
-                            <span className={styles['value']}>{cellPhone}</span>
-                            <EditIcon />
-                            <ReactTooltip id="editPhone" place="top" type="dark" effect="solid">
-                                شماره موبایلی که پیامک ثبت نسخه برای آن ارسال می شود
-                            </ReactTooltip>
-                        </div>
-                    </div>
-
-                    {/* <div className={styles['row']}>
-                        <div className={styles['col']}>
-                            <span className={styles['title']}>وضعیت تاهل</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.maritalStatus ?? '-'}
-                            </span>
-                        </div>
-                        <div className={styles['col']}>
-                            <span className={styles['title']}>پزشک خانواده</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.familyPhysician ?? 'ندارد'}
-                            </span>
-                        </div>
-                    </div> */}
-                    <div className={styles['row']}>
-                        {prescriptionInfo.patientAdditionalData?.productId && (
-                            <div className={styles['col']}>
-                                <span className={styles['title']}>صندوق بیمه</span>
-                                <span className={styles['value']}>
-                                    {prescriptionInfo.patientAdditionalData?.productId ?? '-'}
-                                </span>
-                            </div>
-                        )}
-                        {/* <div className={styles['col']} data-tip data-for="geoInfo">
-                            <span className={styles['title']}>محل تولد</span>
-                            <span className={styles['value']}>
-                                {prescriptionInfo.patientAdditionalData?.geoInfo ?? '-'}
-                            </span>
-                            <ReactTooltip id="geoInfo" place="top" type="dark" effect="solid">
-                                {prescriptionInfo.patientAdditionalData?.geoInfo ?? '-'}
-                            </ReactTooltip>
-                        </div> */}
-                    </div>
-                    {prescriptionInfo.insuranceType === 'salamat' && prescriptionInfo.finalized && (
-                        <div className={styles['row']}>
-                            <div className={styles['col']} data-tip data-for="geoInfo">
-                                <span className={styles['title']}>کد پیگیری</span>
-                                <span className={styles['value']}>
-                                    {prescriptionInfo.salamat_prescription?.trackingCode ?? '-'}
-                                </span>
-                            </div>
-                            <div className={styles['col']}>
-                                <span className={styles['title']}>کد توالی</span>
-                                <span className={styles['value']}>
-                                    {prescriptionInfo.salamat_prescription?.sequenceNumber ?? '-'}
-                                </span>
-                            </div>
-                        </div>
-                    )}
-                    <div className={styles['row']}>
-                        {prescriptionInfo.patientAdditionalData?.specialAccount && (
-                            <div className={styles['col']}>
-                                <span className={styles['title']}>بیماری خاص</span>
-                                <span className={styles['value']}>
-                                    {prescriptionInfo.patientAdditionalData?.specialAccount ?? '-'}
-                                </span>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
         </>
     );
 };

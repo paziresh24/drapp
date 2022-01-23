@@ -25,6 +25,7 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
     const [visitModal, setVisitModal] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
     const deletePrescription = useDeletePrescription();
+    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
     useEffect(() => {
         getPrescriptionPDF.remove();
@@ -88,11 +89,28 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
             <Default>
                 <tr className={turn.finalized ? styles.disabled : ''}>
                     <td data-label="نام بیمار:">
-                        <span className={styles.name}>
-                            {turn.patientAdditionalData.name +
-                                ' ' +
-                                turn.patientAdditionalData.lastName}
-                        </span>
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '2rem',
+                                paddingRight: '0.8rem'
+                            }}
+                        >
+                            <div
+                                onClick={() => setIsDetailsOpen(prev => !prev)}
+                                aria-hidden
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                            </div>
+
+                            <span className={styles.name}>
+                                {turn.patientAdditionalData.name +
+                                    ' ' +
+                                    turn.patientAdditionalData.lastName}
+                            </span>
+                        </div>
                     </td>
                     <td data-label="کدملی:">
                         <span>{turn.patientNationalCode ?? '-'}</span>
@@ -169,6 +187,81 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                         </div>
                     </td>
                 </tr>
+                {isDetailsOpen && (
+                    <tr>
+                        <td colspan="6" style={{ background: '#EBEFF8', padding: '0.5rem 0' }}>
+                            <div
+                                className={styles.details}
+                                style={{
+                                    display: 'flex',
+                                    // justifyContent: 'space-between',
+                                    gap: '5rem',
+                                    width: '100%',
+                                    // background: '#fff',
+                                    padding: '1.5rem 2rem',
+                                    borderRadius: '0rem'
+                                }}
+                            >
+                                <div className={styles['row']}>
+                                    <div className={styles['col']}>
+                                        <span className={styles['title']}>شماره موبایل</span>
+                                        <span className={styles['value']}>
+                                            {turn.patientCell ?? '-'}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles['row']}>
+                                    <div className={styles['col']} data-tip data-for="geoInfo">
+                                        <span className={styles['title']}>کد پیگیری</span>
+                                        <span className={styles['value']}>
+                                            {turn?.insuranceType === 'tamin' &&
+                                                turn[turn?.insuranceType + '_prescription'].map(
+                                                    item => (
+                                                        <span
+                                                            style={{
+                                                                fontSize: '1.4rem',
+                                                                marginRight: '1rem'
+                                                            }}
+                                                            key={item.head_EPRSC_ID}
+                                                        >
+                                                            {item.head_EPRSC_ID ?? '-'}
+                                                        </span>
+                                                    )
+                                                )}
+                                            {turn?.insuranceType === 'salamat' && (
+                                                <span
+                                                    style={{
+                                                        fontSize: '1.4rem',
+                                                        marginRight: '1rem'
+                                                    }}
+                                                    key={
+                                                        turn[
+                                                            turn?.prescription?.insuranceType +
+                                                                '_prescription'
+                                                        ]?.trackingCode
+                                                    }
+                                                >
+                                                    {turn[turn?.insuranceType + '_prescription']
+                                                        ?.trackingCode ?? ''}
+                                                </span>
+                                            )}{' '}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles['row']}>
+                                    <div className={styles['col']}>
+                                        <span className={styles['title']}>کد توالی</span>
+                                        <span className={styles['value']}>
+                                            {turn.salamat_prescription?.sequenceNumber ?? '-'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                )}
             </Default>
             <Mobile>
                 <div className="relative w-full flex flex-col p-[1.1rem] space-y-4 bg-white shadow-card">

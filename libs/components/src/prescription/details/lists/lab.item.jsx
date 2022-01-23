@@ -87,17 +87,28 @@ const LabsItem = ({
                             insuranceType={insuranceType}
                         />
                     </td>
-                    {!readOnly && !noDate && (
+                    {!noDate && (
                         <td data-label="تاریخ موثر">
-                            <SelectDate
-                                label="تاریخ موثر"
-                                simple
-                                onChange={value => editDate(value)}
-                                default-value={service.date_do}
-                                today
-                            />
+                            {!readOnly ? (
+                                <SelectDate
+                                    label="تاریخ موثر"
+                                    simple
+                                    onChange={value => editDate(value)}
+                                    default-value={service.date_do}
+                                    today
+                                />
+                            ) : (
+                                <span>
+                                    {date &&
+                                        moment
+                                            .from(date, 'YYYY-MM-DD')
+                                            .locale('fa')
+                                            .format('YYYY/M/D')}
+                                </span>
+                            )}
                         </td>
                     )}
+
                     <td>
                         <div className={styles.action}>
                             {readOnly && service.description && (

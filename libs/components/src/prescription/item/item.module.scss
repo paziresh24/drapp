@@ -295,3 +295,18 @@
 //         opacity: 0.5;
 //     }
 // }
+
+.details {
+    .row {
+        display: flex;
+        flex-direction: column;
+        @include gap(1rem, false);
+
+        .col {
+            display: flex;
+            flex-direction: row !important;
+            align-items: center;
+            @include gap(1rem);
+        }
+    }
+}

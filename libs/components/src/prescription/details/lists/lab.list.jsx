@@ -125,22 +125,32 @@ const LabsList = ({
                                                         style={{
                                                             display: 'flex',
                                                             gap: '1rem',
-                                                            cursor: 'pointer'
+                                                            ...(!readOnly && { cursor: 'pointer' })
                                                         }}
-                                                        onClick={() => setDateModal(true)}
+                                                        onClick={() =>
+                                                            !readOnly && setDateModal(true)
+                                                        }
                                                         aria-hidden
                                                     >
                                                         تاریخ موثر
-                                                        <CalendarIcon data-tip data-for="dateAll" />
-                                                        <ReactTooltip
-                                                            id="dateAll"
-                                                            place="top"
-                                                            type="dark"
-                                                            effect="solid"
-                                                        >
-                                                            برای یکسان کردن همه تاریخ های موثر، از
-                                                            اینجا یک تاریخ انتخاب کنید
-                                                        </ReactTooltip>
+                                                        {!readOnly && (
+                                                            <>
+                                                                <CalendarIcon
+                                                                    data-tip
+                                                                    data-for="dateAll"
+                                                                />
+                                                                <ReactTooltip
+                                                                    id="dateAll"
+                                                                    place="top"
+                                                                    type="dark"
+                                                                    effect="solid"
+                                                                >
+                                                                    برای یکسان کردن همه تاریخ های
+                                                                    موثر، از اینجا یک تاریخ انتخاب
+                                                                    کنید
+                                                                </ReactTooltip>
+                                                            </>
+                                                        )}
                                                     </div>
                                                 }
                                             </th>
@@ -156,22 +166,32 @@ const LabsList = ({
                                                         style={{
                                                             display: 'flex',
                                                             gap: '1rem',
-                                                            cursor: 'pointer'
+                                                            ...(!readOnly && { cursor: 'pointer' })
                                                         }}
-                                                        onClick={() => setDateModal(true)}
+                                                        onClick={() =>
+                                                            !readOnly && setDateModal(true)
+                                                        }
                                                         aria-hidden
                                                     >
                                                         تاریخ موثر
-                                                        <CalendarIcon data-tip data-for="dateAll" />
-                                                        <ReactTooltip
-                                                            id="dateAll"
-                                                            place="top"
-                                                            type="dark"
-                                                            effect="solid"
-                                                        >
-                                                            برای یکسان کردن همه تاریخ های موثر، از
-                                                            اینجا یک تاریخ انتخاب کنید
-                                                        </ReactTooltip>
+                                                        {!readOnly && (
+                                                            <>
+                                                                <CalendarIcon
+                                                                    data-tip
+                                                                    data-for="dateAll"
+                                                                />
+                                                                <ReactTooltip
+                                                                    id="dateAll"
+                                                                    place="top"
+                                                                    type="dark"
+                                                                    effect="solid"
+                                                                >
+                                                                    برای یکسان کردن همه تاریخ های
+                                                                    موثر، از اینجا یک تاریخ انتخاب
+                                                                    کنید
+                                                                </ReactTooltip>
+                                                            </>
+                                                        )}
                                                     </div>
                                                 }
                                             </th>
@@ -179,7 +199,7 @@ const LabsList = ({
                                 </Fragment>
                             ))}
                             <th>
-                                {!noDate && (
+                                {!readOnly && (
                                     <div
                                         style={{
                                             display: 'flex',

@@ -215,6 +215,14 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
                 </div>
 
                 <div className={styles['amount-bar']}>
+                    {insuranceType === 'tamin' && (
+                        <Count
+                            label="دوره تکرار"
+                            onChange={value => setRepeat(value)}
+                            defaultValue={repeat ?? 1}
+                            insuranceType={insuranceType}
+                        />
+                    )}
                     <Count
                         error={countFiledError}
                         onChange={value => {
@@ -225,14 +233,6 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
                         focus={countFieldFocus}
                         setFocus={setCountFieldFocus}
                     />
-                    {insuranceType === 'tamin' && (
-                        <Count
-                            label="دوره تکرار"
-                            onChange={value => setRepeat(value)}
-                            defaultValue={repeat ?? 1}
-                            insuranceType={insuranceType}
-                        />
-                    )}
                     <Consumption
                         error={consumptionFiledError}
                         onChange={value => {

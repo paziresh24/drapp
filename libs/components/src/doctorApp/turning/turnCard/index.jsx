@@ -271,32 +271,6 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                     >
                                         نسخه ثبت شده است
                                     </ReactTooltip>
-                                    {turn?.prescription?.insuranceType === 'tamin' &&
-                                        turn?.prescription[
-                                            turn?.prescription?.insuranceType + '_prescription'
-                                        ].map(item => (
-                                            <span
-                                                style={{ fontSize: '1.4rem', marginRight: '1rem' }}
-                                                key={item.head_EPRSC_ID}
-                                            >
-                                                {item.head_EPRSC_ID ?? '-'}
-                                            </span>
-                                        ))}
-                                    {turn?.prescription?.insuranceType === 'salamat' && (
-                                        <span
-                                            style={{ fontSize: '1.4rem', marginRight: '1rem' }}
-                                            key={
-                                                turn?.prescription[
-                                                    turn?.prescription?.insuranceType +
-                                                        '_prescription'
-                                                ]?.trackingCode
-                                            }
-                                        >
-                                            {turn?.prescription[
-                                                turn?.prescription?.insuranceType + '_prescription'
-                                            ]?.trackingCode ?? '-'}
-                                        </span>
-                                    )}
                                     {!turn.prescription && '-'}
                                 </>
                             ) : turn.prescription?.status === null ? (

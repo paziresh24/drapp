@@ -20,6 +20,7 @@ import { Overlay } from '@paziresh24/components/core/overlay';
 import emptyState from '@paziresh24/components/prescription/templates/assets/empty_state.png';
 import { isMobile } from 'react-device-detect';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom/index';
+import { toast } from 'react-toastify';
 
 const ServiceFavorite = () => {
     const history = useHistory();
@@ -127,6 +128,12 @@ const ServiceFavorite = () => {
             });
         }
     }, [insuranceType, salamatItems, taminItems]);
+
+    useEffect(() => {
+        if (deleteFavoriteServices.isSuccess && addFavoriteServices.isSuccess) {
+            toast.success('اقلام پراستفاده ذخیره شدند.');
+        }
+    }, [deleteFavoriteServices.status, addFavoriteServices.status]);
 
     const edit = () => {
         getFavoritePrescriptions.data

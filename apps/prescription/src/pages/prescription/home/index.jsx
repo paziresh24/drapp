@@ -1,5 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
-import styles from '../../../assets/styles/pages/prescription/panel.module.scss';
+import styles from './home.module.scss';
 // HOOKS
 import {
     useAddPrescription,
@@ -413,7 +413,7 @@ const Home = props => {
     });
 
     return (
-        <Body>
+        <div className={styles.wrapper}>
             <DeliverCase
                 isOpen={deliverModal}
                 onClose={setDeliverModal}
@@ -470,17 +470,7 @@ const Home = props => {
                 </div>
             </Modal>
 
-            {pdfFetchPrescriptionLink && (
-                <a
-                    download={nationalCode}
-                    href={pdfFetchPrescriptionLink}
-                    ref={linkFetchPrescriptionClick}
-                >
-                    {' '}
-                </a>
-            )}
             <div className={styles['search']}>
-                <span className="text-2xl font-bold">لیست نسخه ها ثبت شده</span>
                 <div className={styles['search-row']}>
                     <div className={styles.searchWrapper}>
                         <SearchBar label="جستجوی بین نسخه ها" value={setSearchValue} />
@@ -736,7 +726,7 @@ const Home = props => {
                 sequenceNumber={location.state?.sequenceNumber}
             /> */}
             {/* {prescriptions.isSuccess && <AddPrescription />} */}
-        </Body>
+        </div>
     );
 };
 

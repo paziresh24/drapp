@@ -13,6 +13,18 @@ const StarService = ({ service, insuranceType }) => {
     const [stared, setStared] = useState(false);
 
     useEffect(() => {
+        if (
+            favoriteItem.find(
+                item => item.service.id === service.service.id && item.count === service.count
+            )
+        ) {
+            services[services.findIndex(item => item.id === service.id)].favorite_item =
+                favoriteItem.find(
+                    item => item.service.id === service.service.id && item.count === service.count
+                );
+            setServices(services);
+            // setStared(true);
+        }
         favoriteItem.find(item => item.id === service.favorite_item?.id)
             ? setStared(true)
             : setStared(false);
