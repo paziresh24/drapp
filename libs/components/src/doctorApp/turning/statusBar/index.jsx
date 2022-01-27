@@ -23,6 +23,7 @@ import { useMenu } from '@paziresh24/context/core/menu';
 import queryString from 'query-string';
 import { useLearnTour } from '@paziresh24/hooks/learn';
 import range from 'lodash/range';
+import { useSettingTurns } from './settingTurns.context';
 
 const TimeInput = ({ placeholder, onBlur, value }) => {
     const [openModal, setOpenModal] = useState(false);
@@ -95,6 +96,7 @@ const TimeInput = ({ placeholder, onBlur, value }) => {
 
 const StatusBar = props => {
     const history = useHistory();
+    const [isOpen, setIsOpen] = useSettingTurns();
     const [moveDeleteModal, setMoveDeleteModal] = useState(false);
     const [openNewTurn, setOpenNewTurn] = useState(false);
     const [tabName, setTabName] = useState('');
@@ -184,7 +186,7 @@ const StatusBar = props => {
                         return toast.error('نوبتی یافت نشد.');
                     }
                     sendEvent('move setting', 'booking', 'deletebook');
-                    props.refetchData();
+                    // props.refetchData();
                     setDeleteTurnsConfirmModal(false);
                     setMoveDeleteModal(false);
                     setVacationDeleteConfirm(false);
@@ -224,7 +226,7 @@ const StatusBar = props => {
                         return toast.error('نوبتی یافت نشد.');
                     }
                     sendEvent('move setting', 'booking', 'setvacation');
-                    props.refetchData();
+                    // props.refetchData();
                     setDeleteTurnsConfirmModal(false);
                     setMoveDeleteModal(false);
                     setVacationDeleteConfirm(false);
@@ -281,7 +283,7 @@ const StatusBar = props => {
                     setMoveTurnsErrorConfirmModal(false);
                     setMoveDeleteModal(false);
                     setMoveTurnsConfirmModal(false);
-                    props.refetchData();
+                    // props.refetchData();
                     return toast.success('عملیات با موفقیت انجام شد.');
                 }
             }
@@ -332,7 +334,7 @@ const StatusBar = props => {
                     }
                     sendEvent('move setting', 'booking', 'setvacation');
                     setVacationMoveTurnsErrorConfirmModal(false);
-                    props.refetchData();
+                    // props.refetchData();
                     setMoveTurnsConfirmModal(false);
                     setMoveDeleteModal(false);
                     setVacationMoveModal(false);
@@ -375,7 +377,7 @@ const StatusBar = props => {
                         return toast.error('نوبتی یافت نشد.');
                     }
                     sendEvent('move setting', 'booking', 'setvacation');
-                    props.refetchData();
+                    // props.refetchData();
                     setMoveDeleteModal(false);
                     return toast.success('عملیات با موفقیت انجام شد.');
                 }
@@ -390,11 +392,11 @@ const StatusBar = props => {
     } = useForm();
 
     useEffect(() => {
-        if (props.isOpen) setMoveDeleteModal(true);
-    }, [props.isOpen]);
+        if (isOpen) setMoveDeleteModal(true);
+    }, [isOpen]);
 
     useEffect(() => {
-        if (!moveDeleteModal) props.setMoveDeleteModal(false);
+        if (!moveDeleteModal) setIsOpen(false);
     }, [moveDeleteModal]);
 
     return (
@@ -464,7 +466,7 @@ const StatusBar = props => {
                         >
                             ثبت اولین نسخه با آموزش
                         </Button> */}
-                        <Button
+                        {/* <Button
                             // variant="secondary"
                             id="add-turn"
                             onClick={() => {
@@ -478,7 +480,7 @@ const StatusBar = props => {
                             size="medium"
                         >
                             افزودن بیمار
-                        </Button>
+                        </Button> */}
                     </div>
                 </FixedWrapBottom>
             </Default>

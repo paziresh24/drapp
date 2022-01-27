@@ -63,8 +63,8 @@
 
     &.primary {
         // background-color: #27bda0;
-        box-shadow: 0px 5px 20px rgba(39, 189, 159, 0.212);
-        @include btn-style(#27bda0, #fff);
+        box-shadow: 0px 5px 20px rgba($color-primary, 0.2);
+        @include btn-style($color-primary, #fff);
 
         &.error {
             // background-color: #f56262;
@@ -79,7 +79,7 @@
 
     &.secondary {
         background-color: transparent;
-        border: 1px solid #27bd9f4b;
+        border: 1px solid rgba($color-primary, 0.4);
 
         &.error {
             border: 1px solid #f562624b;
@@ -90,7 +90,7 @@
         }
 
         .text {
-            color: #27bda0;
+            color: $color-primary;
         }
     }
 }

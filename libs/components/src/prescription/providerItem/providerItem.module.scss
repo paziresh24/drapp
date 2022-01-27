@@ -7,6 +7,12 @@
     margin-bottom: 0.5rem;
     border-radius: 0.8rem;
 
+    @media (max-width: 1097px) {
+        box-shadow: unset;
+        border-bottom: 1px solid rgba(189, 201, 211, 0.459);
+        border-radius: 0;
+    }
+
     .header {
         display: flex;
         justify-content: space-between;
@@ -14,24 +20,29 @@
         padding: 2rem;
         border-bottom: 1px solid rgba(189, 201, 211, 0.27);
 
-        .provider-name {
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.6rem;
-
-            > * {
-                margin: 0 0.5rem;
-            }
-
-            :first-child {
-                margin-right: 0 !important;
-            }
-
-            :last-child {
-                margin-left: 0 !important;
-            }
+        @media (max-width: 1097px) {
+            border-bottom: 0;
+            padding: 1rem 2rem;
         }
+    }
+}
+
+.provider-name {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.6rem;
+
+    > * {
+        margin: 0 0.5rem;
+    }
+
+    :first-child {
+        margin-right: 0 !important;
+    }
+
+    :last-child {
+        margin-left: 0 !important;
     }
 }
 
@@ -54,9 +65,14 @@
         flex-direction: column;
         @include gap(1.5rem, false);
 
+        @media screen and(max-width:1097px) {
+            @include gap(3rem, false);
+        }
+
         .centerInfo {
             display: flex;
             flex-direction: column;
+            @include gap(1rem, false);
 
             .centerName {
                 font-weight: 600;

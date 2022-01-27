@@ -264,35 +264,29 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                 )}
             </Default>
             <Mobile>
-                <div className="relative w-full flex flex-col p-[1.1rem] space-y-4 bg-white shadow-card">
-                    <span className="font-medium">
+                <div className={styles['turn-card']}>
+                    <span className="font-medium" style={{ fontWeight: '500' }}>
                         {turn.patientAdditionalData.name +
                             ' ' +
                             turn.patientAdditionalData.lastName}
                     </span>
-                    <div className="absolute top-0 left-[1rem] w-[3rem] h-[3rem] flex items-center justify-center">
-                        {pdfLink && (
-                            <a
-                                download={
-                                    turn.patientAdditionalData.name +
-                                    ' ' +
-                                    turn.patientAdditionalData.lastName
-                                }
-                                href={pdfLink}
-                                ref={linkClick}
-                            >
-                                {' '}
-                            </a>
-                        )}
-                    </div>
 
-                    <div className="flex flex-col space-y-4 opacity-75 text-2xl">
-                        <div className="flex gap-7">
-                            <div className="w-full">
+                    <div
+                        className="flex flex-col space-y-4 opacity-75 text-2xl"
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            opacity: '0.75',
+                            fontSize: '1.5rem',
+                            padding: '0.5rem 0'
+                        }}
+                    >
+                        <div className="flex gap-7" style={{ display: 'flex' }}>
+                            <div className="w-full" style={{ width: '100%' }}>
                                 <span>شماره موبایل: </span>
                                 <span>{turn.patientCell ?? '-'}</span>
                             </div>
-                            <div className="w-full">
+                            <div className="w-full" style={{ width: '100%' }}>
                                 <span>زمان نوبت: </span>
                                 <span>
                                     {moment(new Date(turn.created_at).getTime())
@@ -311,8 +305,8 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                 </span>
                             </div>
                         </div>
-                        <div className="flex gap-7">
-                            <div className="w-full">
+                        <div className="flex gap-7" style={{ display: 'flex' }}>
+                            <div className="w-full" style={{ width: '100%' }}>
                                 <span>کدپیگیری نسخه: </span>
                                 <span>
                                     {turn?.insuranceType === 'tamin' &&
@@ -336,7 +330,7 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                     )}
                                 </span>
                             </div>
-                            <div className="w-full">
+                            <div className="w-full" style={{ width: '100%' }}>
                                 <span>وضعیت نسخه: </span>
                                 <span>
                                     {turn.finalized ? (

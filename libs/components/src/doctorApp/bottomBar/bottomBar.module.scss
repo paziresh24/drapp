@@ -4,7 +4,7 @@
         position: absolute;
         width: 6rem;
         height: 0.5rem;
-        background: #27bda0;
+        background: $color-primary;
         border-radius: 100rem;
         top: -2px;
     }
@@ -30,5 +30,9 @@
         max-width: 6.5rem;
         min-width: 6.5rem;
         width: 6.5rem;
+
+        * {
+            fill: $color-primary;
+        }
     }
 }

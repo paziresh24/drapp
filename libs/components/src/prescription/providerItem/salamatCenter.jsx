@@ -18,6 +18,9 @@ import { toast } from 'react-toastify';
 import SalamatImport from '../details/ToolBox/Import/salamat';
 import isEmpty from 'lodash/isEmpty';
 import { useDrApp } from '@paziresh24/context/drapp';
+import { isMobile } from 'react-device-detect';
+import TaminIcon from '@paziresh24/components/icons/prescription/tamin';
+import SalamatIcon from '@paziresh24/components/icons/prescription/salamat';
 
 const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }) => {
     const createSalamatDoctor = useCreateSalamatDoctor();
@@ -133,6 +136,17 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
         );
     };
 
+    const providers = {
+        tamin: {
+            name: 'بیمه تامین اجتماعی',
+            icon: <TaminIcon />
+        },
+        salamat: {
+            name: 'بیمه سلامت',
+            icon: <SalamatIcon />
+        }
+    };
+
     return (
         <div className={styles.centerItem}>
             <div
@@ -148,7 +162,12 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
             >
                 <div className={styles.centerInfo}>
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        <span className={styles.centerName}>{name}</span>
+                        {isMobile && (
+                            <div className={styles['provider-name']}>
+                                <SalamatIcon /> <span>بیمه سلامت</span>
+                            </div>
+                        )}
+                        {!isMobile && <span className={styles.centerName}>{name}</span>}
                         <svg
                             width="16"
                             height="17"
@@ -164,7 +183,8 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                             />
                         </svg>
                     </div>
-                    <span className={styles.centerAddress}>{address}</span>
+                    {!isMobile && <span className={styles.centerAddress}>{address}</span>}
+                    {isMobile && <span className={styles.centerAddress}>{name}</span>}
                 </div>
                 {isAuthentication ? (
                     <Chips theme="sucsess">احراز هویت شده</Chips>

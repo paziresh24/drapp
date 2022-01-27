@@ -28,12 +28,12 @@ const Header = () => {
     const [page] = usePage();
     const [isOpen, setIsOpen] = useMenu();
     const [info, setInfo] = useDrApp();
-    const [, setOpenState] = useSupport(false);
+    // const [, setOpenState] = useSupport(false);
     const { setCurrentStep: setSteps } = useTour();
     const [isCenterSelectOpen, setIsCenterSelectOpen] = useState(false);
     const [centerActiveModal, setCenterActiveModal] = useState(false);
     const createCenter = useCreateCenter();
-    const [supportModal, setSupportModal] = useState();
+    const [supportModal, setSupportModal] = useSupport();
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
     const location = useLocation();

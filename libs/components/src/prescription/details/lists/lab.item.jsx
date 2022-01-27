@@ -74,6 +74,7 @@ const LabsItem = ({
                             service={service}
                             name={service.service.name}
                             favorite={!noFavorite}
+                            insuranceType={insuranceType}
                         />
                     </td>
                     <td data-label="تعداد">

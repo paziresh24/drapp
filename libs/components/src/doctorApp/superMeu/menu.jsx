@@ -1,23 +1,29 @@
-import { MenuData } from './menuData';
 import styles from './menu.module.scss';
 import { Link } from 'react-router-dom';
-import isEmpty from 'lodash/isEmpty';
+import { ChevronIcon } from '@paziresh24/components/icons';
 
-const Menu = () => {
-    const menuData = MenuData();
+const Menu = ({ items }) => {
     return (
         <div className={styles.wrapper}>
-            {menuData.map(item => (
-                <Link to={item.path} key={item.path} className={styles.item}>
-                    <div className={styles.icon}>
-                        {item.icon}
+            {items.map(item => (
+                <Link
+                    to={item.path ? item.path : '#'}
+                    key={item.title}
+                    onClick={item?.onClick}
+                    className={styles.item}
+                >
+                    <div className={styles.item_content}>
+                        {item.icon && <div className={styles.icon}>{item.icon}</div>}
+                        <span className={styles.title}>{item.title}</span>
+                    </div>
+                    <div className={styles.item_action}>
                         {item.badge ? (
                             <span className={styles.badge}>
                                 <span className={styles.red}>{item.badge}</span>
                             </span>
                         ) : null}
+                        <ChevronIcon dir="left" />
                     </div>
-                    <span className={styles.title}>{item.title}</span>
                 </Link>
             ))}
         </div>

@@ -6,6 +6,13 @@
     height: 100vh;
     min-height: -webkit-fill-available;
     width: 100%;
+
+    @media screen and(max-width:908px) {
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem;
+        background-color: #fff;
+    }
 }
 
 .section {
@@ -28,13 +35,5 @@
         &:hover {
             opacity: 0.7;
         }
-    }
-}
-
-@media screen and(max-width:908px) {
-    .wrapper {
-        flex-direction: column;
-        justify-content: center;
-        padding: 2rem;
     }
 }

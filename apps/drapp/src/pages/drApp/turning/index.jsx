@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import moment from 'jalali-moment';
 import { TurnTime } from '@paziresh24/components/doctorApp/turning/turnTime';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
 import { v4 as uuid } from 'uuid';
 import { useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
 import Error from '@paziresh24/components/core/error';
@@ -38,6 +38,7 @@ import updatingImage from '@paziresh24/assets/images/drapp/updating.jpg';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import { queryClient } from '@paziresh24/components/core/provider';
+import { style } from 'dom-helpers';
 
 const Turning = () => {
     const history = useHistory();
@@ -520,6 +521,29 @@ const Turning = () => {
                 </div>
                 {!error && (
                     <div className={styles['head-bar']}>
+                        <div className={styles.selectDate}>
+                            <SelectDate
+                                today
+                                value={setDate}
+                                nagivateDate={isMobile}
+                                defaultValue={
+                                    getCookie('turning_date') ? getCookie('turning_date') : null
+                                }
+                            />
+                            {/* {isMobile &&
+                                info.center.is_active_booking &&
+                                info.center.type_id === 1 && (
+                                    <Button
+                                        style={{ maxWidth: '4.3rem', padding: '1.1rem' }}
+                                        variant="secondary"
+                                        size="medium"
+                                        icon={<SettingIcon />}
+                                        onClick={() => setMoveDeleteModal(true)}
+                                    />
+                                )} */}
+                        </div>
+                        <hr />
+
                         <div className={styles.filterWrapper}>
                             <div className={styles['search-wrapper']}>
                                 <svg
@@ -541,36 +565,18 @@ const Turning = () => {
                                     onChange={onChangeSearch}
                                 />
                             </div>
-                            <hr />
-
-                            <div className={styles.selectDate}>
-                                <SelectDate
-                                    today
-                                    value={setDate}
-                                    nagivateDate={isMobile}
-                                    defaultValue={
-                                        getCookie('turning_date') ? getCookie('turning_date') : null
-                                    }
-                                />
-                                {isMobile &&
-                                    info.center.is_active_booking &&
-                                    info.center.type_id === 1 && (
-                                        <Button
-                                            style={{ maxWidth: '4.3rem', padding: '1.1rem' }}
-                                            variant="secondary"
-                                            size="medium"
-                                            icon={<SettingIcon />}
-                                            onClick={() => setMoveDeleteModal(true)}
-                                        />
-                                    )}
-                            </div>
                         </div>
-                        <StatusBar
-                            isOpen={moveDeleteModal}
-                            setMoveDeleteModal={setMoveDeleteModal}
-                            setOpenNewTurn={setOpenNewTurn}
-                            refetchData={refetchData}
-                        />
+                        {!isMobile && (
+                            <Button
+                                onClick={() => {
+                                    setOpenNewTurn(true);
+                                    sendEvent('plususer', 'prescription', 'plususer');
+                                }}
+                                size="medium"
+                            >
+                                افزودن بیمار
+                            </Button>
+                        )}
                     </div>
                 )}
 
@@ -658,6 +664,7 @@ const Turning = () => {
                         pattern="\d*"
                         error={addBookErrors.national_code}
                         disabled={!isEmpty(confirmCellPhone)}
+                        onKeyDown={e => e.keyCode === 13 && addBookSubmit(addBookAction)()}
                         {...rest}
                         ref={e => {
                             ref(e);

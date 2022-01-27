@@ -15,9 +15,12 @@ import { ChevronIcon } from '@paziresh24/components/icons';
 import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
+import { MainMenuData, SubMenuData } from '@paziresh24/configs/drapp/menu.config';
+import { StatusBar } from '@paziresh24/components/doctorApp/turning/statusBar';
 
 const SuperMenu = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState();
+
     const history = useHistory();
     const [info, setInfo] = useDrApp();
     const [userCompleteProfile, setUserCompleteProfile] = useState();
@@ -62,7 +65,7 @@ const SuperMenu = () => {
     });
 
     return (
-        <div className="flex flex-col">
+        <div className={styles.wrapper}>
             <div className={styles['userInfoWrapper']}>
                 <div className={styles['info']}>
                     <img
@@ -78,42 +81,6 @@ const SuperMenu = () => {
                         alt="avatar"
                     />
                     <div className="w-full">
-                        <div style={{ position: 'absolute', top: '3rem', left: '3rem' }}>
-                            <ThreeDots
-                                color="#3f3f79"
-                                onClick={e => {
-                                    !isDropdownOpen && e.stopPropagation();
-                                    !isDropdownOpen && setIsDropdownOpen(true);
-                                    // setIsDropdownOpen(prevValue => !prevValue);
-                                }}
-                            />
-
-                            {isDropdownOpen && (
-                                <div
-                                    style={{
-                                        backgroundColor: '#3f3f79',
-                                        position: 'absolute',
-                                        borderRadius: '1rem',
-                                        left: '0',
-                                        width: '10rem'
-                                    }}
-                                >
-                                    <div
-                                        onClick={() => history.push('/logout')}
-                                        aria-hidden
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            fontWeight: 'bold',
-                                            fontSize: '1.4rem',
-                                            padding: '1.2rem'
-                                        }}
-                                    >
-                                        <span style={{ color: '#fff' }}>خروج</span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
                         <span
                             className={`${styles['user-name']}  mb-4`}
                             onClick={() => {
@@ -139,7 +106,7 @@ const SuperMenu = () => {
                                     <div
                                         style={{
                                             display: 'flex',
-                                            gap: '1rem',
+                                            gap: '0.8rem',
                                             alignItems: 'center'
                                         }}
                                     >
@@ -359,12 +326,16 @@ const SuperMenu = () => {
                     </Modal>
                 </div>
             </div>
-            <Menu />
-            <div className={styles.bannerWrapper}>
+            <Menu items={MainMenuData()} />
+            <Menu items={SubMenuData()} />
+
+            <StatusBar />
+
+            {/* <div className={styles.bannerWrapper}>
                 <Link to="/learn?section=7">
                     <img src={bannerTaminImport} alt="" />
                 </Link>
-            </div>
+            </div> */}
         </div>
     );
 };

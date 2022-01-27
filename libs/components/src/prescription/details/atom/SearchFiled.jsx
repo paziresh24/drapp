@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import Search from '../Search';
+import { Search, SearchFullPage } from '../Search/Search';
 import styles from './SearchFiled.module.scss';
 import { useLearnTour } from '@paziresh24/hooks/learn';
 import { isMobile } from 'react-device-detect';
@@ -127,21 +127,39 @@ const SearchFiled = ({
                         insuranceType={insuranceType}
                     />
                 )}
-            <Search
-                isOpen={showSerch}
-                onClose={closeModalHandler}
-                serviceId={serviceId}
-                setSelectItem={setSelectItem}
-                type={type}
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-                setSelectHover={setSelectHover}
-                selectHover={selectHover}
-                label={label}
-                setResults={setResults}
-                typeId={typeId}
-                insuranceType={insuranceType}
-            />
+            {!isMobile ? (
+                <Search
+                    isOpen={showSerch}
+                    onClose={closeModalHandler}
+                    serviceId={serviceId}
+                    setSelectItem={setSelectItem}
+                    type={type}
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                    setSelectHover={setSelectHover}
+                    selectHover={selectHover}
+                    label={label}
+                    setResults={setResults}
+                    typeId={typeId}
+                    insuranceType={insuranceType}
+                />
+            ) : (
+                <SearchFullPage
+                    isOpen={showSerch}
+                    onClose={closeModalHandler}
+                    serviceId={serviceId}
+                    setSelectItem={setSelectItem}
+                    type={type}
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                    setSelectHover={setSelectHover}
+                    selectHover={selectHover}
+                    label={label}
+                    setResults={setResults}
+                    typeId={typeId}
+                    insuranceType={insuranceType}
+                />
+            )}
         </div>
     );
 };

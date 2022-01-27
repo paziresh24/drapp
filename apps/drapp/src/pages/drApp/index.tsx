@@ -1,6 +1,5 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Suspense } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { routes } from './routes';
 
 import PrivateRoute from '@paziresh24/components/doctorApp/privateRoute';

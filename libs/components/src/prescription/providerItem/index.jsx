@@ -6,6 +6,7 @@ import { CenterItem } from './centerItem';
 import { SalamatCenter } from './salamatCenter';
 import isEmpty from 'lodash/isEmpty';
 import { useDrApp } from '@paziresh24/context/drapp';
+import { isMobile } from 'react-device-detect';
 
 const PoroviderItem = ({ provider, data, centers, refetch }) => {
     const [info] = useDrApp();
@@ -23,15 +24,17 @@ const PoroviderItem = ({ provider, data, centers, refetch }) => {
 
     return (
         <div className={styles['wrapper']} aria-hidden>
-            <div className={styles['header']}>
-                <div
-                    className={styles['provider-name']}
-                    id={provider === 'tamin' ? 'taminPorviderItem' : 'salamatPorviderItem'}
-                >
-                    {providers[provider].icon}
-                    <span>{providers[provider].name}</span>
+            {!isMobile && (
+                <div className={styles['header']}>
+                    <div
+                        className={styles['provider-name']}
+                        id={provider === 'tamin' ? 'taminPorviderItem' : 'salamatPorviderItem'}
+                    >
+                        {providers[provider].icon}
+                        <span>{providers[provider].name}</span>
+                    </div>
                 </div>
-            </div>
+            )}
             <div className={styles.centersWrapper}>
                 {provider === 'tamin' && (
                     <CenterItem

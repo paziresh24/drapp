@@ -4,7 +4,7 @@ import {
     useGetFavoriteServices
 } from '@paziresh24/hooks/prescription';
 import { useEffect, useRef } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 
 import styles from './addTemplates.module.scss';
 import Button from '@paziresh24/components/core/button';
@@ -190,213 +190,192 @@ const ServiceFavorite = () => {
     };
 
     return (
-        <>
-            {getFavoritePrescriptions.isLoading && <Overlay />}
-
-            {getFavoritePrescriptions.isSuccess && (
-                <div className={styles.wrapper}>
-                    <div className={styles.templatesWrapper}>
-                        <div
-                            className="w-full flex justify-between items-center"
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                width: '100%',
-                                padding: '1.5rem'
-                            }}
+        <div className={styles.wrapper}>
+            {isMobile && (
+                <div className={styles.nagivate}>
+                    <Link to="/favorite/templates">نسخه پراستفاده</Link>
+                    <hr />
+                    <Link to="#" className={styles.active}>
+                        اقلام پراستفاده
+                    </Link>
+                </div>
+            )}
+            <div className={styles.templatesWrapper}>
+                <div
+                    className="w-full flex justify-between items-center"
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        width: '100%',
+                        padding: '1.5rem'
+                    }}
+                >
+                    <div className={styles.providerWrapper} style={{ marginRight: '0' }}>
+                        <button
+                            className={`${styles.providerButton} ${
+                                insuranceType === 'tamin' ? styles.selected : ''
+                            }`}
+                            onClick={() => setInsuranceType('tamin')}
                         >
-                            <div className={styles.providerWrapper} style={{ marginRight: '0' }}>
-                                <button
-                                    className={`${styles.providerButton} ${
-                                        insuranceType === 'tamin' ? styles.selected : ''
-                                    }`}
-                                    onClick={() => setInsuranceType('tamin')}
-                                >
-                                    تامین اجتماعی
-                                </button>
-                                <button
-                                    className={`${styles.providerButton} ${
-                                        insuranceType === 'salamat' ? styles.selected : ''
-                                    }`}
-                                    onClick={() => setInsuranceType('salamat')}
-                                >
-                                    سلامت
-                                </button>
-                            </div>
-
-                            {!isMobile && (
-                                <Button
-                                    onClick={edit}
-                                    size="medium"
-                                    loading={
-                                        deleteFavoriteServices.isLoading ||
-                                        addFavoriteServices.isLoading ||
-                                        getFavoritePrescriptions.isLoading
-                                    }
-                                >
-                                    اعمال تغییرات
-                                </Button>
-                            )}
-                            {isMobile && (
-                                <FixedWrapBottom>
-                                    <Button block size="medium" onClick={edit}>
-                                        اعمال تغییرات
-                                    </Button>
-                                </FixedWrapBottom>
-                            )}
-                        </div>
-
-                        <Tabs activeTab={selectedFilter.name} onChange={tab => setType(tab)}>
-                            <Tab
-                                keyTab="drugs"
-                                title="تجویز دارو"
-                                numberBadge={getNumberBadge('drugs')}
-                            >
-                                <DrugDetails
-                                    services={
-                                        insuranceType === 'salamat' ? salamatItems : taminItems
-                                    }
-                                    setServices={
-                                        insuranceType === 'salamat'
-                                            ? setSalamatItems
-                                            : setTaminItems
-                                    }
-                                    insuranceType={insuranceType}
-                                    noDate={true}
-                                />
-                            </Tab>
-                            <Tab
-                                keyTab="lab"
-                                title="آزمایشگاه"
-                                id="lab_tab_step"
-                                numberBadge={getNumberBadge('lab')}
-                            >
-                                <LabsDetails
-                                    services={
-                                        insuranceType === 'salamat' ? salamatItems : taminItems
-                                    }
-                                    setServices={
-                                        insuranceType === 'salamat'
-                                            ? setSalamatItems
-                                            : setTaminItems
-                                    }
-                                    noDate={true}
-                                    insuranceType={insuranceType}
-                                />
-                            </Tab>
-                            <Tab
-                                keyTab="imaging"
-                                title="تصویربرداری"
-                                numberBadge={getNumberBadge('imaging')}
-                            >
-                                <ImagingDetails
-                                    services={
-                                        insuranceType === 'salamat' ? salamatItems : taminItems
-                                    }
-                                    setServices={
-                                        insuranceType === 'salamat'
-                                            ? setSalamatItems
-                                            : setTaminItems
-                                    }
-                                    insuranceType={insuranceType}
-                                    noDate={true}
-                                />
-                            </Tab>
-                            <Tab
-                                keyTab="others"
-                                title="پاراکلینیک"
-                                id="other_tab_step"
-                                numberBadge={getNumberBadge('others')}
-                            >
-                                <OthersDetails
-                                    services={
-                                        insuranceType === 'salamat' ? salamatItems : taminItems
-                                    }
-                                    setServices={
-                                        insuranceType === 'salamat'
-                                            ? setSalamatItems
-                                            : setTaminItems
-                                    }
-                                    insuranceType={insuranceType}
-                                    noDate={true}
-                                />
-                            </Tab>
-                        </Tabs>
+                            تامین اجتماعی
+                        </button>
+                        <button
+                            className={`${styles.providerButton} ${
+                                insuranceType === 'salamat' ? styles.selected : ''
+                            }`}
+                            onClick={() => setInsuranceType('salamat')}
+                        >
+                            سلامت
+                        </button>
                     </div>
-                    <div
-                        className={styles.templatesWrapper}
-                        style={{ padding: '0.8rem', paddingTop: '0.2rem' }}
-                    >
-                        <LabsList
-                            noDate={true}
+
+                    {!isMobile && (
+                        <Button
+                            onClick={edit}
+                            size="medium"
+                            loading={
+                                deleteFavoriteServices.isLoading ||
+                                addFavoriteServices.isLoading ||
+                                getFavoritePrescriptions.isLoading
+                            }
+                        >
+                            اعمال تغییرات
+                        </Button>
+                    )}
+                    {isMobile && (
+                        <FixedWrapBottom>
+                            <Button block size="medium" onClick={edit}>
+                                اعمال تغییرات
+                            </Button>
+                        </FixedWrapBottom>
+                    )}
+                </div>
+
+                <Tabs activeTab={selectedFilter.name} onChange={tab => setType(tab)}>
+                    <Tab keyTab="drugs" title="تجویز دارو" numberBadge={getNumberBadge('drugs')}>
+                        <DrugDetails
                             services={insuranceType === 'salamat' ? salamatItems : taminItems}
                             setServices={
                                 insuranceType === 'salamat' ? setSalamatItems : setTaminItems
                             }
-                            type={type}
                             insuranceType={insuranceType}
-                            noFavorite={true}
+                            noDate={true}
                         />
-                        {insuranceType === 'tamin'
-                            ? !taminItems.some(service =>
-                                  serviceTypeList[type][insuranceType].includes(
-                                      service.service_type
-                                  )
-                              ) && (
-                                  <div
+                    </Tab>
+                    <Tab
+                        keyTab="lab"
+                        title="آزمایشگاه"
+                        id="lab_tab_step"
+                        numberBadge={getNumberBadge('lab')}
+                    >
+                        <LabsDetails
+                            services={insuranceType === 'salamat' ? salamatItems : taminItems}
+                            setServices={
+                                insuranceType === 'salamat' ? setSalamatItems : setTaminItems
+                            }
+                            noDate={true}
+                            insuranceType={insuranceType}
+                        />
+                    </Tab>
+                    <Tab
+                        keyTab="imaging"
+                        title="تصویربرداری"
+                        numberBadge={getNumberBadge('imaging')}
+                    >
+                        <ImagingDetails
+                            services={insuranceType === 'salamat' ? salamatItems : taminItems}
+                            setServices={
+                                insuranceType === 'salamat' ? setSalamatItems : setTaminItems
+                            }
+                            insuranceType={insuranceType}
+                            noDate={true}
+                        />
+                    </Tab>
+                    <Tab
+                        keyTab="others"
+                        title="پاراکلینیک"
+                        id="other_tab_step"
+                        numberBadge={getNumberBadge('others')}
+                    >
+                        <OthersDetails
+                            services={insuranceType === 'salamat' ? salamatItems : taminItems}
+                            setServices={
+                                insuranceType === 'salamat' ? setSalamatItems : setTaminItems
+                            }
+                            insuranceType={insuranceType}
+                            noDate={true}
+                        />
+                    </Tab>
+                </Tabs>
+            </div>
+            {getFavoritePrescriptions.isSuccess && (
+                <div
+                    className={styles.templatesWrapper}
+                    style={{ padding: '0.8rem', paddingTop: '0.2rem' }}
+                >
+                    <LabsList
+                        noDate={true}
+                        services={insuranceType === 'salamat' ? salamatItems : taminItems}
+                        setServices={insuranceType === 'salamat' ? setSalamatItems : setTaminItems}
+                        type={type}
+                        insuranceType={insuranceType}
+                        noFavorite={true}
+                    />
+                    {insuranceType === 'tamin'
+                        ? !taminItems.some(service =>
+                              serviceTypeList[type][insuranceType].includes(service.service_type)
+                          ) && (
+                              <div
+                                  style={{
+                                      margin: '0 auto',
+                                      padding: '10rem',
+                                      display: 'flex',
+                                      gap: '2rem',
+                                      justifyContent: 'center',
+                                      alignItems: 'center'
+                                  }}
+                              >
+                                  <img src={emptyState} alt="" style={{ width: '6rem' }} />
+                                  <span
                                       style={{
-                                          margin: '0 auto',
-                                          padding: '10rem',
-                                          display: 'flex',
-                                          gap: '2rem',
-                                          justifyContent: 'center',
-                                          alignItems: 'center'
+                                          fontSize: '1.4rem',
+                                          fontWeight: '500',
+                                          opacity: '0.7'
                                       }}
                                   >
-                                      <img src={emptyState} alt="" style={{ width: '6rem' }} />
-                                      <span
-                                          style={{
-                                              fontSize: '1.4rem',
-                                              fontWeight: '500',
-                                              opacity: '0.7'
-                                          }}
-                                      >
-                                          خدمتی در این دسته بندی وجود ندارد.
-                                      </span>
-                                  </div>
-                              )
-                            : !salamatItems.some(service =>
-                                  serviceTypeList[type][insuranceType].includes(
-                                      service.service_type
-                                  )
-                              ) && (
-                                  <div
+                                      خدمتی در این دسته بندی وجود ندارد.
+                                  </span>
+                              </div>
+                          )
+                        : !salamatItems.some(service =>
+                              serviceTypeList[type][insuranceType].includes(service.service_type)
+                          ) && (
+                              <div
+                                  style={{
+                                      margin: '0 auto',
+                                      padding: '10rem',
+                                      display: 'flex',
+                                      gap: '2rem',
+                                      justifyContent: 'center',
+                                      alignItems: 'center'
+                                  }}
+                              >
+                                  <img src={emptyState} alt="" style={{ width: '6rem' }} />
+                                  <span
                                       style={{
-                                          margin: '0 auto',
-                                          padding: '10rem',
-                                          display: 'flex',
-                                          gap: '2rem',
-                                          justifyContent: 'center',
-                                          alignItems: 'center'
+                                          fontSize: '1.4rem',
+                                          fontWeight: '500',
+                                          opacity: '0.7'
                                       }}
                                   >
-                                      <img src={emptyState} alt="" style={{ width: '6rem' }} />
-                                      <span
-                                          style={{
-                                              fontSize: '1.4rem',
-                                              fontWeight: '500',
-                                              opacity: '0.7'
-                                          }}
-                                      >
-                                          خدمتی در این دسته بندی وجود ندارد.
-                                      </span>
-                                  </div>
-                              )}
-                    </div>
+                                      خدمتی در این دسته بندی وجود ندارد.
+                                  </span>
+                              </div>
+                          )}
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

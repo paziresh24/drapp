@@ -1,8 +1,9 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    align-items: center;
+    // height: 100%;
+    // overflow: hidden;
 
     @media screen and (min-width: 768px) {
         padding: 2rem;
@@ -30,17 +31,20 @@
         display: flex;
         justify-content: space-between;
         position: sticky;
-        top: 0;
+        top: 1rem;
         z-index: 5;
         // background: #fff;
         margin-bottom: 1rem;
         border-radius: 1rem;
         justify-content: center;
-        padding-top: 1rem;
+        // padding-top: 1rem;
+        margin-top: 1rem;
         margin-bottom: 2rem;
         align-items: center;
-        @include gap(1rem);
-        // box-shadow: 0 21px 30px rgba(37, 37, 71, 0.03);
+        background-color: #fff;
+        // @include gap(1rem);
+        box-shadow: 0 21px 30px rgba(37, 37, 71, 0.03);
+        padding: 0 1rem;
 
         @media screen and (max-width: 1089px) {
             .selectDate {
@@ -60,8 +64,14 @@
             top: 6rem;
             z-index: 5;
             border-bottom: 1px solid #e8eef4;
+            width: 100%;
+            padding: 1rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
 
             .filterWrapper {
+                padding: 0 !important;
+                margin-top: 1rem;
                 .search-wrapper {
                     width: 100% !important;
                     height: 5.3rem !important;
@@ -73,13 +83,13 @@
             display: flex;
             align-items: center;
             // height: 6.5rem;
-            background: #fff;
+            // background: #fff;
             padding: 1rem 1rem;
             border-radius: 0.8rem;
             // box-shadow: 0 21px 30px rgba(37, 37, 71, 0.03);
 
             // box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-            box-shadow: 0 21px 30px rgba(37, 37, 71, 0.03);
+            // box-shadow: 0 21px 30px rgba(37, 37, 71, 0.03);
 
             @media screen and (max-width: 426px) {
                 height: auto !important;
@@ -131,16 +141,18 @@
         position: relative;
         padding-bottom: 16rem;
         flex-grow: 1;
+        min-height: 50vh;
         overflow: auto;
-        min-height: unset;
         padding-bottom: 16rem;
         flex-grow: 1;
         align-items: center;
+        width: 100%;
 
         @media screen and (min-width: 768px) {
             background: #fff;
             border-radius: 1rem;
             box-shadow: 0 10px 35px rgba(37, 37, 71, 0.06);
+            min-height: 60rem;
         }
 
         > * {
@@ -458,13 +470,13 @@
     position: fixed;
     bottom: 12rem;
     z-index: 5;
-    background-color: #27bda0;
+    background-color: $color-primary;
     height: 5rem;
     color: #fff;
     border-radius: 100px;
     padding: 0 5rem;
     font-weight: bold;
-    box-shadow: 0 7px 40px -1px #21a1877e;
+    box-shadow: 0 7px 40px -1px rgba($color-primary, 0.4);
     outline: 0;
 }
 

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import Modal from '../../../core/modal';
 import styles from './voiceSearch.module.scss';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
-import Search from './../Search/Search';
+import { Search } from './../Search';
 import { isMobile } from 'react-device-detect';
 import { sendEvent } from '@paziresh24/utils';
 

@@ -15,6 +15,9 @@ import {
 import Import from '../details/ToolBox/Import';
 import isEmpty from 'lodash/isEmpty';
 import { useDrApp } from '@paziresh24/context/drapp/index';
+import TaminIcon from '@paziresh24/components/icons/prescription/tamin';
+import SalamatIcon from '@paziresh24/components/icons/prescription/salamat';
+import { isMobile } from 'react-device-detect';
 
 const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
     const createTaminDoctor = useCreateTaminDoctor();
@@ -98,6 +101,17 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
         }
     };
 
+    const providers = {
+        tamin: {
+            name: 'بیمه تامین اجتماعی',
+            icon: <TaminIcon />
+        },
+        salamat: {
+            name: 'بیمه سلامت',
+            icon: <SalamatIcon />
+        }
+    };
+
     return (
         <div className={styles.centerItem}>
             <div
@@ -113,9 +127,24 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
             >
                 <div className={styles.centerInfo}>
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        <span className={styles.centerName}>
-                            {info.doctor.name + ' ' + info.doctor.family}
-                        </span>
+                        {isMobile && (
+                            <div
+                                className={styles['provider-name']}
+                                id={
+                                    provider === 'tamin'
+                                        ? 'taminPorviderItem'
+                                        : 'salamatPorviderItem'
+                                }
+                            >
+                                {providers[provider].icon}
+                                <span>{providers[provider].name}</span>
+                            </div>
+                        )}
+                        {!isMobile && (
+                            <span className={styles.centerName}>
+                                {info.doctor.name + ' ' + info.doctor.family}
+                            </span>
+                        )}
                         <svg
                             width="16"
                             height="17"

@@ -3,7 +3,7 @@ import TemplateItem from '@paziresh24/components/prescription/templates/template
 import { useGetFavoritePrescriptions } from '@paziresh24/hooks/prescription';
 import { useEffect, useState } from 'react';
 import Button from '@paziresh24/components/core/button';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import Import from '@paziresh24/components/prescription/details/ToolBox/Import';
 import { isMobile } from 'react-device-detect';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
@@ -19,6 +19,16 @@ const Template = () => {
 
     return (
         <div className={styles.wrapper}>
+            {isMobile && (
+                <div className={styles.nagivate}>
+                    <Link to="#" className={styles.active}>
+                        نسخه پراستفاده
+                    </Link>
+                    <hr />
+                    <Link to="/favorite/service">اقلام پراستفاده</Link>
+                </div>
+            )}
+
             {!isMobile && (
                 <div
                     style={{

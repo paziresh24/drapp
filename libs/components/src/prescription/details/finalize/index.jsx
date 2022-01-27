@@ -30,6 +30,10 @@ const Finalize = () => {
     const [services] = useServices();
     const [backPage] = useBackPage();
 
+    // local state
+    let isServicesOfDoctorsTamin = false;
+    const [isServicesOfDoctors, setIsServicesOfDoctors] = useState(false);
+
     // api hook
     const bulkItems = useBulkItems();
     const finalizePrescription = useFinalizePrescription();
@@ -38,6 +42,7 @@ const Finalize = () => {
     const insurances = useInsurances({ identifier: urlParams.identifier });
 
     // modal
+    const [servicesDoctorVisitConfirmModal, setServicesDoctorVisitConfirmModal] = useState(false);
     const [visitModal, setVisitModal] = useState(false);
     const [deliverModal, setDeliverModal] = useState(false);
     const [deliverConfirmModal, setDeliverConfirmModal] = useState(false);
@@ -100,8 +105,6 @@ const Finalize = () => {
         }
     };
 
-    const [isServicesOfDoctors, setIsServicesOfDoctors] = useState(false);
-
     useEffect(() => {
         setIsServicesOfDoctors(
             prescriptionInfo.insuranceType === 'salamat' &&
@@ -137,21 +140,26 @@ const Finalize = () => {
                         number_of_period,
                         prescription_id,
                         use_instruction,
-                        use_time
+                        use_time,
+                        service_type
                         // active_from
-                    }) => ({
-                        brand,
-                        count,
-                        date_do,
-                        description,
-                        how_to_use,
-                        id: service.id,
-                        number_of_period,
-                        prescription_id,
-                        use_instruction,
-                        use_time
-                        // active_from
-                    })
+                    }) => {
+                        return {
+                            brand,
+                            count,
+                            date_do,
+                            description,
+                            how_to_use,
+                            id: service.id,
+                            number_of_period,
+                            prescription_id,
+                            use_instruction,
+                            use_time,
+                            ...(service_type === 95 &&
+                                isServicesOfDoctorsTamin && { isVisit: true })
+                            // active_from
+                        };
+                    }
                 );
             const { items } = await addItemToPrescription(servicesWithOutNullItem);
 
@@ -222,7 +230,12 @@ const Finalize = () => {
                 <Button
                     size="small"
                     className={styles.button}
-                    onClick={submitServices}
+                    onClick={() => {
+                        if (services.some(item => item.service_type === 95)) {
+                            return setServicesDoctorVisitConfirmModal(true);
+                        }
+                        submitServices();
+                    }}
                     loading={finalizePrescription.isLoading || bulkItems.isLoading}
                 >
                     ویرایش
@@ -232,7 +245,12 @@ const Finalize = () => {
                 <Button
                     size="small"
                     className={styles.button}
-                    onClick={submitServices}
+                    onClick={() => {
+                        if (services.some(item => item.service_type === 95)) {
+                            return setServicesDoctorVisitConfirmModal(true);
+                        }
+                        submitServices();
+                    }}
                     loading={finalizePrescription.isLoading || bulkItems.isLoading}
                 >
                     نهایی سازی نسخه
@@ -246,7 +264,7 @@ const Finalize = () => {
                 {prescriptionInfo.insuranceType === 'tamin' && (
                     <TextArea ref={visitDescription} label="توضیحات ویزیت (اختیاری)" />
                 )}
-                <div className="flex space-s-2">
+                <div className={styles.modalConfirmRow}>
                     <Button
                         block
                         onClick={submitVisit}
@@ -265,11 +283,42 @@ const Finalize = () => {
                 isOpen={deliverConfirmModal}
                 onClose={setDeliverConfirmModal}
             >
-                <div className="flex space-s-2">
+                <div className={styles.modalConfirmRow}>
                     <Button block variant="primary" onClick={openDeliverInfo}>
                         بله
                     </Button>
                     <Button block variant="secondary" onClick={() => setDeliverConfirmModal(false)}>
+                        خیر
+                    </Button>
+                </div>
+            </Modal>
+
+            <Modal
+                title="آیا مایلید همراه خدمات ویزیت هم ثبت شود؟"
+                isOpen={servicesDoctorVisitConfirmModal}
+                onClose={setServicesDoctorVisitConfirmModal}
+            >
+                <div className={styles.modalConfirmRow}>
+                    <Button
+                        block
+                        variant="primary"
+                        onClick={() => {
+                            isServicesOfDoctorsTamin = true;
+                            submitServices();
+                            setServicesDoctorVisitConfirmModal(false);
+                        }}
+                    >
+                        بله
+                    </Button>
+                    <Button
+                        block
+                        variant="secondary"
+                        onClick={() => {
+                            isServicesOfDoctorsTamin = false;
+                            submitServices();
+                            setServicesDoctorVisitConfirmModal(false);
+                        }}
+                    >
                         خیر
                     </Button>
                 </div>

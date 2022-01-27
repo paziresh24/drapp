@@ -3,3 +3,9 @@
     max-width: 15rem;
     width: 15rem;
 }
+
+.modalConfirmRow {
+    display: flex;
+    align-items: center;
+    @include gap(1rem);
+}

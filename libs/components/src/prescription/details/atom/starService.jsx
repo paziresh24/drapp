@@ -4,6 +4,7 @@ import { useAddFavoriteServices, useDeleteFavoriteServices } from '@paziresh24/h
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useServices } from '@paziresh24/context/prescription/services-context';
+import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 
 const StarService = ({ service, insuranceType }) => {
     const [services, setServices] = useServices();
@@ -14,7 +15,30 @@ const StarService = ({ service, insuranceType }) => {
 
     useEffect(() => {
         if (
-            favoriteItem.find(
+            serviceTypeList['drugs'][insuranceType].includes(+service.service_type) &&
+            favoriteItem.some(
+                item =>
+                    item.service.id === service.service.id &&
+                    item.count === service.count &&
+                    item.use_time === service.use_time &&
+                    item.use_instruction === service.use_instruction &&
+                    item.how_to_use === service.how_to_use
+            )
+        ) {
+            services[services.findIndex(item => item.id === service.id)].favorite_item =
+                favoriteItem.find(
+                    item =>
+                        item.service.id === service.service.id &&
+                        item.count === service.count &&
+                        item.use_time === service.use_time &&
+                        item.use_instruction === service.use_instruction &&
+                        item.how_to_use === service.how_to_use
+                );
+            setServices(services);
+            setStared(true);
+        } else if (
+            !serviceTypeList['drugs'][insuranceType].includes(+service.service_type) &&
+            favoriteItem.some(
                 item => item.service.id === service.service.id && item.count === service.count
             )
         ) {
@@ -23,16 +47,11 @@ const StarService = ({ service, insuranceType }) => {
                     item => item.service.id === service.service.id && item.count === service.count
                 );
             setServices(services);
-            // setStared(true);
+            setStared(true);
+        } else {
+            return setStared(false);
         }
-        favoriteItem.find(item => item.id === service.favorite_item?.id)
-            ? setStared(true)
-            : setStared(false);
     }, [service, favoriteItem]);
-
-    // useEffect(() => {
-    //     if (!service.service) setStared(false);
-    // }, [service.service]);
 
     const starHandler = () => {
         if (!stared) {
@@ -88,7 +107,7 @@ const StarService = ({ service, insuranceType }) => {
     };
 
     return (
-        <div className="cursor-pointer" onClick={starHandler} aria-hidden id="star_step">
+        <div style={{ cursor: 'pointer' }} onClick={starHandler} aria-hidden id="star_step">
             <StarIcon color="#27bda0" fill={stared ? '#27bda0' : ''} />
         </div>
     );

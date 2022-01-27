@@ -155,7 +155,7 @@ export const routes = [
         exact: true
     },
     {
-        path: '/favorite/service-favorite',
+        path: '/favorite/service',
         name: 'ServiceFavorite',
         title: 'اقلام پراستفاده',
         component: lazy(() =>

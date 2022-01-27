@@ -88,6 +88,8 @@ const Select = ({ items, onChange, defaultValue, simple, error, focus, setFocus,
                     id: options[selectHover]?.value
                 });
                 setShowOptopns(false);
+                setFocus(false);
+                input.current.blur();
             }
         }
         input.current.removeEventListener('keydown', func);

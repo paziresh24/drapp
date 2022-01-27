@@ -15,6 +15,7 @@ import { useInsurances } from '@paziresh24/hooks/prescription/insurances/index';
 import { useLearnTour } from '@paziresh24/hooks/learn';
 import { Default, Mobile } from '@paziresh24/hooks/device';
 import { useDrApp } from '@paziresh24/context/drapp';
+import { isMobile } from 'react-device-detect';
 
 const Providers = () => {
     const history = useHistory();
@@ -35,14 +36,8 @@ const Providers = () => {
                 <div className={styles.providerColumn}>
                     {!insurances.isSuccess ? (
                         <>
-                            <div
-                                className="skeleton"
-                                style={{ width: '100%', height: '15rem', borderRadius: '1rem' }}
-                            />
-                            <div
-                                className="skeleton"
-                                style={{ width: '100%', height: '15rem', borderRadius: '1rem' }}
-                            />
+                            <ProviderItemSkeleton />
+                            <ProviderItemSkeleton />
                         </>
                     ) : (
                         <>
@@ -67,6 +62,51 @@ const Providers = () => {
                 </Mobile>
             </div>
         </Body>
+    );
+};
+
+const ProviderItemSkeleton = () => {
+    return isMobile ? (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                width: '100%',
+                padding: '2rem'
+            }}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%'
+                }}
+            >
+                <div
+                    className="skeleton"
+                    style={{
+                        width: '40%',
+                        height: '1.5rem',
+                        borderRadius: '1rem',
+                        marginBottom: '1rem'
+                    }}
+                ></div>
+                <div
+                    className="skeleton"
+                    style={{ width: '20%', height: '1.5rem', borderRadius: '1rem' }}
+                ></div>
+            </div>
+            <div
+                className="skeleton"
+                style={{ width: '30%', height: '3rem', borderRadius: '100rem' }}
+            ></div>
+        </div>
+    ) : (
+        <div
+            className="skeleton"
+            style={{ width: '100%', height: '15rem', borderRadius: '1rem' }}
+        />
     );
 };
 

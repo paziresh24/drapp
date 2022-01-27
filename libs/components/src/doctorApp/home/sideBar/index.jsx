@@ -82,7 +82,7 @@ const SideBar = () => {
                 link: '/favorite/templates',
                 subMenu: [
                     { name: 'نسخه پراستفاده', link: '/favorite/templates' },
-                    { name: 'اقلام پراستفاده', link: '/favorite/service-favorite' }
+                    { name: 'اقلام پراستفاده', link: '/favorite/service' }
                 ]
             },
             {

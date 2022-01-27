@@ -1,6 +1,6 @@
 // IMPORT MAIN PAGES
 import NotFoundPage from '../pages/404';
-import DoctorApp from '../pages/drApp/';
+import DoctorApp from '../pages/drApp';
 
 export const routes = [
     {
@@ -12,7 +12,6 @@ export const routes = [
     {
         path: '/drapp/',
         name: 'Index',
-        component: '',
         exact: false
     },
     { path: '*', name: '404', component: NotFoundPage, exact: false }

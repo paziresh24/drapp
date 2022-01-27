@@ -18,6 +18,7 @@ import { BackPageProvider } from '@paziresh24/context/core/backPage';
 import { FavoriteItemProvider } from '@paziresh24/context/prescription/favoriteItem.context';
 import { ToolBoxProvider } from '@paziresh24/context/prescription/toolBox.context';
 import { TemplateItemProvider } from '@paziresh24/context/prescription/templateItem.context';
+import { SettingTurnsProvider } from '../turning/statusBar/settingTurns.context';
 
 const Provider = ({ children }) => {
     return (
@@ -39,7 +40,9 @@ const Provider = ({ children }) => {
                                                                     <FavoriteItemProvider>
                                                                         <ToolBoxProvider>
                                                                             <TemplateItemProvider>
-                                                                                {children}
+                                                                                <SettingTurnsProvider>
+                                                                                    {children}
+                                                                                </SettingTurnsProvider>
                                                                             </TemplateItemProvider>
                                                                         </ToolBoxProvider>
                                                                     </FavoriteItemProvider>
