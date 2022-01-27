@@ -20,7 +20,7 @@ const DrApp = () => {
     const history = useHistory();
 
     useLayoutEffect(() => {
-        history.replace('/turning');
+        history.replace('/');
     }, []);
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const DrApp = () => {
                     </div>
                 )}
                 <div className={styles['box-wrapper']}>
-                    <BoxTitle title="نوبت های امروز" subtitle="نوبت های من" link="/turning" />
+                    <BoxTitle title="نوبت های امروز" subtitle="نوبت های من" link="/" />
                     <TurnBoxes books={getBooks} />
                 </div>
             </div>

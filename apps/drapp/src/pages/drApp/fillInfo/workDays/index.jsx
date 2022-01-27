@@ -189,7 +189,7 @@ const WorkDays = () => {
 
                         <Button
                             className={styles['button-hero']}
-                            onClick={() => window.location.replace('/turning')}
+                            onClick={() => window.location.replace('/')}
                         >
                             شروع نوبت دهی
                         </Button>

@@ -80,7 +80,7 @@ const Finalize = () => {
             }
             const data = await finalizePrescriptionAction();
             if (isEmpty(backPage)) {
-                history.push('/turning', {
+                history.push('/', {
                     prescriptionInfo: data
                 });
             } else {
@@ -172,7 +172,7 @@ const Finalize = () => {
                     return setDeliverConfirmModal(true);
                 }
                 if (isEmpty(backPage)) {
-                    history.push('/turning', {
+                    history.push('/', {
                         prescriptionInfo: data
                     });
                 } else {
@@ -185,7 +185,7 @@ const Finalize = () => {
                     return setDeliverConfirmModal(true);
                 }
                 if (isEmpty(backPage)) {
-                    history.push('/turning');
+                    history.push('/');
                 }
                 !toast.isActive('finalizePrescription') &&
                     toast.success('نسخه ویرایش شد.', {

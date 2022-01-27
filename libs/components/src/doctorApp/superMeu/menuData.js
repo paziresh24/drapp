@@ -16,7 +16,7 @@ export const MenuData = () => {
     return [
         // {
         //     title: 'بیماران',
-        //     path: '/turning',
+        //     path: '/',
         //     icon: <TurningIcon color="#fff" />
         // },
         {

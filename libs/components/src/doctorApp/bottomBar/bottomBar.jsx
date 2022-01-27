@@ -5,7 +5,7 @@ import { Mobile } from '@paziresh24/hooks/core/device';
 const BottomBar = () => {
     return (
         <Mobile>
-            <div className={styles['wrapper']}>
+            <div className={styles['wrapper']} exact>
                 <NavLink
                     className={styles['item']}
                     to="/providers"
@@ -28,7 +28,7 @@ const BottomBar = () => {
                     </svg>
                     <span>بیمه ها</span>
                 </NavLink>
-                <NavLink className={styles['item']} to="/turning" activeClassName={styles.active}>
+                <NavLink className={styles['item']} to="/" activeClassName={styles.active} exact>
                     <svg
                         width="25"
                         height="25"
@@ -45,7 +45,12 @@ const BottomBar = () => {
                     </svg>
                     <span>بیماران</span>
                 </NavLink>
-                <NavLink className={styles['item']} to="/services" activeClassName={styles.active}>
+                <NavLink
+                    className={styles['item']}
+                    to="/services"
+                    activeClassName={styles.active}
+                    exact
+                >
                     <svg
                         width="25"
                         height="25"

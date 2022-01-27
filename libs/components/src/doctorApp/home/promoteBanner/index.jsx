@@ -7,11 +7,7 @@ const PromoteBanner = () => {
     const history = useHistory();
 
     return (
-        <div
-            className={styles['promote-banner']}
-            onClick={() => history.push('/turning')}
-            aria-hidden
-        >
+        <div className={styles['promote-banner']} onClick={() => history.push('/')} aria-hidden>
             {/* <img src={banner} alt="promoteBanner" className={styles['banner']} />
             <img src={MobileBanner} alt="promoteBanner" className={styles['mobile-banner']} /> */}
         </div>

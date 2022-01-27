@@ -25,7 +25,7 @@ const TurnBoxes = ({ books }) => {
             {info.center.id !== '5532' && (
                 <TurnBox
                     title="نوبت حضوری"
-                    link="/turning"
+                    link="/"
                     cardIcon={<Guy />}
                     loading={books.isLoading}
                     turnNumber={

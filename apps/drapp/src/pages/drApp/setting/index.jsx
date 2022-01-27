@@ -50,7 +50,7 @@ const Setting = () => {
                 onSuccess: data => {
                     toast.success(data.message);
                     getWorkDays.refetch();
-                    history.push('/turning');
+                    history.push('/');
                 },
                 onError: err => {
                     toast.error('ساعت کاری وارد شده نادرست می باشد.');
@@ -75,7 +75,7 @@ const Setting = () => {
                 <Button
                     variant="secondary"
                     size="small"
-                    onClick={() => history.push('/turning')}
+                    onClick={() => history.push('/')}
                     icon={<ChevronIcon dir="left" color="#27bda0" />}
                 >
                     بازگشت

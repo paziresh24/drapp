@@ -46,7 +46,7 @@ const Create = () => {
                 Array.isArray(e.data?.drappEvent) &&
                 e.data?.drappEvent?.includes('backToTurning')
             ) {
-                history.push('/turning');
+                history.push('/');
             }
         });
     }, []);

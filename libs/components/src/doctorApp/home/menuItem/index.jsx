@@ -21,6 +21,7 @@ const MenuItem = ({ item }) => {
                     display: 'flex',
                     alignItems: 'center'
                 }}
+                exact
                 onMouseOver={() => item?.subMenu && setIsDropDownOpen(true)}
                 onMouseLeave={() => item?.subMenu && setIsDropDownOpen(false)}
             >

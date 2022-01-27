@@ -29,7 +29,7 @@ const ServicesBox = () => {
                 </Link> */}
             </div>
             <div className={styles['inner']}>
-                <Link to="/turning">
+                <Link to="/">
                     <ServiceBox
                         title="مدیریت نوبت های مطب"
                         // description="مدیریت نوبت دهی بیماران مطب"

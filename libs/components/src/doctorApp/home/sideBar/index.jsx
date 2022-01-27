@@ -63,7 +63,7 @@ const SideBar = () => {
                 id: 'turnning-list-step',
                 name: 'لیست بیماران',
                 icon: <HouseIcon color="#3F3F79" />,
-                link: '/turning',
+                link: '/',
                 tourStep: {
                     key: 2,
                     value: '?learn=true'

@@ -19,17 +19,18 @@ export const routes = [
         path: '/',
         name: 'DrApp',
         isPrivate: true,
-        component: lazy(() => import('./turning')),
-        exact: true
-    },
-    {
-        path: '/turning/',
-        name: 'Turning',
         title: 'لیست بیماران',
         component: lazy(() => import('./turning')),
-        isPrivate: true,
         exact: true
     },
+    // {
+    //     path: '/turning/',
+    //     name: 'Turning',
+    //     title: 'لیست بیماران',
+    //     component: lazy(() => import('./turning')),
+    //     isPrivate: true,
+    //     exact: true
+    // },
     {
         path: '/Services',
         name: 'Services',
