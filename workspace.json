@@ -10,6 +10,8 @@
         "drapp": "apps/drapp",
         "drapp-e2e": "apps/drapp-e2e",
         "hooks": "libs/hooks",
+        "patient-app": "apps/patient-app",
+        "patient-app-e2e": "apps/patient-app-e2e",
         "prescription": "apps/prescription",
         "prescription-e2e": "apps/prescription-e2e",
         "utils": "libs/utils"

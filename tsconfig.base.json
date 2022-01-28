@@ -15,8 +15,8 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@paziresh24/apps/prescription/*": ["apps/prescription/src/*"],
             "@paziresh24/apis/*": ["libs/apis/src/*"],
+            "@paziresh24/apps/prescription/*": ["apps/prescription/src/*"],
             "@paziresh24/assets/*": ["libs/assets/*"],
             "@paziresh24/components/*": ["libs/components/src/*"],
             "@paziresh24/configs/*": ["libs/configs/*"],

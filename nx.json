@@ -45,6 +45,12 @@
                 "style": "scss",
                 "linter": "eslint"
             }
+        },
+        "@nrwl/next": {
+            "application": {
+                "style": "css",
+                "linter": "eslint"
+            }
         }
     },
     "defaultProject": "drapp"
