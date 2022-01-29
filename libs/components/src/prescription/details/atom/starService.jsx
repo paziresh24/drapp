@@ -19,7 +19,7 @@ const StarService = ({ service, insuranceType }) => {
             favoriteItem.some(
                 item =>
                     item.service.id === service.service.id &&
-                    item.count === service.count &&
+                    +item.count === +service.count &&
                     item.use_time === service.use_time &&
                     item.use_instruction === service.use_instruction &&
                     item.how_to_use === service.how_to_use
@@ -29,7 +29,7 @@ const StarService = ({ service, insuranceType }) => {
                 favoriteItem.find(
                     item =>
                         item.service.id === service.service.id &&
-                        item.count === service.count &&
+                        +item.count === +service.count &&
                         item.use_time === service.use_time &&
                         item.use_instruction === service.use_instruction &&
                         item.how_to_use === service.how_to_use
@@ -39,12 +39,12 @@ const StarService = ({ service, insuranceType }) => {
         } else if (
             !serviceTypeList['drugs'][insuranceType].includes(+service.service_type) &&
             favoriteItem.some(
-                item => item.service.id === service.service.id && item.count === service.count
+                item => item.service.id === service.service.id && +item.count === +service.count
             )
         ) {
             services[services.findIndex(item => item.id === service.id)].favorite_item =
                 favoriteItem.find(
-                    item => item.service.id === service.service.id && item.count === service.count
+                    item => item.service.id === service.service.id && +item.count === +service.count
                 );
             setServices(services);
             setStared(true);

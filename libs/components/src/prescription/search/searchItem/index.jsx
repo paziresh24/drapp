@@ -65,7 +65,7 @@ const SearchItem = props => {
             >
                 <div style={{ display: 'inline-block' }}>
                     <span style={{ color: 'gray', opacity: '0.8', margin: '0 0.5rem' }}>
-                        {props.serviceCode + ' '}
+                        {props.serviceCode && props.serviceCode + ' '}
                     </span>
                     {(+props.serviceType.id === 79 || +props.serviceType.id === 1) &&
                         translateType(extractTypeFromName(props.title)) && (

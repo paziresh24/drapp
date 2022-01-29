@@ -159,6 +159,8 @@ export const Search = ({
                         onClose={onClose}
                         setSelectItem={setSelectItem}
                         insuranceType={insuranceType}
+                        selectHover={isOpen && selectHover}
+                        setResults={props.setResults}
                     />
                 )}
                 {results.length > 0 && searchValue && (

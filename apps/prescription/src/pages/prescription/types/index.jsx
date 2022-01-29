@@ -204,7 +204,7 @@ const Types = () => {
                                 </Tab>
                                 <Tab
                                     keyTab="lab"
-                                    title="آزمایشگاه"
+                                    title="آزمایش"
                                     id="lab_tab_step"
                                     numberBadge={
                                         getItemServices.isSuccess &&
