@@ -117,16 +117,16 @@
 }
 
 .support-wrapper {
-    display: flex;
     align-items: center;
     // position: fixed;
-    bottom: 0;
-    padding: 4rem;
-    padding-top: 2rem;
+    padding-right: 3rem;
+    padding-bottom: 1rem;
+    // padding: 4rem;
+    // padding-top: 2rem;
     display: flex;
     justify-content: center;
-    background-color: #3f4079;
-    min-width: 28rem;
+    // background-color: #3f4079;
+    // min-width: 28rem;
 
     > * {
         margin: 0 0.7rem;
@@ -146,7 +146,7 @@
 
         > * {
             margin: 0.1rem 0;
-            color: rgba(255, 255, 255, 0.56);
+            // color: rgba(255, 255, 255, 0.56);
         }
 
         :first-child {
