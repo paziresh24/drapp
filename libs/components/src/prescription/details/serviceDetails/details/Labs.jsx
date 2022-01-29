@@ -3,8 +3,6 @@ import SearchFiled from '../../atom/SearchFiled';
 import Button from '@paziresh24/components/core/button';
 import { useState, useEffect } from 'react';
 import TextArea from '@paziresh24/components/core/textArea';
-import { useAddFavoriteServices } from '@paziresh24/hooks/prescription';
-import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { toast } from 'react-toastify';
 import { MinusLineIcon, PlusLineIcon } from '@paziresh24/components/icons';
 import Count from '../../atom/Count';
@@ -19,10 +17,25 @@ const LabsDetails = ({ services, setServices, insuranceType, noDate = false }) =
     const [count, setCount] = useState(1);
     const [date, setDate] = useState();
     const [description, setDescription] = useState();
-
-    const addFavoriteServices = useAddFavoriteServices();
+    const [countFieldFocus, setCountFieldFocus] = useState(false);
 
     const [showDescription, setShowDescription] = useState(false);
+
+    const addServiceWithEnterKey = event => {
+        if (event.keyCode === 13) {
+            var e = event || window.event,
+                target = e.target || e.srcElement;
+
+            if (target.tagName.toUpperCase() == 'INPUT' && target.type.toUpperCase() !== 'NUMBER')
+                return;
+            addServiceAction();
+        }
+        document.body.removeEventListener('keydown', addServiceWithEnterKey);
+    };
+
+    useEffect(() => {
+        if (item?.id && count) document.body.addEventListener('keydown', addServiceWithEnterKey);
+    }, [item, count]);
 
     const addServiceAction = () => {
         if (item) {
@@ -60,7 +73,7 @@ const LabsDetails = ({ services, setServices, insuranceType, noDate = false }) =
         setCount(1);
         setDescription('');
         selectItem(null);
-        addFavoriteServices.reset();
+        setCountFieldFocus(false);
     };
 
     return (
@@ -70,7 +83,10 @@ const LabsDetails = ({ services, setServices, insuranceType, noDate = false }) =
                     <SearchFiled
                         type="lab"
                         label="انتخاب آزمایش"
-                        onChange={value => selectItem(value)}
+                        onChange={value => {
+                            selectItem(value);
+                            setCountFieldFocus(true);
+                        }}
                         defaultValue={item}
                         insuranceType={insuranceType}
                     />
@@ -103,7 +119,12 @@ const LabsDetails = ({ services, setServices, insuranceType, noDate = false }) =
                     )}
                 </div>
                 <div className={styles['amount-bar']}>
-                    <Count onChange={value => setCount(value)} defaultValue={count} />
+                    <Count
+                        onChange={value => setCount(value)}
+                        defaultValue={count}
+                        focus={countFieldFocus}
+                        setFocus={setCountFieldFocus}
+                    />
                     {!noDate && (
                         <SelectDate
                             label="تاریخ موثر"

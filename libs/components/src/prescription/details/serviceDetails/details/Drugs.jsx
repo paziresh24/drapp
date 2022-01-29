@@ -77,7 +77,7 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
         }
     }, [getBrands.status]);
 
-    const func = event => {
+    const addServiceWithEnterKey = event => {
         if (event.keyCode === 13) {
             var e = event || window.event,
                 target = e.target || e.srcElement;
@@ -85,11 +85,11 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
             if (target.tagName.toUpperCase() == 'INPUT') return;
             addServiceAction();
         }
-        document.body.removeEventListener('keydown', func);
+        document.body.removeEventListener('keydown', addServiceWithEnterKey);
     };
     useEffect(() => {
         if (item?.id && count && consumption?.id && instructions?.id && amounts?.id)
-            document.body.addEventListener('keydown', func);
+            document.body.addEventListener('keydown', addServiceWithEnterKey);
     }, [item, count, consumption?.id, instructions?.id, amounts?.id]);
 
     const addServiceAction = () => {

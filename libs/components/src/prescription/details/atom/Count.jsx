@@ -9,7 +9,7 @@ const Count = ({ defaultValue, onChange, label, simple, error, focus, setFocus }
         ref.current.value = defaultValue;
     }, [defaultValue]);
 
-    useEffect(() => focus && ref.current.focus(), [focus]);
+    useEffect(() => (focus ? ref.current.focus() : ref.current.blur()), [focus]);
 
     return (
         <TextField
@@ -18,7 +18,7 @@ const Count = ({ defaultValue, onChange, label, simple, error, focus, setFocus }
             label={label ?? 'تعداد'}
             type="number"
             min="1"
-            onBlur={() => setFocus(false)}
+            onBlur={() => setFocus && setFocus(false)}
             className={`${styles.countInput} ${simple ? styles.simple : ''}`}
             onChange={e => onChange(e.target.value ?? null)}
         />

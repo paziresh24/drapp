@@ -64,6 +64,7 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
             }
         });
         setServices(prev => [...prev, ...items]);
+
         sendEvent('clickcollection', 'prescription', 'clickcollection');
         toast.success(
             `نسخه ${prescription.name.substr(0, 10)}${
