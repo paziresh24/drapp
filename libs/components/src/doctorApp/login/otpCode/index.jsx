@@ -48,17 +48,21 @@ const OtoCode = ({ userName, loginAction, loginLoading, wrongPassword }) => {
     };
 
     return (
-        <form className={styles.wrapper} onSubmit={handleSubmit(passwordAction)}>
-            <span className={styles.hint}>
+        <form className="flex flex-col space-y-2" onSubmit={handleSubmit(passwordAction)}>
+            <span className="text-sm font-medium text-[#678093] leading-8">
                 کد ارسال شده به شماره موبایل {userName} را وارد کنید.
             </span>
-            <div className={styles['code-wrapper']}>
+            <div className="flex items-center">
                 <TextField
                     type="tel"
                     autoComplete="one-time-code"
                     inputMode="numeric"
                     label="کد"
-                    style={{ direction: 'ltr' }}
+                    style={{
+                        direction: 'ltr',
+                        borderTopLeftRadius: 0,
+                        borderBottomLeftRadius: 0
+                    }}
                     error={errors.password}
                     {...passwordRegister}
                     ref={e => {

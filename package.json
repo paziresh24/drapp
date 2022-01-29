@@ -71,7 +71,7 @@
         "@nrwl/linter": "13.2.2",
         "@nrwl/next": "^13.5.3",
         "@nrwl/nx-cloud": "latest",
-        "@nrwl/react": "13.2.2",
+        "@nrwl/react": "^13.2.2",
         "@nrwl/tao": "13.2.2",
         "@nrwl/web": "13.2.2",
         "@nrwl/workspace": "13.2.2",
@@ -102,6 +102,7 @@
         "react-test-renderer": "17.0.2",
         "sass": "1.43.2",
         "tailwindcss": "false3.0.17",
+        "tailwindcss-rtl": "^0.8.0",
         "ts-jest": "27.0.5",
         "typescript": "4.4.3"
     },

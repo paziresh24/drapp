@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import styles from './form.module.scss';
 import { useLogin, useResendCode, useCaptcha } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -84,13 +83,13 @@ const Form = ({ focus, setFocus }) => {
     }, [userIsPassword, step]);
 
     return (
-        <div className={styles['wrapper']}>
+        <div className="flex flex-col h-full w-full lg:w-[28rem] lg:min-w-[28rem] items-center lg:justify-center relative space-y-6 p-8 lg:p-12">
             <svg
                 width="126"
                 height="44"
                 viewBox="0 0 126 44"
                 fill="none"
-                className={styles['logo-brand']}
+                className="hidden lg:flex absolute top-6 right-12"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
@@ -114,20 +113,22 @@ const Form = ({ focus, setFocus }) => {
                     fill="white"
                 />
             </svg>
-            <div className={styles['head']}>
+            <div className="flex w-full justify-between items-center">
                 {step === 'USERNAME' && (
-                    <span className={styles['title']}>ورود/ثبت نام پزشکان</span>
+                    <span className="text-lg font-black">ورود/ثبت نام پزشکان</span>
                 )}
-                {step === 'REGISTER' && <span className={styles['title']}>ثبت نام پزشک</span>}
-                {step === 'PASSWORD' && <span className={styles['title']}>ورود پزشک</span>}
+                {step === 'REGISTER' && <span className="text-lg font-black">ثبت نام پزشک</span>}
+                {step === 'PASSWORD' && <span className="text-lg font-black">ورود پزشک</span>}
                 {step === 'FORGOTPASSWORD' && (
-                    <span className={styles['title']}>فراموشی رمزعبور</span>
+                    <span className="text-lg font-black">فراموشی رمزعبور</span>
                 )}
-                {step === 'CHANGEPASSWORD' && <span className={styles['title']}>رمزعبور جدید</span>}
+                {step === 'CHANGEPASSWORD' && (
+                    <span className="text-lg font-black">رمزعبور جدید</span>
+                )}
 
                 {step !== 'USERNAME' && (
                     <button
-                        className={styles['change-number']}
+                        className="border-none text-xs font-medium rounded-full px-4 py-2 cursor-pointer bg-[#e0e8efa9] text-[#586a79]"
                         onClick={() => {
                             resendCode.remove();
                             setTimeout(() => setStep('USERNAME'), 0);
@@ -137,7 +138,7 @@ const Form = ({ focus, setFocus }) => {
                     </button>
                 )}
             </div>
-            <div className={styles['body']}>
+            <div className="flex flex-col w-full relative">
                 {(step === 'USERNAME' || step === 'REGISTER') && (
                     <UserName
                         setStep={setStep}
@@ -145,7 +146,7 @@ const Form = ({ focus, setFocus }) => {
                         userName={userName}
                         setUserName={setUserName}
                         setUserIsPassword={setUserIsPassword}
-                        setFocus={setFocus}
+                        setFocus={isMobile && setFocus}
                     />
                 )}
                 {step === 'PASSWORD' && loginType === 'password' && (
@@ -179,7 +180,7 @@ const Form = ({ focus, setFocus }) => {
                 {step === 'CHANGEPASSWORD' && <ChangePassword userName={userName} />}
                 {userIsPassword && loginType === 'password' && step === 'PASSWORD' && (
                     <div
-                        className={styles.changeToOtp}
+                        className="flex items-center mt-5 cursor-pointer space-s-2"
                         onClick={() => setStep('FORGOTPASSWORD')}
                         aria-hidden
                     >
@@ -211,274 +212,13 @@ const Form = ({ focus, setFocus }) => {
                                 fill="#27BDA0"
                             />
                         </svg>
-                        <span>فراموشی رمزعبور</span>
+                        <span className="text-sm font-medium">رمز عبورم را فراموش کرده ام</span>
                     </div>
                 )}
-                {/* {userIsPassword &&
-                    step === 'PASSWORD' &&
-                    (loginType === 'password' ? (
-                        <div
-                            className={styles.changeToOtp}
-                            onClick={() => setLoginType('otpCode')}
-                            aria-hidden
-                        >
-                            <svg
-                                width="25"
-                                height="25"
-                                viewBox="0 0 25 25"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M2.97119 9.22217C2.97119 5.72217 4.97119 4.22217 7.97119 4.22217H17.9712C20.9712 4.22217 22.9712 5.72217 22.9712 9.22217V16.2222C22.9712 19.7222 20.9712 21.2222 17.9712 21.2222H7.97119"
-                                    stroke="#27BDA0"
-                                    strokeWidth="1.5"
-                                    strokeMiterlimit="10"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M17.9712 9.72217L14.8412 12.2222C13.8112 13.0422 12.1212 13.0422 11.0912 12.2222L7.97119 9.72217"
-                                    stroke="#27BDA0"
-                                    strokeWidth="1.5"
-                                    strokeMiterlimit="10"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M2.97119 17.2222H8.97119"
-                                    stroke="#27BDA0"
-                                    strokeWidth="1.5"
-                                    strokeMiterlimit="10"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M2.97119 13.2222H5.97119"
-                                    stroke="#27BDA0"
-                                    strokeWidth="1.5"
-                                    strokeMiterlimit="10"
-                                    strokeLinecap="round"
-                                    strokeL
-                                    inejoin="round"
-                                />
-                            </svg>
-                            <span>ورود با کد یکبار مصرف</span>
-                        </div>
-                    ) : (
-                        <div
-                            className={styles.changeToOtp}
-                            onClick={() => setLoginType('password')}
-                            aria-hidden
-                        >
-                            <svg
-                                width="25"
-                                height="24"
-                                viewBox="0 0 25 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M11.9912 20.25H8.47119C7.72119 20.25 7.17119 20.22 6.70119 20.15C3.37119 19.78 2.72119 17.8 2.72119 14.5V9.5C2.72119 6.2 3.38119 4.21 6.73119 3.84C7.17119 3.78 7.72119 3.75 8.47119 3.75H11.9312C12.3412 3.75 12.6812 4.09 12.6812 4.5C12.6812 4.91 12.3412 5.25 11.9312 5.25H8.47119C7.79119 5.25 7.31119 5.28 6.92119 5.33C4.89119 5.55 4.22119 6.19 4.22119 9.5V14.5C4.22119 17.81 4.89119 18.44 6.89119 18.67C7.31119 18.73 7.79119 18.75 8.47119 18.75H11.9912C12.4012 18.75 12.7412 19.09 12.7412 19.5C12.7412 19.91 12.4012 20.25 11.9912 20.25Z"
-                                    fill="#27BDA0"
-                                />
-                                <path
-                                    d="M17.4712 20.25H15.9912C15.5812 20.25 15.2412 19.91 15.2412 19.5C15.2412 19.09 15.5812 18.75 15.9912 18.75H17.4712C18.1512 18.75 18.6312 18.72 19.0212 18.67C21.0512 18.45 21.7212 17.81 21.7212 14.5V9.5C21.7212 6.19 21.0512 5.56 19.0512 5.33C18.6312 5.27 18.1512 5.25 17.4712 5.25H15.9912C15.5812 5.25 15.2412 4.91 15.2412 4.5C15.2412 4.09 15.5812 3.75 15.9912 3.75H17.4712C18.2212 3.75 18.7712 3.78 19.2412 3.85C22.5712 4.22 23.2212 6.2 23.2212 9.5V14.5C23.2212 17.8 22.5612 19.79 19.2112 20.16C18.7712 20.22 18.2212 20.25 17.4712 20.25Z"
-                                    fill="#27BDA0"
-                                />
-                                <path
-                                    d="M15.9712 22.75C15.5612 22.75 15.2212 22.41 15.2212 22V2C15.2212 1.59 15.5612 1.25 15.9712 1.25C16.3812 1.25 16.7212 1.59 16.7212 2V22C16.7212 22.41 16.3812 22.75 15.9712 22.75Z"
-                                    fill="#27BDA0"
-                                />
-                                <path
-                                    d="M7.67114 13C7.54114 13 7.41114 12.97 7.29114 12.92C7.17114 12.87 7.06114 12.8 6.96114 12.71C6.87114 12.61 6.79114 12.5 6.74114 12.38C6.69114 12.26 6.67114 12.13 6.67114 12C6.67114 11.74 6.78114 11.48 6.96114 11.29C7.33114 10.92 8.00114 10.92 8.38114 11.29C8.56114 11.48 8.67114 11.74 8.67114 12C8.67114 12.13 8.64114 12.26 8.59114 12.38C8.54114 12.5 8.47114 12.61 8.38114 12.71C8.28114 12.8 8.17114 12.87 8.05114 12.92C7.93114 12.97 7.80114 13 7.67114 13Z"
-                                    fill="#27BDA0"
-                                />
-                                <path
-                                    d="M11.6711 13C11.5411 13 11.4111 12.97 11.2911 12.92C11.1711 12.87 11.0611 12.8 10.9611 12.71C10.8711 12.61 10.8011 12.5 10.7411 12.38C10.7011 12.26 10.6711 12.13 10.6711 12C10.6711 11.74 10.7811 11.48 10.9611 11.29C11.3311 10.92 12.0111 10.92 12.3811 11.29C12.5611 11.48 12.6711 11.74 12.6711 12C12.6711 12.13 12.6411 12.26 12.5911 12.38C12.5411 12.5 12.4711 12.61 12.3811 12.71C12.2811 12.8 12.1711 12.87 12.0511 12.92C11.9311 12.97 11.8011 13 11.6711 13Z"
-                                    fill="#27BDA0"
-                                />
-                            </svg>
-                            <span>ورود با رمز عبور</span>
-                        </div>
-                    ))} */}
-                {/* {(isNeedRegister || step === 2) && (
-                    <div
-                        className={`${styles['enterCodeHead']} ${
-                            step === 2 && resendCode.data?.message === 'رمز ثابت را وارد کنید.'
-                                ? styles.changeCell
-                                : ''
-                        } ${step !== 2 ? styles.changeCell : ''}`}
-                    >
-                        {step === 2 && resendCode.data?.message !== 'رمز ثابت را وارد کنید.' && (
-                            <span style={{ fontSize: '1.5rem' }}>
-                                لطفا کد ارسال شده به شماره{' '}
-                                <span
-                                    style={{ textDecoration: 'underline', cursor: 'pointer' }}
-                                    onClick={() => {
-                                        setStep(1);
-                                        setIsNeedRegister(false);
-                                    }}
-                                    aria-hidden
-                                >
-                                    {userInformation.cell}
-                                </span>{' '}
-                                را وارد نمایید
-                            </span>
-                        )}
-                        {step === 2 && resendCode.data?.message === 'رمز ثابت را وارد کنید.' && (
-                            <>
-                                <span style={{ fontSize: '1.5rem' }}>
-                                    برای شما رمز ثابت درنظر گرفته شده است لطفا رمز خود را وارد کنید
-                                </span>
-                                <button
-                                    className={styles['change-number']}
-                                    onClick={() => {
-                                        setStep(1);
-                                        setIsNeedRegister(false);
-                                    }}
-                                >
-                                    تغییر شماره موبایل
-                                </button>
-                            </>
-                        )}
-
-                        {step !== 2 && (
-                            <button
-                                className={styles['change-number']}
-                                onClick={() => {
-                                    setStep(1);
-                                    setIsNeedRegister(false);
-                                }}
-                            >
-                                تغییر شماره موبایل
-                            </button>
-                        )}
-                    </div>
-                )}
-
-                {step === 1 && (
-                    <TextField
-                        type="tel"
-                        onFocus={() => setFocus(true)}
-                        label="شماره موبایل"
-                        defaultValue={userInformation.cell}
-                        onBlur={() => {
-                            checkPhone();
-                            setFocus(false);
-                        }}
-                        ref={cellPhoneInput}
-                        error={isPhoneError}
-                        disabled={isNeedRegister}
-                        onKeyDown={e => e.keyCode === 13 && nextStep()}
-                        onChange={e =>
-                            setUserInformation(prev => ({ ...prev, cell: e.target.value }))
-                        }
-                        errorText="شماره موبایل اشتباه است."
-                    />
-                )}
-                {isNeedRegister && step === 1 && (
-                    <TextField
-                        type="tel"
-                        label="کدملی"
-                        ref={nationalCodeInput}
-                        onFocus={() => setFocus(true)}
-                        onBlur={() => setFocus(false)}
-                        onKeyDown={e => e.keyCode === 13 && secondStep()}
-                        onChange={e => {
-                            setIsNationalCodeError(false);
-                            setUserInformation(prev => ({ ...prev, nationalCode: e.target.value }));
-                        }}
-                        error={isNationalCodeError}
-                        style={{ direction: 'ltr' }}
-                    />
-                )}
-                {isNeedRegister && location.pathname === '/p24auth' && step === 1 && (
-                    <TextField
-                        type="tel"
-                        label="کدنظام پزشکی"
-                        onKeyDown={e => e.keyCode === 13 && secondStep()}
-                        onChange={e => {
-                            setUserInformation(prev => ({ ...prev, medical_code: e.target.value }));
-                        }}
-                        style={{ direction: 'ltr' }}
-                    />
-                )}
-                {step === 2 && (
-                    <div
-                        className={
-                            resendCode.data?.message !== 'رمز ثابت را وارد کنید.' &&
-                            styles['code-wrapper']
-                        }
-                    >
-                        <TextField
-                            type="tel"
-                            autoComplete="one-time-code"
-                            inputMode="numeric"
-                            label={
-                                resendCode.data?.message === 'رمز ثابت را وارد کنید.'
-                                    ? 'رمز عبور'
-                                    : 'کد'
-                            }
-                            ref={otpCodeInput}
-                            onFocus={() => setFocus(true)}
-                            onBlur={() => setFocus(false)}
-                            onKeyDown={e => e.keyCode === 13 && lastStep()}
-                            onChange={e =>
-                                setUserInformation(prev => ({ ...prev, otpCode: e.target.value }))
-                            }
-                            style={{ direction: 'ltr' }}
-                        />
-
-                        {resendCode.data?.message !== 'رمز ثابت را وارد کنید.' && (
-                            <div
-                                className={classNames({
-                                    [styles['timer']]: true,
-                                    [styles['resendCode']]: timer <= 0
-                                })}
-                                onClick={() => {
-                                    if (timer <= 0) {
-                                        resendCode.refetch();
-                                        setTimer(59);
-                                    }
-                                }}
-                                aria-hidden
-                            >
-                                {timer <= 0 ? <span>ارسال مجدد</span> : `00:${timer}`}
-                            </div>
-                        )}
-                    </div>
-                )} */}
             </div>
-            <div className={styles['footer']}>
-                {/* {!isNeedRegister && step === 1 && (
-                    <Button
-                        variant="primary"
-                        onClick={nextStep}
-                        loading={resendCode.isLoading}
-                        block
-                    >
-                        ورود/ثبت‌نام
-                    </Button>
-                )}
-                {isNeedRegister && step === 1 && (
-                    <Button
-                        variant="primary"
-                        onClick={secondStep}
-                        loading={createCenter.isLoading}
-                        block
-                    >
-                        ثبت‌نام
-                    </Button>
-                )}
-                {step === 2 && (
-                    <Button variant="primary" onClick={lastStep} loading={login.isLoading} block>
-                        ورود
-                    </Button>
-                )} */}
-            </div>
-            {!focus && isMobile && (
-                <a className={styles['support-wrapper']} href="tel:02125015555">
+
+            {!focus && !centersConfig[location.hostname]?.hideDownloadBox && (
+                <a className="flex items-center absolute bottom-5" href="tel:02125015555">
                     <svg
                         width="21"
                         height="21"
@@ -499,45 +239,9 @@ const Form = ({ focus, setFocus }) => {
                             strokeMiterlimit="10"
                         />
                     </svg>
-                    <div className={styles['support-content']}>
-                        <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>
-                            پشتیبانی: 02125015555
-                        </span>
-                        <span style={{ fontSize: '1.4rem', fontWeight: '400' }}>
-                            همه روزه 7 الی 24
-                        </span>
-                    </div>
-                </a>
-            )}
-            {!isMobile && !centersConfig[location.hostname]?.hideDownloadBox && (
-                <a className={styles['support-wrapper']} href="tel:02125015555">
-                    <svg
-                        width="21"
-                        height="21"
-                        viewBox="0 0 21 21"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <rect
-                            width="20"
-                            height="20"
-                            transform="translate(0.805908 0.421875)"
-                            fill="white"
-                        />
-                        <path
-                            d="M19.1142 15.697C19.1142 15.997 19.0475 16.3053 18.9059 16.6053C18.7642 16.9053 18.5809 17.1886 18.3392 17.4553C17.9309 17.9053 17.4809 18.2303 16.9725 18.4386C16.4725 18.647 15.9309 18.7553 15.3475 18.7553C14.4975 18.7553 13.5892 18.5553 12.6309 18.147C11.6725 17.7386 10.7142 17.1886 9.7642 16.497C8.80587 15.797 7.89753 15.022 7.03087 14.1636C6.17253 13.297 5.39753 12.3886 4.70587 11.4386C4.02253 10.4886 3.47253 9.53862 3.07253 8.59696C2.67253 7.64696 2.47253 6.73862 2.47253 5.87196C2.47253 5.30529 2.57253 4.76362 2.77253 4.26362C2.97253 3.75529 3.2892 3.28862 3.73087 2.87196C4.2642 2.34696 4.84753 2.08862 5.4642 2.08862C5.69753 2.08862 5.93087 2.13862 6.1392 2.23862C6.35587 2.33862 6.54753 2.48862 6.69753 2.70529L8.63087 5.43029C8.78087 5.63862 8.8892 5.83029 8.9642 6.01362C9.0392 6.18862 9.08087 6.36362 9.08087 6.52196C9.08087 6.72196 9.02253 6.92196 8.90587 7.11362C8.79753 7.30529 8.6392 7.50529 8.4392 7.70529L7.80587 8.36362C7.7142 8.45529 7.67253 8.56362 7.67253 8.69696C7.67253 8.76362 7.68087 8.82196 7.69753 8.88862C7.72253 8.95529 7.74753 9.00529 7.7642 9.05529C7.9142 9.33029 8.17253 9.68862 8.5392 10.122C8.9142 10.5553 9.3142 10.997 9.74753 11.4386C10.1975 11.8803 10.6309 12.2886 11.0725 12.6636C11.5059 13.0303 11.8642 13.2803 12.1475 13.4303C12.1892 13.447 12.2392 13.472 12.2975 13.497C12.3642 13.522 12.4309 13.5303 12.5059 13.5303C12.6475 13.5303 12.7559 13.4803 12.8475 13.3886L13.4809 12.7636C13.6892 12.5553 13.8892 12.397 14.0809 12.297C14.2725 12.1803 14.4642 12.122 14.6725 12.122C14.8309 12.122 14.9975 12.1553 15.1809 12.2303C15.3642 12.3053 15.5559 12.4136 15.7642 12.5553L18.5225 14.5136C18.7392 14.6636 18.8892 14.8386 18.9809 15.047C19.0642 15.2553 19.1142 15.4636 19.1142 15.697Z"
-                            stroke="#27BDA0"
-                            strokeWidth="1.5"
-                            strokeMiterlimit="10"
-                        />
-                    </svg>
-                    <div className={styles['support-content']}>
-                        <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>
-                            پشتیبانی: 02125015555
-                        </span>
-                        <span style={{ fontSize: '1.4rem', fontWeight: '400' }}>
-                            همه روزه 7 الی 24
-                        </span>
+                    <div className="flex flex-col mr-4">
+                        <span className="text-base font-bold">پشتیبانی: 02125015555</span>
+                        <span className="text-sm font-normal mt-1">همه روزه 7 الی 24</span>
                     </div>
                 </a>
             )}

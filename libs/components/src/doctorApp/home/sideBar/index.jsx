@@ -173,7 +173,6 @@ const SideBar = () => {
             <div
                 className={styles.menuBar}
                 style={{
-                    // overflow: 'hidden',
                     background: '#fff',
                     display: 'flex',
                     flexDirection: 'column',
@@ -183,12 +182,10 @@ const SideBar = () => {
                     alignItems: open ? 'flex-start' : 'center',
                     justifyContent: 'space-between',
                     zIndex: '10',
-                    // boxShadow: '-8px 0px 40px 0px #9ba0be21',
                     borderLeft: '1px solid #e5e9f0',
                     width: open ? '27rem' : '6.5rem',
                     transition: 'all 0.3s ease-in-out',
                     height: '100vh'
-                    // overflowY: 'auto'
                 }}
                 onMouseOver={() => setOpen(true)}
             >
