@@ -121,11 +121,11 @@ const Form = ({ focus, setFocus }) => {
                 {step === 'REGISTER' && <span className={styles['title']}>ثبت نام پزشک</span>}
                 {step === 'PASSWORD' && <span className={styles['title']}>ورود پزشک</span>}
                 {step === 'FORGOTPASSWORD' && (
-                    <span className={styles['title']}>فراموشی رمزعبور</span>
+                    <span className={styles['title']}>بازیابی رمزعبور</span>
                 )}
                 {step === 'CHANGEPASSWORD' && <span className={styles['title']}>رمزعبور جدید</span>}
 
-                {step !== 'USERNAME' && (
+                {step !== 'USERNAME' && step !== 'CHANGEPASSWORD' && (
                     <button
                         className={styles['change-number']}
                         onClick={() => {
