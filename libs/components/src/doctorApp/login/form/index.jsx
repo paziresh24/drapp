@@ -211,7 +211,7 @@ const Form = ({ focus, setFocus }) => {
                                 fill="#27BDA0"
                             />
                         </svg>
-                        <span>فراموشی رمزعبور</span>
+                        <span>رمز عبورم را فراموش کرده ام</span>
                     </div>
                 )}
                 {/* {userIsPassword &&

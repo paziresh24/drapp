@@ -24,6 +24,10 @@
     font-size: 1em;
     user-select: text;
     -webkit-user-select: text;
+
+    &.password {
+        padding-left: 4.5rem;
+    }
 }
 
 // .input::-webkit-outer-spin-button,
@@ -89,4 +93,26 @@
     font-size: 1.5rem;
     margin-top: 0.8rem;
     color: #ce4b33;
+}
+
+.show-password {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    * {
+        fill: #3f4079;
+    }
+
+    svg {
+        width: 2rem;
+        height: 2rem;
+    }
 }
