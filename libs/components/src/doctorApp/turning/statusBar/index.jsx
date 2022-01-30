@@ -15,7 +15,6 @@ import moment from 'jalali-moment';
 import { useDeleteTurns, useMoveTurns, useVacation } from '@paziresh24/hooks/drapp/turning';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Timeit } from 'react-timeit';
-import 'react-timeit/dist/index.css';
 import { sendEvent } from '@paziresh24/utils';
 import { useHistory, useLocation } from 'react-router';
 import { Default } from '@paziresh24/hooks/core/device';
