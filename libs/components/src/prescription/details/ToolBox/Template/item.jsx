@@ -9,12 +9,14 @@ import { RemoveIcon, ChevronIcon } from '../../../../icons';
 import { useDeleteFavoritePrescriptions } from '@paziresh24/hooks/prescription';
 import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.context';
 import { sendEvent } from '@paziresh24/utils';
+import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
 
 const Item = ({ prescription, isOpen, setIsOpen }) => {
     const [prescriptionInfo] = useSelectPrescription();
     const [services, setServices] = useServices();
     const deleteFavoritePrescriptions = useDeleteFavoritePrescriptions();
     const [templateItem, setTemplateItem] = useTemplateItem();
+    const [type, setType] = useSelectType();
 
     const [, setIsOpenToolBox] = useToolBox();
 
@@ -65,6 +67,12 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
         });
         setServices(prev => [...prev, ...items]);
 
+        setType(
+            Object.entries(serviceTypeList).filter(item =>
+                item[1][prescriptionInfo.insuranceType].includes(items[0]?.service_type)
+            )[0][0]
+        );
+
         sendEvent('clickcollection', 'prescription', 'clickcollection');
         toast.success(
             `نسخه ${prescription.name.substr(0, 10)}${
@@ -75,6 +83,11 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
     };
 
     const addItemAction = service => {
+        setType(
+            Object.entries(serviceTypeList).filter(item =>
+                item[1][prescriptionInfo.insuranceType].includes(service?.service_type)
+            )[0][0]
+        );
         if (services.some(item => item.service.id === service.service.id)) {
             return toast.warn('این آیتم قبلا اضافه شده است.');
         }
@@ -88,6 +101,7 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
                 date_do: null
             }
         ]);
+
         isMobile && setIsOpenToolBox(false);
     };
 
