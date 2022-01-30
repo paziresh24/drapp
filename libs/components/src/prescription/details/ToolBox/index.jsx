@@ -97,7 +97,7 @@ const ToolBoxContent = () => {
             <Tab title="نسخ پراستفاده">
                 <Template />
             </Tab>
-            <Tab title="سوابق">
+            <Tab title="پرونده بیمار">
                 <History />
             </Tab>
         </Tabs>
