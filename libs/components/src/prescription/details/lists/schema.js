@@ -38,7 +38,7 @@ export const schema = {
             }
         },
         {
-            title: 'مقادیر مصرف',
+            title: 'میزان مصرف',
             meta: {
                 width: '5%'
             }

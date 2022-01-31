@@ -2,7 +2,18 @@ import TextField from '../../../core/textField';
 import { useEffect, useRef } from 'react';
 import styles from './Count.module.scss';
 
-const Count = ({ defaultValue, onChange, label, simple, error, focus, setFocus }) => {
+const Count = ({
+    defaultValue,
+    onChange,
+    label,
+    simple,
+    error,
+    focus,
+    setFocus,
+    autoWidth,
+    min,
+    max
+}) => {
     const ref = useRef();
 
     useEffect(() => {
@@ -19,7 +30,9 @@ const Count = ({ defaultValue, onChange, label, simple, error, focus, setFocus }
             type="number"
             min="1"
             onBlur={() => setFocus && setFocus(false)}
-            className={`${styles.countInput} ${simple ? styles.simple : ''}`}
+            min={min}
+            max={max}
+            className={`${!autoWidth && styles.countInput} ${simple ? styles.simple : ''}`}
             onChange={e => onChange(e.target.value ?? null)}
         />
     );

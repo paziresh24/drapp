@@ -71,7 +71,9 @@ const StarService = ({ service, insuranceType }) => {
                     service: service.service.id,
                     count: service.count,
                     description: service.description,
-                    ...(service.number_of_period && { number_of_period: service.number_of_period }),
+                    ...(service.number_of_period && {
+                        number_of_period: +service.number_of_period
+                    }),
                     provider: insuranceType,
                     type: undefined
                 },

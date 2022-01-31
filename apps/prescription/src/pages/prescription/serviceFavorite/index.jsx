@@ -25,7 +25,9 @@ import { toast } from 'react-toastify';
 const ServiceFavorite = () => {
     const history = useHistory();
     const { prescriptionId } = useParams();
-    const getFavoritePrescriptions = useGetFavoriteServices();
+    const getFavoritePrescriptions = useGetFavoriteServices({
+        _limit: 1000
+    });
     const [salamatItems, setSalamatItems] = useState([]);
     const [taminItems, setTaminItems] = useState([]);
     const [type, setType] = useState('drugs');

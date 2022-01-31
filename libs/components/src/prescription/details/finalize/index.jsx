@@ -60,7 +60,6 @@ const Finalize = () => {
     const servicesCloneRef = useRef();
 
     useEffect(() => {
-        console.log('services', services);
         servicesCloneRef.current = services;
     }, [services]);
 
@@ -199,7 +198,7 @@ const Finalize = () => {
                             description,
                             how_to_use,
                             id: service.id,
-                            number_of_period,
+                            number_of_period: +number_of_period,
                             prescription_id,
                             use_instruction,
                             use_time,
@@ -279,9 +278,9 @@ const Finalize = () => {
                     size="small"
                     className={styles.button}
                     onClick={() => {
-                        if (services.some(item => item.service_type === 95)) {
-                            return setServicesDoctorVisitConfirmModal(true);
-                        }
+                        // if (services.some(item => item.service_type === 95)) {
+                        //     return setServicesDoctorVisitConfirmModal(true);
+                        // }
                         submitServices();
                     }}
                     loading={finalizePrescription.isLoading || bulkItems.isLoading}
@@ -294,14 +293,25 @@ const Finalize = () => {
                     size="small"
                     className={styles.button}
                     onClick={() => {
-                        if (services.some(item => item.service_type === 95)) {
-                            return setServicesDoctorVisitConfirmModal(true);
-                        }
+                        // if (services.some(item => item.service_type === 95)) {
+                        //     return setServicesDoctorVisitConfirmModal(true);
+                        // }
                         submitServices();
                     }}
                     loading={finalizePrescription.isLoading || bulkItems.isLoading}
                 >
                     نهایی سازی نسخه
+                </Button>
+            )}
+
+            {isServicesOfDoctors && prescriptionInfo.finalized && (
+                <Button
+                    block
+                    onClick={() => setDeliverConfirmModal(true)}
+                    size="small"
+                    className={styles.button}
+                >
+                    ارائه خدمت
                 </Button>
             )}
 
