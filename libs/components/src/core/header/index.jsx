@@ -170,23 +170,31 @@ const Header = () => {
                                                         ? localStorage.getItem('center_id') ===
                                                           center.id
                                                         : info.center.id === center.id
-                                                    : false
+                                                    : false,
+                                            [styles.disabled]:
+                                                center?.prescription_local_install !== undefined &&
+                                                !center?.prescription_local_install
                                         })}
                                         onClick={e => {
                                             e.stopPropagation();
-                                            setIsCenterSelectOpen(false);
-                                            localStorage.setItem(
-                                                'center_id',
-                                                center.id ? center.id : info.center.id
-                                            );
-                                            setInfo(prev => ({
-                                                ...prev,
-                                                center: center.name
-                                                    ? prev.centers.find(
-                                                          center2 => center2.id === center.id
-                                                      )
-                                                    : prev.center
-                                            }));
+                                            if (
+                                                center?.prescription_local_install === undefined ||
+                                                center?.prescription_local_install
+                                            ) {
+                                                setIsCenterSelectOpen(false);
+                                                localStorage.setItem(
+                                                    'center_id',
+                                                    center.id ? center.id : info.center.id
+                                                );
+                                                setInfo(prev => ({
+                                                    ...prev,
+                                                    center: center.name
+                                                        ? prev.centers.find(
+                                                              center2 => center2.id === center.id
+                                                          )
+                                                        : prev.center
+                                                }));
+                                            }
                                         }}
                                         aria-hidden
                                     >

@@ -64,6 +64,14 @@ export const routes = [
         exact: true
     },
     {
+        path: '/create-center',
+        name: 'CreateCenter',
+        component: lazy(() => import('./createCenter')),
+        title: 'ایجاد مطب',
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/complaints/',
         name: 'Complaints',
         title: 'شکایات',

@@ -50,10 +50,10 @@ const PrivateRoute = props => {
     useEffect(() => {
         setPage(props);
         if (isEmpty(info) && !isEmpty(getToken())) {
-            centerInfo.refetch();
+            props.path !== '/create-center' && centerInfo.refetch();
             getUserGoftino.refetch();
             if (isProduction && isMainDomain) {
-                // ChatSupport.init();
+                // ChatSupport.init(); props.path !== '/create-center' &&
             }
             if (!isProduction) {
                 // ChatSupport.init();
@@ -64,12 +64,24 @@ const PrivateRoute = props => {
     useEffect(() => {
         if (!info && centerInfo.isSuccess) {
             let center;
+            const centers = centerInfo.data.data;
+
+            const isPrescriptionLocalInstallFieldAvailable =
+                centers[0]?.prescription_local_install !== undefined;
+
+            const isAllHospitalCentersNotInstalledPrescriptionLocal =
+                centers
+                    .filter(item => item.type_id !== 1 && item.id !== '5532')
+                    .every(item => item?.prescription_local_install === false) &&
+                !centers.some(item => item.type_id === 1 || item.id === '5532');
 
             if (
-                isEmpty(
-                    centerInfo.data.data.find(item => item.id === localStorage.getItem('center_id'))
-                )
-            ) {
+                isPrescriptionLocalInstallFieldAvailable &&
+                isAllHospitalCentersNotInstalledPrescriptionLocal
+            )
+                return history.push('/create-center');
+
+            if (isEmpty(centers.find(item => item.id === localStorage.getItem('center_id')))) {
                 center = centerInfo.data.data[0];
                 localStorage.setItem('center_id', center.id);
             } else {
@@ -77,10 +89,9 @@ const PrivateRoute = props => {
                     item => item.id === localStorage.getItem('center_id')
                 );
             }
-            const centers = centerInfo.data.data;
             const centerConsult = centerInfo.data.data.find(center => center.id === '5532') ?? {};
             const onlyConsult = centerConsult.id === '5532' && isEmpty(center);
-            setCentersDoctor(prev => [...prev, centers[0]]);
+            setCentersDoctor(prev => [...prev, center]);
 
             setInfo({
                 centers,
@@ -96,12 +107,6 @@ const PrivateRoute = props => {
             doctorInfo.refetch();
         }
     }, [centersDoctor]);
-
-    // useEffect(() => {
-    //     if (info.center) {
-    //         // doctorInfo.remove();
-    //     }
-    // }, [info.center]);
 
     useEffect(() => {
         if (doctorInfo.isSuccess) {
@@ -161,20 +166,6 @@ const PrivateRoute = props => {
         history.replace('/fill-info');
     }
 
-    // if (
-    //     info &&
-    //     !info.center.is_active_booking &&
-    //     props.name !== 'FillInfo' &&
-    //     props.name !== 'Profile' &&
-    //     !info.onlyConsult
-    // ) {
-    //     setTimeout(() => {
-    //         if (window.__promote_turn_close === undefined) {
-    //             setPromoteModal(true);
-    //         }
-    //     }, 15000);
-    // }
-
     const closePromothModal = () => {
         setPromoteModal(false);
         window.__promote_turn_close = true;
@@ -186,7 +177,14 @@ const PrivateRoute = props => {
                 <title>{`${props.title} | پذیرش24` ?? ''}</title>
                 <link rel="canonical" href={`https://doctorapp.paziresh24.com${props.path}`} />
             </Helmet>
-            <Loading show={!info.doctor && !centerInfo.isError && !isError} />
+            <Loading
+                show={
+                    !info.doctor &&
+                    !centerInfo.isError &&
+                    !isError &&
+                    props.path !== '/create-center'
+                }
+            />
             <ErrorByRefresh show={centerInfo.isError || isError} />
             <div
                 className={classNames({
@@ -206,7 +204,7 @@ const PrivateRoute = props => {
                     [styles['turning']]: props.name === 'Turning'
                 })}
             >
-                {info.doctor && (
+                {(info.doctor || props.path === '/create-center') && (
                     <Route {...props}>
                         {({ match }) => (
                             <CSSTransition
