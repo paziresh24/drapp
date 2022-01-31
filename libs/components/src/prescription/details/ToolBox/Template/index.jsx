@@ -16,6 +16,7 @@ const Template = () => {
     const getFavoritePrescriptions = useGetFavoritePrescriptions({
         [prescriptionInfo.insuranceType + 'Items_null']: false
     });
+    const [isOpenImportModal, setIsOpenImportModal] = useState(false);
     const [searchPrescriptionsValue, setSearchPrescriptionsValue] = useState('');
 
     return (
@@ -23,9 +24,38 @@ const Template = () => {
             <div className={styles['searchWrapper']}>
                 <SearchBar label="جستجوی بین نسخه ها ..." value={setSearchPrescriptionsValue} />
                 {prescriptionInfo.insuranceType === 'tamin' && (
-                    <ImportStatus type="favorite_prescription" />
+                    <ImportStatus
+                        type="favorite_prescription"
+                        isOpenImportModal={isOpenImportModal}
+                        setIsOpenImportModal={setIsOpenImportModal}
+                    />
                 )}
             </div>
+            {prescriptionInfo.insuranceType === 'tamin' && getFavoritePrescriptions.isSuccess && (
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '1.5rem 1rem'
+                    }}
+                >
+                    <span style={{ fontSize: '1.3rem', fontWeight: '500', opacity: '0.8' }}>
+                        اقلام و نسخه های پنل تامین اجتماعی
+                    </span>
+                    <span
+                        style={{
+                            fontSize: '1.3rem',
+                            fontWeight: '600',
+                            textDecoration: 'underLine',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => setIsOpenImportModal(true)}
+                    >
+                        واکشی و نمایش
+                    </span>
+                </div>
+            )}
             <div className={styles['items']}>
                 {templateItem.length > 0 &&
                     templateItem.map(

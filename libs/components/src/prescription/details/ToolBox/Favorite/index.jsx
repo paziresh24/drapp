@@ -18,6 +18,7 @@ import ImportStatus from '../ImportStatus';
 const Favorite = () => {
     const [prescriptionInfo] = useSelectPrescription();
     const [favoriteItem, setFavoriteItem] = useFavoriteItem();
+    const [isOpenImportModal, setIsOpenImportModal] = useState(false);
     const [type] = useSelectType();
     const getFavoriteServices = useGetFavoriteServices({
         provider: prescriptionInfo?.insuranceType,
@@ -80,9 +81,38 @@ const Favorite = () => {
             <div className={styles['searchWrapper']}>
                 <SearchBar label="جستجوی بین اقلام ..." value={setSearchServiceValue} />
                 {/* {prescriptionInfo.insuranceType === 'tamin' && ( */}
-                <ImportStatus type="favorite_service" />
+                <ImportStatus
+                    type="favorite_service"
+                    isOpenImportModal={isOpenImportModal}
+                    setIsOpenImportModal={setIsOpenImportModal}
+                />
                 {/* )} */}
             </div>
+            {getFavoriteServices.isSuccess && (
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '1.5rem 1rem'
+                    }}
+                >
+                    <span style={{ fontSize: '1.3rem', fontWeight: '500', opacity: '0.8' }}>
+                        اقلام و نسخه های پنل تامین اجتماعی
+                    </span>
+                    <span
+                        style={{
+                            fontSize: '1.3rem',
+                            fontWeight: '600',
+                            textDecoration: 'underLine',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => setIsOpenImportModal(true)}
+                    >
+                        واکشی و نمایش
+                    </span>
+                </div>
+            )}
             {/* )} */}
             <div className={styles['items']}>
                 {getFavoriteServices.isLoading && <Overlay />}

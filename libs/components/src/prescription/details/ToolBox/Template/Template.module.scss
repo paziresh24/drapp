@@ -1,6 +1,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+    background-color: #f3f7fa;
 
     @media screen and (min-width: 425px) {
         height: calc(100vh - 50px);
@@ -30,7 +31,7 @@
     padding-bottom: 10rem;
     position: relative;
     padding: 0.4rem;
-    background-color: #f3f7fa;
+    padding-top: 0;
     padding-bottom: 10rem;
 
     > * {
