@@ -34,6 +34,7 @@
         "react-canvas-confetti": "1.2.1",
         "react-device-detect": "1.17.0",
         "react-dom": "17.0.2",
+        "react-drag-reorder": "false1.1.0",
         "react-gtm-module": "2.0.11",
         "react-helmet": "6.1.0",
         "react-hook-form": "7.4.1",

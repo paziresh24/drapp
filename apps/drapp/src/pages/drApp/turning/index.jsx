@@ -400,7 +400,7 @@ const Turning = () => {
                                 marginLeft: '1rem'
                             }}
                         >
-                            تعداد نوبت های امروز
+                            تعداد بیماران امروز
                         </span>
                         {/* </div>   */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>

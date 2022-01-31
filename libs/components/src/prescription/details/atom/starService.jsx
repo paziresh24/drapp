@@ -20,9 +20,9 @@ const StarService = ({ service, insuranceType }) => {
                 item =>
                     item.service.id === service.service.id &&
                     +item.count === +service.count &&
-                    item.use_time === service.use_time &&
-                    item.use_instruction === service.use_instruction &&
-                    item.how_to_use === service.how_to_use
+                    +item.use_time === +service.use_time &&
+                    +item.use_instruction === +service.use_instruction &&
+                    +item.how_to_use === +service.how_to_use
             )
         ) {
             services[services.findIndex(item => item.id === service.id)].favorite_item =

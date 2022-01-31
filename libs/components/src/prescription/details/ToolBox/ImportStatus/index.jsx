@@ -21,7 +21,8 @@ const ImportStatus = ({ type }) => {
     let importInterval = useRef(null);
     const [isOpenImportModal, setIsOpenImportModal] = useState(false);
     const getFavoriteServices = useGetFavoriteServices({
-        provider: prescriptionInfo?.insuranceType
+        provider: prescriptionInfo?.insuranceType,
+        _limit: 1000
     });
 
     const getFavoritePrescriptions = useGetFavoritePrescriptions({

@@ -10263,6 +10263,11 @@ react-dom@17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-drag-reorder@false1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-drag-reorder/-/react-drag-reorder-1.1.0.tgz#8ad4631249b23dc2036fadefd398a80f6d696598"
+  integrity sha512-rpdhAjgxgcG1DCDM4T7jXdFMT3Lio/qUs+SM04ftSVqFtw/zDRqHDU/zyC/XrhE/DNHuPf0KJCkLSeaACkapcw==
+
 react-error-boundary@^3.1.0:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-3.1.4.tgz#255db92b23197108757a888b01e5b729919abde0"

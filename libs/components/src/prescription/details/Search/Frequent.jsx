@@ -50,7 +50,7 @@ const Frequent = ({
                         insuranceType === 'tamin' ? (
                             <SearchItem
                                 key={item.id}
-                                id={item.id}
+                                id={item.service.id}
                                 title={item.service.name}
                                 onClose={onClose}
                                 setSelectItem={setSelectItem}
@@ -66,7 +66,7 @@ const Frequent = ({
                         ) : (
                             <SearchItem
                                 key={item.id}
-                                id={item.id}
+                                id={item.service.id}
                                 title={item.service.name}
                                 onClose={onClose}
                                 setSelectItem={setSelectItem}

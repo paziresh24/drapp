@@ -20,7 +20,8 @@ const Favorite = () => {
     const [favoriteItem, setFavoriteItem] = useFavoriteItem();
     const [type] = useSelectType();
     const getFavoriteServices = useGetFavoriteServices({
-        provider: prescriptionInfo?.insuranceType
+        provider: prescriptionInfo?.insuranceType,
+        _limit: 1000
     });
     const [favoriteItemByType, setFavoriteItemByType] = useState([]);
     const [searchServiceValue, setSearchServiceValue] = useState('');

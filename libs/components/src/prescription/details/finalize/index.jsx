@@ -57,6 +57,54 @@ const Finalize = () => {
         });
     };
 
+    const servicesCloneRef = useRef();
+
+    useEffect(() => {
+        console.log('services', services);
+        servicesCloneRef.current = services;
+    }, [services]);
+
+    useLayoutEffect(() => {
+        // componentWillUnmount
+        return () => {
+            const servicesWithOutNullItem = servicesCloneRef.current
+                .filter(item => item.item_id !== null)
+                .map(
+                    ({
+                        brand,
+                        count,
+                        date_do,
+                        description,
+                        how_to_use,
+                        service,
+                        number_of_period,
+                        prescription_id,
+                        use_instruction,
+                        use_time,
+                        service_type
+                        // active_from
+                    }) => {
+                        return {
+                            brand,
+                            count,
+                            date_do,
+                            description,
+                            how_to_use,
+                            id: service.id,
+                            number_of_period,
+                            prescription_id,
+                            use_instruction,
+                            use_time,
+                            ...(service_type === 95 &&
+                                isServicesOfDoctorsTamin && { isVisit: true })
+                            // active_from
+                        };
+                    }
+                );
+            addItemToPrescription(servicesWithOutNullItem);
+        };
+    }, []);
+
     const addItemToPrescription = items => {
         return bulkItems.mutateAsync({
             prescriptionId: prescriptionInfo.id,

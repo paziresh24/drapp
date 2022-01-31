@@ -86,7 +86,8 @@ const Types = () => {
     };
 
     const getFavoriteServices = useGetFavoriteServices({
-        provider: prescriptionInfo?.insuranceType
+        provider: prescriptionInfo?.insuranceType,
+        _limit: 1000
     });
 
     const getFavoritePrescriptions = useGetFavoritePrescriptions({
