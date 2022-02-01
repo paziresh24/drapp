@@ -39,6 +39,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
     const [otpConfirm, setOtpConfirm] = useState(false);
     const [actionType, setActionType] = useState();
     const getOnePrescription = useGetOnePrescription({ id: turn.prescription?.id });
+    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
     const {
         register: otpRegister,
@@ -246,7 +247,17 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                         aria-hidden
                         style={{ cursor: 'pointer' }}
                     >
-                        {/* <Chips theme="gray">نوبت</Chips>{' '} */}
+                        <div
+                            onClick={() => setIsDetailsOpen(prev => !prev)}
+                            aria-hidden
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                        </div>
+                        {turn.prescription?.insuranceType === 'salamat' &&
+                            turn.prescription?.salamat_prescription?.isReference && (
+                                <Chips theme="gray">ارجاع</Chips>
+                            )}
                         <span>{turn.display_name !== '' ? turn.display_name : '-'}</span>
                     </td>
                     <td data-label="شماره موبایل:">
@@ -435,6 +446,85 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                         </div>
                     </td>
                 </tr>
+                {isDetailsOpen && (
+                    <tr>
+                        <td colspan="6" style={{ background: '#EBEFF8', padding: '0.5rem 0' }}>
+                            <div
+                                className={styles.details}
+                                style={{
+                                    display: 'flex',
+                                    // justifyContent: 'space-between',
+                                    gap: '5rem',
+                                    width: '100%',
+                                    // background: '#fff',
+                                    padding: '1.5rem 2rem',
+                                    borderRadius: '0rem'
+                                }}
+                            >
+                                <div className={styles['row']}>
+                                    <div className={styles['col']}>
+                                        <span className={styles['title']}>کدملی</span>
+                                        <span className={styles['value']}>
+                                            {turn.prescription?.patientNationalCode ?? '-'}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles['row']}>
+                                    <div className={styles['col']} data-tip data-for="geoInfo">
+                                        <span className={styles['title']}>کد پیگیری</span>
+                                        <span className={styles['value']}>
+                                            {turn.prescription?.insuranceType === 'tamin' &&
+                                                turn.prescription?.[
+                                                    turn.prescription?.insuranceType +
+                                                        '_prescription'
+                                                ].map(item => (
+                                                    <span
+                                                        style={{
+                                                            fontSize: '1.4rem',
+                                                            marginRight: '1rem'
+                                                        }}
+                                                        key={item.head_EPRSC_ID}
+                                                    >
+                                                        {item.head_EPRSC_ID ?? '-'}
+                                                    </span>
+                                                ))}
+                                            {turn.prescription?.insuranceType === 'salamat' && (
+                                                <span
+                                                    style={{
+                                                        fontSize: '1.4rem',
+                                                        marginRight: '1rem'
+                                                    }}
+                                                    key={
+                                                        turn.prescription?.[
+                                                            turn?.prescription?.insuranceType +
+                                                                '_prescription'
+                                                        ]?.trackingCode
+                                                    }
+                                                >
+                                                    {turn.prescription?.[
+                                                        turn.prescription?.insuranceType +
+                                                            '_prescription'
+                                                    ]?.trackingCode ?? ''}
+                                                </span>
+                                            )}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles['row']}>
+                                    <div className={styles['col']}>
+                                        <span className={styles['title']}>کد توالی</span>
+                                        <span className={styles['value']}>
+                                            {turn.prescription?.salamat_prescription
+                                                ?.sequenceNumber ?? '-'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                )}
             </Default>
             <Mobile>
                 <div className={styles.card}>

@@ -1,7 +1,14 @@
 import { client } from '../client';
 
-export const getPrescriptionReference = async params => {
-    return await client.get(
-        `/insurance/search/referencePrintCode/${params.code}/${params.nationalCode}`
+export const getPrescriptionReference = async ({ code, nationalCode, identifier, ...params }) => {
+    console.log('hi');
+    return await client.post(
+        `/insurance/search/referencePrintCode/${code}/${nationalCode}`,
+        params,
+        {
+            params: {
+                identifier
+            }
+        }
     );
 };

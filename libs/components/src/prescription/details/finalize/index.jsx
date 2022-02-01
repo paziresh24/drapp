@@ -47,8 +47,10 @@ const Finalize = () => {
     const [deliverModal, setDeliverModal] = useState(false);
     const [deliverConfirmModal, setDeliverConfirmModal] = useState(false);
     const [authForm, setAuthForm] = useState(false);
+    const [referenceModal, setReferenceModal] = useState(false);
 
     const visitDescription = useRef();
+    const referenceFeedback = useRef();
 
     const updatePrescriptionAction = (id, data) => {
         updatePrescription.mutate({
@@ -113,7 +115,8 @@ const Finalize = () => {
 
     const finalizePrescriptionAction = () => {
         return finalizePrescription.mutateAsync({
-            prescriptionId: prescriptionInfo.id
+            prescriptionId: prescriptionInfo.id,
+            referenceFeedback: referenceFeedback.current.value
         });
     };
 
@@ -281,6 +284,11 @@ const Finalize = () => {
                         // if (services.some(item => item.service_type === 95)) {
                         //     return setServicesDoctorVisitConfirmModal(true);
                         // }
+                        if (
+                            prescriptionInfo.insuranceType === 'salamat' &&
+                            prescriptionInfo.salamat_prescription.isReference
+                        )
+                            return setReferenceModal(true);
                         submitServices();
                     }}
                     loading={finalizePrescription.isLoading || bulkItems.isLoading}
@@ -296,6 +304,11 @@ const Finalize = () => {
                         // if (services.some(item => item.service_type === 95)) {
                         //     return setServicesDoctorVisitConfirmModal(true);
                         // }
+                        if (
+                            prescriptionInfo.insuranceType === 'salamat' &&
+                            prescriptionInfo.salamat_prescription.isReference
+                        )
+                            return setReferenceModal(true);
                         submitServices();
                     }}
                     loading={finalizePrescription.isLoading || bulkItems.isLoading}
@@ -345,7 +358,7 @@ const Finalize = () => {
                     <Button block variant="primary" onClick={openDeliverInfo}>
                         بله
                     </Button>
-                    <Button block variant="secondary" onClick={() => setDeliverConfirmModal(false)}>
+                    <Button block variant="secondary" onClick={() => history.push('/')}>
                         خیر
                     </Button>
                 </div>
@@ -378,6 +391,15 @@ const Finalize = () => {
                         }}
                     >
                         خیر
+                    </Button>
+                </div>
+            </Modal>
+
+            <Modal title="بازخورد ارجاع" isOpen={referenceModal} onClose={setReferenceModal}>
+                <TextArea ref={referenceFeedback} />
+                <div className={styles.modalConfirmRow}>
+                    <Button block variant="primary" onClick={submitServices}>
+                        ثبت بازخورد
                     </Button>
                 </div>
             </Modal>

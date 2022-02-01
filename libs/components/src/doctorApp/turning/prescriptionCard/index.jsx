@@ -175,6 +175,11 @@ const PrescriptionCard = ({
                                 <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
                             </div>
 
+                            {turn?.insuranceType === 'salamat' &&
+                                turn?.salamat_prescription?.isReference && (
+                                    <Chips theme="gray">ارجاع</Chips>
+                                )}
+
                             <span
                                 className={styles.name}
                                 onClick={prescription}

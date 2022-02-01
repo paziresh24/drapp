@@ -37,8 +37,10 @@ import TurnsList from '@paziresh24/components/prescription/turnsList/default';
 import { useInView } from 'react-intersection-observer';
 import LoadingIcon from '@paziresh24/components/icons/public/loading';
 import queryString from 'querystring';
+import { useDrApp } from '@paziresh24/context/drapp';
 
 const Home = props => {
+    const [info] = useDrApp();
     const [params, setParams] = useState();
     const history = useHistory();
     const uuidInstance = uuid();
@@ -78,11 +80,10 @@ const Home = props => {
             setPage(prevState => prevState + 20);
         }
     }, [inView]);
-
     const getPrescriptionByPrintcode = useGetPrescriptionByPrintcode({
         code: printCode,
         nationalCode: nationalCode,
-        identifier: urlParams?.identifier
+        identifier: info.center.id
     });
     const getPrescriptionBySamadcode = useGetPrescriptionBySamadcode({
         code: samadCode,
@@ -116,10 +117,7 @@ const Home = props => {
     const [deliverModal, setDeliverModal] = useState(false);
     const [deliverConfirmModal, setDeliverConfirmModal] = useState(false);
 
-    const getPrescriptionReference = useGetPrescriptionReference({
-        code: printCode,
-        nationalCode: nationalCode
-    });
+    const getPrescriptionReference = useGetPrescriptionReference();
 
     const [refrenceConfirmModal, setRefrenceConfirmModal] = useState(false);
 
@@ -204,12 +202,12 @@ const Home = props => {
 
     useEffect(() => {
         // getPrescriptionReference.remove();
-        getPrescriptionReference.remove();
+        // getPrescriptionReference.remove();
 
         if (getPrescriptionByPrintcode.isSuccess) {
             if (
-                !isEmpty(getPrescriptionByPrintcode.data.data) &&
-                !getPrescriptionByPrintcode.data.patientData?.isReferenceable
+                !isEmpty(getPrescriptionByPrintcode?.data?.data) &&
+                !getPrescriptionByPrintcode?.data?.patientData?.isReferenceable
             ) {
                 return setDeliverConfirmModal(true);
             }
@@ -217,7 +215,9 @@ const Home = props => {
                 return setRefrenceConfirmModal(true);
             }
             if (getPrescriptionByPrintcode.data?.prescription?.id) {
-                return history.push(`/${getPrescriptionByPrintcode.data.prescription.id}`);
+                return history.push(
+                    `/prescription/patient/${getPrescriptionByPrintcode.data.prescription.id}`
+                );
             }
             setPpdfFetchPrescriptionLink(
                 `data:application/pdf;base64,${getPrescriptionByPrintcode.data.pdf}`
@@ -225,7 +225,9 @@ const Home = props => {
         }
         if (getPrescriptionBySamadcode.isSuccess) {
             if (getPrescriptionBySamadcode.data?.prescription?.id) {
-                return history.push(`/${getPrescriptionBySamadcode.data.prescription.id}`);
+                return history.push(
+                    `/prescription/patient/${getPrescriptionBySamadcode.data.prescription.id}`
+                );
             }
             setPpdfFetchPrescriptionLink(
                 `data:application/pdf;base64,${getPrescriptionBySamadcode.data.pdf}`
@@ -249,7 +251,9 @@ const Home = props => {
     useEffect(() => {
         if (getPrescriptionReference.isSuccess) {
             setRefrenceConfirmModal(false);
-            return history.push(`/${getPrescriptionReference.data.prescription.id}`);
+            return history.push(
+                `/prescription/patient/${getPrescriptionReference.data.prescription.id}`
+            );
         }
         if (getPrescriptionReference.isError) {
             setRefrenceConfirmModal(false);
@@ -378,7 +382,22 @@ const Home = props => {
 
     const refrenceConfirmAction = bol => {
         if (bol) {
-            return getPrescriptionReference.refetch();
+            const tags = [];
+            tags.push({
+                type: 'center_id',
+                value: info.center.id
+            });
+            info.center?.referral_id &&
+                tags.push({
+                    type: 'siam',
+                    value: info.center.referral_id
+                });
+            return getPrescriptionReference.mutate({
+                code: printCode,
+                nationalCode: nationalCode,
+                identifier: info.center.id,
+                tags
+            });
         }
 
         addPrescription.mutate(
@@ -389,7 +408,7 @@ const Home = props => {
             {
                 onSuccess: () => {
                     setRefrenceConfirmModal(false);
-                    return history.push(`/${addPrescription.data.result.id}`);
+                    return history.push(`/prescription/patient/${addPrescription.data.result.id}`);
                 },
                 onError: () => {
                     setRefrenceConfirmModal(false);
