@@ -86,6 +86,20 @@ const SideBar = () => {
                 ]
             },
             {
+                id: 4,
+                name: 'چت',
+                isShow: info.center.id === '5532',
+                icon: <ChatIcon color="#3F3F79" />,
+                link: '/consult'
+            },
+            {
+                id: 7,
+                name: 'قوانین مشاوره',
+                isShow: info.center.id === '5532',
+                icon: <InfoIcon color="#3F3F79" />,
+                link: '/consult-term'
+            },
+            {
                 id: 'provider-step',
                 name: 'بیمه های من',
                 icon: <PrescriptionIcon color="#3F3F79" />,
@@ -101,37 +115,15 @@ const SideBar = () => {
                 icon: <MessageIcon color="#3F3F79" />,
                 link: '/feedbacks',
                 badge: true
+            },
+            {
+                id: 6,
+                name: 'تسویه حساب',
+                isShow: info.center.id === '5532' || info.center.type_id === 1,
+                icon: <CardIcon color="#3F3F79" />,
+                link: '/financial'
             }
         ]);
-
-        if (info.center.id === '5532') {
-            setMenuItems(prev => [
-                ...prev,
-                {
-                    id: 7,
-                    name: 'قوانین مشاوره',
-                    icon: <InfoIcon color="#3F3F79" />,
-                    link: '/consult-term'
-                },
-                {
-                    id: 4,
-                    name: 'چت',
-                    icon: <ChatIcon color="#3F3F79" />,
-                    link: '/consult'
-                }
-            ]);
-            if (info.center.type_id === 1) {
-                setMenuItems(prev => [
-                    ...prev,
-                    {
-                        id: 6,
-                        name: 'تسویه حساب',
-                        icon: <CardIcon color="#3F3F79" />,
-                        link: '/financial'
-                    }
-                ]);
-            }
-        }
     }, [info.center]);
 
     const sendMessageTelegram = useSendMessageTelegram();
@@ -319,9 +311,12 @@ const SideBar = () => {
                     </div>
 
                     <div>
-                        {menuItems.map(item => (
-                            <MenuItem key={item.id} item={item} />
-                        ))}
+                        {menuItems.map(
+                            item =>
+                                (item.isShow === undefined || item.isShow) && (
+                                    <MenuItem key={item.id} item={item} />
+                                )
+                        )}
                     </div>
                 </div>
 
