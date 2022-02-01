@@ -24,7 +24,7 @@ const Consult = () => {
         window.addEventListener('message', function (e) {
             if (e.data.drappEvent && e.data.drappEvent?.action === 'CREATE_PRESCRIPTION') {
                 history.push(
-                    `/prescription/create?patient_nationalcode=${e.data.drappEvent.patient_nationalcode}&patient_cell=${e.data.drappEvent.patient_cell}&book_id=${e.data.drappEvent.book_Id}&back_page=${e.data.drappEvent.room_id}&tags=[{type: "center_id", value: ${info.center.id}}]`
+                    `/prescription/create?patient_nationalcode=${e.data.drappEvent.patient_nationalcode}&patient_cell=${e.data.drappEvent.patient_cell}&book_id=${e.data.drappEvent.book_Id}&back_page=${e.data.drappEvent.room_id}&center_id=5532`
                 );
             }
         });
