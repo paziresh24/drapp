@@ -184,7 +184,7 @@
             align-items: center;
             border-radius: 0.6rem;
             border: 2px solid #27bda0;
-            color: #3f3f79;
+            color: $color-text;
             background: rgba(39, 189, 160, 0.12);
             position: relative;
 
@@ -208,7 +208,7 @@
 .filterModal-wrapper {
     display: flex;
     flex-direction: column;
-    color: #3f3f79;
+    color: $color-text;
 
     > * {
         margin: 0.5rem 0;
@@ -327,7 +327,7 @@
     align-items: center;
     border-radius: 0.6rem;
     border: 2px solid #27bda0;
-    color: #3f3f79;
+    color: $color-text;
     background: rgba(39, 189, 160, 0.12);
     position: relative;
 }

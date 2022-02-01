@@ -14,7 +14,7 @@
         align-items: center;
         @include gap(2rem);
         padding: 3rem;
-        background-color: #3f3f79;
+        background-color: $color-text;
         box-shadow: 0 4px 81px rgba(59, 88, 129, 0.55);
         border-radius: 0 0 1rem 1rem;
         user-select: none;
@@ -81,7 +81,7 @@
                     @include gap(0.5rem);
                     font-weight: 500;
                     font-size: 1.4rem;
-                    color: #3f3f79;
+                    color: $color-text;
                     svg {
                         width: 2rem;
                         height: 2rem;

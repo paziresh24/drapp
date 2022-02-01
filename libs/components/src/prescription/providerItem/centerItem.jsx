@@ -190,7 +190,7 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                     >
                         <TextField
                             defaultValue={insurance?.docId ?? info.doctor?.medical_code}
-                            label="کد نظارم پزشکی"
+                            label="کد نظام پزشکی"
                             error={errors.docId}
                             {...register('docId', { required: true })}
                         />

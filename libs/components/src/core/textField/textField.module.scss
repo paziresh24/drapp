@@ -19,7 +19,7 @@
     padding: 0 1rem;
     height: 5rem;
     outline: 0;
-    color: #3f4079;
+    color: $color-text;
     transition: border 0.5s;
     font-size: 1em;
     user-select: text;
@@ -71,14 +71,14 @@
     transform: translate(1rem, -2.5rem) scale(0.8);
     background: #fff;
     cursor: unset;
-    color: #3f3f79;
+    color: $color-text;
 }
 
 .input:focus + .label {
     transform: translate(1rem, -2.5rem) scale(0.8);
     background: #fff;
     cursor: unset;
-    color: #3f3f79;
+    color: $color-text;
 }
 
 .error {
@@ -108,7 +108,7 @@
     }
 
     * {
-        fill: #3f4079;
+        fill: $color-text;
     }
 
     svg {

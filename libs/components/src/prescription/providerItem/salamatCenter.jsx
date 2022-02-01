@@ -214,7 +214,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                     >
                         <TextField
                             defaultValue={insurance?.medicalCode ?? info.doctor.medical_code}
-                            label="کد نظارم پزشکی"
+                            label="کد نظام پزشکی"
                             error={errors.medicalCode}
                             {...register('medicalCode', { required: true })}
                         />
