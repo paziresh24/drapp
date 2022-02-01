@@ -116,7 +116,7 @@ const Finalize = () => {
     const finalizePrescriptionAction = () => {
         return finalizePrescription.mutateAsync({
             prescriptionId: prescriptionInfo.id,
-            referenceFeedback: referenceFeedback.current.value
+            referenceFeedback: referenceFeedback?.current?.value
         });
     };
 
