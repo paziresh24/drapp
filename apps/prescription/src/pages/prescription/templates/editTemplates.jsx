@@ -144,8 +144,14 @@ const EditTemplates = () => {
                 postFavoritePrescriptions.mutate(
                     {
                         name: prescriptionNameRef.current.value,
-                        salamatItems: salamatItems.filter(item => item.item_id !== null),
-                        taminItems: taminItems.filter(item => item.item_id !== null)
+                        salamatItems:
+                            salamatItems.filter(item => item.item_id !== null).length > 0
+                                ? salamatItems.filter(item => item.item_id !== null)
+                                : null,
+                        taminItems:
+                            taminItems.filter(item => item.item_id !== null).length > 0
+                                ? taminItems.filter(item => item.item_id !== null)
+                                : null
                     },
                     {
                         onSuccess: data => {

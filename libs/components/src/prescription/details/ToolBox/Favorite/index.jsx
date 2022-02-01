@@ -98,7 +98,8 @@ const Favorite = () => {
                     }}
                 >
                     <span style={{ fontSize: '1.3rem', fontWeight: '500', opacity: '0.8' }}>
-                        اقلام و نسخه های پنل تامین اجتماعی
+                        اقلام و نسخه های پنل{' '}
+                        {prescriptionInfo.insuranceType === 'tamin' ? 'تامین اجتماعی' : 'سلامت'}
                     </span>
                     <span
                         style={{

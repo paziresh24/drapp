@@ -38,7 +38,7 @@ import updatingImage from '@paziresh24/assets/images/drapp/updating.jpg';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import { queryClient } from '@paziresh24/components/core/provider';
-import { style } from 'dom-helpers';
+import ReferenceModal from '@paziresh24/components/prescription/referenceModal';
 
 const Turning = () => {
     const history = useHistory();
@@ -73,6 +73,7 @@ const Turning = () => {
     const [error, setIsError] = useState(false);
     const nationalCodeRef = useRef();
     const [prescriptionPendingModal, setPrescriptionPendingModal] = useState(false);
+    const [referenceModal, setReferenceModal] = useState(false);
 
     useEffect(() => {
         if (location.state?.prescriptionInfo && getTurn.data?.data) {
@@ -684,6 +685,18 @@ const Turning = () => {
                             })}
                         />
                     )}
+                    <span
+                        style={{
+                            fontSize: '1.45rem',
+                            textDecoration: 'underLine',
+                            opacity: '0.8',
+                            cursor: 'pointer',
+                            fontWeight: '500'
+                        }}
+                        onClick={() => setReferenceModal(true)}
+                    >
+                        پذیرش از مسیر ارجاع
+                    </span>
                     <div style={{ display: 'flex', gap: '1rem' }}>
                         {!isEmpty(confirmCellPhone) && (
                             <Button
@@ -789,6 +802,12 @@ const Turning = () => {
                     بیمار اطلاع داده خواهد شد.
                 </span>
             </Modal>
+
+            <ReferenceModal
+                isOpen={referenceModal}
+                onClose={setReferenceModal}
+                nationalCodeDefaultValue={nationalCodeRef.current?.value}
+            />
 
             {/* <TurnTime isOpen={turnTimeModal} setIsOpen={setTurnTimeModal} /> */}
         </>
