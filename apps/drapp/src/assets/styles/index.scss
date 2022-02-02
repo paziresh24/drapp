@@ -280,3 +280,9 @@ input {
         direction: ltr;
     }
 }
+
+@media screen and (max-width: 425px) {
+    .__react_component_tooltip {
+        display: none !important;
+    }
+}
