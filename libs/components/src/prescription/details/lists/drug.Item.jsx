@@ -260,7 +260,7 @@ const DrugItem = ({
                 <div
                     className={styles.card}
                     ref={rowServiceRef}
-                    onClick={() => setIsOpenDetailsForm(true)}
+                    onClick={() => !readOnly && setIsOpenDetailsForm(true)}
                     aria-hidden
                 >
                     {(!readOnly || insuranceType === 'salamat') && (

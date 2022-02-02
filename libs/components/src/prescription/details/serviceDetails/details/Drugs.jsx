@@ -186,7 +186,7 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
                     <SearchFiled
                         error={searchFiledError}
                         type="drugs"
-                        label="انتخاب دارو"
+                        label="... نام یا کد دارو"
                         onChange={value => {
                             setSearchFiledError(false);
                             selectItem(value);

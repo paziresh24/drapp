@@ -82,7 +82,7 @@ const LabsDetails = ({ services, setServices, insuranceType, noDate = false }) =
                 <div className="row">
                     <SearchFiled
                         type="lab"
-                        label="انتخاب آزمایش"
+                        label="... نام یا کد آزمایش"
                         onChange={value => {
                             selectItem(value);
                             setCountFieldFocus(true);

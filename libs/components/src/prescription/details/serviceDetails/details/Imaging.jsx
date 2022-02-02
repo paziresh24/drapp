@@ -126,7 +126,7 @@ const ImagingDetails = ({ services, setServices, insuranceType, noDate = false }
                     <SearchFiled
                         type="imaging"
                         typeId={selectedFilter.id}
-                        label={`انتخاب ${
+                        label={`... نام یا کد خدمت ${
                             insuranceType === 'tamin' ? selectedFilter.title : 'تصویربرداری'
                         }`}
                         onChange={value => {

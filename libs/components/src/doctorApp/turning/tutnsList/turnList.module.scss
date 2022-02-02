@@ -105,18 +105,18 @@
         display: flex;
     }
 
+    span {
+        color: #68778d;
+        color: #68778d;
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+
     td {
         all: unset;
         display: table-cell;
         vertical-align: middle;
         padding: 1rem 2rem;
-        color: #68778d;
-        font-weight: 700;
-        font-size: 1.3rem;
-
-        span {
-            color: #68778d;
-        }
 
         @media screen and (max-width: 426px) {
             padding: 0.5rem 1rem;

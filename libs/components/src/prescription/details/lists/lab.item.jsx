@@ -207,7 +207,7 @@ const LabsItem = ({
                         transform: deleted && 'translateX(100%)',
                         opacity: deleted && '0'
                     }}
-                    onClick={() => setIsOpenDetailsForm(true)}
+                    onClick={() => !readOnly && setIsOpenDetailsForm(true)}
                     aria-hidden
                 >
                     {(!readOnly || insuranceType === 'salamat') && (

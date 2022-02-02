@@ -83,7 +83,7 @@ const OthersDetails = ({ services, setServices, insuranceType, noDate = false })
                 <div className="row">
                     <SearchFiled
                         type="others"
-                        label="انتخاب فیزیوتراپی، خدمات پزشکی"
+                        label="... نام یا کد خدمت فیزیوتراپی، خدمات پزشکی"
                         onChange={value => {
                             selectItem(value);
                             setCountFieldFocus(true);

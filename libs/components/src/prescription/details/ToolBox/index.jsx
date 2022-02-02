@@ -51,14 +51,14 @@ const ToolBox = () => {
     return isMobile ? (
         <Modal title="" fullPage noBodyPad isOpen={isOpen} onClose={setIsOpen} noHeader>
             <div className={`${styles.wrapper} ${styles.mobile}`}>
-                <div
+                {/* <div
                     className="absolute top-[1.3rem] left-[1.2rem]"
                     style={{ position: 'absolute', top: '1.3rem', left: '1.2rem' }}
                     onClick={() => setIsOpen(false)}
                     aria-hidden
                 >
                     <CloseIcon color="#3f3f79" />
-                </div>
+                </div> */}
                 <ToolBoxContent />
             </div>
         </Modal>

@@ -8,7 +8,7 @@ import { Overlay } from '@paziresh24/components/core/overlay';
 import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
 import Button from '@paziresh24/components/core/button';
 import { Mobile } from '@paziresh24/hooks/device';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import FixedWrapBottom from '@paziresh24/components/prescription/fixedWrapBottom';
 import Item from './item';
 import { useServices } from '@paziresh24/context/prescription/services-context';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
