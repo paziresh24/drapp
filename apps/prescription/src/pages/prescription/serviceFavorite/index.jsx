@@ -41,7 +41,9 @@ const ServiceFavorite = () => {
     const addFavoriteServices = useAddFavoriteServices();
 
     useEffect(() => {
-        getFavoritePrescriptions.refetch();
+        getFavoritePrescriptions.remove();
+
+        setTimeout(() => getFavoritePrescriptions.refetch(), 0);
     }, []);
 
     useEffect(() => {

@@ -97,8 +97,12 @@ const Types = () => {
     useEffect(() => {
         // getFavoriteServices.remove();
         if (!isEmpty(prescriptionInfo)) {
-            getFavoriteServices.refetch();
-            getFavoritePrescriptions.refetch();
+            getFavoriteServices.remove();
+            getFavoritePrescriptions.remove();
+            setTimeout(() => {
+                getFavoriteServices.refetch();
+                getFavoritePrescriptions.refetch();
+            }, 0);
             checkShowToolBox();
         }
     }, [prescriptionInfo]);
