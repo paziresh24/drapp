@@ -218,7 +218,6 @@ const Finalize = () => {
 
                 sendEvent('sucsessfulPrescribe', 'prescription', 'sucsessfulPrescribe');
                 if (isServicesOfDoctors) {
-                    setPrescriptionInfo(data);
                     return setDeliverConfirmModal(true);
                 }
                 if (isEmpty(backPage)) {
@@ -227,7 +226,7 @@ const Finalize = () => {
                     });
                 } else {
                     history.push('/consult/', {
-                        room_id: urlParams.room_id
+                        room_id: backPage
                     });
                 }
             } else {
@@ -407,8 +406,15 @@ const Finalize = () => {
             <DeliverCase
                 isOpen={deliverModal}
                 onClose={setDeliverModal}
-                trackingCode={prescriptionInfo?.salamat_prescription?.trackingCode}
-                nationalCode={prescriptionInfo?.patientNationalCode}
+                prescriptionInfo={finalizePrescription.data ?? prescriptionInfo}
+                trackingCode={
+                    finalizePrescription?.data?.salamat_prescription?.trackingCode ??
+                    prescriptionInfo?.salamat_prescription?.trackingCode
+                }
+                nationalCode={
+                    finalizePrescription?.data?.patientNationalCode ??
+                    prescriptionInfo?.patientNationalCode
+                }
             />
             <Modal title="احرازهویت" isOpen={authForm} onClose={setAuthForm}>
                 <FormAuth
