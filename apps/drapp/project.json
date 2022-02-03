@@ -22,7 +22,7 @@
                 "commands": [
                     "chmod +x env.sh",
                     "sh env.sh",
-                    "node ../../node_modules/@craco/craco/bin/craco.js build"
+                    "node ../../node_modules/@craco/craco/bin/craco.js build && rimraf ../../dist/apps/drapp && ncp ../../dist/apps/drapp_temp ../../dist/apps/drapp && rimraf ../../dist/apps/drapp_temp"
                 ]
             }
         },
