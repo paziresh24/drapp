@@ -6,17 +6,18 @@ import { useForm } from 'react-hook-form';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
+import { useState, useEffect } from 'react';
 
 const ReferenceModal = ({ isOpen, onClose, nationalCodeDefaultValue }) => {
     const history = useHistory();
     const [info] = useDrApp();
     const getPrescriptionReference = useGetPrescriptionReference();
+    const [nationalCode, setNationalCode] = useState('');
+    const [trackingCode, setTrackingCode] = useState('');
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    useEffect(() => {
+        setNationalCode(nationalCodeDefaultValue);
+    }, [nationalCodeDefaultValue]);
 
     const submitForm = data => {
         const tags = [];
@@ -32,7 +33,7 @@ const ReferenceModal = ({ isOpen, onClose, nationalCodeDefaultValue }) => {
 
         return getPrescriptionReference.mutate(
             {
-                code: data.code,
+                code: data.trackingCode,
                 nationalCode: data.nationalCode,
                 identifier: info.center.id,
                 tags
@@ -50,40 +51,29 @@ const ReferenceModal = ({ isOpen, onClose, nationalCodeDefaultValue }) => {
 
     return (
         <Modal title="ارجاع" isOpen={isOpen} onClose={onClose}>
-            <form
-                style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-                onSubmit={handleSubmit(submitForm)}
+            <TextField
+                type="tel"
+                label="کدملی/کداتباع بیمار"
+                name="nationalCode"
+                value={nationalCode}
+                onChange={e => setNationalCode(e.target.value)}
+            />
+            <TextField
+                type="tel"
+                label="کد پیگیری"
+                name="code"
+                value={trackingCode}
+                onChange={e => setTrackingCode(e.target.value)}
+            />
+            <Button
+                type="submit"
+                variant="primary"
+                block
+                onClick={() => submitForm({ nationalCode, trackingCode })}
+                loading={getPrescriptionReference.isLoading}
             >
-                <TextField
-                    type="tel"
-                    label="کدملی/کداتباع بیمار"
-                    name="nationalCode"
-                    defaultValue={nationalCodeDefaultValue}
-                    error={errors.nationalCode}
-                    {...register('nationalCode', {
-                        required: true,
-                        maxLength: 12,
-                        minLength: 10
-                    })}
-                />
-                <TextField
-                    type="tel"
-                    label="کد پیگیری"
-                    name="code"
-                    error={errors.code}
-                    {...register('code', {
-                        required: true
-                    })}
-                />
-                <Button
-                    type="submit"
-                    variant="primary"
-                    block
-                    loading={getPrescriptionReference.isLoading}
-                >
-                    تایید
-                </Button>
-            </form>
+                تایید
+            </Button>
         </Modal>
     );
 };
