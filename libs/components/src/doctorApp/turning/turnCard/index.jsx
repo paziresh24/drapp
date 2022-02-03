@@ -241,24 +241,35 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                     className={turn.prescription?.finalized ? styles.disabled : ''}
                     id={`identifier-${turn.id}`}
                 >
-                    <td
-                        data-label="نام بیمار:"
-                        onClick={prescription}
-                        aria-hidden
-                        style={{ cursor: 'pointer' }}
-                    >
+                    <td data-label="نام بیمار:">
                         <div
-                            onClick={() => setIsDetailsOpen(prev => !prev)}
-                            aria-hidden
-                            style={{ cursor: 'pointer' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '2rem',
+                                paddingRight: '0.8rem'
+                            }}
                         >
-                            <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                            <div
+                                onClick={() => setIsDetailsOpen(prev => !prev)}
+                                aria-hidden
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                            </div>
+                            {turn.prescription?.insuranceType === 'salamat' &&
+                                turn.prescription?.salamat_prescription?.isReference && (
+                                    <Chips theme="gray">ارجاع</Chips>
+                                )}
+                            <span
+                                className={styles.name}
+                                onClick={prescription}
+                                aria-hidden
+                                style={{ cursor: 'pointer' }}
+                            >
+                                {turn.display_name !== '' ? turn.display_name : '-'}
+                            </span>
                         </div>
-                        {turn.prescription?.insuranceType === 'salamat' &&
-                            turn.prescription?.salamat_prescription?.isReference && (
-                                <Chips theme="gray">ارجاع</Chips>
-                            )}
-                        <span>{turn.display_name !== '' ? turn.display_name : '-'}</span>
                     </td>
                     <td data-label="شماره موبایل:">
                         <span>{turn.cell ?? '-'}</span>

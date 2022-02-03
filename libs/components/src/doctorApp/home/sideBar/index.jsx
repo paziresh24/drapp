@@ -122,6 +122,12 @@ const SideBar = () => {
                 isShow: info.center.id === '5532' || info.center.type_id === 1,
                 icon: <CardIcon color="#3F3F79" />,
                 link: '/financial'
+            },
+            {
+                id: 23,
+                name: 'خروج',
+                icon: <ExitIcon color="#3F3F79" />,
+                link: '/logout'
             }
         ]);
     }, [info.center]);
@@ -256,7 +262,10 @@ const SideBar = () => {
                                 color: '#3F3F79'
                             }}
                         >
-                            <span style={{ fontSize: '1.7rem', fontWeight: 'bold' }}>
+                            <span
+                                className={styles.doctorName}
+                                style={{ fontSize: '1.7rem', fontWeight: 'bold' }}
+                            >
                                 {`${info.doctor.name} ${info.doctor.family}`}
                             </span>
                             <span
@@ -267,7 +276,10 @@ const SideBar = () => {
                                 }}
                             >
                                 {info.doctor.expertises.length > 0 && (
-                                    <span style={{ fontSize: '1.4rem' }}>
+                                    <span
+                                        className={styles.expertises}
+                                        style={{ fontSize: '1.4rem' }}
+                                    >
                                         {info.doctor.expertises[0].alias_title
                                             ? info.doctor.expertises[0].alias_title
                                             : `${info.doctor.expertises[0].degree?.name ?? ''} ${
