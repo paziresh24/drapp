@@ -56,6 +56,17 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
         let id = services.length > 0 ? +services[services.length - 1].id : 0;
         const items = [];
         prescription[prescriptionInfo.insuranceType + 'Items'].forEach(item => {
+            if (item.service?.deleted === true) {
+                return toast.warn(
+                    `${item.service.name} به دلیل حذف از دیتابیس ${
+                        prescriptionInfo.insuranceType === 'tamin' ? 'تامین اجتماعی' : 'سلامت'
+                    }، از لیست تجویز شما حذف شده. درصورت نیاز دارو/خدمت جایگزین را وارد کنید.`,
+                    {
+                        autoClose: false
+                    }
+                );
+            }
+
             if (!services.some(service => service.service.id === item.service.id)) {
                 id += 1;
                 items.push({
@@ -74,11 +85,13 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
         );
 
         sendEvent('clickcollection', 'prescription', 'clickcollection');
-        toast.success(
-            `نسخه ${prescription.name.substr(0, 10)}${
-                prescription.name.length > 10 ? '...' : ''
-            } اضافه شد.`
-        );
+
+        if (!items.every(item => item.service?.deleted === true))
+            toast.success(
+                `نسخه ${prescription.name.substr(0, 10)}${
+                    prescription.name.length > 10 ? '...' : ''
+                } اضافه شد.`
+            );
         isMobile && setIsOpenToolBox(false);
     };
 
@@ -90,6 +103,16 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
         );
         if (services.some(item => item.service.id === service.service.id)) {
             return toast.warn('این آیتم قبلا اضافه شده است.');
+        }
+        if (service.service?.deleted === true) {
+            return toast.warn(
+                `${service.service.name} به دلیل حذف از دیتابیس ${
+                    prescriptionInfo.insuranceType === 'tamin' ? 'تامین اجتماعی' : 'سلامت'
+                }، از لیست تجویز شما حذف شده. درصورت نیاز دارو/خدمت جایگزین را وارد کنید.`,
+                {
+                    autoClose: false
+                }
+            );
         }
         setServices(item => [
             ...item,
