@@ -83,6 +83,7 @@ const LabsDetails = ({ services, setServices, insuranceType, noDate = false }) =
                     <SearchFiled
                         type="lab"
                         label="... نام یا کد آزمایش"
+                        voiceLabel="آزمایش"
                         onChange={value => {
                             selectItem(value);
                             setCountFieldFocus(true);

@@ -129,6 +129,9 @@ const ImagingDetails = ({ services, setServices, insuranceType, noDate = false }
                         label={`... نام یا کد خدمت ${
                             insuranceType === 'tamin' ? selectedFilter.title : 'تصویربرداری'
                         }`}
+                        voiceLabel={`خدمت ${
+                            insuranceType === 'tamin' ? selectedFilter.title : 'تصویربرداری'
+                        }`}
                         onChange={value => {
                             selectItem(value);
                             setCountFieldFocus(true);

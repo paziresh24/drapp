@@ -17,7 +17,8 @@ const SearchFiled = ({
     nextStep,
     error,
     typeId,
-    insuranceType
+    insuranceType,
+    voiceLabel
 }) => {
     const [showSerch, setShowSearch] = useState(false);
     const [selectItem, setSelectItem] = useState();
@@ -123,8 +124,8 @@ const SearchFiled = ({
                         }}
                         type={type}
                         typeId={typeId}
-                        label={label}
                         insuranceType={insuranceType}
+                        label={voiceLabel}
                     />
                 )}
             {!isMobile ? (

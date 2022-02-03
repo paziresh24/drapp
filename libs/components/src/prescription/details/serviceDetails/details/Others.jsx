@@ -84,6 +84,7 @@ const OthersDetails = ({ services, setServices, insuranceType, noDate = false })
                     <SearchFiled
                         type="others"
                         label="... نام یا کد خدمت فیزیوتراپی، خدمات پزشکی"
+                        voiceLabel="خدمت"
                         onChange={value => {
                             selectItem(value);
                             setCountFieldFocus(true);
