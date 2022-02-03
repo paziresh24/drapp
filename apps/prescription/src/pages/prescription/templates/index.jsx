@@ -4,14 +4,19 @@ import { useGetFavoritePrescriptions } from '@paziresh24/hooks/prescription';
 import { useEffect, useState } from 'react';
 import Button from '@paziresh24/components/core/button';
 import { useHistory, Link } from 'react-router-dom';
-import Import from '@paziresh24/components/prescription/details/ToolBox/Import';
+import TaminImport from '@paziresh24/components/prescription/details/ToolBox/Import';
 import { isMobile } from 'react-device-detect';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import { CSSTransition } from 'react-transition-group';
+import SalamatImport from '@paziresh24/components/prescription/details/ToolBox/Import/salamat';
 
 const Template = () => {
     const history = useHistory();
     const getFavoritePrescriptions = useGetFavoritePrescriptions({});
-    const [isOpenImportModal, setIsOpenImportModal] = useState(false);
+    const [isOpenTaminImportModal, setIsOpenTaminImportModal] = useState(false);
+    const [isOpenSalamatImportModal, setIsOpenSalamatImportModal] = useState(false);
+
+    const [isDropDownOpen, setIsDropDownOpen] = useState();
 
     useEffect(() => {
         getFavoritePrescriptions.refetch();
@@ -28,7 +33,16 @@ const Template = () => {
                     <Link to="/favorite/service">اقلام پراستفاده</Link>
                 </div>
             )}
-
+            <TaminImport
+                isOpen={isOpenTaminImportModal}
+                onClose={setIsOpenTaminImportModal}
+                provider="tamin"
+            />
+            <SalamatImport
+                isOpen={isOpenSalamatImportModal}
+                onClose={setIsOpenSalamatImportModal}
+                provider="salamat"
+            />
             {!isMobile && (
                 <div
                     style={{
@@ -57,12 +71,11 @@ const Template = () => {
                     </div>
 
                     <div className="flex space-s-5" style={{ display: 'flex', gap: '1rem' }}>
-                        <Import
-                            isOpen={isOpenImportModal}
-                            onClose={setIsOpenImportModal}
-                            provider="tamin"
-                        />
-                        <Button onClick={() => setIsOpenImportModal(true)}>
+                        {/* <Button onClick={() => setIsOpenImportModal(true)}> */}
+                        <button
+                            className={styles.importButton}
+                            onClick={() => setIsDropDownOpen(prev => !prev)}
+                        >
                             <svg
                                 width="25"
                                 height="24"
@@ -83,8 +96,36 @@ const Template = () => {
                                     d="M12.1805 19.8155C7.45967 19.8155 4.15967 16.5155 4.15967 11.7947C4.15967 11.4188 4.47133 11.1072 4.84717 11.1072C5.223 11.1072 5.53467 11.4188 5.53467 11.7947C5.53467 15.7088 8.26633 18.4405 12.1805 18.4405C16.0947 18.4405 18.8263 15.7088 18.8263 11.7947C18.8263 11.4188 19.138 11.1072 19.5138 11.1072C19.8897 11.1072 20.2013 11.4188 20.2013 11.7947C20.2013 16.5155 16.9013 19.8155 12.1805 19.8155Z"
                                     fill="white"
                                 />
-                            </svg>{' '}
-                        </Button>
+                            </svg>
+                            <CSSTransition
+                                in={isDropDownOpen}
+                                timeout={300}
+                                classNames={{
+                                    enter: styles.dropdown_enter,
+                                    enterActive: styles.dropdown_enter_active,
+                                    enterDone: styles.dropdown_enter_done,
+                                    exitActive: styles.dropdown_exit_active
+                                }}
+                                unmountOnExit
+                            >
+                                <div
+                                    className={`${styles.items_dropdown} ${
+                                        isDropDownOpen === 'open' ? styles.open : ''
+                                    } ${isDropDownOpen === 'closing' ? styles.closing : ''}`}
+                                    onMouseOver={() => setIsDropDownOpen(true)}
+                                    onMouseLeave={() => setIsDropDownOpen(false)}
+                                >
+                                    <div onClick={() => setIsOpenTaminImportModal(true)}>
+                                        <span>انتقال از پنل تامین اجتماعی</span>
+                                    </div>
+                                    <div onClick={() => setIsOpenSalamatImportModal(true)}>
+                                        <span>انتقال از پنل سلامت</span>
+                                    </div>
+                                </div>
+                            </CSSTransition>
+                        </button>
+
+                        {/* </Button> */}
                         <Button onClick={() => history.push('/favorite/templates/add')}>
                             افزودن نسخه پراستفاده
                         </Button>
@@ -98,12 +139,10 @@ const Template = () => {
                         className="flex space-s-5 w-full"
                         style={{ display: 'flex', width: '100%', gap: '1rem' }}
                     >
-                        <Import
-                            isOpen={isOpenImportModal}
-                            onClose={setIsOpenImportModal}
-                            provider="tamin"
-                        />
-                        <Button onClick={() => setIsOpenImportModal(true)}>
+                        <button
+                            className={styles.importButton}
+                            onClick={() => setIsDropDownOpen(prev => !prev)}
+                        >
                             <svg
                                 width="25"
                                 height="24"
@@ -124,8 +163,35 @@ const Template = () => {
                                     d="M12.1805 19.8155C7.45967 19.8155 4.15967 16.5155 4.15967 11.7947C4.15967 11.4188 4.47133 11.1072 4.84717 11.1072C5.223 11.1072 5.53467 11.4188 5.53467 11.7947C5.53467 15.7088 8.26633 18.4405 12.1805 18.4405C16.0947 18.4405 18.8263 15.7088 18.8263 11.7947C18.8263 11.4188 19.138 11.1072 19.5138 11.1072C19.8897 11.1072 20.2013 11.4188 20.2013 11.7947C20.2013 16.5155 16.9013 19.8155 12.1805 19.8155Z"
                                     fill="white"
                                 />
-                            </svg>{' '}
-                        </Button>
+                            </svg>
+                            <CSSTransition
+                                in={isDropDownOpen}
+                                timeout={300}
+                                classNames={{
+                                    enter: styles.dropdown_enter,
+                                    enterActive: styles.dropdown_enter_active,
+                                    enterDone: styles.dropdown_enter_done,
+                                    exitActive: styles.dropdown_exit_active
+                                }}
+                                unmountOnExit
+                            >
+                                <div
+                                    className={`${styles.items_dropdown} ${
+                                        isMobile ? styles.mobile : ''
+                                    }`}
+                                    onMouseOver={() => setIsDropDownOpen(true)}
+                                    onMouseLeave={() => setIsDropDownOpen(false)}
+                                >
+                                    <div onClick={() => setIsOpenTaminImportModal(true)}>
+                                        <span>انتقال از پنل تامین اجتماعی</span>
+                                    </div>
+                                    <div onClick={() => setIsOpenSalamatImportModal(true)}>
+                                        <span>انتقال از پنل سلامت</span>
+                                    </div>
+                                </div>
+                            </CSSTransition>
+                        </button>
+
                         <Button block onClick={() => history.push('/favorite/templates/add')}>
                             افزودن نسخه پراستفاده
                         </Button>
