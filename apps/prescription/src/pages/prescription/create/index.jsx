@@ -32,9 +32,9 @@ const Create = () => {
     const params = queryString.parse(search);
     const getMe = useGetMe();
     const addPrescription = useAddPrescription();
-    const getPrescription = useGetPrescriptions({
-        identifier: params.book_id ?? null
-    });
+    // const getPrescription = useGetPrescriptions({
+    //     identifier: params.book_id ?? null
+    // });
     const [otpConfirm, setOtpConfirm] = useState(false);
 
     const history = useHistory();
@@ -45,14 +45,14 @@ const Create = () => {
     const validParams = params.patient_nationalcode && params.patient_cell;
     useEffect(() => {
         addPrescription.reset();
-        getPrescription.remove();
+        // getPrescription.remove();
         if (params.token) {
             setToken(params.token);
         }
 
-        if (validParams) {
-            getPrescription.refetch();
-        }
+        // if (validParams) {
+        //     getPrescription.refetch();
+        // }
 
         setBackPage(params.back_page ?? null);
     }, []);
@@ -64,53 +64,54 @@ const Create = () => {
     } = useForm();
 
     useEffect(() => {
-        if (getPrescription.isSuccess) {
-            if (isEmpty(getPrescription.data) || !params.book_id) {
-                addPrescription.mutate(
-                    {
-                        patientNationalCode: params.patient_nationalcode,
-                        patientCell: !toEnglishNumber(params.patient_cell).startsWith('0')
-                            ? `0${toEnglishNumber(params.patient_cell)}`
-                            : toEnglishNumber(params.patient_cell),
-                        identifier: params.book_id ?? uuidInstance,
-                        ...(params.center_id && {
-                            tags: [{ type: 'center_id', value: params.center_id }]
-                        })
-                    },
-                    {
-                        onSuccess: data => {
-                            if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                                return setOtpConfirm(true);
-                            }
-                            return history.replace(
-                                `/prescription/patient/${addPrescription.data.result?.id}`
-                            );
-                        },
-                        onError: e => {
-                            if (e.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                                return setOtpConfirm(true);
-                            }
-                            toast.error(e.response.data.message);
-                            if (
-                                e.response.data.message ===
-                                'بیمار دارای بیمه تامین اجتماعی می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
-                            ) {
-                                history.push('/providers');
-                            }
-                            if (
-                                e.response.data.message ===
-                                'بیمار دارای بیمه سلامت می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
-                            ) {
-                                history.push('/providers');
-                            }
-                        }
+        // if (getPrescription.isSuccess) {
+        // if (isEmpty(getPrescription.data) || !params.book_id) {
+        addPrescription.mutate(
+            {
+                patientNationalCode: params.patient_nationalcode,
+                patientCell: !toEnglishNumber(params.patient_cell).startsWith('0')
+                    ? `0${toEnglishNumber(params.patient_cell)}`
+                    : toEnglishNumber(params.patient_cell),
+                identifier: params.book_id ?? uuidInstance,
+                ...(params.center_id && {
+                    tags: [{ type: 'center_id', value: params.center_id }]
+                })
+            },
+            {
+                onSuccess: data => {
+                    if (data?.message === 'نسخه‌ای با این شناسه قبلا ساخته شده است.') {
+                        return history.replace(`/prescription/patient/${data.result?.id}`);
                     }
-                );
-            } else {
-                return history.replace(`/prescription/patient/${getPrescription.data[0]?.id}`);
+                    if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
+                        return setOtpConfirm(true);
+                    }
+                    return history.replace(`/prescription/patient/${data.result?.id}`);
+                },
+                onError: e => {
+                    if (e.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
+                        return setOtpConfirm(true);
+                    }
+                    toast.error(e.response.data.message);
+                    if (
+                        e.response.data.message ===
+                        'بیمار دارای بیمه تامین اجتماعی می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
+                    ) {
+                        history.push('/providers');
+                    }
+                    if (
+                        e.response.data.message ===
+                        'بیمار دارای بیمه سلامت می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
+                    ) {
+                        history.push('/providers');
+                    }
+                }
             }
-        }
-    }, [getPrescription.status]);
+        );
+        // } else {
+        //     return history.replace(`/prescription/patient/${getPrescription.data[0]?.id}`);
+        // }
+        // }
+    }, []);
 
     const otpConfirmAction = data => {
         checkOtp.mutate(
