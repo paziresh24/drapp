@@ -6,7 +6,7 @@ WARN='\033[0;33m'
 
 pushd "$DIR/.." >/dev/null || exit 1
 echo -e "${WARN}Installing dependecies!${NC}\n"
-npm install --silent --legacy-peer-deps >/dev/null
+yarn --silent --legacy-peer-deps >/dev/null
 popd >/dev/null || exit 1
 
 echo -e "${CYAN}Done!${NC} 🎉"
