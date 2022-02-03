@@ -167,13 +167,15 @@ const PrescriptionCard = ({
                                 paddingRight: '0.8rem'
                             }}
                         >
-                            <div
-                                onClick={() => setIsDetailsOpen(prev => !prev)}
-                                aria-hidden
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
-                            </div>
+                            {turn.finalized && (
+                                <div
+                                    onClick={() => setIsDetailsOpen(prev => !prev)}
+                                    aria-hidden
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                                </div>
+                            )}
 
                             {turn?.insuranceType === 'salamat' &&
                                 turn?.salamat_prescription?.isReference && (

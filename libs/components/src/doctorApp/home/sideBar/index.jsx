@@ -15,7 +15,8 @@ import {
     MessageIcon,
     PrescriptionMenuIcon,
     HouseIcon,
-    UserIcon
+    UserIcon,
+    SettingIcon
 } from '../../../icons';
 import { StarIcon } from '../../../icons/public/duotone';
 import { isMobile } from 'react-device-detect';
@@ -27,10 +28,14 @@ import { baseURL } from '@paziresh24/utils/baseUrl';
 import classNames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 import { MenuItem } from '../menuItem';
+import { useSettingTurns } from '@paziresh24/components/doctorApp/turning/statusBar/settingTurns.context';
+import { StatusBar } from '../../turning/statusBar';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
     // const doctorInfo = useGetDoctorInfo();
+    const [, setSettingIsOpen] = useSettingTurns();
+
     const history = useHistory();
     const [info, setInfo] = useDrApp();
     const [promoteConsult, setPromoteConsult] = useState(false);
@@ -108,6 +113,13 @@ const SideBar = () => {
                     key: 1,
                     value: '?learn=true'
                 }
+            },
+            {
+                id: 8,
+                name: 'تنظیمات نوبت دهی',
+                isShow: info.center.type_id === 1,
+                icon: <SettingIcon color="#3F3F79" />,
+                onClick: () => setSettingIsOpen(true)
             },
             {
                 id: 11,
@@ -542,6 +554,8 @@ const SideBar = () => {
                     )} */}
                 </div>
             )}
+            <StatusBar />
+
             <Modal title="مشاوره آنلاین" isOpen={promoteConsult} onClose={setPromoteConsult}>
                 <span>
                     به بیش از 500 پزشک مشاوره آنلاین پذیرش24 بپیوندید و با ویزیت آنلاین، درآمد خود

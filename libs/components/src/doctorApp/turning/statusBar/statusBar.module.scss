@@ -1,53 +1,53 @@
 .wrapper {
-    display: flex;
-    align-items: center;
-    // background: #fff;
-    padding: 0 1rem;
-    @include gap(1rem);
-    // box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-    border-radius: 0.8rem;
-    height: 6.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // display: flex;
+    // align-items: center;
+    // // background: #fff;
+    // padding: 0 1rem;
+    // @include gap(1rem);
+    // // box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+    // border-radius: 0.8rem;
+    // height: 6.5rem;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
 
-    @media screen and (max-width: 635px) {
-        box-shadow: unset !important;
-        height: unset;
-        margin: 0 !important;
-        // width: 100%;
-        // padding: 0;
-    }
+    // @media screen and (max-width: 635px) {
+    //     box-shadow: unset !important;
+    //     height: unset;
+    //     margin: 0 !important;
+    //     // width: 100%;
+    //     // padding: 0;
+    // }
 
-    > :last-child {
-        @media screen and (max-width: 635px) {
-            // width: 100%;
-        }
-        // width: 12rem;
-    }
+    // > :last-child {
+    //     @media screen and (max-width: 635px) {
+    //         // width: 100%;
+    //     }
+    //     // width: 12rem;
+    // }
 
-    .icon {
-        * {
-            fill: #fff;
-        }
-    }
+    // .icon {
+    //     * {
+    //         fill: #fff;
+    //     }
+    // }
 
-    &.mobile {
-        background: #fff;
-        box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-        margin: {
-            left: -1rem;
-            right: -1rem;
-        }
-    }
-    .title {
-        display: flex;
-        @include gap(1rem);
-        align-items: center;
-        font-weight: bold;
-        font-size: 1.4rem;
-        color: $color-text;
-    }
+    // &.mobile {
+    //     background: #fff;
+    //     box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
+    //     margin: {
+    //         left: -1rem;
+    //         right: -1rem;
+    //     }
+    // }
+    // .title {
+    //     display: flex;
+    //     @include gap(1rem);
+    //     align-items: center;
+    //     font-weight: bold;
+    //     font-size: 1.4rem;
+    //     color: $color-text;
+    // }
 }
 
 .description {

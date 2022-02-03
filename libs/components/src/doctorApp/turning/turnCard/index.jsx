@@ -250,13 +250,15 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 paddingRight: '0.8rem'
                             }}
                         >
-                            <div
-                                onClick={() => setIsDetailsOpen(prev => !prev)}
-                                aria-hidden
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
-                            </div>
+                            {turn.prescription?.finalized && (
+                                <div
+                                    onClick={() => setIsDetailsOpen(prev => !prev)}
+                                    aria-hidden
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                                </div>
+                            )}
                             {turn.prescription?.insuranceType === 'salamat' &&
                                 turn.prescription?.salamat_prescription?.isReference && (
                                     <Chips theme="gray">ارجاع</Chips>
