@@ -316,7 +316,7 @@ const DrugItem = ({
                         </div>
                     )}
                     <ServiceName
-                        favorite={false}
+                        favorite={!noFavorite}
                         service={service}
                         name={service.service.name}
                         insuranceType={insuranceType}

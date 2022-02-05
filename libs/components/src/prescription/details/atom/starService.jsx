@@ -30,9 +30,9 @@ const StarService = ({ service, insuranceType }) => {
                     item =>
                         item.service.id === service.service.id &&
                         +item.count === +service.count &&
-                        item.use_time === service.use_time &&
-                        item.use_instruction === service.use_instruction &&
-                        item.how_to_use === service.how_to_use
+                        +item.use_time === +service.use_time &&
+                        +item.use_instruction === +service.use_instruction &&
+                        +item.how_to_use === +service.how_to_use
                 );
             setServices(services);
             setStared(true);
@@ -53,7 +53,8 @@ const StarService = ({ service, insuranceType }) => {
         }
     }, [service, favoriteItem]);
 
-    const starHandler = () => {
+    const starHandler = e => {
+        e.stopPropagation();
         if (!stared) {
             if (!service.service?.id) {
                 return toast.warn('لطفا یک آیتم انتخاب کنید.');

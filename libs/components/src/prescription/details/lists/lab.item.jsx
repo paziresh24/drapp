@@ -262,7 +262,12 @@ const LabsItem = ({
                             </div>
                         </div>
                     )}
-                    <ServiceName favorite={false} service={service} name={service.service.name} />
+                    <ServiceName
+                        service={service}
+                        name={service.service.name}
+                        favorite={!noFavorite}
+                        insuranceType={insuranceType}
+                    />
                     <div className={styles.amounts}>
                         <span>
                             <Number value={service.count} editable={false} />
