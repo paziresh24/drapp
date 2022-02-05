@@ -76,8 +76,9 @@ const PrivateRoute = props => {
                 !centers.some(item => item.type_id === 1 || item.id === '5532');
 
             if (
-                isPrescriptionLocalInstallFieldAvailable &&
-                isAllHospitalCentersNotInstalledPrescriptionLocal
+                (isPrescriptionLocalInstallFieldAvailable &&
+                    isAllHospitalCentersNotInstalledPrescriptionLocal) ||
+                isEmpty(centers)
             )
                 return history.push('/create-center');
 
