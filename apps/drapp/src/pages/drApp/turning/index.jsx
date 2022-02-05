@@ -361,6 +361,25 @@ const Turning = () => {
         minLength: 10
     });
 
+    const statisticsRef = useRef();
+    const headerRef = useRef();
+
+    var observer = new IntersectionObserver(
+        function (entries) {
+            // no intersection
+            if (entries[0].intersectionRatio === 0) headerRef.current.classList.add(styles.sticky);
+            // fully intersects
+            else if (entries[0].intersectionRatio === 1)
+                headerRef.current.classList.remove(styles.sticky);
+        },
+        {
+            threshold: [0, 1]
+        }
+    );
+    useEffect(() => {
+        !isMobile && observer.observe(statisticsRef.current);
+    }, []);
+
     return (
         <>
             <Visit
@@ -371,7 +390,7 @@ const Turning = () => {
                 refetchData={refetchData}
             />
             <div className={styles['wrapper']}>
-                <div className={styles.statistics}>
+                <div ref={statisticsRef} className={styles.statistics}>
                     <div
                         style={{
                             // width: '25rem',
@@ -521,7 +540,7 @@ const Turning = () => {
                     </div>
                 </div>
                 {!error && (
-                    <div className={styles['head-bar']}>
+                    <div ref={headerRef} className={styles['head-bar']}>
                         <div className={styles.selectDate}>
                             <SelectDate
                                 today
