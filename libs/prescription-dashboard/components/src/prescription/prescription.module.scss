@@ -7,13 +7,25 @@
     box-shadow: 0px 5px 49px rgba(35, 40, 47, 0.059);
     position: sticky;
     top: 0;
-    z-index: 999;
-    width: 40rem;
+    // z-index: 999;
+    width: 20%;
+    // max-width: 45rem;
     height: 100%;
 
     @media screen and (max-width: 768px) {
         width: 100%;
         height: auto;
+    }
+}
+
+.mainWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    overflow: auto;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
     }
 }
 
@@ -33,7 +45,9 @@
 
 .wrapper {
     display: flex;
-    height: calc(100vh - 5rem);
+    // height: calc(100vh - 5rem);
+    height: 100%;
+    flex-grow: 1;
     overflow: hidden;
     width: 100%;
 
@@ -87,6 +101,10 @@
         border-radius: 1rem;
         position: relative;
         overflow: hidden;
+
+        > div {
+            width: 93% !important;
+        }
 
         @media screen and (max-width: 768px) {
             height: 60rem;

@@ -16,7 +16,8 @@ import {
     PrescriptionMenuIcon,
     HouseIcon,
     UserIcon,
-    SettingIcon
+    SettingIcon,
+    Statistics
 } from '../../../icons';
 import { StarIcon } from '../../../icons/public/duotone';
 import { isMobile } from 'react-device-detect';
@@ -30,11 +31,13 @@ import { CSSTransition } from 'react-transition-group';
 import { MenuItem } from '../menuItem';
 import { useSettingTurns } from '@paziresh24/components/doctorApp/turning/statusBar/settingTurns.context';
 import { StatusBar } from '../../turning/statusBar';
+import { useLevel } from '@paziresh24/context/core/level';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
     // const doctorInfo = useGetDoctorInfo();
     const [, setSettingIsOpen] = useSettingTurns();
+    const [level] = useLevel();
 
     const history = useHistory();
     const [info, setInfo] = useDrApp();
@@ -63,77 +66,100 @@ const SideBar = () => {
     const [menuItems, setMenuItems] = useState([]);
 
     useEffect(() => {
-        setMenuItems([
+        if (level === 'DOCTOR') {
+            return setMenuItems([
+                {
+                    id: 'turnning-list-step',
+                    name: 'لیست بیماران',
+                    icon: <HouseIcon color="#3F3F79" />,
+                    link: '/',
+                    tourStep: {
+                        key: 2,
+                        value: '?learn=true'
+                    }
+                },
+                {
+                    id: '50',
+                    isShow: window._env_.P24_STATISTICS_API,
+                    name: 'گزارش نسخه نویسی',
+                    icon: <Statistics color="#3F3F79" />,
+                    link: '/dashboard'
+                },
+                {
+                    id: 10,
+                    name: 'نسخه های ثبت شده',
+                    icon: <PrescriptionMenuIcon color="#3F3F79" />,
+                    link: '/prescription'
+                },
+                {
+                    id: 25,
+                    name: 'پراستفاده ها',
+                    icon: <StarIcon color="#3F3F79" />,
+                    link: '/favorite/templates',
+                    subMenu: [
+                        { name: 'نسخه پراستفاده', link: '/favorite/templates' },
+                        { name: 'اقلام پراستفاده', link: '/favorite/service' }
+                    ]
+                },
+                {
+                    id: 4,
+                    name: 'چت',
+                    isShow: info.center.id === '5532',
+                    icon: <ChatIcon color="#3F3F79" />,
+                    link: '/consult'
+                },
+                {
+                    id: 7,
+                    name: 'قوانین مشاوره',
+                    isShow: info.center.id === '5532',
+                    icon: <InfoIcon color="#3F3F79" />,
+                    link: '/consult-term'
+                },
+                {
+                    id: 'provider-step',
+                    name: 'بیمه های من',
+                    icon: <PrescriptionIcon color="#3F3F79" />,
+                    link: `/providers`,
+                    tourStep: {
+                        key: 1,
+                        value: '?learn=true'
+                    }
+                },
+                {
+                    id: 8,
+                    name: 'تنظیمات نوبت دهی',
+                    isShow: info.center.type_id === 1,
+                    icon: <SettingIcon color="#3F3F79" />,
+                    onClick: () => setSettingIsOpen(true)
+                },
+                {
+                    id: 11,
+                    name: 'نظرات بیماران',
+                    icon: <MessageIcon color="#3F3F79" />,
+                    link: '/feedbacks',
+                    badge: true
+                },
+                {
+                    id: 6,
+                    name: 'تسویه حساب',
+                    isShow: info.center.id === '5532' || info.center.type_id === 1,
+                    icon: <CardIcon color="#3F3F79" />,
+                    link: '/financial'
+                },
+                {
+                    id: 23,
+                    name: 'خروج',
+                    icon: <ExitIcon color="#3F3F79" />,
+                    link: '/logout'
+                }
+            ]);
+        }
+        return setMenuItems([
             {
                 id: 'turnning-list-step',
-                name: 'لیست بیماران',
-                icon: <HouseIcon color="#3F3F79" />,
-                link: '/',
-                tourStep: {
-                    key: 2,
-                    value: '?learn=true'
-                }
-            },
-            {
-                id: 10,
-                name: 'نسخه های ثبت شده',
-                icon: <PrescriptionMenuIcon color="#3F3F79" />,
-                link: '/prescription'
-            },
-            {
-                id: 25,
-                name: 'پراستفاده ها',
-                icon: <StarIcon color="#3F3F79" />,
-                link: '/favorite/templates',
-                subMenu: [
-                    { name: 'نسخه پراستفاده', link: '/favorite/templates' },
-                    { name: 'اقلام پراستفاده', link: '/favorite/service' }
-                ]
-            },
-            {
-                id: 4,
-                name: 'چت',
-                isShow: info.center.id === '5532',
-                icon: <ChatIcon color="#3F3F79" />,
-                link: '/consult'
-            },
-            {
-                id: 7,
-                name: 'قوانین مشاوره',
-                isShow: info.center.id === '5532',
-                icon: <InfoIcon color="#3F3F79" />,
-                link: '/consult-term'
-            },
-            {
-                id: 'provider-step',
-                name: 'بیمه های من',
-                icon: <PrescriptionIcon color="#3F3F79" />,
-                link: `/providers`,
-                tourStep: {
-                    key: 1,
-                    value: '?learn=true'
-                }
-            },
-            {
-                id: 8,
-                name: 'تنظیمات نوبت دهی',
-                isShow: info.center.type_id === 1,
-                icon: <SettingIcon color="#3F3F79" />,
-                onClick: () => setSettingIsOpen(true)
-            },
-            {
-                id: 11,
-                name: 'نظرات بیماران',
-                icon: <MessageIcon color="#3F3F79" />,
-                link: '/feedbacks',
-                badge: true
-            },
-            {
-                id: 6,
-                name: 'تسویه حساب',
-                isShow: info.center.id === '5532' || info.center.type_id === 1,
-                icon: <CardIcon color="#3F3F79" />,
-                link: '/financial'
+                name: 'گزارش نسخه نویسی',
+                icon: <Statistics color="#3F3F79" />,
+                link: '/dashboard'
             },
             {
                 id: 23,

@@ -214,14 +214,7 @@ const PrescriptionStatistics = ({ level }) => {
                 </div>
                 <Filter noPrescriptionType={true} />
             </div>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: '100%',
-                    overflow: 'auto'
-                }}
-            >
+            <div className={styles.mainWrapper}>
                 <div className={styles.header}>
                     <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>
                         گزارش نسخه های ثبت شده

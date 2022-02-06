@@ -47,6 +47,7 @@ export { ChatIcon } from './public/chat';
 export { ComplaintsIcon } from './public/complaints';
 export { PrescriptionMenuIcon } from './public/prescriptionMenu';
 export { MinusLineIcon } from './public/minusLine';
+export { Statistics } from './public/statistics';
 
 export {
     LearnIcon,

@@ -11,17 +11,6 @@ const Select = memo(({ label, items, isOpen, setIsOpen, onChange, defaultValue, 
         onChange && onChange(item?.value);
     };
 
-    // useEffect(() => {
-    //     if (firstUpdate.current) {
-    //         firstUpdate.current = false;
-    //         return;
-    //     }
-    //     if (defaultValue) {
-    //         console.log('hi');
-    //         setValue(defaultValue);
-    //     }
-    // }, [defaultValue]);
-
     return (
         <div
             className={styles.wrapper}

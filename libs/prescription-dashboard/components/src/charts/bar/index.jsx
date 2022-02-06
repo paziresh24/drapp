@@ -3,14 +3,6 @@ import { ResponsiveBar } from '@nivo/bar';
 import isEmpty from 'lodash/isEmpty';
 
 const Bar = ({ data }) => {
-    const [value, setValue] = useState([]);
-
-    useEffect(() => {
-        if (data) {
-            setValue(data.slice().reverse().slice(0, 15).reverse());
-        }
-    }, [data]);
-
     return (
         <>
             {isEmpty(data) && (
@@ -64,7 +56,7 @@ const Bar = ({ data }) => {
             )}
             {!isEmpty(data) && (
                 <ResponsiveBar
-                    data={value}
+                    data={data.slice().reverse().slice(0, 15).reverse()}
                     keys={['total']}
                     indexBy="starts_at"
                     margin={{ top: 50, right: 60, bottom: 50, left: 60 }}

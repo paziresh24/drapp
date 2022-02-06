@@ -24,12 +24,18 @@ import { usePage } from '@paziresh24/context/core/page';
 import { CSSTransition } from 'react-transition-group';
 import LearnControl from './../learnControl/index';
 import ErrorByRefresh from '@paziresh24/components/core/errorByRefresh';
+import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
+import { useLevel } from '@paziresh24/context/core/level';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
+    const [, setLevel] = useLevel();
+
     const [, setPage] = usePage();
     const [centersDoctor, setCentersDoctor] = useState([]);
     const centerInfo = useGetCenterInfo();
+    const getLevels = useGetLevels();
+
     const doctorInfo = useGetDoctorInfo({
         center_id: centersDoctor?.[centersDoctor?.length - 1]?.id
         // center_id: 5532
@@ -52,6 +58,7 @@ const PrivateRoute = props => {
         if (isEmpty(info) && !isEmpty(getToken())) {
             props.path !== '/create-center' && centerInfo.refetch();
             getUserGoftino.refetch();
+            window._env_.P24_STATISTICS_API && getLevels.refetch();
             if (isProduction && isMainDomain) {
                 // ChatSupport.init(); props.path !== '/create-center' &&
             }
@@ -60,6 +67,16 @@ const PrivateRoute = props => {
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (getLevels.isSuccess) {
+            const level = getLevels.data.data?.[0]?.user_level ?? 'DOCTOR';
+            setLevel(level);
+            if ((props.path !== '/dashbord' || props.path !== '/logout') && level !== 'DOCTOR') {
+                history.replace('/dashboard');
+            }
+        }
+    }, [getLevels.status]);
 
     useEffect(() => {
         if (!info && centerInfo.isSuccess) {
@@ -176,7 +193,7 @@ const PrivateRoute = props => {
         <>
             <Helmet>
                 <title>{`${props.title} | پذیرش24` ?? ''}</title>
-                <link rel="canonical" href={`https://doctorapp.paziresh24.com${props.path}`} />
+                <link rel="canonical" href={`https://dr.paziresh24.com${props.path}`} />
             </Helmet>
             <Loading
                 show={
