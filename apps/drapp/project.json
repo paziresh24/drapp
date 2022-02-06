@@ -3,7 +3,7 @@
     "sourceRoot": "apps/drapp/src",
     "projectType": "application",
     "tags": [],
-    "architect": {
+    "targets": {
         "serve": {
             "builder": "@nrwl/workspace:run-commands",
             "options": {
