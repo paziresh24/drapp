@@ -28,7 +28,7 @@ export const routes = [
         name: 'Dashboard',
         isPrivate: true,
         title: 'گزارش نسخه نویسی',
-        component: lazy(() => import('../../../../prescription-dashboard/src/app/app')),
+        component: lazy(() => import('@paziresh24/apps/prescription-dashboard/app/app')),
         exact: true
     },
     // {
