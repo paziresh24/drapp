@@ -5,9 +5,14 @@ import MustUsedStatistics from '@paziresh24/prescription-dashboard/components/mo
 import PrescriptionStatistics from '@paziresh24/prescription-dashboard/components/prescription';
 import { StatisticsFiltersProvider } from '@paziresh24/prescription-dashboard/contexts/filters.context';
 import { StatisticsProvider } from '@paziresh24/prescription-dashboard/contexts/statistics.context';
+import { useEffect } from 'react';
 
 export function App() {
     const getLevels = useGetLevels();
+
+    useEffect(() => {
+        getLevels.refetch();
+    }, []);
 
     return (
         <StatisticsFiltersProvider>

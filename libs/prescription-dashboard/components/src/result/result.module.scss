@@ -36,31 +36,28 @@
     }
 }
 
-tr {
-    transition: all 0.5s ease-in-out;
-
-    &:hover {
-        background-color: rgba(230, 235, 240, 0.525);
-    }
-}
-
-tbody {
-    background: #fff;
-}
-
 .header {
     background: #ffffff;
     position: sticky;
     top: 0;
     z-index: 5;
 }
+.dashboard {
+    tr {
+        transition: all 0.5s ease-in-out;
 
-table {
+        &:hover {
+            background-color: rgba(230, 235, 240, 0.525);
+        }
+    }
+
+    tbody {
+        background: #fff;
+    }
+
     position: relative;
-}
 
-@media screen and (max-width: 600px) {
-    table {
+    @media screen and (max-width: 600px) {
         border: 0;
         colgroup {
             display: none;
@@ -72,38 +69,38 @@ table {
             // @include gap(0.8rem, false);
             background: transparent;
         }
-    }
 
-    table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
+        table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
 
-    table tr {
-        display: block;
-        background: #fff;
-        box-shadow: 0 21px 30px #2525470a;
-    }
+        table tr {
+            display: block;
+            background: #fff;
+            box-shadow: 0 21px 30px #2525470a;
+        }
 
-    table td {
-        display: flex;
-    }
+        table td {
+            display: flex;
+        }
 
-    table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        margin-left: 1rem;
-    }
+        table td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            margin-left: 1rem;
+        }
 
-    table td:last-child {
-        display: flex;
-        justify-content: flex-end;
+        table td:last-child {
+            display: flex;
+            justify-content: flex-end;
+        }
     }
 }
 

@@ -21,40 +21,38 @@
     margin-top: 2rem;
 }
 
-td,
-th {
-    text-align: right;
-    border-bottom: 1px solid #ffffff;
-    padding: 1.2rem 2rem;
-    position: relative;
-    color: #3f3f79;
-    font-weight: 500;
-    font-size: 1.5rem;
-    vertical-align: middle;
+.dashboard {
+    td,
+    th {
+        text-align: right;
+        border-bottom: 1px solid #ffffff;
+        padding: 1.2rem 2rem;
+        position: relative;
+        color: #3f3f79;
+        font-weight: 500;
+        font-size: 1.5rem;
+        vertical-align: middle;
 
-    * {
-        user-select: text;
+        * {
+            user-select: text;
+        }
     }
-}
 
-tbody {
-    background: #fff;
-}
+    tbody {
+        background: #fff;
+    }
 
-th {
-    background: #ffffff;
-    border-bottom: 1px solid #dde6eec5;
-    position: sticky;
-    top: 0;
-    z-index: 5;
-}
+    th {
+        background: #ffffff;
+        border-bottom: 1px solid #dde6eec5;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+    }
 
-table {
     position: relative;
-}
 
-@media screen and (max-width: 600px) {
-    table {
+    @media screen and (max-width: 600px) {
         border: 0;
         colgroup {
             display: none;
@@ -66,38 +64,38 @@ table {
             // @include gap(0.8rem, false);
             background: transparent;
         }
-    }
 
-    table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
+        table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
 
-    table tr {
-        display: block;
-        background: #fff;
-        box-shadow: 0 21px 30px #2525470a;
-    }
+        table tr {
+            display: block;
+            background: #fff;
+            box-shadow: 0 21px 30px #2525470a;
+        }
 
-    table td {
-        display: flex;
-    }
+        table td {
+            display: flex;
+        }
 
-    table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        margin-left: 1rem;
-    }
+        table td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            margin-left: 1rem;
+        }
 
-    table td:last-child {
-        display: flex;
-        justify-content: flex-end;
+        table td:last-child {
+            display: flex;
+            justify-content: flex-end;
+        }
     }
 }
 

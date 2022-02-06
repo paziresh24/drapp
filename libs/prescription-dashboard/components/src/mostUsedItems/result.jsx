@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 const Result = ({ level, data }) => {
     return (
         <>
-            <table width="100%">
+            <table width="100%" className={styles.dashboard}>
                 <colgroup>
                     {resultSchema[level].map(item => (
                         <col key={item.title} span="1" style={{ width: item.meta.width }} />
