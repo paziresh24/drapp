@@ -11,9 +11,7 @@
         "drapp-e2e": "apps/drapp-e2e",
         "hooks": "libs/hooks",
         "prescription": "apps/prescription",
-        "prescription-dashboard": "apps/prescription-dashboard",
         "prescription-dashboard-components": "libs/prescription-dashboard/components",
-        "prescription-dashboard-e2e": "apps/prescription-dashboard-e2e",
         "prescription-e2e": "apps/prescription-e2e",
         "utils": "libs/utils"
     }

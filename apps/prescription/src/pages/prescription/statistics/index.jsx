@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Overlay } from '@paziresh24/components/core/overlay';
 import { Tab, Tabs } from '@paziresh24/components/core/tab';
 import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
@@ -5,9 +6,8 @@ import MustUsedStatistics from '@paziresh24/prescription-dashboard/components/mo
 import PrescriptionStatistics from '@paziresh24/prescription-dashboard/components/prescription';
 import { StatisticsFiltersProvider } from '@paziresh24/prescription-dashboard/contexts/filters.context';
 import { StatisticsProvider } from '@paziresh24/prescription-dashboard/contexts/statistics.context';
-import { useEffect } from 'react';
 
-export function App() {
+export const Statistics = () => {
     const getLevels = useGetLevels();
 
     useEffect(() => {
@@ -37,6 +37,6 @@ export function App() {
             </StatisticsProvider>
         </StatisticsFiltersProvider>
     );
-}
+};
 
-export default App;
+export default Statistics;
