@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { baseURL } from '@paziresh24/utils/baseUrl';
 import { getToken, setToken, clearToken } from '@paziresh24/utils/localstorage';
-import { refreshToken } from './core/refreshToken';
+import { refreshToken } from './drApp/auth/refreshToken';
 
 const client = axios.create({
     baseURL: baseURL('DRAPP_API')

@@ -1,0 +1,23 @@
+{
+    "root": "libs/prescription-dashboard/components",
+    "sourceRoot": "libs/prescription-dashboard/components/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["libs/prescription-dashboard/components/**/*.{ts,tsx,js,jsx}"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/prescription-dashboard/components"],
+            "options": {
+                "jestConfig": "libs/prescription-dashboard/components/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "root": "apps/prescription-dashboard",
+    "sourceRoot": "apps/prescription-dashboard/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/web:build",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "outputPath": "dist/apps/prescription-dashboard",
+                "index": "apps/prescription-dashboard/src/index.html",
+                "baseHref": "/",
+                "main": "apps/prescription-dashboard/src/main.tsx",
+                "polyfills": "apps/prescription-dashboard/src/polyfills.ts",
+                "tsConfig": "apps/prescription-dashboard/tsconfig.app.json",
+                "assets": [
+                    "apps/prescription-dashboard/src/favicon.ico",
+                    "apps/prescription-dashboard/src/assets"
+                ],
+                "styles": ["apps/prescription-dashboard/src/styles.scss"],
+                "scripts": [],
+                "webpackConfig": "@nrwl/react/plugins/webpack"
+            },
+            "configurations": {
+                "production": {
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/prescription-dashboard/src/environments/environment.ts",
+                            "with": "apps/prescription-dashboard/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "optimization": true,
+                    "outputHashing": "all",
+                    "sourceMap": false,
+                    "namedChunks": false,
+                    "extractLicenses": true,
+                    "vendorChunk": false
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/web:dev-server",
+            "options": {
+                "buildTarget": "prescription-dashboard:build",
+                "hmr": true
+            },
+            "configurations": {
+                "production": {
+                    "buildTarget": "prescription-dashboard:build:production",
+                    "hmr": false
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/prescription-dashboard/**/*.{ts,tsx,js,jsx}"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/prescription-dashboard"],
+            "options": {
+                "jestConfig": "apps/prescription-dashboard/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

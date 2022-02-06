@@ -23,6 +23,14 @@ export const routes = [
         component: lazy(() => import('./turning')),
         exact: true
     },
+    {
+        path: '/dashboard',
+        name: 'Dashboard',
+        isPrivate: true,
+        title: 'گزارش نسخه نویسی',
+        component: lazy(() => import('../../../../prescription-dashboard/src/app/app')),
+        exact: true
+    },
     // {
     //     path: '/turning/',
     //     name: 'Turning',

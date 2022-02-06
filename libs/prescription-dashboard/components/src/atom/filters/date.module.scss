@@ -1,0 +1,16 @@
+.wrapper {
+    display: flex;
+    height: 4rem;
+    align-items: center;
+    background: #e8f0f5;
+    padding: 0 1.5rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    font-size: 1.45rem;
+    cursor: pointer;
+}
+
+.calendarWrap {
+    box-shadow: unset !important;
+    margin: 0 auto !important;
+}

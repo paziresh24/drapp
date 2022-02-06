@@ -424,7 +424,7 @@ const Turning = () => {
                         </span>
                         {/* </div>   */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
-                            {getTurn.isSuccess && getTurn?.data?.data.length} بیمار
+                            {getTurn.isSuccess && getTurn?.data?.data?.length} بیمار
                         </span>
                     </div>
                     <div
@@ -474,11 +474,11 @@ const Turning = () => {
                         {/* </div> */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
                             {getTurn.isSuccess &&
-                                getTurn?.data?.data.filter(item =>
+                                getTurn?.data?.data?.filter(item =>
                                     item.type === 'prescription'
                                         ? item.finalized
                                         : item.prescription?.finalized
-                                ).length}{' '}
+                                )?.length}{' '}
                             نسخه
                         </span>
                     </div>
@@ -530,11 +530,11 @@ const Turning = () => {
                         {/* </div> */}
                         <span style={{ fontWeight: '500' }}>
                             {getTurn.isSuccess &&
-                                getTurn.data?.data.filter(item =>
+                                getTurn.data?.data?.filter(item =>
                                     item.type === 'prescription'
                                         ? !item.finalized
                                         : !item.prescription?.finalized
-                                ).length}{' '}
+                                )?.length}{' '}
                             بیمار
                         </span>
                     </div>

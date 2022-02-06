@@ -1,0 +1,28 @@
+{
+    "root": "apps/prescription-dashboard-e2e",
+    "sourceRoot": "apps/prescription-dashboard-e2e/src",
+    "projectType": "application",
+    "targets": {
+        "e2e": {
+            "executor": "@nrwl/cypress:cypress",
+            "options": {
+                "cypressConfig": "apps/prescription-dashboard-e2e/cypress.json",
+                "devServerTarget": "prescription-dashboard:serve"
+            },
+            "configurations": {
+                "production": {
+                    "devServerTarget": "prescription-dashboard:serve:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/prescription-dashboard-e2e/**/*.{js,ts}"]
+            }
+        }
+    },
+    "tags": [],
+    "implicitDependencies": ["prescription-dashboard"]
+}
