@@ -128,7 +128,7 @@ const SideBar = () => {
                 {
                     id: 8,
                     name: 'تنظیمات نوبت دهی',
-                    isShow: info.center.type_id === 1,
+                    isShow: info.center.is_active_booking && info.center.type_id === 1,
                     icon: <SettingIcon color="#3F3F79" />,
                     onClick: () => setSettingIsOpen(true)
                 },
