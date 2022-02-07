@@ -81,8 +81,7 @@ const Finalize = () => {
                         number_of_period,
                         prescription_id,
                         use_instruction,
-                        use_time,
-                        service_type
+                        use_time
                         // active_from
                     }) => {
                         return {
@@ -95,9 +94,8 @@ const Finalize = () => {
                             number_of_period,
                             prescription_id,
                             use_instruction,
-                            use_time,
-                            ...(service_type === 95 &&
-                                isServicesOfDoctorsTamin && { isVisit: true })
+                            use_time
+
                             // active_from
                         };
                     }
@@ -165,10 +163,10 @@ const Finalize = () => {
     const submitServices = async () => {
         insurances.remove();
 
-        // return;
         if (services.length === 0 && !prescriptionInfo.finalized) {
             return setVisitModal(true);
         }
+
         if (diagnosis?.id) {
             updatePrescriptionAction(prescriptionInfo.id, {
                 diagnosis: diagnosis.name,
@@ -190,9 +188,7 @@ const Finalize = () => {
                         number_of_period,
                         prescription_id,
                         use_instruction,
-                        use_time,
-                        service_type
-                        // active_from
+                        use_time
                     }) => {
                         return {
                             brand,
@@ -204,14 +200,18 @@ const Finalize = () => {
                             number_of_period: +number_of_period,
                             prescription_id,
                             use_instruction,
-                            use_time,
-                            ...(service_type === 95 &&
-                                isServicesOfDoctorsTamin && { isVisit: true })
-                            // active_from
+                            use_time
                         };
                     }
                 );
             const { items } = await addItemToPrescription(servicesWithOutNullItem);
+
+            if (isServicesOfDoctorsTamin) {
+                await addItemService.mutateAsync({
+                    prescriptionId: prescriptionInfo.id,
+                    comments: ''
+                });
+            }
 
             if (!prescriptionInfo.finalized) {
                 const data = await finalizePrescriptionAction();
@@ -280,9 +280,9 @@ const Finalize = () => {
                     size="small"
                     className={styles.button}
                     onClick={() => {
-                        // if (services.some(item => item.service_type === 95)) {
-                        //     return setServicesDoctorVisitConfirmModal(true);
-                        // }
+                        if (services.some(item => item.service_type === 95)) {
+                            return setServicesDoctorVisitConfirmModal(true);
+                        }
                         if (
                             prescriptionInfo.insuranceType === 'salamat' &&
                             prescriptionInfo.salamat_prescription.isReference
@@ -300,9 +300,9 @@ const Finalize = () => {
                     size="small"
                     className={styles.button}
                     onClick={() => {
-                        // if (services.some(item => item.service_type === 95)) {
-                        //     return setServicesDoctorVisitConfirmModal(true);
-                        // }
+                        if (services.some(item => item.service_type === 95)) {
+                            return setServicesDoctorVisitConfirmModal(true);
+                        }
                         if (
                             prescriptionInfo.insuranceType === 'salamat' &&
                             prescriptionInfo.salamat_prescription.isReference
