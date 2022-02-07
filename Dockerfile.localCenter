@@ -2,8 +2,7 @@
 FROM node:14.17.5-alpine as build
 WORKDIR /app
 COPY package.json ./
-COPY package-lock.json .
-RUN npm install --silent --legacy-peer-deps
+RUN yarn --silent --legacy-peer-deps
 COPY . .
 ENV PUBLIC_URL /doctorapp
 RUN yarn build drapp
