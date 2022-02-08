@@ -35,7 +35,7 @@ export const queryClient = new QueryClient({
 const isProduction = process.env.NODE_ENV === 'production';
 const isMainDomain = location.host === window._env_.P24_MAIN_DOMAIN;
 
-if (isProduction && isMainDomain) {
+if (isProduction && isMainDomain && !window._env_.P24_DISABLE_THIRD_PARTY) {
     Sentry.init({
         dsn: 'https://e61a90738da845c19044453cacd98d94@p24guard.paziresh24.com/9',
         integrations: [new Integrations.BrowserTracing()],
@@ -53,7 +53,7 @@ if (!isProduction) {
     });
 }
 
-if (isProduction && isMainDomain) {
+if (isProduction && isMainDomain && !window._env_.P24_DISABLE_THIRD_PARTY) {
     TagManager.initialize({
         gtmId: 'GTM-P5RPLDP'
     });
@@ -85,7 +85,7 @@ if (localStorage.getItem('APP_VERSION')) {
 
 const Provider = ({ children }) => {
     return (
-        <Router basename={location.host === 'dr.paziresh24.com' ? '' : process.env.PUBLIC_URL}>
+        <Router basename={process.env.PUBLIC_URL}>
             <ScrollToTop />
             <QueryClientProvider client={queryClient}>
                 <TransitionGroup>{children}</TransitionGroup>

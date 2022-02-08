@@ -116,7 +116,8 @@ const SearchFiled = ({
             />
             {(window.location.host === window._env_.P24_MAIN_DOMAIN ||
                 window.location.hostname === 'localhost') &&
-                window?.webkitSpeechRecognition && (
+                window?.webkitSpeechRecognition &&
+                !window._env_.P24_IS_LOCAL_CENTER && (
                     <VoiceSearch
                         onChange={({ item, speechValue }) => {
                             setItem(item);

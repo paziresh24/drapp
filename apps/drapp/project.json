@@ -8,7 +8,11 @@
             "builder": "@nrwl/workspace:run-commands",
             "options": {
                 "cwd": "apps/drapp",
-                "commands": ["sh env.sh", "node ../../node_modules/@craco/craco/bin/craco.js start"]
+                "commands": [
+                    "chmod +x env.sh",
+                    "sh env.sh && mv env-config.js public",
+                    "node ../../node_modules/@craco/craco/bin/craco.js start"
+                ]
             }
         },
         "build": {
@@ -16,7 +20,6 @@
             "options": {
                 "cwd": "apps/drapp",
                 "commands": [
-                    "sh env.sh",
                     "node ../../node_modules/@craco/craco/bin/craco.js build && node ../../node_modules/rimraf/bin ../../dist/apps/drapp && node ../../node_modules/ncp/bin/ncp ../../dist/apps/drapp_temp ../../dist/apps/drapp && node ../../node_modules/rimraf/bin ../../dist/apps/drapp_temp"
                 ]
             }

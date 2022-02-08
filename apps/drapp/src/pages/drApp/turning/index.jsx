@@ -54,7 +54,9 @@ const Turning = () => {
     const [searchValue, setSearchValue] = useState('');
     const getTurn = useGetTurns({
         baseURL: info.center.local_base_url,
-        ...(info.center.local_base_url && { is_direct: 1 }),
+        ...((info.center.local_base_url || window._env_.P24_IS_LOCAL_CENTER) && {
+            is_direct: 1
+        }),
         center_id: info.center.id,
         date:
             moment
