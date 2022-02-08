@@ -19,6 +19,7 @@ import { FavoriteItemProvider } from '@paziresh24/context/prescription/favoriteI
 import { ToolBoxProvider } from '@paziresh24/context/prescription/toolBox.context';
 import { TemplateItemProvider } from '@paziresh24/context/prescription/templateItem.context';
 import { SettingTurnsProvider } from '../turning/statusBar/settingTurns.context';
+import { LevelProvider } from '@paziresh24/context/core/level';
 
 const Provider = ({ children }) => {
     return (
@@ -41,7 +42,9 @@ const Provider = ({ children }) => {
                                                                         <ToolBoxProvider>
                                                                             <TemplateItemProvider>
                                                                                 <SettingTurnsProvider>
-                                                                                    {children}
+                                                                                    <LevelProvider>
+                                                                                        {children}
+                                                                                    </LevelProvider>
                                                                                 </SettingTurnsProvider>
                                                                             </TemplateItemProvider>
                                                                         </ToolBoxProvider>

@@ -1,6 +1,3 @@
-import styles from './ImportStatus.module.scss';
-import ReactTooltip from 'react-tooltip';
-import classNames from 'classnames';
 import { useRef, useState, useEffect } from 'react';
 import {
     useImportStatus,
@@ -11,7 +8,7 @@ import Import from '../Import';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import SalamatImport from '../Import/salamat';
 
-const ImportStatus = ({ type }) => {
+const ImportStatus = ({ type, isOpenImportModal, setIsOpenImportModal }) => {
     const [prescriptionInfo] = useSelectPrescription();
     const importStatus = useImportStatus({
         provider: prescriptionInfo?.insuranceType,
@@ -19,9 +16,9 @@ const ImportStatus = ({ type }) => {
     });
     const [statusImport, setStatusImport] = useState();
     let importInterval = useRef(null);
-    const [isOpenImportModal, setIsOpenImportModal] = useState(false);
     const getFavoriteServices = useGetFavoriteServices({
-        provider: prescriptionInfo?.insuranceType
+        provider: prescriptionInfo?.insuranceType,
+        _limit: 1000
     });
 
     const getFavoritePrescriptions = useGetFavoritePrescriptions({
@@ -65,7 +62,7 @@ const ImportStatus = ({ type }) => {
     }, [importStatus.status]);
     return (
         <>
-            <div
+            {/* <div
                 className={classNames({
                     [styles.importButton]: true,
                     [styles.failedImport]: statusImport === 'FAILED',
@@ -168,7 +165,7 @@ const ImportStatus = ({ type }) => {
                         />
                     </svg>
                 )}
-            </div>
+            </div> */}
             {prescriptionInfo.insuranceType === 'salamat' && (
                 <SalamatImport isOpen={isOpenImportModal} onClose={setIsOpenImportModal} />
             )}

@@ -77,7 +77,7 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
         }
     }, [getBrands.status]);
 
-    const func = event => {
+    const addServiceWithEnterKey = event => {
         if (event.keyCode === 13) {
             var e = event || window.event,
                 target = e.target || e.srcElement;
@@ -85,11 +85,11 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
             if (target.tagName.toUpperCase() == 'INPUT') return;
             addServiceAction();
         }
-        document.body.removeEventListener('keydown', func);
+        document.body.removeEventListener('keydown', addServiceWithEnterKey);
     };
     useEffect(() => {
         if (item?.id && count && consumption?.id && instructions?.id && amounts?.id)
-            document.body.addEventListener('keydown', func);
+            document.body.addEventListener('keydown', addServiceWithEnterKey);
     }, [item, count, consumption?.id, instructions?.id, amounts?.id]);
 
     const addServiceAction = () => {
@@ -137,14 +137,24 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
                 {
                     id: services.length + 1,
                     item_id: item.id,
-                    use_instruction: amounts?.id,
+                    use_instruction:
+                        insuranceType === 'salamat'
+                            ? +item?.shape?.id === 9
+                                ? amounts?.id
+                                : undefined
+                            : amounts.id,
                     use_time: consumption?.id,
                     how_to_use: instructions?.id,
                     service: item,
                     count: count,
                     brand: brand?.id,
                     description: description,
-                    number_of_period: +repeat,
+                    number_of_period:
+                        insuranceType === 'salamat'
+                            ? +item?.shape?.id !== 9
+                                ? amounts?.id
+                                : undefined
+                            : +repeat,
                     date_do: dateFormat,
                     service_type: item.serviceType.id
                 }
@@ -176,7 +186,8 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
                     <SearchFiled
                         error={searchFiledError}
                         type="drugs"
-                        label="انتخاب دارو"
+                        label="... نام یا کد دارو"
+                        voiceLabel="دارو"
                         onChange={value => {
                             setSearchFiledError(false);
                             selectItem(value);
@@ -263,9 +274,7 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
                             setAmounts(value);
                         }}
                         defaultValue={item?.defaultValue?.use_instruction}
-                        shape={
-                            insuranceType === 'salamat' && +item?.shape?.id === 9 && item?.shape?.id
-                        }
+                        shape={item?.shape?.id}
                         focus={amountsFiledFocus}
                         setFocus={setAmountsFiledFocus}
                         insuranceType={insuranceType}

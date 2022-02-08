@@ -234,10 +234,7 @@ export const useDeliverPrescriptionInfo = params =>
     });
 export const useDeliverPrescriptionPriceInfo = () => useMutation(deliverPrescriptionPriceInfo);
 
-export const useGetPrescriptionReference = params =>
-    useQuery(['getPrescriptionReference', params], () => getPrescriptionReference(params), {
-        enabled: false
-    });
+export const useGetPrescriptionReference = () => useMutation(getPrescriptionReference);
 
 export const useGetFrequentItems = params =>
     useQuery(['getFrequentItems', params], () => getFrequentItems(params), {

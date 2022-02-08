@@ -9,12 +9,14 @@ import { RemoveIcon, ChevronIcon } from '../../../../icons';
 import { useDeleteFavoritePrescriptions } from '@paziresh24/hooks/prescription';
 import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.context';
 import { sendEvent } from '@paziresh24/utils';
+import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
 
 const Item = ({ prescription, isOpen, setIsOpen }) => {
     const [prescriptionInfo] = useSelectPrescription();
     const [services, setServices] = useServices();
     const deleteFavoritePrescriptions = useDeleteFavoritePrescriptions();
     const [templateItem, setTemplateItem] = useTemplateItem();
+    const [type, setType] = useSelectType();
 
     const [, setIsOpenToolBox] = useToolBox();
 
@@ -54,6 +56,17 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
         let id = services.length > 0 ? +services[services.length - 1].id : 0;
         const items = [];
         prescription[prescriptionInfo.insuranceType + 'Items'].forEach(item => {
+            if (item.service?.deleted === true) {
+                return toast.warn(
+                    `${item.service.name} به دلیل حذف از دیتابیس ${
+                        prescriptionInfo.insuranceType === 'tamin' ? 'تامین اجتماعی' : 'سلامت'
+                    }، از لیست تجویز شما حذف شده. درصورت نیاز دارو/خدمت جایگزین را وارد کنید.`,
+                    {
+                        autoClose: false
+                    }
+                );
+            }
+
             if (!services.some(service => service.service.id === item.service.id)) {
                 id += 1;
                 items.push({
@@ -64,18 +77,42 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
             }
         });
         setServices(prev => [...prev, ...items]);
-        sendEvent('clickcollection', 'prescription', 'clickcollection');
-        toast.success(
-            `نسخه ${prescription.name.substr(0, 10)}${
-                prescription.name.length > 10 ? '...' : ''
-            } اضافه شد.`
+
+        setType(
+            Object.entries(serviceTypeList).filter(item =>
+                item[1][prescriptionInfo.insuranceType].includes(items[0]?.service_type)
+            )[0][0]
         );
+
+        sendEvent('clickcollection', 'prescription', 'clickcollection');
+
+        if (!items.every(item => item.service?.deleted === true))
+            toast.success(
+                `نسخه ${prescription.name.substr(0, 10)}${
+                    prescription.name.length > 10 ? '...' : ''
+                } اضافه شد.`
+            );
         isMobile && setIsOpenToolBox(false);
     };
 
     const addItemAction = service => {
+        setType(
+            Object.entries(serviceTypeList).filter(item =>
+                item[1][prescriptionInfo.insuranceType].includes(service?.service_type)
+            )[0][0]
+        );
         if (services.some(item => item.service.id === service.service.id)) {
             return toast.warn('این آیتم قبلا اضافه شده است.');
+        }
+        if (service.service?.deleted === true) {
+            return toast.warn(
+                `${service.service.name} به دلیل حذف از دیتابیس ${
+                    prescriptionInfo.insuranceType === 'tamin' ? 'تامین اجتماعی' : 'سلامت'
+                }، از لیست تجویز شما حذف شده. درصورت نیاز دارو/خدمت جایگزین را وارد کنید.`,
+                {
+                    autoClose: false
+                }
+            );
         }
         setServices(item => [
             ...item,
@@ -87,6 +124,7 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
                 date_do: null
             }
         ]);
+
         isMobile && setIsOpenToolBox(false);
     };
 

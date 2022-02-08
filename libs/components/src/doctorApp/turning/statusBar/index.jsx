@@ -15,7 +15,6 @@ import moment from 'jalali-moment';
 import { useDeleteTurns, useMoveTurns, useVacation } from '@paziresh24/hooks/drapp/turning';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Timeit } from 'react-timeit';
-import 'react-timeit/dist/index.css';
 import { sendEvent } from '@paziresh24/utils';
 import { useHistory, useLocation } from 'react-router';
 import { Default } from '@paziresh24/hooks/core/device';
@@ -400,90 +399,7 @@ const StatusBar = props => {
     }, [moveDeleteModal]);
 
     return (
-        <div className={classNames(styles['wrapper'])}>
-            {!info.center.is_active_booking && info.center.type_id === 1 && (
-                <Button
-                    variant="secondary"
-                    size="medium"
-                    block={isMobile}
-                    onClick={() => {
-                        sendEvent('click', 'home', 'clickturningbutton');
-                        history.push('/fill-info');
-                    }}
-                    style={{ marginBottom: isMobile && '1rem' }}
-                >
-                    فعالسازی نوبت دهی
-                </Button>
-            )}
-            {/* <Mobile>
-                <Button
-                    variant="secondary"
-                    block
-                    // className={styles['ping']}
-                    onClick={() => {
-                        // props.setOpenNewTurn(true);
-                        tourState(true);
-                        setSteps(1);
-
-                        // sendEvent('plususer', 'prescription', 'plususer');
-                    }}
-                    style={{ marginBottom: isMobile && '1rem' }}
-                    size="medium"
-                >
-                    ثبت اولین نسخه با آموزش
-                </Button>
-            </Mobile> */}
-            <Default>
-                <FixedWrapBottom>
-                    <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
-                        {/* {info.center.is_active_booking && info.center.type_id === 1 && (
-                            <Button
-                                style={{ maxWidth: '5.5rem' }}
-                                variant="secondary"
-                                size="medium"
-                                icon={<SettingIcon />}
-                                onClick={() => setMoveDeleteModal(true)}
-                            />
-                        )} */}
-                        {/* <Button
-                            variant="secondary"
-                            // className={styles['ping']}
-                            onClick={() => {
-                                // props.setOpenNewTurn(true);
-                                if (menuIsOpen) {
-                                    setSteps(1, 'force');
-                                }
-                                if (!menuIsOpen) {
-                                    setMenuIsOpen(true);
-                                    setTimeout(() => {
-                                        setSteps(1, 'force');
-                                    }, 500);
-                                }
-
-                                // sendEvent('plususer', 'prescription', 'plususer');
-                            }}
-                            size="medium"
-                        >
-                            ثبت اولین نسخه با آموزش
-                        </Button> */}
-                        {/* <Button
-                            // variant="secondary"
-                            id="add-turn"
-                            onClick={() => {
-                                props.setOpenNewTurn(true);
-                                if (urlParams.learn) {
-                                    tourState(true);
-                                    setSteps(4);
-                                }
-                                sendEvent('plususer', 'prescription', 'plususer');
-                            }}
-                            size="medium"
-                        >
-                            افزودن بیمار
-                        </Button> */}
-                    </div>
-                </FixedWrapBottom>
-            </Default>
+        <>
             <Modal
                 title={modalTitle}
                 isOpen={moveDeleteModal}
@@ -530,7 +446,10 @@ const StatusBar = props => {
                                     id="workHours"
                                     group="actionType"
                                     title="تغییر ساعت کاری"
-                                    onChange={() => history.push('/turning/setting')}
+                                    onChange={() => {
+                                        history.push('/turning/setting');
+                                        setMoveDeleteModal(false);
+                                    }}
                                 />
                             </div>
                         </>
@@ -878,7 +797,7 @@ const StatusBar = props => {
                     </Button>
                 </div>
             </Modal>
-        </div>
+        </>
     );
 };
 

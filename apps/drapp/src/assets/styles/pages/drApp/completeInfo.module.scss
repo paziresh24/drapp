@@ -14,7 +14,7 @@
         @include gap(1rem, false);
         font-weight: bold;
         font-size: 1.4rem;
-        color: #3f3f79;
+        color: $color-text;
         .form-control {
             display: flex;
             flex-direction: column;

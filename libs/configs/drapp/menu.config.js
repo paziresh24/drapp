@@ -28,6 +28,16 @@ export const MainMenuData = () => {
     };
     return [
         {
+            title: 'نسخه های ثبت شده',
+            path: '/prescription',
+            icon: <PrescriptionMenuIcon color="#3F3F79" />
+        },
+        {
+            title: 'پراستفاده ها',
+            path: '/favorite/templates',
+            icon: <StarIcon color="#3F3F79" />
+        },
+        {
             title: 'مشاوره',
             path: '/consult',
             icon: <ConsultIcon color="#3F3F79" />
@@ -57,16 +67,6 @@ export const MainMenuData = () => {
             title: 'شکایات',
             path: '/complaints',
             icon: <ComplaintsIcon color="#3F3F79" />
-        },
-        {
-            title: 'نسخه های ثبت شده',
-            path: '/prescription',
-            icon: <PrescriptionMenuIcon color="#3F3F79" />
-        },
-        {
-            title: 'پراستفاده ها',
-            path: '/favorite/templates',
-            icon: <StarIcon color="#3F3F79" />
         }
     ];
 };

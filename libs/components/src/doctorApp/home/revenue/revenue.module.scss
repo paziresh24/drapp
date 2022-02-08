@@ -7,7 +7,7 @@
     @include gap(1rem, false);
     .title {
         font-size: 1.6rem;
-        color: #3f3f79;
+        color: $color-text;
     }
     .price-number {
         font-weight: bold;
@@ -15,7 +15,7 @@
     }
     .price-type {
         font-size: 1.2rem;
-        color: #3f3f79;
+        color: $color-text;
     }
     .red {
         color: #c81818;

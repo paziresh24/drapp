@@ -23,6 +23,11 @@
             "@paziresh24/constants/*": ["libs/constants/src/*"],
             "@paziresh24/context/*": ["libs/context/src/*"],
             "@paziresh24/hooks/*": ["libs/hooks/src/*"],
+            "@paziresh24/prescription-dashboard/*": ["libs/prescription-dashboard/*"],
+            "@paziresh24/prescription-dashboard/apis/*": ["libs/prescription-dashboard/apis/*"],
+            "@paziresh24/prescription-dashboard/components/*": [
+                "libs/prescription-dashboard/components/src/*"
+            ],
             "@paziresh24/utils": ["libs/utils/src/index.js"],
             "@paziresh24/utils/*": ["libs/utils/src/*"]
         }

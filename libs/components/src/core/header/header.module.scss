@@ -285,6 +285,12 @@
         border: 1px solid rgba(224, 233, 239, 0.63);
         justify-content: space-between;
 
+        &.disabled {
+            filter: grayscale(0.2);
+            opacity: 0.5;
+            cursor: default;
+        }
+
         span {
             user-select: unset !important;
         }

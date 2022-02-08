@@ -11,42 +11,79 @@ const MenuItem = ({ item }) => {
 
     return (
         <div className={styles.menuBarItem}>
-            <NavLink
-                key={item?.id}
-                to={item?.link}
-                className={styles.menuContent}
-                activeClassName={styles['active']}
-                style={{
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center'
-                }}
-                exact
-                onMouseOver={() => item?.subMenu && setIsDropDownOpen(true)}
-                onMouseLeave={() => item?.subMenu && setIsDropDownOpen(false)}
-            >
-                <div className={styles.menuIcon}>
-                    {item?.icon}
-                    {/* {!getFeedbacks.isLoading && item.badge && (
+            {item?.onClick ? (
+                <div
+                    key={item?.id}
+                    className={styles.menuContent}
+                    style={{
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center'
+                    }}
+                    onClick={item?.onClick}
+                    exact
+                >
+                    <div className={styles.menuIcon}>
+                        {item?.icon}
+                        {/* {!getFeedbacks.isLoading && item.badge && (
+                      <span className={styles['badge']} aria-hidden>
+                          <span className={styles['red']}>{calculateNoReplyComments()}</span>
+                      </span>
+                  )} */}
+                    </div>
+
+                    {/* {open && ( */}
+                    <span
+                        style={{
+                            right: open ? '6rem' : '0',
+                            transitionDelay: !open ? 'unset' : '0.2s',
+                            opacity: open ? '1' : '0'
+                        }}
+                        className={styles.menuName}
+                    >
+                        {item?.name}
+                    </span>
+                    {/* )} */}
+                </div>
+            ) : (
+                <NavLink
+                    key={item?.id}
+                    to={item?.link ?? '#'}
+                    className={styles.menuContent}
+                    activeClassName={styles['active']}
+                    style={{
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center'
+                    }}
+                    onClick={item?.onClick}
+                    exact
+                    onMouseOver={() => item?.subMenu && setIsDropDownOpen(true)}
+                    onMouseLeave={() => item?.subMenu && setIsDropDownOpen(false)}
+                >
+                    <div className={styles.menuIcon}>
+                        {item?.icon}
+                        {/* {!getFeedbacks.isLoading && item.badge && (
                     <span className={styles['badge']} aria-hidden>
                         <span className={styles['red']}>{calculateNoReplyComments()}</span>
                     </span>
                 )} */}
-                </div>
+                    </div>
 
-                {/* {open && ( */}
-                <span
-                    style={{
-                        right: open ? '6rem' : '0',
-                        transitionDelay: !open ? 'unset' : '0.2s',
-                        opacity: open ? '1' : '0'
-                    }}
-                    className={styles.menuName}
-                >
-                    {item?.name}
-                </span>
-                {/* )} */}
-            </NavLink>
+                    {/* {open && ( */}
+                    <span
+                        style={{
+                            right: open ? '6rem' : '0',
+                            transitionDelay: !open ? 'unset' : '0.2s',
+                            opacity: open ? '1' : '0'
+                        }}
+                        className={styles.menuName}
+                    >
+                        {item?.name}
+                    </span>
+                    {/* )} */}
+                </NavLink>
+            )}
             {item.subMenu && (
                 <CSSTransition
                     in={isDropDownOpen}

@@ -1,6 +1,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+    background-color: #f3f7fa;
 
     @media screen and (min-width: 425px) {
         height: calc(100vh - 50px);
@@ -30,7 +31,6 @@
     padding-bottom: 10rem;
     position: relative;
     padding: 0.4rem;
-    background-color: #f3f7fa;
     padding-bottom: 10rem;
 
     > * {
@@ -54,7 +54,8 @@
         flex-direction: column;
         position: absolute;
         inset: 0;
-        background-color: #fff;
+        // background-color: #fff;
+        padding-bottom: 10rem;
 
         > * {
             margin: 1rem 0;
@@ -74,6 +75,7 @@
             font-weight: 500;
             text-align: center;
             line-height: 2.6rem;
+            color: #7f8f9b;
         }
     }
 

@@ -17,6 +17,7 @@ const ImagingDetails = ({ services, setServices, insuranceType, noDate = false }
     const [count, setCount] = useState(1);
     const [date, setDate] = useState();
     const [description, setDescription] = useState();
+    const [countFieldFocus, setCountFieldFocus] = useState(false);
 
     const [showDescription, setShowDescription] = useState(false);
     const filterButton = [
@@ -47,6 +48,21 @@ const ImagingDetails = ({ services, setServices, insuranceType, noDate = false }
     useEffect(() => {
         resetForm();
     }, [selectedFilter]);
+
+    const addServiceWithEnterKey = event => {
+        if (event.keyCode === 13) {
+            var e = event || window.event,
+                target = e.target || e.srcElement;
+
+            if (target.tagName.toUpperCase() == 'INPUT' && target.type.toUpperCase() !== 'NUMBER')
+                return;
+            addServiceAction();
+        }
+        document.body.removeEventListener('keydown', addServiceWithEnterKey);
+    };
+    useEffect(() => {
+        if (item?.id && count) document.body.addEventListener('keydown', addServiceWithEnterKey);
+    }, [item, count]);
 
     const addServiceAction = () => {
         if (item) {
@@ -85,6 +101,7 @@ const ImagingDetails = ({ services, setServices, insuranceType, noDate = false }
         setCount(1);
         setDescription('');
         setShowDescription(false);
+        setCountFieldFocus(false);
     };
 
     return (
@@ -109,10 +126,16 @@ const ImagingDetails = ({ services, setServices, insuranceType, noDate = false }
                     <SearchFiled
                         type="imaging"
                         typeId={selectedFilter.id}
-                        label={`انتخاب ${
+                        label={`... نام یا کد خدمت ${
                             insuranceType === 'tamin' ? selectedFilter.title : 'تصویربرداری'
                         }`}
-                        onChange={value => selectItem(value)}
+                        voiceLabel={`خدمت ${
+                            insuranceType === 'tamin' ? selectedFilter.title : 'تصویربرداری'
+                        }`}
+                        onChange={value => {
+                            selectItem(value);
+                            setCountFieldFocus(true);
+                        }}
                         defaultValue={item}
                         insuranceType={insuranceType}
                     />
@@ -145,7 +168,12 @@ const ImagingDetails = ({ services, setServices, insuranceType, noDate = false }
                     )}
                 </div>
                 <div className={styles['amount-bar']}>
-                    <Count onChange={value => setCount(value)} defaultValue={count} />
+                    <Count
+                        onChange={value => setCount(value)}
+                        defaultValue={count}
+                        focus={countFieldFocus}
+                        setFocus={setCountFieldFocus}
+                    />
                     {!noDate && (
                         <SelectDate
                             label="تاریخ موثر"

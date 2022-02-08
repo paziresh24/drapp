@@ -30,7 +30,6 @@ module.exports = {
             '@config': path.resolve(__dirname, 'src/config'),
             'config': path.resolve(__dirname, 'src/config')
         },
-
         configure: config => {
             // Remove guard against importing modules outside of \`src\`.
             // Needed for workspace projects.

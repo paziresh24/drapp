@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { info } from '@paziresh24/apis/drApp/home/info';
+import { info } from '@paziresh24/apis/drApp/auth/me';
 import { revenue } from '@paziresh24/apis/drApp/home/revenue';
 import { books } from '@paziresh24/apis/drApp/home/books';
 

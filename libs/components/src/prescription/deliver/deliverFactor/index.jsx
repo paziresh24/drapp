@@ -10,9 +10,11 @@ import { useDeliverPrescription } from '@paziresh24/hooks/prescription';
 import { toast } from 'react-toastify';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { useBackPage } from '@paziresh24/context/core/backPage';
+import { useHistory } from 'react-router';
+import { isMobile } from 'react-device-detect';
 
 const DeliverFactor = props => {
-    const [prescriptionInfo] = useSelectPrescription();
+    const history = useHistory();
     const [calculated, setCalculated] = useState({
         total: 0,
         orgAmount: 0,
@@ -35,30 +37,20 @@ const DeliverFactor = props => {
     const submit = () => {
         deliverPrescription.mutate(
             {
-                prescriptionId: prescriptionInfo.id,
+                prescriptionId: props.prescriptionInfo.id,
                 subscriptions: [...props.subscriptions]
             },
             {
                 onSuccess: data => {
                     props.onClose(false);
                     if (isEmpty(backPage)) {
-                        window.parent.postMessage(
-                            {
-                                drappEvent: ['backToTurning', 'successFinalize'],
-                                prescriptionInfo: prescriptionInfo
-                            },
-                            '*'
-                        );
+                        history.push('/', {
+                            prescriptionInfo: props.prescriptionInfo
+                        });
                     } else {
-                        window.parent.postMessage(
-                            {
-                                drappEvent: {
-                                    action: 'BACK_PAGE',
-                                    page: backPage
-                                }
-                            },
-                            '*'
-                        );
+                        history.push('/consult/', {
+                            room_id: backPage
+                        });
                     }
                 },
                 onError: err => {
@@ -78,7 +70,12 @@ const DeliverFactor = props => {
     };
 
     return (
-        <Modal title="تایید نهایی نسخه" fullPage isOpen={props.isOpen} onClose={props.onClose}>
+        <Modal
+            title="تایید نهایی نسخه"
+            fullPage={isMobile}
+            isOpen={props.isOpen}
+            onClose={props.onClose}
+        >
             <div className={styles['confirmModal-col']}>
                 <div className={styles['deliverItems']}>
                     {props.data &&

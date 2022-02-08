@@ -3,8 +3,9 @@ import styles from './upload.module.scss';
 import { v4 } from 'uuid';
 import { Overlay } from '../overlay';
 import Modal from '../modal';
-import Button from '..//button';
+import Button from '../button';
 import ScrollContainer from 'react-indiana-drag-scroll';
+import isEmpty from 'lodash/isEmpty';
 
 const UploadField = forwardRef(({ title, onChange, data, loading, deleteAction }, ref) => {
     const [id] = useState(v4());
@@ -22,7 +23,7 @@ const UploadField = forwardRef(({ title, onChange, data, loading, deleteAction }
                 accept="image/*"
                 multiple
             />
-            {!_.isEmpty(data) && (
+            {!isEmpty(data) && (
                 <ScrollContainer className={styles['gallery']}>
                     {data.map(image => (
                         <img

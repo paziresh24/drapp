@@ -8,7 +8,7 @@ import { Overlay } from '@paziresh24/components/core/overlay';
 import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
 import Button from '@paziresh24/components/core/button';
 import { Mobile } from '@paziresh24/hooks/device';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import FixedWrapBottom from '@paziresh24/components/prescription/fixedWrapBottom';
 import Item from './item';
 import { useServices } from '@paziresh24/context/prescription/services-context';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
@@ -18,9 +18,11 @@ import ImportStatus from '../ImportStatus';
 const Favorite = () => {
     const [prescriptionInfo] = useSelectPrescription();
     const [favoriteItem, setFavoriteItem] = useFavoriteItem();
+    const [isOpenImportModal, setIsOpenImportModal] = useState(false);
     const [type] = useSelectType();
     const getFavoriteServices = useGetFavoriteServices({
-        provider: prescriptionInfo?.insuranceType
+        provider: prescriptionInfo?.insuranceType,
+        _limit: 1000
     });
     const [favoriteItemByType, setFavoriteItemByType] = useState([]);
     const [searchServiceValue, setSearchServiceValue] = useState('');
@@ -79,9 +81,39 @@ const Favorite = () => {
             <div className={styles['searchWrapper']}>
                 <SearchBar label="جستجوی بین اقلام ..." value={setSearchServiceValue} />
                 {/* {prescriptionInfo.insuranceType === 'tamin' && ( */}
-                <ImportStatus type="favorite_service" />
+                <ImportStatus
+                    type="favorite_service"
+                    isOpenImportModal={isOpenImportModal}
+                    setIsOpenImportModal={setIsOpenImportModal}
+                />
                 {/* )} */}
             </div>
+            {getFavoriteServices.isSuccess && (
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '1.5rem 1rem'
+                    }}
+                >
+                    <span style={{ fontSize: '1.3rem', fontWeight: '500', opacity: '0.8' }}>
+                        اقلام و نسخه های پنل{' '}
+                        {prescriptionInfo.insuranceType === 'tamin' ? 'تامین اجتماعی' : 'سلامت'}
+                    </span>
+                    <span
+                        style={{
+                            fontSize: '1.3rem',
+                            fontWeight: '600',
+                            textDecoration: 'underLine',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => setIsOpenImportModal(true)}
+                    >
+                        واکشی و نمایش
+                    </span>
+                </div>
+            )}
             {/* )} */}
             <div className={styles['items']}>
                 {getFavoriteServices.isLoading && <Overlay />}
@@ -115,36 +147,86 @@ const Favorite = () => {
                         </Button>
                     </FixedWrapBottom>
                 </Mobile>
-                {favoriteItemByType.length === 0 && (
+
+                {searchServiceValue &&
+                    !favoriteItemByType.some(item =>
+                        item.service.name
+                            .toLowerCase()
+                            .replace(/ي/g, 'ی')
+                            .replace(/ك/g, 'ک')
+                            .replace(/ /g, '')
+                            .includes(
+                                searchServiceValue
+                                    .toLowerCase()
+                                    .replace(/ي/g, 'ی')
+                                    .replace(/ك/g, 'ک')
+                                    .replace(/ /g, '')
+                            )
+                    ) && (
+                        <div className={styles.emptyState}>
+                            <svg
+                                width="67"
+                                height="65"
+                                viewBox="0 0 67 65"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M37.3971 21.9647L41.0272 29.1147C41.5222 30.0897 42.8422 31.0647 43.9422 31.2272L50.5147 32.3106C54.7222 33.0147 55.7121 35.9939 52.6871 38.9731L47.5722 44.0106C46.7197 44.8502 46.2246 46.5022 46.4996 47.6939L47.9572 53.9502C49.1122 58.8793 46.4447 60.8022 42.0172 58.2293L35.8571 54.6272C34.7296 53.9772 32.9147 53.9772 31.7872 54.6272L25.6271 58.2293C21.1996 60.8022 18.5321 58.8793 19.6871 53.9502L21.1447 47.6939C21.4197 46.5293 20.9247 44.8772 20.0722 44.0106L14.9572 38.9731C11.9322 35.9939 12.9222 32.9876 17.1297 32.3106L23.7022 31.2272C24.8022 31.0377 26.1222 30.0897 26.6172 29.1147L30.2472 21.9647C32.1997 18.0918 35.4446 18.0918 37.3971 21.9647Z"
+                                    fill="#7F8F9B"
+                                />
+                                <path
+                                    opacity="0.4"
+                                    d="M17.3223 26.4061C16.1948 26.4061 15.2598 25.4853 15.2598 24.3748V5.4165C15.2598 4.30609 16.1948 3.38525 17.3223 3.38525C18.4498 3.38525 19.3848 4.30609 19.3848 5.4165V24.3748C19.3848 25.4853 18.4498 26.4061 17.3223 26.4061Z"
+                                    fill="#7F8F9B"
+                                />
+                                <path
+                                    opacity="0.4"
+                                    d="M50.3223 26.4061C49.1948 26.4061 48.2598 25.4853 48.2598 24.3748V5.4165C48.2598 4.30609 49.1948 3.38525 50.3223 3.38525C51.4498 3.38525 52.3848 4.30609 52.3848 5.4165V24.3748C52.3848 25.4853 51.4498 26.4061 50.3223 26.4061Z"
+                                    fill="#7F8F9B"
+                                />
+                                <path
+                                    opacity="0.4"
+                                    d="M33.8223 12.8644C32.6948 12.8644 31.7598 11.9436 31.7598 10.8332V5.4165C31.7598 4.30609 32.6948 3.38525 33.8223 3.38525C34.9498 3.38525 35.8848 4.30609 35.8848 5.4165V10.8332C35.8848 11.9436 34.9498 12.8644 33.8223 12.8644Z"
+                                    fill="#7F8F9B"
+                                />
+                            </svg>
+                            <span>نتیجه ای یافت نشد.</span>
+                        </div>
+                    )}
+                {!searchServiceValue && favoriteItemByType.length === 0 && (
                     <div className={styles.emptyState}>
                         <svg
-                            width="72"
-                            height="72"
-                            viewBox="0 0 72 72"
+                            width="67"
+                            height="65"
+                            viewBox="0 0 67 65"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
                         >
                             <path
-                                d="M39.9 24.3303L43.86 32.2503C44.4 33.3303 45.84 34.4103 47.04 34.5903L54.21 35.7903C58.8 36.5703 59.8799 39.8703 56.5799 43.1703L51 48.7503C50.07 49.6803 49.5299 51.5103 49.8299 52.8303L51.42 59.7603C52.68 65.2203 49.77 67.3503 44.94 64.5003L38.22 60.5103C36.99 59.7903 35.01 59.7903 33.78 60.5103L27.06 64.5003C22.23 67.3503 19.3199 65.2203 20.5799 59.7603L22.17 52.8303C22.47 51.5403 21.93 49.7103 21 48.7503L15.42 43.1703C12.12 39.8703 13.2 36.5403 17.79 35.7903L24.96 34.5903C26.16 34.3803 27.6 33.3303 28.14 32.2503L32.1 24.3303C34.23 20.0403 37.77 20.0403 39.9 24.3303Z"
-                                fill="#27BDA0"
+                                d="M37.3971 21.9647L41.0272 29.1147C41.5222 30.0897 42.8422 31.0647 43.9422 31.2272L50.5147 32.3106C54.7222 33.0147 55.7121 35.9939 52.6871 38.9731L47.5722 44.0106C46.7197 44.8502 46.2246 46.5022 46.4996 47.6939L47.9572 53.9502C49.1122 58.8793 46.4447 60.8022 42.0172 58.2293L35.8571 54.6272C34.7296 53.9772 32.9147 53.9772 31.7872 54.6272L25.6271 58.2293C21.1996 60.8022 18.5321 58.8793 19.6871 53.9502L21.1447 47.6939C21.4197 46.5293 20.9247 44.8772 20.0722 44.0106L14.9572 38.9731C11.9322 35.9939 12.9222 32.9876 17.1297 32.3106L23.7022 31.2272C24.8022 31.0377 26.1222 30.0897 26.6172 29.1147L30.2472 21.9647C32.1997 18.0918 35.4446 18.0918 37.3971 21.9647Z"
+                                fill="#7F8F9B"
                             />
                             <path
                                 opacity="0.4"
-                                d="M18 29.25C16.77 29.25 15.75 28.23 15.75 27V6C15.75 4.77 16.77 3.75 18 3.75C19.23 3.75 20.25 4.77 20.25 6V27C20.25 28.23 19.23 29.25 18 29.25Z"
-                                fill="#27BDA0"
+                                d="M17.3223 26.4061C16.1948 26.4061 15.2598 25.4853 15.2598 24.3748V5.4165C15.2598 4.30609 16.1948 3.38525 17.3223 3.38525C18.4498 3.38525 19.3848 4.30609 19.3848 5.4165V24.3748C19.3848 25.4853 18.4498 26.4061 17.3223 26.4061Z"
+                                fill="#7F8F9B"
                             />
                             <path
                                 opacity="0.4"
-                                d="M54 29.25C52.77 29.25 51.75 28.23 51.75 27V6C51.75 4.77 52.77 3.75 54 3.75C55.23 3.75 56.25 4.77 56.25 6V27C56.25 28.23 55.23 29.25 54 29.25Z"
-                                fill="#27BDA0"
+                                d="M50.3223 26.4061C49.1948 26.4061 48.2598 25.4853 48.2598 24.3748V5.4165C48.2598 4.30609 49.1948 3.38525 50.3223 3.38525C51.4498 3.38525 52.3848 4.30609 52.3848 5.4165V24.3748C52.3848 25.4853 51.4498 26.4061 50.3223 26.4061Z"
+                                fill="#7F8F9B"
                             />
                             <path
                                 opacity="0.4"
-                                d="M36 14.25C34.77 14.25 33.75 13.23 33.75 12V6C33.75 4.77 34.77 3.75 36 3.75C37.23 3.75 38.25 4.77 38.25 6V12C38.25 13.23 37.23 14.25 36 14.25Z"
-                                fill="#27BDA0"
+                                d="M33.8223 12.8644C32.6948 12.8644 31.7598 11.9436 31.7598 10.8332V5.4165C31.7598 4.30609 32.6948 3.38525 33.8223 3.38525C34.9498 3.38525 35.8848 4.30609 35.8848 5.4165V10.8332C35.8848 11.9436 34.9498 12.8644 33.8223 12.8644Z"
+                                fill="#7F8F9B"
                             />
                         </svg>
-                        <span>برای ستاره دار کردن روی ستاره کنار دکمه افزودن بزن</span>
+                        <span>
+                            از طریق ستاره کنار اقلام داخل نسخه و یا از قسمت پراستفاده ها از مسیر
+                            منوی سمت راست، اقلامی که بیشتر استفاده میکنید را به این لیست اضافه کنید.
+                        </span>
                     </div>
                 )}
             </div>

@@ -38,7 +38,7 @@ import updatingImage from '@paziresh24/assets/images/drapp/updating.jpg';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import { queryClient } from '@paziresh24/components/core/provider';
-import { style } from 'dom-helpers';
+import ReferenceModal from '@paziresh24/components/prescription/referenceModal';
 
 const Turning = () => {
     const history = useHistory();
@@ -54,7 +54,9 @@ const Turning = () => {
     const [searchValue, setSearchValue] = useState('');
     const getTurn = useGetTurns({
         baseURL: info.center.local_base_url,
-        ...(info.center.local_base_url && { is_direct: 1 }),
+        ...((info.center.local_base_url || window._env_.P24_IS_LOCAL_CENTER) && {
+            is_direct: 1
+        }),
         center_id: info.center.id,
         date:
             moment
@@ -73,6 +75,7 @@ const Turning = () => {
     const [error, setIsError] = useState(false);
     const nationalCodeRef = useRef();
     const [prescriptionPendingModal, setPrescriptionPendingModal] = useState(false);
+    const [referenceModal, setReferenceModal] = useState(false);
 
     useEffect(() => {
         if (location.state?.prescriptionInfo && getTurn.data?.data) {
@@ -360,6 +363,25 @@ const Turning = () => {
         minLength: 10
     });
 
+    const statisticsRef = useRef();
+    const headerRef = useRef();
+
+    var observer = new IntersectionObserver(
+        function (entries) {
+            // no intersection
+            if (entries[0].intersectionRatio === 0) headerRef.current.classList.add(styles.sticky);
+            // fully intersects
+            else if (entries[0].intersectionRatio === 1)
+                headerRef.current.classList.remove(styles.sticky);
+        },
+        {
+            threshold: [0, 1]
+        }
+    );
+    useEffect(() => {
+        !isMobile && observer.observe(statisticsRef.current);
+    }, []);
+
     return (
         <>
             <Visit
@@ -370,7 +392,7 @@ const Turning = () => {
                 refetchData={refetchData}
             />
             <div className={styles['wrapper']}>
-                <div className={styles.statistics}>
+                <div ref={statisticsRef} className={styles.statistics}>
                     <div
                         style={{
                             // width: '25rem',
@@ -400,11 +422,11 @@ const Turning = () => {
                                 marginLeft: '1rem'
                             }}
                         >
-                            تعداد نوبت های امروز
+                            تعداد بیماران امروز
                         </span>
                         {/* </div>   */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
-                            {getTurn.isSuccess && getTurn?.data?.data.length} بیمار
+                            {getTurn.isSuccess && getTurn?.data?.data?.length} بیمار
                         </span>
                     </div>
                     <div
@@ -454,11 +476,11 @@ const Turning = () => {
                         {/* </div> */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
                             {getTurn.isSuccess &&
-                                getTurn?.data?.data.filter(item =>
+                                getTurn?.data?.data?.filter(item =>
                                     item.type === 'prescription'
                                         ? item.finalized
                                         : item.prescription?.finalized
-                                ).length}{' '}
+                                )?.length}{' '}
                             نسخه
                         </span>
                     </div>
@@ -510,17 +532,17 @@ const Turning = () => {
                         {/* </div> */}
                         <span style={{ fontWeight: '500' }}>
                             {getTurn.isSuccess &&
-                                getTurn.data?.data.filter(item =>
+                                getTurn.data?.data?.filter(item =>
                                     item.type === 'prescription'
                                         ? !item.finalized
                                         : !item.prescription?.finalized
-                                ).length}{' '}
+                                )?.length}{' '}
                             بیمار
                         </span>
                     </div>
                 </div>
                 {!error && (
-                    <div className={styles['head-bar']}>
+                    <div ref={headerRef} className={styles['head-bar']}>
                         <div className={styles.selectDate}>
                             <SelectDate
                                 today
@@ -684,6 +706,18 @@ const Turning = () => {
                             })}
                         />
                     )}
+                    <span
+                        style={{
+                            fontSize: '1.45rem',
+                            textDecoration: 'underLine',
+                            opacity: '0.8',
+                            cursor: 'pointer',
+                            fontWeight: '500'
+                        }}
+                        onClick={() => setReferenceModal(true)}
+                    >
+                        پذیرش از مسیر ارجاع
+                    </span>
                     <div style={{ display: 'flex', gap: '1rem' }}>
                         {!isEmpty(confirmCellPhone) && (
                             <Button
@@ -789,6 +823,12 @@ const Turning = () => {
                     بیمار اطلاع داده خواهد شد.
                 </span>
             </Modal>
+
+            <ReferenceModal
+                isOpen={referenceModal}
+                onClose={setReferenceModal}
+                nationalCodeDefaultValue={nationalCodeRef.current?.value}
+            />
 
             {/* <TurnTime isOpen={turnTimeModal} setIsOpen={setTurnTimeModal} /> */}
         </>

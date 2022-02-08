@@ -69,7 +69,7 @@ const SelectBox = ({
                         simple={simple}
                         onChange={value => changeAction(value)}
                         defaultValue={value}
-                        shape={+service?.service?.shape?.id === 9 && service.service.shape.id}
+                        shape={service?.service?.shape?.id}
                         insuranceType={insuranceType}
                     />
                 ) : (

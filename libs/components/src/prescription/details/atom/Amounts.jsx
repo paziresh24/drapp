@@ -1,6 +1,7 @@
 import Select from '../../../ui/Select/Select';
 import { useEffect, useState } from 'react';
 import amountData from '@paziresh24/constants/drugData/amounts.json';
+import Count from './Count';
 
 const Amounts = ({
     onChange,
@@ -20,23 +21,33 @@ const Amounts = ({
 
     const reformatData = () => {
         const reformat = amountData[insuranceType]
-            .filter(amount => (shape ? +amount.shape === +shape : true))
+            .filter(amount => (shape ? +amount.shape.includes(shape.toString()) : true))
             .map(amount => ({
                 name: amount.name.includes('ي') ? amount.name.replace(/ي/g, 'ی') : amount.name,
-                value: amount.id
+                value: amount.value
             }));
 
         setAmount(reformat);
     };
 
-    return (
+    return +shape === 5 || +shape === 10 ? (
+        <Count
+            label="میزان مصرف"
+            defaultValue={defaultValue}
+            simple={simple}
+            autoWidth
+            min={1}
+            max={100}
+            onChange={value => onChange({ name: value, id: value })}
+        />
+    ) : (
         <Select
             focus={focus}
             setFocus={setFocus}
             error={error}
             defaultValue={defaultValue}
             onChange={onChange}
-            label="مقادیر مصرف"
+            label="میزان مصرف"
             items={amount}
             simple={simple}
         />

@@ -81,40 +81,23 @@ const Header = () => {
             <header className={styles['header']}>
                 <span className={styles.pageTitle}>{page.title}</span>
                 <div className={styles.right}>
-                    {/* <Default>
-                        <div
-                            className={styles['toggle-menu-button']}
-                            onClick={() => {
-                                setSteps(1);
-                                setIsOpen(prevVal => !prevVal);
-                            }}
-                            aria-hidden
+                    {!info.center.is_active_booking && info.center.type_id === 1 && (
+                        <Button
+                            variant="secondary"
+                            size="medium"
+                            style={{ marginLeft: '0.5rem' }}
+                            onClick={() => history.push('/fill-info')}
                         >
-                            <div id="step2">
-                                <svg
-                                    width="22"
-                                    height="13"
-                                    viewBox="0 0 22 13"
-                                    fill="#3f4079"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className={styles['icn']}
-                                >
-                                    <rect y="10.4849" width="22" height="2" />
-                                    <rect y="0.484863" width="22" height="2" />
-                                    <rect y="5.48486" width="22" height="2" />
-                                </svg>
-                            </div>
-                        </div>
-                    </Default> */}
-
-                    {/* <Mobile> */}
-                    {/* </Mobile> */}
-
+                            فعالسازی نوبت دهی
+                        </Button>
+                    )}
                     <div
                         className={styles.selectCenter}
                         onMouseOut={() => setIsCenterSelectOpen(false)}
                     >
-                        <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
+                        {info.center.is_active_booking && (
+                            <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
+                        )}
                         <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
                             از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب کنید
                         </ReactTooltip>
@@ -170,23 +153,31 @@ const Header = () => {
                                                         ? localStorage.getItem('center_id') ===
                                                           center.id
                                                         : info.center.id === center.id
-                                                    : false
+                                                    : false,
+                                            [styles.disabled]:
+                                                center?.prescription_local_install !== undefined &&
+                                                !center?.prescription_local_install
                                         })}
                                         onClick={e => {
                                             e.stopPropagation();
-                                            setIsCenterSelectOpen(false);
-                                            localStorage.setItem(
-                                                'center_id',
-                                                center.id ? center.id : info.center.id
-                                            );
-                                            setInfo(prev => ({
-                                                ...prev,
-                                                center: center.name
-                                                    ? prev.centers.find(
-                                                          center2 => center2.id === center.id
-                                                      )
-                                                    : prev.center
-                                            }));
+                                            if (
+                                                center?.prescription_local_install === undefined ||
+                                                center?.prescription_local_install
+                                            ) {
+                                                setIsCenterSelectOpen(false);
+                                                localStorage.setItem(
+                                                    'center_id',
+                                                    center.id ? center.id : info.center.id
+                                                );
+                                                setInfo(prev => ({
+                                                    ...prev,
+                                                    center: center.name
+                                                        ? prev.centers.find(
+                                                              center2 => center2.id === center.id
+                                                          )
+                                                        : prev.center
+                                                }));
+                                            }
                                         }}
                                         aria-hidden
                                     >
@@ -334,138 +325,6 @@ const Header = () => {
                         </Modal>
                     </div>
                 </div>
-
-                {/* <img src={Logo} alt="logo" /> */}
-
-                {/* <div className={styles['actions']}>
-                    <div className={styles.action} onClick={openGoftinoAction} aria-hidden>
-                        <svg viewBox="0 0 29 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M23.2289 11.3342H23.1647V9.81811C23.1647 4.94801 19.0731 1 14.0258 1C8.9784 1 4.8868 4.94801 4.8868 9.81811V11.3342H4.50202C3.09108 11.3342 2.00083 12.5409 2.00083 13.9332V17.8008C1.9653 19.1503 3.07033 20.2721 4.46894 20.3064C4.47999 20.3067 4.49097 20.3069 4.50202 20.307H6.87493C7.21104 20.2918 7.47072 20.0165 7.45489 19.6922C7.45433 19.6805 7.45341 19.6688 7.45213 19.6572V12.0767C7.45213 11.7055 7.22767 11.3341 6.87493 11.3341H6.16946V9.81805C6.16946 5.63149 9.68687 2.23757 14.0258 2.23757C18.3647 2.23757 21.8821 5.63149 21.8821 9.81805V11.3341H21.1766C20.8239 11.3341 20.5994 11.7054 20.5994 12.0767V19.6572C20.5636 19.98 20.8058 20.2698 21.1404 20.3043C21.1524 20.3055 21.1645 20.3064 21.1766 20.3069H21.9141L21.85 20.3997C20.8878 21.6336 19.3779 22.3563 17.7775 22.349C17.4272 20.6914 15.7505 19.6217 14.0326 19.9598C12.5635 20.2488 11.5043 21.4903 11.4925 22.9369C11.51 24.6336 12.9406 26.0001 14.6991 26C15.5696 25.9864 16.3994 25.6417 17.0079 25.0408C17.4185 24.6352 17.6875 24.116 17.7775 23.5557C19.7816 23.563 21.6716 22.6569 22.8761 21.1114L23.4854 20.245C24.8642 20.1522 25.73 19.3168 25.73 18.1101V14.2425C25.7301 12.9122 24.704 11.3342 23.2289 11.3342ZM6.16946 19.0694H4.50202C3.81153 19.0531 3.26539 18.4999 3.28221 17.8337C3.28252 17.8227 3.28295 17.8118 3.2835 17.8008V13.9332C3.2835 13.2216 3.79655 12.5718 4.50202 12.5718H6.16946V19.0694ZM16.078 24.1746C15.7227 24.5464 15.2234 24.7593 14.6992 24.7625C13.6559 24.7465 12.8093 23.9432 12.7752 22.937C12.7748 21.9287 13.6215 21.1111 14.6664 21.1107C15.7112 21.1103 16.5586 21.9273 16.5591 22.9355V22.937C16.5858 23.3963 16.4112 23.8454 16.078 24.1746ZM24.4474 18.1102C24.4474 18.9456 23.6136 19.0694 23.2289 19.0694H21.8821V12.5718H23.2289C23.9343 12.5718 24.4474 13.531 24.4474 14.2426V18.1102Z"
-                                strokeWidth="0.4"
-                            />
-                        </svg>
-                    </div>
-
-                    {unread != 0 && (
-                        <span
-                            onClick={openGoftinoAction}
-                            aria-hidden
-                            className={styles['unreadCount']}
-                        >
-                            {unread}
-                        </span>
-                    )}
-                    <div
-                        className={classNames({
-                            [styles['support-tool-tip']]: true,
-                            [styles['hide']]: hideToolTip
-                        })}
-                    >
-                        هر روز از 7 تا 24 پاسخگوی شما هستیم.
-                    </div> */}
-                {/* {!isMobile && (
-                        <div
-                            className={styles.wrapper_dropdown}
-                            onMouseOut={() => setIsDropDownOpen(false)}
-                        >
-                            <div
-                                className={styles.header_dropdown}
-                                onMouseOver={() => setIsDropDownOpen(true)}
-                            >
-                                <div className={styles.name}>
-                                    <UserIcon color="#415266" />
-                                    <span>{`${info.doctor.name} ${info.doctor.family}`}</span>
-                                </div>
-
-                                <ChevronIcon
-                                    className={styles.chevron_dropdown}
-                                    color="#758599"
-                                    dir={isDropDownOpen ? 'top' : 'bottom'}
-                                />
-                            </div>
-                            <CSSTransition
-                                in={isDropDownOpen}
-                                timeout={300}
-                                classNames={{
-                                    enter: styles.dropdown_enter,
-                                    enterActive: styles.dropdown_enter_active,
-                                    enterDone: styles.dropdown_enter_done,
-                                    exitActive: styles.dropdown_exit_active
-                                }}
-                                unmountOnExit
-                            >
-                                <div
-                                    className={`${styles.items_dropdown} ${
-                                        isDropDownOpen === 'open' ? styles.open : ''
-                                    } ${isDropDownOpen === 'closing' ? styles.closing : ''}`}
-                                    onMouseOver={() => setIsDropDownOpen(true)}
-                                >
-                                    <div className={styles.info_dropdown}>
-                                        <img
-                                            src={
-                                                info.doctor.image
-                                                    ? baseURL('UPLOADER') + info.doctor.image
-                                                    : null ?? NoImage
-                                            }
-                                            alt="avatar"
-                                        />
-                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                            <span
-                                                style={{
-                                                    fontSize: '1.6rem',
-                                                    fontWeight: 'bold',
-                                                    marginBottom: '0.5rem'
-                                                }}
-                                            >{`${info.doctor.name} ${info.doctor.family}`}</span>
-                                            {info.doctor.expertises.length > 0 && (
-                                                <span style={{ fontSize: '1.4rem' }}>
-                                                    {info.doctor.expertises[0].alias_title
-                                                        ? info.doctor.expertises[0].alias_title
-                                                        : `${
-                                                              info.doctor.expertises[0].degree
-                                                                  ?.name ?? ''
-                                                          } ${
-                                                              info.doctor.expertises[0].expertise
-                                                                  ?.name ?? ''
-                                                          }`}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <ul>
-                                        <li onClick={() => history.push('/profile')}>
-                                            <UserIcon color="#758599" />
-                                            <span>پروفایل من</span>
-                                        </li>
-
-                                        <li onClick={() => history.push('/logout')}>
-                                            <ExitIcon color="#758599" />
-                                            <span>خروج از حساب کاربری</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </CSSTransition>
-                        </div>
-                    )} */}
-                {/* </div> */}
-
-                {/* <Button
-                    // variant="secondary"
-                    // size="small"
-                    id="add-turn"
-                    // onClick={() => {
-                    //     props.setOpenNewTurn(true);
-                    //     if (urlParams.learn) {
-                    //         tourState(true);
-                    //         setSteps(4);
-                    //     }
-                    //     sendEvent('plususer', 'prescription', 'plususer');
-                    // }}
-                    size="medium"
-                >
-                    افزودن بیمار
-                </Button> */}
 
                 {isOpen && (
                     <div

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-rm -rf ./public/env-config.js
-touch ./public/env-config.js
+rm -rf ./env-config.js
+touch ./env-config.js
 
-echo "window._env_ = {" >> ./public/env-config.js
+echo "window._env_ = {" >> ./env-config.js
 
 while read -r line || [[ -n "$line" ]];
 do
@@ -15,22 +15,22 @@ do
       value=$(printf '%s\n' "${!varname}")
       [[ -z $value ]] && value=${varvalue}
 
-       if grep -q -e $varname ".env.local"; then
-        value=$(grep -e "^$varname=" ".env.local" | sed -e 's/^[^=]*=//')
-        varvalue=$(grep -e "^$varname=" ".env.local" | sed -e 's/^[^=]*=//')
-        
+      if [[ -f ".env.local" ]]; then
+        if grep -q -e $varname ".env.local"; then
+          value=$(grep -e "^$varname=" ".env.local" | sed -e 's/^[^=]*=//')
+          varvalue=$(grep -e "^$varname=" ".env.local" | sed -e 's/^[^=]*=//')
+          
+        fi
       fi
 
-    
-
       if printf '%s\n' "$varvalue" | grep -q -e 'true' ||printf '%s\n' "$varvalue" | grep -q -e 'false'  ; then
-        echo "    $varname: $value," >> ./public/env-config.js
+        echo "    $varname: $value," >> ./env-config.js
       else
-        echo "    $varname: \`$value\`," >> ./public/env-config.js
+        echo "    $varname: \`$value\`," >> ./env-config.js
       fi
     fi
 
  
 done < .env
 
-echo "};" >> ./public/env-config.js
+echo "};" >> ./env-config.js

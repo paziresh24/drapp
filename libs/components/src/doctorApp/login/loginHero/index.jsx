@@ -59,9 +59,9 @@ const LoginHero = ({ focus, setFocus }) => {
                 )}
 
                 <div className={styles['content']}>
-                    <span className={styles['title']}>صدور نسخه فقط با یک کلیک!!</span>
+                    <span className={styles['title']}>پذیرش24، دستیار هوشمند پزشکان</span>
                     <span className={styles['description']}>
-                        بدون وارد کردن اطلاعات بیمار، از لیست نوبت دهی دکمه صدور نسخه را بزنید.{' '}
+                        پرونده الکترونیک، نسخه نویسی و مدیریت مطب تنها در یک پنل
                     </span>
 
                     {!centersConfig[window.location.hostname]?.hideDownloadBox && (

@@ -5,12 +5,22 @@ import { isMobile } from 'react-device-detect';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
 import { toast } from 'react-toastify';
 import { sendEvent } from '@paziresh24/utils';
+import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
+import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
+import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 
 const Item = ({ service, setItemsSelect, itemsSelect }) => {
     const [services, setServices] = useServices();
     const [, setIsOpenToolBox] = useToolBox();
+    const [type, setType] = useSelectType();
+    const [prescriptionInfo] = useSelectPrescription();
 
     const addItemService = () => {
+        setType(
+            Object.entries(serviceTypeList).filter(item =>
+                item[1][prescriptionInfo.insuranceType].includes(service?.service_type?.id)
+            )?.[0]?.[0] ?? 'drugs'
+        );
         if (services.some(item => item.service.id === service.service.id)) {
             return toast.warn('این آیتم قبلا اضافه شده است.');
         }

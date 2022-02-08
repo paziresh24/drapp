@@ -5,51 +5,13 @@ import { PrescriptionCard } from '../prescriptionCard';
 import { useEffect, useState } from 'react';
 import Loading from './loading';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
+import { ChevronIcon } from '@paziresh24/components/icons';
+import { isMobile } from 'react-device-detect';
 
 const TurnsWrapper = ({ loading, turns, refetchData }) => {
     const [dropDownShow, setDropDownShow] = useState(false);
-    const [nearTurns, setNearTurns] = useState([]);
-
-    useEffect(() => {
-        if (!isEmpty(turns)) {
-            setNearTurns(
-                turns
-                    .filter(
-                        turn =>
-                            (turn.type === 'book'
-                                ? !turn.prescription?.finalized ?? false
-                                : !turn.finalized) &&
-                            (turn.type === 'book'
-                                ? turn.from * 1000
-                                : new Date(turn.created_at).getTime()) <= new Date().getTime() &&
-                            (turn.type === 'book'
-                                ? turn.from * 1000
-                                : new Date(turn.created_at).getTime()) -
-                                new Date().getTime() >=
-                                -900000
-                    )
-                    .reverse()
-                    .slice(0, 2)
-                    .reverse(),
-                turns
-                    .filter(
-                        turn =>
-                            (turn.type === 'book'
-                                ? !turn.prescription?.finalized ?? false
-                                : !turn.finalized) &&
-                            (turn.type === 'book'
-                                ? turn.from * 1000
-                                : new Date(turn.created_at).getTime()) >= new Date().getTime() &&
-                            (turn.type === 'book'
-                                ? turn.from * 1000
-                                : new Date(turn.created_at).getTime()) -
-                                new Date().getTime() <=
-                                900000
-                    )
-                    .slice(0, 2)
-            );
-        }
-    }, [turns]);
+    const [isOpenActiveTurns, setIsOpenActiveTurns] = useState(true);
+    const [isOpenFinalizedTurns, setIsOpenFinalizedTurns] = useState(true);
 
     document.body.addEventListener('click', () => {
         if (dropDownShow) {
@@ -60,72 +22,196 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
     return (
         !isEmpty(turns) && (
             <>
-                {!isEmpty(nearTurns) && (
+                {!isMobile ? (
                     <tr className={styles['head-title']}>
-                        <td>نوبت های نزدیک</td>
+                        <td>
+                            لیست بیماران
+                            <span style={{ marginRight: '0.5rem' }}>
+                                (
+                                {
+                                    turns.filter(
+                                        turn =>
+                                            turn.prescription?.finalized === false ||
+                                            turn.finalized === false
+                                    ).length
+                                }
+                                )
+                            </span>
+                        </td>
                         <td />
                         <td />
                         <td />
                         <td />
-                        <td />
+                        <td>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <div
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => setIsOpenActiveTurns(prev => !prev)}
+                                    aria-hidden
+                                >
+                                    <ChevronIcon dir={isOpenActiveTurns ? 'top' : 'bottom'} />
+                                </div>
+                            </div>
+                        </td>
                     </tr>
+                ) : (
+                    <div
+                        className={styles['head-title']}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            width: '100%',
+                            padding: '1rem 2rem'
+                        }}
+                    >
+                        <div>
+                            <span>لیست بیماران</span>
+                            <span style={{ marginRight: '0.5rem' }}>
+                                (
+                                {
+                                    turns.filter(
+                                        turn =>
+                                            turn.prescription?.finalized === false ||
+                                            turn.finalized === false
+                                    ).length
+                                }
+                                )
+                            </span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <div
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => setIsOpenActiveTurns(prev => !prev)}
+                                aria-hidden
+                            >
+                                <ChevronIcon dir={isOpenActiveTurns ? 'top' : 'bottom'} />
+                            </div>
+                        </div>
+                    </div>
                 )}
 
-                {!isEmpty(nearTurns) &&
-                    nearTurns.map(turn =>
-                        turn.type === 'book' ? (
-                            <TurnCard
-                                turn={turn}
-                                key={turn.id}
-                                dropDownShowKey={turn.id + 'near'}
-                                refetchData={refetchData}
-                                dropDownShow={dropDownShow}
-                                setDropDownShow={setDropDownShow}
-                            />
-                        ) : (
-                            <PrescriptionCard
-                                dropDownShow={dropDownShow}
-                                setDropDownShow={setDropDownShow}
-                                turn={turn}
-                                key={turn.id}
-                                dropDownShowKey={turn.id + 'near'}
-                                refetchData={refetchData}
-                            />
-                        )
+                {isOpenActiveTurns &&
+                    turns.map(turn =>
+                        turn.type === 'book'
+                            ? !turn.prescription?.finalized && (
+                                  <TurnCard
+                                      turn={turn}
+                                      key={turn.id}
+                                      dropDownShowKey={turn.id}
+                                      refetchData={refetchData}
+                                      dropDownShow={dropDownShow}
+                                      setDropDownShow={setDropDownShow}
+                                  />
+                              )
+                            : !turn?.finalized && (
+                                  <PrescriptionCard
+                                      dropDownShow={dropDownShow}
+                                      setDropDownShow={setDropDownShow}
+                                      turn={turn}
+                                      key={turn.id}
+                                      dropDownShowKey={turn.id}
+                                      refetchData={refetchData}
+                                  />
+                              )
                     )}
 
-                {!isEmpty(nearTurns) && (
-                    <tr className={styles['head-title']}>
-                        <td>نوبت ها</td>
+                {!isMobile ? (
+                    <tr
+                        className={styles['head-title']}
+                        style={{ borderTop: '1px solid #e6e6e683' }}
+                    >
+                        <td>
+                            <span>نسخه های ثبت شده</span>
+                            <span style={{ marginRight: '0.5rem' }}>
+                                (
+                                {
+                                    turns.filter(
+                                        turn =>
+                                            turn.prescription?.finalized === true ||
+                                            turn.finalized === true
+                                    ).length
+                                }
+                                )
+                            </span>
+                        </td>
                         <td />
                         <td />
                         <td />
                         <td />
-                        <td />
+                        <td>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <div
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => setIsOpenFinalizedTurns(prev => !prev)}
+                                    aria-hidden
+                                >
+                                    <ChevronIcon dir={isOpenFinalizedTurns ? 'top' : 'bottom'} />
+                                </div>
+                            </div>
+                        </td>
                     </tr>
+                ) : (
+                    <div
+                        className={styles['head-title']}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            width: '100%',
+                            padding: '1rem 2rem'
+                        }}
+                    >
+                        <div>
+                            <span>نسخه های ثبت شده</span>
+                            <span style={{ marginRight: '0.5rem' }}>
+                                (
+                                {
+                                    turns.filter(
+                                        turn =>
+                                            turn.prescription?.finalized === true ||
+                                            turn.finalized === true
+                                    ).length
+                                }
+                                )
+                            </span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <div
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => setIsOpenFinalizedTurns(prev => !prev)}
+                                aria-hidden
+                            >
+                                <ChevronIcon dir={isOpenFinalizedTurns ? 'top' : 'bottom'} />
+                            </div>
+                        </div>
+                    </div>
                 )}
 
-                {turns.map(turn =>
-                    turn.type === 'book' ? (
-                        <TurnCard
-                            turn={turn}
-                            key={turn.id}
-                            dropDownShowKey={turn.id}
-                            refetchData={refetchData}
-                            dropDownShow={dropDownShow}
-                            setDropDownShow={setDropDownShow}
-                        />
-                    ) : (
-                        <PrescriptionCard
-                            dropDownShow={dropDownShow}
-                            setDropDownShow={setDropDownShow}
-                            turn={turn}
-                            key={turn.id}
-                            dropDownShowKey={turn.id}
-                            refetchData={refetchData}
-                        />
-                    )
-                )}
+                {isOpenFinalizedTurns &&
+                    turns.map(turn =>
+                        turn.type === 'book'
+                            ? turn.prescription?.finalized && (
+                                  <TurnCard
+                                      turn={turn}
+                                      key={turn.id}
+                                      dropDownShowKey={turn.id}
+                                      refetchData={refetchData}
+                                      dropDownShow={dropDownShow}
+                                      setDropDownShow={setDropDownShow}
+                                  />
+                              )
+                            : turn?.finalized && (
+                                  <PrescriptionCard
+                                      dropDownShow={dropDownShow}
+                                      setDropDownShow={setDropDownShow}
+                                      turn={turn}
+                                      key={turn.id}
+                                      dropDownShowKey={turn.id}
+                                      refetchData={refetchData}
+                                  />
+                              )
+                    )}
             </>
         )
     );
