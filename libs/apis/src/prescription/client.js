@@ -9,7 +9,7 @@ const isMainDomain =
 const client = axios.create({
     baseURL:
         isProduction && !isMainDomain
-            ? window.location.origin + process.env.P24_BASE_URL_PRESCRIPTION_ROUTE
+            ? window.location.origin + process.env.REACT_APP_BASE_URL_PRESCRIPTION_ROUTE
             : window._env_.P24_BASE_URL_PRESCRIPTION_API
 });
 

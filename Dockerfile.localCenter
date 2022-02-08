@@ -2,7 +2,7 @@
 FROM node:14.17.5-alpine as build
 WORKDIR /app
 COPY package.json ./
-RUN yarn --silent --legacy-peer-deps
+RUN yarn --silent
 COPY . .
 ENV PUBLIC_URL /doctorapp
 RUN yarn build drapp
@@ -30,6 +30,7 @@ RUN apk add --no-cache bash
 RUN chmod +x env.sh
 
 RUN sed -i -e 's/\r$//' env.sh
+RUN sed -i -e 's/\r$//' .env
 
 # Start Nginx server
 CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]

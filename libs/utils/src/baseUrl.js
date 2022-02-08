@@ -20,7 +20,7 @@ export const baseURL = key => {
 
     if (key === 'PRESCRIPTION_API') {
         if (isProduction && !isMainDomain) {
-            return window.location.origin + window._env_.P24_BASE_URL_PRESCRIPTION_ROUTE;
+            return window.location.origin + process.env.REACT_APP_BASE_URL_PRESCRIPTION_ROUTE;
         }
         return window._env_.P24_BASE_URL_PRESCRIPTION_API;
     }
