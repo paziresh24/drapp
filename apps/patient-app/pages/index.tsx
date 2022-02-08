@@ -1,7 +1,20 @@
+import Card from '../components/atoms/card';
+
 export function Index() {
     return (
         <div className="bg-gray-50">
-            <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"></div>
+            <Card>
+                <span>hi</span>
+            </Card>
+            <Card>
+                <span>hi</span>
+            </Card>
+            <Card>
+                <span>hi</span>
+            </Card>
+            <Card>
+                <span>hi</span>
+            </Card>
         </div>
     );
 }
