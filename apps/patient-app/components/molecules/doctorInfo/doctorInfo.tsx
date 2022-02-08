@@ -3,9 +3,9 @@ import Text from '../../atoms/Text';
 
 interface DoctorInfoProps {
     avatar?: string;
-    firstName: string;
-    lastName: string;
-    expertise: string;
+    firstName?: string;
+    lastName?: string;
+    expertise?: string;
 }
 
 export const DoctorInfo: React.FC<DoctorInfoProps> = props => {
