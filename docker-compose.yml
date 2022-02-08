@@ -3,7 +3,7 @@ version: '3.7'
 services:
     drapp-local:
         container_name: drapp-local
-        # image: dockerhub.paziresh24.com/drapp-client-local
+        image: dockerhub.paziresh24.com/drapp-local
         build:
             context: .
             dockerfile: Dockerfile.localCenter

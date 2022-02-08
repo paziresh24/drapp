@@ -1,16 +1,8 @@
 import axios from 'axios';
-import queryString from 'querystring';
-
-const isProduction = process.env.NODE_ENV === 'production';
-const isMainDomain =
-    window.location.host === window._env_.P24_MAIN_DOMAIN ||
-    window.location.hostname === 'localhost';
+import { baseURL } from '@paziresh24/utils/baseUrl';
 
 const client = axios.create({
-    baseURL:
-        isProduction && !isMainDomain
-            ? window.location.origin + process.env.REACT_APP_BASE_URL_PRESCRIPTION_ROUTE
-            : window._env_.P24_BASE_URL_PRESCRIPTION_API
+    baseURL: baseURL('PRESCRIPTION_API')
 });
 
 client.interceptors.response.use(
