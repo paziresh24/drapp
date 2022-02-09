@@ -3,9 +3,9 @@ import Text from '../../atoms/Text';
 
 interface DoctorInfoProps {
     avatar?: string;
-    firstName?: string;
-    lastName?: string;
-    expertise?: string;
+    firstName: string;
+    lastName: string;
+    expertise: string;
 }
 
 export const DoctorInfo: React.FC<DoctorInfoProps> = props => {
@@ -13,11 +13,13 @@ export const DoctorInfo: React.FC<DoctorInfoProps> = props => {
     return (
         <div className="flex items-center">
             <Aavatar src={avatar} />
-            <div className="flex flex-col">
-                <Text fontSize="lg">
+            <div className="flex flex-col mr-4">
+                <Text fontSize="lg" fontWeight="bold">
                     {firstName} {lastName}
                 </Text>
-                <Text fontSize="sm">{expertise}</Text>
+                <Text fontSize="sm" className="mt-1">
+                    {expertise}
+                </Text>
             </div>
         </div>
     );
