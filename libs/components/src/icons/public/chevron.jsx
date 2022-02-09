@@ -1,6 +1,13 @@
 import styles from './styles/chevron.module.scss';
 
-const Chevron = ({ dir, color, width, height, className, onClick }) => {
+const Chevron = ({
+    dir = 'left',
+    color = '#3f3f79',
+    width = '7',
+    height = '11',
+    className = undefined,
+    onClick = undefined
+}) => {
     return (
         <svg
             width={width}

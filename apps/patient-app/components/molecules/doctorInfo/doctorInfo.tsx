@@ -1,5 +1,5 @@
 import Aavatar from '../../atoms/avatar';
-import Text from '../../atoms/Text';
+import Text from '../../atoms/text';
 
 interface DoctorInfoProps {
     avatar?: string;

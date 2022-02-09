@@ -1,7 +1,7 @@
-import Text from '../../atoms/Text';
+import Text from '../../atoms/text';
 
 interface TurnDetailsProps {
-    items: Array<{ id: number; name: string; value: string }>;
+    items: Array<{ id: number; name: string; value: string | React.ReactNode }>;
 }
 
 export const TurnDetails: React.FC<TurnDetailsProps> = props => {
