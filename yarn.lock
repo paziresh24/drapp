@@ -10681,7 +10681,7 @@ react-error-overlay@^6.0.10:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.10.tgz#0fe26db4fa85d9dbb8624729580e90e7159a59a6"
   integrity sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA==
 
-react-export-excel-xlsx-fix@false0.5.3:
+react-export-excel-xlsx-fix@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/react-export-excel-xlsx-fix/-/react-export-excel-xlsx-fix-0.5.3.tgz#d6fcf4a3618d53c9f3ec9781c791c6ffffcf333e"
   integrity sha512-OXqpbMOm+rityULTORIkqgp1gCN6Zxw2OBdoy/AJgOV9kH+cCAWmiL7nNcRW0zRmu+oUcdjMHoC+7GpU9cx1nQ==
@@ -12175,7 +12175,7 @@ table@^6.0.9:
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
-tailwindcss-rtl@false0.9.0:
+tailwindcss-rtl@0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/tailwindcss-rtl/-/tailwindcss-rtl-0.9.0.tgz#270da04492081620478ebf73819fc285fe724a54"
   integrity sha512-y7yC8QXjluDBEFMSX33tV6xMYrf0B3sa+tOB5JSQb6/G6laBU313a+Z+qxu55M1Qyn8tDMttjomsA8IsJD+k+w==

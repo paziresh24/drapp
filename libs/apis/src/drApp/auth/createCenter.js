@@ -1,8 +1,9 @@
 import { client } from '../../client';
+import omit from 'lodash/omit';
 
 export const createCenter = async params => {
     return await client.post(
         `/doctor/center${params.ignore_shahkar ? '/ignoreShahkar' : ''}`,
-        _.omit(params, ['ignore_shahkar'])
+        omit(params, ['ignore_shahkar'])
     );
 };

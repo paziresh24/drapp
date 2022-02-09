@@ -15,6 +15,13 @@
                 ]
             }
         },
+        "changeEnv": {
+            "builder": "@nrwl/workspace:run-commands",
+            "options": {
+                "cwd": "apps/drapp",
+                "commands": ["chmod +x env.sh", "sh env.sh && mv env-config.js public"]
+            }
+        },
         "build": {
             "builder": "@nrwl/workspace:run-commands",
             "options": {
