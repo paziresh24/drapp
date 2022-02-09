@@ -8,8 +8,11 @@ module.exports = {
     ],
     theme: {
         extend: {
-            body: {
-                direction: 'rtl'
+            colors: {
+                primary: '#0077DB',
+                gray: '#F8FAFB',
+                secondary: '#27BDA0',
+                brand: '#3F3F79'
             }
         }
     },
