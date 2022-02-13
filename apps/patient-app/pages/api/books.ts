@@ -1,31 +1,32 @@
 import axios from 'axios';
 import FormData from 'form-data';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req, res) {
-    const data = new FormData();
-    data.append('certificate', '$2y$10$lGttgXxc3vgPbsZg8EbnvehGTE4aFOdJO3JFVW5Z7H3k6ZM8Yubrq');
-    data.append('page', req.query?.page ?? '1');
-    data.append('type', '"book_request\'');
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
+        const data = new FormData();
+        data.append('certificate', req.cookies.certificate);
+        data.append('page', req.query?.page ?? '1');
+        data.append('type', 'book_request');
+
         const books = await axios.post('https://www.paziresh24.com/api/getBooks', data, {
             headers: {
-                Cookie: 'P24SESSION=l2ok4nmttnk32f7v43c0fcbpu7',
+                Cookie: req.cookies.P24SESSION,
                 ...data.getHeaders()
             }
         });
 
-        const reformatBooks = Object.keys(books.data.result)
+        const reformattedBooks = Object.keys(books.data.result)
             .filter(key => key !== '#total_count')
             .map(key => books.data.result[key]);
 
-        if (reformatBooks.length === 0) return res.status(204).json({ data: [] });
+        if (reformattedBooks.length === 0) return res.status(204).json({ data: [] });
 
         const prescriptions = await axios.get('https://prescription-api.paziresh24.com/V1/pdf', {
-            params: { identifier: reformatBooks.map(book => book.book_id) }
+            params: { identifier: reformattedBooks.map(book => book.book_id) }
         });
 
-        const reformatResponse = reformatBooks.map(book => ({
+        const reformattedResponse = reformattedBooks.map(book => ({
             id: book.book_id,
             status: book.book_delete === '1' ? 'deleted' : book.book_status,
             doctor_info: {
@@ -64,11 +65,11 @@ export default async function handler(req, res) {
             }
         }));
 
-        res.status(200).json({ data: reformatResponse });
+        res.status(200).json({ data: reformattedResponse });
     } catch (e) {
+        console.error(e);
         res.status(500).json({
-            message: 'Something went wrong',
-            results: e
+            message: 'Something went wrong'
         });
     }
 }
