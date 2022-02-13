@@ -1,4 +1,4 @@
-const ShareIcon = () => {
+export const ShareIcon = () => {
     return (
         <svg
             width="24"

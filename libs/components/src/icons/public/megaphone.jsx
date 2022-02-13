@@ -1,4 +1,4 @@
-const MegaphoneIcon = ({ color }) => {
+export const MegaphoneIcon = ({ color }) => {
     return (
         <svg
             width="20"
