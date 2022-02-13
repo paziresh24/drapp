@@ -12,14 +12,13 @@ const Modal = ({
     isOpen,
     onClose,
     title,
-    icon,
+    icon = undefined,
     children,
-    noHeader,
-    noBodyPad,
-    fullPage,
-    maxWidth,
-    isDesktop,
-    id
+    noHeader = false,
+    noBodyPad = false,
+    fullPage = false,
+    maxWidth = undefined,
+    id = undefined
 }) => {
     const neutralizeBack = () => {
         if (isMobile) {
@@ -103,7 +102,7 @@ const Modal = ({
                 </div>
             </div>
         </CSSTransition>,
-        document.getElementById('root')
+        document.body
     );
 };
 

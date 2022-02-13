@@ -1,12 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Location from './clinicTurn';
+import DropDown from './dropDown';
 
 describe('Card', () => {
     it('should render successfully', () => {
-        const { baseElement } = render(
-            <Location items={[{ id: 1, name: 'کدپیگیری', value: '123' }]} />
-        );
+        const { baseElement } = render(<DropDown>foo</DropDown>);
         expect(baseElement).toBeTruthy();
     });
 });

@@ -10,8 +10,10 @@ export const TurnDetails: React.FC<TurnDetailsProps> = props => {
         <div className="flex flex-col w-full bg-gray p-3 px-4 space-y-4 rounded-md">
             {items.map(item => (
                 <div key={item.id} className="flex items-center justify-between">
-                    <Text>{item.name}:</Text>
-                    <Text fontWeight="bold">{item.value}</Text>
+                    <Text fontSize="sm">{item.name}:</Text>
+                    <Text fontWeight="bold" fontSize="sm">
+                        {item.value}
+                    </Text>
                 </div>
             ))}
         </div>

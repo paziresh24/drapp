@@ -3,17 +3,17 @@ import Text from '../../atoms/text';
 interface LocationProps {
     address: string;
     lat: number;
-    long: number;
+    lng: number;
 }
 
 export const Location: React.FC<LocationProps> = props => {
-    const { address, lat, long } = props;
+    const { address, lat, lng } = props;
     return (
         <a
-            href={`https://maps.google.com/maps?daddr=${lat},${long}&amp;ll=`}
+            href={`https://maps.google.com/maps?daddr=${lat},${lng}&amp;ll=`}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center w-full p-3"
+            className="flex items-center w-full p-3 px-0"
         >
             <div className="flex items-center justify-center w-12 min-w-[3rem] h-12 bg-gray rounded-md ml-2">
                 <svg
@@ -32,7 +32,7 @@ export const Location: React.FC<LocationProps> = props => {
                     />
                 </svg>
             </div>
-            <Text fontSize="base" className="line-clamp-2">
+            <Text fontSize="sm" className="line-clamp-2">
                 {address}
             </Text>
         </a>

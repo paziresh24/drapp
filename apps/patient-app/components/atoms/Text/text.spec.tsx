@@ -4,7 +4,7 @@ import Text from './text';
 
 describe('Text', () => {
     it('should render successfully', () => {
-        const { baseElement } = render(<Text fontSize='3xl'>Bar</Text>);
+        const { baseElement } = render(<Text fontSize="3xl">Bar</Text>);
         expect(baseElement).toBeTruthy();
-    });ٌ
+    });
 });

@@ -7,6 +7,7 @@ interface ButtonProps {
     onClick?: () => void;
     block?: boolean;
     className?: string;
+    loading?: boolean;
 }
 
 const buttonStyles = {
@@ -16,8 +17,8 @@ const buttonStyles = {
     },
     size: {
         sm: 'px-3 h-10 text-sm',
-        md: 'px-4 h-12 text-base',
-        lg: 'px-5 h-14 text-lg'
+        md: 'px-4 h-12 text-sm',
+        lg: 'px-5 h-14 text-md'
     },
     theme: {
         error: {
@@ -37,7 +38,8 @@ export const Button: React.FC<ButtonProps> = props => {
         block = false,
         onClick,
         icon,
-        className
+        className,
+        loading = false
     } = props;
 
     return (
@@ -50,8 +52,70 @@ export const Button: React.FC<ButtonProps> = props => {
             } ${className ? className : ''}`}
             onClick={onClick}
         >
-            {icon && <span className="flex items-center justify-center ml-2">{icon}</span>}
-            {children}
+            {!loading && (
+                <>
+                    {icon && <span className="flex items-center justify-center ml-2">{icon}</span>}
+                    {children}
+                </>
+            )}
+            {loading && (
+                <svg
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="60px"
+                    height="10px"
+                    viewBox="0 0 80 20"
+                >
+                    <circle cx="10" cy="10" r="10" fill="#fff">
+                        <animate
+                            attributeName="cx"
+                            from="10"
+                            to="40"
+                            dur="0.5s"
+                            calcMode="spline"
+                            keySplines="0.42 0 0.58 1"
+                            keyTimes="0;1"
+                            repeatCount="indefinite"
+                        />
+                    </circle>
+                    <circle cx="10" cy="10" r="0" fill="#fff">
+                        <animate
+                            attributeName="r"
+                            from="0"
+                            to="10"
+                            dur="0.5s"
+                            calcMode="spline"
+                            keySplines="0.42 0 0.58 1"
+                            keyTimes="0;1"
+                            repeatCount="indefinite"
+                        />
+                    </circle>
+                    <circle cx="40" cy="10" r="10" fill="#fff">
+                        <animate
+                            attributeName="cx"
+                            from="40"
+                            to="70"
+                            dur="0.5s"
+                            calcMode="spline"
+                            keySplines="0.42 0 0.58 1"
+                            keyTimes="0;1"
+                            repeatCount="indefinite"
+                        />
+                    </circle>
+                    <circle cx="70" cy="10" r="10" fill="#fff">
+                        <animate
+                            attributeName="r"
+                            from="10"
+                            to="0"
+                            dur="0.5s"
+                            calcMode="spline"
+                            keySplines="0.42 0 0.58 1"
+                            keyTimes="0;1"
+                            repeatCount="indefinite"
+                        />
+                    </circle>
+                </svg>
+            )}
         </button>
     );
 };

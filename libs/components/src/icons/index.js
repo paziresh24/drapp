@@ -48,6 +48,8 @@ export { ComplaintsIcon } from './public/complaints';
 export { PrescriptionMenuIcon } from './public/prescriptionMenu';
 export { MinusLineIcon } from './public/minusLine';
 export { Statistics } from './public/statistics';
+export { ShareIcon } from './public/share';
+export { MegaphoneIcon } from './public/megaphone';
 
 export {
     LearnIcon,

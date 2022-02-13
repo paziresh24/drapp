@@ -5,9 +5,9 @@ class Document extends NextDocument {
     }
     render() {
         return (
-            <Html dir="rtl" lang="fa-IR">
+            <Html dir="rtl" lang="fa-IR" className="scroll-smooth">
                 <Head />
-                <body className="font-sans">
+                <body className="bg-[#f3f7fa]">
                     <Main />
                     <NextScript />
                 </body>
