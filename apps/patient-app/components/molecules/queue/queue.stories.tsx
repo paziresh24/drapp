@@ -1,4 +1,4 @@
-import TagStatus from './tagStatus';
+import TagStatus from './queue';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

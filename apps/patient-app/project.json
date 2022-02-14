@@ -50,34 +50,17 @@
             }
         },
         "storybook": {
-            "executor": "@nrwl/storybook:storybook",
+            "builder": "@nrwl/workspace:run-commands",
             "options": {
-                "uiFramework": "@storybook/react",
-                "port": 4400,
-                "config": {
-                    "configFolder": "apps/patient-app/.storybook"
-                }
-            },
-            "configurations": {
-                "ci": {
-                    "quiet": true
-                }
+                "cwd": "apps/patient-app",
+                "commands": ["node ./node_modules/@storybook/react/bin"]
             }
         },
         "build-storybook": {
-            "executor": "@nrwl/storybook:build",
-            "outputs": ["{options.outputPath}"],
+            "builder": "@nrwl/workspace:run-commands",
             "options": {
-                "uiFramework": "@storybook/react",
-                "outputPath": "dist/storybook/patient-app",
-                "config": {
-                    "configFolder": "apps/patient-app/.storybook"
-                }
-            },
-            "configurations": {
-                "ci": {
-                    "quiet": true
-                }
+                "cwd": "apps/patient-app",
+                "commands": ["node ./node_modules/@storybook/react/bin/build"]
             }
         }
     },

@@ -1,4 +1,4 @@
-import ClinicTurn from './clinicTurn';
+import ClinicTurn from './turn';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
