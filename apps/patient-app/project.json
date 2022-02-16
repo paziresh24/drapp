@@ -3,6 +3,15 @@
     "sourceRoot": "apps/patient-app",
     "projectType": "application",
     "targets": {
+        "deploy": {
+            "builder": "@nrwl/workspace:run-commands",
+            "options": {
+                "cwd": "apps/patient-app",
+                "commands": [
+                    "cd  ../.. && nx build patient-app  && docker-compose build patient-app && docker-compose push patient-app"
+                ]
+            }
+        },
         "build": {
             "executor": "@nrwl/next:build",
             "outputs": ["{options.outputPath}"],
