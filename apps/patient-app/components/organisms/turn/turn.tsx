@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { convertToPersianDate, convertToTime } from '@paziresh24/utils';
 import { TurnBody, TurnFooter, TurnHeader } from '../../molecules/turnCard';
 interface TurnProps {
-    status?: 'expired' | 'deleted' | 'not_visited';
+    status?: 'expired' | 'deleted' | 'not_visited' | 'visited';
     id: string;
     centerType: 'clinic' | 'hospital' | 'consult';
     centerInfo: {

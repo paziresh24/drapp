@@ -4,7 +4,7 @@ import Rate from './../../rate/rate';
 
 interface TurnBodyProps {
     detailsData: Array<{ id: number; name: string; value: string | React.ReactNode }>;
-    status: 'expired' | 'deleted' | 'not_visited';
+    status: 'expired' | 'deleted' | 'not_visited' | 'visited';
     feedbackUrl: string;
     location: {
         lat: number;

@@ -1,12 +1,13 @@
 import Chips from '../../atoms/chips';
 
 interface TagStatusProps {
-    status: 'expired' | 'deleted' | 'not_visited';
+    status: 'expired' | 'deleted' | 'not_visited' | 'visited';
 }
 
 enum TagsStatus {
     expired = 'منقضی',
-    deleted = 'حذف شده'
+    deleted = 'حذف شده',
+    visited = 'ویزیت شده'
 }
 
 export const TagStatus: React.FC<TagStatusProps> = props => {

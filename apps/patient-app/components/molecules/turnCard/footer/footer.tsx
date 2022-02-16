@@ -8,7 +8,7 @@ import Queue from '../../queue';
 
 interface TurnFooterProps {
     slug: string;
-    status: 'expired' | 'deleted' | 'not_visited';
+    status: 'expired' | 'deleted' | 'not_visited' | 'visited';
     pdfLink: string;
     centerType: 'clinic' | 'hospital' | 'consult';
 }
@@ -56,23 +56,29 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
             {status === 'not_visited' &&
                 (centerType === 'consult' ? CunsultPrimaryButton : ClinicPrimaryButton)}
 
-            {status === 'expired' && (
-                <div className="flex gap-2">
-                    <Button variant="secondary" size="sm" block={true} onClick={getTurnAgainAction}>
-                        دریافت نوبت مجدد
-                    </Button>
-                    {pdfLink && (
+            {status === 'expired' ||
+                (status === 'visited' && (
+                    <div className="flex gap-2">
                         <Button
                             variant="secondary"
                             size="sm"
                             block={true}
-                            onClick={prescriptionAction}
+                            onClick={getTurnAgainAction}
                         >
-                            مشاهده نسخه
+                            دریافت نوبت مجدد
                         </Button>
-                    )}
-                </div>
-            )}
+                        {pdfLink && (
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                block={true}
+                                onClick={prescriptionAction}
+                            >
+                                مشاهده نسخه
+                            </Button>
+                        )}
+                    </div>
+                ))}
 
             <Modal
                 title="شماره نوبت شما"

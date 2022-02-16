@@ -24,7 +24,7 @@ interface TurnHeaderProps {
     centerId: string;
     nationalCode: string;
     trackingCode: string;
-    status: 'expired' | 'deleted' | 'not_visited';
+    status: 'expired' | 'deleted' | 'not_visited' | 'visited';
 }
 
 export const TurnHeader: React.FC<TurnHeaderProps> = props => {
