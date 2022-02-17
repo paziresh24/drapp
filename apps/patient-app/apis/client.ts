@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const nextClient = axios.create({
     withCredentials: true,
-    baseURL: `${process.env.NEXT_PUBLIC_BASE_PATH}/api`
+    baseURL: `${isProduction ? process.env.NEXT_PUBLIC_BASE_PATH : ''}/api`
 });
 
 export const clinicClient = axios.create({
