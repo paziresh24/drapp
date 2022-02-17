@@ -6,7 +6,7 @@ import Text from '../components/atoms/text';
 import { useInView } from 'react-intersection-observer';
 import { useBookStore } from '../store';
 
-export function Index() {
+export function Index({ isWebView }) {
     const [page, setPage] = useState(1);
     const { books, addBooks } = useBookStore();
     const [isLoading, setIsLoading] = useState(true);
@@ -36,10 +36,14 @@ export function Index() {
 
     return (
         <div className="flex flex-col container mx-auto">
-            <div className="h-14 w-full flex items-center px-5 bg-white shadow-card fixed top-0 right-0 z-10">
-                <Text fontWeight="bold">نوبت های من</Text>
-            </div>
-            <div className="p-5 space-y-3 pt-20 w-full lg:w-2/4 self-center">
+            {isWebView && (
+                <div className="h-14 w-full flex items-center px-5 bg-white shadow-card fixed top-0 right-0 z-10">
+                    <Text fontWeight="bold">نوبت های من</Text>
+                </div>
+            )}
+            <div
+                className={`p-5 space-y-3 ${isWebView ? 'pt-20' : ''} w-full lg:w-2/4 self-center`}
+            >
                 {isLoading && (
                     <>
                         <Skeleton w="100%" h="15rem" rounded="lg" />
@@ -155,6 +159,15 @@ export function Index() {
             </div>
         </div>
     );
+}
+
+export async function getServerSideProps(context) {
+    const isWebView = context.req.query?.isWebView ?? false;
+    return {
+        props: {
+            isWebView
+        }
+    };
 }
 
 export default Index;
