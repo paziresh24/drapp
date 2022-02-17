@@ -326,7 +326,7 @@ export const SearchFullPage = ({
         }
     }, [searchValue, isIrc]);
 
-    const isShowIrcToggleButton = insuranceType === 'salamat' && type === 'drugs';
+    const shouldShowIrcToggleButton = insuranceType === 'salamat' && type === 'drugs';
 
     return createPortal(
         <CSSTransition
@@ -359,7 +359,7 @@ export const SearchFullPage = ({
                             onChange={e => setSearchValue(e.target.value)}
                             value={searchValue}
                         />
-                        {isShowIrcToggleButton && (
+                        {shouldShowIrcToggleButton && (
                             <SquareToggle label="IRC" onChange={setIsIrc} value={isIrc} />
                         )}
                     </div>

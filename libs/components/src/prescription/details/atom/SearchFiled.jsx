@@ -79,7 +79,7 @@ const SearchFiled = ({
         setShowSearch(false);
     };
 
-    const isShowIrcToggleButton = !isMobile && insuranceType === 'salamat' && type === 'drugs';
+    const shouldShowIrcToggleButton = !isMobile && insuranceType === 'salamat' && type === 'drugs';
 
     return (
         <div className={styles.wrapper} id={id}>
@@ -145,7 +145,7 @@ const SearchFiled = ({
                 />
             )}
 
-            {isShowIrcToggleButton && (
+            {shouldShowIrcToggleButton && (
                 <SquareToggle label="IRC" onChange={setIsIrc} value={isIrc} />
             )}
             {(window.location.host === window._env_.P24_MAIN_DOMAIN ||
