@@ -57,7 +57,7 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
         if (navigator.share)
             navigator.share({
                 text: `رسید نوبت ${doctorInfo.firstName} ${doctorInfo.lastName}`,
-                url: `https://www.paziresh24.com/booking/${doctorInfo.slug}?id=${id}&center_id=${centerId}`
+                url: `${process.env.NEXT_PUBLIC_CLINIC_BASE_URL}/booking/${doctorInfo.slug}?id=${id}&center_id=${centerId}`
             });
     };
 

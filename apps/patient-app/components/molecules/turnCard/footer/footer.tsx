@@ -18,11 +18,11 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
     const [queueModal, setQueueModal] = useState(false);
 
     const prescriptionAction = () => {
-        window.open(`https://prescription-api.paziresh24.com/pdfs/${pdfLink}`);
+        window.open(`${process.env.NEXT_PUBLIC_PRESCRIPTION_API}/pdfs/${pdfLink}`);
     };
 
     const getTurnAgainAction = () => {
-        window.open(`https://www.paziresh24.com/dr/${slug}`);
+        window.open(`${process.env.NEXT_PUBLIC_CLINIC_BASE_URL}/dr/${slug}`);
     };
 
     const ClinicPrimaryButton = (
@@ -43,7 +43,9 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
             variant="secondary"
             size="sm"
             block={true}
-            onClick={() => window.open(`https://www.paziresh24.com/panel/user/#consult`)}
+            onClick={() =>
+                window.open(`${process.env.NEXT_PUBLIC_CLINIC_BASE_URL}/panel/user/#consult`)
+            }
             icon={<ChatIcon color="#0077DB" />}
         >
             گفتگو با پزشک

@@ -1,5 +1,5 @@
-import { client } from '../client';
+import { nextClient } from '../client';
 
 export const getBooks = async (params: any) => {
-    return await client.get('/books', { params });
+    return await nextClient.get('/books', { params });
 };

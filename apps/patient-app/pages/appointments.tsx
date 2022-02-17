@@ -24,7 +24,7 @@ export function Index() {
     useEffect(() => {
         getBooks.refetch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page]);
+    }, [page]); //  getbook is not a dependency
 
     useEffect(() => {
         if (getBooks.isSuccess) {
@@ -32,7 +32,7 @@ export function Index() {
             getBooks.data?.data && addBooks(getBooks.data.data.data);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getBooks.status]);
+    }, [getBooks.status]); //  just getBooks.status dependency
 
     return (
         <div className="flex flex-col container mx-auto">
@@ -66,7 +66,9 @@ export function Index() {
                                     centerType: turn.center_info.center_type
                                 }}
                                 doctorInfo={{
-                                    avatar: `https://www.paziresh24.com${turn.doctor_info.avatar}`,
+                                    avatar:
+                                        process.env.NEXT_PUBLIC_CLINIC_BASE_URL +
+                                        turn.doctor_info.avatar,
                                     firstName: turn.doctor_info.first_name,
                                     lastName: turn.doctor_info.last_name,
                                     expertise: turn.doctor_info.expertise,

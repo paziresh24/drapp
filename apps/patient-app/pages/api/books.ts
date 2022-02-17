@@ -1,6 +1,6 @@
-import axios from 'axios';
 import FormData from 'form-data';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { clinicClient, prescriptionClient } from '../../apis/client';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data.append('page', req.query?.page ?? '1');
         data.append('type', 'book_request');
 
-        const books = await axios.post('https://www.paziresh24.com/api/getBooks', data, {
+        const books = await clinicClient.post('/getBooks', data, {
             headers: {
                 Cookie: req.cookies.P24SESSION,
                 ...data.getHeaders()
@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (reformattedBooks.length === 0) return res.status(204).json({ data: [] });
 
-        const prescriptions = await axios.get('https://prescription-api.paziresh24.com/V1/pdf', {
+        const prescriptions = await prescriptionClient.get('/V1/pdf', {
             params: { identifier: reformattedBooks.map(book => book.book_id) }
         });
 
