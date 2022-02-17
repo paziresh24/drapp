@@ -11,6 +11,7 @@ import Frequent from './Frequent';
 import { isMobile } from 'react-device-detect';
 import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 import { createPortal } from 'react-dom';
+import SquareToggle from '@paziresh24/components/core/squareToggle';
 
 export const Search = ({
     isOpen,
@@ -24,6 +25,7 @@ export const Search = ({
     typeId,
     noSearchBar,
     insuranceType,
+    isIrc,
     ...props
 }) => {
     const [results, setResults] = useState([]);
@@ -44,6 +46,7 @@ export const Search = ({
         ...(type === 'others' && {
             type_nin: insuranceType === 'tamin' ? [79, 80, 81, 83, 84, 85] : [1, 2, 3]
         }),
+        ...(isIrc && { isIrc: true }),
         provider: insuranceType
     });
     const searchInput = useRef();
@@ -112,7 +115,7 @@ export const Search = ({
                 );
             }
         }
-    }, [searchValue]);
+    }, [searchValue, isIrc]);
 
     return (
         <CSSTransition
@@ -230,6 +233,8 @@ export const SearchFullPage = ({
     typeId,
     noSearchBar,
     insuranceType,
+    setIsIrc,
+    isIrc,
     ...props
 }) => {
     const [results, setResults] = useState([]);
@@ -250,6 +255,7 @@ export const SearchFullPage = ({
         ...(type === 'others' && {
             type_nin: insuranceType === 'tamin' ? [79, 80, 81, 83, 84, 85] : [1, 2, 3]
         }),
+        ...(isIrc && { isIrc: true }),
         provider: insuranceType
     });
     const searchInput = useRef();
@@ -318,7 +324,9 @@ export const SearchFullPage = ({
                 );
             }
         }
-    }, [searchValue]);
+    }, [searchValue, isIrc]);
+
+    const isShowIrcToggleButton = insuranceType === 'salamat' && type === 'drugs';
 
     return createPortal(
         <CSSTransition
@@ -351,6 +359,9 @@ export const SearchFullPage = ({
                             onChange={e => setSearchValue(e.target.value)}
                             value={searchValue}
                         />
+                        {isShowIrcToggleButton && (
+                            <SquareToggle label="IRC" onChange={setIsIrc} value={isIrc} />
+                        )}
                     </div>
                 )}
                 {search.isLoading && (
