@@ -1,15 +1,21 @@
-import Turn from '../components/organisms/turn';
 import { Fragment, useState, useEffect } from 'react';
-import { useGetBooks } from '../apis/getBooks/useGetBook.hook';
-import Skeleton from './../components/atoms/skeleton/skeleton';
-import Text from '../components/atoms/text';
 import { useInView } from 'react-intersection-observer';
+
+import Turn from '../components/organisms/turn';
+import Text from '../components/atoms/text';
+import Skeleton from './../components/atoms/skeleton/skeleton';
+
+import { useGetBooks } from '../apis/getBooks/useGetBook.hook';
 import { useBookStore } from '../store';
 
-export function Index({ isWebView }) {
-    const [page, setPage] = useState(1);
+interface AppointmentsProps {
+    isWebView: boolean;
+}
+
+export const Appointments: React.FC<AppointmentsProps> = ({ isWebView }) => {
+    const [page, setPage] = useState<number>(1);
     const { books, addBooks } = useBookStore();
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const getBooks = useGetBooks({ page });
 
@@ -159,10 +165,10 @@ export function Index({ isWebView }) {
             </div>
         </div>
     );
-}
+};
 
 export async function getServerSideProps(context) {
-    const isWebView = context.req.query?.isWebView ?? false;
+    const isWebView: boolean = context.req.query?.isWebView ?? false;
     return {
         props: {
             isWebView
@@ -170,4 +176,4 @@ export async function getServerSideProps(context) {
     };
 }
 
-export default Index;
+export default Appointments;
