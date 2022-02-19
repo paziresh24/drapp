@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction: boolean = process.env.NODE_ENV === 'production';
 
-export const nextClient = axios.create({
+export const routeApiClient = axios.create({
     withCredentials: true,
     baseURL: `${isProduction ? process.env.NEXT_PUBLIC_BASE_PATH : ''}/api`
 });
