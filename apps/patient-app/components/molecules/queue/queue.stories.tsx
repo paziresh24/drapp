@@ -1,14 +1,14 @@
-import TagStatus from './queue';
+import Queue from './queue';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    title: 'Molecules/TagStatus',
-    component: TagStatus
+    title: 'Molecules/Queue',
+    component: Queue
 };
 
 const Template = args => (
     <div className="w-96">
-        <TagStatus {...args} />
+        <Queue {...args} />
     </div>
 );
 

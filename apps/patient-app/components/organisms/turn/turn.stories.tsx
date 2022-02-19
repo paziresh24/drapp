@@ -1,14 +1,14 @@
-import ClinicTurn from './turn';
+import Turn from './turn';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    title: 'Organisms/ClinicTurn',
-    component: ClinicTurn
+    title: 'Organisms/Turn',
+    component: Turn
 };
 
 const Template = args => (
     <div className="w-96">
-        <ClinicTurn {...args} />
+        <Turn {...args} />
     </div>
 );
 
