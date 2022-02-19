@@ -1,5 +1,5 @@
-import { routeApiClient } from '../client';
+import { patientAppClient } from '../client';
 
 export const getBooks = async (params: any) => {
-    return await routeApiClient.get('/books', { params });
+    return await patientAppClient.get('/books', { params });
 };

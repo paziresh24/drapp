@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 
-export const routeApiClient = axios.create({
+export const patientAppClient = axios.create({
     withCredentials: true,
     baseURL: `${isProduction ? process.env.NEXT_PUBLIC_BASE_PATH : ''}/api`
 });
