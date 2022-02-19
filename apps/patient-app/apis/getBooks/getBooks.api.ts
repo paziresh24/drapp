@@ -1,5 +1,5 @@
-import { nextClient } from '../client';
+import { routeApiClient } from '../client';
 
 export const getBooks = async (params: any) => {
-    return await nextClient.get('/books', { params });
+    return await routeApiClient.get('/books', { params });
 };
