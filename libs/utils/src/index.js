@@ -1,9 +1,22 @@
 import queryString from 'query-string';
+import FormData from 'form-data';
 
 // convert string date to date  14001206 => 1400/12/06
 export const strDateToDate = strDate => {
     const date = `${strDate.slice(0, 4)}/${strDate.slice(4, 6)}/${strDate.slice(6, 8)}`;
     return date;
+};
+
+export const convertToTime = time => {
+    const date = new Date(time * 1000);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const timeString = `${hours}:${minutes.toString().length === 1 ? `0${minutes}` : minutes}`;
+    return timeString;
+};
+
+export const convertToPersianDate = time => {
+    return new Date(time * 1000).toLocaleDateString('fa');
 };
 
 export const formData = params => {
