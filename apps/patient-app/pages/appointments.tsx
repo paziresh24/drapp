@@ -1,4 +1,5 @@
 import { Fragment, useState, useEffect } from 'react';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useInView } from 'react-intersection-observer';
 
@@ -176,13 +177,13 @@ export const Appointments: React.FC<AppointmentsProps> = ({ isWebView }) => {
     );
 };
 
-export async function getServerSideProps(context) {
-    const isWebView: boolean = context.req.query?.isWebView ?? false;
+export const getServerSideProps: GetServerSideProps = async context => {
+    const isWebView: boolean = context.query?.isWebView ? true : false;
     return {
         props: {
             isWebView
         }
     };
-}
+};
 
 export default Appointments;
