@@ -8,7 +8,8 @@
         "analyze": "source-map-explorer 'dist/apps/drapp/static/js/*.js'",
         "start": "nx serve",
         "build": "nx build",
-        "test": "nx test"
+        "test": "nx test",
+        "commit": "git-cz"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "29.1.0",
@@ -73,6 +74,8 @@
     "devDependencies": {
         "@babel/core": "7.12.13",
         "@babel/preset-typescript": "7.12.13",
+        "@commitlint/cli": "16.2.1",
+        "@commitlint/config-conventional": "16.2.1",
         "@craco/craco": "6.4.3",
         "@nrwl/cli": "13.2.2",
         "@nrwl/cypress": "13.2.2",
@@ -98,8 +101,10 @@
         "autoprefixer": "10.4.2",
         "babel-jest": "27.2.3",
         "babel-loader": "8.1.0",
+        "commitizen": "4.2.4",
         "craco-sass-resources-loader": "1.1.0",
         "cypress": "8.3.0",
+        "cz-conventional-changelog": "3.3.0",
         "eslint": "7.32.0",
         "eslint-config-next": "12.0.7",
         "eslint-config-prettier": "8.1.0",
@@ -108,7 +113,9 @@
         "eslint-plugin-jsx-a11y": "6.4.1",
         "eslint-plugin-react": "7.26.1",
         "eslint-plugin-react-hooks": "4.2.0",
+        "husky": "7.0.4",
         "jest": "27.2.3",
+        "lint-staged": "12.3.4",
         "postcss-import": "14.0.2",
         "prettier": "2.3.1",
         "react-test-renderer": "17.0.2",
@@ -126,5 +133,14 @@
     "repository": {
         "type": "git",
         "url": "git+https://gitlabserver.paziresh24.com/Amirly/drapp.git"
+    },
+    "lint-staged": {
+        "*.{js,jsx,json}": "eslint --cache --fix",
+        "*.{js,jsx,json,css,md}": "prettier --write"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
     }
 }
