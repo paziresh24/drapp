@@ -2967,10 +2967,10 @@
     node-addon-api "^3.2.1"
     node-gyp-build "^4.3.0"
 
-"@paziresh24/splunk-event@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@paziresh24/splunk-event/-/splunk-event-1.1.1.tgz#17a4dd9def0b9cc29953b02812aad1daea91223a"
-  integrity sha512-Pt/WrdY32Ca0NPsQRHlLQmLhNyLH1CBtp1hiZP86XqMkDcF0FLzu8ClQmWEULn6EmT0ASGTqEE1G88EsIk3eOg==
+"@paziresh24/splunk-event@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@paziresh24/splunk-event/-/splunk-event-1.2.0.tgz#588fc0d57bac54d82791bb7ffd8ba15cb39642cc"
+  integrity sha512-g9utBdCx1NFvFX+G7mqdpWEajhtqFGtuPTdHUwIOGMJ+hWh18dg5WA1OjdTno0aOwHA5B7z5coBc312eEUDShw==
   dependencies:
     axios "^0.26.0"
 
