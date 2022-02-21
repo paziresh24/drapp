@@ -17,7 +17,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
     const { slug, status, pdfLink, centerType } = props;
     const [queueModal, setQueueModal] = useState(false);
 
-    const prescriptionAction = () => {
+    const showPrescription = () => {
         window.open(`${process.env.NEXT_PUBLIC_PRESCRIPTION_API}/pdfs/${pdfLink}`);
     };
 
@@ -68,7 +68,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
                             variant="secondary"
                             size="sm"
                             block={true}
-                            onClick={prescriptionAction}
+                            onClick={showPrescription}
                         >
                             مشاهده نسخه
                         </Button>
