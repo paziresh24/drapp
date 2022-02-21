@@ -21,7 +21,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
         window.open(`${process.env.NEXT_PUBLIC_PRESCRIPTION_API}/pdfs/${pdfLink}`);
     };
 
-    const reBookAction = () => {
+    const reBook = () => {
         window.open(`${process.env.NEXT_PUBLIC_CLINIC_BASE_URL}/dr/${slug}`);
     };
 
@@ -60,7 +60,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
 
             {(status === 'expired' || status === 'visited') && (
                 <div className="flex gap-2">
-                    <Button variant="secondary" size="sm" block={true} onClick={reBookAction}>
+                    <Button variant="secondary" size="sm" block={true} onClick={reBook}>
                         دریافت نوبت مجدد
                     </Button>
                     {pdfLink && (
