@@ -20,11 +20,15 @@ services:
         environment:
             - NODE_ENV=production
             - PUBLIC_URL=/doctorapp
-            # - P24_AUTH_API=http://192.168.2.5/local-auth/V1
-            # - P24_BASE_URL=http://192.168.2.5/lbook/V1
-            # - P24_BASE_URL_PRESCRIPTION_API=http://192.168.2.5/prescription-api
-            # - P24_STATISTICS_API=http://192.168.2.5/statistics
-            # - P24_DISABLE_THIRD_PARTY=true
-            # - P24_IS_LOCAL_CENTER=true
+        ports:
+            - '4030:80'
+    drapp:
+        container_name: drapp
+        image: dockerhub.paziresh24.com/drapp
+        build:
+            context: .
+            dockerfile: Dockerfile.drApp
+        environment:
+            - NODE_ENV=production
         ports:
             - '4030:80'
