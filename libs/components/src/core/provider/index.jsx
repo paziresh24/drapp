@@ -88,6 +88,7 @@ export const splunkDrApp = splunk.create({
             identifier: localStorage.getItem('client_identifier'),
             user_agent: window.navigator.userAgent
         },
+        ...(window.user_information && { user_information: window.user_information }),
         current_url: window.location.href
     }
 });
@@ -100,6 +101,7 @@ export const splunkPrescription = splunk.create({
             identifier: localStorage.getItem('client_identifier'),
             user_agent: window.navigator.userAgent
         },
+        ...(window.user_information && { user_information: window.user_information }),
         current_url: window.location.href
     }
 });
