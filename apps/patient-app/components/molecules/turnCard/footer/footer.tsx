@@ -58,29 +58,23 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
             {status === 'not_visited' &&
                 (centerType === 'consult' ? CunsultPrimaryButton : ClinicPrimaryButton)}
 
-            {status === 'expired' ||
-                (status === 'visited' && (
-                    <div className="flex gap-2">
+            {(status === 'expired' || status === 'visited') && (
+                <div className="flex gap-2">
+                    <Button variant="secondary" size="sm" block={true} onClick={getTurnAgainAction}>
+                        دریافت نوبت مجدد
+                    </Button>
+                    {pdfLink && (
                         <Button
                             variant="secondary"
                             size="sm"
                             block={true}
-                            onClick={getTurnAgainAction}
+                            onClick={prescriptionAction}
                         >
-                            دریافت نوبت مجدد
+                            مشاهده نسخه
                         </Button>
-                        {pdfLink && (
-                            <Button
-                                variant="secondary"
-                                size="sm"
-                                block={true}
-                                onClick={prescriptionAction}
-                            >
-                                مشاهده نسخه
-                            </Button>
-                        )}
-                    </div>
-                ))}
+                    )}
+                </div>
+            )}
 
             <Modal
                 title="شماره نوبت شما"
