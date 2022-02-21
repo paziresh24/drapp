@@ -2,8 +2,10 @@ import Card from '../../atoms/card';
 import { useState, useEffect } from 'react';
 import { convertToPersianDate, convertToTime } from '@paziresh24/utils';
 import { TurnBody, TurnFooter, TurnHeader } from '../../molecules/turnCard';
+import { BookStatus } from 'apps/patient-app/types/bookStatus';
+
 interface TurnProps {
-    status?: 'expired' | 'deleted' | 'not_visited' | 'visited';
+    status?: BookStatus;
     id: string;
     centerType: 'clinic' | 'hospital' | 'consult';
     centerInfo: {
@@ -68,7 +70,7 @@ export const Turn: React.FC<TurnProps> = props => {
         const { bookTime, trackingCode, waitingTime } = turnDetails;
         const dateAndTime = `${convertToTime(bookTime)} - ${convertToPersianDate(bookTime)}`;
 
-        if (status !== 'expired')
+        if (status !== BookStatus.expired)
             if (centerType === 'consult')
                 return setDetailsData([
                     { id: 0, name: 'زمان ارتباط با پزشک', value: dateAndTime },
@@ -90,7 +92,10 @@ export const Turn: React.FC<TurnProps> = props => {
     };
 
     return (
-        <Card className="space-y-2 relative" style={{ opacity: status === 'deleted' && '0.5' }}>
+        <Card
+            className="space-y-2 relative"
+            style={{ opacity: status === BookStatus.deleted && '0.5' }}
+        >
             <TurnHeader
                 id={id}
                 doctorInfo={doctorInfo}
