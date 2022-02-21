@@ -11,6 +11,7 @@ import TrashIcon from '@paziresh24/components/icons/public/trash';
 import ThreeDotsIcon from '@paziresh24/components/icons/public/threeDots';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
+import { BookStatus } from 'apps/patient-app/types/bookStatus';
 
 interface TurnHeaderProps {
     id: string;
@@ -24,7 +25,7 @@ interface TurnHeaderProps {
     centerId: string;
     nationalCode: string;
     trackingCode: string;
-    status: 'expired' | 'deleted' | 'not_visited' | 'visited';
+    status: BookStatus;
 }
 
 export const TurnHeader: React.FC<TurnHeaderProps> = props => {
@@ -72,7 +73,7 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
 
             <TagStatus status={status} />
 
-            {status === 'not_visited' && (
+            {status === BookStatus.not_visited && (
                 <DropDown
                     element={
                         <div className="flex items-center justify-center w-8 h-8 absolute left-2 top-3 cursor-pointer">

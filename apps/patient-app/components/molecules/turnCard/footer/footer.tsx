@@ -1,14 +1,13 @@
 import Modal from '@paziresh24/components/core/modal';
 import { Button } from './../../../atoms/button/button';
 import { useState } from 'react';
-import MegaphoneIcon from '@paziresh24/components/icons/public/megaphone';
 import ChatIcon from '@paziresh24/components/icons/public/chat';
-
 import Queue from '../../queue';
+import { BookStatus } from 'apps/patient-app/types/bookStatus';
 
 interface TurnFooterProps {
     slug: string;
-    status: 'expired' | 'deleted' | 'not_visited' | 'visited';
+    status: BookStatus;
     pdfLink: string;
     centerType: 'clinic' | 'hospital' | 'consult';
 }
@@ -52,13 +51,13 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
         </Button>
     );
 
-    if (status === 'deleted') return null;
+    if (status === BookStatus.deleted) return null;
     return (
         <>
-            {status === 'not_visited' &&
+            {status === BookStatus.not_visited &&
                 (centerType === 'consult' ? CunsultPrimaryButton : ClinicPrimaryButton)}
 
-            {(status === 'expired' || status === 'visited') && (
+            {(status === BookStatus.expired || status === BookStatus.visited) && (
                 <div className="flex gap-2">
                     <Button variant="secondary" size="sm" block={true} onClick={reBook}>
                         دریافت نوبت مجدد
