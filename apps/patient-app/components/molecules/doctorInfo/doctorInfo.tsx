@@ -5,21 +5,24 @@ interface DoctorInfoProps {
     avatar?: string;
     firstName: string;
     lastName: string;
-    expertise: string;
+    expertise?: string;
+    className?: string;
 }
 
 export const DoctorInfo: React.FC<DoctorInfoProps> = props => {
-    const { avatar, firstName, lastName, expertise } = props;
+    const { avatar, firstName, lastName, expertise, className } = props;
     return (
-        <div className="flex items-center">
+        <div className={`flex items-center ${className ? className : ''}`}>
             <Aavatar src={avatar} />
             <div className="flex flex-col mr-4">
-                <Text fontSize="lg" fontWeight="bold">
+                <Text fontSize="sm" fontWeight="bold" className="line-clamp-1">
                     {firstName} {lastName}
                 </Text>
-                <Text fontSize="sm" className="mt-1">
-                    {expertise}
-                </Text>
+                {expertise && (
+                    <Text fontSize="xs" className="mt-2 line-clamp-1">
+                        {expertise}
+                    </Text>
+                )}
             </div>
         </div>
     );
