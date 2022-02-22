@@ -67,6 +67,7 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
     return (
         <>
             <DoctorInfo
+                className="w-9/12"
                 avatar={doctorInfo.avatar}
                 firstName={doctorInfo.firstName}
                 lastName={doctorInfo.lastName}
