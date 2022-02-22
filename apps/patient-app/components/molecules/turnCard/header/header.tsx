@@ -19,7 +19,7 @@ interface TurnHeaderProps {
         avatar: string;
         firstName: string;
         lastName: string;
-        expertise: string;
+        expertise?: string;
         slug: string;
     };
     centerId: string;
@@ -34,6 +34,8 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
     const [removeModal, setRemoveModal] = useState(false);
     const { removeBook } = useBookStore();
     const removeBookApi = useRemoveBook();
+
+    const shouldShowTurnMenu = status === BookStatus.not_visited;
 
     const removeBookAction = () => {
         removeBookApi.mutate(
@@ -73,7 +75,7 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
 
             <TagStatus status={status} />
 
-            {status === BookStatus.not_visited && (
+            {shouldShowTurnMenu && (
                 <DropDown
                     element={
                         <div className="flex items-center justify-center w-8 h-8 absolute left-2 top-3 cursor-pointer">

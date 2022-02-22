@@ -5,7 +5,7 @@ interface DoctorInfoProps {
     avatar?: string;
     firstName: string;
     lastName: string;
-    expertise: string;
+    expertise?: string;
 }
 
 export const DoctorInfo: React.FC<DoctorInfoProps> = props => {
@@ -17,9 +17,11 @@ export const DoctorInfo: React.FC<DoctorInfoProps> = props => {
                 <Text fontSize="lg" fontWeight="bold">
                     {firstName} {lastName}
                 </Text>
-                <Text fontSize="sm" className="mt-1">
-                    {expertise}
-                </Text>
+                {expertise && (
+                    <Text fontSize="sm" className="mt-1">
+                        {expertise}
+                    </Text>
+                )}
             </div>
         </div>
     );

@@ -34,10 +34,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 last_name: book.doctor_family,
                 avatar: book.doctor_image,
                 expertise:
-                    book.expertises?.[0]?.alias_title ??
-                    book.expertises?.[0]?.degree?.name +
-                        ' ' +
-                        book.expertises?.[0]?.expertise?.name,
+                    book.expertises?.[0]?.alias_title ?? book.expertises?.[0]?.degree?.name
+                        ? book.expertises?.[0]?.degree?.name +
+                          ' ' +
+                          book.expertises?.[0]?.expertise?.name
+                        : undefined,
                 slug: book.doctor_slug
             },
             patient_info: {

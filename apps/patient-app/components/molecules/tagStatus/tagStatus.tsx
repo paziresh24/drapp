@@ -8,7 +8,8 @@ export interface TagStatusProps {
 enum TagsStatus {
     expired = 'منقضی',
     deleted = 'حذف شده',
-    visited = 'ویزیت شده'
+    visited = 'ویزیت شده',
+    requested = 'درخواست'
 }
 
 export const TagStatus: React.FC<TagStatusProps> = props => {
