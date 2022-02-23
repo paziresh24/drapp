@@ -1,32 +1,40 @@
 import TurnDetails from '../../turnDetails';
 import Location from './../../location/location';
 import Rate from './../../rate/rate';
+import { BookStatus } from 'apps/patient-app/types/bookStatus';
+import { CenterType } from 'apps/patient-app/types/centerType';
 
 interface TurnBodyProps {
     detailsData: Array<{ id: number; name: string; value: string | React.ReactNode }>;
-    status: 'expired' | 'deleted' | 'not_visited' | 'visited';
+    status: BookStatus;
     feedbackUrl: string;
     location: {
         lat: number;
         lng: number;
         address: string;
     };
-    centerType: 'clinic' | 'hospital' | 'consult';
+    centerType: CenterType;
 }
 
 export const TurnBody: React.FC<TurnBodyProps> = props => {
     const { detailsData, status, feedbackUrl, location, centerType } = props;
 
+    const shouldShowTurnDetails = status !== BookStatus.deleted;
+    const shouldShowLocation =
+        centerType !== CenterType.consult &&
+        status !== BookStatus.expired &&
+        status !== BookStatus.deleted;
+    const shouldShowRate =
+        centerType !== CenterType.consult && status === BookStatus.expired && feedbackUrl;
+
     return (
         <>
-            {status !== 'deleted' && <TurnDetails items={detailsData} />}
+            {shouldShowTurnDetails && <TurnDetails items={detailsData} />}
 
-            {centerType !== 'consult' && status !== 'expired' && status !== 'deleted' && (
+            {shouldShowLocation && (
                 <Location address={location.address} lat={location.lat} lng={location.lng} />
             )}
-            {centerType !== 'consult' && status === 'expired' && feedbackUrl && (
-                <Rate link={feedbackUrl} />
-            )}
+            {shouldShowRate && <Rate link={feedbackUrl} />}
         </>
     );
 };
