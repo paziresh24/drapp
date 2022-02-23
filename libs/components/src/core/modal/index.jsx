@@ -68,36 +68,38 @@ const Modal = ({
             }}
             unmountOnExit
         >
-            <div className={styles['root']}>
-                <div className={styles['mask']} onClick={closeModalHandler} aria-hidden />
-                <div
-                    className={classNames({
-                        [styles['wrap']]: true,
-                        [styles['fullPage']]: fullPage
-                    })}
-                    id={id}
-                    style={{ maxWidth: !isMobile && maxWidth }}
-                >
-                    {!noHeader && (
-                        <div className={styles['header']}>
-                            <div className={styles['title-wraper']}>
-                                {icon}
-                                <span className={styles['title']}>{title}</span>
-                            </div>
-                            <CloseIcon
-                                className={styles['close-button']}
-                                onClick={closeModalHandler}
-                            />
-                        </div>
-                    )}
+            <div className={styles['root']} onClick={closeModalHandler}>
+                <div className={styles['mask']} aria-hidden>
                     <div
                         className={classNames({
-                            [styles['body']]: true,
-                            [styles['scrollable']]: fullPage
+                            [styles['wrap']]: true,
+                            [styles['fullPage']]: fullPage
                         })}
-                        style={{ padding: noBodyPad ? '0' : null }}
+                        onClick={e => e.stopPropagation()}
+                        id={id}
+                        style={{ maxWidth: !isMobile && maxWidth }}
                     >
-                        {children}
+                        {!noHeader && (
+                            <div className={styles['header']}>
+                                <div className={styles['title-wraper']}>
+                                    {icon}
+                                    <span className={styles['title']}>{title}</span>
+                                </div>
+                                <CloseIcon
+                                    className={styles['close-button']}
+                                    onClick={closeModalHandler}
+                                />
+                            </div>
+                        )}
+                        <div
+                            className={classNames({
+                                [styles['body']]: true,
+                                [styles['scrollable']]: fullPage
+                            })}
+                            style={{ padding: noBodyPad ? '0' : null }}
+                        >
+                            {children}
+                        </div>
                     </div>
                 </div>
             </div>
