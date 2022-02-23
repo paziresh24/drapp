@@ -5,6 +5,7 @@ import CloseIcon from '@paziresh24/components/icons/public/close';
 const LevelSelect = ({ label, icon, items, onChange, valueField, defaultValue, allLabel }) => {
     const [isOpen, setIsopen] = useState(false);
     const [values, setValues] = useState(null);
+    const [search, setSearch] = useState('');
 
     const addItem = item => {
         setValues(item);
@@ -45,7 +46,10 @@ const LevelSelect = ({ label, icon, items, onChange, valueField, defaultValue, a
                     <div className={styles.value}>{allLabel ?? 'همه مراکز'}</div>
                 ) : (
                     <div className={styles.value}>
-                        <span>{items.find(item => item[valueField] === values)?.name}</span>
+                        <span>
+                            {items?.length > 0 &&
+                                items.find(item => item[valueField] === values)?.name}
+                        </span>
                         <CloseIcon
                             onClick={e => {
                                 e.stopPropagation();
@@ -57,15 +61,34 @@ const LevelSelect = ({ label, icon, items, onChange, valueField, defaultValue, a
             </div>
             {isOpen === label && (
                 <ul className={styles.select} onClick={e => e.stopPropagation()} aria-hidden>
-                    {items.map(item => (
-                        <li
-                            key={item[valueField]}
-                            onClick={() => addItem(item[valueField])}
-                            aria-hidden
-                        >
-                            {item.name}
-                        </li>
-                    ))}
+                    <div style={{ padding: '1rem' }}>
+                        <input
+                            type="text"
+                            onChange={e => setSearch(e.target.value)}
+                            value={search}
+                            placeholder="جستجو..."
+                            style={{
+                                height: '4.5rem',
+                                width: '100%',
+                                background: '#e7eff5',
+                                borderRadius: '0.6rem',
+                                padding: '1rem',
+                                outline: 0
+                            }}
+                        />
+                    </div>
+                    {items.map(
+                        item =>
+                            item.name.toLowerCase().includes(search.toLowerCase()) && (
+                                <li
+                                    key={item[valueField]}
+                                    onClick={() => addItem(item[valueField])}
+                                    aria-hidden
+                                >
+                                    {item.name}
+                                </li>
+                            )
+                    )}
                 </ul>
             )}
         </div>
