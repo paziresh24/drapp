@@ -18,6 +18,7 @@ import queryString from 'query-string';
 import { useInsurances } from '@paziresh24/hooks/prescription/insurances';
 import toastType from '@paziresh24/constants/prescription.json';
 import isEmpty from 'lodash/isEmpty';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Finalize = () => {
     const { search } = useLocation();
@@ -215,6 +216,11 @@ const Finalize = () => {
 
             if (!prescriptionInfo.finalized) {
                 const data = await finalizePrescriptionAction();
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'finalized',
+                    prescription_info: prescriptionInfo
+                });
 
                 sendEvent('sucsessfulPrescribe', 'prescription', 'sucsessfulPrescribe');
                 if (isServicesOfDoctors) {
@@ -236,12 +242,23 @@ const Finalize = () => {
                 if (isEmpty(backPage)) {
                     history.push('/');
                 }
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'edited',
+                    prescription_info: prescriptionInfo
+                });
                 !toast.isActive('finalizePrescription') &&
                     toast.success('نسخه ویرایش شد.', {
                         toastId: 'finalizePrescription'
                     });
             }
         } catch (error) {
+            getSplunkInstance().sendEvent({
+                group: 'prescription',
+                type: 'finalized-error',
+                error: error.response.data,
+                prescription_info: prescriptionInfo
+            });
             if (error.response?.data?.messages) {
                 error.response.data?.messages.map(item => {
                     toast[toastType[item.type]](item.text);
