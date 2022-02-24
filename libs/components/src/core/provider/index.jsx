@@ -80,31 +80,19 @@ if (!localStorage.getItem('client_identifier')) {
     localStorage.setItem('client_identifier', uuid());
 }
 
-export const splunkDrApp = splunk.create({
-    baseUrl: window._env_.P24_SPLUNK_BASE_URL,
-    token: window._env_.P24_SPLUNK_TOKEN,
-    constant: {
-        client_information: {
-            identifier: localStorage.getItem('client_identifier'),
-            user_agent: window.navigator.userAgent
-        },
-        ...(window.user_information && { user_information: window.user_information }),
-        current_url: window.location.href
-    }
-});
-
-export const splunkPrescription = splunk.create({
-    baseUrl: window._env_.P24_SPLUNK_BASE_URL,
-    token: window._env_.P24_SPLUNK_TOKEN,
-    constant: {
-        client_information: {
-            identifier: localStorage.getItem('client_identifier'),
-            user_agent: window.navigator.userAgent
-        },
-        ...(window.user_information && { user_information: window.user_information }),
-        current_url: window.location.href
-    }
-});
+export const getSplunkInstance = () =>
+    splunk.create({
+        baseUrl: window._env_.P24_SPLUNK_BASE_URL,
+        token: window._env_.P24_SPLUNK_TOKEN,
+        constant: {
+            client_information: {
+                identifier: localStorage.getItem('client_identifier'),
+                user_agent: window.navigator.userAgent
+            },
+            user_information: window.user_information,
+            current_url: window.location.href
+        }
+    });
 
 const Provider = ({ children }) => {
     return (

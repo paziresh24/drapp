@@ -3,7 +3,7 @@ import styles from './form.module.scss';
 import { useLogin, useResendCode, useCaptcha } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { toEnglishNumber } from '@paziresh24/utils';
 import { setToken } from '@paziresh24/utils/localstorage';
 import { isMobile } from 'react-device-detect';
 import queryString from 'query-string';
@@ -13,7 +13,7 @@ import OtpCode from './../otpCode';
 import UserName from '../userName';
 import ForgotPassword from '../forgotPassword';
 import ChangePassword from './../changePassword/index';
-import { splunkDrApp } from '@paziresh24/components/core/provider';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Form = ({ focus, setFocus }) => {
     const [loginType, setLoginType] = useState('password');
@@ -41,7 +41,7 @@ const Form = ({ focus, setFocus }) => {
                     setToken(data.access_token);
 
                     if (!forgot) {
-                        splunkDrApp.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'login',
                             type: 'successful',
                             event: {
@@ -60,7 +60,7 @@ const Form = ({ focus, setFocus }) => {
                             }
                         });
                     } else {
-                        splunkDrApp.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'login',
                             type: 'change-password',
                             event: {
@@ -75,7 +75,7 @@ const Form = ({ focus, setFocus }) => {
                     const message = error.response?.data;
 
                     if (statusCode === 401) {
-                        splunkDrApp.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'login',
                             type: 'unsuccessful-password',
                             event: {
@@ -84,7 +84,7 @@ const Form = ({ focus, setFocus }) => {
                         });
                         toast.error('رمز وارد شده اشتباه می باشد.');
                     } else if (message.field === 'captcha_value') {
-                        splunkDrApp.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'login',
                             type: 'unsuccessful-captcha',
                             event: {
@@ -94,7 +94,7 @@ const Form = ({ focus, setFocus }) => {
                         toast.error('عبارت امنیتی اشتباه است.');
                         getCaptcha.refetch();
                     } else {
-                        splunkDrApp.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'login',
                             type: 'unsuccessful-irregular',
                             event: {

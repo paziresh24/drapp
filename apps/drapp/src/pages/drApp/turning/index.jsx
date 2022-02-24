@@ -39,6 +39,7 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import { queryClient } from '@paziresh24/components/core/provider';
 import ReferenceModal from '@paziresh24/components/prescription/referenceModal';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Turning = () => {
     const history = useHistory();
@@ -208,6 +209,10 @@ const Turning = () => {
             },
             {
                 onSuccess: data => {
+                    getSplunkInstance().sendEvent({
+                        group: 'turning-list',
+                        type: 'prescription-action'
+                    });
                     if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                         return setOtpConfirm(true);
                     }
@@ -229,6 +234,11 @@ const Turning = () => {
                     });
                 },
                 onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'turning-list',
+                        type: 'prescription-action-error',
+                        error: error.response.data
+                    });
                     if (error.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                         return setOtpConfirm(true);
                     }
