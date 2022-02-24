@@ -49,7 +49,7 @@ const ToolBox = () => {
     }, []);
 
     return isMobile ? (
-        <Modal title="" fullPage noBodyPad isOpen={isOpen} onClose={setIsOpen} noHeader>
+        <Modal title="" fullPage noBodyPadding isOpen={isOpen} onClose={setIsOpen} noHeader>
             <div className={`${styles.wrapper} ${styles.mobile}`}>
                 <ToolBoxContent />
             </div>

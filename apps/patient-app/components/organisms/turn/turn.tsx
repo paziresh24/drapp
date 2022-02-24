@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';
 
 import { TurnBody, TurnFooter, TurnHeader } from '../../molecules/turnCard';
-import { turnDetailsData } from './turnDetailsData';
+import { turnDetailsData } from './turnDetails';
 
 export const Turn: React.FC<TurnProps> = props => {
     const {
