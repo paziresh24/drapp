@@ -88,7 +88,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                 getSplunkInstance().sendEvent({
                     group: 'turning-list',
                     type: 'prescription-action-error',
-                    error: e.response.data
+                    event: { error: e.response.data }
                 });
 
                 if (e.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {

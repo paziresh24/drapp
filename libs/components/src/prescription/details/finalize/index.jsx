@@ -53,12 +53,18 @@ const Finalize = () => {
     const visitDescription = useRef();
     const referenceFeedback = useRef();
 
+    const startPrescriptionDate = useRef();
+
     const updatePrescriptionAction = (id, data) => {
         updatePrescription.mutate({
             prescriptionId: id,
             ...data
         });
     };
+
+    useEffect(() => {
+        startPrescriptionDate.current = new Date();
+    }, []);
 
     const servicesCloneRef = useRef();
 
@@ -219,7 +225,20 @@ const Finalize = () => {
                 getSplunkInstance().sendEvent({
                     group: 'prescription',
                     type: 'finalized',
-                    prescription_info: prescriptionInfo
+                    event: {
+                        prescription_info: prescriptionInfo
+                    }
+                });
+
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'duration',
+                    event: {
+                        start_date: startPrescriptionDate.current,
+                        end_date: new Date(),
+                        duration: new Date().getTime() - startPrescriptionDate.current.getTime(),
+                        prescription_info: prescriptionInfo
+                    }
                 });
 
                 sendEvent('sucsessfulPrescribe', 'prescription', 'sucsessfulPrescribe');
@@ -245,7 +264,7 @@ const Finalize = () => {
                 getSplunkInstance().sendEvent({
                     group: 'prescription',
                     type: 'edited',
-                    prescription_info: prescriptionInfo
+                    event: { prescription_info: prescriptionInfo }
                 });
                 !toast.isActive('finalizePrescription') &&
                     toast.success('نسخه ویرایش شد.', {
@@ -256,8 +275,7 @@ const Finalize = () => {
             getSplunkInstance().sendEvent({
                 group: 'prescription',
                 type: 'finalized-error',
-                error: error.response.data,
-                prescription_info: prescriptionInfo
+                event: { error: error.response.data, prescription_info: prescriptionInfo }
             });
             if (error.response?.data?.messages) {
                 error.response.data?.messages.map(item => {

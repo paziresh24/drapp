@@ -237,7 +237,7 @@ const Turning = () => {
                     getSplunkInstance().sendEvent({
                         group: 'turning-list',
                         type: 'prescription-action-error',
-                        error: error.response.data
+                        event: { error: error.response.data }
                     });
                     if (error.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                         return setOtpConfirm(true);

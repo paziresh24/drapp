@@ -55,15 +55,14 @@ const DeliverFactor = props => {
                     getSplunkInstance().sendEvent({
                         group: 'prescription',
                         type: 'deliver',
-                        prescription_info: props.prescriptionInfo
+                        event: { prescription_info: props.prescriptionInfo }
                     });
                 },
                 onError: err => {
                     getSplunkInstance().sendEvent({
                         group: 'prescription',
                         type: 'deliver-error',
-                        error: err,
-                        prescription_info: props.prescriptionInfo
+                        event: { error: err, prescription_info: props.prescriptionInfo }
                     });
                     !toast.isActive('deliverPrescription') &&
                         toast.error(err.response.data.message, {
