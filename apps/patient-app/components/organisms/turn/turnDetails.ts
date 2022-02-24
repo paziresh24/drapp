@@ -31,7 +31,7 @@ export const turnDetailsData = ({ data, status, centerType }: TurnDetailsDataPar
             { id: 1, name: 'کدپیگیری', value: trackingCode }
         ];
 
-    if (status === BookStatus.not_visited || status === BookStatus.visited)
+    if (status === BookStatus.not_visited)
         return [
             { id: 0, name: 'زمان نوبت', value: dateAndTime },
             {
@@ -44,5 +44,5 @@ export const turnDetailsData = ({ data, status, centerType }: TurnDetailsDataPar
             { id: 2, name: 'کدپیگیری', value: trackingCode }
         ];
 
-    return [{ id: 1, name: 'زمان نوبت', value: dateAndTime }];
+    return [{ id: 0, name: 'زمان نوبت', value: dateAndTime }];
 };

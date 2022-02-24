@@ -12,7 +12,7 @@ interface DoctorInfoProps {
 export const DoctorInfo: React.FC<DoctorInfoProps> = props => {
     const { avatar, firstName, lastName, expertise, className } = props;
     return (
-        <div className={`flex items-center ${className ? className : ''}`}>
+        <div className={`flex items-center ${className ?? ''}`}>
             <Aavatar src={avatar} />
             <div className="flex flex-col mr-4">
                 <Text fontSize="sm" fontWeight="bold" className="line-clamp-1">
