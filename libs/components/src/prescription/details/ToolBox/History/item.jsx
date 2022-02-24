@@ -8,6 +8,7 @@ import { sendEvent } from '@paziresh24/utils';
 import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
 import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Item = ({ service, setItemsSelect, itemsSelect }) => {
     const [services, setServices] = useServices();
@@ -26,6 +27,10 @@ const Item = ({ service, setItemsSelect, itemsSelect }) => {
         }
         const id = services[services.length - 1]?.id ?? 0;
         sendEvent('clickhistory', 'prescription', 'clickhistory');
+        getSplunkInstance().sendEvent({
+            group: 'prescription-tool-box',
+            type: 'add-service-with-history'
+        });
 
         setServices(item => [
             ...item,
@@ -48,6 +53,10 @@ const Item = ({ service, setItemsSelect, itemsSelect }) => {
         if (e.target.checked) {
             if (!itemsSelect.some(item => item.service.id === service.service.id)) {
                 sendEvent('clickhistory', 'prescription', 'clickhistory');
+                getSplunkInstance().sendEvent({
+                    group: 'prescription-tool-box',
+                    type: 'add-service-with-history'
+                });
 
                 setItemsSelect(prev => [
                     ...prev,
