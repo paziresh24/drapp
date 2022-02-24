@@ -15,7 +15,7 @@ const Modal = ({
     icon = undefined,
     children,
     noHeader = false,
-    noBodyPad = false,
+    noBodyPadding = false,
     fullPage = false,
     maxWidth = undefined,
     id = undefined
@@ -96,7 +96,7 @@ const Modal = ({
                                 [styles['body']]: true,
                                 [styles['scrollable']]: fullPage
                             })}
-                            style={{ padding: noBodyPad ? '0' : null }}
+                            style={{ padding: noBodyPadding ? '0' : null }}
                         >
                             {children}
                         </div>
