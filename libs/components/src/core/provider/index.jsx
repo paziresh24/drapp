@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import TagManager from 'react-gtm-module';
-import { splunk } from '@paziresh24/splunk-event';
-import { v4 as uuid } from 'uuid';
+import { splunk as splunkEvent } from '@paziresh24/splunk-event';
+import { v4 as uuidV4 } from 'uuid';
 
 toast.configure({
     position: 'top-right',
@@ -77,11 +77,11 @@ if (localStorage.getItem('APP_VERSION')) {
 }
 
 if (!localStorage.getItem('client_identifier')) {
-    localStorage.setItem('client_identifier', uuid());
+    localStorage.setItem('client_identifier', uuidV4());
 }
 
 export const getSplunkInstance = () =>
-    splunk.create({
+    splunkEvent.create({
         baseUrl: window._env_.P24_SPLUNK_BASE_URL,
         token: window._env_.P24_SPLUNK_TOKEN,
         constant: {
