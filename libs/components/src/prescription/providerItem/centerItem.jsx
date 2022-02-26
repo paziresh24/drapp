@@ -3,7 +3,7 @@ import styles from './providerItem.module.scss';
 import Chips from '../../core/chips';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { sendEvent, digitsFaToEn } from '@paziresh24/utils';
 import TextField from '../../core/textField';
 import Button from '../../core/button';
 import { useForm } from 'react-hook-form';
@@ -45,11 +45,11 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
         if (isEmpty(insurance)) {
             createTaminDoctor.mutate(
                 {
-                    docId: toEnglishNumber(data.docId),
-                    nationalCode: toEnglishNumber(data.nationalCode),
-                    mobileNo: toEnglishNumber(data.mobileNo),
-                    username: toEnglishNumber(data.taminUsername),
-                    password: toEnglishNumber(data.taminPassword)
+                    docId: digitsFaToEn(data.docId),
+                    nationalCode: digitsFaToEn(data.nationalCode),
+                    mobileNo: digitsFaToEn(data.mobileNo),
+                    username: digitsFaToEn(data.taminUsername),
+                    password: digitsFaToEn(data.taminPassword)
                 },
                 {
                     onSuccess: () => {
@@ -89,11 +89,11 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
             updateTaminDoctor.mutate(
                 {
                     id: insurance.id,
-                    docId: toEnglishNumber(data.docId),
-                    nationalCode: toEnglishNumber(data.nationalCode),
-                    mobileNo: toEnglishNumber(data.mobileNo),
-                    username: toEnglishNumber(data.taminUsername),
-                    password: toEnglishNumber(data.taminPassword)
+                    docId: digitsFaToEn(data.docId),
+                    nationalCode: digitsFaToEn(data.nationalCode),
+                    mobileNo: digitsFaToEn(data.mobileNo),
+                    username: digitsFaToEn(data.taminUsername),
+                    password: digitsFaToEn(data.taminPassword)
                 },
                 {
                     onSuccess: () => {

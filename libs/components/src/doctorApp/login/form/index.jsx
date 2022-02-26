@@ -3,7 +3,7 @@ import styles from './form.module.scss';
 import { useLogin, useResendCode, useCaptcha } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 import { setToken } from '@paziresh24/utils/localstorage';
 import { isMobile } from 'react-device-detect';
 import queryString from 'query-string';
@@ -31,8 +31,8 @@ const Form = ({ focus, setFocus }) => {
     const loginAction = (username, password, forgot = false, captcha) => {
         login.mutate(
             {
-                username: toEnglishNumber(username),
-                password: toEnglishNumber(password),
+                username: digitsFaToEn(username),
+                password: digitsFaToEn(password),
                 ...(captcha && captcha),
                 justDoctor: true
             },
@@ -45,7 +45,7 @@ const Form = ({ focus, setFocus }) => {
                             group: 'login',
                             type: 'successful',
                             event: {
-                                username: toEnglishNumber(username)
+                                username: digitsFaToEn(username)
                             }
                         });
 
@@ -64,7 +64,7 @@ const Form = ({ focus, setFocus }) => {
                             group: 'login',
                             type: 'change-password',
                             event: {
-                                username: toEnglishNumber(username)
+                                username: digitsFaToEn(username)
                             }
                         });
                         setStep('CHANGEPASSWORD');
@@ -79,7 +79,7 @@ const Form = ({ focus, setFocus }) => {
                             group: 'login',
                             type: 'unsuccessful-password',
                             event: {
-                                username: toEnglishNumber(username)
+                                username: digitsFaToEn(username)
                             }
                         });
                         toast.error('رمز وارد شده اشتباه می باشد.');
@@ -88,7 +88,7 @@ const Form = ({ focus, setFocus }) => {
                             group: 'login',
                             type: 'unsuccessful-captcha',
                             event: {
-                                username: toEnglishNumber(username)
+                                username: digitsFaToEn(username)
                             }
                         });
                         toast.error('عبارت امنیتی اشتباه است.');
@@ -98,7 +98,7 @@ const Form = ({ focus, setFocus }) => {
                             group: 'login',
                             type: 'unsuccessful-irregular',
                             event: {
-                                username: toEnglishNumber(username)
+                                username: digitsFaToEn(username)
                             }
                         });
                         toast.error('خطایی رخ داده است.');

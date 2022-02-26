@@ -4,7 +4,7 @@ import Chips from '../../core/chips';
 import Modal from '../../core/modal';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { sendEvent, digitsFaToEn } from '@paziresh24/utils';
 import TextField from '../../core/textField';
 import Button from '../../core/button';
 import { useForm } from 'react-hook-form';
@@ -54,14 +54,14 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
     }, [isAuth]);
 
     const loginAction = data => {
-        setUserName(toEnglishNumber(data.username));
+        setUserName(digitsFaToEn(data.username));
         if (isEmpty(insurance)) {
             createSalamatDoctor.mutate(
                 {
                     identifier: identifier,
-                    medicalCode: toEnglishNumber(data.medicalCode),
-                    username: toEnglishNumber(data.username),
-                    password: toEnglishNumber(data.password)
+                    medicalCode: digitsFaToEn(data.medicalCode),
+                    username: digitsFaToEn(data.username),
+                    password: digitsFaToEn(data.password)
                 },
                 {
                     onSuccess: data => {
@@ -104,9 +104,9 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
             updateSalamatDoctor.mutate(
                 {
                     id: insurance.id,
-                    medicalCode: toEnglishNumber(data.medicalCode),
-                    username: toEnglishNumber(data.username),
-                    password: toEnglishNumber(data.password)
+                    medicalCode: digitsFaToEn(data.medicalCode),
+                    username: digitsFaToEn(data.username),
+                    password: digitsFaToEn(data.password)
                 },
                 {
                     onSuccess: data => {
@@ -152,8 +152,8 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
         checkOtp.mutate(
             {
                 identifier: identifier,
-                medicalCode: toEnglishNumber(userName),
-                code: toEnglishNumber(data.otpCode)
+                medicalCode: digitsFaToEn(userName),
+                code: digitsFaToEn(data.otpCode)
             },
             {
                 onSuccess: () => {

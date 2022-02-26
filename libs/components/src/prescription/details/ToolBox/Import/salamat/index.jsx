@@ -14,7 +14,7 @@ import queryString from 'query-string';
 import TextField from '../../../../../core/textField';
 import { useEffect, useState } from 'react';
 import { Overlay } from '@paziresh24/components/core/overlay';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 
 const SalamatImport = ({ isOpen, onClose, provider }) => {
     const [prescriptionInfo] = useSelectPrescription();
@@ -53,7 +53,7 @@ const SalamatImport = ({ isOpen, onClose, provider }) => {
         importCaptcha.mutate(
             {
                 import_status_id: importRequests.data.importStatusId,
-                captcha: toEnglishNumber(captcha)
+                captcha: digitsFaToEn(captcha)
             },
             {
                 onSuccess: data => {
@@ -78,7 +78,7 @@ const SalamatImport = ({ isOpen, onClose, provider }) => {
         importOtpSalamat.mutate(
             {
                 import_status_id: importRequests.data.importStatusId,
-                otp: toEnglishNumber(data.otpCode)
+                otp: digitsFaToEn(data.otpCode)
             },
             {
                 onSuccess: data => {

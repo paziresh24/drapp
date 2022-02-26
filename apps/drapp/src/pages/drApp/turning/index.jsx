@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import moment from 'jalali-moment';
 import { TurnTime } from '@paziresh24/components/doctorApp/turning/turnTime';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { sendEvent, digitsFaToEn } from '@paziresh24/utils';
 import { v4 as uuid } from 'uuid';
 import { useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
 import Error from '@paziresh24/components/core/error';
@@ -203,7 +203,7 @@ const Turning = () => {
         addPrescription.mutate(
             {
                 baseURL: info.center.local_base_url,
-                patientNationalCode: toEnglishNumber(data.national_code),
+                patientNationalCode: digitsFaToEn(data.national_code),
                 identifier: uuidInstance,
                 tags: tags
             },
@@ -274,7 +274,7 @@ const Turning = () => {
         addPrescription.mutate(
             {
                 baseURL: info.center.local_base_url,
-                patientNationalCode: toEnglishNumber(data.national_code),
+                patientNationalCode: digitsFaToEn(data.national_code),
                 identifier: uuidInstance,
                 tags: tags
             },
@@ -318,7 +318,7 @@ const Turning = () => {
             {
                 baseURL: info.center.local_base_url,
                 prescriptionId: confirmCellPhone.id,
-                patientCell: toEnglishNumber(data.cell)
+                patientCell: digitsFaToEn(data.cell)
             },
             {
                 onSuccess: () => {

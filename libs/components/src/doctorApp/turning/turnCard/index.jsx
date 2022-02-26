@@ -13,7 +13,7 @@ import {
     useDeletePrescription,
     useGetOnePrescription
 } from '@paziresh24/hooks/prescription';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 import { toast } from 'react-toastify';
 import { Loading } from '../../../core/loading';
 import Chips from '../../../core/chips';
@@ -124,8 +124,8 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
             });
         return addPrescription.mutateAsync({
             baseURL: info.center.local_base_url,
-            patientCell: toEnglishNumber(cell),
-            patientNationalCode: toEnglishNumber(national_code),
+            patientCell: digitsFaToEn(cell),
+            patientNationalCode: digitsFaToEn(national_code),
             identifier: id,
             tags: tags
         });
