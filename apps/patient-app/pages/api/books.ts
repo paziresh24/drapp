@@ -44,8 +44,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             params: { identifier: reformattedBooks.map(book => book.book_id) }
         });
 
-        console.log(reformattedBooks);
-
         const reformattedResponse = reformattedBooks.map(book => ({
             id: book.book_id,
             status: book.book_delete === '1' ? 'deleted' : book.book_status,
@@ -66,7 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             center_info: {
                 center_type: book.center_type,
                 center_id: book.center_id,
-                is_paging: book.settings['booking:paging_from_clinic']
+                is_paging: book.settings.booking_paging_from_clinic ? true : false
             },
             turn_details: {
                 book_time: book.book_from,

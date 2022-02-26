@@ -8,6 +8,7 @@ export interface TurnProps {
     centerInfo: {
         centerId: string;
         centerType: string;
+        isPaging: boolean;
     };
     doctorInfo: {
         avatar: string;

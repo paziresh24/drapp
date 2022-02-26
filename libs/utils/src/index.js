@@ -7,6 +7,15 @@ export const strDateToDate = strDate => {
     return date;
 };
 
+export const isToday = date => {
+    const today = new Date();
+    return (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+    );
+};
+
 export const convertToTime = time => {
     const date = new Date(time * 1000);
     const hours = date.getHours();
