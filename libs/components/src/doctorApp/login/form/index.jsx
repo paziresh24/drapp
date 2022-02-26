@@ -3,7 +3,7 @@ import styles from './form.module.scss';
 import { useLogin, useResendCode, useCaptcha } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 import { setToken } from '@paziresh24/utils/localstorage';
 import { isMobile } from 'react-device-detect';
 import queryString from 'query-string';
@@ -13,6 +13,7 @@ import OtpCode from './../otpCode';
 import UserName from '../userName';
 import ForgotPassword from '../forgotPassword';
 import ChangePassword from './../changePassword/index';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Form = ({ focus, setFocus }) => {
     const [loginType, setLoginType] = useState('password');
@@ -30,8 +31,8 @@ const Form = ({ focus, setFocus }) => {
     const loginAction = (username, password, forgot = false, captcha) => {
         login.mutate(
             {
-                username: toEnglishNumber(username),
-                password: toEnglishNumber(password),
+                username: digitsFaToEn(username),
+                password: digitsFaToEn(password),
                 ...(captcha && captcha),
                 justDoctor: true
             },
@@ -40,6 +41,14 @@ const Form = ({ focus, setFocus }) => {
                     setToken(data.access_token);
 
                     if (!forgot) {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'successful',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
+
                         if (params?.url && new URL(params?.url).origin === location.origin) {
                             return location.replace(decodeURIComponent(params.url));
                         }
@@ -51,20 +60,47 @@ const Form = ({ focus, setFocus }) => {
                             }
                         });
                     } else {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'change-password',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
                         setStep('CHANGEPASSWORD');
                     }
                 },
                 onError: error => {
                     const statusCode = error.response?.status;
                     const message = error.response?.data;
-                    sendEvent('doctorReg', 'step1', `unsuccessfulreg ${username}`);
 
                     if (statusCode === 401) {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'unsuccessful-password',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
                         toast.error('رمز وارد شده اشتباه می باشد.');
                     } else if (message.field === 'captcha_value') {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'unsuccessful-captcha',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
                         toast.error('عبارت امنیتی اشتباه است.');
                         getCaptcha.refetch();
                     } else {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'unsuccessful-irregular',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
                         toast.error('خطایی رخ داده است.');
                     }
                 }
