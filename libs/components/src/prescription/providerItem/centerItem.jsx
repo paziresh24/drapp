@@ -18,6 +18,7 @@ import { useDrApp } from '@paziresh24/context/drapp/index';
 import TaminIcon from '@paziresh24/components/icons/prescription/tamin';
 import SalamatIcon from '@paziresh24/components/icons/prescription/salamat';
 import { isMobile } from 'react-device-detect';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
     const createTaminDoctor = useCreateTaminDoctor();
@@ -52,6 +53,13 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                 },
                 {
                     onSuccess: () => {
+                        getSplunkInstance.sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication',
+                            event: {
+                                provider: 'tamin'
+                            }
+                        });
                         isImport && setImportModal(true);
                         setIsAuthentication(true);
                         refetch();
@@ -59,6 +67,14 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                     },
                     onError: error => {
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
+                        getSplunkInstance.sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-error',
+                            event: {
+                                provider: 'tamin',
+                                error
+                            }
+                        });
                         console.clear();
                         const statusCode = error.response?.status;
                         if (statusCode === 401) {
@@ -82,12 +98,27 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                 {
                     onSuccess: () => {
                         isImport && setImportModal(true);
+                        getSplunkInstance.sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-edit',
+                            event: {
+                                provider: 'tamin'
+                            }
+                        });
                         setIsAuthentication(true);
                         refetch();
                         toast.success('اطلاعات شما ویرایش شد.');
                     },
                     onError: error => {
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
+                        getSplunkInstance.sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-error',
+                            event: {
+                                provider: 'tamin',
+                                error
+                            }
+                        });
                         console.clear();
                         const statusCode = error.response?.status;
                         if (statusCode === 401) {

@@ -21,6 +21,7 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import { isMobile } from 'react-device-detect';
 import TaminIcon from '@paziresh24/components/icons/prescription/tamin';
 import SalamatIcon from '@paziresh24/components/icons/prescription/salamat';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }) => {
     const createSalamatDoctor = useCreateSalamatDoctor();
@@ -64,6 +65,13 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                 },
                 {
                     onSuccess: data => {
+                        getSplunkInstance.sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication',
+                            event: {
+                                provider: 'salamat'
+                            }
+                        });
                         if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                             setOtpConfirm(true);
                         } else {
@@ -74,6 +82,14 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                         }
                     },
                     onError: error => {
+                        getSplunkInstance.sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-error',
+                            event: {
+                                provider: 'salamat',
+                                error
+                            }
+                        });
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
                         const statusCode = error.response?.status;
                         if (statusCode === 401) {
@@ -94,6 +110,13 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                 },
                 {
                     onSuccess: data => {
+                        getSplunkInstance.sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-edit',
+                            event: {
+                                provider: 'salamat'
+                            }
+                        });
                         if (data?.message == 'کد تایید دو مرحله‌ای را ارسال کنید') {
                             setOtpConfirm(true);
                         } else {
@@ -104,6 +127,14 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                         }
                     },
                     onError: error => {
+                        getSplunkInstance.sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-error',
+                            event: {
+                                provider: 'salamat',
+                                error
+                            }
+                        });
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
                         const statusCode = error.response?.status;
                         if (statusCode === 401) {
