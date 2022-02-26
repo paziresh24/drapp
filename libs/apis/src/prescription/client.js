@@ -8,13 +8,16 @@ const client = axios.create({
 
 client.interceptors.response.use(
     res => {
-        if (new Date().getTime() - res.config.startTime.getTime() > 3000) {
+        const isTimeDifferenceNowAndStartTimeGreaterThan3Seconds =
+            new Date().getTime() - res.config.startDateTime.getTime() > 3000;
+
+        if (isTimeDifferenceNowAndStartTimeGreaterThan3Seconds) {
             getSplunkInstance().sendEvent({
                 group: 'prescription-api',
                 type: 'response-time-greater-than-3-seconds',
                 event: {
                     end_point: res.config.url,
-                    time_ms: new Date().getTime() - res.config.startTime.getTime()
+                    time_ms: new Date().getTime() - res.config.startDateTime.getTime()
                 }
             });
         }
@@ -32,7 +35,7 @@ client.interceptors.request.use(
             config.headers['Authorization'] = 'Bearer ' + token;
             config.headers['Content-Type'] = 'application/json';
         }
-        config.startTime = new Date();
+        config.startDateTime = new Date();
         return config;
     },
     err => {
