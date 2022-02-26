@@ -16,7 +16,7 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, refetchData }) => {
     const submitVisit = () => {
         getSplunkInstance().sendEvent({
             group: 'turning-list',
-            type: 'visit-action'
+            type: 'visit-prescription-action'
         });
         if (provider === 'tamin') {
             addItem.mutate(
