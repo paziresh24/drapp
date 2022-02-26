@@ -53,7 +53,7 @@ const Finalize = () => {
     const visitDescription = useRef();
     const referenceFeedback = useRef();
 
-    const startPrescriptionDate = useRef();
+    const startPrescribeDateTime = useRef();
 
     const updatePrescriptionAction = (id, data) => {
         updatePrescription.mutate({
@@ -63,7 +63,7 @@ const Finalize = () => {
     };
 
     useEffect(() => {
-        startPrescriptionDate.current = new Date();
+        startPrescribeDateTime.current = new Date();
     }, []);
 
     const servicesCloneRef = useRef();
@@ -234,9 +234,9 @@ const Finalize = () => {
                     group: 'prescription',
                     type: 'duration',
                     event: {
-                        start_date: startPrescriptionDate.current,
+                        start_date: startPrescribeDateTime.current,
                         end_date: new Date(),
-                        duration: new Date().getTime() - startPrescriptionDate.current.getTime(),
+                        duration: new Date().getTime() - startPrescribeDateTime.current.getTime(),
                         prescription_info: prescriptionInfo
                     }
                 });
