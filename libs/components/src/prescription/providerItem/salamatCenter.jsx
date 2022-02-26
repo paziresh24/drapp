@@ -65,7 +65,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                 },
                 {
                     onSuccess: data => {
-                        getSplunkInstance.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'prescription',
                             type: 'providers-authentication',
                             event: {
@@ -82,7 +82,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                         }
                     },
                     onError: error => {
-                        getSplunkInstance.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'prescription',
                             type: 'providers-authentication-error',
                             event: {
@@ -110,7 +110,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                 },
                 {
                     onSuccess: data => {
-                        getSplunkInstance.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'prescription',
                             type: 'providers-authentication-edit',
                             event: {
@@ -127,7 +127,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                         }
                     },
                     onError: error => {
-                        getSplunkInstance.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'prescription',
                             type: 'providers-authentication-error',
                             event: {

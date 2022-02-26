@@ -53,7 +53,7 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                 },
                 {
                     onSuccess: () => {
-                        getSplunkInstance.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'prescription',
                             type: 'providers-authentication',
                             event: {
@@ -67,7 +67,7 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                     },
                     onError: error => {
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
-                        getSplunkInstance.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'prescription',
                             type: 'providers-authentication-error',
                             event: {
@@ -98,7 +98,7 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                 {
                     onSuccess: () => {
                         isImport && setImportModal(true);
-                        getSplunkInstance.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'prescription',
                             type: 'providers-authentication-edit',
                             event: {
@@ -111,7 +111,7 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                     },
                     onError: error => {
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
-                        getSplunkInstance.sendEvent({
+                        getSplunkInstance().sendEvent({
                             group: 'prescription',
                             type: 'providers-authentication-error',
                             event: {
