@@ -9,11 +9,11 @@ const MenuItem = ({ item }) => {
     const history = useHistory();
     const [isDropDownOpen, setIsDropDownOpen] = useState();
 
-    const RootNode = item?.onClick && !item.link ? 'div' : NavLink;
+    const RootNodeComponent = item?.onClick && !item.link ? 'div' : NavLink;
 
     return (
         <div className={styles.menuBarItem}>
-            <RootNode
+            <RootNodeComponent
                 key={item?.id}
                 to={item?.link ?? '#'}
                 className={styles.menuContent}
@@ -49,7 +49,7 @@ const MenuItem = ({ item }) => {
                     {item?.name}
                 </span>
                 {/* )} */}
-            </RootNode>
+            </RootNodeComponent>
 
             {item.subMenu && (
                 <CSSTransition
