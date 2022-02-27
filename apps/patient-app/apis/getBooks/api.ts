@@ -1,5 +1,5 @@
 import { patientAppClient } from '../client';
 
-export const getBooks = async (params: any) => {
-    return await patientAppClient.get('/books', { params });
+export const getBooks = (params: { page: number }) => {
+    return patientAppClient.get('/books', { params });
 };
