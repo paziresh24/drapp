@@ -106,6 +106,35 @@ const PrescriptionStatistics = ({ level }) => {
         }, 0);
     };
 
+    const CountAllPrescriptionStatisitics = () => (
+        <div
+            style={{
+                alignSelf: 'flex-start',
+                padding: '2rem 2rem',
+                paddingBottom: '0'
+            }}
+        >
+            تعداد کل نسخه ها در بازه ی {new Date(filters.starts_at * 1000).toLocaleDateString('fa')}{' '}
+            تا {new Date(filters.ends_at * 1000).toLocaleDateString('fa')}:{' '}
+            <span style={{ fontWeight: 'bold' }}>
+                {sumBy(
+                    Object.keys(groupBy(statistics?.data, 'starts_at')).map(key => ({
+                        total: sumBy(
+                            statistics?.data.filter(item => item.starts_at === key),
+                            'total'
+                        ),
+                        starts_at_with_year: digitsFaToEn(new Date(key).toLocaleDateString('fa')),
+                        starts_at: digitsFaToEn(
+                            new Date(key).toLocaleDateString('fa').substr(5, 10)
+                        )
+                    })),
+                    'total'
+                )}
+            </span>{' '}
+            نسخه
+        </div>
+    );
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.filterWrapper}>
@@ -267,35 +296,7 @@ const PrescriptionStatistics = ({ level }) => {
                     </div>
                 </div>
                 <div>
-                    <div
-                        style={{
-                            alignSelf: 'flex-start',
-                            padding: '2rem 2rem',
-                            paddingBottom: '0'
-                        }}
-                    >
-                        تعداد کل نسخه ها در بازه ی{' '}
-                        {new Date(filters.starts_at * 1000).toLocaleDateString('fa')} تا{' '}
-                        {new Date(filters.ends_at * 1000).toLocaleDateString('fa')}:{' '}
-                        <span style={{ fontWeight: 'bold' }}>
-                            {sumBy(
-                                Object.keys(groupBy(statistics?.data, 'starts_at')).map(key => ({
-                                    total: sumBy(
-                                        statistics?.data.filter(item => item.starts_at === key),
-                                        'total'
-                                    ),
-                                    starts_at_with_year: digitsFaToEn(
-                                        new Date(key).toLocaleDateString('fa')
-                                    ),
-                                    starts_at: digitsFaToEn(
-                                        new Date(key).toLocaleDateString('fa').substr(5, 10)
-                                    )
-                                })),
-                                'total'
-                            )}
-                        </span>{' '}
-                        نسخه
-                    </div>
+                    <CountAllPrescriptionStatisitics />
                 </div>
                 <div className={styles.chartsWrapper}>
                     <div className={styles.chartBlock}>
