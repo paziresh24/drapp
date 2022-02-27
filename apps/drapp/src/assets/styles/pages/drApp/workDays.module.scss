@@ -218,14 +218,15 @@
             font-weight: 700;
             margin-bottom: 2rem;
             margin-top: 0.5rem;
+            text-align: center;
         }
 
         .hero-info-wrapper {
             display: flex;
             flex-direction: column;
             position: absolute;
-            top: 5rem;
-            right: 5rem;
+            top: 2rem;
+            right: 2rem;
 
             .name {
                 font-size: 1.9rem;

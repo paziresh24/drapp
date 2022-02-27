@@ -192,6 +192,14 @@ export const routes = [
         exact: false
     },
     {
+        path: '/consult/fill-info/',
+        name: 'FillInfo',
+        title: 'ثبت نام ویزیت آنلاین',
+        component: lazy(() => import('./consultRegister')),
+        isPrivate: true,
+        exact: false
+    },
+    {
         path: '/financial/',
         name: 'Financial',
         title: 'مدیریت مالی',

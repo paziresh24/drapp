@@ -23,7 +23,7 @@ const TextField = forwardRef((props, ref) => {
                 value={props.value}
                 defaultValue={props.defaultValue}
                 name={props.name}
-                placeholder=" "
+                placeholder={props.placeHolder ? props.placeHolder : ' '}
                 onChange={props.onChange}
                 onFocus={props.onFocus}
                 onBlur={props.onBlur}
