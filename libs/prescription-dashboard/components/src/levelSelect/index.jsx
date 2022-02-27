@@ -61,20 +61,13 @@ const LevelSelect = ({ label, icon, items, onChange, valueField, defaultValue, a
             </div>
             {isOpen === label && (
                 <ul className={styles.select} onClick={e => e.stopPropagation()} aria-hidden>
-                    <div style={{ padding: '1rem' }}>
+                    <div className="p-4">
                         <input
                             type="text"
                             onChange={e => setSearchValue(e.target.value)}
                             value={searchValue}
                             placeholder="جستجو..."
-                            style={{
-                                height: '4.5rem',
-                                width: '100%',
-                                background: '#e7eff5',
-                                borderRadius: '0.6rem',
-                                padding: '1rem',
-                                outline: 0
-                            }}
+                            className="h-16 w-full bg-[#e7eff5] rounded-lg p-4 outline-none"
                         />
                     </div>
                     {items.map(
