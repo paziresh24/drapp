@@ -10,7 +10,7 @@
                 "cwd": "apps/drapp",
                 "commands": [
                     "chmod +x env.sh",
-                    "./env.sh && mv env-config.js public",
+                    "sh env.sh && mv env-config.js public",
                     "node ../../node_modules/@craco/craco/bin/craco.js start"
                 ]
             }

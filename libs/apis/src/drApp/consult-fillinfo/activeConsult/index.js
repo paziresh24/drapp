@@ -1,5 +1,5 @@
 import { client } from '../../../client';
 
-export const activeConsult = async params => {
-    return await client.post(`/doctor/consult`, params);
+export const activeConsult = params => {
+    return client.post(`/doctor/consult`, params);
 };

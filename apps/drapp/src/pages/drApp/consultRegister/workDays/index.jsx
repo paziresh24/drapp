@@ -10,7 +10,6 @@ import { TimeRow } from '@paziresh24/components/doctorApp/setting/workDays';
 import { toast } from 'react-toastify';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useDuration } from '@paziresh24/context/drapp/duration';
-import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 import { useConsult } from '@paziresh24/context/drapp/consult';
@@ -104,10 +103,6 @@ const WorkDays = () => {
         if (isEmpty(workDaysTime)) {
             return toast.warning('ساعت کاری نمی تواند خالی باشد.');
         }
-        console.log({
-            ...consult,
-            workHours: workDaysTime
-        });
         activeConsult.mutate(
             {
                 ...consult,
@@ -165,9 +160,11 @@ const WorkDays = () => {
                                 fill="#3f3f79"
                             />
                         </svg>
-                        <span className={styles['hero-title']}>
-                            مرکز مشاوره آنلاین شما با موفقیت ثبت شد. لطفا تا زمان فعالسازی منتظر
-                            بمانید..
+                        <span className={styles['hero-title']} style={{ marginBottom: '0.5rem' }}>
+                            مرکز مشاوره آنلاین شما با موفقیت ثبت شد.
+                        </span>
+                        <span style={{ marginBottom: '2rem' }}>
+                            لطفا تا زمان فعالسازی منتظر بمانید...
                         </span>
                         <span>پروفایل عمومی شما</span>
                         <a
@@ -203,25 +200,6 @@ const WorkDays = () => {
                     </div>
                 </div>
             </Modal>
-            {/* <Modal
-                icon={<CircleTick />}
-                title="نوبت دهی شما فعال شد"
-                isOpen={success}
-                onClose={setSuccess}
-                fullPage
-            >
-                <div className={styles['final-modal']}>
-                    <span>
-                        بیماران شما از طریق وبسایت یا اپلیکیشن پذیرش24 می توانند نوبت شما را در تایم
-                        های مشخص شده دریافت نمایند. شما نیز می توانید از طریق منوی نوبت دهی مطب و یا
-                        دکمه زیر، نوبت های خود را مدیریت نمایید.
-                    </span>
-
-                    <Button onClick={() => location.replace('/turning')}>
-                        رفتن به صفحه مدیریت نوبت ها
-                    </Button>
-                </div>
-            </Modal> */}
         </>
     );
 };
