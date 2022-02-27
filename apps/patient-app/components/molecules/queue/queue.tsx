@@ -2,7 +2,7 @@ import { useGetPagingBook } from '../../../apis/getPagingBook/hook';
 import { Text } from '../../atoms/text/text';
 import { useEffect } from 'react';
 import Loading from '../../atoms/loading';
-import { convertToTime } from '@paziresh24/utils';
+import { convertTimeStampToFormattedTime } from '@paziresh24/utils';
 
 interface QueueProps {
     bookId: string;
@@ -131,7 +131,7 @@ export const Queue: React.FC<QueueProps> = props => {
                                         </svg>
                                         <Text fontSize="sm">بازه تقریبی حضور شما در مرکز:</Text>
                                         <Text fontSize="sm" fontWeight="bold">
-                                            {convertToTime(
+                                            {convertTimeStampToFormattedTime(
                                                 pagingBookData.data.booking_queue.attendance_time
                                             )}
                                         </Text>

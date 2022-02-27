@@ -16,7 +16,7 @@ export const isToday = date => {
     );
 };
 
-export const convertToTime = time => {
+export const convertTimeStampToFormattedTime = time => {
     const date = new Date(time * 1000);
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -24,7 +24,7 @@ export const convertToTime = time => {
     return timeString;
 };
 
-export const convertToPersianDate = time => {
+export const convertTimeStampToPersianDate = time => {
     return new Date(time * 1000).toLocaleDateString('fa');
 };
 
