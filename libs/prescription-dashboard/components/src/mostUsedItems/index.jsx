@@ -13,6 +13,10 @@ import { useGetCenterName } from './../../../apis/getCenterName/useGetCenterName
 import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
 
+const levelConstants = {
+    doctor: 'DOCTOR'
+};
+
 const PrescriptionStatistics = ({ level }) => {
     // store
     const [filters, setFilters] = useStatisticsFilters();
@@ -24,7 +28,7 @@ const PrescriptionStatistics = ({ level }) => {
     const getMostUsedItemsAggregated = useGetMostUsedItems({
         ...filters,
         // is_aggregated: 1,
-        ...(level !== 'DOCTOR' && { hospital_center_id: centerId }),
+        ...(level !== levelConstants.doctor && { hospital_center_id: centerId }),
         prescription_type: filters.prescription_type,
         insurance_type: filters.insurance_type ?? 'tamin',
         level
@@ -43,7 +47,7 @@ const PrescriptionStatistics = ({ level }) => {
     }, [statistics]);
 
     useEffect(() => {
-        if (getDoctorCenter.isSuccess && level !== 'DOCTOR')
+        if (getDoctorCenter.isSuccess && level !== levelConstants.doctor)
             setCenterId(getDoctorCenter.data[0].center_id);
     }, [getDoctorCenter.status, level]);
     const firstUpdate = useRef(true);
@@ -133,7 +137,7 @@ const PrescriptionStatistics = ({ level }) => {
         <div className={styles.wrapper}>
             <div className={styles.filterWrapper}>
                 <div className="flex gap-3 flex-col w-full">
-                    {level === 'DOCTOR' && (
+                    {level === levelConstants.doctor && (
                         <LevelSelect
                             icon={
                                 <svg
@@ -165,7 +169,7 @@ const PrescriptionStatistics = ({ level }) => {
                             }}
                         />
                     )}
-                    {level !== 'DOCTOR' && getDoctorCenter.isSuccess && (
+                    {level !== levelConstants.doctor && getDoctorCenter.isSuccess && (
                         <>
                             ‍
                             <LevelSelect
@@ -305,7 +309,7 @@ const PrescriptionStatistics = ({ level }) => {
                                               ...item,
 
                                               center_name: getCenterName.data[item.center_id],
-                                              ...(level !== 'DOCTOR' && {
+                                              ...(level !== levelConstants.doctor && {
                                                   doctor_id:
                                                       getDoctors.isSuccess &&
                                                       getDoctors.data.find(

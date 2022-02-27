@@ -21,6 +21,10 @@ import sumBy from 'lodash/sumBy';
 import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
 
+const levelConstants = {
+    doctor: 'DOCTOR'
+};
+
 const PrescriptionStatistics = ({ level }) => {
     // store
     const [filters, setFilters] = useStatisticsFilters();
@@ -30,13 +34,13 @@ const PrescriptionStatistics = ({ level }) => {
     // api
     const getPrescriptionStatistics = useGetPrescriptionStatistics({
         ...filters,
-        ...(level !== 'DOCTOR' && { hospital_center_id: centerId }),
+        ...(level !== levelConstants.doctor && { hospital_center_id: centerId }),
         level
     });
     const getPrescriptionStatisticsAggregated = useGetPrescriptionStatistics({
         ...filters,
         is_aggregated: 1,
-        ...(level !== 'DOCTOR' && { hospital_center_id: centerId }),
+        ...(level !== levelConstants.doctor && { hospital_center_id: centerId }),
         level
     });
     const getDoctors = useGetDoctors({
@@ -48,7 +52,7 @@ const PrescriptionStatistics = ({ level }) => {
     });
 
     useEffect(() => {
-        if (getDoctorCenter.isSuccess && level !== 'DOCTOR')
+        if (getDoctorCenter.isSuccess && level !== levelConstants.doctor)
             setCenterId(getDoctorCenter.data[0].center_id);
     }, [getDoctorCenter.status, level]);
 
@@ -68,10 +72,10 @@ const PrescriptionStatistics = ({ level }) => {
         getPrescriptionStatistics.remove();
         getPrescriptionStatisticsAggregated.remove();
 
-        if (centerId && level !== 'DOCTOR') {
+        if (centerId && level !== levelConstants.doctor) {
             refetch();
         }
-        if (level === 'DOCTOR') {
+        if (level === levelConstants.doctor) {
             refetch();
         }
     }, [filters, centerId]);
@@ -106,7 +110,7 @@ const PrescriptionStatistics = ({ level }) => {
         <div className={styles.wrapper}>
             <div className={styles.filterWrapper}>
                 <div className="flex gap-3 flex-col w-full">
-                    {level === 'DOCTOR' && (
+                    {level === levelConstants.doctor && (
                         <LevelSelect
                             icon={
                                 <svg
@@ -137,7 +141,7 @@ const PrescriptionStatistics = ({ level }) => {
                             }}
                         />
                     )}
-                    {level !== 'DOCTOR' && getDoctorCenter.isSuccess && (
+                    {level !== levelConstants.doctor && getDoctorCenter.isSuccess && (
                         <>
                             ‍
                             <LevelSelect
@@ -238,7 +242,7 @@ const PrescriptionStatistics = ({ level }) => {
                                               new Date(item.starts_at).toLocaleDateString('fa')
                                           ),
                                           center_name: getCenterName.data[item.center_id],
-                                          ...(level !== 'DOCTOR' && {
+                                          ...(level !== levelConstants.doctor && {
                                               doctor_id:
                                                   getDoctors.isSuccess &&
                                                   getDoctors.data.find(
@@ -280,10 +284,10 @@ const PrescriptionStatistics = ({ level }) => {
                                         statistics?.data.filter(item => item.starts_at === key),
                                         'total'
                                     ),
-                                    starts_at_with_year: toEnglishNumber(
+                                    starts_at_with_year: digitsFaToEn(
                                         new Date(key).toLocaleDateString('fa')
                                     ),
-                                    starts_at: toEnglishNumber(
+                                    starts_at: digitsFaToEn(
                                         new Date(key).toLocaleDateString('fa').substr(5, 10)
                                     )
                                 })),
@@ -454,7 +458,7 @@ const PrescriptionStatistics = ({ level }) => {
                                                   new Date(item.starts_at).toLocaleDateString('fa')
                                               ),
                                               center_name: getCenterName.data[item.center_id],
-                                              ...(level !== 'DOCTOR' && {
+                                              ...(level !== levelConstants.doctor && {
                                                   doctor_id:
                                                       getDoctors.isSuccess &&
                                                       getDoctors.data.find(
