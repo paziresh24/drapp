@@ -10,7 +10,7 @@ import Skeleton from './../components/atoms/skeleton/skeleton';
 import { useGetBooks } from '../apis/getBooks/hook';
 import { useBookStore } from '../store';
 import { CenterType } from '../types/centerType';
-import Loader from './../components/atoms/loader';
+import Loading from '../components/atoms/loading';
 
 interface AppointmentsProps {
     isWebView: boolean;
@@ -116,7 +116,7 @@ export const Appointments: React.FC<AppointmentsProps> = ({ isWebView }) => {
                         ))}
                     {!isLoading && getBooks.data?.status !== 204 && (
                         <div ref={ref} className="w-full flex justify-center py-8">
-                            <Loader />
+                            <Loading />
                         </div>
                     )}
                 </div>

@@ -1,4 +1,4 @@
-export const Loader: React.FC = () => {
+export const Loading: React.FC = () => {
     return (
         <svg
             version="1.1"
@@ -59,4 +59,4 @@ export const Loader: React.FC = () => {
     );
 };
 
-export default Loader;
+export default Loading;

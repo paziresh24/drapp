@@ -1,7 +1,7 @@
 import { useGetPagingBook } from '../../../apis/getPagingBook/hook';
 import { Text } from '../../atoms/text/text';
 import { useEffect } from 'react';
-import Loader from '../../atoms/loader';
+import Loading from '../../atoms/loading';
 import { convertToTime } from '@paziresh24/utils';
 
 interface QueueProps {
@@ -19,7 +19,7 @@ export const Queue: React.FC<QueueProps> = props => {
     if (isLoading)
         return (
             <div className="h-64 flex flex-col justify-center items-center">
-                <Loader />
+                <Loading />
             </div>
         );
 
