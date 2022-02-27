@@ -265,7 +265,7 @@ const SideBar = () => {
                             position: 'relative',
                             cursor: 'pointer'
                         }}
-                        onMouseOver={() => setIsDropDownOpen(true)}
+                        onMouseOver={() => open && setIsDropDownOpen(true)}
                         onMouseLeave={() => setIsDropDownOpen(false)}
                     >
                         <div
@@ -313,7 +313,9 @@ const SideBar = () => {
                                 right: open ? '7rem' : '0',
                                 bottom: '0',
                                 transitionDelay: !open ? 'unset' : '0.2s',
-                                color: '#3F3F79'
+                                color: '#3F3F79',
+                                width: !open && '0',
+                                overflow: !open && 'hidden'
                             }}
                         >
                             <span

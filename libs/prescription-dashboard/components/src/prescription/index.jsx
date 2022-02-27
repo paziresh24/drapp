@@ -14,13 +14,16 @@ import { resultSchema } from '../../../schemas/result.schema';
 import { digitsFaToEn } from '@paziresh24/utils';
 import LiveMode from '../liveMode';
 import { useGetPrescriptionStatistics } from './../../../apis/getPrescriptionStatistics/useGetPrescriptionStatistics.hook';
-import { useGetHospitals } from './../../../apis/getHospitals/useGetHospitals.hook';
 import { useGetDoctorCenter } from './../../../apis/getDoctorCenter/useGetDoctorCenter.hook';
 import { useGetCenterName } from './../../../apis/getCenterName/useGetCenterName.hook';
 import { useGetDoctors } from './../../../apis/getDoctors/useGetDoctors.hook';
 import sumBy from 'lodash/sumBy';
 import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
+
+const levelConstants = {
+    doctor: 'DOCTOR'
+};
 
 const PrescriptionStatistics = ({ level }) => {
     // store
@@ -31,17 +34,14 @@ const PrescriptionStatistics = ({ level }) => {
     // api
     const getPrescriptionStatistics = useGetPrescriptionStatistics({
         ...filters,
-        hospital_center_id: centerId,
+        ...(level !== levelConstants.doctor && { hospital_center_id: centerId }),
         level
     });
     const getPrescriptionStatisticsAggregated = useGetPrescriptionStatistics({
         ...filters,
         is_aggregated: 1,
-        hospital_center_id: centerId,
+        ...(level !== levelConstants.doctor && { hospital_center_id: centerId }),
         level
-    });
-    const getHospitals = useGetHospitals({
-        // university_center_id: 5544
     });
     const getDoctors = useGetDoctors({
         hospital_center_id: centerId
@@ -50,6 +50,11 @@ const PrescriptionStatistics = ({ level }) => {
     const getCenterName = useGetCenterName({
         center_ids: Object.keys(groupBy(statistics.data, 'center_id'))
     });
+
+    useEffect(() => {
+        if (getDoctorCenter.isSuccess && level !== levelConstants.doctor)
+            setCenterId(getDoctorCenter.data[0].center_id);
+    }, [getDoctorCenter.status, level]);
 
     useEffect(() => {
         if (!isEmpty(statistics.data)) {
@@ -67,10 +72,10 @@ const PrescriptionStatistics = ({ level }) => {
         getPrescriptionStatistics.remove();
         getPrescriptionStatisticsAggregated.remove();
 
-        if (centerId && level !== 'DOCTOR') {
+        if (centerId && level !== levelConstants.doctor) {
             refetch();
         }
-        if (level === 'DOCTOR') {
+        if (level === levelConstants.doctor) {
             refetch();
         }
     }, [filters, centerId]);
@@ -91,16 +96,7 @@ const PrescriptionStatistics = ({ level }) => {
     }, [getPrescriptionStatistics.status, getPrescriptionStatisticsAggregated.status]);
 
     useEffect(() => {
-        if (getHospitals.isSuccess) setCenterId(getHospitals.data[0].center_id);
-    }, [getHospitals.status]);
-
-    useEffect(() => {
-        if (level === 'DOCTOR') {
-            getDoctorCenter.refetch();
-        }
-        if (level === 'HOSPITAL') {
-            getHospitals.refetch();
-        }
+        getDoctorCenter.refetch();
     }, []);
 
     const refetch = () => {
@@ -110,11 +106,40 @@ const PrescriptionStatistics = ({ level }) => {
         }, 0);
     };
 
+    const CountAllPrescriptionStatisitics = () => (
+        <div
+            style={{
+                alignSelf: 'flex-start',
+                padding: '2rem 2rem',
+                paddingBottom: '0'
+            }}
+        >
+            تعداد کل نسخه ها در بازه ی {new Date(filters.starts_at * 1000).toLocaleDateString('fa')}{' '}
+            تا {new Date(filters.ends_at * 1000).toLocaleDateString('fa')}:{' '}
+            <span style={{ fontWeight: 'bold' }}>
+                {sumBy(
+                    Object.keys(groupBy(statistics?.data, 'starts_at')).map(key => ({
+                        total: sumBy(
+                            statistics?.data.filter(item => item.starts_at === key),
+                            'total'
+                        ),
+                        starts_at_with_year: digitsFaToEn(new Date(key).toLocaleDateString('fa')),
+                        starts_at: digitsFaToEn(
+                            new Date(key).toLocaleDateString('fa').substr(5, 10)
+                        )
+                    })),
+                    'total'
+                )}
+            </span>{' '}
+            نسخه
+        </div>
+    );
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.filterWrapper}>
                 <div className="flex gap-3 flex-col w-full">
-                    {level === 'DOCTOR' && (
+                    {level === levelConstants.doctor && (
                         <LevelSelect
                             icon={
                                 <svg
@@ -138,14 +163,14 @@ const PrescriptionStatistics = ({ level }) => {
                             items={getDoctorCenter.data}
                             valueField="center_id"
                             onChange={value => {
-                                // if (value) {
-                                setCenterId(value);
-                                setFilters(prev => ({ ...prev, center_id: value }));
-                                // }
+                                if (value) {
+                                    setCenterId(value);
+                                    setFilters(prev => ({ ...prev, center_id: value }));
+                                }
                             }}
                         />
                     )}
-                    {level !== 'DOCTOR' && (
+                    {level !== levelConstants.doctor && getDoctorCenter.isSuccess && (
                         <>
                             ‍
                             <LevelSelect
@@ -168,13 +193,15 @@ const PrescriptionStatistics = ({ level }) => {
                                     </svg>
                                 }
                                 label="انتخاب مرکز"
-                                items={getHospitals.data}
+                                items={getDoctorCenter.data}
                                 defaultValue={centerId}
                                 valueField="center_id"
                                 onChange={value => {
-                                    setCenterId(value);
-                                    setTimeout(() => getDoctors.refetch(), 0);
-                                    setFilters(prev => ({ ...prev, center_id: value }));
+                                    if (value) {
+                                        setCenterId(value);
+                                        setTimeout(() => getDoctors.refetch(), 0);
+                                        setFilters(prev => ({ ...prev, center_id: value }));
+                                    }
                                 }}
                             />
                             <LevelSelect
@@ -197,11 +224,19 @@ const PrescriptionStatistics = ({ level }) => {
                                 allLabel="همه دکترها"
                                 label="انتخاب دکتر"
                                 items={
-                                    getDoctors?.data
-                                        ? getDoctors.data.map(item => ({
-                                              ...item,
-                                              name: item.name + ' ' + item.family
-                                          }))
+                                    getDoctors.isSuccess && getDoctors?.data
+                                        ? getDoctors.data
+                                              .filter(item => item?.doctor_id)
+                                              .filter(
+                                                  (v, i, a) =>
+                                                      a.findIndex(
+                                                          t => t.doctor_id === v.doctor_id
+                                                      ) === i
+                                              )
+                                              .map(item => ({
+                                                  ...item,
+                                                  name: item.name + ' ' + item.family
+                                              }))
                                         : []
                                 }
                                 valueField="doctor_id"
@@ -236,7 +271,7 @@ const PrescriptionStatistics = ({ level }) => {
                                               new Date(item.starts_at).toLocaleDateString('fa')
                                           ),
                                           center_name: getCenterName.data[item.center_id],
-                                          ...(level !== 'DOCTOR' && {
+                                          ...(level !== levelConstants.doctor && {
                                               doctor_id:
                                                   getDoctors.isSuccess &&
                                                   getDoctors.data.find(
@@ -259,6 +294,9 @@ const PrescriptionStatistics = ({ level }) => {
                             schema={resultSchema[level.toLowerCase()]}
                         />
                     </div>
+                </div>
+                <div>
+                    <CountAllPrescriptionStatisitics />
                 </div>
                 <div className={styles.chartsWrapper}>
                     <div className={styles.chartBlock}>
@@ -421,7 +459,7 @@ const PrescriptionStatistics = ({ level }) => {
                                                   new Date(item.starts_at).toLocaleDateString('fa')
                                               ),
                                               center_name: getCenterName.data[item.center_id],
-                                              ...(level !== 'DOCTOR' && {
+                                              ...(level !== levelConstants.doctor && {
                                                   doctor_id:
                                                       getDoctors.isSuccess &&
                                                       getDoctors.data.find(
