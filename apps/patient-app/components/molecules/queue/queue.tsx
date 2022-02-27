@@ -9,8 +9,8 @@ interface QueueProps {
 }
 
 enum QueueStatus {
-    onlyDayBook = 2,
-    success = 1
+    notInTheBookedDay = 2,
+    inTheBookedDay = 1
 }
 
 export const Queue: React.FC<QueueProps> = props => {
@@ -28,7 +28,7 @@ export const Queue: React.FC<QueueProps> = props => {
             </div>
         );
 
-    if (isSuccess && pagingBookData.data.status == QueueStatus.onlyDayBook)
+    if (isSuccess && pagingBookData.data.status == QueueStatus.notInTheBookedDay)
         return (
             <div className="h-64 flex flex-col justify-center items-center p-6">
                 <div className="bg-[#f3f7fa] h-full w-full flex flex-col justify-center items-center rounded-xl space-y-5">
@@ -58,8 +58,8 @@ export const Queue: React.FC<QueueProps> = props => {
 
     if (
         isSuccess &&
-        pagingBookData.data.status != QueueStatus.onlyDayBook &&
-        pagingBookData.data.status != QueueStatus.success
+        pagingBookData.data.status != QueueStatus.notInTheBookedDay &&
+        pagingBookData.data.status != QueueStatus.inTheBookedDay
     )
         return (
             <div className="h-64 flex flex-col justify-center items-center p-6">
@@ -74,7 +74,7 @@ export const Queue: React.FC<QueueProps> = props => {
             </div>
         );
 
-    if (isSuccess && pagingBookData.data.status == QueueStatus.success)
+    if (isSuccess && pagingBookData.data.status == QueueStatus.inTheBookedDay)
         return (
             <div className="flex flex-col items-center space-y-3 p-5">
                 <Text fontWeight="bold" className="mb-2">
