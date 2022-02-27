@@ -80,7 +80,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
                 title="شماره نوبت شما"
                 onClose={setQueueModal}
                 isOpen={queueModal}
-                noBodyPad
+                noBodyPadding
                 noHeader
             >
                 <Queue />

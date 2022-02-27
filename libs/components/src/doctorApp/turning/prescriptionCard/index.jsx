@@ -23,6 +23,7 @@ import Visit from '../visit';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
 import queryString from 'query-string';
 import { useTour } from '@reactour/tour';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const PrescriptionCard = ({
     dropDownShowKey,
@@ -54,6 +55,10 @@ const PrescriptionCard = ({
     } = useForm();
 
     const prescription = () => {
+        getSplunkInstance().sendEvent({
+            group: 'turning-list',
+            type: 'prescription-action'
+        });
         window._prescription = { ...turn };
         sendEvent('tajviz', 'prescription', 'tajviz');
         history.push(`/prescription/patient/${turn.id}`, {

@@ -12,7 +12,7 @@ import {
 } from '@paziresh24/hooks/prescription/';
 import { v4 as uuid } from 'uuid';
 import { getToken, setToken } from '@paziresh24/utils/localstorage.js';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 
 // COMPONENTS
 import { Loading } from '@paziresh24/components/prescription/loading';
@@ -69,9 +69,9 @@ const Create = () => {
         addPrescription.mutate(
             {
                 patientNationalCode: params.patient_nationalcode,
-                patientCell: !toEnglishNumber(params.patient_cell).startsWith('0')
-                    ? `0${toEnglishNumber(params.patient_cell)}`
-                    : toEnglishNumber(params.patient_cell),
+                patientCell: !digitsFaToEn(params.patient_cell).startsWith('0')
+                    ? `0${digitsFaToEn(params.patient_cell)}`
+                    : digitsFaToEn(params.patient_cell),
                 identifier: params.book_id ?? uuidInstance,
                 ...(params.center_id && {
                     tags: [{ type: 'center_id', value: params.center_id }]

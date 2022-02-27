@@ -46,7 +46,7 @@ export const isWebView = () => {
 };
 
 // change persian number to english number
-export const toEnglishNumber = number => {
+export const digitsFaToEn = number => {
     const id = {
         '۰': '0',
         '۱': '1',

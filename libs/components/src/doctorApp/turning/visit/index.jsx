@@ -5,6 +5,7 @@ import Button from '../../../core/button';
 import Modal from '../../../core/modal';
 import TextArea from '../../../core/textArea';
 import { useDrApp } from '@paziresh24/context/drapp/index';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Visit = ({ isOpen, onClose, provider, prescriptionId, refetchData }) => {
     const [info] = useDrApp();
@@ -13,6 +14,10 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, refetchData }) => {
     const commentRef = useRef();
 
     const submitVisit = () => {
+        getSplunkInstance().sendEvent({
+            group: 'turning-list',
+            type: 'visit-prescription-action'
+        });
         if (provider === 'tamin') {
             addItem.mutate(
                 {

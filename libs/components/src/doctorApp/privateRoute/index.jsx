@@ -134,6 +134,11 @@ const PrivateRoute = props => {
                 doctor
             }));
 
+            window.user_information = {
+                doctor: doctor,
+                center: info.center
+            };
+
             Sentry.setUser({ user: doctor });
 
             ChatSupport.setUserInfo(doctor);
