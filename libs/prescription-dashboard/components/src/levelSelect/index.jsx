@@ -5,7 +5,7 @@ import CloseIcon from '@paziresh24/components/icons/public/close';
 const LevelSelect = ({ label, icon, items, onChange, valueField, defaultValue, allLabel }) => {
     const [isOpen, setIsopen] = useState(false);
     const [values, setValues] = useState(null);
-    const [search, setSearch] = useState('');
+    const [searchValue, setSearchValue] = useState('');
 
     const addItem = item => {
         setValues(item);
@@ -64,8 +64,8 @@ const LevelSelect = ({ label, icon, items, onChange, valueField, defaultValue, a
                     <div style={{ padding: '1rem' }}>
                         <input
                             type="text"
-                            onChange={e => setSearch(e.target.value)}
-                            value={search}
+                            onChange={e => setSearchValue(e.target.value)}
+                            value={searchValue}
                             placeholder="جستجو..."
                             style={{
                                 height: '4.5rem',
@@ -79,7 +79,7 @@ const LevelSelect = ({ label, icon, items, onChange, valueField, defaultValue, a
                     </div>
                     {items.map(
                         item =>
-                            item.name.toLowerCase().includes(search.toLowerCase()) && (
+                            item.name.toLowerCase().includes(searchValue.toLowerCase()) && (
                                 <li
                                     key={item[valueField]}
                                     onClick={() => addItem(item[valueField])}
