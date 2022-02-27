@@ -14,12 +14,12 @@ interface TurnFooterProps {
     status: BookStatus;
     pdfLink: string;
     centerType: CenterType;
-    isPaging: boolean;
+    hasPaging: boolean;
     bookTime: number;
 }
 
 export const TurnFooter: React.FC<TurnFooterProps> = props => {
-    const { id, slug, status, pdfLink, centerType, isPaging, bookTime } = props;
+    const { id, slug, status, pdfLink, centerType, hasPaging, bookTime } = props;
     const [queueModal, setQueueModal] = useState(false);
 
     const isBookForToday = isToday(new Date(bookTime));
@@ -32,7 +32,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
         window.open(`${process.env.NEXT_PUBLIC_CLINIC_BASE_URL}/dr/${slug}`);
     };
 
-    const ClinicPrimaryButton = isPaging && (
+    const ClinicPrimaryButton = hasPaging && (
         <Button
             variant="secondary"
             size="sm"

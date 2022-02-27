@@ -85,7 +85,7 @@ export const Appointments: React.FC<AppointmentsProps> = ({ isWebView }) => {
                                     centerInfo={{
                                         centerId: turn.center_info.center_id,
                                         centerType: turn.center_info.center_type,
-                                        isPaging: turn.center_info.is_paging
+                                        hasPaging: turn.center_info.has_paging
                                     }}
                                     doctorInfo={{
                                         avatar:
