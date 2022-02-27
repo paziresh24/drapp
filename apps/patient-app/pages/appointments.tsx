@@ -7,7 +7,7 @@ import Turn from '../components/organisms/turn';
 import Text from '../components/atoms/text';
 import Skeleton from './../components/atoms/skeleton/skeleton';
 
-import { useGetBooks } from '../apis/getBooks/useGetBook.hook';
+import { useGetBooks } from '../apis/getBooks/hook';
 import { useBookStore } from '../store';
 import { CenterType } from '../types/centerType';
 import Loader from './../components/atoms/loader';

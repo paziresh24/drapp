@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query';
-import { getPagingBook } from './getPagingBook.api';
+import { getPagingBook } from './api';
 
 export const useGetPagingBook = () => {
     return useMutation(getPagingBook);
