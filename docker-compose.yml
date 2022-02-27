@@ -10,6 +10,8 @@ services:
         ports:
             - 8030:3000
         command: 'yarn start'
+        extra_hosts:
+            - prescription-api.paziresh24.com:192.168.216.16
 
     drapp-local:
         container_name: drapp-local
@@ -22,6 +24,7 @@ services:
             - PUBLIC_URL=/doctorapp
         ports:
             - '4030:80'
+
     drapp:
         container_name: drapp
         image: dockerhub.paziresh24.com/drapp
