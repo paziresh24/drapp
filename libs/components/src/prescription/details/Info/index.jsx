@@ -15,7 +15,7 @@ import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.c
 import { Default, Mobile } from '@paziresh24/hooks/device';
 import isEmpty from 'lodash/isEmpty';
 import { toast } from 'react-toastify';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 
 const Info = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +67,7 @@ const Info = () => {
         updatePrescription.mutate(
             {
                 prescriptionId: prescriptionInfo.id,
-                patientCell: toEnglishNumber(data.patientCell)
+                patientCell: digitsFaToEn(data.patientCell)
             },
             {
                 onSuccess: () => {

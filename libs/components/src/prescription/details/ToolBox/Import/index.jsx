@@ -7,7 +7,7 @@ import { useSelectPrescription } from '@paziresh24/context/prescription/selectPr
 import { toast } from 'react-toastify';
 import styles from './Import.module.scss';
 import { useUpdateTaminDoctor } from '@paziresh24/hooks/prescription/insurances';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 
 const Import = ({ isOpen, onClose, provider, taminId }) => {
     const [prescriptionInfo] = useSelectPrescription();
@@ -30,8 +30,8 @@ const Import = ({ isOpen, onClose, provider, taminId }) => {
                 {
                     // TODO: tamin doctor not exited in visotor api
                     id: prescriptionInfo?.doctor?.tamin_doctor ?? taminId,
-                    username: toEnglishNumber(data.username),
-                    password: toEnglishNumber(data.password)
+                    username: digitsFaToEn(data.username),
+                    password: digitsFaToEn(data.password)
                 },
                 {
                     onSuccess: () => {
@@ -50,8 +50,8 @@ const Import = ({ isOpen, onClose, provider, taminId }) => {
         importRequests.mutate(
             {
                 provider: prescriptionInfo?.insuranceType ?? provider,
-                username: toEnglishNumber(data.username),
-                password: toEnglishNumber(data.password)
+                username: digitsFaToEn(data.username),
+                password: digitsFaToEn(data.password)
             },
             {
                 onSuccess: data => {

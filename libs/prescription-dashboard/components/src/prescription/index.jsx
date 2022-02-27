@@ -11,7 +11,7 @@ import { Overlay } from '@paziresh24/components/core/overlay';
 import Result from '../result';
 import ExportExcel from '../exportExcel';
 import { resultSchema } from '../../../schemas/result.schema';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 import LiveMode from '../liveMode';
 import { useGetPrescriptionStatistics } from './../../../apis/getPrescriptionStatistics/useGetPrescriptionStatistics.hook';
 import { useGetHospitals } from './../../../apis/getHospitals/useGetHospitals.hook';
@@ -232,7 +232,7 @@ const PrescriptionStatistics = ({ level }) => {
                                 getCenterName.isSuccess
                                     ? statistics?.data.map(item => ({
                                           ...item,
-                                          starts_at: toEnglishNumber(
+                                          starts_at: digitsFaToEn(
                                               new Date(item.starts_at).toLocaleDateString('fa')
                                           ),
                                           center_name: getCenterName.data[item.center_id],
@@ -271,10 +271,10 @@ const PrescriptionStatistics = ({ level }) => {
                                             statistics?.data.filter(item => item.starts_at === key),
                                             'total'
                                         ),
-                                        starts_at_with_year: toEnglishNumber(
+                                        starts_at_with_year: digitsFaToEn(
                                             new Date(key).toLocaleDateString('fa')
                                         ),
-                                        starts_at: toEnglishNumber(
+                                        starts_at: digitsFaToEn(
                                             new Date(key).toLocaleDateString('fa').substr(5, 10)
                                         )
                                     })
@@ -417,7 +417,7 @@ const PrescriptionStatistics = ({ level }) => {
                                     getCenterName.isSuccess
                                         ? statistics?.data.map(item => ({
                                               ...item,
-                                              starts_at: toEnglishNumber(
+                                              starts_at: digitsFaToEn(
                                                   new Date(item.starts_at).toLocaleDateString('fa')
                                               ),
                                               center_name: getCenterName.data[item.center_id],

@@ -8,10 +8,10 @@ import { useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { useDeliverPrescription } from '@paziresh24/hooks/prescription';
 import { toast } from 'react-toastify';
-import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { useBackPage } from '@paziresh24/context/core/backPage';
 import { useHistory } from 'react-router';
 import { isMobile } from 'react-device-detect';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const DeliverFactor = props => {
     const history = useHistory();
@@ -52,8 +52,18 @@ const DeliverFactor = props => {
                             room_id: backPage
                         });
                     }
+                    getSplunkInstance().sendEvent({
+                        group: 'prescription',
+                        type: 'deliver',
+                        event: { prescription_info: props.prescriptionInfo }
+                    });
                 },
                 onError: err => {
+                    getSplunkInstance().sendEvent({
+                        group: 'prescription',
+                        type: 'deliver-error',
+                        event: { error: err, prescription_info: props.prescriptionInfo }
+                    });
                     !toast.isActive('deliverPrescription') &&
                         toast.error(err.response.data.message, {
                             toastId: 'deliverPrescription'
