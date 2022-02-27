@@ -63,7 +63,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
             center_info: {
                 center_type: book.center_type,
-                center_id: book.center_id
+                center_id: book.center_id,
+                has_paging: book.settings.booking_paging_from_clinic ? true : false
             },
             turn_details: {
                 book_time: book.book_from,

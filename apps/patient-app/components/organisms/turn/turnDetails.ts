@@ -1,4 +1,4 @@
-import { convertToPersianDate, convertToTime } from '@paziresh24/utils';
+import { convertTimeStampToPersianDate, convertTimeStampToFormattedTime } from '@paziresh24/utils';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';
 import { CenterType } from 'apps/patient-app/types/centerType';
 
@@ -21,7 +21,9 @@ enum WaitingTimeList {
 
 export const turnDetailsData = ({ data, status, centerType }: TurnDetailsDataParam) => {
     const { bookTime, trackingCode, waitingTime } = data;
-    const dateAndTime = `${convertToTime(bookTime)} - ${convertToPersianDate(bookTime)}`;
+    const dateAndTime = `${convertTimeStampToFormattedTime(
+        bookTime
+    )} - ${convertTimeStampToPersianDate(bookTime)}`;
 
     if (status === BookStatus.requested) return [{ id: 0, name: 'کدپیگیری', value: trackingCode }];
 

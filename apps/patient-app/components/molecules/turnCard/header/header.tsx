@@ -5,7 +5,7 @@ import TagStatus from '../../tagStatus';
 import DropDown from '../../../atoms/dropDown';
 import Button from '../../../atoms/button';
 import { useBookStore } from '../../../../store';
-import { useRemoveBook } from '../../../../apis/removeBook/useRemoveBook.hook';
+import { useRemoveBook } from '../../../../apis/removeBook/hook';
 import ShareIcon from '@paziresh24/components/icons/public/share';
 import TrashIcon from '@paziresh24/components/icons/public/trash';
 import ThreeDotsIcon from '@paziresh24/components/icons/public/threeDots';

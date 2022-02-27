@@ -55,10 +55,13 @@ export const Turn: React.FC<TurnProps> = props => {
             />
 
             <TurnFooter
+                id={id}
                 centerType={centerType}
                 pdfLink={prescription.pdf}
                 slug={doctorInfo.slug}
                 status={status}
+                hasPaging={centerInfo.hasPaging}
+                bookTime={turnDetails.bookTime}
             />
         </Card>
     );
