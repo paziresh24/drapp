@@ -74,19 +74,19 @@ const Filter = ({ noGender, noPrescriptionType, insurance_type = null, removeble
     });
 
     const setStartDate = date => {
-        const formatedDate = moment
+        const formattedDate = moment
             .from(`${date?.year}/${date?.month}/${date?.day}`, 'fa', 'JYYYY/JMM/JDD')
             .format('x');
-        setFilters(prev => ({ ...prev, starts_at: Math.floor(formatedDate / 1000) }));
+        setFilters(prev => ({ ...prev, starts_at: Math.floor(formattedDate / 1000) }));
     };
 
     const setEndDate = date => {
-        const formatedDate = new Date(
+        const formattedDate = new Date(
             +moment
                 .from(`${date?.year}/${date?.month}/${date?.day}`, 'fa', 'JYYYY/JMM/JDD')
                 .format('x')
         ).setHours(23, 59, 59, 59);
-        setFilters(prev => ({ ...prev, ends_at: Math.floor(formatedDate / 1000) }));
+        setFilters(prev => ({ ...prev, ends_at: Math.floor(formattedDate / 1000) }));
     };
 
     return (
