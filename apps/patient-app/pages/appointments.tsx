@@ -9,6 +9,7 @@ import Skeleton from './../components/atoms/skeleton/skeleton';
 
 import { useGetBooks } from '../apis/getBooks/useGetBook.hook';
 import { useBookStore } from '../store';
+import { CenterType } from '../types/centerType';
 
 interface AppointmentsProps {
     isWebView: boolean;
@@ -75,10 +76,10 @@ export const Appointments: React.FC<AppointmentsProps> = ({ isWebView }) => {
                                     id={turn.id}
                                     centerType={
                                         turn.center_info.center_type === '1'
-                                            ? 'clinic'
+                                            ? CenterType.clinic
                                             : turn.center_info.center_id === '5532'
-                                            ? 'consult'
-                                            : 'hospital'
+                                            ? CenterType.consult
+                                            : CenterType.hospital
                                     }
                                     centerInfo={{
                                         centerId: turn.center_info.center_id,

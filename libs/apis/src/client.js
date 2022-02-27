@@ -2,6 +2,7 @@ import axios from 'axios';
 import { baseURL } from '@paziresh24/utils/baseUrl';
 import { getToken, setToken, clearToken } from '@paziresh24/utils/localstorage';
 import { refreshToken } from './drApp/auth/refreshToken';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const client = axios.create({
     baseURL: baseURL('DRAPP_API')
@@ -16,6 +17,7 @@ client.interceptors.request.use(
             config.headers['Authorization'] = 'Bearer ' + token;
             config.headers['Content-Type'] = 'application/json';
         }
+        config.startDateTime = new Date();
         return config;
     },
     err => {
@@ -25,7 +27,22 @@ client.interceptors.request.use(
 
 // onResponse
 client.interceptors.response.use(
-    res => res.data,
+    res => {
+        const isTimeDifferenceNowAndStartTimeGreaterThan3Seconds =
+            new Date().getTime() - res.config.startDateTime.getTime() > 3000;
+
+        if (isTimeDifferenceNowAndStartTimeGreaterThan3Seconds) {
+            getSplunkInstance().sendEvent({
+                group: 'doctor-api',
+                type: 'response-time-greater-than-3-seconds',
+                event: {
+                    end_point: res.config.url,
+                    time_ms: new Date().getTime() - res.config.startDateTime.getTime()
+                }
+            });
+        }
+        return res.data;
+    },
     async err => {
         const originalRequest = err.config;
         if (

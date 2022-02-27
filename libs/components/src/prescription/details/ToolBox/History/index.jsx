@@ -17,6 +17,7 @@ import { useLearnTour } from '@paziresh24/hooks/learn';
 import { Mobile } from '@paziresh24/hooks/device';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
 import { sendEvent } from '@paziresh24/utils';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const History = ({ isOpen, onClose }) => {
     const { prescriptionId } = useParams();
@@ -42,6 +43,10 @@ const History = ({ isOpen, onClose }) => {
     useEffect(() => {
         getPrescriptions.refetch();
         sendEvent('clickhistory', 'prescription', 'clickhistory');
+        getSplunkInstance().sendEvent({
+            group: 'prescription-tool-box',
+            type: 'click-history'
+        });
     }, []);
 
     useEffect(() => {

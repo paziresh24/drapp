@@ -2,6 +2,24 @@ import FormData from 'form-data';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { clinicClient, prescriptionClient } from '../../apis/client';
 
+const getDisplayDoctorExpertise = ({
+    aliasTitle,
+    degree,
+    expertise
+}: {
+    aliasTitle: string;
+    degree: string;
+    expertise: string;
+}): string | undefined => {
+    if (aliasTitle) {
+        return aliasTitle;
+    }
+
+    if (degree && expertise) {
+        return `${degree} ${expertise}`;
+    }
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const data = new FormData();
@@ -33,11 +51,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 first_name: book.doctor_name,
                 last_name: book.doctor_family,
                 avatar: book.doctor_image,
-                expertise:
-                    book.expertises?.[0]?.alias_title ??
-                    book.expertises?.[0]?.degree?.name +
-                        ' ' +
-                        book.expertises?.[0]?.expertise?.name,
+                expertise: getDisplayDoctorExpertise({
+                    aliasTitle: book.expertises?.[0]?.alias_title,
+                    degree: book.expertises?.[0]?.degree?.name,
+                    expertise: book.expertises?.[0]?.expertise?.name
+                }),
                 slug: book.doctor_slug
             },
             patient_info: {

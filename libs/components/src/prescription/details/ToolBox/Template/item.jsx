@@ -10,6 +10,7 @@ import { useDeleteFavoritePrescriptions } from '@paziresh24/hooks/prescription';
 import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.context';
 import { sendEvent } from '@paziresh24/utils';
 import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Item = ({ prescription, isOpen, setIsOpen }) => {
     const [prescriptionInfo] = useSelectPrescription();
@@ -85,6 +86,10 @@ const Item = ({ prescription, isOpen, setIsOpen }) => {
         );
 
         sendEvent('clickcollection', 'prescription', 'clickcollection');
+        getSplunkInstance().sendEvent({
+            group: 'prescription-tool-box',
+            type: 'add-service-with-template'
+        });
 
         if (!items.every(item => item.service?.deleted === true))
             toast.success(

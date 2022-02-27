@@ -4,12 +4,13 @@ import { useState } from 'react';
 import ChatIcon from '@paziresh24/components/icons/public/chat';
 import Queue from '../../queue';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';
+import { CenterType } from 'apps/patient-app/types/centerType';
 
 interface TurnFooterProps {
     slug: string;
     status: BookStatus;
     pdfLink: string;
-    centerType: 'clinic' | 'hospital' | 'consult';
+    centerType: CenterType;
 }
 
 export const TurnFooter: React.FC<TurnFooterProps> = props => {
@@ -55,7 +56,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
     return (
         <>
             {status === BookStatus.not_visited &&
-                (centerType === 'consult' ? CunsultPrimaryButton : ClinicPrimaryButton)}
+                (centerType === CenterType.consult ? CunsultPrimaryButton : ClinicPrimaryButton)}
 
             {(status === BookStatus.expired || status === BookStatus.visited) && (
                 <div className="flex gap-2">
@@ -79,7 +80,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
                 title="شماره نوبت شما"
                 onClose={setQueueModal}
                 isOpen={queueModal}
-                noBodyPad
+                noBodyPadding
                 noHeader
             >
                 <Queue />

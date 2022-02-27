@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import moment from 'jalali-moment';
 import { TurnTime } from '@paziresh24/components/doctorApp/turning/turnTime';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { sendEvent, digitsFaToEn } from '@paziresh24/utils';
 import { v4 as uuid } from 'uuid';
 import { useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
 import Error from '@paziresh24/components/core/error';
@@ -39,6 +39,7 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import { queryClient } from '@paziresh24/components/core/provider';
 import ReferenceModal from '@paziresh24/components/prescription/referenceModal';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Turning = () => {
     const history = useHistory();
@@ -202,12 +203,16 @@ const Turning = () => {
         addPrescription.mutate(
             {
                 baseURL: info.center.local_base_url,
-                patientNationalCode: toEnglishNumber(data.national_code),
+                patientNationalCode: digitsFaToEn(data.national_code),
                 identifier: uuidInstance,
                 tags: tags
             },
             {
                 onSuccess: data => {
+                    getSplunkInstance().sendEvent({
+                        group: 'turning-list',
+                        type: 'prescription-action'
+                    });
                     if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                         return setOtpConfirm(true);
                     }
@@ -229,6 +234,11 @@ const Turning = () => {
                     });
                 },
                 onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'turning-list',
+                        type: 'prescription-action-error',
+                        event: { error: error.response.data }
+                    });
                     if (error.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                         return setOtpConfirm(true);
                     }
@@ -264,7 +274,7 @@ const Turning = () => {
         addPrescription.mutate(
             {
                 baseURL: info.center.local_base_url,
-                patientNationalCode: toEnglishNumber(data.national_code),
+                patientNationalCode: digitsFaToEn(data.national_code),
                 identifier: uuidInstance,
                 tags: tags
             },
@@ -308,7 +318,7 @@ const Turning = () => {
             {
                 baseURL: info.center.local_base_url,
                 prescriptionId: confirmCellPhone.id,
-                patientCell: toEnglishNumber(data.cell)
+                patientCell: digitsFaToEn(data.cell)
             },
             {
                 onSuccess: () => {
