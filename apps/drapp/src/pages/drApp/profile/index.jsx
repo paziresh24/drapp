@@ -5,7 +5,8 @@ import {
     StarIcon,
     ThreeDots,
     UserIcon,
-    LocationIcon
+    LocationIcon,
+    ChatIcon
 } from '@paziresh24/components/icons';
 import styles from '@assets/styles/pages/drApp/profile.module.scss';
 import TextField from '@paziresh24/components/core/textField';
@@ -33,7 +34,9 @@ import {
     useUploadGallery,
     useUploadPorfile,
     useDoctorInfoUpdate,
-    useCenterInfoUpdate
+    useCenterInfoUpdate,
+    useGetWhatsApp,
+    useUpdateWhatsapp
 } from '@paziresh24/hooks/drapp/profile';
 
 import { Overlay } from '@paziresh24/components/core/overlay';
@@ -66,6 +69,9 @@ const Profile = () => {
     const bankInfo = useBankInfo();
     const getBankInfo = useGetBankInfo({ center_id: info.center.id });
 
+    const getWhatsapp = useGetWhatsApp();
+    const updateWhatsapp = useUpdateWhatsapp();
+
     const centerPromises = [];
 
     const [province, setProvince] = useState();
@@ -73,6 +79,7 @@ const Profile = () => {
 
     const [expertiseAccordion, setExpertiseAccordion] = useState(false);
     const [bankAccordion, setBankAccordion] = useState(false);
+    const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
     const biographyRef = useRef();
@@ -117,6 +124,12 @@ const Profile = () => {
         register: bankInfoRegister,
         handleSubmit: bankSubmit,
         formState: { errors: bankInfoErrors }
+    } = useForm();
+
+    const {
+        register: whatsappRegister,
+        handleSubmit: whatsappSubmit,
+        formState: { errors: whatsappErrors }
     } = useForm();
 
     const updateDoctor = async data => {
@@ -197,6 +210,18 @@ const Profile = () => {
             },
             onError: err => {
                 toast.error(err.response.data.errors.IBAN[0]);
+            }
+        });
+    };
+
+    const whatsappAction = data => {
+        updateWhatsapp.mutate(data, {
+            onSuccess: () => {
+                setWhatsappAccordion(false);
+                toast.success('شماره whatsapp business با موفقیت ذخیره شد.');
+            },
+            onError: err => {
+                toast.error(err.response.data.message);
             }
         });
     };
@@ -730,6 +755,33 @@ const Profile = () => {
                             <span>IR</span>
                         </div>
                         <Button block type="submit" loading={bankInfo.isLoading}>
+                            ذخیره تغییرات
+                        </Button>
+                    </form>
+                </Accordion>
+            )}
+            {info.center.id === '5532' && (
+                <Accordion
+                    title="شماره whatsapp business"
+                    icon={<ChatIcon color="#3F3F79" />}
+                    open={whatsappAccordion}
+                    setOpen={setWhatsappAccordion}
+                >
+                    <form className={styles['form']} onSubmit={whatsappSubmit(whatsappAction)}>
+                        <div className={styles['bank_row']}>
+                            <TextField
+                                label="شماره whatsapp business"
+                                type="tel"
+                                error={whatsappErrors.whatsapp}
+                                defaultValue={
+                                    getWhatsapp.isSuccess && getWhatsapp.data.data.whatsapp
+                                }
+                                {...whatsappRegister('whatsapp', {
+                                    required: true
+                                })}
+                            />
+                        </div>
+                        <Button block type="submit" loading={updateWhatsapp.isLoading}>
                             ذخیره تغییرات
                         </Button>
                     </form>

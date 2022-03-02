@@ -146,7 +146,8 @@ const WorkDays = () => {
                     <div className={styles['hero-content']}>
                         <div className={styles['hero-info-wrapper']}>
                             <span className={styles['name']}>
-                                دکتر {info.doctor.name} {info.doctor.family}
+                                دکتر {info.doctor.name} {info.doctor.family} عزیز ثبت نام شما
+                                باموفقیت انجام شد.
                             </span>
                             <span>خوش آمدید</span>
                         </div>
@@ -166,8 +167,8 @@ const WorkDays = () => {
                             />
                         </svg>
                         <span className={styles['hero-title']}>
-                            مرکز مشاوره آنلاین شما با موفقیت ثبت شد. لطفا تا زمان فعالسازی منتظر
-                            بمانید..
+                            نوبت دهی ویزیت آنلاین شما تا یک ساعت دیگر فعال می شود منتظر پیامک ما
+                            باشید.
                         </span>
                         <span>پروفایل عمومی شما</span>
                         <a

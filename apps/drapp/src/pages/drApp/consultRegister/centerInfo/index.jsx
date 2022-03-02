@@ -19,6 +19,34 @@ import range from 'lodash/range';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { Text } from '../../../../../../patient-app/components/atoms/text/text';
 import Number from '../../../../../../../libs/components/src/prescription/details/lists/atom/number';
+var first = 1;
+function moneyCommaSep(ctrl) {
+    if (first > 1) {
+        ctrl = ctrl.replace(' تومان', '');
+    }
+    var separator = ',';
+    var int = ctrl.replace(new RegExp(separator, 'g'), '');
+    var regexp = new RegExp('\\B(\\d{3})(' + separator + '|$)');
+    do {
+        int = int.replace(regexp, separator + '$1');
+    } while (int.search(regexp) >= 0);
+    ctrl = int;
+    first += 1;
+
+    return ctrl + ' تومان';
+}
+function moneyBackSpace(ctrl) {
+    ctrl = ctrl.replace(' توما', '');
+    ctrl = ctrl.substr(0, ctrl.length - 1);
+    return ctrl + ' تومان';
+}
+
+function normalPrice(ctrl) {
+    ctrl = ctrl.replace(' تومان', '');
+    ctrl = ctrl.replace(',', '');
+    ctrl += '0';
+    return ctrl;
+}
 
 const CenterInfo = () => {
     const [info] = useDrApp();
@@ -77,9 +105,18 @@ const CenterInfo = () => {
                             </div>
 
                             <TextField
-                                placeHolder="50000 تومان"
-                                type="Number"
-                                onChange={e => setCostVisit(e.target.value)}
+                                placeHolder="50,000 تومان"
+                                type="Text"
+                                onChange={e => {
+                                    if (e.nativeEvent.inputType === 'insertText') {
+                                        e.target.value = moneyCommaSep(e.target.value);
+                                    } else if (
+                                        e.nativeEvent.inputType === 'deleteContentBackward'
+                                    ) {
+                                        e.target.value = moneyBackSpace(e.target.value);
+                                    }
+                                    setCostVisit(normalPrice(e.target.value));
+                                }}
                             />
                         </div>
                     </div>
