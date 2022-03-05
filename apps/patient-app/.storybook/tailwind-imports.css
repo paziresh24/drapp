@@ -49,9 +49,11 @@
     src: url('/static/fonts/ttf/IRANSansWeb\(FaNum\)_Black.ttf');
 }
 
-@layer base {
-    body {
-        direction: rtl;
-        font-family: 'IRANSans';
-    }
+body {
+    direction: rtl;
+    font-family: 'IRANSans';
+}
+
+body.sb-main-fullscreen {
+    direction: ltr !important;
 }
