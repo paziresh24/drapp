@@ -2,7 +2,13 @@ import Text from '../../atoms/text';
 
 interface LocationProps {
     address: string;
+    /**
+     * Latitude
+     */
     lat: number;
+    /**
+     * Longitude
+     */
     lng: number;
 }
 

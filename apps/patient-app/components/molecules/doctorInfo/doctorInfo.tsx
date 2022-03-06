@@ -2,7 +2,10 @@ import Aavatar from '../../atoms/avatar';
 import Text from '../../atoms/text';
 
 interface DoctorInfoProps {
-    avatar?: string;
+    /**
+     * Avatar src (url)
+     */
+    avatar: string;
     firstName: string;
     lastName: string;
     expertise?: string;

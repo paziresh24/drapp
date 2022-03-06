@@ -57,3 +57,7 @@ body {
 body.sb-main-fullscreen {
     direction: ltr !important;
 }
+
+body.sb-main-fullscreen .docs-story {
+    direction: rtl;
+}

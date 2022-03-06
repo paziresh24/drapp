@@ -1,7 +1,14 @@
 import { getGreeting } from '../support/app.po';
 
 describe('patient-app', () => {
-    beforeEach(() => cy.visit('/'));
+    beforeEach(() => {
+        cy.setCookie(
+            'certificate',
+            '%242y%2410%24Kv8nHRsX96AN58wqULwMz.X7G1SPrnnFklPG0DxVbIyVNChHDgWxS'
+        );
+        cy.setCookie('P24SESSION', '7lf1egf7eg6chj4qauu7v1lu9s');
+        cy.visit('/appointments');
+    });
 
     it('should display welcome message', () => {
         // Custom command example, see `../support/commands.ts` file

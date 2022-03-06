@@ -61,10 +61,12 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
     if (status === BookStatus.deleted) return null;
     return (
         <>
-            {status === BookStatus.not_visited &&
+            {status === BookStatus.notVisited &&
                 (centerType === CenterType.consult ? CunsultPrimaryButton : ClinicPrimaryButton)}
 
-            {(status === BookStatus.expired || status === BookStatus.visited) && (
+            {(status === BookStatus.expired ||
+                status === BookStatus.visited ||
+                status === BookStatus.rejected) && (
                 <div className="flex gap-2">
                     {isBookForToday && ClinicPrimaryButton}
                     <Button variant="secondary" size="sm" block={true} onClick={reBook}>

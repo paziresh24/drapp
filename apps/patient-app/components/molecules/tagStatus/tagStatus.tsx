@@ -2,21 +2,29 @@ import Chips from '../../atoms/chips';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';
 
 export interface TagStatusProps {
+    /**
+     * Status of the turn
+     */
     status: BookStatus;
 }
 
-enum TagsStatus {
+export enum TagsStatusTranslation {
     expired = 'منقضی',
     deleted = 'حذف شده',
     visited = 'ویزیت شده',
-    requested = 'درخواست'
+    requested = 'درخواست',
+    notVisited = 'ویزیت نشده',
+    rejected = 'رد شده'
 }
 
 export const TagStatus: React.FC<TagStatusProps> = props => {
     const { status } = props;
 
-    if (status === BookStatus.not_visited) return null;
-    return <Chips className="absolute left-4 top-2">{TagsStatus[status]}</Chips>;
+    return (
+        <Chips className="absolute left-4 top-2">
+            {TagsStatusTranslation[status as BookStatus]}
+        </Chips>
+    );
 };
 
 export default TagStatus;

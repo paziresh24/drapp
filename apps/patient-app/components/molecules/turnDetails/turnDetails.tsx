@@ -1,6 +1,10 @@
 import Text from '../../atoms/text';
 
 interface TurnDetailsProps {
+    /**
+     * the details items in list
+     * value in item can be string or react element
+     */
     items: Array<{ id: number; name: string; value: string | React.ReactNode }>;
 }
 
