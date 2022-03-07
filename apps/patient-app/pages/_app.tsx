@@ -30,6 +30,10 @@ toast.configure({
     theme: 'dark'
 });
 
+if (process.env.NEXT_PUBLIC_API_MOCKING) {
+    import('../mocks').then(({ setupMocks }) => setupMocks());
+}
+
 function CustomApp({ Component, pageProps }: AppProps) {
     return (
         <>
