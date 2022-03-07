@@ -6,15 +6,16 @@ import Filter from '../filter';
 import { useStatisticsFilters } from '../../../contexts/filters.context';
 import { useStatistics } from '../../../contexts/statistics.context';
 import Result from './result';
-import ExportExcel from '../exportExcel';
-import { resultSchema } from '../../../schemas/resultMostUsedItems.schema';
 import { useGetMostUsedItems } from './../../../apis/getMostUsedItems/useGetMostUsedItems.hook';
-import { useGetHospitals } from './../../../apis/getHospitals/useGetHospitals.hook';
 import { useGetDoctorCenter } from './../../../apis/getDoctorCenter/useGetDoctorCenter.hook';
 import { useGetDoctors } from './../../../apis/getDoctors/useGetDoctors.hook';
 import { useGetCenterName } from './../../../apis/getCenterName/useGetCenterName.hook';
 import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
+
+const levelConstants = {
+    doctor: 'DOCTOR'
+};
 
 const PrescriptionStatistics = ({ level }) => {
     // store
@@ -27,12 +28,11 @@ const PrescriptionStatistics = ({ level }) => {
     const getMostUsedItemsAggregated = useGetMostUsedItems({
         ...filters,
         // is_aggregated: 1,
-        ...(level !== 'DOCTOR' && { hospital_center_id: centerId }),
+        ...(level !== levelConstants.doctor && { hospital_center_id: centerId }),
         prescription_type: filters.prescription_type,
         insurance_type: filters.insurance_type ?? 'tamin',
         level
     });
-    const getHospitals = useGetHospitals();
     const getDoctorCenter = useGetDoctorCenter();
     const getDoctors = useGetDoctors({
         hospital_center_id: centerId
@@ -47,13 +47,9 @@ const PrescriptionStatistics = ({ level }) => {
     }, [statistics]);
 
     useEffect(() => {
-        level !== 'DOCTOR' && getHospitals.refetch();
-    }, []);
-
-    useEffect(() => {
-        if (getHospitals.isSuccess) setCenterId(getHospitals.data[0].center_id);
-    }, [getHospitals.status]);
-
+        if (getDoctorCenter.isSuccess && level !== levelConstants.doctor)
+            setCenterId(getDoctorCenter.data[0].center_id);
+    }, [getDoctorCenter.status, level]);
     const firstUpdate = useRef(true);
 
     useEffect(() => {
@@ -79,9 +75,7 @@ const PrescriptionStatistics = ({ level }) => {
     }, [getMostUsedItemsAggregated.status]);
 
     useEffect(() => {
-        if (level === 'DOCTOR') {
-            getDoctorCenter.refetch();
-        }
+        getDoctorCenter.refetch();
     }, [level]);
 
     const serviceTypeList = {
@@ -143,7 +137,7 @@ const PrescriptionStatistics = ({ level }) => {
         <div className={styles.wrapper}>
             <div className={styles.filterWrapper}>
                 <div className="flex gap-3 flex-col w-full">
-                    {level === 'DOCTOR' && (
+                    {level === levelConstants.doctor && (
                         <LevelSelect
                             icon={
                                 <svg
@@ -175,7 +169,7 @@ const PrescriptionStatistics = ({ level }) => {
                             }}
                         />
                     )}
-                    {level !== 'DOCTOR' && (
+                    {level !== levelConstants.doctor && getDoctorCenter.isSuccess && (
                         <>
                             ‍
                             <LevelSelect
@@ -198,7 +192,7 @@ const PrescriptionStatistics = ({ level }) => {
                                     </svg>
                                 }
                                 label="انتخاب مرکز"
-                                items={getHospitals.data}
+                                items={getDoctorCenter.data}
                                 valueField="center_id"
                                 onChange={value => {
                                     if (value) {
@@ -228,11 +222,19 @@ const PrescriptionStatistics = ({ level }) => {
                                 allLabel="همه دکترها"
                                 label="انتخاب دکتر"
                                 items={
-                                    getDoctors?.data
-                                        ? getDoctors.data.map(item => ({
-                                              ...item,
-                                              name: item.name + ' ' + item.family
-                                          }))
+                                    getDoctors.isSuccess && getDoctors?.data
+                                        ? getDoctors.data
+                                              .filter(item => item?.doctor_id)
+                                              .filter(
+                                                  (v, i, a) =>
+                                                      a.findIndex(
+                                                          t => t.doctor_id === v.doctor_id
+                                                      ) === i
+                                              )
+                                              .map(item => ({
+                                                  ...item,
+                                                  name: item.name + ' ' + item.family
+                                              }))
                                         : []
                                 }
                                 valueField="doctor_id"
@@ -307,7 +309,7 @@ const PrescriptionStatistics = ({ level }) => {
                                               ...item,
 
                                               center_name: getCenterName.data[item.center_id],
-                                              ...(level !== 'DOCTOR' && {
+                                              ...(level !== levelConstants.doctor && {
                                                   doctor_id:
                                                       getDoctors.isSuccess &&
                                                       getDoctors.data.find(

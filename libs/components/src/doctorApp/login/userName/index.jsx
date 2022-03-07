@@ -3,7 +3,7 @@ import styles from './userName.module.scss';
 import Button from '../../../core/button/index';
 import { useResendCode, useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import { useState, useEffect, useRef } from 'react';
-import { toEnglishNumber, sendEvent } from '@paziresh24/utils';
+import { digitsFaToEn, sendEvent } from '@paziresh24/utils';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
@@ -43,7 +43,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
     }, [step]);
 
     const checkPhone = cellPhone => {
-        const number = toEnglishNumber(cellPhone);
+        const number = digitsFaToEn(cellPhone);
         const rgx = /^(\+98|0)?9\d{9}$/;
 
         if (rgx.test(number)) return true;
@@ -53,9 +53,9 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
     const resendCodeAction = ({ cellPhone }) => {
         if (checkPhone(cellPhone)) {
             setUserName(
-                !toEnglishNumber(cellPhone)?.startsWith('0')
-                    ? `0${toEnglishNumber(cellPhone)}`
-                    : toEnglishNumber(cellPhone)
+                !digitsFaToEn(cellPhone)?.startsWith('0')
+                    ? `0${digitsFaToEn(cellPhone)}`
+                    : digitsFaToEn(cellPhone)
             );
             setTimeout(() => resendCode.refetch());
         } else {
@@ -68,9 +68,9 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
         createCenter.mutate(
             {
                 ignore_shahkar: window.location.pathname === '/p24auth',
-                mobile: toEnglishNumber(userName),
-                nationalCode: toEnglishNumber(nationalCode),
-                medical_code: toEnglishNumber(medicalCode)
+                mobile: digitsFaToEn(userName),
+                nationalCode: digitsFaToEn(nationalCode),
+                medical_code: digitsFaToEn(medicalCode)
             },
             {
                 onSuccess: data => {

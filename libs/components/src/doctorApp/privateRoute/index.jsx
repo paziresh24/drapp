@@ -69,14 +69,14 @@ const PrivateRoute = props => {
     }, []);
 
     useEffect(() => {
-        if (getLevels.isSuccess) {
+        if (getLevels.isSuccess && doctorInfo.isSuccess && centerInfo.isSuccess) {
             const level = getLevels.data.data?.[0]?.user_level ?? 'DOCTOR';
             setLevel(level);
             if ((props.path !== '/dashbord' || props.path !== '/logout') && level !== 'DOCTOR') {
                 history.replace('/dashboard');
             }
         }
-    }, [getLevels.status]);
+    }, [getLevels.status, doctorInfo.status, centerInfo.status]);
 
     useEffect(() => {
         if (!info && centerInfo.isSuccess) {
@@ -133,6 +133,11 @@ const PrivateRoute = props => {
                 ...prev,
                 doctor
             }));
+
+            window.user_information = {
+                doctor: doctor,
+                center: info.center
+            };
 
             Sentry.setUser({ user: doctor });
 

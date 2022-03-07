@@ -1,14 +1,37 @@
 version: '3.7'
 
 services:
+    patient-app:
+        container_name: patient-app
+        image: dockerhub.paziresh24.com/patient-app
+        build:
+            context: .
+            dockerfile: Dockerfile.patientApp
+        ports:
+            - 8030:3000
+        command: 'yarn start'
+        extra_hosts:
+            - prescription-api.paziresh24.com:192.168.216.16
+
     drapp-local:
-        container_name: drapp-client-local-center
-        # image: dockerhub.paziresh24.com/drapp-client-local
+        container_name: drapp-local
+        image: dockerhub.paziresh24.com/drapp-local
         build:
             context: .
             dockerfile: Dockerfile.localCenter
         environment:
             - NODE_ENV=production
             - PUBLIC_URL=/doctorapp
+        ports:
+            - '4030:80'
+
+    drapp:
+        container_name: drapp
+        image: dockerhub.paziresh24.com/drapp
+        build:
+            context: .
+            dockerfile: Dockerfile.drApp
+        environment:
+            - NODE_ENV=production
         ports:
             - '4030:80'

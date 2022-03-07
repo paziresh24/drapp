@@ -137,7 +137,7 @@ const WorkDays = () => {
                     </Button>
                 </FixedWrapBottom>
             </div>
-            <Modal isOpen={success} noHeader noBodyPad fullPage>
+            <Modal isOpen={success} noHeader noBodyPadding fullPage>
                 <div className={styles['hero-wrapper']}>
                     <div className={styles['hero-content']}>
                         <div className={styles['hero-info-wrapper']}>

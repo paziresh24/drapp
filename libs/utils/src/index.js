@@ -1,9 +1,31 @@
 import queryString from 'query-string';
+import FormData from 'form-data';
 
 // convert string date to date  14001206 => 1400/12/06
 export const strDateToDate = strDate => {
     const date = `${strDate.slice(0, 4)}/${strDate.slice(4, 6)}/${strDate.slice(6, 8)}`;
     return date;
+};
+
+export const isToday = date => {
+    const today = new Date();
+    return (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+    );
+};
+
+export const convertTimeStampToFormattedTime = time => {
+    const date = new Date(time * 1000);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const timeString = `${hours}:${minutes.toString().length === 1 ? `0${minutes}` : minutes}`;
+    return timeString;
+};
+
+export const convertTimeStampToPersianDate = time => {
+    return new Date(time * 1000).toLocaleDateString('fa');
 };
 
 export const formData = params => {
@@ -33,7 +55,7 @@ export const isWebView = () => {
 };
 
 // change persian number to english number
-export const toEnglishNumber = number => {
+export const digitsFaToEn = number => {
     const id = {
         '۰': '0',
         '۱': '1',

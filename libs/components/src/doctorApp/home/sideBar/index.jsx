@@ -32,6 +32,7 @@ import { MenuItem } from '../menuItem';
 import { useSettingTurns } from '@paziresh24/components/doctorApp/turning/statusBar/settingTurns.context';
 import { StatusBar } from '../../turning/statusBar';
 import { useLevel } from '@paziresh24/context/core/level';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
@@ -73,6 +74,11 @@ const SideBar = () => {
                     name: 'لیست بیماران',
                     icon: <HouseIcon color="#3F3F79" />,
                     link: '/',
+                    onClick: () =>
+                        getSplunkInstance().sendEvent({
+                            group: 'sidebar',
+                            type: 'click-turnning-menu'
+                        }),
                     tourStep: {
                         key: 2,
                         value: '?learn=true'
@@ -89,6 +95,11 @@ const SideBar = () => {
                     id: 10,
                     name: 'نسخه های ثبت شده',
                     icon: <PrescriptionMenuIcon color="#3F3F79" />,
+                    onClick: () =>
+                        getSplunkInstance().sendEvent({
+                            group: 'sidebar',
+                            type: 'click-prescription-menu'
+                        }),
                     link: '/prescription'
                 },
                 {
@@ -120,6 +131,11 @@ const SideBar = () => {
                     name: 'بیمه های من',
                     icon: <PrescriptionIcon color="#3F3F79" />,
                     link: `/providers`,
+                    onClick: () =>
+                        getSplunkInstance().sendEvent({
+                            group: 'sidebar',
+                            type: 'click-providers-menu'
+                        }),
                     tourStep: {
                         key: 1,
                         value: '?learn=true'
@@ -249,7 +265,7 @@ const SideBar = () => {
                             position: 'relative',
                             cursor: 'pointer'
                         }}
-                        onMouseOver={() => setIsDropDownOpen(true)}
+                        onMouseOver={() => open && setIsDropDownOpen(true)}
                         onMouseLeave={() => setIsDropDownOpen(false)}
                     >
                         <div
@@ -297,7 +313,9 @@ const SideBar = () => {
                                 right: open ? '7rem' : '0',
                                 bottom: '0',
                                 transitionDelay: !open ? 'unset' : '0.2s',
-                                color: '#3F3F79'
+                                color: '#3F3F79',
+                                width: !open && '0',
+                                overflow: !open && 'hidden'
                             }}
                         >
                             <span

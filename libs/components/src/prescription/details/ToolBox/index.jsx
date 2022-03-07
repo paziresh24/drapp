@@ -49,42 +49,23 @@ const ToolBox = () => {
     }, []);
 
     return isMobile ? (
-        <Modal title="" fullPage noBodyPad isOpen={isOpen} onClose={setIsOpen} noHeader>
+        <Modal title="" fullPage noBodyPadding isOpen={isOpen} onClose={setIsOpen} noHeader>
             <div className={`${styles.wrapper} ${styles.mobile}`}>
-                {/* <div
-                    className="absolute top-[1.3rem] left-[1.2rem]"
-                    style={{ position: 'absolute', top: '1.3rem', left: '1.2rem' }}
-                    onClick={() => setIsOpen(false)}
-                    aria-hidden
-                >
-                    <CloseIcon color="#3f3f79" />
-                </div> */}
                 <ToolBoxContent />
             </div>
         </Modal>
     ) : (
-        <>
-            {/* {isSmallSize && isOpen && (
-                // <div className={styles.mask} onClick={() => setIsOpen(prev => !prev)} aria-hidden />
-            )} */}
-            {/* <ResizePanel
-                direction="e"
-                style={{ width: '35rem', maxWidth: '60rem', direction: 'ltr' }}
-                handleClass={styles.customHandle}
-            > */}
-            <div className={`${styles.wrapper} ${!isOpen ? styles.hide : ''}`} ref={pane}>
-                <div className={styles.gutter} ref={gutter} />
+        <div className={`${styles.wrapper} ${!isOpen ? styles.hide : ''}`} ref={pane}>
+            <div className={styles.gutter} ref={gutter} />
 
-                <ToolBoxContent />
-                <button
-                    className={`${styles.close} ${!isOpen ? styles.right : ''}`}
-                    onClick={() => setIsOpen(prev => !prev)}
-                >
-                    <ChevronIcon dir={isOpen ? 'left' : 'right'} />
-                </button>
-            </div>
-            {/* </ResizePanel> */}
-        </>
+            <ToolBoxContent />
+            <button
+                className={`${styles.close} ${!isOpen ? styles.right : ''}`}
+                onClick={() => setIsOpen(prev => !prev)}
+            >
+                <ChevronIcon dir={isOpen ? 'left' : 'right'} />
+            </button>
+        </div>
     );
 };
 

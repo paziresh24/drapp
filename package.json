@@ -8,7 +8,8 @@
         "analyze": "source-map-explorer 'dist/apps/drapp/static/js/*.js'",
         "start": "nx serve",
         "build": "nx build",
-        "test": "nx test"
+        "test": "nx test",
+        "commit": "git-cz"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "29.1.0",
@@ -18,9 +19,11 @@
         "@nivo/bar": "0.74.1",
         "@nivo/core": "0.74.1",
         "@nivo/pie": "0.74.1",
+        "@paziresh24/splunk-event": "1.2.0",
         "@reactour/tour": "2.2.1",
         "@sentry/react": "6.11.0",
         "@sentry/tracing": "6.11.0",
+        "@tailwindcss/line-clamp": "0.3.1",
         "axios": "0.24.0",
         "classnames": "2.3.1",
         "core-js": "3.6.5",
@@ -29,7 +32,9 @@
         "leaflet": "1.7.1",
         "lodash": "4.17.21",
         "ncp": "2.0.0",
+        "next": "12.0.7",
         "plyr-react": "3.2.1",
+        "postcss": "8.4.5",
         "postcss-import": "14.0.2",
         "postcss-nesting": "10.0.2",
         "qrcode.react": "1.0.1",
@@ -39,7 +44,7 @@
         "react-device-detect": "1.17.0",
         "react-dom": "17.0.2",
         "react-drag-reorder": "1.1.0",
-        "react-export-excel-xlsx-fix": "false0.5.3",
+        "react-export-excel-xlsx-fix": "0.5.3",
         "react-gtm-module": "2.0.11",
         "react-helmet": "6.1.0",
         "react-hook-form": "7.4.1",
@@ -56,7 +61,7 @@
         "react-transition-group": "4.4.1",
         "regenerator-runtime": "0.13.7",
         "rimraf": "3.0.2",
-        "source-map-explorer": "^2.5.2",
+        "source-map-explorer": "2.5.2",
         "styled-components": "5.3.3",
         "tslib": "2.0.0",
         "uuid": "8.3.2",
@@ -64,48 +69,63 @@
         "workbox-expiration": "6.1.5",
         "workbox-precaching": "6.1.5",
         "workbox-routing": "6.1.5",
-        "workbox-strategies": "6.1.5"
+        "workbox-strategies": "6.1.5",
+        "zustand": "3.7.0"
     },
     "devDependencies": {
+        "@babel/core": "7.12.13",
+        "@babel/preset-typescript": "7.12.13",
+        "@commitlint/cli": "16.2.1",
+        "@commitlint/config-conventional": "16.2.1",
         "@craco/craco": "6.4.3",
         "@nrwl/cli": "13.2.2",
         "@nrwl/cypress": "13.2.2",
         "@nrwl/eslint-plugin-nx": "13.2.2",
         "@nrwl/jest": "13.2.2",
         "@nrwl/linter": "13.2.2",
+        "@nrwl/next": "13.6.1",
         "@nrwl/nx-cloud": "latest",
         "@nrwl/react": "13.2.2",
         "@nrwl/tao": "13.2.2",
         "@nrwl/web": "13.2.2",
         "@nrwl/workspace": "13.2.2",
+        "@svgr/webpack": "^5.4.0",
         "@testing-library/react": "12.1.2",
         "@testing-library/react-hooks": "7.0.2",
         "@types/jest": "27.0.2",
         "@types/node": "14.14.33",
         "@types/react": "17.0.30",
         "@types/react-dom": "17.0.9",
-        "@types/react-router-dom": "^5.3.3",
+        "@types/react-router-dom": "5.3.3",
         "@typescript-eslint/eslint-plugin": "4.33.0",
         "@typescript-eslint/parser": "4.33.0",
-        "autoprefixer": "10.4.1",
+        "autoprefixer": "10.4.2",
         "babel-jest": "27.2.3",
+        "babel-loader": "8.1.0",
+        "commitizen": "4.2.4",
         "craco-sass-resources-loader": "1.1.0",
         "cypress": "8.3.0",
+        "cz-conventional-changelog": "3.3.0",
         "eslint": "7.32.0",
+        "eslint-config-next": "12.0.7",
         "eslint-config-prettier": "8.1.0",
         "eslint-plugin-cypress": "2.10.3",
         "eslint-plugin-import": "2.25.2",
         "eslint-plugin-jsx-a11y": "6.4.1",
         "eslint-plugin-react": "7.26.1",
         "eslint-plugin-react-hooks": "4.2.0",
+        "husky": "7.0.4",
         "jest": "27.2.3",
+        "lint-staged": "12.3.4",
         "postcss-import": "14.0.2",
         "prettier": "2.3.1",
         "react-test-renderer": "17.0.2",
+        "sass": "1.43.2",
         "tailwindcss": "3.0.7",
-        "tailwindcss-rtl": "false0.9.0",
+        "tailwindcss-rtl": "0.9.0",
         "ts-jest": "27.0.5",
-        "typescript": "4.4.3"
+        "typescript": "4.4.3",
+        "url-loader": "^3.0.0"
     },
     "volta": {
         "node": "17.3.1",
@@ -114,5 +134,14 @@
     "repository": {
         "type": "git",
         "url": "git+https://gitlabserver.paziresh24.com/Amirly/drapp.git"
+    },
+    "lint-staged": {
+        "*.{js,jsx,json}": "eslint --cache --fix",
+        "*.{js,jsx,json,css,md}": "prettier --write"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
     }
 }

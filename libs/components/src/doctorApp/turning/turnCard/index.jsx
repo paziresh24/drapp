@@ -13,7 +13,7 @@ import {
     useDeletePrescription,
     useGetOnePrescription
 } from '@paziresh24/hooks/prescription';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 import { toast } from 'react-toastify';
 import { Loading } from '../../../core/loading';
 import Chips from '../../../core/chips';
@@ -24,6 +24,7 @@ import ReactTooltip from 'react-tooltip';
 import Visit from '../visit';
 import { Mobile, Default } from '@paziresh24/hooks/core/device';
 import { sendEvent } from '@paziresh24/utils';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownShow }) => {
     const [info] = useDrApp();
@@ -72,6 +73,11 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                     id: turn.id
                 });
 
+                getSplunkInstance().sendEvent({
+                    group: 'turning-list',
+                    type: 'prescription-action'
+                });
+
                 if (prescriptionData?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                     return setOtpConfirm(true);
                 }
@@ -79,6 +85,12 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                 window._prescription = { ...prescriptionData.result };
                 history.push(`/prescription/patient/${prescriptionData.result.id}`);
             } catch (e) {
+                getSplunkInstance().sendEvent({
+                    group: 'turning-list',
+                    type: 'prescription-action-error',
+                    event: { error: e.response.data }
+                });
+
                 if (e.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                     return setOtpConfirm(true);
                 }
@@ -112,8 +124,8 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
             });
         return addPrescription.mutateAsync({
             baseURL: info.center.local_base_url,
-            patientCell: toEnglishNumber(cell),
-            patientNationalCode: toEnglishNumber(national_code),
+            patientCell: digitsFaToEn(cell),
+            patientNationalCode: digitsFaToEn(national_code),
             identifier: id,
             tags: tags
         });

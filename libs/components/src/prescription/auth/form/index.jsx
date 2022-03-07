@@ -12,7 +12,7 @@ import TextField from '@paziresh24/components/core/textField';
 import Button from '@paziresh24/components/core/button';
 
 import Modal from '../../../core/modal';
-import { toEnglishNumber, sendEvent } from '@paziresh24/utils';
+import { digitsFaToEn, sendEvent } from '@paziresh24/utils';
 import {
     useCreateSalamatDoctor,
     useCreateTaminDoctor,
@@ -101,9 +101,9 @@ const Form = props => {
                 createSalamatDoctor.mutate(
                     {
                         identifier: props.identifier,
-                        medicalCode: toEnglishNumber(data.medicalCode),
-                        username: toEnglishNumber(data.username),
-                        password: toEnglishNumber(data.password)
+                        medicalCode: digitsFaToEn(data.medicalCode),
+                        username: digitsFaToEn(data.username),
+                        password: digitsFaToEn(data.password)
                     },
                     {
                         onSuccess: data => {
@@ -146,9 +146,9 @@ const Form = props => {
                 updateSalamatDoctor.mutate(
                     {
                         id: props.data.find(item => item.identifier === props.identifier).id,
-                        medicalCode: toEnglishNumber(data.medicalCode),
-                        username: toEnglishNumber(data.username),
-                        password: toEnglishNumber(data.password)
+                        medicalCode: digitsFaToEn(data.medicalCode),
+                        username: digitsFaToEn(data.username),
+                        password: digitsFaToEn(data.password)
                     },
                     {
                         onSuccess: data => {
@@ -193,19 +193,19 @@ const Form = props => {
             if (data.taminUsername && data.taminPassword) {
                 importRequests.mutate({
                     provider: providers.tamin,
-                    username: toEnglishNumber(data.taminUsername),
-                    password: toEnglishNumber(data.taminPassword)
+                    username: digitsFaToEn(data.taminUsername),
+                    password: digitsFaToEn(data.taminPassword)
                 });
             }
 
             if (isEmpty(props.data)) {
                 createTaminDoctor.mutate(
                     {
-                        docId: toEnglishNumber(data.medicalCode),
-                        nationalCode: toEnglishNumber(data.username),
-                        mobileNo: toEnglishNumber(data.password),
-                        username: toEnglishNumber(data.taminUsername),
-                        password: toEnglishNumber(data.taminPassword)
+                        docId: digitsFaToEn(data.medicalCode),
+                        nationalCode: digitsFaToEn(data.username),
+                        mobileNo: digitsFaToEn(data.password),
+                        username: digitsFaToEn(data.taminUsername),
+                        password: digitsFaToEn(data.taminPassword)
                     },
                     {
                         onSuccess: () => {
@@ -236,11 +236,11 @@ const Form = props => {
                 updateTaminDoctor.mutate(
                     {
                         id: props.data.id,
-                        docId: toEnglishNumber(data.medicalCode),
-                        nationalCode: toEnglishNumber(data.username),
-                        mobileNo: toEnglishNumber(data.password),
-                        username: toEnglishNumber(data.taminUsername),
-                        password: toEnglishNumber(data.taminPassword)
+                        docId: digitsFaToEn(data.medicalCode),
+                        nationalCode: digitsFaToEn(data.username),
+                        mobileNo: digitsFaToEn(data.password),
+                        username: digitsFaToEn(data.taminUsername),
+                        password: digitsFaToEn(data.taminPassword)
                     },
                     {
                         onSuccess: () => {
@@ -273,8 +273,8 @@ const Form = props => {
     const otpConfirmAction = data => {
         checkOtp.mutate({
             identifier: props.identifier,
-            medicalCode: toEnglishNumber(userData.medicalCode),
-            code: toEnglishNumber(data.otpCode)
+            medicalCode: digitsFaToEn(userData.medicalCode),
+            code: digitsFaToEn(data.otpCode)
         });
     };
 

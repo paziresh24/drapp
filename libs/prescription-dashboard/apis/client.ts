@@ -1,10 +1,8 @@
 import axios from 'axios';
 // @ts-ignore
 import { getToken } from '@paziresh24/utils/localstorage';
-
-const public_env = window['_env_'];
-const isProduction = process.env.NODE_ENV === 'production';
-const isMainDomain = location.host === public_env.P24_MAIN_DOMAIN;
+// @ts-ignore
+import { baseURL } from '@paziresh24/utils/baseUrl';
 
 /*
     This is the client for the prescription-statistics api.
@@ -12,10 +10,7 @@ const isMainDomain = location.host === public_env.P24_MAIN_DOMAIN;
     when request local client -> {public_env.P24_STATISTICS_API}
 */
 const client = axios.create({
-    baseURL:
-        isProduction && !isMainDomain
-            ? location.origin + public_env.P24_STATISTICS_ROUTE
-            : public_env.P24_STATISTICS_API
+    baseURL: baseURL('STATISTICS_API')
 });
 
 client.interceptors.request.use(

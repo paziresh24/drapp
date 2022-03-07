@@ -1,4 +1,4 @@
-const ThreeDots = ({ color, className, onClick }) => {
+const ThreeDots = ({ color = '#fff', className = undefined, onClick = undefined }) => {
     return (
         <svg
             width="5"

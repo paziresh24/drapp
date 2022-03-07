@@ -18,6 +18,7 @@ import queryString from 'query-string';
 import { useInsurances } from '@paziresh24/hooks/prescription/insurances';
 import toastType from '@paziresh24/constants/prescription.json';
 import isEmpty from 'lodash/isEmpty';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Finalize = () => {
     const { search } = useLocation();
@@ -52,12 +53,18 @@ const Finalize = () => {
     const visitDescription = useRef();
     const referenceFeedback = useRef();
 
+    const startPrescribeDateTime = useRef();
+
     const updatePrescriptionAction = (id, data) => {
         updatePrescription.mutate({
             prescriptionId: id,
             ...data
         });
     };
+
+    useEffect(() => {
+        startPrescribeDateTime.current = new Date();
+    }, []);
 
     const servicesCloneRef = useRef();
 
@@ -215,6 +222,24 @@ const Finalize = () => {
 
             if (!prescriptionInfo.finalized) {
                 const data = await finalizePrescriptionAction();
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'finalized',
+                    event: {
+                        prescription_info: prescriptionInfo
+                    }
+                });
+
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'duration',
+                    event: {
+                        start_date: startPrescribeDateTime.current,
+                        end_date: new Date(),
+                        duration: new Date().getTime() - startPrescribeDateTime.current.getTime(),
+                        prescription_info: prescriptionInfo
+                    }
+                });
 
                 sendEvent('sucsessfulPrescribe', 'prescription', 'sucsessfulPrescribe');
                 if (isServicesOfDoctors) {
@@ -236,12 +261,22 @@ const Finalize = () => {
                 if (isEmpty(backPage)) {
                     history.push('/');
                 }
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'edited',
+                    event: { prescription_info: prescriptionInfo }
+                });
                 !toast.isActive('finalizePrescription') &&
                     toast.success('نسخه ویرایش شد.', {
                         toastId: 'finalizePrescription'
                     });
             }
         } catch (error) {
+            getSplunkInstance().sendEvent({
+                group: 'prescription',
+                type: 'finalized-error',
+                event: { error: error.response.data, prescription_info: prescriptionInfo }
+            });
             if (error.response?.data?.messages) {
                 error.response.data?.messages.map(item => {
                     toast[toastType[item.type]](item.text);
