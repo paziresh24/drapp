@@ -40,6 +40,7 @@ import debounce from 'lodash/debounce';
 import { queryClient } from '@paziresh24/components/core/provider';
 import ReferenceModal from '@paziresh24/components/prescription/referenceModal';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
 const Turning = () => {
     const history = useHistory();
@@ -77,6 +78,7 @@ const Turning = () => {
     const nationalCodeRef = useRef();
     const [prescriptionPendingModal, setPrescriptionPendingModal] = useState(false);
     const [referenceModal, setReferenceModal] = useState(false);
+    const isExpertDoctor = !isLessThanExpertDegreeDoctor(info.doctor?.expertises);
 
     useEffect(() => {
         if (location.state?.prescriptionInfo && getTurn.data?.data) {
@@ -598,7 +600,7 @@ const Turning = () => {
                                 />
                             </div>
                         </div>
-                        {!isMobile && (
+                        {!isMobile && isExpertDoctor && (
                             <Button
                                 onClick={() => {
                                     setOpenNewTurn(true);
@@ -644,17 +646,19 @@ const Turning = () => {
                         refetchData={refetchData}
                     />
 
-                    <Mobile>
-                        <div className={styles['add-turn-button-mask']} />
-                        <button
-                            className={styles['add-turn-button']}
-                            onClick={() => {
-                                setOpenNewTurn(true);
-                            }}
-                        >
-                            افزودن بیمار
-                        </button>
-                    </Mobile>
+                    {isExpertDoctor && (
+                        <Mobile>
+                            <div className={styles['add-turn-button-mask']} />
+                            <button
+                                className={styles['add-turn-button']}
+                                onClick={() => {
+                                    setOpenNewTurn(true);
+                                }}
+                            >
+                                افزودن بیمار
+                            </button>
+                        </Mobile>
+                    )}
                 </div>
             </div>
 

@@ -25,6 +25,7 @@ import Visit from '../visit';
 import { Mobile, Default } from '@paziresh24/hooks/core/device';
 import { sendEvent } from '@paziresh24/utils';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
 const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownShow }) => {
     const [info] = useDrApp();
@@ -41,6 +42,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
     const [actionType, setActionType] = useState();
     const getOnePrescription = useGetOnePrescription({ id: turn.prescription?.id });
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+    const isExpertDoctor = !isLessThanExpertDegreeDoctor(info.doctor?.expertises);
 
     const {
         register: otpRegister,
@@ -215,6 +217,8 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
             setVisitModal(true);
         } else {
             try {
+                if (!isExpertDoctor) return setVisitModal(true);
+
                 const prescriptionData = await createPrescription({
                     national_code: turn.national_code ?? data.national_code,
                     cell: turn.cell,
@@ -243,6 +247,14 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                 }
             }
         }
+    };
+
+    const visitProvider = () => {
+        const instructionProvider =
+            turn.prescription?.insuranceType ?? addPrescription?.data?.result?.insuranceType;
+
+        if (!isExpertDoctor) return 'paziresh24';
+        return instructionProvider;
     };
 
     return (
@@ -380,23 +392,31 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 <Button
                                     variant="secondary"
                                     size="small"
-                                    disabled={turn.finalized}
+                                    disabled={
+                                        turn.finalized ||
+                                        (!isExpertDoctor && turn.book_status === 'visited')
+                                    }
                                     onClick={() => visitSubmit()}
                                     style={{ marginLeft: '1rem' }}
                                     loading={addPrescription.isLoading}
                                 >
-                                    {turn.finalized ? 'ویزیت شده' : 'ویزیت '}
+                                    {turn.prescription?.finalized ||
+                                    (!isExpertDoctor && turn.book_status === 'visited')
+                                        ? 'ویزیت شده'
+                                        : 'ویزیت '}
                                 </Button>
                             )}
-                            <Button
-                                className={styles.buttonAction}
-                                size="small"
-                                icon={<ChevronIcon color="#27bda0" />}
-                                variant="secondary"
-                                onClick={prescription}
-                            >
-                                {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
-                            </Button>
+                            {isExpertDoctor && (
+                                <Button
+                                    className={styles.buttonAction}
+                                    size="small"
+                                    icon={<ChevronIcon color="#27bda0" />}
+                                    variant="secondary"
+                                    onClick={prescription}
+                                >
+                                    {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
+                                </Button>
+                            )}
                             <div className={styles.action}>
                                 {pdfLink && (
                                     <a
@@ -411,26 +431,43 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                         {' '}
                                     </a>
                                 )}
-                                <div
-                                    className={styles.turn_action}
-                                    onClick={e => {
-                                        !dropDownShow && e.stopPropagation();
-                                        !dropDownShow && setDropDownShow(dropDownShowKey);
-                                    }}
-                                    aria-hidden
-                                >
-                                    <svg
-                                        width="5"
-                                        height="15"
-                                        viewBox="0 0 3 13"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
+                                {isExpertDoctor && (
+                                    <div
+                                        className={styles.turn_action}
+                                        onClick={e => {
+                                            !dropDownShow && e.stopPropagation();
+                                            !dropDownShow && setDropDownShow(dropDownShowKey);
+                                        }}
+                                        aria-hidden
                                     >
-                                        <circle cx="1.35281" cy="1.75977" r="1" fill="#3F3F79" />
-                                        <circle cx="1.35281" cy="6.75977" r="1" fill="#3F3F79" />
-                                        <circle cx="1.35281" cy="11.7598" r="1" fill="#3F3F79" />
-                                    </svg>
-                                </div>
+                                        <svg
+                                            width="5"
+                                            height="15"
+                                            viewBox="0 0 3 13"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <circle
+                                                cx="1.35281"
+                                                cy="1.75977"
+                                                r="1"
+                                                fill="#3F3F79"
+                                            />
+                                            <circle
+                                                cx="1.35281"
+                                                cy="6.75977"
+                                                r="1"
+                                                fill="#3F3F79"
+                                            />
+                                            <circle
+                                                cx="1.35281"
+                                                cy="11.7598"
+                                                r="1"
+                                                fill="#3F3F79"
+                                            />
+                                        </svg>
+                                    </div>
+                                )}
 
                                 <ul
                                     className={classNames({
@@ -707,16 +744,24 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                         <Button
                             variant="secondary"
                             size="small"
-                            disabled={turn.prescription?.finalized}
+                            disabled={
+                                turn.prescription?.finalized ||
+                                (!isExpertDoctor && turn.book_status === 'visited')
+                            }
                             block
                             onClick={() => visitSubmit()}
                             loading={addPrescription.isLoading}
                         >
-                            {turn.prescription?.finalized ? 'ویزیت شده' : 'ویزیت '}
+                            {turn.prescription?.finalized ||
+                            (!isExpertDoctor && turn.book_status === 'visited')
+                                ? 'ویزیت شده'
+                                : 'ویزیت '}
                         </Button>
-                        <Button variant="secondary" size="small" block onClick={prescription}>
-                            {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
-                        </Button>
+                        {isExpertDoctor && (
+                            <Button variant="secondary" size="small" block onClick={prescription}>
+                                {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
+                            </Button>
+                        )}
                     </div>
                 </div>
             </Mobile>
@@ -787,9 +832,8 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
             <Visit
                 isOpen={visitModal}
                 onClose={setVisitModal}
-                provider={
-                    turn.prescription?.insuranceType ?? addPrescription?.data?.result?.insuranceType
-                }
+                provider={visitProvider()}
+                bookId={turn.id}
                 prescriptionId={turn.prescription?.id ?? addPrescription?.data?.result?.id}
                 refetchData={refetchData}
             />

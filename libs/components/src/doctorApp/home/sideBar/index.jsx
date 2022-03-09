@@ -33,6 +33,7 @@ import { useSettingTurns } from '@paziresh24/components/doctorApp/turning/status
 import { StatusBar } from '../../turning/statusBar';
 import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
@@ -94,6 +95,7 @@ const SideBar = () => {
                 {
                     id: 10,
                     name: 'نسخه های ثبت شده',
+                    isShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <PrescriptionMenuIcon color="#3F3F79" />,
                     onClick: () =>
                         getSplunkInstance().sendEvent({
@@ -105,6 +107,7 @@ const SideBar = () => {
                 {
                     id: 25,
                     name: 'پراستفاده ها',
+                    isShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <StarIcon color="#3F3F79" />,
                     link: '/favorite/templates',
                     subMenu: [
@@ -129,6 +132,7 @@ const SideBar = () => {
                 {
                     id: 'provider-step',
                     name: 'بیمه های من',
+                    isShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <PrescriptionIcon color="#3F3F79" />,
                     link: `/providers`,
                     onClick: () =>

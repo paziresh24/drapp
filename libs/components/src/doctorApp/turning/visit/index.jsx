@@ -6,19 +6,21 @@ import Modal from '../../../core/modal';
 import TextArea from '../../../core/textArea';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
 
-const Visit = ({ isOpen, onClose, provider, prescriptionId, refetchData }) => {
+const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData }) => {
     const [info] = useDrApp();
     const addItem = useAddItemService();
     const finalize = useFinalizePrescription();
+    const paziresh = usePaziresh();
     const commentRef = useRef();
 
-    const submitVisit = () => {
-        getSplunkInstance().sendEvent({
-            group: 'turning-list',
-            type: 'visit-prescription-action'
-        });
-        if (provider === 'tamin') {
+    const submitVisit = {
+        tamin: ({ prescriptionId, bookId }) => {
+            getSplunkInstance().sendEvent({
+                group: 'turning-list',
+                type: 'visit-prescription-action'
+            });
             addItem.mutate(
                 {
                     baseURL: info.center.local_base_url,
@@ -30,9 +32,16 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, refetchData }) => {
                         finalize.mutate(
                             { baseURL: info.center.local_base_url, prescriptionId },
                             {
-                                onSuccess: () => {
-                                    refetchData();
-                                    onClose(false);
+                                onSuccess: async () => {
+                                    try {
+                                        if (bookId) {
+                                            await paziresh24Visit(bookId);
+                                        }
+                                        refetchData();
+                                        onClose(false);
+                                    } catch (e) {
+                                        toast.error(e.response.data.message);
+                                    }
                                 },
                                 onError: error => {
                                     toast.warn(error.response.data.message);
@@ -45,18 +54,48 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, refetchData }) => {
                     }
                 }
             );
-        }
-        if (provider === 'salamat') {
+        },
+        salamat: ({ prescriptionId, bookId }) => {
+            getSplunkInstance().sendEvent({
+                group: 'turning-list',
+                type: 'visit-prescription-action'
+            });
             finalize.mutate(
                 { prescriptionId },
                 {
-                    onSuccess: () => {
-                        refetchData();
-                        onClose(false);
+                    onSuccess: async () => {
+                        try {
+                            if (bookId) {
+                                await paziresh24Visit(bookId);
+                            }
+                            refetchData();
+                            onClose(false);
+                        } catch (e) {
+                            toast.error(e.response.data.message);
+                        }
                     }
                 }
             );
+        },
+        paziresh24: async ({ bookId }) => {
+            try {
+                await paziresh24Visit(bookId);
+                refetchData();
+                onClose(false);
+            } catch (e) {
+                toast.error(e.response.data.message);
+            }
         }
+    };
+
+    const paziresh24Visit = id => {
+        return paziresh.mutateAsync(
+            {
+                book_id: id,
+                status: true
+            },
+            {}
+        );
     };
 
     return (
@@ -65,8 +104,13 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, refetchData }) => {
             <div className="flex gap-5">
                 <Button
                     block
-                    onClick={submitVisit}
-                    loading={addItem.isLoading || finalize.isLoading}
+                    onClick={() =>
+                        submitVisit[provider]({
+                            prescriptionId,
+                            bookId
+                        })
+                    }
+                    loading={addItem.isLoading || finalize.isLoading || paziresh.isLoading}
                 >
                     ویزیت
                 </Button>
