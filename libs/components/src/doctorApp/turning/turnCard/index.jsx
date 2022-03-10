@@ -289,9 +289,9 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 )}
                             <span
                                 className={styles.name}
-                                onClick={prescription}
+                                onClick={isExpertDoctor && prescription}
                                 aria-hidden
-                                style={{ cursor: 'pointer' }}
+                                style={{ cursor: isExpertDoctor && 'pointer' }}
                             >
                                 {turn.display_name !== '' ? turn.display_name : '-'}
                             </span>
@@ -388,24 +388,22 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                     </td>
                     <td className={styles.actionCol}>
                         <div className={styles.buttonAction}>
-                            {!turn.prescription?.finalized && (
-                                <Button
-                                    variant="secondary"
-                                    size="small"
-                                    disabled={
-                                        turn.finalized ||
-                                        (!isExpertDoctor && turn.book_status === 'visited')
-                                    }
-                                    onClick={() => visitSubmit()}
-                                    style={{ marginLeft: '1rem' }}
-                                    loading={addPrescription.isLoading}
-                                >
-                                    {turn.prescription?.finalized ||
+                            <Button
+                                variant="secondary"
+                                size="small"
+                                disabled={
+                                    turn.finalized ||
                                     (!isExpertDoctor && turn.book_status === 'visited')
-                                        ? 'ویزیت شده'
-                                        : 'ویزیت '}
-                                </Button>
-                            )}
+                                }
+                                onClick={() => visitSubmit()}
+                                style={{ marginLeft: '1rem' }}
+                                loading={addPrescription.isLoading}
+                            >
+                                {turn.prescription?.finalized ||
+                                (!isExpertDoctor && turn.book_status === 'visited')
+                                    ? 'ویزیت شده'
+                                    : 'ویزیت '}
+                            </Button>
                             {isExpertDoctor && (
                                 <Button
                                     className={styles.buttonAction}
