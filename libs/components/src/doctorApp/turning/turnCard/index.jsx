@@ -274,15 +274,13 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 paddingRight: '0.8rem'
                             }}
                         >
-                            {turn.prescription?.finalized && (
-                                <div
-                                    onClick={() => setIsDetailsOpen(prev => !prev)}
-                                    aria-hidden
-                                    style={{ cursor: 'pointer' }}
-                                >
-                                    <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
-                                </div>
-                            )}
+                            <div
+                                onClick={() => setIsDetailsOpen(prev => !prev)}
+                                aria-hidden
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                            </div>
                             {turn.prescription?.insuranceType === 'salamat' &&
                                 turn.prescription?.salamat_prescription?.isReference && (
                                     <Chips theme="gray">ارجاع</Chips>
@@ -392,7 +390,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 variant="secondary"
                                 size="small"
                                 disabled={
-                                    turn.finalized ||
+                                    turn.prescription.finalized ||
                                     (!isExpertDoctor && turn.book_status === 'visited')
                                 }
                                 onClick={() => visitSubmit()}
@@ -513,74 +511,93 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 className={styles.details}
                                 style={{
                                     display: 'flex',
-                                    // justifyContent: 'space-between',
                                     gap: '5rem',
                                     width: '100%',
-                                    // background: '#fff',
                                     padding: '1.5rem 2rem',
                                     borderRadius: '0rem'
                                 }}
                             >
-                                <div className={styles['row']}>
-                                    <div className={styles['col']}>
-                                        <span className={styles['title']}>کدملی</span>
-                                        <span className={styles['value']}>
-                                            {turn.prescription?.patientNationalCode ?? '-'}
-                                        </span>
-                                    </div>
+                                <div className="flex space-s-3">
+                                    <span>کدملی</span>
+                                    <span>
+                                        {turn.prescription?.patientNationalCode ??
+                                            turn.national_code ??
+                                            '-'}
+                                    </span>
                                 </div>
 
-                                <div className={styles['row']}>
-                                    <div className={styles['col']} data-tip data-for="geoInfo">
-                                        <span className={styles['title']}>کد پیگیری</span>
-                                        <span className={styles['value']}>
-                                            {turn.prescription?.insuranceType === 'tamin' &&
-                                                turn.prescription?.[
-                                                    turn.prescription?.insuranceType +
-                                                        '_prescription'
-                                                ].map(item => (
+                                {info.center.id === '5532' && (
+                                    <>
+                                        <div className="flex space-s-3">
+                                            <span>وضعیت پرداخت: </span>
+                                            <span>
+                                                {turn.payment_status === 'paid' && (
+                                                    <span>پرداخت شده</span>
+                                                )}
+                                                {turn.payment_status === 'refund' && (
+                                                    <span>استرداد</span>
+                                                )}
+                                                {!turn.payment_status && <span> - </span>}
+                                            </span>
+                                        </div>
+                                        <div className="flex space-s-3">
+                                            <span>مبلغ ویزیت: </span>
+                                            <span> - </span>
+                                        </div>
+                                    </>
+                                )}
+
+                                {isExpertDoctor && (
+                                    <>
+                                        <div className="flex space-s-3">
+                                            <span>کد پیگیری</span>
+                                            <span>
+                                                {turn.prescription?.insuranceType === 'tamin' &&
+                                                    turn.prescription?.[
+                                                        turn.prescription?.insuranceType +
+                                                            '_prescription'
+                                                    ].map(item => (
+                                                        <span
+                                                            style={{
+                                                                fontSize: '1.4rem',
+                                                                marginRight: '1rem'
+                                                            }}
+                                                            key={item.head_EPRSC_ID}
+                                                        >
+                                                            {item.head_EPRSC_ID ?? '-'}
+                                                        </span>
+                                                    ))}
+                                                {turn.prescription?.insuranceType === 'salamat' && (
                                                     <span
                                                         style={{
                                                             fontSize: '1.4rem',
                                                             marginRight: '1rem'
                                                         }}
-                                                        key={item.head_EPRSC_ID}
+                                                        key={
+                                                            turn.prescription?.[
+                                                                turn?.prescription?.insuranceType +
+                                                                    '_prescription'
+                                                            ]?.trackingCode
+                                                        }
                                                     >
-                                                        {item.head_EPRSC_ID ?? '-'}
-                                                    </span>
-                                                ))}
-                                            {turn.prescription?.insuranceType === 'salamat' && (
-                                                <span
-                                                    style={{
-                                                        fontSize: '1.4rem',
-                                                        marginRight: '1rem'
-                                                    }}
-                                                    key={
-                                                        turn.prescription?.[
-                                                            turn?.prescription?.insuranceType +
+                                                        {turn.prescription?.[
+                                                            turn.prescription?.insuranceType +
                                                                 '_prescription'
-                                                        ]?.trackingCode
-                                                    }
-                                                >
-                                                    {turn.prescription?.[
-                                                        turn.prescription?.insuranceType +
-                                                            '_prescription'
-                                                    ]?.trackingCode ?? ''}
-                                                </span>
-                                            )}
-                                        </span>
-                                    </div>
-                                </div>
+                                                        ]?.trackingCode ?? ''}
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </div>
 
-                                <div className={styles['row']}>
-                                    <div className={styles['col']}>
-                                        <span className={styles['title']}>کد توالی</span>
-                                        <span className={styles['value']}>
-                                            {turn.prescription?.salamat_prescription
-                                                ?.sequenceNumber ?? '-'}
-                                        </span>
-                                    </div>
-                                </div>
+                                        <div className="flex space-s-3">
+                                            <span>کد توالی</span>
+                                            <span>
+                                                {turn.prescription?.salamat_prescription
+                                                    ?.sequenceNumber ?? '-'}
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </td>
                     </tr>
@@ -737,6 +754,22 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 </span>
                             </div>
                         </div>
+                        {info.center.id === '5532' && (
+                            <div className={styles.patientInfoRow}>
+                                <div className="w-full">
+                                    <span>وضعیت پرداخت: </span>
+                                    <span>
+                                        {turn.payment_status === 'paid' && <span>پرداخت شده</span>}
+                                        {turn.payment_status === 'refund' && <span>استرداد</span>}
+                                        {!turn.payment_status && <span> - </span>}
+                                    </span>
+                                </div>
+                                <div className="w-full">
+                                    <span>مبلغ ویزیت: </span>
+                                    <span> - </span>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className={styles.cardAction}>
                         <Button
