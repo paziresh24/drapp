@@ -35,7 +35,7 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
                                 onSuccess: async () => {
                                     try {
                                         if (bookId) {
-                                            await paziresh24Visit(bookId);
+                                            await submitPaziresh24Visit(bookId);
                                         }
                                         refetchData();
                                         onClose(false);
@@ -66,7 +66,7 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
                     onSuccess: async () => {
                         try {
                             if (bookId) {
-                                await paziresh24Visit(bookId);
+                                await submitPaziresh24Visit(bookId);
                             }
                             refetchData();
                             onClose(false);
@@ -79,7 +79,7 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
         },
         paziresh24: async ({ bookId }) => {
             try {
-                await paziresh24Visit(bookId);
+                await submitPaziresh24Visit(bookId);
                 refetchData();
                 onClose(false);
             } catch (e) {
@@ -88,14 +88,11 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
         }
     };
 
-    const paziresh24Visit = id => {
-        return paziresh.mutateAsync(
-            {
-                book_id: id,
-                status: true
-            },
-            {}
-        );
+    const submitPaziresh24Visit = id => {
+        return paziresh.mutateAsync({
+            book_id: id,
+            status: true
+        });
     };
 
     return (
