@@ -137,6 +137,7 @@ const UserName = ({ step }) => {
                         usernameRegister.ref(e);
                         usernameField.current = e;
                     }}
+                    testId="salamat-login-username-field"
                 />
                 <TextField
                     type="tel"
@@ -147,8 +148,14 @@ const UserName = ({ step }) => {
                         passwordRegister.ref(e);
                         passwordField.current = e;
                     }}
+                    testId="salamat-login-password-field"
                 />
-                <Button block type="submit" loading={salamtLogin.isLoading}>
+                <Button
+                    block
+                    type="submit"
+                    loading={salamtLogin.isLoading}
+                    testId="salamat-login-login-button"
+                >
                     ورود
                 </Button>
             </form>

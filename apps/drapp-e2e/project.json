@@ -6,13 +6,7 @@
         "e2e": {
             "executor": "@nrwl/cypress:cypress",
             "options": {
-                "cypressConfig": "apps/drapp-e2e/cypress.json",
-                "devServerTarget": "drapp:serve"
-            },
-            "configurations": {
-                "production": {
-                    "devServerTarget": "drapp:serve:production"
-                }
+                "cypressConfig": "apps/drapp-e2e/cypress.json"
             }
         },
         "lint": {

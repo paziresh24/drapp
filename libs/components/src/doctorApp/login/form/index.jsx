@@ -280,6 +280,7 @@ const Form = ({ focus, setFocus }) => {
                             }}
                             block
                             variant="secondary"
+                            testId="change-login-with-salamat"
                         >
                             ورود با بیمه سلامت
                         </Button>
