@@ -87,7 +87,7 @@ const SideBar = () => {
                 },
                 {
                     id: '50',
-                    isShow: window._env_.P24_STATISTICS_API,
+                    shouldShow: window._env_.P24_STATISTICS_API,
                     name: 'گزارش نسخه نویسی',
                     icon: <Statistics color="#3F3F79" />,
                     link: '/dashboard'
@@ -95,7 +95,7 @@ const SideBar = () => {
                 {
                     id: 10,
                     name: 'نسخه های ثبت شده',
-                    isShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
+                    shouldShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <PrescriptionMenuIcon color="#3F3F79" />,
                     onClick: () =>
                         getSplunkInstance().sendEvent({
@@ -107,7 +107,7 @@ const SideBar = () => {
                 {
                     id: 25,
                     name: 'پراستفاده ها',
-                    isShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
+                    shouldShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <StarIcon color="#3F3F79" />,
                     link: '/favorite/templates',
                     subMenu: [
@@ -118,21 +118,21 @@ const SideBar = () => {
                 {
                     id: 4,
                     name: 'چت',
-                    isShow: info.center.id === '5532',
+                    shouldShow: info.center.id === '5532',
                     icon: <ChatIcon color="#3F3F79" />,
                     link: '/consult'
                 },
                 {
                     id: 7,
                     name: 'قوانین مشاوره',
-                    isShow: info.center.id === '5532',
+                    shouldShow: info.center.id === '5532',
                     icon: <InfoIcon color="#3F3F79" />,
                     link: '/consult-term'
                 },
                 {
                     id: 'provider-step',
                     name: 'بیمه های من',
-                    isShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
+                    shouldShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <PrescriptionIcon color="#3F3F79" />,
                     link: `/providers`,
                     onClick: () =>
@@ -148,7 +148,7 @@ const SideBar = () => {
                 {
                     id: 8,
                     name: 'تنظیمات نوبت دهی',
-                    isShow: info.center.is_active_booking && info.center.type_id === 1,
+                    shouldShow: info.center.is_active_booking && info.center.type_id === 1,
                     icon: <SettingIcon color="#3F3F79" />,
                     onClick: () => setSettingIsOpen(true)
                 },
@@ -162,7 +162,7 @@ const SideBar = () => {
                 {
                     id: 6,
                     name: 'تسویه حساب',
-                    isShow: info.center.id === '5532' || info.center.type_id === 1,
+                    shouldShow: info.center.id === '5532' || info.center.type_id === 1,
                     icon: <CardIcon color="#3F3F79" />,
                     link: '/financial'
                 },
@@ -385,7 +385,7 @@ const SideBar = () => {
                     <div>
                         {menuItems.map(
                             item =>
-                                (item.isShow === undefined || item.isShow) && (
+                                (item.shouldShow === undefined || item.shouldShow) && (
                                     <MenuItem key={item.id} item={item} />
                                 )
                         )}
