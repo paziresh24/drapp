@@ -2,7 +2,7 @@ import styles from './textField.module.scss';
 import classNames from 'classnames';
 import { forwardRef, useState } from 'react';
 
-const TextField = forwardRef((props, ref) => {
+const TextField = forwardRef(({ autoComplete = 'off', ...props }, ref) => {
     const [isShowPassword, setIsShowPassword] = useState(false);
     return (
         <label
@@ -30,7 +30,7 @@ const TextField = forwardRef((props, ref) => {
                 ref={ref}
                 style={props.style}
                 onKeyDown={props.onKeyDown}
-                autoComplete="off"
+                autoComplete={autoComplete}
                 inputMode={props.inputMode}
                 min={props.min}
                 max={props.max}

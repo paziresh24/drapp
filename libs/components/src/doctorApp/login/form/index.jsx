@@ -11,7 +11,9 @@ import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
 import Password from './../password';
 import OtpCode from './../otpCode';
 import UserName from '../userName';
+import SalamatLogin from '../salamatLogin';
 import ForgotPassword from '../forgotPassword';
+import Button from '../../../core/button/index';
 import ChangePassword from './../changePassword/index';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
@@ -23,6 +25,7 @@ const Form = ({ focus, setFocus }) => {
     const params = queryString.parse(search);
     const [step, setStep] = useState('USERNAME');
     const [userName, setUserName] = useState();
+    const [salamatPassword, setSalamatPassword] = useState();
     const resendCode = useResendCode({ mobile: userName, justDoctor: true });
     const [userIsPassword, setUserIsPassword] = useState(false);
 
@@ -155,13 +158,14 @@ const Form = ({ focus, setFocus }) => {
                     <span className={styles['title']}>ورود/ثبت نام پزشکان</span>
                 )}
                 {step === 'REGISTER' && <span className={styles['title']}>ثبت نام پزشک</span>}
-                {step === 'PASSWORD' && <span className={styles['title']}>ورود پزشک</span>}
+                {step === 'PASSWORD' ||
+                    (step === 'SALAMATAUTH' && <span className={styles['title']}>ورود پزشک</span>)}
                 {step === 'FORGOTPASSWORD' && (
                     <span className={styles['title']}>بازیابی رمزعبور</span>
                 )}
                 {step === 'CHANGEPASSWORD' && <span className={styles['title']}>رمزعبور جدید</span>}
 
-                {step !== 'USERNAME' && step !== 'CHANGEPASSWORD' && (
+                {step !== 'USERNAME' && step !== 'CHANGEPASSWORD' && step !== 'SALAMATAUTH' && (
                     <button
                         className={styles['change-number']}
                         onClick={() => {
@@ -181,6 +185,17 @@ const Form = ({ focus, setFocus }) => {
                         userName={userName}
                         setUserName={setUserName}
                         setUserIsPassword={setUserIsPassword}
+                        setFocus={setFocus}
+                    />
+                )}
+                {step === 'SALAMATAUTH' && (
+                    <SalamatLogin
+                        setStep={setStep}
+                        step={step}
+                        userName={userName}
+                        setUserName={setUserName}
+                        password={salamatPassword}
+                        setPassword={setSalamatPassword}
                         setFocus={setFocus}
                     />
                 )}
@@ -250,268 +265,43 @@ const Form = ({ focus, setFocus }) => {
                         <span>رمز عبورم را فراموش کرده ام</span>
                     </div>
                 )}
-                {/* {userIsPassword &&
-                    step === 'PASSWORD' &&
-                    (loginType === 'password' ? (
-                        <div
-                            className={styles.changeToOtp}
-                            onClick={() => setLoginType('otpCode')}
-                            aria-hidden
-                        >
-                            <svg
-                                width="25"
-                                height="25"
-                                viewBox="0 0 25 25"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M2.97119 9.22217C2.97119 5.72217 4.97119 4.22217 7.97119 4.22217H17.9712C20.9712 4.22217 22.9712 5.72217 22.9712 9.22217V16.2222C22.9712 19.7222 20.9712 21.2222 17.9712 21.2222H7.97119"
-                                    stroke="#27BDA0"
-                                    strokeWidth="1.5"
-                                    strokeMiterlimit="10"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M17.9712 9.72217L14.8412 12.2222C13.8112 13.0422 12.1212 13.0422 11.0912 12.2222L7.97119 9.72217"
-                                    stroke="#27BDA0"
-                                    strokeWidth="1.5"
-                                    strokeMiterlimit="10"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M2.97119 17.2222H8.97119"
-                                    stroke="#27BDA0"
-                                    strokeWidth="1.5"
-                                    strokeMiterlimit="10"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M2.97119 13.2222H5.97119"
-                                    stroke="#27BDA0"
-                                    strokeWidth="1.5"
-                                    strokeMiterlimit="10"
-                                    strokeLinecap="round"
-                                    strokeL
-                                    inejoin="round"
-                                />
-                            </svg>
-                            <span>ورود با کد یکبار مصرف</span>
+                {step === 'USERNAME' && (
+                    <div>
+                        <div className={styles.lineRoot}>
+                            <div className={styles.line}></div>
+                            <span className="p-5">یا</span>
+                            <div className={styles.line}></div>
                         </div>
-                    ) : (
-                        <div
+                        <Button
                             className={styles.changeToOtp}
-                            onClick={() => setLoginType('password')}
-                            aria-hidden
+                            onClick={() => {
+                                setFocus(true);
+                                setStep('SALAMATAUTH');
+                            }}
+                            block
+                            variant="secondary"
                         >
-                            <svg
-                                width="25"
-                                height="24"
-                                viewBox="0 0 25 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M11.9912 20.25H8.47119C7.72119 20.25 7.17119 20.22 6.70119 20.15C3.37119 19.78 2.72119 17.8 2.72119 14.5V9.5C2.72119 6.2 3.38119 4.21 6.73119 3.84C7.17119 3.78 7.72119 3.75 8.47119 3.75H11.9312C12.3412 3.75 12.6812 4.09 12.6812 4.5C12.6812 4.91 12.3412 5.25 11.9312 5.25H8.47119C7.79119 5.25 7.31119 5.28 6.92119 5.33C4.89119 5.55 4.22119 6.19 4.22119 9.5V14.5C4.22119 17.81 4.89119 18.44 6.89119 18.67C7.31119 18.73 7.79119 18.75 8.47119 18.75H11.9912C12.4012 18.75 12.7412 19.09 12.7412 19.5C12.7412 19.91 12.4012 20.25 11.9912 20.25Z"
-                                    fill="#27BDA0"
-                                />
-                                <path
-                                    d="M17.4712 20.25H15.9912C15.5812 20.25 15.2412 19.91 15.2412 19.5C15.2412 19.09 15.5812 18.75 15.9912 18.75H17.4712C18.1512 18.75 18.6312 18.72 19.0212 18.67C21.0512 18.45 21.7212 17.81 21.7212 14.5V9.5C21.7212 6.19 21.0512 5.56 19.0512 5.33C18.6312 5.27 18.1512 5.25 17.4712 5.25H15.9912C15.5812 5.25 15.2412 4.91 15.2412 4.5C15.2412 4.09 15.5812 3.75 15.9912 3.75H17.4712C18.2212 3.75 18.7712 3.78 19.2412 3.85C22.5712 4.22 23.2212 6.2 23.2212 9.5V14.5C23.2212 17.8 22.5612 19.79 19.2112 20.16C18.7712 20.22 18.2212 20.25 17.4712 20.25Z"
-                                    fill="#27BDA0"
-                                />
-                                <path
-                                    d="M15.9712 22.75C15.5612 22.75 15.2212 22.41 15.2212 22V2C15.2212 1.59 15.5612 1.25 15.9712 1.25C16.3812 1.25 16.7212 1.59 16.7212 2V22C16.7212 22.41 16.3812 22.75 15.9712 22.75Z"
-                                    fill="#27BDA0"
-                                />
-                                <path
-                                    d="M7.67114 13C7.54114 13 7.41114 12.97 7.29114 12.92C7.17114 12.87 7.06114 12.8 6.96114 12.71C6.87114 12.61 6.79114 12.5 6.74114 12.38C6.69114 12.26 6.67114 12.13 6.67114 12C6.67114 11.74 6.78114 11.48 6.96114 11.29C7.33114 10.92 8.00114 10.92 8.38114 11.29C8.56114 11.48 8.67114 11.74 8.67114 12C8.67114 12.13 8.64114 12.26 8.59114 12.38C8.54114 12.5 8.47114 12.61 8.38114 12.71C8.28114 12.8 8.17114 12.87 8.05114 12.92C7.93114 12.97 7.80114 13 7.67114 13Z"
-                                    fill="#27BDA0"
-                                />
-                                <path
-                                    d="M11.6711 13C11.5411 13 11.4111 12.97 11.2911 12.92C11.1711 12.87 11.0611 12.8 10.9611 12.71C10.8711 12.61 10.8011 12.5 10.7411 12.38C10.7011 12.26 10.6711 12.13 10.6711 12C10.6711 11.74 10.7811 11.48 10.9611 11.29C11.3311 10.92 12.0111 10.92 12.3811 11.29C12.5611 11.48 12.6711 11.74 12.6711 12C12.6711 12.13 12.6411 12.26 12.5911 12.38C12.5411 12.5 12.4711 12.61 12.3811 12.71C12.2811 12.8 12.1711 12.87 12.0511 12.92C11.9311 12.97 11.8011 13 11.6711 13Z"
-                                    fill="#27BDA0"
-                                />
-                            </svg>
-                            <span>ورود با رمز عبور</span>
-                        </div>
-                    ))} */}
-                {/* {(isNeedRegister || step === 2) && (
-                    <div
-                        className={`${styles['enterCodeHead']} ${
-                            step === 2 && resendCode.data?.message === 'رمز ثابت را وارد کنید.'
-                                ? styles.changeCell
-                                : ''
-                        } ${step !== 2 ? styles.changeCell : ''}`}
-                    >
-                        {step === 2 && resendCode.data?.message !== 'رمز ثابت را وارد کنید.' && (
-                            <span style={{ fontSize: '1.5rem' }}>
-                                لطفا کد ارسال شده به شماره{' '}
-                                <span
-                                    style={{ textDecoration: 'underline', cursor: 'pointer' }}
-                                    onClick={() => {
-                                        setStep(1);
-                                        setIsNeedRegister(false);
-                                    }}
-                                    aria-hidden
-                                >
-                                    {userInformation.cell}
-                                </span>{' '}
-                                را وارد نمایید
-                            </span>
-                        )}
-                        {step === 2 && resendCode.data?.message === 'رمز ثابت را وارد کنید.' && (
-                            <>
-                                <span style={{ fontSize: '1.5rem' }}>
-                                    برای شما رمز ثابت درنظر گرفته شده است لطفا رمز خود را وارد کنید
-                                </span>
-                                <button
-                                    className={styles['change-number']}
-                                    onClick={() => {
-                                        setStep(1);
-                                        setIsNeedRegister(false);
-                                    }}
-                                >
-                                    تغییر شماره موبایل
-                                </button>
-                            </>
-                        )}
-
-                        {step !== 2 && (
-                            <button
-                                className={styles['change-number']}
-                                onClick={() => {
-                                    setStep(1);
-                                    setIsNeedRegister(false);
-                                }}
-                            >
-                                تغییر شماره موبایل
-                            </button>
-                        )}
+                            ورود با بیمه سلامت
+                        </Button>
                     </div>
                 )}
-
-                {step === 1 && (
-                    <TextField
-                        type="tel"
-                        onFocus={() => setFocus(true)}
-                        label="شماره موبایل"
-                        defaultValue={userInformation.cell}
-                        onBlur={() => {
-                            checkPhone();
-                            setFocus(false);
-                        }}
-                        ref={cellPhoneInput}
-                        error={isPhoneError}
-                        disabled={isNeedRegister}
-                        onKeyDown={e => e.keyCode === 13 && nextStep()}
-                        onChange={e =>
-                            setUserInformation(prev => ({ ...prev, cell: e.target.value }))
-                        }
-                        errorText="شماره موبایل اشتباه است."
-                    />
-                )}
-                {isNeedRegister && step === 1 && (
-                    <TextField
-                        type="tel"
-                        label="کدملی"
-                        ref={nationalCodeInput}
-                        onFocus={() => setFocus(true)}
-                        onBlur={() => setFocus(false)}
-                        onKeyDown={e => e.keyCode === 13 && secondStep()}
-                        onChange={e => {
-                            setIsNationalCodeError(false);
-                            setUserInformation(prev => ({ ...prev, nationalCode: e.target.value }));
-                        }}
-                        error={isNationalCodeError}
-                        style={{ direction: 'ltr' }}
-                    />
-                )}
-                {isNeedRegister && location.pathname === '/p24auth' && step === 1 && (
-                    <TextField
-                        type="tel"
-                        label="کدنظام پزشکی"
-                        onKeyDown={e => e.keyCode === 13 && secondStep()}
-                        onChange={e => {
-                            setUserInformation(prev => ({ ...prev, medical_code: e.target.value }));
-                        }}
-                        style={{ direction: 'ltr' }}
-                    />
-                )}
-                {step === 2 && (
-                    <div
-                        className={
-                            resendCode.data?.message !== 'رمز ثابت را وارد کنید.' &&
-                            styles['code-wrapper']
-                        }
-                    >
-                        <TextField
-                            type="tel"
-                            autoComplete="one-time-code"
-                            inputMode="numeric"
-                            label={
-                                resendCode.data?.message === 'رمز ثابت را وارد کنید.'
-                                    ? 'رمز عبور'
-                                    : 'کد'
-                            }
-                            ref={otpCodeInput}
-                            onFocus={() => setFocus(true)}
-                            onBlur={() => setFocus(false)}
-                            onKeyDown={e => e.keyCode === 13 && lastStep()}
-                            onChange={e =>
-                                setUserInformation(prev => ({ ...prev, otpCode: e.target.value }))
-                            }
-                            style={{ direction: 'ltr' }}
-                        />
-
-                        {resendCode.data?.message !== 'رمز ثابت را وارد کنید.' && (
-                            <div
-                                className={classNames({
-                                    [styles['timer']]: true,
-                                    [styles['resendCode']]: timer <= 0
-                                })}
-                                onClick={() => {
-                                    if (timer <= 0) {
-                                        resendCode.refetch();
-                                        setTimer(59);
-                                    }
-                                }}
-                                aria-hidden
-                            >
-                                {timer <= 0 ? <span>ارسال مجدد</span> : `00:${timer}`}
-                            </div>
-                        )}
+                {step === 'SALAMATAUTH' && (
+                    <div>
+                        <div className={styles.lineRoot}>
+                            <div className={styles.line}></div>
+                            <span className="p-5">یا</span>
+                            <div className={styles.line}></div>
+                        </div>
+                        <Button
+                            className={styles.changeToOtp}
+                            onClick={() => setStep('USERNAME')}
+                            block
+                            variant="secondary"
+                        >
+                            ورود با پذیرش 24
+                        </Button>
                     </div>
-                )} */}
-            </div>
-            <div className={styles['footer']}>
-                {/* {!isNeedRegister && step === 1 && (
-                    <Button
-                        variant="primary"
-                        onClick={nextStep}
-                        loading={resendCode.isLoading}
-                        block
-                    >
-                        ورود/ثبت‌نام
-                    </Button>
                 )}
-                {isNeedRegister && step === 1 && (
-                    <Button
-                        variant="primary"
-                        onClick={secondStep}
-                        loading={createCenter.isLoading}
-                        block
-                    >
-                        ثبت‌نام
-                    </Button>
-                )}
-                {step === 2 && (
-                    <Button variant="primary" onClick={lastStep} loading={login.isLoading} block>
-                        ورود
-                    </Button>
-                )} */}
             </div>
             {!focus && isMobile && (
                 <a className={styles['support-wrapper']} href="tel:02125015555">
