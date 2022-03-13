@@ -389,34 +389,25 @@ const PrescriptionCard = ({
                                     <span>کد پیگیری</span>
                                     <span>
                                         {turn?.insuranceType === 'tamin' &&
-                                            turn[turn?.insuranceType + '_prescription'].map(
-                                                item => (
-                                                    <span
-                                                        style={{
-                                                            fontSize: '1.4rem',
-                                                            marginRight: '1rem'
-                                                        }}
-                                                        key={item.head_EPRSC_ID}
-                                                    >
-                                                        {item.head_EPRSC_ID ?? '-'}
-                                                    </span>
-                                                )
-                                            )}
+                                            turn.tamin_prescription.map(item => (
+                                                <span
+                                                    style={{
+                                                        fontSize: '1.4rem',
+                                                        marginRight: '1rem'
+                                                    }}
+                                                    key={item.head_EPRSC_ID}
+                                                >
+                                                    {item.head_EPRSC_ID ?? '-'}
+                                                </span>
+                                            ))}
                                         {turn?.insuranceType === 'salamat' && (
                                             <span
                                                 style={{
                                                     fontSize: '1.4rem',
                                                     marginRight: '1rem'
                                                 }}
-                                                key={
-                                                    turn[
-                                                        turn?.prescription?.insuranceType +
-                                                            '_prescription'
-                                                    ]?.trackingCode
-                                                }
                                             >
-                                                {turn[turn?.insuranceType + '_prescription']
-                                                    ?.trackingCode ?? ''}
+                                                {turn.salamat_prescription?.trackingCode ?? ''}
                                             </span>
                                         )}{' '}
                                     </span>
@@ -524,23 +515,13 @@ const PrescriptionCard = ({
                                 <span>کدپیگیری نسخه: </span>
                                 <span>
                                     {turn?.insuranceType === 'tamin' &&
-                                        turn[turn?.insuranceType + '_prescription'].map(item => (
+                                        turn.tamin_prescription.map(item => (
                                             <span key={item.head_EPRSC_ID}>
                                                 {item.head_EPRSC_ID ?? '-'}
                                             </span>
                                         ))}
                                     {turn?.insuranceType === 'salamat' && (
-                                        <span
-                                            key={
-                                                turn[
-                                                    turn?.prescription?.insuranceType +
-                                                        '_prescription'
-                                                ]?.trackingCode
-                                            }
-                                        >
-                                            {turn[turn?.insuranceType + '_prescription']
-                                                ?.trackingCode ?? ''}
-                                        </span>
+                                        <span>{turn.salamat_prescription?.trackingCode ?? ''}</span>
                                     )}
                                 </span>
                             </div>

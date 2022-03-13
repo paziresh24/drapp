@@ -13,7 +13,7 @@ import {
     useDeletePrescription,
     useGetOnePrescription
 } from '@paziresh24/hooks/prescription';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn, addCommaPrice } from '@paziresh24/utils';
 import { toast } from 'react-toastify';
 import { Loading } from '../../../core/loading';
 import Chips from '../../../core/chips';
@@ -390,7 +390,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 variant="secondary"
                                 size="small"
                                 disabled={
-                                    turn.prescription.finalized ||
+                                    turn.prescription?.finalized ||
                                     (!isExpertDoctor && turn.book_status === 'visited')
                                 }
                                 onClick={() => visitSubmit()}
@@ -471,7 +471,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                         [styles['show']]: dropDownShow === dropDownShowKey
                                     })}
                                 >
-                                    {turn.prescription.finalized && (
+                                    {turn.prescription?.finalized && (
                                         <li
                                             onClick={() =>
                                                 turn.prescription
@@ -485,7 +485,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                             <span>pdf نسخه</span>
                                         </li>
                                     )}
-                                    {!turn.prescription.finalized && (
+                                    {!turn.prescription?.finalized && (
                                         <li
                                             onClick={() =>
                                                 turn.prescription
@@ -542,7 +542,11 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                         </div>
                                         <div className="flex space-s-3">
                                             <span>مبلغ ویزیت: </span>
-                                            <span> - </span>
+                                            <span>
+                                                {turn.user_payment
+                                                    ? `${addCommaPrice(turn.user_payment)} تومان`
+                                                    : '-'}
+                                            </span>
                                         </div>
                                     </>
                                 )}
@@ -553,37 +557,28 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                             <span>کد پیگیری</span>
                                             <span>
                                                 {turn.prescription?.insuranceType === 'tamin' &&
-                                                    turn.prescription?.[
-                                                        turn.prescription?.insuranceType +
-                                                            '_prescription'
-                                                    ].map(item => (
-                                                        <span
-                                                            style={{
-                                                                fontSize: '1.4rem',
-                                                                marginRight: '1rem'
-                                                            }}
-                                                            key={item.head_EPRSC_ID}
-                                                        >
-                                                            {item.head_EPRSC_ID ?? '-'}
-                                                        </span>
-                                                    ))}
+                                                    turn.prescription?.tamin_prescription.map(
+                                                        item => (
+                                                            <span
+                                                                style={{
+                                                                    fontSize: '1.4rem',
+                                                                    marginRight: '1rem'
+                                                                }}
+                                                                key={item.head_EPRSC_ID}
+                                                            >
+                                                                {item.head_EPRSC_ID ?? '-'}
+                                                            </span>
+                                                        )
+                                                    )}
                                                 {turn.prescription?.insuranceType === 'salamat' && (
                                                     <span
                                                         style={{
                                                             fontSize: '1.4rem',
                                                             marginRight: '1rem'
                                                         }}
-                                                        key={
-                                                            turn.prescription?.[
-                                                                turn?.prescription?.insuranceType +
-                                                                    '_prescription'
-                                                            ]?.trackingCode
-                                                        }
                                                     >
-                                                        {turn.prescription?.[
-                                                            turn.prescription?.insuranceType +
-                                                                '_prescription'
-                                                        ]?.trackingCode ?? ''}
+                                                        {turn.prescription?.salamat_prescription
+                                                            ?.trackingCode ?? ''}
                                                     </span>
                                                 )}
                                             </span>
@@ -649,7 +644,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                     [styles['show']]: dropDownShow === dropDownShowKey
                                 })}
                             >
-                                {turn.prescription.finalized && (
+                                {turn.prescription?.finalized && (
                                     <li
                                         onClick={() =>
                                             turn.prescription ? getPdf() : setDropDownShow(false)
@@ -661,7 +656,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                         <span>pdf نسخه</span>
                                     </li>
                                 )}
-                                {!turn.prescription.finalized && (
+                                {!turn.prescription?.finalized && (
                                     <li
                                         onClick={() =>
                                             turn.prescription
@@ -708,25 +703,15 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 <span>کدپیگیری نسخه: </span>
                                 <span>
                                     {turn.prescription?.insuranceType === 'tamin' &&
-                                        turn.prescription?.[
-                                            turn.prescription?.insuranceType + '_prescription'
-                                        ].map(item => (
+                                        turn.prescription?.tamin_prescription.map(item => (
                                             <span key={item.head_EPRSC_ID}>
                                                 {item.head_EPRSC_ID ?? '-'}
                                             </span>
                                         ))}
                                     {turn.prescription?.insuranceType === 'salamat' && (
-                                        <span
-                                            key={
-                                                turn.prescription?.[
-                                                    turn?.prescription?.insuranceType +
-                                                        '_prescription'
-                                                ]?.trackingCode
-                                            }
-                                        >
-                                            {turn.prescription?.[
-                                                turn.prescription?.insuranceType + '_prescription'
-                                            ]?.trackingCode ?? ''}
+                                        <span>
+                                            {turn.prescription?.salamat_prescription
+                                                ?.trackingCode ?? ''}
                                         </span>
                                     )}
                                 </span>
@@ -766,7 +751,11 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 </div>
                                 <div className="w-full">
                                     <span>مبلغ ویزیت: </span>
-                                    <span> - </span>
+                                    <span>
+                                        {turn.user_payment
+                                            ? `${addCommaPrice(turn.user_payment)} تومان`
+                                            : '-'}
+                                    </span>
                                 </div>
                             </div>
                         )}
