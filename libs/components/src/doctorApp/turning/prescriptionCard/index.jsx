@@ -285,20 +285,18 @@ const PrescriptionCard = ({
                     </td>
                     <td className={styles.actionCol}>
                         <div className={styles.buttonAction}>
-                            {!turn.finalized && (
-                                <Button
-                                    variant="secondary"
-                                    size="small"
-                                    disabled={turn.finalized}
-                                    onClick={() => {
-                                        setVisitModal(true);
-                                        sendEvent('onlyvisit', 'prescription', 'tajonlyvisitviz');
-                                    }}
-                                    style={{ marginLeft: '1rem' }}
-                                >
-                                    {turn.finalized ? 'ویزیت شده' : 'ویزیت '}
-                                </Button>
-                            )}
+                            <Button
+                                variant="secondary"
+                                size="small"
+                                disabled={turn.finalized}
+                                onClick={() => {
+                                    setVisitModal(true);
+                                    sendEvent('onlyvisit', 'prescription', 'tajonlyvisitviz');
+                                }}
+                                style={{ marginLeft: '1rem' }}
+                            >
+                                {turn.finalized ? 'ویزیت شده' : 'ویزیت '}
+                            </Button>
                             <Button
                                 size="small"
                                 icon={<ChevronIcon color="#27bda0" />}
@@ -376,69 +374,48 @@ const PrescriptionCard = ({
                                 className={styles.details}
                                 style={{
                                     display: 'flex',
-                                    // justifyContent: 'space-between',
                                     gap: '5rem',
                                     width: '100%',
-                                    // background: '#fff',
                                     padding: '1.5rem 2rem',
                                     borderRadius: '0rem'
                                 }}
                             >
-                                <div className={styles['row']}>
-                                    <div className={styles['col']}>
-                                        <span className={styles['title']}>کدملی</span>
-                                        <span className={styles['value']}>
-                                            {turn.patientNationalCode ?? '-'}
-                                        </span>
-                                    </div>
+                                <div className="flex space-s-3">
+                                    <span>کدملی</span>
+                                    <span>{turn.patientNationalCode ?? '-'}</span>
                                 </div>
 
-                                <div className={styles['row']}>
-                                    <div className={styles['col']} data-tip data-for="geoInfo">
-                                        <span className={styles['title']}>کد پیگیری</span>
-                                        <span className={styles['value']}>
-                                            {turn?.insuranceType === 'tamin' &&
-                                                turn[turn?.insuranceType + '_prescription'].map(
-                                                    item => (
-                                                        <span
-                                                            style={{
-                                                                fontSize: '1.4rem',
-                                                                marginRight: '1rem'
-                                                            }}
-                                                            key={item.head_EPRSC_ID}
-                                                        >
-                                                            {item.head_EPRSC_ID ?? '-'}
-                                                        </span>
-                                                    )
-                                                )}
-                                            {turn?.insuranceType === 'salamat' && (
+                                <div className="flex space-s-3">
+                                    <span>کد پیگیری</span>
+                                    <span>
+                                        {turn?.insuranceType === 'tamin' &&
+                                            turn.tamin_prescription.map(item => (
                                                 <span
                                                     style={{
                                                         fontSize: '1.4rem',
                                                         marginRight: '1rem'
                                                     }}
-                                                    key={
-                                                        turn[
-                                                            turn?.prescription?.insuranceType +
-                                                                '_prescription'
-                                                        ]?.trackingCode
-                                                    }
+                                                    key={item.head_EPRSC_ID}
                                                 >
-                                                    {turn[turn?.insuranceType + '_prescription']
-                                                        ?.trackingCode ?? ''}
+                                                    {item.head_EPRSC_ID ?? '-'}
                                                 </span>
-                                            )}{' '}
-                                        </span>
-                                    </div>
+                                            ))}
+                                        {turn?.insuranceType === 'salamat' && (
+                                            <span
+                                                style={{
+                                                    fontSize: '1.4rem',
+                                                    marginRight: '1rem'
+                                                }}
+                                            >
+                                                {turn.salamat_prescription?.trackingCode ?? ''}
+                                            </span>
+                                        )}{' '}
+                                    </span>
                                 </div>
 
-                                <div className={styles['row']}>
-                                    <div className={styles['col']}>
-                                        <span className={styles['title']}>کد توالی</span>
-                                        <span className={styles['value']}>
-                                            {turn.salamat_prescription?.sequenceNumber ?? '-'}
-                                        </span>
-                                    </div>
+                                <div className="flex space-s-3">
+                                    <span>کد توالی</span>
+                                    <span>{turn.salamat_prescription?.sequenceNumber ?? '-'}</span>
                                 </div>
                             </div>
                         </td>
@@ -538,23 +515,13 @@ const PrescriptionCard = ({
                                 <span>کدپیگیری نسخه: </span>
                                 <span>
                                     {turn?.insuranceType === 'tamin' &&
-                                        turn[turn?.insuranceType + '_prescription'].map(item => (
+                                        turn.tamin_prescription.map(item => (
                                             <span key={item.head_EPRSC_ID}>
                                                 {item.head_EPRSC_ID ?? '-'}
                                             </span>
                                         ))}
                                     {turn?.insuranceType === 'salamat' && (
-                                        <span
-                                            key={
-                                                turn[
-                                                    turn?.prescription?.insuranceType +
-                                                        '_prescription'
-                                                ]?.trackingCode
-                                            }
-                                        >
-                                            {turn[turn?.insuranceType + '_prescription']
-                                                ?.trackingCode ?? ''}
-                                        </span>
+                                        <span>{turn.salamat_prescription?.trackingCode ?? ''}</span>
                                     )}
                                 </span>
                             </div>

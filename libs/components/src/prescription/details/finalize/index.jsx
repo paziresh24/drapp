@@ -19,6 +19,7 @@ import { useInsurances } from '@paziresh24/hooks/prescription/insurances';
 import toastType from '@paziresh24/constants/prescription.json';
 import isEmpty from 'lodash/isEmpty';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
 
 const Finalize = () => {
     const { search } = useLocation();
@@ -41,6 +42,7 @@ const Finalize = () => {
     const updatePrescription = useUpdatePrescription();
     const addItemService = useAddItemService();
     const insurances = useInsurances({ identifier: urlParams.identifier });
+    const paziresh = usePaziresh();
 
     // modal
     const [servicesDoctorVisitConfirmModal, setServicesDoctorVisitConfirmModal] = useState(false);
@@ -228,6 +230,11 @@ const Finalize = () => {
                     event: {
                         prescription_info: prescriptionInfo
                     }
+                });
+
+                paziresh.mutate({
+                    book_id: prescriptionInfo.identifier,
+                    status: true
                 });
 
                 getSplunkInstance().sendEvent({
