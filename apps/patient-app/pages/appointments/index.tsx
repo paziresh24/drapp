@@ -3,14 +3,14 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useInView } from 'react-intersection-observer';
 
-import Turn from '../components/organisms/turn';
-import Text from '../components/atoms/text';
-import Skeleton from './../components/atoms/skeleton/skeleton';
+import Turn from '../../components/organisms/turn';
+import Text from '../../components/atoms/text';
+import Skeleton from '../../components/atoms/skeleton/skeleton';
 
-import { useGetBooks } from '../apis/getBooks/hook';
-import { useBookStore } from '../store';
-import { CenterType } from '../types/centerType';
-import Loading from '../components/atoms/loading';
+import { useGetBooks } from '../../apis/getBooks/hook';
+import { useBookStore } from '../../store';
+import { CenterType } from '../../types/centerType';
+import Loading from '../../components/atoms/loading';
 
 interface AppointmentsProps {
     isWebView: boolean;
