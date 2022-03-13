@@ -73,6 +73,7 @@ const SideBar = () => {
                 {
                     id: 'turnning-list-step',
                     name: 'لیست بیماران',
+                    shouldShow: true,
                     icon: <HouseIcon color="#3F3F79" />,
                     link: '/',
                     onClick: () =>
@@ -155,6 +156,7 @@ const SideBar = () => {
                 {
                     id: 11,
                     name: 'نظرات بیماران',
+                    shouldShow: true,
                     icon: <MessageIcon color="#3F3F79" />,
                     link: '/feedbacks',
                     badge: true
@@ -169,6 +171,7 @@ const SideBar = () => {
                 {
                     id: 23,
                     name: 'خروج',
+                    shouldShow: true,
                     icon: <ExitIcon color="#3F3F79" />,
                     link: '/logout'
                 }
@@ -178,12 +181,14 @@ const SideBar = () => {
             {
                 id: 'turnning-list-step',
                 name: 'گزارش نسخه نویسی',
+                shouldShow: true,
                 icon: <Statistics color="#3F3F79" />,
                 link: '/dashboard'
             },
             {
                 id: 23,
                 name: 'خروج',
+                shouldShow: true,
                 icon: <ExitIcon color="#3F3F79" />,
                 link: '/logout'
             }
@@ -384,10 +389,7 @@ const SideBar = () => {
 
                     <div>
                         {menuItems.map(
-                            item =>
-                                (item.shouldShow === undefined || item.shouldShow) && (
-                                    <MenuItem key={item.id} item={item} />
-                                )
+                            item => item.shouldShow && <MenuItem key={item.id} item={item} />
                         )}
                     </div>
                 </div>
