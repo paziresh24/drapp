@@ -38,6 +38,7 @@ import { useInView } from 'react-intersection-observer';
 import LoadingIcon from '@paziresh24/components/icons/public/loading';
 import queryString from 'querystring';
 import { useDrApp } from '@paziresh24/context/drapp';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Home = props => {
     const [info] = useDrApp();
@@ -358,6 +359,10 @@ const Home = props => {
     };
 
     const prescriptionByPrintcodeAction = data => {
+        getSplunkInstance().sendEvent({
+            group: 'prescription',
+            type: 'fetch-prescription'
+        });
         setPrintCode(data.code);
         setNationalCode(data.nationalCode);
 

@@ -5,7 +5,7 @@ import TagStatus from '../../tagStatus';
 import DropDown from '../../../atoms/dropDown';
 import Button from '../../../atoms/button';
 import { useBookStore } from '../../../../store';
-import { useRemoveBook } from '../../../../apis/removeBook/useRemoveBook.hook';
+import { useRemoveBook } from '../../../../apis/removeBook/hook';
 import ShareIcon from '@paziresh24/components/icons/public/share';
 import TrashIcon from '@paziresh24/components/icons/public/trash';
 import ThreeDotsIcon from '@paziresh24/components/icons/public/threeDots';
@@ -19,7 +19,7 @@ interface TurnHeaderProps {
         avatar: string;
         firstName: string;
         lastName: string;
-        expertise: string;
+        expertise?: string;
         slug: string;
     };
     centerId: string;
@@ -34,6 +34,8 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
     const [removeModal, setRemoveModal] = useState(false);
     const { removeBook } = useBookStore();
     const removeBookApi = useRemoveBook();
+
+    const shouldShowTurnMenu = status === BookStatus.not_visited;
 
     const removeBookAction = () => {
         removeBookApi.mutate(
@@ -65,6 +67,7 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
     return (
         <>
             <DoctorInfo
+                className="w-9/12"
                 avatar={doctorInfo.avatar}
                 firstName={doctorInfo.firstName}
                 lastName={doctorInfo.lastName}
@@ -73,7 +76,7 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
 
             <TagStatus status={status} />
 
-            {status === BookStatus.not_visited && (
+            {shouldShowTurnMenu && (
                 <DropDown
                     element={
                         <div className="flex items-center justify-center w-8 h-8 absolute left-2 top-3 cursor-pointer">

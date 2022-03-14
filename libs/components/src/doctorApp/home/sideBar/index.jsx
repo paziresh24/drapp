@@ -32,6 +32,8 @@ import { MenuItem } from '../menuItem';
 import { useSettingTurns } from '@paziresh24/components/doctorApp/turning/statusBar/settingTurns.context';
 import { StatusBar } from '../../turning/statusBar';
 import { useLevel } from '@paziresh24/context/core/level';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
@@ -71,8 +73,14 @@ const SideBar = () => {
                 {
                     id: 'turnning-list-step',
                     name: 'لیست بیماران',
+                    shouldShow: true,
                     icon: <HouseIcon color="#3F3F79" />,
                     link: '/',
+                    onClick: () =>
+                        getSplunkInstance().sendEvent({
+                            group: 'sidebar',
+                            type: 'click-turnning-menu'
+                        }),
                     tourStep: {
                         key: 2,
                         value: '?learn=true'
@@ -80,7 +88,7 @@ const SideBar = () => {
                 },
                 {
                     id: '50',
-                    isShow: window._env_.P24_STATISTICS_API,
+                    shouldShow: window._env_.P24_STATISTICS_API,
                     name: 'گزارش نسخه نویسی',
                     icon: <Statistics color="#3F3F79" />,
                     link: '/dashboard'
@@ -88,12 +96,19 @@ const SideBar = () => {
                 {
                     id: 10,
                     name: 'نسخه های ثبت شده',
+                    shouldShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <PrescriptionMenuIcon color="#3F3F79" />,
+                    onClick: () =>
+                        getSplunkInstance().sendEvent({
+                            group: 'sidebar',
+                            type: 'click-prescription-menu'
+                        }),
                     link: '/prescription'
                 },
                 {
                     id: 25,
                     name: 'پراستفاده ها',
+                    shouldShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <StarIcon color="#3F3F79" />,
                     link: '/favorite/templates',
                     subMenu: [
@@ -104,22 +119,28 @@ const SideBar = () => {
                 {
                     id: 4,
                     name: 'چت',
-                    isShow: info.center.id === '5532',
+                    shouldShow: info.center.id === '5532',
                     icon: <ChatIcon color="#3F3F79" />,
                     link: '/consult'
                 },
                 {
                     id: 7,
                     name: 'قوانین مشاوره',
-                    isShow: info.center.id === '5532',
+                    shouldShow: info.center.id === '5532',
                     icon: <InfoIcon color="#3F3F79" />,
                     link: '/consult-term'
                 },
                 {
                     id: 'provider-step',
                     name: 'بیمه های من',
+                    shouldShow: !isLessThanExpertDegreeDoctor(info.doctor?.expertises),
                     icon: <PrescriptionIcon color="#3F3F79" />,
                     link: `/providers`,
+                    onClick: () =>
+                        getSplunkInstance().sendEvent({
+                            group: 'sidebar',
+                            type: 'click-providers-menu'
+                        }),
                     tourStep: {
                         key: 1,
                         value: '?learn=true'
@@ -128,7 +149,7 @@ const SideBar = () => {
                 {
                     id: 8,
                     name: 'تنظیمات نوبت دهی',
-                    isShow:
+                    shouldShow:
                         info.center.is_active_booking &&
                         (info.center.type_id === 1 || info.center.type_id === 3),
                     icon: <SettingIcon color="#3F3F79" />,
@@ -137,6 +158,7 @@ const SideBar = () => {
                 {
                     id: 11,
                     name: 'نظرات بیماران',
+                    shouldShow: true,
                     icon: <MessageIcon color="#3F3F79" />,
                     link: '/feedbacks',
                     badge: true
@@ -144,13 +166,14 @@ const SideBar = () => {
                 {
                     id: 6,
                     name: 'تسویه حساب',
-                    isShow: info.center.id === '5532' || info.center.type_id === 1,
+                    shouldShow: info.center.id === '5532' || info.center.type_id === 1,
                     icon: <CardIcon color="#3F3F79" />,
                     link: '/financial'
                 },
                 {
                     id: 23,
                     name: 'خروج',
+                    shouldShow: true,
                     icon: <ExitIcon color="#3F3F79" />,
                     link: '/logout'
                 }
@@ -160,12 +183,14 @@ const SideBar = () => {
             {
                 id: 'turnning-list-step',
                 name: 'گزارش نسخه نویسی',
+                shouldShow: true,
                 icon: <Statistics color="#3F3F79" />,
                 link: '/dashboard'
             },
             {
                 id: 23,
                 name: 'خروج',
+                shouldShow: true,
                 icon: <ExitIcon color="#3F3F79" />,
                 link: '/logout'
             }
@@ -251,7 +276,7 @@ const SideBar = () => {
                             position: 'relative',
                             cursor: 'pointer'
                         }}
-                        onMouseOver={() => setIsDropDownOpen(true)}
+                        onMouseOver={() => open && setIsDropDownOpen(true)}
                         onMouseLeave={() => setIsDropDownOpen(false)}
                     >
                         <div
@@ -299,7 +324,9 @@ const SideBar = () => {
                                 right: open ? '7rem' : '0',
                                 bottom: '0',
                                 transitionDelay: !open ? 'unset' : '0.2s',
-                                color: '#3F3F79'
+                                color: '#3F3F79',
+                                width: !open && '0',
+                                overflow: !open && 'hidden'
                             }}
                         >
                             <span
@@ -364,10 +391,7 @@ const SideBar = () => {
 
                     <div>
                         {menuItems.map(
-                            item =>
-                                (item.isShow === undefined || item.isShow) && (
-                                    <MenuItem key={item.id} item={item} />
-                                )
+                            item => item.shouldShow && <MenuItem key={item.id} item={item} />
                         )}
                     </div>
                 </div>

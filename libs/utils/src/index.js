@@ -7,7 +7,16 @@ export const strDateToDate = strDate => {
     return date;
 };
 
-export const convertToTime = time => {
+export const isToday = date => {
+    const today = new Date();
+    return (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+    );
+};
+
+export const convertTimeStampToFormattedTime = time => {
     const date = new Date(time * 1000);
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -15,7 +24,7 @@ export const convertToTime = time => {
     return timeString;
 };
 
-export const convertToPersianDate = time => {
+export const convertTimeStampToPersianDate = time => {
     return new Date(time * 1000).toLocaleDateString('fa');
 };
 
@@ -46,7 +55,7 @@ export const isWebView = () => {
 };
 
 // change persian number to english number
-export const toEnglishNumber = number => {
+export const digitsFaToEn = number => {
     const id = {
         '۰': '0',
         '۱': '1',

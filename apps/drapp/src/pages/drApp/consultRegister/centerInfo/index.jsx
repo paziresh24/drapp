@@ -1,21 +1,14 @@
 import styles from 'assets/styles/pages/drApp/completeInfo.module.scss';
 import TextField from '@paziresh24/components/core/textField';
 import Button from '@paziresh24/components/core/button';
-import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import { useState } from 'react';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
-import provinceData from '@paziresh24/constants/province.json';
-import cityData from '@paziresh24/constants/city.json';
-import Select from '@paziresh24/components/ui/Select/Select';
-import Counter from '@paziresh24/components/core/counter';
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { HelpIcon } from '@paziresh24/components/icons/public/help';
-import range from 'lodash/range';
-
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { Text } from '../../../../../../patient-app/components/atoms/text/text';
 import Number from '../../../../../../../libs/components/src/prescription/details/lists/atom/number';
@@ -54,13 +47,7 @@ const CenterInfo = () => {
     const [countVisitDaily, setCountVisitDaily] = useState();
     const [costVisit, setCostVisit] = useState();
     const [whatsAppCell, setWhatsAppCell] = useState();
-    const [consult, setConsult] = useConsult();
-
-    const {
-        register: updateCenterInfo,
-        handleSubmit: centerInfoSubmit,
-        formState: { errors: centerInfoErrors }
-    } = useForm();
+    const [, setConsult] = useConsult();
 
     const history = useHistory();
 
@@ -106,6 +93,7 @@ const CenterInfo = () => {
 
                             <TextField
                                 placeHolder="50,000 تومان"
+                                unit="تومان"
                                 type="Text"
                                 onChange={e => {
                                     if (e.nativeEvent.inputType === 'insertText') {

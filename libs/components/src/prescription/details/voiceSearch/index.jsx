@@ -72,7 +72,7 @@ const VoiceSearch = ({ onChange, type, typeId, insuranceType, label }) => {
                     />
                 </svg>
             </div>
-            <Modal noHeader noBodyPad isOpen={isOpen} onClose={setIsOpen}>
+            <Modal noHeader noBodyPadding isOpen={isOpen} onClose={setIsOpen}>
                 <div className={styles.speechWrapper}>
                     <div className={styles.recordIcon}>
                         <svg
@@ -107,7 +107,7 @@ const VoiceSearch = ({ onChange, type, typeId, insuranceType, label }) => {
                     <span>مثلا بگویید استامینوفن ...</span>
                 </div>
             </Modal>
-            <Modal noHeader noBodyPad isOpen={isOpenSearch} onClose={setIsOpenSearch}>
+            <Modal noHeader noBodyPadding isOpen={isOpenSearch} onClose={setIsOpenSearch}>
                 <div>
                     <div
                         style={{

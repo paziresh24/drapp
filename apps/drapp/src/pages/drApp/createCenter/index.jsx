@@ -5,7 +5,7 @@ import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 
 const CreateCenter = () => {
     const getinfo = useGetInfo();
@@ -21,7 +21,7 @@ const CreateCenter = () => {
             {
                 ignore_shahkar: true,
                 mobile: `0${getinfo.data.data.cell}`,
-                nationalCode: toEnglishNumber(nationalCode)
+                nationalCode: digitsFaToEn(nationalCode)
             },
             {
                 onSuccess: () => {

@@ -7,8 +7,10 @@ import Turn from '../components/organisms/turn';
 import Text from '../components/atoms/text';
 import Skeleton from './../components/atoms/skeleton/skeleton';
 
-import { useGetBooks } from '../apis/getBooks/useGetBook.hook';
+import { useGetBooks } from '../apis/getBooks/hook';
 import { useBookStore } from '../store';
+import { CenterType } from '../types/centerType';
+import Loading from '../components/atoms/loading';
 
 interface AppointmentsProps {
     isWebView: boolean;
@@ -75,14 +77,15 @@ export const Appointments: React.FC<AppointmentsProps> = ({ isWebView }) => {
                                     id={turn.id}
                                     centerType={
                                         turn.center_info.center_type === '1'
-                                            ? 'clinic'
+                                            ? CenterType.clinic
                                             : turn.center_info.center_id === '5532'
-                                            ? 'consult'
-                                            : 'hospital'
+                                            ? CenterType.consult
+                                            : CenterType.hospital
                                     }
                                     centerInfo={{
                                         centerId: turn.center_info.center_id,
-                                        centerType: turn.center_info.center_type
+                                        centerType: turn.center_info.center_type,
+                                        hasPaging: turn.center_info.has_paging
                                     }}
                                     doctorInfo={{
                                         avatar:
@@ -113,62 +116,7 @@ export const Appointments: React.FC<AppointmentsProps> = ({ isWebView }) => {
                         ))}
                     {!isLoading && getBooks.data?.status !== 204 && (
                         <div ref={ref} className="w-full flex justify-center py-8">
-                            <svg
-                                version="1.1"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="60px"
-                                height="10px"
-                                viewBox="0 0 80 20"
-                            >
-                                <circle cx="10" cy="10" r="10" fill="#2b2f33">
-                                    <animate
-                                        attributeName="cx"
-                                        from="10"
-                                        to="40"
-                                        dur="0.5s"
-                                        calcMode="spline"
-                                        keySplines="0.42 0 0.58 1"
-                                        keyTimes="0;1"
-                                        repeatCount="indefinite"
-                                    />
-                                </circle>
-                                <circle cx="10" cy="10" r="0" fill="#2b2f33">
-                                    <animate
-                                        attributeName="r"
-                                        from="0"
-                                        to="10"
-                                        dur="0.5s"
-                                        calcMode="spline"
-                                        keySplines="0.42 0 0.58 1"
-                                        keyTimes="0;1"
-                                        repeatCount="indefinite"
-                                    />
-                                </circle>
-                                <circle cx="40" cy="10" r="10" fill="#2b2f33">
-                                    <animate
-                                        attributeName="cx"
-                                        from="40"
-                                        to="70"
-                                        dur="0.5s"
-                                        calcMode="spline"
-                                        keySplines="0.42 0 0.58 1"
-                                        keyTimes="0;1"
-                                        repeatCount="indefinite"
-                                    />
-                                </circle>
-                                <circle cx="70" cy="10" r="10" fill="#2b2f33">
-                                    <animate
-                                        attributeName="r"
-                                        from="10"
-                                        to="0"
-                                        dur="0.5s"
-                                        calcMode="spline"
-                                        keySplines="0.42 0 0.58 1"
-                                        keyTimes="0;1"
-                                        repeatCount="indefinite"
-                                    />
-                                </circle>
-                            </svg>
+                            <Loading />
                         </div>
                     )}
                 </div>

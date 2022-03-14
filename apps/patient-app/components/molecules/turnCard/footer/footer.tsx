@@ -4,17 +4,25 @@ import { useState } from 'react';
 import ChatIcon from '@paziresh24/components/icons/public/chat';
 import Queue from '../../queue';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';
+import { CenterType } from 'apps/patient-app/types/centerType';
+import { MegaphoneIcon } from '@paziresh24/components/icons';
+import { isToday } from '@paziresh24/utils';
 
 interface TurnFooterProps {
+    id: string;
     slug: string;
     status: BookStatus;
     pdfLink: string;
-    centerType: 'clinic' | 'hospital' | 'consult';
+    centerType: CenterType;
+    hasPaging: boolean;
+    bookTime: number;
 }
 
 export const TurnFooter: React.FC<TurnFooterProps> = props => {
-    const { slug, status, pdfLink, centerType } = props;
+    const { id, slug, status, pdfLink, centerType, hasPaging, bookTime } = props;
     const [queueModal, setQueueModal] = useState(false);
+
+    const isBookForToday = isToday(new Date(bookTime));
 
     const showPrescription = () => {
         window.open(`${process.env.NEXT_PUBLIC_PRESCRIPTION_API}/pdfs/${pdfLink}`);
@@ -24,17 +32,16 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
         window.open(`${process.env.NEXT_PUBLIC_CLINIC_BASE_URL}/dr/${slug}`);
     };
 
-    const ClinicPrimaryButton = (
-        <></>
-        // <Button
-        //     variant="secondary"
-        //     size="sm"
-        //     block={true}
-        //     onClick={() => setQueueModal(true)}
-        //     icon={<MegaphoneIcon color="#0077DB" />}
-        // >
-        //     دریافت شماره نوبت
-        // </Button>
+    const ClinicPrimaryButton = hasPaging && (
+        <Button
+            variant="secondary"
+            size="sm"
+            block={true}
+            onClick={() => setQueueModal(true)}
+            icon={<MegaphoneIcon color="#0077DB" />}
+        >
+            دریافت شماره نوبت
+        </Button>
     );
 
     const CunsultPrimaryButton = (
@@ -55,10 +62,11 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
     return (
         <>
             {status === BookStatus.not_visited &&
-                (centerType === 'consult' ? CunsultPrimaryButton : ClinicPrimaryButton)}
+                (centerType === CenterType.consult ? CunsultPrimaryButton : ClinicPrimaryButton)}
 
             {(status === BookStatus.expired || status === BookStatus.visited) && (
                 <div className="flex gap-2">
+                    {isBookForToday && ClinicPrimaryButton}
                     <Button variant="secondary" size="sm" block={true} onClick={reBook}>
                         دریافت نوبت مجدد
                     </Button>
@@ -79,10 +87,10 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
                 title="شماره نوبت شما"
                 onClose={setQueueModal}
                 isOpen={queueModal}
-                noBodyPad
+                noBodyPadding
                 noHeader
             >
-                <Queue />
+                <Queue bookId={id} />
             </Modal>
         </>
     );

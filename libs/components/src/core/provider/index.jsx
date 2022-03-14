@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import TagManager from 'react-gtm-module';
+import { splunk as splunkEvent } from '@paziresh24/splunk-event';
+import { v4 as uuidV4 } from 'uuid';
 
 toast.configure({
     position: 'top-right',
@@ -65,15 +67,6 @@ if (!isProduction) {
     });
 }
 
-window.addEventListener('goftino_ready', function () {
-    window.__goftino_ready = true;
-    Goftino.setWidget({
-        cssUrl: '/style/gstyle.css',
-        hasIcon: false,
-        hasSound: true
-    });
-});
-
 if (localStorage.getItem('APP_VERSION')) {
     console.log('---------------- DrApp PWA ----------------');
     console.log(`v${localStorage.getItem('APP_VERSION')}`);
@@ -82,6 +75,24 @@ if (localStorage.getItem('APP_VERSION')) {
         version: localStorage.getItem('APP_VERSION')
     };
 }
+
+if (!localStorage.getItem('client_identifier')) {
+    localStorage.setItem('client_identifier', uuidV4());
+}
+
+export const getSplunkInstance = () =>
+    splunkEvent.create({
+        baseUrl: window._env_.P24_SPLUNK_BASE_URL,
+        token: window._env_.P24_SPLUNK_TOKEN,
+        constant: {
+            client_information: {
+                identifier: localStorage.getItem('client_identifier'),
+                user_agent: window.navigator.userAgent
+            },
+            user_information: window.user_information,
+            current_url: window.location.href
+        }
+    });
 
 const Provider = ({ children }) => {
     return (
