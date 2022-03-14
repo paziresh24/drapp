@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import Avatar from './avatar';
 
 describe('Avatar', () => {
-    it('should be show image with default 70*70 pixels', () => {
+    it('should show image with default 70*70 pixels', () => {
         const { getByAltText } = render(<Avatar src="https://i.pravatar.cc/150?img=50" />);
         const image = getByAltText('avatar') as HTMLImageElement;
 
@@ -11,7 +11,7 @@ describe('Avatar', () => {
         expect(image.src).toContain('https://i.pravatar.cc/150?img=50');
     });
 
-    it('should be show image with 100*100 pixels', () => {
+    it('should image with 100*100 pixels', () => {
         const { getByAltText } = render(
             <Avatar src="https://i.pravatar.cc/150?img=50" width={100} height={100} />
         );
