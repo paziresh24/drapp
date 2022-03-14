@@ -82,6 +82,7 @@ const Profile = () => {
     const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
+    const [serviceDesk, setServiceDesk] = useState();
     const biographyRef = useRef();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -140,6 +141,7 @@ const Profile = () => {
                 national_code: data.national_code,
                 medical_code: data.medical_code,
                 biography: biographyRef.current,
+                service_desk: serviceDesk ? serviceDesk : '',
                 secretary_phone: data.secretary_phone,
                 center_id: info.center.id
             },
@@ -479,6 +481,52 @@ const Profile = () => {
                             }}
                         />
                     </div>
+                    {info.center.id === 5532 && (
+                        <div className={styles['col']}>
+                            <span style={{ marginBottom: '1rem' }}>توضیحات خدمات مشاوره</span>
+                            <CKEditor
+                                editor={ClassicEditor}
+                                config={{
+                                    toolbar: [
+                                        'heading',
+                                        '|',
+                                        'bold',
+                                        'italic',
+                                        'bulletedList',
+                                        'numberedList'
+                                    ],
+                                    heading: {
+                                        options: [
+                                            {
+                                                model: 'paragraph',
+                                                title: 'Paragraph',
+                                                class: 'ck-heading_paragraph'
+                                            },
+                                            {
+                                                model: 'heading1',
+                                                view: 'h1',
+                                                title: 'Heading 1',
+                                                class: 'ck-heading_heading1'
+                                            },
+                                            {
+                                                model: 'heading2',
+                                                view: 'h2',
+                                                title: 'Heading 2',
+                                                class: 'ck-heading_heading2'
+                                            }
+                                        ]
+                                    },
+                                    contentsLangDirection: 'rtl',
+                                    language: 'fa'
+                                }}
+                                data={info.doctor.desk ? info.doctor.desk : ''}
+                                onBlur={(event, editor) => {
+                                    const data = editor.getData();
+                                    setServiceDesk(data);
+                                }}
+                            />
+                        </div>
+                    )}
                     <Button variant="primary" type="submit" loading={doctorInfoUpdate.isLoading}>
                         ذخیره تغییرات
                     </Button>

@@ -7,11 +7,16 @@ import { useDrApp } from '@paziresh24/context/drapp/index';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
+import Select from '@paziresh24/components/doctorApp/Select';
+import { useConsult } from '@paziresh24/context/drapp/consult';
+import { CheckBox } from '@paziresh24/components/core/checkBox';
+import { useState } from 'react';
 
 const CompleteInfo = () => {
     const [info] = useDrApp();
     const doctorInfoUpdate = useDoctorInfoUpdate();
-
+    const [consult, setConsult] = useConsult();
+    const [gender, setGender] = useState();
     const {
         register: updateCenterInfo,
         handleSubmit: centerInfoSubmit,
@@ -21,6 +26,11 @@ const CompleteInfo = () => {
     const history = useHistory();
 
     const updateCenter = data => {
+        setConsult({
+            ...consult,
+            gender: gender.id
+        });
+
         doctorInfoUpdate.mutate(
             {
                 name: info.doctor.name,
@@ -40,7 +50,10 @@ const CompleteInfo = () => {
             }
         );
     };
-
+    var genders = [
+        { id: '1', name: 'اقا' },
+        { id: '2', name: 'خانم' }
+    ];
     return (
         <div className={styles['wrapper']}>
             <form className={styles['form']} onSubmit={centerInfoSubmit(updateCenter)}>
@@ -68,6 +81,20 @@ const CompleteInfo = () => {
                             error={centerInfoErrors.national_code}
                             defaultValue={info.doctor.national_code}
                             {...updateCenterInfo('national_code', { required: false })}
+                        />
+
+                        <Select
+                            label="جنسیت"
+                            onChange={value => {
+                                if (value) {
+                                    setGender(value);
+                                }
+                            }}
+                            defaultValue={+info.center.city}
+                            items={genders.map(item => ({
+                                name: item.name,
+                                value: item.id
+                            }))}
                         />
                         <TextField
                             label="شماره نظام پزشکی"

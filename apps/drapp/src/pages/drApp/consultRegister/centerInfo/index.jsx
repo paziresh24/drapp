@@ -47,7 +47,7 @@ const CenterInfo = () => {
     const [countVisitDaily, setCountVisitDaily] = useState();
     const [costVisit, setCostVisit] = useState();
     const [whatsAppCell, setWhatsAppCell] = useState();
-    const [, setConsult] = useConsult();
+    const [consult, setConsult] = useConsult();
 
     const history = useHistory();
 
@@ -60,10 +60,12 @@ const CenterInfo = () => {
         }
 
         setConsult({
+            ...consult,
             whatsapp: whatsAppCell,
             price: costVisit,
             turn_num: countVisitDaily
         });
+
         history.push('/consult/fill-info/expertises');
     };
 

@@ -103,9 +103,11 @@ const WorkDays = () => {
         if (isEmpty(workDaysTime)) {
             return toast.warning('ساعت کاری نمی تواند خالی باشد.');
         }
+
         activeConsult.mutate(
             {
                 ...consult,
+                desk: '',
                 workHours: workDaysTime
             },
             {
@@ -162,8 +164,7 @@ const WorkDays = () => {
                             />
                         </svg>
                         <span className={styles['hero-title']}>
-                            نوبت دهی ویزیت آنلاین شما تا یک ساعت دیگر فعال می شود منتظر پیامک ما
-                            باشید.
+                            نوبت دهی ویزیت آنلاین شما تا 2 ساعت دیگر فعال می شود.
                         </span>
                         <span>پروفایل عمومی شما</span>
                         <a
