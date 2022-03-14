@@ -1,4 +1,4 @@
-import { render, RenderResult } from '@testing-library/react';
+import { cleanup, render, RenderResult } from '@testing-library/react';
 
 import DoctorInfo from './doctorInfo';
 
@@ -16,21 +16,22 @@ describe('Doctor Info', () => {
         );
     });
     it('should show formatted firstName and lastName', () => {
-        const { getByText } = documentBody;
-        expect(getByText('امیرحسین بیگی')).toBeTruthy();
+        const { getByTestId } = documentBody;
+        expect(getByTestId('doctor-info__full-name').innerHTML).toEqual('امیرحسین بیگی');
     });
     it('should show expertise', () => {
-        const { getByText } = documentBody;
-        expect(getByText('پزشک عمومی')).toBeTruthy();
+        const { getByTestId } = documentBody;
+        expect(getByTestId('doctor-info__expertise')).toBeTruthy();
     });
     it('should remove expertise container when not expertise', () => {
-        const { container } = render(
+        cleanup();
+        const { queryByTestId } = render(
             <DoctorInfo
                 firstName="امیرحسین"
                 lastName="بیگی"
                 avatar="https://www.paziresh24.com/api/getImage/p24/search-men/d418ce9cfb1df336bad5b3c48bc03f1e.jpg"
             />
         );
-        expect(container.querySelectorAll('span')[1]).toBeUndefined();
+        expect(queryByTestId('doctor-info__expertise')).toBeNull();
     });
 });

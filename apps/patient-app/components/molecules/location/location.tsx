@@ -20,6 +20,7 @@ export const Location: React.FC<LocationProps> = props => {
             target="_blank"
             rel="noreferrer"
             className="flex items-center w-full p-3 px-0"
+            data-testid="location__link"
         >
             <div className="flex items-center justify-center w-12 min-w-[3rem] h-12 bg-gray rounded-md ml-2">
                 <svg
@@ -38,7 +39,7 @@ export const Location: React.FC<LocationProps> = props => {
                     />
                 </svg>
             </div>
-            <Text fontSize="sm" className="line-clamp-2">
+            <Text fontSize="sm" className="line-clamp-2" data-testid="location__address">
                 {address}
             </Text>
         </a>

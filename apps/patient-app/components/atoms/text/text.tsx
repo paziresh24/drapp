@@ -57,10 +57,11 @@ const textStyles = {
 };
 
 export const Text: React.FC<TextProps> = props => {
-    const { fontSize, fontWeight, className, children } = props;
+    const { fontSize, fontWeight, className, children, ...rest } = props;
     return (
         <span
             className={`${textStyles.size[fontSize]} ${textStyles.weight[fontWeight]} ${className}`}
+            {...rest}
         >
             {children}
         </span>
