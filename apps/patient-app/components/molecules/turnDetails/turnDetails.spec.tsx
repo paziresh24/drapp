@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import TurnDetails from './turnDetails';
 
 describe('Tunr Details', () => {
-    it('should render details just tracking code', () => {
+    it('should return just tracking code', () => {
         const { container } = render(
             <TurnDetails items={[{ id: 0, name: 'کدپیگیری', value: '123' }]} />
         );
@@ -11,7 +11,7 @@ describe('Tunr Details', () => {
         expect(container.querySelectorAll('span')[0].innerHTML).toBe('کدپیگیری:');
         expect(container.querySelectorAll('span')[1].innerHTML).toBe('123');
     });
-    it('should render details tow details', () => {
+    it('should return two details', () => {
         const { container } = render(
             <TurnDetails
                 items={[
