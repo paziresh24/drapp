@@ -1,10 +1,12 @@
-import { render } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 
 import DoctorInfo from './doctorInfo';
 
+let documentBody: RenderResult;
+
 describe('Doctor Info', () => {
-    it('should show formatted firstName and lastName', () => {
-        const { getByText } = render(
+    beforeEach(() => {
+        documentBody = render(
             <DoctorInfo
                 firstName="امیرحسین"
                 lastName="بیگی"
@@ -12,17 +14,13 @@ describe('Doctor Info', () => {
                 avatar="https://www.paziresh24.com/api/getImage/p24/search-men/d418ce9cfb1df336bad5b3c48bc03f1e.jpg"
             />
         );
+    });
+    it('should show formatted firstName and lastName', () => {
+        const { getByText } = documentBody;
         expect(getByText('امیرحسین بیگی')).toBeTruthy();
     });
     it('should show expertise', () => {
-        const { getByText } = render(
-            <DoctorInfo
-                firstName="امیرحسین"
-                lastName="بیگی"
-                expertise="پزشک عمومی"
-                avatar="https://www.paziresh24.com/api/getImage/p24/search-men/d418ce9cfb1df336bad5b3c48bc03f1e.jpg"
-            />
-        );
+        const { getByText } = documentBody;
         expect(getByText('پزشک عمومی')).toBeTruthy();
     });
     it('should remove expertise container when not expertise', () => {
