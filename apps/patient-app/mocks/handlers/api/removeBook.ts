@@ -1,13 +1,13 @@
 import { rest } from 'msw';
 
-interface removeBookRequestBody {
+interface RemoveBookRequestBody {
     center_id: string;
     reference_code: string;
     national_code: string;
 }
 
 export const removeBookHandlers = [
-    rest.post<removeBookRequestBody>(
+    rest.post<RemoveBookRequestBody>(
         'https://www.paziresh24.com/api/deleteBook',
         (req, res, ctx) => {
             const { P24SESSION: p24session, certificate } = req.cookies;

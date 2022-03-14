@@ -1,11 +1,11 @@
 import { rest } from 'msw';
 
-interface addBookToQueueRequestBody {
+interface AddBookToQueueRequestBody {
     book_id: string;
 }
 
 export const addBookToQueueHandlers = [
-    rest.post<addBookToQueueRequestBody>(
+    rest.post<AddBookToQueueRequestBody>(
         'https://www.paziresh24.com/api/addBookToQueue',
         (req, res, ctx) => {
             return res(
