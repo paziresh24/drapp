@@ -13,7 +13,7 @@ import {
     useDeletePrescription,
     useGetOnePrescription
 } from '@paziresh24/hooks/prescription';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn, addCommaPrice } from '@paziresh24/utils';
 import { toast } from 'react-toastify';
 import { Loading } from '../../../core/loading';
 import Chips from '../../../core/chips';
@@ -25,6 +25,7 @@ import Visit from '../visit';
 import { Mobile, Default } from '@paziresh24/hooks/core/device';
 import { sendEvent } from '@paziresh24/utils';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
 const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownShow }) => {
     const [info] = useDrApp();
@@ -41,6 +42,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
     const [actionType, setActionType] = useState();
     const getOnePrescription = useGetOnePrescription({ id: turn.prescription?.id });
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+    const isExpertDoctor = !isLessThanExpertDegreeDoctor(info.doctor?.expertises);
 
     const {
         register: otpRegister,
@@ -215,6 +217,8 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
             setVisitModal(true);
         } else {
             try {
+                if (!isExpertDoctor) return setVisitModal(true);
+
                 const prescriptionData = await createPrescription({
                     national_code: turn.national_code ?? data.national_code,
                     cell: turn.cell,
@@ -245,6 +249,14 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
         }
     };
 
+    const visitProvider = () => {
+        const instructionProvider =
+            turn.prescription?.insuranceType ?? addPrescription?.data?.result?.insuranceType;
+
+        if (!isExpertDoctor) return 'paziresh24';
+        return instructionProvider;
+    };
+
     return (
         <>
             <Loading show={addPrescription.isLoading} simple />
@@ -262,24 +274,22 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 paddingRight: '0.8rem'
                             }}
                         >
-                            {turn.prescription?.finalized && (
-                                <div
-                                    onClick={() => setIsDetailsOpen(prev => !prev)}
-                                    aria-hidden
-                                    style={{ cursor: 'pointer' }}
-                                >
-                                    <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
-                                </div>
-                            )}
+                            <div
+                                onClick={() => setIsDetailsOpen(prev => !prev)}
+                                aria-hidden
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                            </div>
                             {turn.prescription?.insuranceType === 'salamat' &&
                                 turn.prescription?.salamat_prescription?.isReference && (
                                     <Chips theme="gray">ارجاع</Chips>
                                 )}
                             <span
                                 className={styles.name}
-                                onClick={prescription}
+                                onClick={isExpertDoctor && prescription}
                                 aria-hidden
-                                style={{ cursor: 'pointer' }}
+                                style={{ cursor: isExpertDoctor && 'pointer' }}
                             >
                                 {turn.display_name !== '' ? turn.display_name : '-'}
                             </span>
@@ -376,27 +386,33 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                     </td>
                     <td className={styles.actionCol}>
                         <div className={styles.buttonAction}>
-                            {!turn.prescription?.finalized && (
+                            <Button
+                                variant="secondary"
+                                size="small"
+                                disabled={
+                                    turn.prescription?.finalized ||
+                                    (!isExpertDoctor && turn.book_status === 'visited')
+                                }
+                                onClick={() => visitSubmit()}
+                                style={{ marginLeft: '1rem' }}
+                                loading={addPrescription.isLoading}
+                            >
+                                {turn.prescription?.finalized ||
+                                (!isExpertDoctor && turn.book_status === 'visited')
+                                    ? 'ویزیت شده'
+                                    : 'ویزیت '}
+                            </Button>
+                            {isExpertDoctor && (
                                 <Button
-                                    variant="secondary"
+                                    className={styles.buttonAction}
                                     size="small"
-                                    disabled={turn.finalized}
-                                    onClick={() => visitSubmit()}
-                                    style={{ marginLeft: '1rem' }}
-                                    loading={addPrescription.isLoading}
+                                    icon={<ChevronIcon color="#27bda0" />}
+                                    variant="secondary"
+                                    onClick={prescription}
                                 >
-                                    {turn.finalized ? 'ویزیت شده' : 'ویزیت '}
+                                    {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
                                 </Button>
                             )}
-                            <Button
-                                className={styles.buttonAction}
-                                size="small"
-                                icon={<ChevronIcon color="#27bda0" />}
-                                variant="secondary"
-                                onClick={prescription}
-                            >
-                                {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
-                            </Button>
                             <div className={styles.action}>
                                 {pdfLink && (
                                     <a
@@ -411,26 +427,43 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                         {' '}
                                     </a>
                                 )}
-                                <div
-                                    className={styles.turn_action}
-                                    onClick={e => {
-                                        !dropDownShow && e.stopPropagation();
-                                        !dropDownShow && setDropDownShow(dropDownShowKey);
-                                    }}
-                                    aria-hidden
-                                >
-                                    <svg
-                                        width="5"
-                                        height="15"
-                                        viewBox="0 0 3 13"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
+                                {isExpertDoctor && (
+                                    <div
+                                        className={styles.turn_action}
+                                        onClick={e => {
+                                            !dropDownShow && e.stopPropagation();
+                                            !dropDownShow && setDropDownShow(dropDownShowKey);
+                                        }}
+                                        aria-hidden
                                     >
-                                        <circle cx="1.35281" cy="1.75977" r="1" fill="#3F3F79" />
-                                        <circle cx="1.35281" cy="6.75977" r="1" fill="#3F3F79" />
-                                        <circle cx="1.35281" cy="11.7598" r="1" fill="#3F3F79" />
-                                    </svg>
-                                </div>
+                                        <svg
+                                            width="5"
+                                            height="15"
+                                            viewBox="0 0 3 13"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <circle
+                                                cx="1.35281"
+                                                cy="1.75977"
+                                                r="1"
+                                                fill="#3F3F79"
+                                            />
+                                            <circle
+                                                cx="1.35281"
+                                                cy="6.75977"
+                                                r="1"
+                                                fill="#3F3F79"
+                                            />
+                                            <circle
+                                                cx="1.35281"
+                                                cy="11.7598"
+                                                r="1"
+                                                fill="#3F3F79"
+                                            />
+                                        </svg>
+                                    </div>
+                                )}
 
                                 <ul
                                     className={classNames({
@@ -438,7 +471,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                         [styles['show']]: dropDownShow === dropDownShowKey
                                     })}
                                 >
-                                    {turn.prescription.finalized && (
+                                    {turn.prescription?.finalized && (
                                         <li
                                             onClick={() =>
                                                 turn.prescription
@@ -452,7 +485,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                             <span>pdf نسخه</span>
                                         </li>
                                     )}
-                                    {!turn.prescription.finalized && (
+                                    {!turn.prescription?.finalized && (
                                         <li
                                             onClick={() =>
                                                 turn.prescription
@@ -478,74 +511,88 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 className={styles.details}
                                 style={{
                                     display: 'flex',
-                                    // justifyContent: 'space-between',
                                     gap: '5rem',
                                     width: '100%',
-                                    // background: '#fff',
                                     padding: '1.5rem 2rem',
                                     borderRadius: '0rem'
                                 }}
                             >
-                                <div className={styles['row']}>
-                                    <div className={styles['col']}>
-                                        <span className={styles['title']}>کدملی</span>
-                                        <span className={styles['value']}>
-                                            {turn.prescription?.patientNationalCode ?? '-'}
-                                        </span>
-                                    </div>
+                                <div className="flex space-s-3">
+                                    <span>کدملی</span>
+                                    <span>
+                                        {turn.prescription?.patientNationalCode ??
+                                            turn.national_code ??
+                                            '-'}
+                                    </span>
                                 </div>
 
-                                <div className={styles['row']}>
-                                    <div className={styles['col']} data-tip data-for="geoInfo">
-                                        <span className={styles['title']}>کد پیگیری</span>
-                                        <span className={styles['value']}>
-                                            {turn.prescription?.insuranceType === 'tamin' &&
-                                                turn.prescription?.[
-                                                    turn.prescription?.insuranceType +
-                                                        '_prescription'
-                                                ].map(item => (
+                                {info.center.id === '5532' && (
+                                    <>
+                                        <div className="flex space-s-3">
+                                            <span>وضعیت پرداخت: </span>
+                                            <span>
+                                                {turn.payment_status === 'paid' && (
+                                                    <span>پرداخت شده</span>
+                                                )}
+                                                {turn.payment_status === 'refund' && (
+                                                    <span>استرداد</span>
+                                                )}
+                                                {!turn.payment_status && <span> - </span>}
+                                            </span>
+                                        </div>
+                                        <div className="flex space-s-3">
+                                            <span>مبلغ ویزیت: </span>
+                                            <span>
+                                                {turn.user_payment
+                                                    ? `${addCommaPrice(turn.user_payment)} تومان`
+                                                    : '-'}
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
+
+                                {isExpertDoctor && (
+                                    <>
+                                        <div className="flex space-s-3">
+                                            <span>کد پیگیری</span>
+                                            <span>
+                                                {turn.prescription?.insuranceType === 'tamin' &&
+                                                    turn.prescription?.tamin_prescription.map(
+                                                        item => (
+                                                            <span
+                                                                style={{
+                                                                    fontSize: '1.4rem',
+                                                                    marginRight: '1rem'
+                                                                }}
+                                                                key={item.head_EPRSC_ID}
+                                                            >
+                                                                {item.head_EPRSC_ID ?? '-'}
+                                                            </span>
+                                                        )
+                                                    )}
+                                                {turn.prescription?.insuranceType === 'salamat' && (
                                                     <span
                                                         style={{
                                                             fontSize: '1.4rem',
                                                             marginRight: '1rem'
                                                         }}
-                                                        key={item.head_EPRSC_ID}
                                                     >
-                                                        {item.head_EPRSC_ID ?? '-'}
+                                                        {turn.prescription?.salamat_prescription
+                                                            ?.trackingCode ?? ''}
                                                     </span>
-                                                ))}
-                                            {turn.prescription?.insuranceType === 'salamat' && (
-                                                <span
-                                                    style={{
-                                                        fontSize: '1.4rem',
-                                                        marginRight: '1rem'
-                                                    }}
-                                                    key={
-                                                        turn.prescription?.[
-                                                            turn?.prescription?.insuranceType +
-                                                                '_prescription'
-                                                        ]?.trackingCode
-                                                    }
-                                                >
-                                                    {turn.prescription?.[
-                                                        turn.prescription?.insuranceType +
-                                                            '_prescription'
-                                                    ]?.trackingCode ?? ''}
-                                                </span>
-                                            )}
-                                        </span>
-                                    </div>
-                                </div>
+                                                )}
+                                            </span>
+                                        </div>
 
-                                <div className={styles['row']}>
-                                    <div className={styles['col']}>
-                                        <span className={styles['title']}>کد توالی</span>
-                                        <span className={styles['value']}>
-                                            {turn.prescription?.salamat_prescription
-                                                ?.sequenceNumber ?? '-'}
-                                        </span>
-                                    </div>
-                                </div>
+                                        <div className="flex space-s-3">
+                                            <span>کد توالی</span>
+                                            <span>
+                                                {turn.prescription?.salamat_prescription
+                                                    ?.sequenceNumber ?? '-'}
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </td>
                     </tr>
@@ -597,7 +644,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                     [styles['show']]: dropDownShow === dropDownShowKey
                                 })}
                             >
-                                {turn.prescription.finalized && (
+                                {turn.prescription?.finalized && (
                                     <li
                                         onClick={() =>
                                             turn.prescription ? getPdf() : setDropDownShow(false)
@@ -609,7 +656,7 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                         <span>pdf نسخه</span>
                                     </li>
                                 )}
-                                {!turn.prescription.finalized && (
+                                {!turn.prescription?.finalized && (
                                     <li
                                         onClick={() =>
                                             turn.prescription
@@ -656,25 +703,15 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 <span>کدپیگیری نسخه: </span>
                                 <span>
                                     {turn.prescription?.insuranceType === 'tamin' &&
-                                        turn.prescription?.[
-                                            turn.prescription?.insuranceType + '_prescription'
-                                        ].map(item => (
+                                        turn.prescription?.tamin_prescription.map(item => (
                                             <span key={item.head_EPRSC_ID}>
                                                 {item.head_EPRSC_ID ?? '-'}
                                             </span>
                                         ))}
                                     {turn.prescription?.insuranceType === 'salamat' && (
-                                        <span
-                                            key={
-                                                turn.prescription?.[
-                                                    turn?.prescription?.insuranceType +
-                                                        '_prescription'
-                                                ]?.trackingCode
-                                            }
-                                        >
-                                            {turn.prescription?.[
-                                                turn.prescription?.insuranceType + '_prescription'
-                                            ]?.trackingCode ?? ''}
+                                        <span>
+                                            {turn.prescription?.salamat_prescription
+                                                ?.trackingCode ?? ''}
                                         </span>
                                     )}
                                 </span>
@@ -702,21 +739,49 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 </span>
                             </div>
                         </div>
+                        {info.center.id === '5532' && (
+                            <div className={styles.patientInfoRow}>
+                                <div className="w-full">
+                                    <span>وضعیت پرداخت: </span>
+                                    <span>
+                                        {turn.payment_status === 'paid' && <span>پرداخت شده</span>}
+                                        {turn.payment_status === 'refund' && <span>استرداد</span>}
+                                        {!turn.payment_status && <span> - </span>}
+                                    </span>
+                                </div>
+                                <div className="w-full">
+                                    <span>مبلغ ویزیت: </span>
+                                    <span>
+                                        {turn.user_payment
+                                            ? `${addCommaPrice(turn.user_payment)} تومان`
+                                            : '-'}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className={styles.cardAction}>
                         <Button
                             variant="secondary"
                             size="small"
-                            disabled={turn.prescription?.finalized}
+                            disabled={
+                                turn.prescription?.finalized ||
+                                (!isExpertDoctor && turn.book_status === 'visited')
+                            }
                             block
                             onClick={() => visitSubmit()}
                             loading={addPrescription.isLoading}
                         >
-                            {turn.prescription?.finalized ? 'ویزیت شده' : 'ویزیت '}
+                            {turn.prescription?.finalized ||
+                            (!isExpertDoctor && turn.book_status === 'visited')
+                                ? 'ویزیت شده'
+                                : 'ویزیت '}
                         </Button>
-                        <Button variant="secondary" size="small" block onClick={prescription}>
-                            {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
-                        </Button>
+                        {isExpertDoctor && (
+                            <Button variant="secondary" size="small" block onClick={prescription}>
+                                {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
+                            </Button>
+                        )}
                     </div>
                 </div>
             </Mobile>
@@ -787,9 +852,8 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
             <Visit
                 isOpen={visitModal}
                 onClose={setVisitModal}
-                provider={
-                    turn.prescription?.insuranceType ?? addPrescription?.data?.result?.insuranceType
-                }
+                provider={visitProvider()}
+                bookId={turn.id}
                 prescriptionId={turn.prescription?.id ?? addPrescription?.data?.result?.id}
                 refetchData={refetchData}
             />

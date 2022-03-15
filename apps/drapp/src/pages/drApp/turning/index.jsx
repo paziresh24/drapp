@@ -40,6 +40,7 @@ import debounce from 'lodash/debounce';
 import { queryClient } from '@paziresh24/components/core/provider';
 import ReferenceModal from '@paziresh24/components/prescription/referenceModal';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
 const Turning = () => {
     const history = useHistory();
@@ -77,6 +78,7 @@ const Turning = () => {
     const nationalCodeRef = useRef();
     const [prescriptionPendingModal, setPrescriptionPendingModal] = useState(false);
     const [referenceModal, setReferenceModal] = useState(false);
+    const isExpertDoctor = !isLessThanExpertDegreeDoctor(info.doctor?.expertises);
 
     useEffect(() => {
         if (location.state?.prescriptionInfo && getTurn.data?.data) {
@@ -392,6 +394,38 @@ const Turning = () => {
         !isMobile && observer.observe(statisticsRef.current);
     }, []);
 
+    const statisticsTurns = {
+        allPatientsToday: () => {
+            if (isExpertDoctor) {
+                return getTurn?.data?.data?.length;
+            }
+            return getTurn?.data?.data?.filter(turn => turn.type === 'book').length;
+        },
+        activePatientsToday: () => {
+            if (isExpertDoctor) {
+                getTurn.isSuccess &&
+                    getTurn.data?.data?.filter(item =>
+                        item.type === 'prescription'
+                            ? !item.finalized
+                            : !item.prescription?.finalized
+                    )?.length;
+            }
+            return getTurn?.data?.data?.filter(
+                turn => turn.type === 'book' && turn.book_status !== 'visited'
+            ).length;
+        },
+        visitedPatientsToday: () => {
+            if (isExpertDoctor) {
+                return getTurn?.data?.data?.filter(turn =>
+                    turn.type === 'prescription' ? turn.finalized : turn.prescription?.finalized
+                )?.length;
+            }
+            return getTurn?.data?.data?.filter(
+                turn => turn.type === 'book' && turn.book_status === 'visited'
+            ).length;
+        }
+    };
+
     return (
         <>
             <Visit
@@ -405,25 +439,15 @@ const Turning = () => {
                 <div ref={statisticsRef} className={styles.statistics}>
                     <div
                         style={{
-                            // width: '25rem',
                             height: '5rem',
                             background: '#ebeff8',
                             borderRadius: '1rem',
-                            // boxShadow: '0 21px 30px rgba(37, 37, 71, 0.03)',
                             display: 'flex',
-                            // flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
                             padding: '0 2rem'
                         }}
                     >
-                        {/* <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginBottom: '1rem'
-                            }}
-                        > */}
                         <TurningIcon />
                         <span
                             style={{
@@ -434,32 +458,21 @@ const Turning = () => {
                         >
                             تعداد بیماران امروز
                         </span>
-                        {/* </div>   */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
-                            {getTurn.isSuccess && getTurn?.data?.data?.length} بیمار
+                            {getTurn.isSuccess && statisticsTurns.allPatientsToday()} بیمار
                         </span>
                     </div>
                     <div
                         style={{
-                            // width: '25rem',
                             height: '5rem',
                             background: '#ebeff8',
                             borderRadius: '1rem',
-                            // boxShadow: '0 21px 30px rgba(37, 37, 71, 0.03)',
                             display: 'flex',
-                            // flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
                             padding: '0 2rem'
                         }}
                     >
-                        {/* <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginBottom: '1rem'
-                            }}
-                        > */}
                         <svg
                             width="25"
                             height="25"
@@ -481,40 +494,23 @@ const Turning = () => {
                                 marginLeft: '1rem'
                             }}
                         >
-                            نسخه های صادر شده
+                            {isExpertDoctor ? 'نسخه های صادر شده' : 'بیماران ویزیت شده'}
                         </span>
-                        {/* </div> */}
                         <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
-                            {getTurn.isSuccess &&
-                                getTurn?.data?.data?.filter(item =>
-                                    item.type === 'prescription'
-                                        ? item.finalized
-                                        : item.prescription?.finalized
-                                )?.length}{' '}
-                            نسخه
+                            {getTurn.isSuccess && statisticsTurns.visitedPatientsToday()} نسخه
                         </span>
                     </div>
                     <div
                         style={{
-                            // width: '25rem',
                             height: '5rem',
                             background: '#ebeff8',
                             borderRadius: '1rem',
-                            // boxShadow: '0 21px 30px rgba(37, 37, 71, 0.03)',
                             display: 'flex',
-                            // flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
                             padding: ' 0 2rem'
                         }}
                     >
-                        {/* <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center'
-                                // marginBottom: '1rem'
-                            }}
-                        > */}
                         <svg
                             width="24"
                             height="24"
@@ -529,7 +525,6 @@ const Turning = () => {
                                 fill="#27BDA0"
                             />
                         </svg>
-
                         <span
                             style={{
                                 fontWeight: 'bold',
@@ -539,15 +534,8 @@ const Turning = () => {
                         >
                             بیماران باقی مانده
                         </span>
-                        {/* </div> */}
                         <span style={{ fontWeight: '500' }}>
-                            {getTurn.isSuccess &&
-                                getTurn.data?.data?.filter(item =>
-                                    item.type === 'prescription'
-                                        ? !item.finalized
-                                        : !item.prescription?.finalized
-                                )?.length}{' '}
-                            بیمار
+                            {statisticsTurns.activePatientsToday()} بیمار
                         </span>
                     </div>
                 </div>
@@ -562,17 +550,6 @@ const Turning = () => {
                                     getCookie('turning_date') ? getCookie('turning_date') : null
                                 }
                             />
-                            {/* {isMobile &&
-                                info.center.is_active_booking &&
-                                info.center.type_id === 1 && (
-                                    <Button
-                                        style={{ maxWidth: '4.3rem', padding: '1.1rem' }}
-                                        variant="secondary"
-                                        size="medium"
-                                        icon={<SettingIcon />}
-                                        onClick={() => setMoveDeleteModal(true)}
-                                    />
-                                )} */}
                         </div>
                         <hr />
 
@@ -598,7 +575,7 @@ const Turning = () => {
                                 />
                             </div>
                         </div>
-                        {!isMobile && (
+                        {!isMobile && isExpertDoctor && (
                             <Button
                                 onClick={() => {
                                     setOpenNewTurn(true);
@@ -644,17 +621,19 @@ const Turning = () => {
                         refetchData={refetchData}
                     />
 
-                    <Mobile>
-                        <div className={styles['add-turn-button-mask']} />
-                        <button
-                            className={styles['add-turn-button']}
-                            onClick={() => {
-                                setOpenNewTurn(true);
-                            }}
-                        >
-                            افزودن بیمار
-                        </button>
-                    </Mobile>
+                    {isExpertDoctor && (
+                        <Mobile>
+                            <div className={styles['add-turn-button-mask']} />
+                            <button
+                                className={styles['add-turn-button']}
+                                onClick={() => {
+                                    setOpenNewTurn(true);
+                                }}
+                            >
+                                افزودن بیمار
+                            </button>
+                        </Mobile>
+                    )}
                 </div>
             </div>
 

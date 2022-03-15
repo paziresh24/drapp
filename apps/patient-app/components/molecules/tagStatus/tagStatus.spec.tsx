@@ -1,10 +1,13 @@
 import { render } from '@testing-library/react';
+import { BookStatus } from 'apps/patient-app/types/bookStatus';
 
-import TagStatus from './tagStatus';
+import TagStatus, { TagsStatusTranslation } from './tagStatus';
 
 describe('TagStatus', () => {
-    it('should render successfully', () => {
-        const { baseElement } = render(<TagStatus status="deleted" />);
-        expect(baseElement).toBeTruthy();
+    Object.keys(BookStatus).forEach(status => {
+        it(`should render translation ${status}`, () => {
+            const { baseElement } = render(<TagStatus status={status as BookStatus} />);
+            expect(baseElement.textContent).toBe(TagsStatusTranslation[status as BookStatus]);
+        });
     });
 });

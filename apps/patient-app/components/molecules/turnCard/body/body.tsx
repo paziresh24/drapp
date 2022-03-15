@@ -24,7 +24,8 @@ export const TurnBody: React.FC<TurnBodyProps> = props => {
         centerType !== CenterType.consult &&
         status !== BookStatus.expired &&
         status !== BookStatus.visited &&
-        status !== BookStatus.deleted;
+        status !== BookStatus.deleted &&
+        status !== BookStatus.rejected;
     const shouldShowRate =
         centerType !== CenterType.consult &&
         (status === BookStatus.expired || status === BookStatus.visited) &&

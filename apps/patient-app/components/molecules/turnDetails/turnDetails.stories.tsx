@@ -13,23 +13,23 @@ const Template = args => (
     </div>
 );
 
-export const Simple = Template.bind({});
-Simple.args = {
-    items: [{ id: 1, name: 'کدپیگیری', value: '123' }]
+export const TrackingCode = Template.bind({});
+TrackingCode.args = {
+    items: [{ id: 0, name: 'کدپیگیری', value: '123' }]
 };
 
 export const Multiple = Template.bind({});
 Multiple.args = {
     items: [
-        { id: 1, name: 'زمان نوبت', value: '1400/12/23 - 20:45' },
+        { id: 0, name: 'زمان نوبت', value: '1400/12/23 - 20:45' },
         { id: 1, name: 'میانگین زمان انتظار در مطب', value: '2 ساعت' },
-        { id: 1, name: 'کدپیگیری', value: '1234567890' }
+        { id: 2, name: 'کدپیگیری', value: '1234567890' }
     ]
 };
 
 export const WithTimer = Template.bind({});
 WithTimer.args = {
     items: [
-        { id: 1, name: 'زمان باقی مانده برای صحبت با پزشک', value: <Timer target={1644812367} /> }
+        { id: 0, name: 'زمان باقی مانده برای صحبت با پزشک', value: <Timer target={1644812367} /> }
     ]
 };

@@ -25,15 +25,21 @@ export const turnDetailsData = ({ data, status, centerType }: TurnDetailsDataPar
         bookTime
     )} - ${convertTimeStampToPersianDate(bookTime)}`;
 
-    if (status === BookStatus.requested) return [{ id: 0, name: 'کدپیگیری', value: trackingCode }];
-
     if (centerType === CenterType.consult)
         return [
             { id: 0, name: 'زمان ارتباط با پزشک', value: dateAndTime },
             { id: 1, name: 'کدپیگیری', value: trackingCode }
         ];
 
-    if (status === BookStatus.not_visited)
+    if (status === BookStatus.expired) return [{ id: 0, name: 'زمان نوبت', value: dateAndTime }];
+
+    if (status === BookStatus.visited)
+        return [
+            { id: 0, name: 'زمان نوبت', value: dateAndTime },
+            { id: 1, name: 'کدپیگیری', value: trackingCode }
+        ];
+
+    if (status === BookStatus.notVisited)
         return [
             { id: 0, name: 'زمان نوبت', value: dateAndTime },
             {
@@ -46,5 +52,5 @@ export const turnDetailsData = ({ data, status, centerType }: TurnDetailsDataPar
             { id: 2, name: 'کدپیگیری', value: trackingCode }
         ];
 
-    return [{ id: 0, name: 'زمان نوبت', value: dateAndTime }];
+    return [{ id: 0, name: 'کدپیگیری', value: trackingCode }];
 };

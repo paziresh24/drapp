@@ -1,4 +1,10 @@
-export const Loading: React.FC = () => {
+interface LoadingProps {
+    color?: string;
+}
+
+export const Loading: React.FC<LoadingProps> = props => {
+    const { color = '#2b2f33' } = props;
+
     return (
         <svg
             version="1.1"
@@ -7,7 +13,7 @@ export const Loading: React.FC = () => {
             height="10px"
             viewBox="0 0 80 20"
         >
-            <circle cx="10" cy="10" r="10" fill="#2b2f33">
+            <circle cx="10" cy="10" r="10" fill={color}>
                 <animate
                     attributeName="cx"
                     from="10"
@@ -19,7 +25,7 @@ export const Loading: React.FC = () => {
                     repeatCount="indefinite"
                 />
             </circle>
-            <circle cx="10" cy="10" r="0" fill="#2b2f33">
+            <circle cx="10" cy="10" r="0" fill={color}>
                 <animate
                     attributeName="r"
                     from="0"
@@ -31,7 +37,7 @@ export const Loading: React.FC = () => {
                     repeatCount="indefinite"
                 />
             </circle>
-            <circle cx="40" cy="10" r="10" fill="#2b2f33">
+            <circle cx="40" cy="10" r="10" fill={color}>
                 <animate
                     attributeName="cx"
                     from="40"
@@ -43,7 +49,7 @@ export const Loading: React.FC = () => {
                     repeatCount="indefinite"
                 />
             </circle>
-            <circle cx="70" cy="10" r="10" fill="#2b2f33">
+            <circle cx="70" cy="10" r="10" fill={color}>
                 <animate
                     attributeName="r"
                     from="10"
