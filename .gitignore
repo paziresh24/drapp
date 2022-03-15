@@ -44,3 +44,5 @@ node_modules
 tsconfig.tsbuildinfo
 
 storybook-static
+
+.env.local
