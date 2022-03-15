@@ -284,6 +284,10 @@ const Finalize = () => {
                 type: 'finalized-error',
                 event: { error: error.response.data, prescription_info: prescriptionInfo }
             });
+            if (error.response.data.prescription_type === 3 && isServicesOfDoctorsTamin) {
+                isServicesOfDoctorsTamin = false;
+                return submitServices();
+            }
             if (error.response?.data?.messages) {
                 error.response.data?.messages.map(item => {
                     toast[toastType[item.type]](item.text);
