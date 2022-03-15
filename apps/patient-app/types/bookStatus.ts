@@ -1,7 +1,8 @@
 export enum BookStatus {
     expired = 'expired',
     deleted = 'deleted',
-    not_visited = 'not_visited',
+    notVisited = 'not_visited',
     visited = 'visited',
-    requested = 'requested'
+    requested = 'requested',
+    rejected = 'rejected'
 }

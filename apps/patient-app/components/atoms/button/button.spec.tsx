@@ -1,10 +1,12 @@
 import { render } from '@testing-library/react';
 
-import Timer from './button';
+import Button from './button';
 
-describe('Timer', () => {
-    it('should render successfully', () => {
-        const { baseElement } = render(<Timer target={1644812367} />);
-        expect(baseElement).toBeTruthy();
+describe('Button', () => {
+    it('should content in children', () => {
+        const { getByText } = render(<Button>Button</Button>);
+        const button = getByText('Button') as HTMLButtonElement;
+
+        expect(button.innerHTML).toBe('Button');
     });
 });
