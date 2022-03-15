@@ -173,6 +173,7 @@ const UserName = ({ step }) => {
                             cellRegister.ref(e);
                             cellField.current = e;
                         }}
+                        testId="create-center-cell-phone-field"
                     />
                     <TextField
                         type="tel"
@@ -183,11 +184,13 @@ const UserName = ({ step }) => {
                             nationalCodeRegister.ref(e);
                             nationalCodeField.current = e;
                         }}
+                        testId="create-center-national-code-field"
                     />
                     <Button
                         block
                         type="submit"
                         loading={createCenterReq.isLoading || salamtLogin.isLoading}
+                        testId="create-center-submit-button"
                     >
                         ثبت نام
                     </Button>
