@@ -105,6 +105,9 @@ const SalamatLogin = ({ step }) => {
                     if (error.response.data.message === 'user not found') {
                         return setLocalStep('CREATE_CENTER');
                     }
+                    if (error.response.data.message === 'Salamat-Unauthorized') {
+                        return toast.error('نام کاربری یا کلمه عبور اشتباه است');
+                    }
                     toast.error(error.response.data.message);
                     getSplunkInstance().sendEvent({
                         group: 'login',
