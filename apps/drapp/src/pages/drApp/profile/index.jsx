@@ -82,8 +82,8 @@ const Profile = () => {
     const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
-    const [serviceDesk, setServiceDesk] = useState();
     const biographyRef = useRef();
+    const serviceRef = useRef();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [mapZoom, setMapZoom] = useState();
@@ -141,7 +141,7 @@ const Profile = () => {
                 national_code: data.national_code,
                 medical_code: data.medical_code,
                 biography: biographyRef.current,
-                service_desk: serviceDesk ? serviceDesk : '',
+                service_desk: serviceRef.current,
                 secretary_phone: data.secretary_phone,
                 center_id: info.center.id
             },
@@ -519,10 +519,10 @@ const Profile = () => {
                                     contentsLangDirection: 'rtl',
                                     language: 'fa'
                                 }}
-                                data={info.doctor.desk ? info.doctor.desk : ''}
+                                data={info.doctor?.desk}
                                 onBlur={(event, editor) => {
                                     const data = editor.getData();
-                                    setServiceDesk(data);
+                                    serviceRef.current = data;
                                 }}
                             />
                         </div>

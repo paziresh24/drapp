@@ -84,13 +84,11 @@ const Setting = () => {
 
             {getWorkDays.isSuccess && (
                 <>
-                    {getWorkDays.data.data.duration != 0 ? (
+                    {info.center.id !== '5532' && (
                         <Duration
                             value={setDuration}
                             defaultValue={getWorkDays.data.data.duration}
                         />
-                    ) : (
-                        ''
                     )}
 
                     <span>

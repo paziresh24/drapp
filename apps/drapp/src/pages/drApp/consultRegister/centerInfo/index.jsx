@@ -11,8 +11,6 @@ import ReactTooltip from 'react-tooltip';
 import { HelpIcon } from '@paziresh24/components/icons/public/help';
 import Select from '@paziresh24/components/doctorApp/Select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
-import { Text } from '../../../../../../patient-app/components/atoms/text/text';
-import Number from '../../../../../../../libs/components/src/prescription/details/lists/atom/number';
 import { digitsFaToEn } from '@paziresh24/utils';
 var first = 1;
 function moneyCommaSep(ctrl) {

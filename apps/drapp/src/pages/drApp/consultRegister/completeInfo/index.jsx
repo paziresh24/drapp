@@ -90,7 +90,6 @@ const CompleteInfo = () => {
                                     setGender(value);
                                 }
                             }}
-                            defaultValue={+info.center.city}
                             items={genders.map(item => ({
                                 name: item.name,
                                 value: item.id
