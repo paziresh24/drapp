@@ -71,8 +71,6 @@ const Header = () => {
         }
     });
 
-    useEffect(() => console.log(info), []);
-
     return (
         <>
             <header className={styles['header']}>

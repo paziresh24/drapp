@@ -8,7 +8,7 @@ import { useCreateExpertise, useUpdateExpertise } from '@paziresh24/hooks/drapp/
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
-import SelectDate from '../../../../../../../libs/components/src/prescription/selectDate/index';
+import SelectDate from '@paziresh24/components/prescription/selectDate';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { getCookie, setCookie } from '@paziresh24/utils/cookie';
 import moment from 'jalali-moment';

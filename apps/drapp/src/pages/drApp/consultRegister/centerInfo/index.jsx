@@ -88,7 +88,6 @@ const CenterInfo = () => {
                                         setCountVisitDaily(value.id);
                                     }
                                 }}
-                                defaultValue={+info.center.city}
                                 items={days.map(item => ({
                                     name: item.name,
                                     value: item.id
