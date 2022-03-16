@@ -1,20 +1,66 @@
-import { getGreeting } from '../support/app.po';
-
 describe('patient-app', () => {
     beforeEach(() => {
-        cy.setCookie(
-            'certificate',
-            '%242y%2410%24Kv8nHRsX96AN58wqULwMz.X7G1SPrnnFklPG0DxVbIyVNChHDgWxS'
-        );
-        cy.setCookie('P24SESSION', '7lf1egf7eg6chj4qauu7v1lu9s');
+        cy.login();
+        cy.viewport(414, 896);
         cy.visit('/appointments');
+        cy.intercept('GET', '/api/books?page=*', { statusCode: 200, fixture: 'turn/list' }).as(
+            'turns'
+        );
+        cy.wait('@turns');
     });
 
-    it('should display welcome message', () => {
-        // Custom command example, see `../support/commands.ts` file
-        cy.login('my-email@something.com', 'myPassword');
+    it('should display correct tag status', () => {
+        cy.getTestId('turn-card').eq(0).find('[data-testid=tag-status]').contains('درخواست');
+        cy.getTestId('turn-card').eq(1).find('[data-testid=tag-status]').contains('رد شده');
+        cy.getTestId('turn-card').eq(4).find('[data-testid=tag-status]').contains('ویزیت شده');
+        cy.getTestId('turn-card').eq(5).find('[data-testid=tag-status]').contains('منقضی');
+        cy.getTestId('turn-card').eq(6).find('[data-testid=tag-status]').contains('حذف شده');
+    });
 
-        // Function helper example, see `../support/app.po.ts` file
-        getGreeting().contains('Welcome patient-app');
+    it('should remove turn', () => {
+        cy.intercept('POST', '/api/deleteBook', {
+            statusCode: 200,
+            fixture: 'turn/remove'
+        }).as('deleteTurn');
+
+        cy.getTestId('turn-card').eq(2).find('[data-testid=turn-drop-down-button]').click();
+        cy.get('.left-4 > .flex-col > :nth-child(2)').click();
+        cy.getTestId('modal__remove-turn-button').click();
+    });
+
+    it('should un success remove turn and show error', () => {
+        cy.intercept('POST', '/api/deleteBook', {
+            statusCode: 200,
+            fixture: 'turn/remove.error'
+        }).as('deleteTurn');
+
+        cy.getTestId('turn-card').eq(2).find('[data-testid=turn-drop-down-button]').click();
+        cy.get('.left-4 > .flex-col > :nth-child(2)').click();
+        cy.getTestId('modal__remove-turn-button').click();
+        cy.get('.Toastify__toast-body > :nth-child(2)').contains('خطایی رخ داده است');
+    });
+
+    it('should cancel remove turn', () => {
+        cy.getTestId('turn-card').eq(2).find('[data-testid=turn-drop-down-button]').click();
+        cy.get('.left-4 > .flex-col > :nth-child(2)').click();
+        cy.getTestId('modal__cancel-remove-turn-button').click();
+    });
+
+    it('should show queue button', () => {
+        cy.getTestId('turn-card')
+            .eq(2)
+            .find('[data-testid=footer__queue_button]')
+            .should('be.visible');
+    });
+
+    it('should show turn number queue', () => {
+        cy.intercept('POST', '/api/addBookToQueue', { fixture: 'turn/queue' });
+        cy.getTestId('turn-card').eq(2).find('[data-testid=footer__queue_button]').click();
+        cy.getTestId('queue__booking-number').contains('19');
+        cy.getTestId('queue__booking-text').contains('19');
+        cy.getTestId('queue__booking-attendance-time').contains('21:40');
+        cy.getTestId('queue__booking-waiting').contains('1');
+        cy.getTestId('queue__acceptance-number').contains('10');
+        cy.getTestId('queue__acceptance-text').contains('10');
     });
 });

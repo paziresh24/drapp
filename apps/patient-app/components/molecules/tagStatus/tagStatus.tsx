@@ -21,7 +21,7 @@ export const TagStatus: React.FC<TagStatusProps> = props => {
     const { status } = props;
 
     return (
-        <Chips className="absolute left-4 top-2">
+        <Chips className="absolute left-4 top-2" data-testId="tag-status">
             {TagsStatusTranslation[status as BookStatus]}
         </Chips>
     );

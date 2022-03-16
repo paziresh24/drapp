@@ -79,7 +79,10 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
             {shouldShowTurnMenu && (
                 <DropDown
                     element={
-                        <div className="flex items-center justify-center w-8 h-8 absolute left-2 top-3 cursor-pointer">
+                        <div
+                            className="flex items-center justify-center w-8 h-8 absolute left-2 top-3 cursor-pointer"
+                            data-testId="turn-drop-down-button"
+                        >
                             <ThreeDotsIcon color="#000" />
                         </div>
                     }
@@ -112,6 +115,7 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
                         block
                         onClick={removeBookAction}
                         loading={removeBookApi.isLoading}
+                        data-testId="modal__remove-turn-button"
                     >
                         حذف
                     </Button>
@@ -120,6 +124,7 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
                         variant="secondary"
                         block
                         onClick={() => setRemoveModal(false)}
+                        data-testId="modal__cancel-remove-turn-button"
                     >
                         انصراف
                     </Button>
