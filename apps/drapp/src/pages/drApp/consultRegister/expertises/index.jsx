@@ -47,7 +47,6 @@ const ExpertisesPage = () => {
             ...consult,
             graduation_date: formattedDateToTimeStamp
         });
-        console.log(consult);
         setLoading(true);
         expertises.forEach(expertise => {
             if (!expertise.id) {

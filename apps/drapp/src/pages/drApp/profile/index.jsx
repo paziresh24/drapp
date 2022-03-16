@@ -481,7 +481,7 @@ const Profile = () => {
                             }}
                         />
                     </div>
-                    {info.center.id === 5532 && (
+                    {info.center.id === '5532' && (
                         <div className={styles['col']}>
                             <span style={{ marginBottom: '1rem' }}>توضیحات خدمات مشاوره</span>
                             <CKEditor

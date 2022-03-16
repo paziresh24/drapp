@@ -9,9 +9,11 @@ import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { HelpIcon } from '@paziresh24/components/icons/public/help';
+import Select from '@paziresh24/components/doctorApp/Select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { Text } from '../../../../../../patient-app/components/atoms/text/text';
 import Number from '../../../../../../../libs/components/src/prescription/details/lists/atom/number';
+import { digitsFaToEn } from '@paziresh24/utils';
 var first = 1;
 function moneyCommaSep(ctrl) {
     if (first > 1) {
@@ -50,7 +52,11 @@ const CenterInfo = () => {
     const [consult, setConsult] = useConsult();
 
     const history = useHistory();
-
+    var days = [
+        { id: '1', name: 'تا 1 روز' },
+        { id: '2', name: 'تا 2 روز' },
+        { id: '3', name: 'تا 3 روز' }
+    ];
     const updateCenter = () => {
         if (!whatsAppCell) {
             return toast.error('شماره whatsapp business الزامی می باشد');
@@ -61,9 +67,9 @@ const CenterInfo = () => {
 
         setConsult({
             ...consult,
-            whatsapp: whatsAppCell,
+            whatsapp: digitsFaToEn(whatsAppCell.replace(/^0+/, '')),
             price: costVisit,
-            turn_num: countVisitDaily
+            service_length: countVisitDaily
         });
 
         history.push('/consult/fill-info/expertises');
@@ -75,12 +81,20 @@ const CenterInfo = () => {
                 <div className={styles['form-control']}>
                     <div className="flex space-s-2 w-full">
                         <div className="flex flex-col w-full space-y-3">
-                            <span>حداکثر تعداد ویزیت روزانه</span>
+                            <span>مدت زمان پاسخگویی پزشک</span>
 
-                            <TextField
-                                placeHolder="12 تا"
-                                type="Number"
-                                onChange={e => setCountVisitDaily(e.target.value)}
+                            <Select
+                                placeholder="تا 2 روز"
+                                onChange={value => {
+                                    if (value) {
+                                        setCountVisitDaily(value.id);
+                                    }
+                                }}
+                                defaultValue={+info.center.city}
+                                items={days.map(item => ({
+                                    name: item.name,
+                                    value: item.id
+                                }))}
                             />
                         </div>
 

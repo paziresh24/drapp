@@ -109,7 +109,7 @@ const Select = ({ items, onChange, defaultValue, simple, error, focus, noModal, 
                     type={props.type}
                     value={!showOptions && items ? value?.name ?? '' : searchValue}
                     name={props.name}
-                    placeholder=" "
+                    placeholder={props.placeholder ? props.placeholder : ' '}
                     onKeyDown={e => {
                         e.keyCode === 40 &&
                             setSelectHover(prev => (prev < options.length - 1 ? prev + 1 : 0));
