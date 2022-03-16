@@ -24,7 +24,7 @@ describe('patient-app', () => {
         }).as('deleteTurn');
 
         cy.getTestId('turn-card').eq(2).find('[data-testid=turn-drop-down-button]').click();
-        cy.get('.left-4 > .flex-col > :nth-child(2)').click();
+        cy.getTestId('drop-down__remove-button').click();
         cy.getTestId('modal__remove-turn-button').click();
     });
 
@@ -35,14 +35,14 @@ describe('patient-app', () => {
         }).as('deleteTurn');
 
         cy.getTestId('turn-card').eq(2).find('[data-testid=turn-drop-down-button]').click();
-        cy.get('.left-4 > .flex-col > :nth-child(2)').click();
+        cy.getTestId('drop-down__remove-button').click();
         cy.getTestId('modal__remove-turn-button').click();
         cy.get('.Toastify__toast-body > :nth-child(2)').contains('خطایی رخ داده است');
     });
 
     it('should cancel remove turn', () => {
         cy.getTestId('turn-card').eq(2).find('[data-testid=turn-drop-down-button]').click();
-        cy.get('.left-4 > .flex-col > :nth-child(2)').click();
+        cy.getTestId('drop-down__remove-button').click();
         cy.getTestId('modal__cancel-remove-turn-button').click();
     });
 

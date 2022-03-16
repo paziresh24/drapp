@@ -97,7 +97,8 @@ export const TurnHeader: React.FC<TurnHeaderProps> = props => {
                             id: 1,
                             name: 'حذف نوبت',
                             icon: <TrashIcon />,
-                            action: () => setRemoveModal(true)
+                            action: () => setRemoveModal(true),
+                            testId: 'drop-down__remove-button'
                         }
                     ]}
                 />
