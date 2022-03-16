@@ -60,6 +60,7 @@ export const Appointments: React.FC<AppointmentsProps> = ({ isWebView }) => {
                     className={`p-5 space-y-3 ${
                         isWebView ? 'pt-20' : ''
                     } w-full lg:w-2/4 self-center`}
+                    data-testId="appointments-container"
                 >
                     {isLoading && (
                         <>

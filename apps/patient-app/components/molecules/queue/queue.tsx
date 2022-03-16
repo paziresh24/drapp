@@ -106,11 +106,19 @@ export const Queue: React.FC<QueueProps> = props => {
                         {!pagingBookData.data.booking_queue.message && (
                             <>
                                 <div className="flex justify-center items-center w-14 h-14 rounded-md bg-primary text-white mb-4">
-                                    <Text fontSize="xl" fontWeight="bold">
+                                    <Text
+                                        fontSize="xl"
+                                        fontWeight="bold"
+                                        data-testId="queue__booking-number"
+                                    >
                                         {pagingBookData.data.booking_queue.no}
                                     </Text>
                                 </div>
-                                <Text fontSize="base" fontWeight="bold">
+                                <Text
+                                    fontSize="base"
+                                    fontWeight="bold"
+                                    data-testId="queue__booking-text"
+                                >
                                     شما نفر {pagingBookData.data.booking_queue.no} صف پزشک می باشید
                                 </Text>
                                 <div className="flex flex-col self-start mt-5 space-y-3">
@@ -130,7 +138,11 @@ export const Queue: React.FC<QueueProps> = props => {
                                             />
                                         </svg>
                                         <Text fontSize="sm">بازه تقریبی حضور شما در مرکز:</Text>
-                                        <Text fontSize="sm" fontWeight="bold">
+                                        <Text
+                                            fontSize="sm"
+                                            fontWeight="bold"
+                                            data-testId="queue__booking-attendance-time"
+                                        >
                                             {convertTimeStampToFormattedTime(
                                                 pagingBookData.data.booking_queue.attendance_time
                                             )}
@@ -153,7 +165,11 @@ export const Queue: React.FC<QueueProps> = props => {
                                         </svg>
 
                                         <Text fontSize="sm">تعداد نفرات قبل از شما:</Text>
-                                        <Text fontSize="sm" fontWeight="bold">
+                                        <Text
+                                            fontSize="sm"
+                                            fontWeight="bold"
+                                            data-testId="queue__booking-waiting"
+                                        >
                                             {pagingBookData.data.booking_queue.waiting} نفر
                                         </Text>
                                     </div>
@@ -186,11 +202,19 @@ export const Queue: React.FC<QueueProps> = props => {
                         {!pagingBookData.data.acceptance_queue.message && (
                             <>
                                 <div className="flex justify-center items-center w-14 h-14 rounded-md bg-primary text-white mb-4">
-                                    <Text fontSize="xl" fontWeight="bold">
+                                    <Text
+                                        fontSize="xl"
+                                        fontWeight="bold"
+                                        data-testId="queue__acceptance-number"
+                                    >
                                         {pagingBookData.data.acceptance_queue.no}
                                     </Text>
                                 </div>
-                                <Text fontSize="base" fontWeight="bold">
+                                <Text
+                                    fontSize="base"
+                                    fontWeight="bold"
+                                    data-testId="queue__acceptance-text"
+                                >
                                     شما نفر {pagingBookData.data.acceptance_queue.no} صف پذیرش می
                                     باشید
                                 </Text>

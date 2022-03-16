@@ -73,7 +73,8 @@ export const Button: React.FC<ButtonProps> = props => {
         onClick,
         icon,
         className,
-        loading = false
+        loading = false,
+        ...rest
     } = props;
 
     return (
@@ -85,6 +86,7 @@ export const Button: React.FC<ButtonProps> = props => {
                 block ? buttonStyles['block'] : ''
             } ${className ? className : ''}`}
             onClick={onClick}
+            {...rest}
         >
             {!loading && (
                 <>

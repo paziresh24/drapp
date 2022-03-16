@@ -5,13 +5,13 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = props => {
-    const { children, className, style } = props;
+    const { children, className, ...rest } = props;
     return (
         <div
             className={`flex flex-col p-4 bg-white rounded-lg shadow-card ${
                 className ? className : ''
             }`}
-            style={style}
+            {...rest}
         >
             {children}
         </div>
