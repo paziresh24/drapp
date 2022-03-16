@@ -20,6 +20,8 @@ import toastType from '@paziresh24/constants/prescription.json';
 import isEmpty from 'lodash/isEmpty';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
 import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
+import { prescriptionType } from '@paziresh24/constants/prescriptionType';
+import { serviceType } from '@paziresh24/constants/serviceType';
 
 const Finalize = () => {
     const { search } = useLocation();
@@ -33,7 +35,7 @@ const Finalize = () => {
     const [backPage] = useBackPage();
 
     // local state
-    let isServicesOfDoctorsTamin = false;
+    let isServiceWithVisitTamin = false;
     const [isServicesOfDoctors, setIsServicesOfDoctors] = useState(false);
 
     // api hook
@@ -215,7 +217,7 @@ const Finalize = () => {
                 );
             const { items } = await addItemToPrescription(servicesWithOutNullItem);
 
-            if (isServicesOfDoctorsTamin) {
+            if (isServiceWithVisitTamin) {
                 await addItemService.mutateAsync({
                     prescriptionId: prescriptionInfo.id,
                     comments: ''
@@ -284,8 +286,11 @@ const Finalize = () => {
                 type: 'finalized-error',
                 event: { error: error.response.data, prescription_info: prescriptionInfo }
             });
-            if (error.response.data.prescription_type === 3 && isServicesOfDoctorsTamin) {
-                isServicesOfDoctorsTamin = false;
+            if (
+                error.response.data.prescription_type === prescriptionType.VISIT &&
+                isServiceWithVisitTamin
+            ) {
+                isServiceWithVisitTamin = false;
                 return submitServices();
             }
             if (error.response?.data?.messages) {
@@ -326,7 +331,11 @@ const Finalize = () => {
                     size="small"
                     className={styles.button}
                     onClick={() => {
-                        if (services.some(item => item.service_type === 95)) {
+                        if (
+                            services.some(
+                                item => item.service_type === serviceType.TAMIN.SERVICES_OF_DOCTORS
+                            )
+                        ) {
                             return setServicesDoctorVisitConfirmModal(true);
                         }
                         if (
@@ -346,7 +355,11 @@ const Finalize = () => {
                     size="small"
                     className={styles.button}
                     onClick={() => {
-                        if (services.some(item => item.service_type === 95)) {
+                        if (
+                            services.some(
+                                item => item.service_type === serviceType.TAMIN.SERVICES_OF_DOCTORS
+                            )
+                        ) {
                             return setServicesDoctorVisitConfirmModal(true);
                         }
                         if (
@@ -419,7 +432,7 @@ const Finalize = () => {
                         block
                         variant="primary"
                         onClick={() => {
-                            isServicesOfDoctorsTamin = true;
+                            isServiceWithVisitTamin = true;
                             submitServices();
                             setServicesDoctorVisitConfirmModal(false);
                         }}
@@ -430,7 +443,7 @@ const Finalize = () => {
                         block
                         variant="secondary"
                         onClick={() => {
-                            isServicesOfDoctorsTamin = false;
+                            isServiceWithVisitTamin = false;
                             submitServices();
                             setServicesDoctorVisitConfirmModal(false);
                         }}
