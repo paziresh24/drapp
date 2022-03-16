@@ -1,7 +1,7 @@
 import TextField from '../../../core/textField';
-import styles from './userName.module.scss';
+import styles from './salamatLogin.module.scss';
 import Button from '../../../core/button/index';
-import { useCreateCenter, useSalamtLogin } from '@paziresh24/hooks/drapp/auth';
+import { useCreateCenter, useSalamatLogin } from '@paziresh24/hooks/drapp/auth';
 import { useEffect, useRef, useState } from 'react';
 import { digitsFaToEn } from '@paziresh24/utils';
 import { useForm } from 'react-hook-form';
@@ -11,9 +11,9 @@ import { getSplunkInstance } from '@paziresh24/components/core/provider';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
-const UserName = ({ step }) => {
+const SalamatLogin = ({ step }) => {
     const history = useHistory();
-    const salamtLogin = useSalamtLogin();
+    const salamatLogin = useSalamatLogin();
     const createCenterReq = useCreateCenter();
     const { search } = useLocation();
     const [localStep, setLocalStep] = useState(step);
@@ -51,10 +51,6 @@ const UserName = ({ step }) => {
     }, []);
 
     const handleCreateCenter = async ({ cellPhone, nationalCode }) => {
-        console.log({
-            username: usernameField.current.value,
-            password: passwordField.current.value
-        });
         try {
             await createCenter({
                 cellPhone: digitsFaToEn(cellPhone),
@@ -78,7 +74,7 @@ const UserName = ({ step }) => {
     };
 
     const handleLogin = async ({ username, password }) => {
-        salamtLogin.mutate(
+        salamatLogin.mutate(
             {
                 username: digitsFaToEn(username),
                 password: digitsFaToEn(password)
@@ -153,7 +149,7 @@ const UserName = ({ step }) => {
                 <Button
                     block
                     type="submit"
-                    loading={salamtLogin.isLoading}
+                    loading={salamatLogin.isLoading}
                     testId="salamat-login-login-button"
                 >
                     ورود
@@ -189,7 +185,7 @@ const UserName = ({ step }) => {
                     <Button
                         block
                         type="submit"
-                        loading={createCenterReq.isLoading || salamtLogin.isLoading}
+                        loading={createCenterReq.isLoading || salamatLogin.isLoading}
                         testId="create-center-submit-button"
                     >
                         ثبت نام
@@ -200,4 +196,4 @@ const UserName = ({ step }) => {
     );
 };
 
-export default UserName;
+export default SalamatLogin;

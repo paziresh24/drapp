@@ -25,7 +25,6 @@ const Form = ({ focus, setFocus }) => {
     const params = queryString.parse(search);
     const [step, setStep] = useState('USERNAME');
     const [userName, setUserName] = useState();
-    const [salamatPassword, setSalamatPassword] = useState();
     const resendCode = useResendCode({ mobile: userName, justDoctor: true });
     const [userIsPassword, setUserIsPassword] = useState(false);
 
@@ -188,17 +187,7 @@ const Form = ({ focus, setFocus }) => {
                         setFocus={setFocus}
                     />
                 )}
-                {step === 'SALAMATAUTH' && (
-                    <SalamatLogin
-                        setStep={setStep}
-                        step={step}
-                        userName={userName}
-                        setUserName={setUserName}
-                        password={salamatPassword}
-                        setPassword={setSalamatPassword}
-                        setFocus={setFocus}
-                    />
-                )}
+                {step === 'SALAMATAUTH' && <SalamatLogin step={step} />}
                 {step === 'PASSWORD' && loginType === 'password' && (
                     <Password
                         userName={userName}
