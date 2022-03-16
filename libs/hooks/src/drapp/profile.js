@@ -21,6 +21,8 @@ import { getGallery } from '@paziresh24/apis/drApp/profile/gallery/get';
 import { deleteGallery } from '@paziresh24/apis/drApp/profile/gallery/delete';
 import { bankInfo } from '@paziresh24/apis/drApp/profile/bank/update';
 import { getBankInfo } from '@paziresh24/apis/drApp/profile/bank/get';
+import { getWhatsapp } from '@paziresh24/apis/drApp/profile/whatsapp/get';
+import { updateWhatsapp } from '@paziresh24/apis/drApp/profile/whatsapp/update';
 
 const useGetFeedbacks = param => {
     return useQuery(['feedbacks', param], () => feedbacks(param));
@@ -120,6 +122,14 @@ const useGetBankInfo = params => {
     return useQuery(['getBankInfo', params], () => getBankInfo(params));
 };
 
+const useGetWhatsApp = params => {
+    return useQuery(['getWhatsapp', params], () => getWhatsapp(params));
+};
+
+const useUpdateWhatsapp = params => {
+    return useMutation(updateWhatsapp);
+};
+
 export {
     useGetFeedbacks,
     useGetCenterInfo,
@@ -142,5 +152,7 @@ export {
     useBankInfo,
     useGetBankInfo,
     useComplaintsSummary,
-    useComplaintsDetail
+    useComplaintsDetail,
+    useGetWhatsApp,
+    useUpdateWhatsapp
 };

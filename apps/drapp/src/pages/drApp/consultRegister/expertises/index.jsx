@@ -8,6 +8,10 @@ import { useCreateExpertise, useUpdateExpertise } from '@paziresh24/hooks/drapp/
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
+import SelectDate from '@paziresh24/components/prescription/selectDate';
+import { useConsult } from '@paziresh24/context/drapp/consult';
+import { getCookie, setCookie } from '@paziresh24/utils/cookie';
+import moment from 'jalali-moment';
 
 const ExpertisesPage = () => {
     const [info] = useDrApp();
@@ -16,7 +20,8 @@ const ExpertisesPage = () => {
     const updateExpertise = useUpdateExpertise();
     const [loading, setLoading] = useState(false);
     const promises = [];
-
+    const [date, setDate] = useState();
+    const [consult, setConsult] = useConsult();
     useEffect(() => {
         if (isEmpty(info.doctor.expertises)) {
             return setExpertises([
@@ -34,6 +39,14 @@ const ExpertisesPage = () => {
     const history = useHistory();
 
     const updateCenter = () => {
+        const formattedDateToTimeStamp =
+            moment
+                .from(`${date?.year}/${date?.month}/${date?.day}`, 'fa', 'JYYYY/JMM/JDD')
+                .format('x') / 1000;
+        setConsult({
+            ...consult,
+            graduation_date: formattedDateToTimeStamp
+        });
         setLoading(true);
         expertises.forEach(expertise => {
             if (!expertise.id) {
@@ -101,7 +114,10 @@ const ExpertisesPage = () => {
                                 )
                         )}
                 </div>
-
+                <label>تاریخ اخذ مدرک</label>
+                <div className={styles.selectDate}>
+                    <SelectDate today value={setDate} />
+                </div>
                 <FixedWrapBottom>
                     <Button onClick={updateCenter} loading={loading} block>
                         انتخاب ساعت کاری ویزیت انلاین

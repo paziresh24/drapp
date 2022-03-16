@@ -71,8 +71,6 @@ const Header = () => {
         }
     });
 
-    useEffect(() => console.log(info), []);
-
     return (
         <>
             <header className={styles['header']}>
@@ -287,7 +285,7 @@ const Header = () => {
                                                     ویزیت آنلاین
                                                 </span>
                                                 <span className={styles.centerAddress}>
-                                                    ویزیت آنلاین برای شما فعال نمیباشد.
+                                                    همین الان ویزیت آنلاین خود را فعال کنید.
                                                 </span>
                                             </div>
                                         </div>

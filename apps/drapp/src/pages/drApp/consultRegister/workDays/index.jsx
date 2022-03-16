@@ -103,6 +103,10 @@ const WorkDays = () => {
         if (isEmpty(workDaysTime)) {
             return toast.warning('ساعت کاری نمی تواند خالی باشد.');
         }
+        // console.log({
+        //     ...consult,
+        //     workHours: workDaysTime
+        // });
         activeConsult.mutate(
             {
                 ...consult,
@@ -141,7 +145,8 @@ const WorkDays = () => {
                     <div className={styles['hero-content']}>
                         <div className={styles['hero-info-wrapper']}>
                             <span className={styles['name']}>
-                                دکتر {info.doctor.name} {info.doctor.family}
+                                دکتر {info.doctor.name} {info.doctor.family} عزیز ثبت نام شما
+                                باموفقیت انجام شد.
                             </span>
                             <span>خوش آمدید</span>
                         </div>
@@ -160,11 +165,8 @@ const WorkDays = () => {
                                 fill="#3f3f79"
                             />
                         </svg>
-                        <span className={styles['hero-title']} style={{ marginBottom: '0.5rem' }}>
-                            مرکز مشاوره آنلاین شما با موفقیت ثبت شد.
-                        </span>
-                        <span style={{ marginBottom: '2rem' }}>
-                            لطفا تا زمان فعالسازی منتظر بمانید...
+                        <span className={styles['hero-title']}>
+                            نوبت دهی ویزیت آنلاین شما تا 2 ساعت دیگر فعال می شود.
                         </span>
                         <span>پروفایل عمومی شما</span>
                         <a

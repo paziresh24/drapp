@@ -160,6 +160,7 @@ const DrugItem = ({
                         <td data-label="تاریخ موثر">
                             <SelectDate
                                 label="تاریخ موثر"
+                                minimumDate={utils('fa').getToday()}
                                 simple
                                 onChange={value => editDate(value)}
                                 // today
@@ -416,6 +417,7 @@ const DrugItem = ({
                     {insuranceType === 'salamat' && !readOnly && !noDate && (
                         <SelectDate
                             label="تاریخ موثر"
+                            minimumDate={utils('fa').getToday()}
                             onChange={value => editDate(value)}
                             default-value={service.date_do}
                             today

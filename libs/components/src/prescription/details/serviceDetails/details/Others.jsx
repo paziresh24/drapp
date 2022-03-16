@@ -10,6 +10,7 @@ import SelectDate from '../../../selectDate/index';
 import moment from 'jalali-moment';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
 import { isMobile } from 'react-device-detect';
+import { utils } from '@hassanmojab/react-modern-calendar-datepicker';
 
 const OthersDetails = ({ services, setServices, insuranceType, noDate = false }) => {
     const [isOpen, setIsOpen] = useToolBox();
@@ -131,6 +132,7 @@ const OthersDetails = ({ services, setServices, insuranceType, noDate = false })
                         <SelectDate
                             label="تاریخ موثر"
                             today
+                            minimumDate={utils('fa').getToday()}
                             onChange={value => setDate(value)}
                             default-value={item?.defaultValue?.dateDo}
                         />

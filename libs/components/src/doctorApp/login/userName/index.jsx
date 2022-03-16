@@ -7,6 +7,7 @@ import { digitsFaToEn, sendEvent } from '@paziresh24/utils';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, setFocus }) => {
     const resendCode = useResendCode({ mobile: userName, justDoctor: true });
@@ -75,11 +76,28 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
             {
                 onSuccess: data => {
                     sendEvent('doctorReg', 'step1', 'sucsessfulreg');
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'successful',
+                        event: {
+                            cellPhone: digitsFaToEn(userName),
+                            nationalCode: digitsFaToEn(nationalCode)
+                        }
+                    });
                     toast.success(data.message);
                     resendCode.refetch();
                 },
                 onError: error => {
                     sendEvent('doctorReg', 'step1', `unsuccessfulreg ${cellPhone}`);
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'successful',
+                        event: {
+                            cellPhone: digitsFaToEn(userName),
+                            nationalCode: digitsFaToEn(nationalCode),
+                            error: error.response?.data
+                        }
+                    });
                     toast.error(error.response?.data.message);
                 }
             }
