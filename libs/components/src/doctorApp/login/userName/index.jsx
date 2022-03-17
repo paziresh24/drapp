@@ -91,7 +91,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                     sendEvent('doctorReg', 'step1', `unsuccessfulreg ${cellPhone}`);
                     getSplunkInstance().sendEvent({
                         group: 'register',
-                        type: 'successful',
+                        type: 'unsuccessful',
                         event: {
                             cellPhone: digitsFaToEn(userName),
                             nationalCode: digitsFaToEn(nationalCode),

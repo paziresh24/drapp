@@ -13,6 +13,7 @@ import { useDuration } from '@paziresh24/context/drapp/duration';
 import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const canvasStyles = {
     position: 'absolute',
@@ -111,9 +112,20 @@ const WorkDays = () => {
             },
             {
                 onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'workdays_active_booking',
+                        type: 'successful'
+                    });
                     setSuccess(true);
                 },
-                onError: () => {
+                onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'workdays_active_booking',
+                        type: 'unsuccessful',
+                        event: {
+                            error: error.response?.data
+                        }
+                    });
                     toast.error('ساعت کاری وارد شده نادرست می باشد.');
                 }
             }

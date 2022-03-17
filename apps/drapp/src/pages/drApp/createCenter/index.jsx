@@ -6,6 +6,7 @@ import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { digitsFaToEn } from '@paziresh24/utils';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const CreateCenter = () => {
     const getinfo = useGetInfo();
@@ -25,9 +26,26 @@ const CreateCenter = () => {
             },
             {
                 onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'successful',
+                        event: {
+                            cellPhone: digitsFaToEn(`0${getinfo.data.data.cell}`),
+                            nationalCode: digitsFaToEn(nationalCode)
+                        }
+                    });
                     location = '/';
                 },
                 onError: err => {
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'unsuccessful',
+                        event: {
+                            cellPhone: digitsFaToEn(`0${getinfo.data.data.cell}`),
+                            nationalCode: digitsFaToEn(nationalCode),
+                            error: err.response?.data
+                        }
+                    });
                     toast.error(err.response.data.message);
                 }
             }
