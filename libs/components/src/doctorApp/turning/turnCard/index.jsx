@@ -745,7 +745,9 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                     <span>وضعیت پرداخت: </span>
                                     <span>
                                         {turn.payment_status === 'paid' && <span>پرداخت شده</span>}
-                                        {turn.payment_status === 'refund' && <span>استرداد</span>}
+                                        {turn.payment_status === 'refunded' && (
+                                            <span>استرداد شده</span>
+                                        )}
                                         {!turn.payment_status && <span> - </span>}
                                     </span>
                                 </div>
