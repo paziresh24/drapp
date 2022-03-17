@@ -11,12 +11,15 @@ import Select from '@paziresh24/components/doctorApp/Select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { CheckBox } from '@paziresh24/components/core/checkBox';
 import { useState } from 'react';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { digitsFaToEn } from '@paziresh24/utils';
 
 const CompleteInfo = () => {
     const [info] = useDrApp();
     const doctorInfoUpdate = useDoctorInfoUpdate();
     const [consult, setConsult] = useConsult();
     const [gender, setGender] = useState();
+    const [genderError, setGenderError] = useState();
     const {
         register: updateCenterInfo,
         handleSubmit: centerInfoSubmit,
@@ -26,6 +29,9 @@ const CompleteInfo = () => {
     const history = useHistory();
 
     const updateCenter = data => {
+        if (!gender) {
+            return setGenderError(true);
+        }
         setConsult({
             ...consult,
             gender: gender.id
@@ -41,9 +47,20 @@ const CompleteInfo = () => {
             },
             {
                 onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'complete_info_consult',
+                        type: 'successful'
+                    });
                     history.push('/consult/fill-info/center-info');
                 },
                 onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'complete_info_consult',
+                        type: 'unsuccessful',
+                        event: {
+                            error: error.response?.data
+                        }
+                    });
                     console.dir({ error });
                     toast.error(error.response.data.message);
                 }
@@ -84,6 +101,7 @@ const CompleteInfo = () => {
                         />
 
                         <Select
+                            error={genderError}
                             label="جنسیت"
                             onChange={value => {
                                 if (value) {

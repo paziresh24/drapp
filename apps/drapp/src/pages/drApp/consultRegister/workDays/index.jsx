@@ -13,6 +13,8 @@ import { useDuration } from '@paziresh24/context/drapp/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 import { useConsult } from '@paziresh24/context/drapp/consult';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { digitsFaToEn } from '@paziresh24/utils';
 
 const canvasStyles = {
     position: 'absolute',
@@ -114,9 +116,20 @@ const WorkDays = () => {
             },
             {
                 onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'workdays_consult',
+                        type: 'successful'
+                    });
                     setSuccess(true);
                 },
-                onError: () => {
+                onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'workdays_consult',
+                        type: 'unsuccessful',
+                        event: {
+                            error: error.response?.data
+                        }
+                    });
                     toast.warning(
                         'اطلاعات مرکز مشاوره آنلاین شما قبلا ثبت شده است.تا زمان فعالسازی لطفا منتظر بمانید.'
                     );
