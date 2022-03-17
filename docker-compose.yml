@@ -12,6 +12,7 @@ services:
         command: 'yarn start'
         extra_hosts:
             - prescription-api.paziresh24.com:192.168.216.16
+        restart: always
 
     drapp-local:
         container_name: drapp-local
@@ -24,6 +25,7 @@ services:
             - PUBLIC_URL=/doctorapp
         ports:
             - '4030:80'
+        restart: always
 
     drapp:
         container_name: drapp
@@ -35,3 +37,4 @@ services:
             - NODE_ENV=production
         ports:
             - '4030:80'
+        restart: always
