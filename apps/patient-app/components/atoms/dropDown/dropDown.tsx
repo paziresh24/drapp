@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import Text from '../text';
 
 interface DropDownProps {
-    items: Array<{ id: number; name: string; icon?: React.ReactNode; action: () => void }>;
+    items: Array<{
+        id: number;
+        name: string;
+        icon?: React.ReactNode;
+        action: () => void;
+        testId?: string;
+    }>;
     element?: React.ReactNode;
 }
 
@@ -26,18 +32,19 @@ export const DropDown: React.FC<DropDownProps> = props => {
                 <>
                     <div className="absolute left-4 top-2 bg-white shadow-card w-40 rounded-xl rounded-tl-sm z-20">
                         <div className="flex flex-col p-2">
-                            {items.map(item => (
+                            {items.map(({ id, action, name, icon, testId }) => (
                                 <div
-                                    key={item.id}
+                                    key={id}
                                     className="flex items-center p-2 space-s-2 cursor-pointer"
                                     onClick={() => {
                                         setDropDown(false);
-                                        item.action();
+                                        action();
                                     }}
+                                    data-testId={testId}
                                 >
-                                    {item.icon}
+                                    {icon}
                                     <Text fontSize="sm" fontWeight="medium">
-                                        {item.name}
+                                        {name}
                                     </Text>
                                 </div>
                             ))}

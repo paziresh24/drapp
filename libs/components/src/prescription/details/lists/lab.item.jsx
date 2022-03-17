@@ -94,6 +94,7 @@ const LabsItem = ({
                                 <SelectDate
                                     label="تاریخ موثر"
                                     simple
+                                    minimumDate={utils('fa').getToday()}
                                     onChange={value => editDate(value)}
                                     default-value={service.date_do}
                                     today
@@ -300,6 +301,7 @@ const LabsItem = ({
                     <SelectDate
                         label="تاریخ موثر"
                         // simple
+                        minimumDate={utils('fa').getToday()}
                         onChange={value => editDate(value)}
                         default-value={service.date_do}
                         today

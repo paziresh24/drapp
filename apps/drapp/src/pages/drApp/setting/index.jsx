@@ -84,7 +84,13 @@ const Setting = () => {
 
             {getWorkDays.isSuccess && (
                 <>
-                    <Duration value={setDuration} defaultValue={getWorkDays.data.data.duration} />
+                    {info.center.id !== '5532' && (
+                        <Duration
+                            value={setDuration}
+                            defaultValue={getWorkDays.data.data.duration}
+                        />
+                    )}
+
                     <span>
                         لطفا روزها و ساعات کاری که در مطب خود آماده حضور بیماران هستید را مشخص کنید.
                     </span>

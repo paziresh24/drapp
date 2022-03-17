@@ -87,7 +87,7 @@ const SelectDate = props => {
                     value={selectedDay}
                     onChange={setSelectedDay}
                     inputPlaceholder="Select a day"
-                    minimumDate={utils('fa').getToday()}
+                    minimumDate={props.minimumDate}
                     shouldHighlightWeekends
                     colorPrimary="#27bda0"
                     locale="fa"

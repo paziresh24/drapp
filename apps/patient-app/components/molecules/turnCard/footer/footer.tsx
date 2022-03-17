@@ -39,6 +39,7 @@ export const TurnFooter: React.FC<TurnFooterProps> = props => {
             block={true}
             onClick={() => setQueueModal(true)}
             icon={<MegaphoneIcon color="#0077DB" />}
+            data-testId="footer__queue_button"
         >
             دریافت شماره نوبت
         </Button>

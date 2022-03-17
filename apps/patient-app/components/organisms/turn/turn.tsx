@@ -36,6 +36,7 @@ export const Turn: React.FC<TurnProps> = props => {
         <Card
             className="space-y-2 relative"
             style={{ opacity: status === BookStatus.deleted && '0.5' }}
+            data-testId="turn-card"
         >
             <TurnHeader
                 id={id}

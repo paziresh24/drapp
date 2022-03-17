@@ -218,3 +218,16 @@
         color: #27bda0;
     }
 }
+
+.line {
+    height: 1px;
+    width: 50%;
+    background: #ccc;
+}
+
+.lineRoot {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

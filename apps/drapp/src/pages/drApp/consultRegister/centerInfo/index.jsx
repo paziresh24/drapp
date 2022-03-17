@@ -9,7 +9,37 @@ import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { HelpIcon } from '@paziresh24/components/icons/public/help';
+import Select from '@paziresh24/components/doctorApp/Select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
+import { digitsFaToEn } from '@paziresh24/utils';
+var first = 1;
+function moneyCommaSep(ctrl) {
+    if (first > 1) {
+        ctrl = ctrl.replace(' تومان', '');
+    }
+    var separator = ',';
+    var int = ctrl.replace(new RegExp(separator, 'g'), '');
+    var regexp = new RegExp('\\B(\\d{3})(' + separator + '|$)');
+    do {
+        int = int.replace(regexp, separator + '$1');
+    } while (int.search(regexp) >= 0);
+    ctrl = int;
+    first += 1;
+
+    return ctrl + ' تومان';
+}
+function moneyBackSpace(ctrl) {
+    ctrl = ctrl.replace(' توما', '');
+    ctrl = ctrl.substr(0, ctrl.length - 1);
+    return ctrl + ' تومان';
+}
+
+function normalPrice(ctrl) {
+    ctrl = ctrl.replace(' تومان', '');
+    ctrl = ctrl.replace(',', '');
+    ctrl += '0';
+    return ctrl;
+}
 
 const CenterInfo = () => {
     const [info] = useDrApp();
@@ -17,10 +47,14 @@ const CenterInfo = () => {
     const [countVisitDaily, setCountVisitDaily] = useState();
     const [costVisit, setCostVisit] = useState();
     const [whatsAppCell, setWhatsAppCell] = useState();
-    const [, setConsult] = useConsult();
+    const [consult, setConsult] = useConsult();
 
     const history = useHistory();
-
+    var days = [
+        { id: '1', name: 'تا 1 روز' },
+        { id: '2', name: 'تا 2 روز' },
+        { id: '3', name: 'تا 3 روز' }
+    ];
     const updateCenter = () => {
         if (!whatsAppCell) {
             return toast.error('شماره whatsapp business الزامی می باشد');
@@ -30,10 +64,12 @@ const CenterInfo = () => {
         }
 
         setConsult({
-            whatsapp: whatsAppCell,
+            ...consult,
+            whatsapp: digitsFaToEn(whatsAppCell.replace(/^0+/, '')),
             price: costVisit,
-            turn_num: countVisitDaily
+            service_length: countVisitDaily
         });
+
         history.push('/consult/fill-info/expertises');
     };
 
@@ -43,12 +79,19 @@ const CenterInfo = () => {
                 <div className={styles['form-control']}>
                     <div className="flex space-s-2 w-full">
                         <div className="flex flex-col w-full space-y-3">
-                            <span>حداکثر تعداد ویزیت روزانه</span>
+                            <span>مدت زمان پاسخگویی پزشک</span>
 
-                            <TextField
-                                placeHolder="12 تا"
-                                type="Number"
-                                onChange={e => setCountVisitDaily(e.target.value)}
+                            <Select
+                                placeholder="تا 2 روز"
+                                onChange={value => {
+                                    if (value) {
+                                        setCountVisitDaily(value.id);
+                                    }
+                                }}
+                                items={days.map(item => ({
+                                    name: item.name,
+                                    value: item.id
+                                }))}
                             />
                         </div>
 
@@ -62,9 +105,19 @@ const CenterInfo = () => {
                             </div>
 
                             <TextField
-                                placeHolder="50000 تومان"
-                                type="Number"
-                                onChange={e => setCostVisit(e.target.value)}
+                                placeHolder="50,000 تومان"
+                                unit="تومان"
+                                type="Text"
+                                onChange={e => {
+                                    if (e.nativeEvent.inputType === 'insertText') {
+                                        e.target.value = moneyCommaSep(e.target.value);
+                                    } else if (
+                                        e.nativeEvent.inputType === 'deleteContentBackward'
+                                    ) {
+                                        e.target.value = moneyBackSpace(e.target.value);
+                                    }
+                                    setCostVisit(normalPrice(e.target.value));
+                                }}
                             />
                         </div>
                     </div>

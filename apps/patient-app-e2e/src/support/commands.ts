@@ -13,8 +13,8 @@ declare namespace Cypress {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject> {
         login(): void;
-        getTestId(selector: string): HTMLElement;
-        getTestIdLike(selector: string): HTMLElement;
+        getTestId(selector: string): Chainable<HTMLElement>;
+        findTestId(selector: string): Chainable<HTMLElement>;
     }
 }
 //
@@ -28,9 +28,9 @@ Cypress.Commands.add('login', () => {
 });
 
 Cypress.Commands.add('getTestId', (selector, ...args) => {
-    return cy.find(`[data-testid=${selector}]`, ...args);
+    return cy.get(`[data-testid=${selector}]`, ...args);
 });
 
-Cypress.Commands.add('getTestIdLike', (selector, ...args) => {
-    return cy.get(`[data-testid*=${selector}]`, ...args);
+Cypress.Commands.add('findTestId', (selector, ...args) => {
+    return cy.find(`[data-testid=${selector}]`, ...args);
 });

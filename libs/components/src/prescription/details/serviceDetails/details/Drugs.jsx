@@ -283,6 +283,7 @@ const DrugsDetails = ({ services, setServices, insuranceType, noDate = false }) 
                         <SelectDate
                             label="تاریخ موثر"
                             onChange={value => setDate(value)}
+                            minimumDate={utils('fa').getToday()}
                             today
                             default-value={
                                 date
