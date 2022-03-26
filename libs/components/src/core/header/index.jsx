@@ -285,7 +285,7 @@ const Header = () => {
                                                     ویزیت آنلاین
                                                 </span>
                                                 <span className={styles.centerAddress}>
-                                                    همین الان ویزیت آنلاین خود را فعال کنید.
+                                                    ‌همین الان به پزشکان ویزیت آنلاین بپیوندید .
                                                 </span>
                                             </div>
                                         </div>
