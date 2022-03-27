@@ -6,11 +6,13 @@ import Modal from '../modal';
 import Button from '../button';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import isEmpty from 'lodash/isEmpty';
+import { TrashIcon } from '@paziresh24/components/icons';
 
 const UploadField = forwardRef(({ title, onChange, data, loading, deleteAction }, ref) => {
     const [id] = useState(v4());
     const [deleteImage, setDeleteImage] = useState();
     const [selectedImage, setSelectedImage] = useState();
+    const [previewModal, setPreviewModal] = useState(false);
 
     return (
         <div className={styles['file']}>
@@ -33,7 +35,8 @@ const UploadField = forwardRef(({ title, onChange, data, loading, deleteAction }
                             alt={image.filename}
                             onClick={() => {
                                 setSelectedImage(image.id);
-                                setDeleteImage(true);
+                                // setDeleteImage(true);
+                                setPreviewModal(true);
                             }}
                             aria-hidden
                         />
@@ -65,8 +68,29 @@ const UploadField = forwardRef(({ title, onChange, data, loading, deleteAction }
                     <Overlay />
                 )}
             </label>
+
+            <Modal isOpen={previewModal} onClose={setPreviewModal}>
+                {selectedImage && (
+                    <img
+                        src={data.find(image => image.id === selectedImage)?.url}
+                        alt={data.find(image => image.id === selectedImage)?.filename}
+                    />
+                )}
+                <Button
+                    block
+                    theme="error"
+                    variant="secondary"
+                    onClick={() => setDeleteImage(true)}
+                >
+                    <div className="flex items-center space-s-3">
+                        <TrashIcon color="#f56262" />
+                        <span className="text-[#f56262]">حذف تصویر</span>
+                    </div>
+                </Button>
+            </Modal>
+
             <Modal
-                title="آیا از حذف عکس مطمئن هستید؟"
+                title="آیا از حذف تصویر مطمئن هستید؟"
                 isOpen={deleteImage}
                 onClose={setDeleteImage}
             >
@@ -78,6 +102,8 @@ const UploadField = forwardRef(({ title, onChange, data, loading, deleteAction }
                         onClick={() => {
                             deleteAction(selectedImage);
                             setDeleteImage(false);
+                            setPreviewModal(false);
+                            setSelectedImage(null);
                         }}
                     >
                         بله و حذف

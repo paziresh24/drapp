@@ -147,7 +147,6 @@ const StatusBar = props => {
     }, [moveDeleteModal]);
 
     const { tourState, setSteps } = useLearnTour();
-    const [menuIsOpen, setMenuIsOpen] = useMenu();
 
     useEffect(() => {
         if (urlParams?.learn) {

@@ -90,8 +90,8 @@ const ExpertisesPage = () => {
                                     <Expertises
                                         key={expertise.id}
                                         id={expertise.id}
-                                        degree={expertise.degree.id.toString()}
-                                        expertise={expertise?.expertise?.id.toString()}
+                                        degree={expertise?.degree?.id}
+                                        expertise={expertise?.expertise?.id}
                                         aliasTitle={expertise.alias_title}
                                         setExpertise={setExpertises}
                                         expertises={expertises}

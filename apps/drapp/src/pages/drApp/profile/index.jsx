@@ -606,7 +606,6 @@ const Profile = () => {
                             <Select
                                 label="استان"
                                 searchble
-                                // value={setProvince}
                                 onChange={value => {
                                     if (value) {
                                         setProvince(value.id);
@@ -624,17 +623,7 @@ const Profile = () => {
                                     name: item.name,
                                     value: item.id
                                 }))}
-                            >
-                                {/* {provinceData.map(province => (
-                                    <Option
-                                        key={province.id}
-                                        title={province.name}
-                                        value={+province.id}
-                                    >
-                                        {province.name}
-                                    </Option>
-                                ))} */}
-                            </Select>
+                            ></Select>
                             <Select
                                 label="شهر"
                                 searchble
@@ -669,7 +658,11 @@ const Profile = () => {
                             type="tel"
                             defaultValue={info.center.tell}
                             error={centerInfoErrors.tell}
-                            {...updateCenterInfo('tell', { required: true })}
+                            errorText="شماره تلفن را با فرمت درست وارد نمایید."
+                            {...updateCenterInfo('tell', {
+                                required: true,
+                                pattern: /^\d+$/
+                            })}
                         />
                         <TextField
                             label="خدمات مطب"
@@ -691,7 +684,7 @@ const Profile = () => {
                                     deleteGallery.mutate(
                                         { id },
                                         {
-                                            onError: err => {
+                                            onSuccess: () => {
                                                 getGallery.refetch();
                                             }
                                         }

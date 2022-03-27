@@ -142,16 +142,24 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                 }}
             />
             {step === 'REGISTER' && (
-                <TextField
-                    type="tel"
-                    label="کدملی"
-                    error={errors.nationalCode}
-                    {...nationalCodeRegister}
-                    ref={e => {
-                        nationalCodeRegister.ref(e);
-                        nationalCodeField.current = e;
-                    }}
-                />
+                <>
+                    <TextField
+                        type="tel"
+                        label="کدملی"
+                        error={errors.nationalCode}
+                        {...nationalCodeRegister}
+                        ref={e => {
+                            nationalCodeRegister.ref(e);
+                            nationalCodeField.current = e;
+                        }}
+                    />
+                    <div className="bg-[#eaf0f4] rounded-lg p-5 mt-5">
+                        <span className="text-[#586a79] text-2xl">
+                            لازم به ذکر است که مالکیت شماره موبایل وارد شده باید با کد ملی شما تطابق
+                            داشته باشد.
+                        </span>
+                    </div>
+                </>
             )}
             {step === 'REGISTER' && window.location.pathname === '/p24auth' && (
                 <TextField

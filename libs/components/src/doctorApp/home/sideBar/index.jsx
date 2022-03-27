@@ -34,9 +34,12 @@ import { StatusBar } from '../../turning/statusBar';
 import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
 import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
+import { useTour } from '@reactour/tour';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
+    const { setIsOpen: setIsOpenTour } = useTour();
+
     // const doctorInfo = useGetDoctorInfo();
     const [, setSettingIsOpen] = useSettingTurns();
     const [level] = useLevel();
@@ -231,6 +234,14 @@ const SideBar = () => {
         return noReplyComment.length;
     };
 
+    useEffect(() => {
+        if (localStorage.getItem('shouldFillProfile')) {
+            setOpen(true);
+            setIsDropDownOpen(true);
+            setTimeout(() => setIsOpenTour(true), 300);
+        }
+    }, [open, isDropDownOpen]);
+
     return (
         <div style={{ display: 'flex' }} onMouseLeave={() => setOpen(false)}>
             <div
@@ -367,6 +378,7 @@ const SideBar = () => {
                                 exitActive: styles.dropdown_exit_active
                             }}
                             unmountOnExit
+                            id="profile-dropdown"
                         >
                             <div
                                 className={`${styles.items_dropdown} ${
@@ -375,7 +387,15 @@ const SideBar = () => {
                                 onMouseOver={() => setIsDropDownOpen(true)}
                             >
                                 <ul>
-                                    <li onClick={() => history.push('/profile')}>
+                                    <li
+                                        onClick={() => {
+                                            history.push('/profile');
+                                            setIsOpenTour(false);
+                                            localStorage.removeItem('shouldFillProfile');
+                                            setIsDropDownOpen(false);
+                                            setTimeout(() => setOpen(false), 0);
+                                        }}
+                                    >
                                         <UserIcon color="#758599" />
                                         <span>پروفایل من</span>
                                     </li>
@@ -417,7 +437,13 @@ const SideBar = () => {
                         }}
                     >
                         <div className={styles['support-content']}>
-                            <span style={{ fontSize: '1.4rem', fontWeight: '700', opacity: '0.6' }}>
+                            <span
+                                style={{
+                                    fontSize: '1.4rem',
+                                    fontWeight: '700',
+                                    opacity: '0.6'
+                                }}
+                            >
                                 پشتیبانی: 02125015555
                             </span>
                         </div>

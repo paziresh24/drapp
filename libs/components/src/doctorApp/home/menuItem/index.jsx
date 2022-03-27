@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useMenu } from '@paziresh24/context/core/menu';
 
 const MenuItem = ({ item }) => {
-    const [open, setOpen] = useMenu();
+    const [open] = useMenu();
     const history = useHistory();
     const [isDropDownOpen, setIsDropDownOpen] = useState();
 

@@ -9,7 +9,7 @@ import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import provinceData from '@paziresh24/constants/province.json';
 import cityData from '@paziresh24/constants/city.json';
-import { Select, Option } from '@paziresh24/components/core/Selecte';
+import Select from '@paziresh24/components/doctorApp/Select';
 
 const CenterInfo = () => {
     const [info] = useDrApp();
@@ -67,37 +67,37 @@ const CenterInfo = () => {
                             <Select
                                 label="استان"
                                 searchble
-                                value={setProvince}
-                                default-value={+info.center.province}
-                            >
-                                {provinceData.map(province => (
-                                    <Option
-                                        key={province.id}
-                                        title={province.name}
-                                        value={+province.id}
-                                    >
-                                        {province.name}
-                                    </Option>
-                                ))}
-                            </Select>
-                            {cityList && (
-                                <Select
-                                    label="شهر"
-                                    searchble
-                                    value={setCity}
-                                    default-value={+info.center.city}
-                                >
-                                    {cityList.map(city => (
-                                        <Option key={city.id} title={city.name} value={+city.id}>
-                                            {city.name}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            )}
+                                onChange={value => {
+                                    if (value) {
+                                        setProvince(value.id);
+                                    }
+                                }}
+                                defaultValue={+info.center.province}
+                                items={provinceData.map(item => ({
+                                    name: item.name,
+                                    value: item.id
+                                }))}
+                            />
+                            <Select
+                                label="شهر"
+                                searchble
+                                onChange={value => {
+                                    if (value) {
+                                        setCity(value.id);
+                                    }
+                                }}
+                                defaultValue={+info.center.city}
+                                items={cityData
+                                    .filter(city => +city.province_id === +province)
+                                    .map(item => ({
+                                        name: item.name,
+                                        value: item.id
+                                    }))}
+                            />
                         </div>
                         <TextField
                             label="آدرس مطب"
-                            error={updateCenterInfo.address}
+                            error={centerInfoErrors.address}
                             defaultValue={info.center.address}
                             {...updateCenterInfo('address', { required: true })}
                         />
@@ -105,8 +105,12 @@ const CenterInfo = () => {
                             label="شماره تلفن مطب"
                             type="tel"
                             defaultValue={info.center.tell}
-                            error={updateCenterInfo.tell}
-                            {...updateCenterInfo('tell', { required: true })}
+                            error={centerInfoErrors.tell}
+                            errorText="شماره تلفن را با فرمت درست وارد نمایید."
+                            {...updateCenterInfo('tell', {
+                                required: true,
+                                pattern: /^\d+$/
+                            })}
                         />
                     </div>
                     <FixedWrapBottom>
