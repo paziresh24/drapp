@@ -15,5 +15,5 @@ module.exports = {
             }
         }
     },
-    plugins: [require('tailwindcss-rtl')]
+    plugins: [require('@tailwindcss/line-clamp'), require('tailwindcss-rtl')]
 };

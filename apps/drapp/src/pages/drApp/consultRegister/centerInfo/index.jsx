@@ -130,7 +130,7 @@ const CenterInfo = () => {
                     />
                 </div>
                 <div className="bg-[#eaf0f4] rounded-lg p-5 flex flex-col space-y-3">
-                    <span className="text-[#586a79] text-2xl">
+                    <span className="text-[#586a79] text-2xl leading-[3rem]">
                         <InfoIcon color="#586a79" className="inline-block ml-3" />
                         لازم به ذکر است که این شماره در دسترس بیماران قرار خواهد گرفت.
                     </span>

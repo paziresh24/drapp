@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { InfoIcon } from '@paziresh24/components/icons';
 
 const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, setFocus }) => {
     const resendCode = useResendCode({ mobile: userName, justDoctor: true });
@@ -154,7 +155,8 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                         }}
                     />
                     <div className="bg-[#eaf0f4] rounded-lg p-5 mt-5">
-                        <span className="text-[#586a79] text-2xl">
+                        <span className="text-[#586a79] text-2xl font-medium leading-[3rem]">
+                            <InfoIcon color="#586a79" className="inline-block ml-3" />
                             لازم به ذکر است که مالکیت شماره موبایل وارد شده باید با کد ملی شما تطابق
                             داشته باشد.
                         </span>
