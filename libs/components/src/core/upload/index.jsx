@@ -35,7 +35,6 @@ const UploadField = forwardRef(({ title, onChange, data, loading, deleteAction }
                             alt={image.filename}
                             onClick={() => {
                                 setSelectedImage(image.id);
-                                // setDeleteImage(true);
                                 setPreviewModal(true);
                             }}
                             aria-hidden

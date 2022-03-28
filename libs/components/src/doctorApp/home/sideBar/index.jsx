@@ -40,7 +40,6 @@ const SideBar = () => {
     const [open, setOpen] = useMenu();
     const { setIsOpen: setIsOpenTour } = useTour();
 
-    // const doctorInfo = useGetDoctorInfo();
     const [, setSettingIsOpen] = useSettingTurns();
     const [level] = useLevel();
 
