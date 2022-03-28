@@ -7,7 +7,7 @@ import { useDrApp } from '@paziresh24/context/drapp/index';
 import { useEffect, useState } from 'react';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
-import provinceData from '@paziresh24/constants/province.json';
+import provincesData from '@paziresh24/constants/province.json';
 import cityData from '@paziresh24/constants/city.json';
 import Select from '@paziresh24/components/doctorApp/Select';
 
@@ -73,7 +73,7 @@ const CenterInfo = () => {
                                     }
                                 }}
                                 defaultValue={+info.center.province}
-                                items={provinceData.map(item => ({
+                                items={provincesData.map(item => ({
                                     name: item.name,
                                     value: item.id
                                 }))}

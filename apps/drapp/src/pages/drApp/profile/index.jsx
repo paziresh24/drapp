@@ -21,8 +21,8 @@ import { useForm } from 'react-hook-form';
 import { formData } from '@paziresh24/utils';
 import Select from '@paziresh24/components/doctorApp/Select';
 import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
-import provinceData from '@paziresh24/constants/province.json';
-import cityData from '@paziresh24/constants/city.json';
+import provincesData from '@paziresh24/constants/province.json';
+import citiesData from '@paziresh24/constants/city.json';
 
 import {
     useBankInfo,
@@ -610,16 +610,16 @@ const Profile = () => {
                                     if (value) {
                                         setProvince(value.id);
                                         setPosition({
-                                            lat: +provinceData.find(item => +item.id === +value.id)
+                                            lat: +provincesData.find(item => +item.id === +value.id)
                                                 ?.lat,
-                                            lng: +provinceData.find(item => +item.id === +value.id)
+                                            lng: +provincesData.find(item => +item.id === +value.id)
                                                 ?.lon
                                         });
                                         return setMapZoom(8);
                                     }
                                 }}
                                 defaultValue={+info.center.province}
-                                items={provinceData.map(item => ({
+                                items={provincesData.map(item => ({
                                     name: item.name,
                                     value: item.id
                                 }))}
@@ -631,15 +631,16 @@ const Profile = () => {
                                     if (value) {
                                         setCity(value.id);
                                         setPosition({
-                                            lat: +cityData.find(item => +item.id === +value.id)
+                                            lat: +citiesData.find(item => +item.id === +value.id)
                                                 ?.lat,
-                                            lng: +cityData.find(item => +item.id === +value.id)?.lon
+                                            lng: +citiesData.find(item => +item.id === +value.id)
+                                                ?.lon
                                         });
                                         return setMapZoom(8);
                                     }
                                 }}
                                 defaultValue={+info.center.city}
-                                items={cityData
+                                items={citiesData
                                     .filter(city => +city.province_id === +province)
                                     .map(item => ({
                                         name: item.name,
