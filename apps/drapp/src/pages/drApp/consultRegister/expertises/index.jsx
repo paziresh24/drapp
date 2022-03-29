@@ -98,14 +98,14 @@ const ExpertisesPage = () => {
                 <div className={styles['form-control']}>
                     {expertises.length > 0 &&
                         expertises.map(
-                            (expertise, index) =>
-                                !isEmpty(expertise.degree) && (
+                            (expertiseObject, index) =>
+                                !isEmpty(expertiseObject.degree) && (
                                     <Expertises
-                                        key={expertise.id}
-                                        id={expertise.id}
-                                        degree={expertise.degree.id.toString()}
-                                        expertise={expertise?.expertise?.id.toString()}
-                                        aliasTitle={expertise.alias_title}
+                                        key={expertiseObject.id}
+                                        id={expertiseObject.id}
+                                        degree={expertiseObject.degree?.id}
+                                        expertise={expertiseObject?.expertise?.id}
+                                        aliasTitle={expertiseObject.alias_title}
                                         setExpertise={setExpertises}
                                         expertises={expertises}
                                         index={index}

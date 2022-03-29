@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { InfoIcon } from '@paziresh24/components/icons';
 
 const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, setFocus }) => {
     const resendCode = useResendCode({ mobile: userName, justDoctor: true });
@@ -82,7 +83,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                         event: {
                             cellPhone: digitsFaToEn(userName),
                             nationalCode: digitsFaToEn(nationalCode),
-                            medicalCode: medicalCode
+                            medicalCode: digitsFaToEn(medicalCode)
                         }
                     });
                     toast.success(data.message);
@@ -96,7 +97,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                         event: {
                             cellPhone: digitsFaToEn(userName),
                             nationalCode: digitsFaToEn(nationalCode),
-                            medicalCode: medicalCode,
+                            medicalCode: digitsFaToEn(medicalCode),
                             error: error.response?.data
                         }
                     });
@@ -144,27 +145,34 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                 }}
             />
             {step === 'REGISTER' && (
-                <TextField
-                    type="tel"
-                    label="کدنظام پزشکی"
-                    {...medicalCodeRegister}
-                    ref={e => {
-                        medicalCodeRegister.ref(e);
-                        medicalCodeField.current = e;
-                    }}
-                />
-            )}
-            {step === 'REGISTER' && (
-                <TextField
-                    type="tel"
-                    label="کدملی"
-                    error={errors.nationalCode}
-                    {...nationalCodeRegister}
-                    ref={e => {
-                        nationalCodeRegister.ref(e);
-                        nationalCodeField.current = e;
-                    }}
-                />
+                <>
+                    <TextField
+                        type="tel"
+                        label="کدنظام پزشکی"
+                        {...medicalCodeRegister}
+                        ref={e => {
+                            medicalCodeRegister.ref(e);
+                            medicalCodeField.current = e;
+                        }}
+                    />
+                    <TextField
+                        type="tel"
+                        label="کدملی"
+                        error={errors.nationalCode}
+                        {...nationalCodeRegister}
+                        ref={e => {
+                            nationalCodeRegister.ref(e);
+                            nationalCodeField.current = e;
+                        }}
+                    />
+                    <div className="bg-[#eaf0f4] rounded-lg p-5 mt-5">
+                        <span className="text-[#586a79] text-2xl font-medium leading-[3rem]">
+                            <InfoIcon color="#586a79" className="inline-block ml-3" />
+                            لازم به ذکر است که مالکیت شماره موبایل وارد شده باید با کد ملی شما تطابق
+                            داشته باشد.
+                        </span>
+                    </div>
+                </>
             )}
 
             <Button block type="submit" loading={resendCode.isLoading || createCenter.isLoading}>

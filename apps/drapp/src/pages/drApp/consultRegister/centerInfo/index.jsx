@@ -12,6 +12,7 @@ import { HelpIcon } from '@paziresh24/components/icons/public/help';
 import Select from '@paziresh24/components/doctorApp/Select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { digitsFaToEn } from '@paziresh24/utils';
+import { InfoIcon } from '@paziresh24/components/icons';
 var first = 1;
 function moneyCommaSep(ctrl) {
     if (first > 1) {
@@ -128,10 +129,16 @@ const CenterInfo = () => {
                         onChange={e => setWhatsAppCell(e.target.value)}
                     />
                 </div>
-                <span className="!mb-5 opacity-70">
-                    این شماره می تواند شماره مطب شما، شماره موبایل و یا هر شماره ای که قادر به نصب
-                    واتس اپ بیزینس روی آن هستید، باشد.
-                </span>
+                <div className="bg-[#eaf0f4] rounded-lg p-5 flex flex-col space-y-3">
+                    <span className="text-[#586a79] text-2xl leading-[3rem]">
+                        <InfoIcon color="#586a79" className="inline-block ml-3" />
+                        لازم به ذکر است که این شماره در دسترس بیماران قرار خواهد گرفت.
+                    </span>
+                    <span className="font-medium text-[#586a79] text-2xl">
+                        این شماره می تواند شماره مطب شما، شماره موبایل و یا هر شماره ای که قادر به
+                        نصب واتس اپ بیزینس روی آن هستید، باشد.
+                    </span>
+                </div>
                 <FixedWrapBottom>
                     <Button onClick={updateCenter} loading={centerInfoUpdate.isLoading} block>
                         مرحله بعدی
