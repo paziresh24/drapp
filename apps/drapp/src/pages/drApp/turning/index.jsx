@@ -417,7 +417,9 @@ const Turning = () => {
         visitedPatientsToday: () => {
             if (isExpertDoctor) {
                 return getTurn?.data?.data?.filter(turn =>
-                    turn.type === 'prescription' ? turn.finalized : turn.prescription?.finalized
+                    turn.type === 'prescription'
+                        ? turn.finalized
+                        : turn.prescription?.finalized ?? turn.book_status === 'visited'
                 )?.length;
             }
             return getTurn?.data?.data?.filter(

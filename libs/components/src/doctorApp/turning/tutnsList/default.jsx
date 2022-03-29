@@ -39,7 +39,14 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                         turns.filter(turn =>
                             isExpertDoctor
                                 ? turn.prescription?.finalized === finalized ||
-                                  turn.finalized === finalized
+                                  turn.finalized === finalized ||
+                                  (finalized &&
+                                      turn.book_status &&
+                                      turn.book_status === 'visited') ||
+                                  (!finalized &&
+                                      turn.book_status &&
+                                      turn.prescription == finalized &&
+                                      turn.book_status !== 'visited')
                                 : finalized
                                 ? turn.book_status === 'visited'
                                 : turn.book_status && turn.book_status !== 'visited'
@@ -75,6 +82,7 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
         Turn: ({ turn }) => (
             <TurnCard
                 turn={turn}
+                finalized={turn.book_status === 'visited' || turn.prescription.finalized}
                 key={turn.id}
                 dropDownShowKey={turn.id}
                 refetchData={refetchData}
@@ -100,7 +108,11 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
             return true;
         }
         if (turn.type === 'book') {
+            if (turn.book_status === 'visited') return true;
             if (!turn.prescription?.finalized) return false;
+            return true;
+        }
+        if (turn.type === 'book') {
             return true;
         }
         if (turn.finalized) return true;

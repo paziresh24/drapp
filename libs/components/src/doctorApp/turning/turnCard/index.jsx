@@ -27,7 +27,14 @@ import { sendEvent } from '@paziresh24/utils';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
 import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
-const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownShow }) => {
+const TurnCard = ({
+    dropDownShowKey,
+    turn,
+    refetchData,
+    dropDownShow,
+    setDropDownShow,
+    finalized
+}) => {
     const [info] = useDrApp();
     const [visitModal, setVisitModal] = useState(false);
     const history = useHistory();
@@ -232,6 +239,9 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                 if (e.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                     return setOtpConfirm(true);
                 }
+                if (e.response.data.error === 'PatientNotFound') {
+                    return setVisitModal(true);
+                }
                 toast.error(e.response.data.message);
                 if (
                     e.response.data.message ===
@@ -251,20 +261,20 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
 
     const visitProvider = () => {
         const instructionProvider =
-            turn.prescription?.insuranceType ?? addPrescription?.data?.result?.insuranceType;
+            turn.prescription?.insuranceType ??
+            addPrescription?.data?.result?.insuranceType ??
+            'paziresh24';
 
         if (!isExpertDoctor) return 'paziresh24';
         return instructionProvider;
     };
 
+    console.log(turn);
     return (
         <>
             <Loading show={addPrescription.isLoading} simple />
             <Default>
-                <tr
-                    className={turn.prescription?.finalized ? styles.disabled : ''}
-                    id={`identifier-${turn.id}`}
-                >
+                <tr className={finalized ? styles.disabled : ''} id={`identifier-${turn.id}`}>
                     <td data-label="نام بیمار:">
                         <div
                             style={{
@@ -390,15 +400,13 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 variant="secondary"
                                 size="small"
                                 disabled={
-                                    turn.prescription?.finalized ||
-                                    (!isExpertDoctor && turn.book_status === 'visited')
+                                    finalized || (!isExpertDoctor && turn.book_status === 'visited')
                                 }
                                 onClick={() => visitSubmit()}
                                 style={{ marginLeft: '1rem' }}
                                 loading={addPrescription.isLoading}
                             >
-                                {turn.prescription?.finalized ||
-                                (!isExpertDoctor && turn.book_status === 'visited')
+                                {finalized || (!isExpertDoctor && turn.book_status === 'visited')
                                     ? 'ویزیت شده'
                                     : 'ویزیت '}
                             </Button>
@@ -414,19 +422,6 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                                 </Button>
                             )}
                             <div className={styles.action}>
-                                {pdfLink && (
-                                    <a
-                                        download={
-                                            turn.prescription?.patientAdditionalData?.name +
-                                            ' ' +
-                                            turn.prescription?.patientAdditionalData?.lastName
-                                        }
-                                        href={pdfLink}
-                                        ref={linkClick}
-                                    >
-                                        {' '}
-                                    </a>
-                                )}
                                 {isExpertDoctor && (
                                     <div
                                         className={styles.turn_action}
@@ -767,15 +762,13 @@ const TurnCard = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDow
                             variant="secondary"
                             size="small"
                             disabled={
-                                turn.prescription?.finalized ||
-                                (!isExpertDoctor && turn.book_status === 'visited')
+                                finalized || (!isExpertDoctor && turn.book_status === 'visited')
                             }
                             block
                             onClick={() => visitSubmit()}
                             loading={addPrescription.isLoading}
                         >
-                            {turn.prescription?.finalized ||
-                            (!isExpertDoctor && turn.book_status === 'visited')
+                            {finalized || (!isExpertDoctor && turn.book_status === 'visited')
                                 ? 'ویزیت شده'
                                 : 'ویزیت '}
                         </Button>
