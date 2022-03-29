@@ -201,32 +201,16 @@ const WorkDays = () => {
 
                         <Button
                             className={styles['button-hero']}
-                            onClick={() => window.location.replace('/')}
+                            onClick={() => {
+                                window.location.replace('/');
+                                localStorage.setItem('shouldFillProfile', true);
+                            }}
                         >
                             شروع نوبت دهی
                         </Button>
                     </div>
                 </div>
             </Modal>
-            {/* <Modal
-                icon={<CircleTick />}
-                title="نوبت دهی شما فعال شد"
-                isOpen={success}
-                onClose={setSuccess}
-                fullPage
-            >
-                <div className={styles['final-modal']}>
-                    <span>
-                        بیماران شما از طریق وبسایت یا اپلیکیشن پذیرش24 می توانند نوبت شما را در تایم
-                        های مشخص شده دریافت نمایند. شما نیز می توانید از طریق منوی نوبت دهی مطب و یا
-                        دکمه زیر، نوبت های خود را مدیریت نمایید.
-                    </span>
-
-                    <Button onClick={() => location.replace('/turning')}>
-                        رفتن به صفحه مدیریت نوبت ها
-                    </Button>
-                </div>
-            </Modal> */}
         </>
     );
 };

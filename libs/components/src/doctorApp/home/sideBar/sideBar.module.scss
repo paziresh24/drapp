@@ -5,7 +5,6 @@
     overflow: hidden;
     overflow-y: auto;
     background: #3f4079;
-    // box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -21,9 +20,7 @@
 
     .wrapper {
         width: 100%;
-        // overflow: auto;
         height: 100%;
-        // padding-bottom: 20rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -33,11 +30,7 @@
         display: flex;
         position: absolute;
         top: 5rem;
-        // flex-direction: column;
         align-items: center;
-        // @include gap(1rem, false);
-        // padding: 1.5rem;
-        // border-bottom: 1px solid #606199;
         width: 100%;
         transition: all 0.5s;
 
@@ -48,7 +41,6 @@
 
         .user-info-wrapper {
             display: flex;
-            // flex-direction: column;
             align-items: center;
             width: 100%;
             cursor: pointer;
@@ -61,7 +53,6 @@
             }
 
             .user-name {
-                // font-weight: 400;
                 font-size: 1.5rem;
                 color: #fff;
                 display: flex;
@@ -108,55 +99,10 @@
         }
     }
 
-    // @media screen and (max-width: 992px) {
     position: fixed !important;
     top: 0;
     right: 0;
     z-index: 10;
-    // }
-}
-
-.support-wrapper {
-    align-items: center;
-    // position: fixed;
-    padding-right: 3rem;
-    padding-bottom: 1rem;
-    // padding: 4rem;
-    // padding-top: 2rem;
-    display: flex;
-    justify-content: center;
-    // background-color: #3f4079;
-    // min-width: 28rem;
-
-    > * {
-        margin: 0 0.7rem;
-    }
-
-    :first-child {
-        margin-right: 0;
-    }
-
-    :last-child {
-        margin-left: 0;
-    }
-
-    .support-content {
-        display: flex;
-        flex-direction: column;
-
-        > * {
-            margin: 0.1rem 0;
-            // color: rgba(255, 255, 255, 0.56);
-        }
-
-        :first-child {
-            margin-top: 0;
-        }
-
-        :last-child {
-            margin-bottom: 0;
-        }
-    }
 }
 
 .sidebar-open {
@@ -196,8 +142,6 @@
     width: 26rem;
     border: 1px solid rgba(226, 226, 226, 0.685);
     box-shadow: 0px 4px 25px rgba(65, 65, 65, 0.123);
-    // box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(15, 23, 42, 0.1) 0px 0px 0px 1px,
-    //     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
     border-radius: 0.8rem;
     flex-direction: column;
     overflow: hidden;
@@ -267,20 +211,4 @@
             }
         }
     }
-}
-
-.doctorName {
-    width: 99%;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-}
-
-.expertises {
-    width: 15rem;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
 }

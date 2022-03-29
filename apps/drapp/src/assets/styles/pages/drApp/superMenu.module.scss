@@ -62,7 +62,6 @@
             justify-content: space-between;
             @include gap(0.5rem);
             width: 100%;
-            // background-color: rgba(255, 255, 255, 0.5);
             background-color: #cedbe6;
 
             border-radius: 2rem;
@@ -302,6 +301,7 @@
         }
 
         .activeOfficeType {
+            white-space: nowrap;
             color: #fff;
             background-color: #27bda0;
             box-shadow: 0px 8px 35px rgba(39, 189, 159, 0.281);
