@@ -39,7 +39,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
     useEffect(() => {
         !isMobile && cellPhoneField.current.focus();
         if (step === 'REGISTER') {
-            nationalCodeField.current.focus();
+            medicalCodeField.current.focus();
         }
     }, [step]);
 
@@ -81,7 +81,8 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                         type: 'successful',
                         event: {
                             cellPhone: digitsFaToEn(userName),
-                            nationalCode: digitsFaToEn(nationalCode)
+                            nationalCode: digitsFaToEn(nationalCode),
+                            medicalCode: medicalCode
                         }
                     });
                     toast.success(data.message);
@@ -95,6 +96,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                         event: {
                             cellPhone: digitsFaToEn(userName),
                             nationalCode: digitsFaToEn(nationalCode),
+                            medicalCode: medicalCode,
                             error: error.response?.data
                         }
                     });
@@ -144,6 +146,17 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
             {step === 'REGISTER' && (
                 <TextField
                     type="tel"
+                    label="کدنظام پزشکی"
+                    {...medicalCodeRegister}
+                    ref={e => {
+                        medicalCodeRegister.ref(e);
+                        medicalCodeField.current = e;
+                    }}
+                />
+            )}
+            {step === 'REGISTER' && (
+                <TextField
+                    type="tel"
                     label="کدملی"
                     error={errors.nationalCode}
                     {...nationalCodeRegister}
@@ -153,17 +166,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                     }}
                 />
             )}
-            {step === 'REGISTER' && window.location.pathname === '/p24auth' && (
-                <TextField
-                    type="tel"
-                    label="کدنظام پزشکی"
-                    {...medicalCodeRegister}
-                    ref={e => {
-                        medicalCodeRegister.ref(e);
-                        medicalCodeField.current = e;
-                    }}
-                />
-            )}
+
             <Button block type="submit" loading={resendCode.isLoading || createCenter.isLoading}>
                 {step === 'REGISTER' ? 'ثبت نام' : 'ورود/ثبت نام'}
             </Button>

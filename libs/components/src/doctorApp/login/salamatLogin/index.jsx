@@ -102,6 +102,14 @@ const SalamatLogin = ({ step }) => {
                     });
                 },
                 onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'login',
+                        type: 'unsuccessful-salamat',
+                        event: {
+                            username: digitsFaToEn(username),
+                            error: error.response.data
+                        }
+                    });
                     if (error.response.data.message === 'user not found') {
                         return setLocalStep('CREATE_CENTER');
                     }
@@ -109,13 +117,6 @@ const SalamatLogin = ({ step }) => {
                         return toast.error('نام کاربری یا کلمه عبور اشتباه است');
                     }
                     toast.error(error.response.data.message);
-                    getSplunkInstance().sendEvent({
-                        group: 'login',
-                        type: 'unsuccessful-salamat',
-                        event: {
-                            username: digitsFaToEn(username)
-                        }
-                    });
                 }
             }
         );
