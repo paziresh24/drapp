@@ -34,7 +34,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
     });
     const medicalCodeField = useRef();
     const medicalCodeRegister = register('medicalCode', {
-        required: false
+        required: step === 'REGISTER'
     });
 
     useEffect(() => {
@@ -149,6 +149,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                     <TextField
                         type="tel"
                         label="کدنظام پزشکی"
+                        error={errors.medicalCode}
                         {...medicalCodeRegister}
                         ref={e => {
                             medicalCodeRegister.ref(e);
