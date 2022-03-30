@@ -1,5 +1,5 @@
 import styles from './expertises.module.scss';
-import { Select, Option } from '../../../core/Selecte';
+import Select from '@paziresh24/components/doctorApp/Select';
 import degreeData from '@paziresh24/constants/degree.json';
 import expertisesData from '@paziresh24/constants/expertises.json';
 import TextField from '../../../core/textField';
@@ -13,21 +13,21 @@ import isEmpty from 'lodash/isEmpty';
 export const Expertises = props => {
     const [degree, setDegree] = useState(props.degree);
     const [expertise, setExpertise] = useState(props.expertise);
-    const [expertiseSelect, setExpertiseSelect] = useState();
     const [aliasTitle, setAliasTitle] = useState(props.aliasTitle);
     const deleteExpertises = useDeleteExpertises();
     const [deleteExpertisesModal, setDeleteExpertisesModal] = useState(false);
 
     useEffect(() => {
+        if (props.degree) setDegree(props.degree);
+        if (props.expertise) setExpertise(props.expertise);
+    }, [props.degree, props.expertise]);
+
+    useEffect(() => {
         if (degree !== props.degree) {
-            setExpertise('');
-            setExpertiseSelect('');
+            setExpertise(null);
         }
         if (degree) {
             setTimeout(() => {
-                setExpertiseSelect(
-                    expertisesData.filter(expertise => expertise.degree_id === degree)
-                );
                 let visitesList = [...props.expertises];
                 visitesList[props.index] = {
                     id: props.id,
@@ -122,47 +122,35 @@ export const Expertises = props => {
                     />
                 )}
             </div>
-            {degree && (
-                <>
-                    <div className={styles['expertises_row']}>
-                        <Select
-                            label="درجه علمی"
-                            searchble
-                            value={setDegree}
-                            default-value={degree}
-                        >
-                            {degreeData.map(degree => (
-                                <Option key={degree.id} title={degree.name} value={degree.id}>
-                                    {degree.name}
-                                </Option>
-                            ))}
-                        </Select>
-                        {expertiseSelect && (
-                            <Select
-                                label="تخصص"
-                                searchble
-                                value={setExpertise}
-                                default-value={expertise}
-                            >
-                                {expertiseSelect.map(expertise => (
-                                    <Option
-                                        key={expertise?.expertise_id}
-                                        title={expertise?.name}
-                                        value={expertise?.expertise_id}
-                                    >
-                                        {expertise.name}
-                                    </Option>
-                                ))}
-                            </Select>
-                        )}
-                    </div>
-                    <TextField
-                        onChange={e => setAliasTitle(e.target.value)}
-                        label="عنوان تخصص"
-                        defaultValue={aliasTitle}
-                    />
-                </>
-            )}
+            <div className={styles['expertises_row']}>
+                <Select
+                    label="درجه علمی"
+                    searchble
+                    onChange={value => value && setDegree(value.id)}
+                    defaultValue={degree}
+                    items={degreeData.map(item => ({
+                        name: item.name,
+                        value: item.id
+                    }))}
+                />
+                <Select
+                    label="تخصص"
+                    searchble
+                    onChange={value => value && setExpertise(value.id)}
+                    defaultValue={expertise}
+                    items={expertisesData
+                        .filter(expertise => +expertise.degree_id === +degree)
+                        .map(item => ({
+                            name: item.name,
+                            value: item.expertise_id
+                        }))}
+                />
+            </div>
+            <TextField
+                onChange={e => setAliasTitle(e.target.value)}
+                label="عنوان تخصص"
+                defaultValue={aliasTitle}
+            />
 
             <Modal
                 title="آیا از حذف تخصص مطمئن هستید؟"

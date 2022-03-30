@@ -5,7 +5,6 @@ import Button from '../../../core/button';
 import { useWorkDays } from '@paziresh24/context/drapp/workDays';
 import classNames from 'classnames';
 import { Timeit } from 'react-timeit';
-import 'react-timeit/dist/index.css';
 import { CloseIcon } from '../../../icons';
 import isEmpty from 'lodash/isEmpty';
 import range from 'lodash/range';

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Button from '../../../core/button';
 import { useResendCode } from '@paziresh24/hooks/drapp/auth';
 import { useForm } from 'react-hook-form';
-import { toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 import Captcha from '../../../doctorApp/login/captcha';
 
 const OtoCode = ({ userName, loginAction, loginLoading, wrongPassword }) => {
@@ -44,7 +44,7 @@ const OtoCode = ({ userName, loginAction, loginLoading, wrongPassword }) => {
     const passwordAction = ({ password }) => {
         if (wrongPassword && !captcha) return setCaptchaError(true);
 
-        loginAction(userName, toEnglishNumber(password), false, captcha);
+        loginAction(userName, digitsFaToEn(password), false, captcha);
     };
 
     return (

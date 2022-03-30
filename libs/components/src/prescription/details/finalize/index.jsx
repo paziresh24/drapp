@@ -18,6 +18,10 @@ import queryString from 'query-string';
 import { useInsurances } from '@paziresh24/hooks/prescription/insurances';
 import toastType from '@paziresh24/constants/prescription.json';
 import isEmpty from 'lodash/isEmpty';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
+import { prescriptionType } from '@paziresh24/constants/prescriptionType';
+import { serviceType } from '@paziresh24/constants/serviceType';
 
 const Finalize = () => {
     const { search } = useLocation();
@@ -31,7 +35,7 @@ const Finalize = () => {
     const [backPage] = useBackPage();
 
     // local state
-    let isServicesOfDoctorsTamin = false;
+    let isServiceWithVisitTamin = false;
     const [isServicesOfDoctors, setIsServicesOfDoctors] = useState(false);
 
     // api hook
@@ -40,6 +44,7 @@ const Finalize = () => {
     const updatePrescription = useUpdatePrescription();
     const addItemService = useAddItemService();
     const insurances = useInsurances({ identifier: urlParams.identifier });
+    const paziresh = usePaziresh();
 
     // modal
     const [servicesDoctorVisitConfirmModal, setServicesDoctorVisitConfirmModal] = useState(false);
@@ -47,8 +52,12 @@ const Finalize = () => {
     const [deliverModal, setDeliverModal] = useState(false);
     const [deliverConfirmModal, setDeliverConfirmModal] = useState(false);
     const [authForm, setAuthForm] = useState(false);
+    const [referenceModal, setReferenceModal] = useState(false);
 
     const visitDescription = useRef();
+    const referenceFeedback = useRef();
+
+    const startPrescribeDateTime = useRef();
 
     const updatePrescriptionAction = (id, data) => {
         updatePrescription.mutate({
@@ -56,6 +65,55 @@ const Finalize = () => {
             ...data
         });
     };
+
+    useEffect(() => {
+        startPrescribeDateTime.current = new Date();
+    }, []);
+
+    const servicesCloneRef = useRef();
+
+    useEffect(() => {
+        servicesCloneRef.current = services;
+    }, [services]);
+
+    useLayoutEffect(() => {
+        // componentWillUnmount
+        return () => {
+            const servicesWithOutNullItem = servicesCloneRef.current
+                .filter(item => item.item_id !== null)
+                .map(
+                    ({
+                        brand,
+                        count,
+                        date_do,
+                        description,
+                        how_to_use,
+                        service,
+                        number_of_period,
+                        prescription_id,
+                        use_instruction,
+                        use_time
+                        // active_from
+                    }) => {
+                        return {
+                            brand,
+                            count,
+                            date_do,
+                            description,
+                            how_to_use,
+                            id: service.id,
+                            number_of_period,
+                            prescription_id,
+                            use_instruction,
+                            use_time
+
+                            // active_from
+                        };
+                    }
+                );
+            addItemToPrescription(servicesWithOutNullItem);
+        };
+    }, []);
 
     const addItemToPrescription = items => {
         return bulkItems.mutateAsync({
@@ -66,7 +124,8 @@ const Finalize = () => {
 
     const finalizePrescriptionAction = () => {
         return finalizePrescription.mutateAsync({
-            prescriptionId: prescriptionInfo.id
+            prescriptionId: prescriptionInfo.id,
+            referenceFeedback: referenceFeedback?.current?.value
         });
     };
 
@@ -115,10 +174,10 @@ const Finalize = () => {
     const submitServices = async () => {
         insurances.remove();
 
-        // return;
         if (services.length === 0 && !prescriptionInfo.finalized) {
             return setVisitModal(true);
         }
+
         if (diagnosis?.id) {
             updatePrescriptionAction(prescriptionInfo.id, {
                 diagnosis: diagnosis.name,
@@ -140,9 +199,7 @@ const Finalize = () => {
                         number_of_period,
                         prescription_id,
                         use_instruction,
-                        use_time,
-                        service_type
-                        // active_from
+                        use_time
                     }) => {
                         return {
                             brand,
@@ -151,24 +208,50 @@ const Finalize = () => {
                             description,
                             how_to_use,
                             id: service.id,
-                            number_of_period,
+                            number_of_period: +number_of_period,
                             prescription_id,
                             use_instruction,
-                            use_time,
-                            ...(service_type === 95 &&
-                                isServicesOfDoctorsTamin && { isVisit: true })
-                            // active_from
+                            use_time
                         };
                     }
                 );
             const { items } = await addItemToPrescription(servicesWithOutNullItem);
 
+            if (isServiceWithVisitTamin) {
+                await addItemService.mutateAsync({
+                    prescriptionId: prescriptionInfo.id,
+                    comments: ''
+                });
+            }
+
             if (!prescriptionInfo.finalized) {
                 const data = await finalizePrescriptionAction();
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'finalized',
+                    event: {
+                        prescription_info: prescriptionInfo
+                    }
+                });
+
+                paziresh.mutate({
+                    book_id: prescriptionInfo.identifier,
+                    status: true
+                });
+
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'duration',
+                    event: {
+                        start_date: startPrescribeDateTime.current,
+                        end_date: new Date(),
+                        duration: new Date().getTime() - startPrescribeDateTime.current.getTime(),
+                        prescription_info: prescriptionInfo
+                    }
+                });
 
                 sendEvent('sucsessfulPrescribe', 'prescription', 'sucsessfulPrescribe');
                 if (isServicesOfDoctors) {
-                    setPrescriptionInfo(data);
                     return setDeliverConfirmModal(true);
                 }
                 if (isEmpty(backPage)) {
@@ -177,7 +260,7 @@ const Finalize = () => {
                     });
                 } else {
                     history.push('/consult/', {
-                        room_id: urlParams.room_id
+                        room_id: backPage
                     });
                 }
             } else {
@@ -187,12 +270,29 @@ const Finalize = () => {
                 if (isEmpty(backPage)) {
                     history.push('/');
                 }
+                getSplunkInstance().sendEvent({
+                    group: 'prescription',
+                    type: 'edited',
+                    event: { prescription_info: prescriptionInfo }
+                });
                 !toast.isActive('finalizePrescription') &&
                     toast.success('نسخه ویرایش شد.', {
                         toastId: 'finalizePrescription'
                     });
             }
         } catch (error) {
+            getSplunkInstance().sendEvent({
+                group: 'prescription',
+                type: 'finalized-error',
+                event: { error: error.response.data, prescription_info: prescriptionInfo }
+            });
+            if (
+                error.response.data.prescription_type === prescriptionType.VISIT &&
+                isServiceWithVisitTamin
+            ) {
+                isServiceWithVisitTamin = false;
+                return submitServices();
+            }
             if (error.response?.data?.messages) {
                 error.response.data?.messages.map(item => {
                     toast[toastType[item.type]](item.text);
@@ -231,9 +331,18 @@ const Finalize = () => {
                     size="small"
                     className={styles.button}
                     onClick={() => {
-                        if (services.some(item => item.service_type === 95)) {
+                        if (
+                            services.some(
+                                item => item.service_type === serviceType.TAMIN.SERVICES_OF_DOCTORS
+                            )
+                        ) {
                             return setServicesDoctorVisitConfirmModal(true);
                         }
+                        if (
+                            prescriptionInfo.insuranceType === 'salamat' &&
+                            prescriptionInfo.salamat_prescription.isReference
+                        )
+                            return setReferenceModal(true);
                         submitServices();
                     }}
                     loading={finalizePrescription.isLoading || bulkItems.isLoading}
@@ -246,14 +355,34 @@ const Finalize = () => {
                     size="small"
                     className={styles.button}
                     onClick={() => {
-                        if (services.some(item => item.service_type === 95)) {
+                        if (
+                            services.some(
+                                item => item.service_type === serviceType.TAMIN.SERVICES_OF_DOCTORS
+                            )
+                        ) {
                             return setServicesDoctorVisitConfirmModal(true);
                         }
+                        if (
+                            prescriptionInfo.insuranceType === 'salamat' &&
+                            prescriptionInfo.salamat_prescription.isReference
+                        )
+                            return setReferenceModal(true);
                         submitServices();
                     }}
                     loading={finalizePrescription.isLoading || bulkItems.isLoading}
                 >
                     نهایی سازی نسخه
+                </Button>
+            )}
+
+            {isServicesOfDoctors && prescriptionInfo.finalized && (
+                <Button
+                    block
+                    onClick={() => setDeliverConfirmModal(true)}
+                    size="small"
+                    className={styles.button}
+                >
+                    ارائه خدمت
                 </Button>
             )}
 
@@ -287,7 +416,7 @@ const Finalize = () => {
                     <Button block variant="primary" onClick={openDeliverInfo}>
                         بله
                     </Button>
-                    <Button block variant="secondary" onClick={() => setDeliverConfirmModal(false)}>
+                    <Button block variant="secondary" onClick={() => history.push('/')}>
                         خیر
                     </Button>
                 </div>
@@ -303,7 +432,7 @@ const Finalize = () => {
                         block
                         variant="primary"
                         onClick={() => {
-                            isServicesOfDoctorsTamin = true;
+                            isServiceWithVisitTamin = true;
                             submitServices();
                             setServicesDoctorVisitConfirmModal(false);
                         }}
@@ -314,7 +443,7 @@ const Finalize = () => {
                         block
                         variant="secondary"
                         onClick={() => {
-                            isServicesOfDoctorsTamin = false;
+                            isServiceWithVisitTamin = false;
                             submitServices();
                             setServicesDoctorVisitConfirmModal(false);
                         }}
@@ -324,11 +453,27 @@ const Finalize = () => {
                 </div>
             </Modal>
 
+            <Modal title="بازخورد ارجاع" isOpen={referenceModal} onClose={setReferenceModal}>
+                <TextArea ref={referenceFeedback} />
+                <div className={styles.modalConfirmRow}>
+                    <Button block variant="primary" onClick={submitServices}>
+                        ثبت بازخورد
+                    </Button>
+                </div>
+            </Modal>
+
             <DeliverCase
                 isOpen={deliverModal}
                 onClose={setDeliverModal}
-                trackingCode={prescriptionInfo?.salamat_prescription?.trackingCode}
-                nationalCode={prescriptionInfo?.patientNationalCode}
+                prescriptionInfo={finalizePrescription.data ?? prescriptionInfo}
+                trackingCode={
+                    finalizePrescription?.data?.salamat_prescription?.trackingCode ??
+                    prescriptionInfo?.salamat_prescription?.trackingCode
+                }
+                nationalCode={
+                    finalizePrescription?.data?.patientNationalCode ??
+                    prescriptionInfo?.patientNationalCode
+                }
             />
             <Modal title="احرازهویت" isOpen={authForm} onClose={setAuthForm}>
                 <FormAuth

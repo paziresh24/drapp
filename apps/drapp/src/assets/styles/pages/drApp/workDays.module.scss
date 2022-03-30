@@ -9,7 +9,7 @@
     font-weight: bold;
     font-size: 1.4rem;
     margin-top: 2rem;
-    color: #3f3f79;
+    color: $color-text;
     position: relative;
     overflow: hidden;
     // height: 67rem;
@@ -35,7 +35,7 @@
     padding: 1.5rem;
     font-weight: bold;
     font-size: 1.4rem;
-    color: #3f3f79;
+    color: $color-text;
     position: relative;
     // height: 55.8rem;
     overflow: hidden;
@@ -67,7 +67,7 @@
     .day {
         font-weight: bold;
         font-size: 1.4rem;
-        color: #3f3f79;
+        color: $color-text;
         width: 20%;
     }
     .input-row {
@@ -101,7 +101,7 @@
             text-align: center;
             padding: 0 1rem;
             transition: all 0.5s ease;
-            color: #3f3f79;
+            color: $color-text;
             font-size: 1.3rem;
             font-weight: 500;
             &:focus {
@@ -131,7 +131,7 @@
     outline: 0;
     font-size: 1.6rem;
     font-weight: 500;
-    color: #3f3f79;
+    color: $color-text;
 }
 
 .time-picker-wrapper {
@@ -218,14 +218,15 @@
             font-weight: 700;
             margin-bottom: 2rem;
             margin-top: 0.5rem;
+            text-align: center;
         }
 
         .hero-info-wrapper {
             display: flex;
             flex-direction: column;
             position: absolute;
-            top: 5rem;
-            right: 5rem;
+            top: 2rem;
+            right: 2rem;
 
             .name {
                 font-size: 1.9rem;

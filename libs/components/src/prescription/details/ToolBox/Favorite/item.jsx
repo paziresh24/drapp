@@ -12,6 +12,7 @@ import { isMobile } from 'react-device-detect';
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { sendEvent } from '@paziresh24/utils';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Item = ({ service, setFavoriteListSelect, favoriteListSelect }) => {
     const [prescriptionInfo] = useSelectPrescription();
@@ -46,6 +47,10 @@ const Item = ({ service, setFavoriteListSelect, favoriteListSelect }) => {
             }
         ]);
         sendEvent('clickfavorite', 'prescription', 'clickfavorite');
+        getSplunkInstance().sendEvent({
+            group: 'prescription-tool-box',
+            type: 'add-service-with-favorite'
+        });
 
         isMobile && setIsOpenToolBox(false);
     };
@@ -57,6 +62,10 @@ const Item = ({ service, setFavoriteListSelect, favoriteListSelect }) => {
                 : services[services.length - 1]?.id ?? 0;
         if (e.target.checked) {
             sendEvent('clickfavorite', 'prescription', 'clickfavorite');
+            getSplunkInstance().sendEvent({
+                group: 'prescription-tool-box',
+                type: 'add-service-with-favorite'
+            });
 
             if (!favoriteListSelect.some(item => item.service.id === service.service.id)) {
                 setFavoriteListSelect(prev => [

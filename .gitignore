@@ -38,3 +38,11 @@ testem.log
 .DS_Store
 Thumbs.db
 node_modules
+
+.eslintcache
+
+tsconfig.tsbuildinfo
+
+storybook-static
+
+.env.local

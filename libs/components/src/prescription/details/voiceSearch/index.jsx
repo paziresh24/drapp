@@ -6,7 +6,7 @@ import { Search } from './../Search';
 import { isMobile } from 'react-device-detect';
 import { sendEvent } from '@paziresh24/utils';
 
-const VoiceSearch = ({ onChange, type, typeId, label, insuranceType }) => {
+const VoiceSearch = ({ onChange, type, typeId, insuranceType, label }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const [prescriptionInfo] = useSelectPrescription();
@@ -72,7 +72,7 @@ const VoiceSearch = ({ onChange, type, typeId, label, insuranceType }) => {
                     />
                 </svg>
             </div>
-            <Modal noHeader noBodyPad isOpen={isOpen} onClose={setIsOpen}>
+            <Modal noHeader noBodyPadding isOpen={isOpen} onClose={setIsOpen}>
                 <div className={styles.speechWrapper}>
                     <div className={styles.recordIcon}>
                         <svg
@@ -101,13 +101,13 @@ const VoiceSearch = ({ onChange, type, typeId, label, insuranceType }) => {
                 </div>
                 <div className={styles.speechFooter}>
                     <span>
-                        این قابلیت به صورت آزمایشی است و شما میتوانید با گفتن نام{' '}
-                        {label.replace('انتخاب ', '')} آن را سرچ کنید.
+                        این قابلیت به صورت آزمایشی می باشد و شما با گفتن نام{' '}
+                        {label.replace('انتخاب ', '')} می توانید آن را جستجو کنید.
                     </span>
-                    <span>برای مثال بگویید استامینوفن ...</span>
+                    <span>مثلا بگویید استامینوفن ...</span>
                 </div>
             </Modal>
-            <Modal noHeader noBodyPad isOpen={isOpenSearch} onClose={setIsOpenSearch}>
+            <Modal noHeader noBodyPadding isOpen={isOpenSearch} onClose={setIsOpenSearch}>
                 <div>
                     <div
                         style={{

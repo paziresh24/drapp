@@ -7,6 +7,7 @@ import { useDrApp } from '@paziresh24/context/drapp/index';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const CompleteInfo = () => {
     const [info] = useDrApp();
@@ -31,9 +32,20 @@ const CompleteInfo = () => {
             },
             {
                 onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'complete_info_active_booking',
+                        type: 'successful'
+                    });
                     history.push('/fill-info/center-info');
                 },
                 onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'complete_info_active_booking',
+                        type: 'unsuccessful',
+                        event: {
+                            error: error.response?.data
+                        }
+                    });
                     console.dir({ error });
                     toast.error(error.response.data.message);
                 }

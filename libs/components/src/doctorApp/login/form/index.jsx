@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLogin, useResendCode, useCaptcha } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/utils';
 import { setToken } from '@paziresh24/utils/localstorage';
 import { isMobile } from 'react-device-detect';
 import queryString from 'query-string';
@@ -10,8 +10,11 @@ import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
 import Password from './../password';
 import OtpCode from './../otpCode';
 import UserName from '../userName';
+import SalamatLogin from '../salamatLogin';
 import ForgotPassword from '../forgotPassword';
+import Button from '../../../core/button/index';
 import ChangePassword from './../changePassword/index';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Form = ({ focus, setFocus }) => {
     const [loginType, setLoginType] = useState('password');
@@ -29,8 +32,8 @@ const Form = ({ focus, setFocus }) => {
     const loginAction = (username, password, forgot = false, captcha) => {
         login.mutate(
             {
-                username: toEnglishNumber(username),
-                password: toEnglishNumber(password),
+                username: digitsFaToEn(username),
+                password: digitsFaToEn(password),
                 ...(captcha && captcha),
                 justDoctor: true
             },
@@ -39,6 +42,14 @@ const Form = ({ focus, setFocus }) => {
                     setToken(data.access_token);
 
                     if (!forgot) {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'successful',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
+
                         if (params?.url && new URL(params?.url).origin === location.origin) {
                             return location.replace(decodeURIComponent(params.url));
                         }
@@ -50,20 +61,47 @@ const Form = ({ focus, setFocus }) => {
                             }
                         });
                     } else {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'change-password',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
                         setStep('CHANGEPASSWORD');
                     }
                 },
                 onError: error => {
                     const statusCode = error.response?.status;
                     const message = error.response?.data;
-                    sendEvent('doctorReg', 'step1', `unsuccessfulreg ${username}`);
 
                     if (statusCode === 401) {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'unsuccessful-password',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
                         toast.error('رمز وارد شده اشتباه می باشد.');
                     } else if (message.field === 'captcha_value') {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'unsuccessful-captcha',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
                         toast.error('عبارت امنیتی اشتباه است.');
                         getCaptcha.refetch();
                     } else {
+                        getSplunkInstance().sendEvent({
+                            group: 'login',
+                            type: 'unsuccessful-irregular',
+                            event: {
+                                username: digitsFaToEn(username)
+                            }
+                        });
                         toast.error('خطایی رخ داده است.');
                     }
                 }
@@ -118,15 +156,17 @@ const Form = ({ focus, setFocus }) => {
                     <span className="text-lg font-black">ورود/ثبت نام پزشکان</span>
                 )}
                 {step === 'REGISTER' && <span className="text-lg font-black">ثبت نام پزشک</span>}
-                {step === 'PASSWORD' && <span className="text-lg font-black">ورود پزشک</span>}
+                {(step === 'PASSWORD' || step === 'SALAMATAUTH') && (
+                    <span className="text-lg font-black">ورود پزشک</span>
+                )}
                 {step === 'FORGOTPASSWORD' && (
-                    <span className="text-lg font-black">فراموشی رمزعبور</span>
+                    <span className="text-lg font-black">بازیابی رمزعبور</span>
                 )}
                 {step === 'CHANGEPASSWORD' && (
                     <span className="text-lg font-black">رمزعبور جدید</span>
                 )}
 
-                {step !== 'USERNAME' && (
+                {step !== 'USERNAME' && step !== 'CHANGEPASSWORD' && step !== 'SALAMATAUTH' && (
                     <button
                         className="border-none text-xs font-medium rounded-full px-4 py-2 cursor-pointer bg-[#e0e8efa9] text-[#586a79]"
                         onClick={() => {
@@ -149,6 +189,7 @@ const Form = ({ focus, setFocus }) => {
                         setFocus={isMobile && setFocus}
                     />
                 )}
+                {step === 'SALAMATAUTH' && <SalamatLogin step={step} />}
                 {step === 'PASSWORD' && loginType === 'password' && (
                     <Password
                         userName={userName}
@@ -217,7 +258,39 @@ const Form = ({ focus, setFocus }) => {
                 )}
             </div>
 
-            {!focus && !centersConfig[location.hostname]?.hideDownloadBox && (
+            {step === 'USERNAME' && (
+                <div className="w-full">
+                    <div className="flex justify-center items-center">
+                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                        <span className="p-5">یا</span>
+                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                    </div>
+                    <Button
+                        onClick={() => {
+                            setFocus(true);
+                            setStep('SALAMATAUTH');
+                        }}
+                        block
+                        variant="secondary"
+                        testId="change-login-with-salamat"
+                    >
+                        ورود با بیمه سلامت
+                    </Button>
+                </div>
+            )}
+            {step === 'SALAMATAUTH' && (
+                <div className="w-full">
+                    <div className="flex justify-center items-center">
+                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                        <span className="p-5">یا</span>
+                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                    </div>
+                    <Button onClick={() => setStep('USERNAME')} block variant="secondary">
+                        ورود با پذیرش 24
+                    </Button>
+                </div>
+            )}
+            {!focus && (
                 <a className="flex items-center absolute bottom-5" href="tel:02125015555">
                     <svg
                         width="21"

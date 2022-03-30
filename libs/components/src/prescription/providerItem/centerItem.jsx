@@ -3,7 +3,7 @@ import styles from './providerItem.module.scss';
 import Chips from '../../core/chips';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { sendEvent, digitsFaToEn } from '@paziresh24/utils';
 import TextField from '../../core/textField';
 import Button from '../../core/button';
 import { useForm } from 'react-hook-form';
@@ -18,6 +18,7 @@ import { useDrApp } from '@paziresh24/context/drapp/index';
 import TaminIcon from '@paziresh24/components/icons/prescription/tamin';
 import SalamatIcon from '@paziresh24/components/icons/prescription/salamat';
 import { isMobile } from 'react-device-detect';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
     const createTaminDoctor = useCreateTaminDoctor();
@@ -44,14 +45,21 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
         if (isEmpty(insurance)) {
             createTaminDoctor.mutate(
                 {
-                    docId: toEnglishNumber(data.docId),
-                    nationalCode: toEnglishNumber(data.nationalCode),
-                    mobileNo: toEnglishNumber(data.mobileNo),
-                    username: toEnglishNumber(data.taminUsername),
-                    password: toEnglishNumber(data.taminPassword)
+                    docId: digitsFaToEn(data.docId),
+                    nationalCode: digitsFaToEn(data.nationalCode),
+                    mobileNo: digitsFaToEn(data.mobileNo),
+                    username: digitsFaToEn(data.taminUsername),
+                    password: digitsFaToEn(data.taminPassword)
                 },
                 {
                     onSuccess: () => {
+                        getSplunkInstance().sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication',
+                            event: {
+                                provider: 'tamin'
+                            }
+                        });
                         isImport && setImportModal(true);
                         setIsAuthentication(true);
                         refetch();
@@ -59,6 +67,14 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                     },
                     onError: error => {
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
+                        getSplunkInstance().sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-error',
+                            event: {
+                                provider: 'tamin',
+                                error
+                            }
+                        });
                         console.clear();
                         const statusCode = error.response?.status;
                         if (statusCode === 401) {
@@ -73,21 +89,36 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
             updateTaminDoctor.mutate(
                 {
                     id: insurance.id,
-                    docId: toEnglishNumber(data.docId),
-                    nationalCode: toEnglishNumber(data.nationalCode),
-                    mobileNo: toEnglishNumber(data.mobileNo),
-                    username: toEnglishNumber(data.taminUsername),
-                    password: toEnglishNumber(data.taminPassword)
+                    docId: digitsFaToEn(data.docId),
+                    nationalCode: digitsFaToEn(data.nationalCode),
+                    mobileNo: digitsFaToEn(data.mobileNo),
+                    username: digitsFaToEn(data.taminUsername),
+                    password: digitsFaToEn(data.taminPassword)
                 },
                 {
                     onSuccess: () => {
                         isImport && setImportModal(true);
+                        getSplunkInstance().sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-edit',
+                            event: {
+                                provider: 'tamin'
+                            }
+                        });
                         setIsAuthentication(true);
                         refetch();
                         toast.success('اطلاعات شما ویرایش شد.');
                     },
                     onError: error => {
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
+                        getSplunkInstance().sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-error',
+                            event: {
+                                provider: 'tamin',
+                                error
+                            }
+                        });
                         console.clear();
                         const statusCode = error.response?.status;
                         if (statusCode === 401) {
@@ -190,7 +221,7 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                     >
                         <TextField
                             defaultValue={insurance?.docId ?? info.doctor?.medical_code}
-                            label="کد نظارم پزشکی"
+                            label="کد نظام پزشکی"
                             error={errors.docId}
                             {...register('docId', { required: true })}
                         />

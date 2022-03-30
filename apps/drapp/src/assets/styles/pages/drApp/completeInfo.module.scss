@@ -14,12 +14,12 @@
         @include gap(1rem, false);
         font-weight: bold;
         font-size: 1.4rem;
-        color: #3f3f79;
+        color: $color-text;
         .form-control {
             display: flex;
             flex-direction: column;
             @include gap(2rem, false);
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
             margin-top: 2rem;
         }
 

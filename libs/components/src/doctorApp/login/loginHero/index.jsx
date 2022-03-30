@@ -53,10 +53,10 @@ const LoginHero = ({ focus }) => {
                 )}
                 <div className="flex self-end xl:self-center flex-col xl:text-center">
                     <span className="font-black text-xl lg:text-3xl text-white">
-                        صدور نسخه فقط با یک کلیک!!
+                        پذیرش24، دستیار هوشمند پزشکان{' '}
                     </span>
                     <span className="font-normal text-base lg:text-lg mt-3 text-white text-opacity-75">
-                        بدون وارد کردن اطلاعات بیمار، از لیست نوبت دهی دکمه صدور نسخه را بزنید.
+                        پرونده الکترونیک، نسخه نویسی و مدیریت مطب تنها در یک پنل
                     </span>
 
                     {!centersConfig[window.location.hostname]?.hideDownloadBox && (

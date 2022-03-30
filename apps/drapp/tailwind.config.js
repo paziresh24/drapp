@@ -8,7 +8,11 @@ module.exports = {
         ...createGlobPatternsForDependencies(__dirname)
     ],
     theme: {
-        extend: {}
+        extend: {
+            minWidth: {
+                20: '5rem'
+            }
+        }
     },
-    plugins: [require('tailwindcss-rtl')]
+    plugins: [require('@tailwindcss/line-clamp'), require('tailwindcss-rtl')]
 };

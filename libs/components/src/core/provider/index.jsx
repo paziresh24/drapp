@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import TagManager from 'react-gtm-module';
+import { splunk as splunkEvent } from '@paziresh24/splunk-event';
+import { v4 as uuidV4 } from 'uuid';
 
 toast.configure({
     position: 'top-right',
@@ -35,7 +37,7 @@ export const queryClient = new QueryClient({
 const isProduction = process.env.NODE_ENV === 'production';
 const isMainDomain = location.host === window._env_.P24_MAIN_DOMAIN;
 
-if (isProduction && isMainDomain) {
+if (isProduction && isMainDomain && !window._env_.P24_DISABLE_THIRD_PARTY) {
     Sentry.init({
         dsn: 'https://e61a90738da845c19044453cacd98d94@p24guard.paziresh24.com/9',
         integrations: [new Integrations.BrowserTracing()],
@@ -53,7 +55,7 @@ if (!isProduction) {
     });
 }
 
-if (isProduction && isMainDomain) {
+if (isProduction && isMainDomain && !window._env_.P24_DISABLE_THIRD_PARTY) {
     TagManager.initialize({
         gtmId: 'GTM-P5RPLDP'
     });
@@ -64,15 +66,6 @@ if (!isProduction) {
         gtmId: 'GTM-P5RPLDP'
     });
 }
-
-window.addEventListener('goftino_ready', function () {
-    window.__goftino_ready = true;
-    Goftino.setWidget({
-        cssUrl: '/style/gstyle.css',
-        hasIcon: false,
-        hasSound: true
-    });
-});
 
 if (localStorage.getItem('APP_VERSION')) {
     console.log('---------------- DrApp PWA ----------------');
@@ -83,9 +76,27 @@ if (localStorage.getItem('APP_VERSION')) {
     };
 }
 
+if (!localStorage.getItem('client_identifier')) {
+    localStorage.setItem('client_identifier', uuidV4());
+}
+
+export const getSplunkInstance = () =>
+    splunkEvent.create({
+        baseUrl: window._env_.P24_SPLUNK_BASE_URL,
+        token: window._env_.P24_SPLUNK_TOKEN,
+        constant: {
+            client_information: {
+                identifier: localStorage.getItem('client_identifier'),
+                user_agent: window.navigator.userAgent
+            },
+            user_information: window.user_information,
+            current_url: window.location.href
+        }
+    });
+
 const Provider = ({ children }) => {
     return (
-        <Router basename={location.host === 'dr.paziresh24.com' ? '' : process.env.PUBLIC_URL}>
+        <Router basename={process.env.PUBLIC_URL}>
             <ScrollToTop />
             <QueryClientProvider client={queryClient}>
                 <TransitionGroup>{children}</TransitionGroup>

@@ -4,7 +4,7 @@ import Chips from '../../core/chips';
 import Modal from '../../core/modal';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { sendEvent, toEnglishNumber } from '@paziresh24/utils';
+import { sendEvent, digitsFaToEn } from '@paziresh24/utils';
 import TextField from '../../core/textField';
 import Button from '../../core/button';
 import { useForm } from 'react-hook-form';
@@ -21,6 +21,7 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import { isMobile } from 'react-device-detect';
 import TaminIcon from '@paziresh24/components/icons/prescription/tamin';
 import SalamatIcon from '@paziresh24/components/icons/prescription/salamat';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }) => {
     const createSalamatDoctor = useCreateSalamatDoctor();
@@ -53,17 +54,24 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
     }, [isAuth]);
 
     const loginAction = data => {
-        setUserName(toEnglishNumber(data.username));
+        setUserName(digitsFaToEn(data.username));
         if (isEmpty(insurance)) {
             createSalamatDoctor.mutate(
                 {
                     identifier: identifier,
-                    medicalCode: toEnglishNumber(data.medicalCode),
-                    username: toEnglishNumber(data.username),
-                    password: toEnglishNumber(data.password)
+                    medicalCode: digitsFaToEn(data.medicalCode),
+                    username: digitsFaToEn(data.username),
+                    password: digitsFaToEn(data.password)
                 },
                 {
                     onSuccess: data => {
+                        getSplunkInstance().sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication',
+                            event: {
+                                provider: 'salamat'
+                            }
+                        });
                         if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                             setOtpConfirm(true);
                         } else {
@@ -74,6 +82,14 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                         }
                     },
                     onError: error => {
+                        getSplunkInstance().sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-error',
+                            event: {
+                                provider: 'salamat',
+                                error
+                            }
+                        });
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
                         const statusCode = error.response?.status;
                         if (statusCode === 401) {
@@ -88,12 +104,19 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
             updateSalamatDoctor.mutate(
                 {
                     id: insurance.id,
-                    medicalCode: toEnglishNumber(data.medicalCode),
-                    username: toEnglishNumber(data.username),
-                    password: toEnglishNumber(data.password)
+                    medicalCode: digitsFaToEn(data.medicalCode),
+                    username: digitsFaToEn(data.username),
+                    password: digitsFaToEn(data.password)
                 },
                 {
                     onSuccess: data => {
+                        getSplunkInstance().sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-edit',
+                            event: {
+                                provider: 'salamat'
+                            }
+                        });
                         if (data?.message == 'کد تایید دو مرحله‌ای را ارسال کنید') {
                             setOtpConfirm(true);
                         } else {
@@ -104,6 +127,14 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                         }
                     },
                     onError: error => {
+                        getSplunkInstance().sendEvent({
+                            group: 'prescription',
+                            type: 'providers-authentication-error',
+                            event: {
+                                provider: 'salamat',
+                                error
+                            }
+                        });
                         sendEvent('epsubscribe', 'prescription', 'epsubscribe');
                         const statusCode = error.response?.status;
                         if (statusCode === 401) {
@@ -121,8 +152,8 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
         checkOtp.mutate(
             {
                 identifier: identifier,
-                medicalCode: toEnglishNumber(userName),
-                code: toEnglishNumber(data.otpCode)
+                medicalCode: digitsFaToEn(userName),
+                code: digitsFaToEn(data.otpCode)
             },
             {
                 onSuccess: () => {
@@ -214,7 +245,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                     >
                         <TextField
                             defaultValue={insurance?.medicalCode ?? info.doctor.medical_code}
-                            label="کد نظارم پزشکی"
+                            label="کد نظام پزشکی"
                             error={errors.medicalCode}
                             {...register('medicalCode', { required: true })}
                         />

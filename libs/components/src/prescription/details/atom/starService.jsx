@@ -19,32 +19,32 @@ const StarService = ({ service, insuranceType }) => {
             favoriteItem.some(
                 item =>
                     item.service.id === service.service.id &&
-                    item.count === service.count &&
-                    item.use_time === service.use_time &&
-                    item.use_instruction === service.use_instruction &&
-                    item.how_to_use === service.how_to_use
+                    +item.count === +service.count &&
+                    +item.use_time === +service.use_time &&
+                    +item.use_instruction === +service.use_instruction &&
+                    +item.how_to_use === +service.how_to_use
             )
         ) {
             services[services.findIndex(item => item.id === service.id)].favorite_item =
                 favoriteItem.find(
                     item =>
                         item.service.id === service.service.id &&
-                        item.count === service.count &&
-                        item.use_time === service.use_time &&
-                        item.use_instruction === service.use_instruction &&
-                        item.how_to_use === service.how_to_use
+                        +item.count === +service.count &&
+                        +item.use_time === +service.use_time &&
+                        +item.use_instruction === +service.use_instruction &&
+                        +item.how_to_use === +service.how_to_use
                 );
             setServices(services);
             setStared(true);
         } else if (
             !serviceTypeList['drugs'][insuranceType].includes(+service.service_type) &&
             favoriteItem.some(
-                item => item.service.id === service.service.id && item.count === service.count
+                item => item.service.id === service.service.id && +item.count === +service.count
             )
         ) {
             services[services.findIndex(item => item.id === service.id)].favorite_item =
                 favoriteItem.find(
-                    item => item.service.id === service.service.id && item.count === service.count
+                    item => item.service.id === service.service.id && +item.count === +service.count
                 );
             setServices(services);
             setStared(true);
@@ -53,7 +53,8 @@ const StarService = ({ service, insuranceType }) => {
         }
     }, [service, favoriteItem]);
 
-    const starHandler = () => {
+    const starHandler = e => {
+        e.stopPropagation();
         if (!stared) {
             if (!service.service?.id) {
                 return toast.warn('لطفا یک آیتم انتخاب کنید.');
@@ -71,7 +72,9 @@ const StarService = ({ service, insuranceType }) => {
                     service: service.service.id,
                     count: service.count,
                     description: service.description,
-                    ...(service.number_of_period && { number_of_period: service.number_of_period }),
+                    ...(service.number_of_period && {
+                        number_of_period: +service.number_of_period
+                    }),
                     provider: insuranceType,
                     type: undefined
                 },

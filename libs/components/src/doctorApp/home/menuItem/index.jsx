@@ -5,15 +5,17 @@ import { useState } from 'react';
 import { useMenu } from '@paziresh24/context/core/menu';
 
 const MenuItem = ({ item }) => {
-    const [open, setOpen] = useMenu();
+    const [open] = useMenu();
     const history = useHistory();
     const [isDropDownOpen, setIsDropDownOpen] = useState();
 
+    const RootNodeComponent = item?.onClick && !item.link ? 'div' : NavLink;
+
     return (
         <div className={styles.menuBarItem}>
-            <NavLink
+            <RootNodeComponent
                 key={item?.id}
-                to={item?.link}
+                to={item?.link ?? '#'}
                 className={styles.menuContent}
                 activeClassName={styles['active']}
                 style={{
@@ -21,6 +23,7 @@ const MenuItem = ({ item }) => {
                     display: 'flex',
                     alignItems: 'center'
                 }}
+                onClick={item?.onClick}
                 exact
                 onMouseOver={() => item?.subMenu && setIsDropDownOpen(true)}
                 onMouseLeave={() => item?.subMenu && setIsDropDownOpen(false)}
@@ -46,7 +49,8 @@ const MenuItem = ({ item }) => {
                     {item?.name}
                 </span>
                 {/* )} */}
-            </NavLink>
+            </RootNodeComponent>
+
             {item.subMenu && (
                 <CSSTransition
                     in={isDropDownOpen}

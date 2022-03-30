@@ -5,51 +5,17 @@ import { PrescriptionCard } from '../prescriptionCard';
 import { useEffect, useState } from 'react';
 import Loading from './loading';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
+import { ChevronIcon } from '@paziresh24/components/icons';
+import { isMobile } from 'react-device-detect';
+import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
+import { useDrApp } from '@paziresh24/context/drapp';
 
 const TurnsWrapper = ({ loading, turns, refetchData }) => {
+    const [info] = useDrApp();
     const [dropDownShow, setDropDownShow] = useState(false);
-    const [nearTurns, setNearTurns] = useState([]);
-
-    useEffect(() => {
-        if (!isEmpty(turns)) {
-            setNearTurns(
-                turns
-                    .filter(
-                        turn =>
-                            (turn.type === 'book'
-                                ? !turn.prescription?.finalized ?? false
-                                : !turn.finalized) &&
-                            (turn.type === 'book'
-                                ? turn.from * 1000
-                                : new Date(turn.created_at).getTime()) <= new Date().getTime() &&
-                            (turn.type === 'book'
-                                ? turn.from * 1000
-                                : new Date(turn.created_at).getTime()) -
-                                new Date().getTime() >=
-                                -900000
-                    )
-                    .reverse()
-                    .slice(0, 2)
-                    .reverse(),
-                turns
-                    .filter(
-                        turn =>
-                            (turn.type === 'book'
-                                ? !turn.prescription?.finalized ?? false
-                                : !turn.finalized) &&
-                            (turn.type === 'book'
-                                ? turn.from * 1000
-                                : new Date(turn.created_at).getTime()) >= new Date().getTime() &&
-                            (turn.type === 'book'
-                                ? turn.from * 1000
-                                : new Date(turn.created_at).getTime()) -
-                                new Date().getTime() <=
-                                900000
-                    )
-                    .slice(0, 2)
-            );
-        }
-    }, [turns]);
+    const [isOpenActiveTurns, setIsOpenActiveTurns] = useState(true);
+    const [isOpenFinalizedTurns, setIsOpenFinalizedTurns] = useState(true);
+    const isExpertDoctor = !isLessThanExpertDegreeDoctor(info.doctor?.expertises);
 
     document.body.addEventListener('click', () => {
         if (dropDownShow) {
@@ -57,75 +23,146 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
         }
     });
 
+    const ActivePatientsList = ({ finalized }) => (
+        <div className="flex justify-between items-center bg-[#f6f8fb] w-full py-4 px-8 text-xl font-bold">
+            <div>
+                <span className="text-[#68778d]">
+                    {finalized
+                        ? isExpertDoctor
+                            ? 'نسخه های ثبت شده'
+                            : 'ویزیت شده'
+                        : 'لیست بیماران'}
+                </span>
+                <span className="text-[#68778d] mr-2">
+                    (
+                    {
+                        turns.filter(turn =>
+                            isExpertDoctor
+                                ? turn.prescription?.finalized === finalized ||
+                                  turn.finalized === finalized ||
+                                  (finalized &&
+                                      turn.book_status &&
+                                      turn.book_status === 'visited') ||
+                                  (!finalized &&
+                                      turn.book_status &&
+                                      turn.prescription == finalized &&
+                                      turn.book_status !== 'visited')
+                                : finalized
+                                ? turn.book_status === 'visited'
+                                : turn.book_status && turn.book_status !== 'visited'
+                        ).length
+                    }
+                    )
+                </span>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <div
+                    style={{ cursor: 'pointer' }}
+                    onClick={() =>
+                        finalized
+                            ? setIsOpenFinalizedTurns(prev => !prev)
+                            : setIsOpenActiveTurns(prev => !prev)
+                    }
+                    aria-hidden
+                >
+                    <ChevronIcon
+                        dir={
+                            (finalized ? isOpenFinalizedTurns : isOpenActiveTurns)
+                                ? 'top'
+                                : 'bottom'
+                        }
+                    />
+                </div>
+            </div>
+        </div>
+    );
+
+    const TurnRow = {
+        Turn: ({ turn }) => (
+            <TurnCard
+                turn={turn}
+                finalized={turn.book_status === 'visited' || turn.prescription.finalized}
+                key={turn.id}
+                dropDownShowKey={turn.id}
+                refetchData={refetchData}
+                dropDownShow={dropDownShow}
+                setDropDownShow={setDropDownShow}
+            />
+        ),
+        Prescription: ({ turn }) => (
+            <PrescriptionCard
+                dropDownShow={dropDownShow}
+                setDropDownShow={setDropDownShow}
+                turn={turn}
+                key={turn.id}
+                dropDownShowKey={turn.id}
+                refetchData={refetchData}
+            />
+        )
+    };
+
+    const isTurnActive = turn => {
+        if (!isExpertDoctor) {
+            if (turn.book_status !== 'visited') return false;
+            return true;
+        }
+        if (turn.type === 'book') {
+            if (turn.book_status === 'visited') return true;
+            if (!turn.prescription?.finalized) return false;
+            return true;
+        }
+        if (turn.type === 'book') {
+            return true;
+        }
+        if (turn.finalized) return true;
+        return false;
+    };
+
     return (
         !isEmpty(turns) && (
             <>
-                {!isEmpty(nearTurns) && (
-                    <tr className={styles['head-title']}>
-                        <td>نوبت های نزدیک</td>
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                        <td />
+                {!isMobile ? (
+                    <tr>
+                        <td colSpan="100" className="!p-0">
+                            <ActivePatientsList finalized={false} />
+                        </td>
                     </tr>
+                ) : (
+                    <ActivePatientsList finalized={false} />
                 )}
 
-                {!isEmpty(nearTurns) &&
-                    nearTurns.map(turn =>
-                        turn.type === 'book' ? (
-                            <TurnCard
-                                turn={turn}
-                                key={turn.id}
-                                dropDownShowKey={turn.id + 'near'}
-                                refetchData={refetchData}
-                                dropDownShow={dropDownShow}
-                                setDropDownShow={setDropDownShow}
-                            />
-                        ) : (
-                            <PrescriptionCard
-                                dropDownShow={dropDownShow}
-                                setDropDownShow={setDropDownShow}
-                                turn={turn}
-                                key={turn.id}
-                                dropDownShowKey={turn.id + 'near'}
-                                refetchData={refetchData}
-                            />
-                        )
+                {isOpenActiveTurns &&
+                    turns.map(
+                        turn =>
+                            !isTurnActive(turn) &&
+                            (turn.type === 'book' ? (
+                                <TurnRow.Turn turn={turn} />
+                            ) : (
+                                isExpertDoctor && <TurnRow.Prescription turn={turn} />
+                            ))
                     )}
 
-                {!isEmpty(nearTurns) && (
-                    <tr className={styles['head-title']}>
-                        <td>نوبت ها</td>
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                        <td />
+                {!isMobile ? (
+                    <tr>
+                        <td colSpan="100" className="!p-0">
+                            <ActivePatientsList finalized={true} />
+                        </td>
                     </tr>
+                ) : (
+                    <ActivePatientsList finalized={true} />
                 )}
 
-                {turns.map(turn =>
-                    turn.type === 'book' ? (
-                        <TurnCard
-                            turn={turn}
-                            key={turn.id}
-                            dropDownShowKey={turn.id}
-                            refetchData={refetchData}
-                            dropDownShow={dropDownShow}
-                            setDropDownShow={setDropDownShow}
-                        />
-                    ) : (
-                        <PrescriptionCard
-                            dropDownShow={dropDownShow}
-                            setDropDownShow={setDropDownShow}
-                            turn={turn}
-                            key={turn.id}
-                            dropDownShowKey={turn.id}
-                            refetchData={refetchData}
-                        />
-                    )
-                )}
+                {isOpenFinalizedTurns &&
+                    turns.map(
+                        turn =>
+                            isTurnActive(turn) &&
+                            (turn.type === 'book' ? (
+                                <TurnRow.Turn turn={turn} />
+                            ) : (
+                                isExpertDoctor && <TurnRow.Prescription turn={turn} />
+                            ))
+                    )}
             </>
         )
     );

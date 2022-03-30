@@ -1,11 +1,10 @@
-import { useRef } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Search, SearchFullPage } from '../Search/Search';
 import styles from './SearchFiled.module.scss';
 import { useLearnTour } from '@paziresh24/hooks/learn';
 import { isMobile } from 'react-device-detect';
-import VoiceSearch from './../voiceSearch/index';
+import VoiceSearch from './../voiceSearch';
+import SquareToggle from '@paziresh24/components/core/squareToggle';
 
 const SearchFiled = ({
     serviceId,
@@ -17,13 +16,15 @@ const SearchFiled = ({
     nextStep,
     error,
     typeId,
-    insuranceType
+    insuranceType,
+    voiceLabel
 }) => {
     const [showSerch, setShowSearch] = useState(false);
     const [selectItem, setSelectItem] = useState();
     const searchRef = useRef();
     const [searchValue, setSearchValue] = useState('');
     const { tourState, setSteps } = useLearnTour();
+    const [isIrc, setIsIrc] = useState(false);
 
     const [selectHover, setSelectHover] = useState(!isMobile ? 0 : null);
     const [results, setResults] = useState([]);
@@ -54,13 +55,6 @@ const SearchFiled = ({
         }
     }, [defaultValue]);
 
-    // useEffect(() => {
-    //     if (searchValue) {
-    //         !isMobile && setSelectHover(0);
-    //         setShowSearch(true);
-    //     }
-    // }, [searchValue]);
-
     useEffect(() => {
         if (showSerch) neutralizeBack();
     }, [showSerch]);
@@ -84,6 +78,8 @@ const SearchFiled = ({
         }
         setShowSearch(false);
     };
+
+    const shouldShowIrcToggleButton = !isMobile && insuranceType === 'salamat' && type === 'drugs';
 
     return (
         <div className={styles.wrapper} id={id}>
@@ -111,22 +107,7 @@ const SearchFiled = ({
                     e.keyCode === 38 &&
                         setSelectHover(prev => (prev - 1 >= 0 ? prev - 1 : results.length - 1));
                 }}
-                // readOnly
             />
-            {(window.location.host === window._env_.P24_MAIN_DOMAIN ||
-                window.location.hostname === 'localhost') &&
-                window?.webkitSpeechRecognition && (
-                    <VoiceSearch
-                        onChange={({ item, speechValue }) => {
-                            setItem(item);
-                            setSearchValue(speechValue);
-                        }}
-                        type={type}
-                        typeId={typeId}
-                        label={label}
-                        insuranceType={insuranceType}
-                    />
-                )}
             {!isMobile ? (
                 <Search
                     isOpen={showSerch}
@@ -142,6 +123,7 @@ const SearchFiled = ({
                     setResults={setResults}
                     typeId={typeId}
                     insuranceType={insuranceType}
+                    isIrc={isIrc}
                 />
             ) : (
                 <SearchFullPage
@@ -158,8 +140,29 @@ const SearchFiled = ({
                     setResults={setResults}
                     typeId={typeId}
                     insuranceType={insuranceType}
+                    isIrc={isIrc}
+                    setIsIrc={setIsIrc}
                 />
             )}
+
+            {shouldShowIrcToggleButton && (
+                <SquareToggle label="IRC" onChange={setIsIrc} value={isIrc} />
+            )}
+            {(window.location.host === window._env_.P24_MAIN_DOMAIN ||
+                window.location.hostname === 'localhost') &&
+                window?.webkitSpeechRecognition &&
+                !window._env_.P24_IS_LOCAL_CENTER && (
+                    <VoiceSearch
+                        onChange={({ item, speechValue }) => {
+                            setItem(item);
+                            setSearchValue(speechValue);
+                        }}
+                        type={type}
+                        typeId={typeId}
+                        insuranceType={insuranceType}
+                        label={voiceLabel}
+                    />
+                )}
         </div>
     );
 };

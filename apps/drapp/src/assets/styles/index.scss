@@ -49,7 +49,7 @@ body {
 
 span,
 label {
-    color: #2b2f33;
+    color: $color-text;
 }
 
 a {
@@ -278,5 +278,11 @@ input {
 
     * {
         direction: ltr;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .__react_component_tooltip {
+        display: none !important;
     }
 }

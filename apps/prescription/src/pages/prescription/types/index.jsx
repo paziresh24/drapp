@@ -28,7 +28,7 @@ import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.context';
 import { useLocation } from 'react-router';
 import LabsList from '@paziresh24/components/prescription/details/lists/lab.list';
-import { useBulkItems } from '@paziresh24/hooks/prescription/types';
+import { useState } from 'react';
 
 const Types = () => {
     const [me] = useMe();
@@ -40,7 +40,7 @@ const Types = () => {
     const getItemServices = useGetItemServices({
         prescriptionId: prescriptionId ?? prescriptionInfo?.id
     });
-    const bulkItems = useBulkItems();
+    const [isShowToolBox, setIsShowToolBox] = useState(false);
 
     const [favoriteItem, setFavoriteItem] = useFavoriteItem();
     const [templateItem, setTemplateItem] = useTemplateItem();
@@ -86,7 +86,8 @@ const Types = () => {
     };
 
     const getFavoriteServices = useGetFavoriteServices({
-        provider: prescriptionInfo?.insuranceType
+        provider: prescriptionInfo?.insuranceType,
+        _limit: 1000
     });
 
     const getFavoritePrescriptions = useGetFavoritePrescriptions({
@@ -96,10 +97,23 @@ const Types = () => {
     useEffect(() => {
         // getFavoriteServices.remove();
         if (!isEmpty(prescriptionInfo)) {
-            getFavoriteServices.refetch();
-            getFavoritePrescriptions.refetch();
+            getFavoriteServices.remove();
+            getFavoritePrescriptions.remove();
+            setTimeout(() => {
+                getFavoriteServices.refetch();
+                getFavoritePrescriptions.refetch();
+            }, 0);
+            checkShowToolBox();
         }
     }, [prescriptionInfo]);
+
+    const checkShowToolBox = () => {
+        if (prescriptionInfo.insuranceType === 'tamin' && prescriptionInfo.finalized) {
+            return setIsShowToolBox(false);
+        }
+
+        return setIsShowToolBox(true);
+    };
 
     useLayoutEffect(() => {
         if (getFavoritePrescriptions.isSuccess) {
@@ -195,7 +209,7 @@ const Types = () => {
                                 </Tab>
                                 <Tab
                                     keyTab="lab"
-                                    title="آزمایشگاه"
+                                    title="آزمایش"
                                     id="lab_tab_step"
                                     numberBadge={
                                         getItemServices.isSuccess &&
@@ -251,7 +265,7 @@ const Types = () => {
                         </>
                     )}
                 </div>
-                {prescriptionInfo && <ToolBox />}
+                {isShowToolBox && <ToolBox />}
             </div>
 
             {getPrescription.isError && getPrescription.error.response?.status !== 404 && (

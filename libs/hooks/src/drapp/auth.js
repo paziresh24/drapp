@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
 import { login } from '@paziresh24/apis/drApp/auth/login';
+import { salamatLogin } from '@paziresh24/apis/drApp/auth/salamatLogin';
 import { register } from '@paziresh24/apis/drApp/auth/register';
 import { createCenter } from '@paziresh24/apis/drApp/auth/createCenter';
 import { resendCode } from '@paziresh24/apis/drApp/auth/resendCode';
@@ -25,6 +26,10 @@ const useCreateCenter = () => {
 
 const useLogin = () => {
     return useMutation(login);
+};
+
+const useSalamatLogin = () => {
+    return useMutation(salamatLogin);
 };
 
 const useLogout = () => {
@@ -58,5 +63,6 @@ export {
     useEnablePassword,
     useChangePassword,
     useDisablePassword,
-    useCaptcha
+    useCaptcha,
+    useSalamatLogin
 };

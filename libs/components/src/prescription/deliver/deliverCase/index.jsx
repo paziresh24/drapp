@@ -13,13 +13,13 @@ import { useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { DeliverFactor } from '../deliverFactor';
+import { isMobile } from 'react-device-detect';
 
 const DeliverCase = props => {
-    const [prescriptionInfo] = useSelectPrescription();
     const deliverPrescriptionInfo = useDeliverPrescriptionInfo({
         // printCode: props.trackingCode,
         // nationalCode: props.nationalCode
-        prescriptionId: prescriptionInfo?.id
+        prescriptionId: props?.prescriptionInfo?.id
     });
     const deliverPrescriptionPriceInfo = useDeliverPrescriptionPriceInfo();
     const [factorModal, setFactorModal] = useState(false);
@@ -36,7 +36,7 @@ const DeliverCase = props => {
         setData(Object.values(subscriptions));
         deliverPrescriptionPriceInfo.mutate(
             {
-                prescriptionId: prescriptionInfo.id,
+                prescriptionId: props.prescriptionInfo?.id,
                 subscriptions: Object.values(subscriptions)
             },
             {
@@ -52,7 +52,7 @@ const DeliverCase = props => {
         <>
             <Modal
                 title="اقلام را برای ارائه انتخاب کنید."
-                fullPage
+                fullPage={isMobile}
                 isOpen={props.isOpen}
                 onClose={props.onClose}
             >
@@ -85,6 +85,7 @@ const DeliverCase = props => {
                 </div>
             </Modal>
             <DeliverFactor
+                prescriptionInfo={props.prescriptionInfo}
                 isOpen={factorModal}
                 onClose={setFactorModal}
                 data={deliverPrescriptionPriceInfo.data?.data}

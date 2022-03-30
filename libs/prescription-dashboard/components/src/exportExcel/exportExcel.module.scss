@@ -1,0 +1,17 @@
+.excelExportButton {
+    height: 4rem;
+    padding: 0 1.5rem;
+    border: 1px solid rgba(47, 149, 83, 0.322);
+    background-color: #5abb7c;
+    display: flex;
+    align-items: center;
+    border-radius: 0.6rem;
+    cursor: pointer;
+
+    span {
+        color: #fff;
+        margin-right: 0.5rem;
+        font-weight: 500;
+        font-size: 1.4rem;
+    }
+}

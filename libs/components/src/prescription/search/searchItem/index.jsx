@@ -2,9 +2,14 @@ import styles from './searchItem.module.scss';
 import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { extractTypeFromName, translateType } from '@paziresh24/utils';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const SearchItem = props => {
     const addHandler = () => {
+        getSplunkInstance().sendEvent({
+            group: 'prescription',
+            type: 'add-service-with-search'
+        });
         props.setSelectItem({
             id: props.id,
             name: props.title,
@@ -29,6 +34,7 @@ const SearchItem = props => {
         if (e.keyCode === 13 && props.selectHover === props.selectHoverId) {
             addHandler();
         }
+        document.getElementById('searchFiled').removeEventListener('keydown', addItemWithEnterKey);
     };
 
     useEffect(() => {
@@ -65,7 +71,7 @@ const SearchItem = props => {
             >
                 <div style={{ display: 'inline-block' }}>
                     <span style={{ color: 'gray', opacity: '0.8', margin: '0 0.5rem' }}>
-                        {props.serviceCode + ' '}
+                        {props.serviceCode && props.serviceCode + ' '}
                     </span>
                     {(+props.serviceType.id === 79 || +props.serviceType.id === 1) &&
                         translateType(extractTypeFromName(props.title)) && (

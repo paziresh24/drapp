@@ -5,7 +5,8 @@ import {
     StarIcon,
     ThreeDots,
     UserIcon,
-    LocationIcon
+    LocationIcon,
+    ChatIcon
 } from '@paziresh24/components/icons';
 import styles from '@assets/styles/pages/drApp/profile.module.scss';
 import TextField from '@paziresh24/components/core/textField';
@@ -20,8 +21,8 @@ import { useForm } from 'react-hook-form';
 import { formData } from '@paziresh24/utils';
 import Select from '@paziresh24/components/doctorApp/Select';
 import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
-import provinceData from '@paziresh24/constants/province.json';
-import cityData from '@paziresh24/constants/city.json';
+import provincesData from '@paziresh24/constants/province.json';
+import citiesData from '@paziresh24/constants/city.json';
 
 import {
     useBankInfo,
@@ -33,7 +34,9 @@ import {
     useUploadGallery,
     useUploadPorfile,
     useDoctorInfoUpdate,
-    useCenterInfoUpdate
+    useCenterInfoUpdate,
+    useGetWhatsApp,
+    useUpdateWhatsapp
 } from '@paziresh24/hooks/drapp/profile';
 
 import { Overlay } from '@paziresh24/components/core/overlay';
@@ -66,6 +69,9 @@ const Profile = () => {
     const bankInfo = useBankInfo();
     const getBankInfo = useGetBankInfo({ center_id: info.center.id });
 
+    const getWhatsapp = useGetWhatsApp();
+    const updateWhatsapp = useUpdateWhatsapp();
+
     const centerPromises = [];
 
     const [province, setProvince] = useState();
@@ -73,9 +79,11 @@ const Profile = () => {
 
     const [expertiseAccordion, setExpertiseAccordion] = useState(false);
     const [bankAccordion, setBankAccordion] = useState(false);
+    const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
     const biographyRef = useRef();
+    const serviceRef = useRef();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [mapZoom, setMapZoom] = useState();
@@ -119,6 +127,12 @@ const Profile = () => {
         formState: { errors: bankInfoErrors }
     } = useForm();
 
+    const {
+        register: whatsappRegister,
+        handleSubmit: whatsappSubmit,
+        formState: { errors: whatsappErrors }
+    } = useForm();
+
     const updateDoctor = async data => {
         doctorInfoUpdate.mutate(
             {
@@ -127,6 +141,7 @@ const Profile = () => {
                 national_code: data.national_code,
                 medical_code: data.medical_code,
                 biography: biographyRef.current,
+                service_desk: serviceRef.current,
                 secretary_phone: data.secretary_phone,
                 center_id: info.center.id
             },
@@ -197,6 +212,18 @@ const Profile = () => {
             },
             onError: err => {
                 toast.error(err.response.data.errors.IBAN[0]);
+            }
+        });
+    };
+
+    const whatsappAction = data => {
+        updateWhatsapp.mutate(data, {
+            onSuccess: () => {
+                setWhatsappAccordion(false);
+                toast.success('شماره whatsapp business با موفقیت ذخیره شد.');
+            },
+            onError: err => {
+                toast.error(err.response.data.message);
             }
         });
     };
@@ -454,6 +481,52 @@ const Profile = () => {
                             }}
                         />
                     </div>
+                    {info.center.id === '5532' && (
+                        <div className={styles['col']}>
+                            <span style={{ marginBottom: '1rem' }}>توضیحات خدمات مشاوره</span>
+                            <CKEditor
+                                editor={ClassicEditor}
+                                config={{
+                                    toolbar: [
+                                        'heading',
+                                        '|',
+                                        'bold',
+                                        'italic',
+                                        'bulletedList',
+                                        'numberedList'
+                                    ],
+                                    heading: {
+                                        options: [
+                                            {
+                                                model: 'paragraph',
+                                                title: 'Paragraph',
+                                                class: 'ck-heading_paragraph'
+                                            },
+                                            {
+                                                model: 'heading1',
+                                                view: 'h1',
+                                                title: 'Heading 1',
+                                                class: 'ck-heading_heading1'
+                                            },
+                                            {
+                                                model: 'heading2',
+                                                view: 'h2',
+                                                title: 'Heading 2',
+                                                class: 'ck-heading_heading2'
+                                            }
+                                        ]
+                                    },
+                                    contentsLangDirection: 'rtl',
+                                    language: 'fa'
+                                }}
+                                data={info.doctor?.desk}
+                                onBlur={(event, editor) => {
+                                    const data = editor.getData();
+                                    serviceRef.current = data;
+                                }}
+                            />
+                        </div>
+                    )}
                     <Button variant="primary" type="submit" loading={doctorInfoUpdate.isLoading}>
                         ذخیره تغییرات
                     </Button>
@@ -533,35 +606,24 @@ const Profile = () => {
                             <Select
                                 label="استان"
                                 searchble
-                                // value={setProvince}
                                 onChange={value => {
                                     if (value) {
                                         setProvince(value.id);
                                         setPosition({
-                                            lat: +provinceData.find(item => +item.id === +value.id)
+                                            lat: +provincesData.find(item => +item.id === +value.id)
                                                 ?.lat,
-                                            lng: +provinceData.find(item => +item.id === +value.id)
+                                            lng: +provincesData.find(item => +item.id === +value.id)
                                                 ?.lon
                                         });
                                         return setMapZoom(8);
                                     }
                                 }}
                                 defaultValue={+info.center.province}
-                                items={provinceData.map(item => ({
+                                items={provincesData.map(item => ({
                                     name: item.name,
                                     value: item.id
                                 }))}
-                            >
-                                {/* {provinceData.map(province => (
-                                    <Option
-                                        key={province.id}
-                                        title={province.name}
-                                        value={+province.id}
-                                    >
-                                        {province.name}
-                                    </Option>
-                                ))} */}
-                            </Select>
+                            ></Select>
                             <Select
                                 label="شهر"
                                 searchble
@@ -569,15 +631,16 @@ const Profile = () => {
                                     if (value) {
                                         setCity(value.id);
                                         setPosition({
-                                            lat: +cityData.find(item => +item.id === +value.id)
+                                            lat: +citiesData.find(item => +item.id === +value.id)
                                                 ?.lat,
-                                            lng: +cityData.find(item => +item.id === +value.id)?.lon
+                                            lng: +citiesData.find(item => +item.id === +value.id)
+                                                ?.lon
                                         });
                                         return setMapZoom(8);
                                     }
                                 }}
                                 defaultValue={+info.center.city}
-                                items={cityData
+                                items={citiesData
                                     .filter(city => +city.province_id === +province)
                                     .map(item => ({
                                         name: item.name,
@@ -596,7 +659,11 @@ const Profile = () => {
                             type="tel"
                             defaultValue={info.center.tell}
                             error={centerInfoErrors.tell}
-                            {...updateCenterInfo('tell', { required: true })}
+                            errorText="شماره تلفن را با فرمت درست وارد نمایید."
+                            {...updateCenterInfo('tell', {
+                                required: true,
+                                pattern: /^\d+$/
+                            })}
                         />
                         <TextField
                             label="خدمات مطب"
@@ -618,7 +685,7 @@ const Profile = () => {
                                     deleteGallery.mutate(
                                         { id },
                                         {
-                                            onError: err => {
+                                            onSuccess: () => {
                                                 getGallery.refetch();
                                             }
                                         }
@@ -730,6 +797,33 @@ const Profile = () => {
                             <span>IR</span>
                         </div>
                         <Button block type="submit" loading={bankInfo.isLoading}>
+                            ذخیره تغییرات
+                        </Button>
+                    </form>
+                </Accordion>
+            )}
+            {info.center.id === '5532' && (
+                <Accordion
+                    title="شماره whatsapp business"
+                    icon={<ChatIcon color="#3F3F79" />}
+                    open={whatsappAccordion}
+                    setOpen={setWhatsappAccordion}
+                >
+                    <form className={styles['form']} onSubmit={whatsappSubmit(whatsappAction)}>
+                        <div className={styles['bank_row']}>
+                            <TextField
+                                label="شماره whatsapp business"
+                                type="tel"
+                                error={whatsappErrors.whatsapp}
+                                defaultValue={
+                                    getWhatsapp.isSuccess && getWhatsapp.data.data.whatsapp
+                                }
+                                {...whatsappRegister('whatsapp', {
+                                    required: true
+                                })}
+                            />
+                        </div>
+                        <Button block type="submit" loading={updateWhatsapp.isLoading}>
                             ذخیره تغییرات
                         </Button>
                     </form>

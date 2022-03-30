@@ -12,22 +12,25 @@
 declare namespace Cypress {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject> {
-        login(email: string, password: string): void;
+        login(): void;
+        getTestId(selector: string): Chainable<HTMLElement>;
+        findTestId(selector: string): Chainable<HTMLElement>;
     }
 }
 //
 // -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-    console.log('Custom command example: Login', email, password);
+Cypress.Commands.add('login', () => {
+    cy.setCookie(
+        'certificate',
+        '%242y%2410%24Kv8nHRsX96AN58wqULwMz.X7G1SPrnnFklPG0DxVbIyVNChHDgWxS'
+    );
+    cy.setCookie('P24SESSION', '7lf1egf7eg6chj4qauu7v1lu9s');
 });
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getTestId', (selector, ...args) => {
+    return cy.get(`[data-testid=${selector}]`, ...args);
+});
+
+Cypress.Commands.add('findTestId', (selector, ...args) => {
+    return cy.find(`[data-testid=${selector}]`, ...args);
+});

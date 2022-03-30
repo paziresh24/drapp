@@ -94,6 +94,7 @@ const LabsItem = ({
                                 <SelectDate
                                     label="تاریخ موثر"
                                     simple
+                                    minimumDate={utils('fa').getToday()}
                                     onChange={value => editDate(value)}
                                     default-value={service.date_do}
                                     today
@@ -207,7 +208,7 @@ const LabsItem = ({
                         transform: deleted && 'translateX(100%)',
                         opacity: deleted && '0'
                     }}
-                    onClick={() => setIsOpenDetailsForm(true)}
+                    onClick={() => !readOnly && setIsOpenDetailsForm(true)}
                     aria-hidden
                 >
                     {(!readOnly || insuranceType === 'salamat') && (
@@ -262,7 +263,12 @@ const LabsItem = ({
                             </div>
                         </div>
                     )}
-                    <ServiceName favorite={false} service={service} name={service.service.name} />
+                    <ServiceName
+                        service={service}
+                        name={service.service.name}
+                        favorite={!noFavorite}
+                        insuranceType={insuranceType}
+                    />
                     <div className={styles.amounts}>
                         <span>
                             <Number value={service.count} editable={false} />
@@ -295,6 +301,7 @@ const LabsItem = ({
                     <SelectDate
                         label="تاریخ موثر"
                         // simple
+                        minimumDate={utils('fa').getToday()}
                         onChange={value => editDate(value)}
                         default-value={service.date_do}
                         today

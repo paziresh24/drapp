@@ -23,6 +23,16 @@ export const routes = [
         component: lazy(() => import('./turning')),
         exact: true
     },
+    {
+        path: '/dashboard',
+        name: 'Dashboard',
+        isPrivate: true,
+        title: 'گزارش نسخه نویسی',
+        component: lazy(() =>
+            import('@paziresh24/apps/prescription/pages/prescription/statistics')
+        ),
+        exact: true
+    },
     // {
     //     path: '/turning/',
     //     name: 'Turning',
@@ -60,6 +70,14 @@ export const routes = [
         name: 'Feedbacks',
         title: 'نظرات بیماران',
         component: lazy(() => import('./feedbacks')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/create-center',
+        name: 'CreateCenter',
+        component: lazy(() => import('./createCenter')),
+        title: 'ایجاد مطب',
         isPrivate: true,
         exact: true
     },
@@ -170,6 +188,14 @@ export const routes = [
         name: 'FillInfo',
         title: 'فعال سازی نوبت دهی',
         component: lazy(() => import('./fillInfo')),
+        isPrivate: true,
+        exact: false
+    },
+    {
+        path: '/consult/fill-info/',
+        name: 'FillInfo',
+        title: 'ثبت نام ویزیت آنلاین',
+        component: lazy(() => import('./consultRegister')),
         isPrivate: true,
         exact: false
     },

@@ -4,7 +4,7 @@
     label {
         cursor: pointer;
         transition: all 250ms ease;
-        color: #3f3f79;
+        color: $color-text;
         display: flex;
         align-items: center;
         @include gap(0.5rem);
@@ -16,7 +16,7 @@
             display: flex;
             width: 1.5rem;
             height: 1.5rem;
-            border: 1px solid #3f3f79;
+            border: 1px solid $color-text;
             box-sizing: border-box;
             border-radius: 0.4rem;
         }

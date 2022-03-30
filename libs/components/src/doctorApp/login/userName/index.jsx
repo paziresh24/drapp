@@ -3,10 +3,12 @@ import styles from './userName.module.scss';
 import Button from '../../../core/button/index';
 import { useResendCode, useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import { useState, useEffect, useRef } from 'react';
-import { toEnglishNumber, sendEvent } from '@paziresh24/utils';
+import { digitsFaToEn, sendEvent } from '@paziresh24/utils';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { InfoIcon } from '@paziresh24/components/icons';
 
 const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, setFocus }) => {
     const resendCode = useResendCode({ mobile: userName, justDoctor: true });
@@ -38,12 +40,12 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
     useEffect(() => {
         !isMobile && cellPhoneField.current.focus();
         if (step === 'REGISTER') {
-            nationalCodeField.current.focus();
+            medicalCodeField.current.focus();
         }
     }, [step]);
 
     const checkPhone = cellPhone => {
-        const number = toEnglishNumber(cellPhone);
+        const number = digitsFaToEn(cellPhone);
         const rgx = /^(\+98|0)?9\d{9}$/;
 
         if (rgx.test(number)) return true;
@@ -53,9 +55,9 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
     const resendCodeAction = ({ cellPhone }) => {
         if (checkPhone(cellPhone)) {
             setUserName(
-                !toEnglishNumber(cellPhone)?.startsWith('0')
-                    ? `0${toEnglishNumber(cellPhone)}`
-                    : toEnglishNumber(cellPhone)
+                !digitsFaToEn(cellPhone)?.startsWith('0')
+                    ? `0${digitsFaToEn(cellPhone)}`
+                    : digitsFaToEn(cellPhone)
             );
             setTimeout(() => resendCode.refetch());
         } else {
@@ -68,18 +70,37 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
         createCenter.mutate(
             {
                 ignore_shahkar: window.location.pathname === '/p24auth',
-                mobile: toEnglishNumber(userName),
-                nationalCode: toEnglishNumber(nationalCode),
-                medical_code: toEnglishNumber(medicalCode)
+                mobile: digitsFaToEn(userName),
+                nationalCode: digitsFaToEn(nationalCode),
+                medical_code: digitsFaToEn(medicalCode)
             },
             {
                 onSuccess: data => {
                     sendEvent('doctorReg', 'step1', 'sucsessfulreg');
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'successful',
+                        event: {
+                            cellPhone: digitsFaToEn(userName),
+                            nationalCode: digitsFaToEn(nationalCode),
+                            medicalCode: digitsFaToEn(medicalCode)
+                        }
+                    });
                     toast.success(data.message);
                     resendCode.refetch();
                 },
                 onError: error => {
                     sendEvent('doctorReg', 'step1', `unsuccessfulreg ${cellPhone}`);
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'unsuccessful',
+                        event: {
+                            cellPhone: digitsFaToEn(userName),
+                            nationalCode: digitsFaToEn(nationalCode),
+                            medicalCode: digitsFaToEn(medicalCode),
+                            error: error.response?.data
+                        }
+                    });
                     toast.error(error.response?.data.message);
                 }
             }
@@ -124,28 +145,36 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                 }}
             />
             {step === 'REGISTER' && (
-                <TextField
-                    type="tel"
-                    label="کدملی"
-                    error={errors.nationalCode}
-                    {...nationalCodeRegister}
-                    ref={e => {
-                        nationalCodeRegister.ref(e);
-                        nationalCodeField.current = e;
-                    }}
-                />
+                <>
+                    <TextField
+                        type="tel"
+                        label="کدنظام پزشکی"
+                        {...medicalCodeRegister}
+                        ref={e => {
+                            medicalCodeRegister.ref(e);
+                            medicalCodeField.current = e;
+                        }}
+                    />
+                    <TextField
+                        type="tel"
+                        label="کدملی"
+                        error={errors.nationalCode}
+                        {...nationalCodeRegister}
+                        ref={e => {
+                            nationalCodeRegister.ref(e);
+                            nationalCodeField.current = e;
+                        }}
+                    />
+                    <div className="bg-[#eaf0f4] rounded-lg p-5 mt-5">
+                        <span className="text-[#586a79] text-2xl font-medium leading-[3rem]">
+                            <InfoIcon color="#586a79" className="inline-block ml-3" />
+                            لازم به ذکر است که مالکیت شماره موبایل وارد شده باید با کد ملی شما تطابق
+                            داشته باشد.
+                        </span>
+                    </div>
+                </>
             )}
-            {step === 'REGISTER' && window.location.pathname === '/p24auth' && (
-                <TextField
-                    type="tel"
-                    label="کدنظام پزشکی"
-                    {...medicalCodeRegister}
-                    ref={e => {
-                        medicalCodeRegister.ref(e);
-                        medicalCodeField.current = e;
-                    }}
-                />
-            )}
+
             <Button block type="submit" loading={resendCode.isLoading || createCenter.isLoading}>
                 {step === 'REGISTER' ? 'ثبت نام' : 'ورود/ثبت نام'}
             </Button>

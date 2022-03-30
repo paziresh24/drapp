@@ -1,4 +1,4 @@
-const ChatIcon = ({ color = '#fff' }) => {
+export const ChatIcon = ({ color = '#fff' }) => {
     return (
         <svg
             width="24"
@@ -25,4 +25,4 @@ const ChatIcon = ({ color = '#fff' }) => {
     );
 };
 
-export { ChatIcon };
+export default ChatIcon;

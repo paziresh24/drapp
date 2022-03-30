@@ -19,11 +19,15 @@
     padding: 0 0.6rem;
     height: 3rem;
     outline: 0;
-    color: #3f4079;
+    color: $color-text;
     transition: border 0.5s;
     font-size: 1rem;
     user-select: text;
     -webkit-user-select: text;
+
+    &.password {
+        padding-left: 4.5rem;
+    }
 }
 
 // .input::-webkit-outer-spin-button,
@@ -68,14 +72,14 @@
     transform: translate(0.3rem, -1.5rem) scale(0.9);
     background: #fff;
     cursor: unset;
-    color: #3f3f79;
+    color: $color-text;
 }
 
 .input:focus + .label {
     transform: translate(0.3rem, -1.5rem) scale(0.9);
     background: #fff;
     cursor: unset;
-    color: #3f3f79;
+    color: $color-text;
 }
 
 .error {
@@ -91,4 +95,26 @@
     font-weight: 500;
     margin-top: 0.8rem;
     color: #ce4b33;
+}
+
+.show-password {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    * {
+        fill: $color-text;
+    }
+
+    svg {
+        width: 2rem;
+        height: 2rem;
+    }
 }

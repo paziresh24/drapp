@@ -131,12 +131,24 @@ const DrugItem = ({
                             editable={!readOnly}
                         />
                     </td>
-                    <td data-label="مقادیر مصرف">
+                    <td data-label="میزان مصرف">
                         <SelectBox
                             serviceId={service.id}
                             service={service}
-                            value={service.use_instruction}
-                            field="use_instruction"
+                            value={
+                                insuranceType === 'salamat'
+                                    ? +service?.service?.shape?.id !== 9
+                                        ? service.number_of_period
+                                        : service.use_instruction
+                                    : service.use_instruction
+                            }
+                            field={
+                                insuranceType === 'salamat'
+                                    ? +service?.service?.shape?.id !== 9
+                                        ? 'number_of_period'
+                                        : 'use_instruction'
+                                    : 'use_instruction'
+                            }
                             type="Amounts"
                             insuranceType={insuranceType}
                             services={services}
@@ -148,6 +160,7 @@ const DrugItem = ({
                         <td data-label="تاریخ موثر">
                             <SelectDate
                                 label="تاریخ موثر"
+                                minimumDate={utils('fa').getToday()}
                                 simple
                                 onChange={value => editDate(value)}
                                 // today
@@ -248,7 +261,7 @@ const DrugItem = ({
                 <div
                     className={styles.card}
                     ref={rowServiceRef}
-                    onClick={() => setIsOpenDetailsForm(true)}
+                    onClick={() => !readOnly && setIsOpenDetailsForm(true)}
                     aria-hidden
                 >
                     {(!readOnly || insuranceType === 'salamat') && (
@@ -304,7 +317,7 @@ const DrugItem = ({
                         </div>
                     )}
                     <ServiceName
-                        favorite={false}
+                        favorite={!noFavorite}
                         service={service}
                         name={service.service.name}
                         insuranceType={insuranceType}
@@ -404,6 +417,7 @@ const DrugItem = ({
                     {insuranceType === 'salamat' && !readOnly && !noDate && (
                         <SelectDate
                             label="تاریخ موثر"
+                            minimumDate={utils('fa').getToday()}
                             onChange={value => editDate(value)}
                             default-value={service.date_do}
                             today
