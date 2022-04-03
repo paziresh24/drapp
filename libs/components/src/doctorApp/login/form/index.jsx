@@ -288,7 +288,7 @@ const Form = ({ focus, setFocus }) => {
                             block
                             variant="secondary"
                         >
-                            ورود با پذیرش 24
+                            ورود با شماره موبایل
                         </Button>
                     </div>
                 )}

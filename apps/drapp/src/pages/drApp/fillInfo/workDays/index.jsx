@@ -14,6 +14,7 @@ import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { from } from 'jalali-moment';
 
 const canvasStyles = {
     position: 'absolute',
@@ -114,7 +115,14 @@ const WorkDays = () => {
                 onSuccess: () => {
                     getSplunkInstance().sendEvent({
                         group: 'workdays_active_booking',
-                        type: 'successful'
+                        type: 'successful',
+                        event: {
+                            slut:
+                                ((workDaysTime[0].to.slice(0, 2) -
+                                    workDaysTime[0].from.slice(0, 2)) *
+                                    60) /
+                                duration
+                        }
                     });
                     setSuccess(true);
                 },
@@ -123,6 +131,11 @@ const WorkDays = () => {
                         group: 'workdays_active_booking',
                         type: 'unsuccessful',
                         event: {
+                            slut:
+                                ((workDaysTime[0].to.slice(0, 2) -
+                                    workDaysTime[0].from.slice(0, 2)) *
+                                    60) /
+                                duration,
                             error: error.response?.data
                         }
                     });

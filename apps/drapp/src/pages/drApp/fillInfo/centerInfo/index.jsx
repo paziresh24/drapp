@@ -10,6 +10,7 @@ import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import provincesData from '@paziresh24/constants/province.json';
 import cityData from '@paziresh24/constants/city.json';
 import Select from '@paziresh24/components/doctorApp/Select';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const CenterInfo = () => {
     const [info] = useDrApp();
@@ -49,7 +50,20 @@ const CenterInfo = () => {
             },
             {
                 onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'center_info_active_booking',
+                        type: 'successful'
+                    });
                     history.push('/fill-info/expertises');
+                },
+                onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'center_info_active_booking',
+                        type: 'unsuccessful',
+                        event: {
+                            error: error.response?.data
+                        }
+                    });
                 }
             }
         );
