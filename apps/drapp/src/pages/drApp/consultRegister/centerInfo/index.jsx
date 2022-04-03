@@ -14,34 +14,6 @@ import { useConsult } from '@paziresh24/context/drapp/consult';
 import { digitsFaToEn } from '@paziresh24/utils';
 import { InfoIcon } from '@paziresh24/components/icons';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
-var first = 1;
-function moneyCommaSep(ctrl) {
-    if (first > 1) {
-        ctrl = ctrl.replace(' تومان', '');
-    }
-    var separator = ',';
-    var int = ctrl.replace(new RegExp(separator, 'g'), '');
-    var regexp = new RegExp('\\B(\\d{3})(' + separator + '|$)');
-    do {
-        int = int.replace(regexp, separator + '$1');
-    } while (int.search(regexp) >= 0);
-    ctrl = int;
-    first += 1;
-
-    return ctrl + ' تومان';
-}
-function moneyBackSpace(ctrl) {
-    ctrl = ctrl.replace(' توما', '');
-    ctrl = ctrl.substr(0, ctrl.length - 1);
-    return ctrl + ' تومان';
-}
-
-function normalPrice(ctrl) {
-    ctrl = ctrl.replace(' تومان', '');
-    ctrl = ctrl.replace(',', '');
-    ctrl += '0';
-    return ctrl;
-}
 
 const CenterInfo = () => {
     const [info] = useDrApp();
@@ -72,7 +44,7 @@ const CenterInfo = () => {
         setConsult({
             ...consult,
             whatsapp: digitsFaToEn(whatsAppCell.replace(/^0+/, '')),
-            price: costVisit,
+            price: digitsFaToEn(costVisit + '0'),
             service_length: countVisitDaily
         });
 
@@ -113,16 +85,9 @@ const CenterInfo = () => {
                             <TextField
                                 placeHolder="50,000 تومان"
                                 unit="تومان"
-                                type="Text"
+                                type="number"
                                 onChange={e => {
-                                    if (e.nativeEvent.inputType === 'insertText') {
-                                        e.target.value = moneyCommaSep(e.target.value);
-                                    } else if (
-                                        e.nativeEvent.inputType === 'deleteContentBackward'
-                                    ) {
-                                        e.target.value = moneyBackSpace(e.target.value);
-                                    }
-                                    setCostVisit(normalPrice(e.target.value));
+                                    setCostVisit(e.target.value);
                                 }}
                             />
                         </div>
