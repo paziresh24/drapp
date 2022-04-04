@@ -63,7 +63,7 @@ const SalamatLogin = ({ step }) => {
                     cellPhone: digitsFaToEn(cellPhone),
                     nationalCode: digitsFaToEn(nationalCode),
                     username: usernameField.current.value,
-                    password: passwordField.current.value
+
                 }
             });
             handleLogin({
@@ -78,7 +78,6 @@ const SalamatLogin = ({ step }) => {
                     cellPhone: digitsFaToEn(cellPhone),
                     nationalCode: digitsFaToEn(nationalCode),
                     username: usernameField.current.value,
-                    password: passwordField.current.value,
                     error: error.response.data
                 }
             });
@@ -108,7 +107,7 @@ const SalamatLogin = ({ step }) => {
                         type: 'successful-salamat',
                         event: {
                             username: digitsFaToEn(username),
-                            password: digitsFaToEn(password)
+
                         }
                     });
 
@@ -129,7 +128,6 @@ const SalamatLogin = ({ step }) => {
                         type: 'unsuccessful-salamat',
                         event: {
                             username: digitsFaToEn(username),
-                            password: digitsFaToEn(password),
                             error: error.response.data
                         }
                     });

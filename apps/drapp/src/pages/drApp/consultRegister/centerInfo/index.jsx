@@ -36,6 +36,9 @@ const CenterInfo = () => {
         if (!costVisit) {
             return toast.error('مبلغ هر ویزیت الزامی میباشد');
         }
+        if (costVisit <= 1000) {
+            return toast.error('مبلغ باید بیشتر از 1000 تومان باشد.');
+        }
         getSplunkInstance().sendEvent({
             group: 'center_info_consult',
             type: 'successful'
@@ -44,7 +47,7 @@ const CenterInfo = () => {
         setConsult({
             ...consult,
             whatsapp: digitsFaToEn(whatsAppCell.replace(/^0+/, '')),
-            price: digitsFaToEn(costVisit + '0'),
+            price: costVisit * 10,
             service_length: countVisitDaily
         });
 

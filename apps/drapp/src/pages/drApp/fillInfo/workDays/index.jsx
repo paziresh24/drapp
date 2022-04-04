@@ -92,7 +92,10 @@ const WorkDays = () => {
         { id: 4, day: 'پنج‌شنبه' },
         { id: 5, day: 'جمعه' }
     ];
-
+    const calculateDoctorSlot = (workDays, duration) => {
+        //calculate doctor slot of first work day
+        return ((workDays[0].to.slice(0, 2) - workDays[0].from.slice(0, 2)) * 60) / duration;
+    };
     const submit = () => {
         Object.keys(workDays).forEach(dayKey => {
             Object.keys(workDays[dayKey]).forEach(key => {
@@ -117,11 +120,7 @@ const WorkDays = () => {
                         group: 'workdays_active_booking',
                         type: 'successful',
                         event: {
-                            slut:
-                                ((workDaysTime[0].to.slice(0, 2) -
-                                    workDaysTime[0].from.slice(0, 2)) *
-                                    60) /
-                                duration
+                            slot: calculateDoctorSlot(workDaysTime, duration)
                         }
                     });
                     setSuccess(true);
@@ -131,11 +130,7 @@ const WorkDays = () => {
                         group: 'workdays_active_booking',
                         type: 'unsuccessful',
                         event: {
-                            slut:
-                                ((workDaysTime[0].to.slice(0, 2) -
-                                    workDaysTime[0].from.slice(0, 2)) *
-                                    60) /
-                                duration,
+                            slot: calculateDoctorSlot(workDaysTime, duration),
                             error: error.response?.data
                         }
                     });
