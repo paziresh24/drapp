@@ -14,6 +14,7 @@ import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { from } from 'jalali-moment';
 
 const canvasStyles = {
     position: 'absolute',
@@ -91,7 +92,10 @@ const WorkDays = () => {
         { id: 4, day: 'پنج‌شنبه' },
         { id: 5, day: 'جمعه' }
     ];
-
+    const calculateDoctorSlot = (workDays, duration) => {
+        //calculate doctor slot of first work day
+        return ((workDays[0].to.slice(0, 2) - workDays[0].from.slice(0, 2)) * 60) / duration;
+    };
     const submit = () => {
         Object.keys(workDays).forEach(dayKey => {
             Object.keys(workDays[dayKey]).forEach(key => {
@@ -114,7 +118,10 @@ const WorkDays = () => {
                 onSuccess: () => {
                     getSplunkInstance().sendEvent({
                         group: 'workdays_active_booking',
-                        type: 'successful'
+                        type: 'successful',
+                        event: {
+                            slot: calculateDoctorSlot(workDaysTime, duration)
+                        }
                     });
                     setSuccess(true);
                 },
@@ -123,6 +130,7 @@ const WorkDays = () => {
                         group: 'workdays_active_booking',
                         type: 'unsuccessful',
                         event: {
+                            slot: calculateDoctorSlot(workDaysTime, duration),
                             error: error.response?.data
                         }
                     });

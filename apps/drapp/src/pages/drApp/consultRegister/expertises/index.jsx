@@ -12,6 +12,7 @@ import SelectDate from '@paziresh24/components/prescription/selectDate';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { getCookie, setCookie } from '@paziresh24/utils/cookie';
 import moment from 'jalali-moment';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const ExpertisesPage = () => {
     const [info] = useDrApp();
@@ -58,8 +59,21 @@ const ExpertisesPage = () => {
                             alias_title: expertise?.alias_title
                         },
                         {
-                            onError: err => {
-                                toast.error(err.response.data.message);
+                            onSuccess: () => {
+                                getSplunkInstance().sendEvent({
+                                    group: 'create_expertise_consult',
+                                    type: 'successful'
+                                });
+                            },
+                            onError: error => {
+                                getSplunkInstance().sendEvent({
+                                    group: 'create_expertise_consult',
+                                    type: 'unsuccessful',
+                                    event: {
+                                        error: error.response?.data
+                                    }
+                                });
+                                toast.error(error.response.data.message);
                             }
                         }
                     )
@@ -74,8 +88,21 @@ const ExpertisesPage = () => {
                         alias_title: expertise?.alias_title
                     },
                     {
-                        onError: err => {
-                            toast.error(err.response.data.message);
+                        onSuccess: () => {
+                            getSplunkInstance().sendEvent({
+                                group: 'update_expertise_consult',
+                                type: 'successful'
+                            });
+                        },
+                        onError: error => {
+                            getSplunkInstance().sendEvent({
+                                group: 'update_expertise_consult',
+                                type: 'unsuccessful',
+                                event: {
+                                    error: error.response?.data
+                                }
+                            });
+                            toast.error(error.response.data.message);
                         }
                     }
                 )
