@@ -56,11 +56,30 @@ const SalamatLogin = ({ step }) => {
                 cellPhone: digitsFaToEn(cellPhone),
                 nationalCode: digitsFaToEn(nationalCode)
             });
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'successful-salamat',
+                event: {
+                    cellPhone: digitsFaToEn(cellPhone),
+                    nationalCode: digitsFaToEn(nationalCode),
+                    username: usernameField.current.value
+                }
+            });
             handleLogin({
                 username: usernameField.current.value,
                 password: passwordField.current.value
             });
         } catch (error) {
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'unsuccessful-salamat',
+                event: {
+                    cellPhone: digitsFaToEn(cellPhone),
+                    nationalCode: digitsFaToEn(nationalCode),
+                    username: usernameField.current.value,
+                    error: error.response.data
+                }
+            });
             toast.error(error.response?.data.message);
         }
     };

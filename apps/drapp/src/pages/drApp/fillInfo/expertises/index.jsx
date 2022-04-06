@@ -8,6 +8,7 @@ import { useCreateExpertise, useUpdateExpertise } from '@paziresh24/hooks/drapp/
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const ExpertisesPage = () => {
     const [info] = useDrApp();
@@ -45,8 +46,21 @@ const ExpertisesPage = () => {
                             alias_title: expertise?.alias_title
                         },
                         {
-                            onError: err => {
-                                toast.error(err.response.data.message);
+                            onSuccess: () => {
+                                getSplunkInstance().sendEvent({
+                                    group: 'create_expertise_active_booking',
+                                    type: 'successful'
+                                });
+                            },
+                            onError: error => {
+                                getSplunkInstance().sendEvent({
+                                    group: 'create_expertise_active_booking',
+                                    type: 'unsuccessful',
+                                    event: {
+                                        error: error.response?.data
+                                    }
+                                });
+                                toast.error(error.response.data.message);
                             }
                         }
                     )
@@ -61,8 +75,21 @@ const ExpertisesPage = () => {
                         alias_title: expertise?.alias_title
                     },
                     {
-                        onError: err => {
-                            toast.error(err.response.data.message);
+                        onSuccess: () => {
+                            getSplunkInstance().sendEvent({
+                                group: 'update_expertise_active_booking',
+                                type: 'successful'
+                            });
+                        },
+                        onError: error => {
+                            getSplunkInstance().sendEvent({
+                                group: 'update_expertise_active_booking',
+                                type: 'unsuccessful',
+                                event: {
+                                    error: error.response?.data
+                                }
+                            });
+                            toast.error(error.response.data.message);
                         }
                     }
                 )

@@ -286,7 +286,7 @@ const Form = ({ focus, setFocus }) => {
                         <div className="border border-solid border-gray-200 w-3/6"></div>
                     </div>
                     <Button onClick={() => setStep('USERNAME')} block variant="secondary">
-                        ورود با پذیرش 24
+                        ورود با شماره موبایل
                     </Button>
                 </div>
             )}
