@@ -47,7 +47,6 @@ const Finalize = () => {
     const paziresh = usePaziresh();
 
     // modal
-    const [servicesDoctorVisitConfirmModal, setServicesDoctorVisitConfirmModal] = useState(false);
     const [visitModal, setVisitModal] = useState(false);
     const [deliverModal, setDeliverModal] = useState(false);
     const [deliverConfirmModal, setDeliverConfirmModal] = useState(false);
@@ -336,7 +335,7 @@ const Finalize = () => {
                                 item => item.service_type === serviceType.TAMIN.SERVICES_OF_DOCTORS
                             )
                         ) {
-                            return setServicesDoctorVisitConfirmModal(true);
+                            isServiceWithVisitTamin = true;
                         }
                         if (
                             prescriptionInfo.insuranceType === 'salamat' &&
@@ -360,7 +359,7 @@ const Finalize = () => {
                                 item => item.service_type === serviceType.TAMIN.SERVICES_OF_DOCTORS
                             )
                         ) {
-                            return setServicesDoctorVisitConfirmModal(true);
+                            isServiceWithVisitTamin = true;
                         }
                         if (
                             prescriptionInfo.insuranceType === 'salamat' &&
@@ -417,37 +416,6 @@ const Finalize = () => {
                         بله
                     </Button>
                     <Button block variant="secondary" onClick={() => history.push('/')}>
-                        خیر
-                    </Button>
-                </div>
-            </Modal>
-
-            <Modal
-                title="آیا مایلید همراه خدمات ویزیت هم ثبت شود؟"
-                isOpen={servicesDoctorVisitConfirmModal}
-                onClose={setServicesDoctorVisitConfirmModal}
-            >
-                <div className={styles.modalConfirmRow}>
-                    <Button
-                        block
-                        variant="primary"
-                        onClick={() => {
-                            isServiceWithVisitTamin = true;
-                            submitServices();
-                            setServicesDoctorVisitConfirmModal(false);
-                        }}
-                    >
-                        بله
-                    </Button>
-                    <Button
-                        block
-                        variant="secondary"
-                        onClick={() => {
-                            isServiceWithVisitTamin = false;
-                            submitServices();
-                            setServicesDoctorVisitConfirmModal(false);
-                        }}
-                    >
                         خیر
                     </Button>
                 </div>
