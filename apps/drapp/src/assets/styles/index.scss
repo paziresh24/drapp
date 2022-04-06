@@ -58,8 +58,8 @@ a {
 }
 
 ::placeholder {
-    color: #3f3f7975;
-    font-size: 1.5rem;
+    color: #bac1c7 !important;
+    font-weight: 400 !important;
 }
 
 .page-enter {
@@ -145,7 +145,7 @@ a {
 }
 
 .skeleton {
-    height: 1.2rem;
+    height: 0.8rem;
     background: rgba(76, 96, 125, 0.2);
     border-radius: 100rem;
     animation: skeleton 0.8s ease-in-out infinite both;
@@ -191,30 +191,6 @@ a {
 .row {
     display: flex;
     align-items: center;
-}
-
-.topbar {
-    width: 100%;
-    background-color: #fff;
-    padding: 1.5rem;
-    display: flex;
-    justify-content: flex-end;
-    border-bottom: 1px solid #e5e9f0;
-
-    @media screen and (max-width: 426px) {
-        display: none;
-    }
-
-    > * {
-        margin: 0 0.5rem;
-    }
-
-    > :first-child {
-        margin-right: 0;
-    }
-    > :last-child {
-        margin-left: 0;
-    }
 }
 
 input {

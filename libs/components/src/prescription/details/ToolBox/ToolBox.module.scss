@@ -1,9 +1,9 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    min-width: 35rem;
-    width: 35rem;
-    max-width: 60rem;
+    min-width: 23rem;
+    width: 23rem;
+    max-width: 35rem;
     height: 100vh;
     background-color: #ffffff;
     justify-content: space-between;
@@ -11,8 +11,6 @@
     top: 0;
     border-right: 1px solid #e3e7f0;
     justify-content: center;
-    // transition: all 0.5s ease-in-out;
-    // z-index: 1;
 
     @media (max-width: 992px) {
         position: fixed;
@@ -53,13 +51,13 @@
 
     .close {
         position: absolute;
-        height: 5rem;
+        height: 3rem;
         background: #e3eaf0;
-        width: 1.5rem;
+        width: 1rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 1rem 0 0 1rem;
+        border-radius: 0.6rem 0 0 0.6rem;
         outline: 0;
         opacity: 1;
         transition: all 0.3s ease-in-out;
@@ -67,8 +65,8 @@
         z-index: 1;
 
         &.right {
-            right: -1.5rem;
-            border-radius: 0 1rem 1rem 0;
+            right: -1rem;
+            border-radius: 0 0.6rem 0.6rem 0;
         }
     }
 }

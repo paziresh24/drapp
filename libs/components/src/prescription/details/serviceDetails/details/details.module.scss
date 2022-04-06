@@ -1,6 +1,6 @@
 .wrapper {
     display: flex;
-    padding: 2rem;
+    padding: 1.5rem;
     flex-direction: column;
     width: 100%;
     align-items: flex-end;
@@ -18,7 +18,7 @@
         width: 100%;
 
         > * {
-            margin: 0.8rem 0rem;
+            margin: 0.6rem 0rem;
         }
 
         > :first-child {
@@ -33,7 +33,7 @@
             display: flex;
             width: 100%;
             flex-flow: row wrap;
-            grid-gap: 1rem;
+            grid-gap: 0.7rem;
 
             & > * {
                 flex: 1 1 127px;
@@ -87,7 +87,7 @@
             display: flex;
             align-items: center;
             cursor: pointer;
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 500;
             grid-gap: 0.5rem;
         }
@@ -110,7 +110,6 @@
         align-items: center;
         width: 100%;
         justify-content: space-between;
-        margin-top: 1rem;
 
         .left {
             display: flex;
@@ -152,7 +151,7 @@
             .showDescription {
                 display: flex;
                 align-items: center;
-                font-size: 1.4rem;
+                font-size: 1rem;
                 font-weight: 500;
                 cursor: pointer;
                 transition: all 0.3s;
@@ -178,7 +177,6 @@
 }
 
 .duplicate {
-    font-size: 1.5rem;
     margin-bottom: 1.3rem;
     color: #cc7b16;
     margin-top: -0.7rem;
@@ -194,7 +192,6 @@
 
     span {
         color: #27bda0;
-        font-size: 1.5rem;
         font-weight: 500;
     }
 }
@@ -203,12 +200,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 5rem;
-    min-width: 5rem;
+    height: 3rem;
+    min-width: 3rem;
     margin-right: 0.5rem;
     background-color: rgba(39, 189, 159, 0.075);
     border: 2px solid #27bda0;
-    border-radius: 0.6rem;
+    border-radius: 0.4rem;
 }
 
 .searchFilterWrapper {
@@ -218,11 +215,11 @@
     padding-left: 1rem;
 
     .searchFilterButton {
-        padding: 0 1.5rem;
+        padding: 0 1rem;
         background: #27bda021;
         border-radius: 100rem;
-        font-size: 1.4rem;
-        height: 3rem;
+        font-size: 0.9rem;
+        height: 1.9rem;
         color: #107c6a;
         font-weight: 500;
         border: 1px solid #119e87;

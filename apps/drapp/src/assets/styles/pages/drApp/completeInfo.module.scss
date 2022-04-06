@@ -2,25 +2,23 @@
     .form {
         display: flex;
         flex-direction: column;
-        @include gap(1.6rem, false);
+        @include gap(1rem, false);
     }
     .register-form {
         background: #fff;
         box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-        border-radius: 1rem;
-        padding: 2rem;
+        border-radius: 0.6rem;
+        padding: 1rem;
         display: flex;
         flex-direction: column;
         @include gap(1rem, false);
         font-weight: bold;
-        font-size: 1.4rem;
         color: $color-text;
         .form-control {
             display: flex;
             flex-direction: column;
-            @include gap(2rem, false);
+            @include gap(1rem, false);
             margin-bottom: 0.5rem;
-            margin-top: 2rem;
         }
 
         .title {
@@ -38,7 +36,7 @@
     width: 100%;
 
     > * {
-        margin: 0 1rem;
+        margin: 0 0.5rem;
     }
 
     > :first-child {

@@ -206,13 +206,9 @@ const ServiceFavorite = () => {
             )}
             <div className={styles.templatesWrapper}>
                 <div
-                    className="w-full flex justify-between items-center"
+                    className="w-full flex justify-between items-center p-4"
                     style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        width: '100%',
-                        padding: '1.5rem'
+                        background: isMobile && '#fff'
                     }}
                 >
                     <div className={styles.providerWrapper} style={{ marginRight: '0' }}>
@@ -237,7 +233,6 @@ const ServiceFavorite = () => {
                     {!isMobile && (
                         <Button
                             onClick={edit}
-                            size="medium"
                             loading={
                                 deleteFavoriteServices.isLoading ||
                                 addFavoriteServices.isLoading ||
@@ -249,7 +244,7 @@ const ServiceFavorite = () => {
                     )}
                     {isMobile && (
                         <FixedWrapBottom>
-                            <Button block size="medium" onClick={edit}>
+                            <Button block onClick={edit}>
                                 اعمال تغییرات
                             </Button>
                         </FixedWrapBottom>
@@ -335,15 +330,14 @@ const ServiceFavorite = () => {
                                       margin: '0 auto',
                                       padding: '10rem',
                                       display: 'flex',
-                                      gap: '2rem',
+                                      gap: '1rem',
                                       justifyContent: 'center',
                                       alignItems: 'center'
                                   }}
                               >
-                                  <img src={emptyState} alt="" style={{ width: '6rem' }} />
+                                  <img src={emptyState} alt="" style={{ width: '3rem' }} />
                                   <span
                                       style={{
-                                          fontSize: '1.4rem',
                                           fontWeight: '500',
                                           opacity: '0.7'
                                       }}
@@ -360,15 +354,14 @@ const ServiceFavorite = () => {
                                       margin: '0 auto',
                                       padding: '10rem',
                                       display: 'flex',
-                                      gap: '2rem',
+                                      gap: '1rem',
                                       justifyContent: 'center',
                                       alignItems: 'center'
                                   }}
                               >
-                                  <img src={emptyState} alt="" style={{ width: '6rem' }} />
+                                  <img src={emptyState} alt="" style={{ width: '3rem' }} />
                                   <span
                                       style={{
-                                          fontSize: '1.4rem',
                                           fontWeight: '500',
                                           opacity: '0.7'
                                       }}

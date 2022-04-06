@@ -26,7 +26,7 @@
     -webkit-user-select: text;
 
     &.password {
-        padding-left: 4.5rem;
+        padding-left: 2.75rem;
     }
 }
 
@@ -53,8 +53,8 @@
     transform: translate(0, 0);
     transition: transform 120ms ease-in;
     padding: 0 0.5rem;
-    color: #91a5b6;
-    font-weight: 500;
+    color: #bac1c7;
+    font-weight: 400;
     cursor: text;
     user-select: none;
     font-size: 1rem;
@@ -73,6 +73,7 @@
     background: #fff;
     cursor: unset;
     color: $color-text;
+    font-weight: 500 !important;
 }
 
 .input:focus + .label {
@@ -80,6 +81,7 @@
     background: #fff;
     cursor: unset;
     color: $color-text;
+    font-weight: 500 !important;
 }
 
 .error {
@@ -99,8 +101,8 @@
 
 .show-password {
     position: absolute;
-    left: 1.5rem;
-    top: 1.5rem;
+    left: 0.85rem;
+    top: 0.9rem;
     cursor: pointer;
     opacity: 0.8;
     transition: opacity 0.3s;
@@ -114,7 +116,7 @@
     }
 
     svg {
-        width: 2rem;
-        height: 2rem;
+        width: 1.3rem;
+        height: 1.3rem;
     }
 }

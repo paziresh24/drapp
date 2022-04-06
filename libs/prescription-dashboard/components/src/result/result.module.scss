@@ -21,36 +21,15 @@
     margin-top: 2rem;
 }
 
-.rowTable {
-    text-align: right;
-    border-bottom: 1px solid #dde6eec5;
-    padding: 1.2rem 2rem;
-    position: relative;
-    color: #3f3f79;
-    font-weight: 500;
-    font-size: 1.5rem;
-    vertical-align: middle;
-
-    * {
-        user-select: text;
-    }
-}
-
 .dashboard {
     td,
     th {
         text-align: right;
-        border-bottom: 1px solid #ffffff;
-        padding: 1.2rem 2rem;
+        border-bottom: 1px solid #e6e6e683;
+        padding: 1rem 0.5rem;
         position: relative;
-        color: #3f3f79;
         font-weight: 500;
-        font-size: 1.5rem;
         vertical-align: middle;
-
-        * {
-            user-select: text;
-        }
     }
 
     tbody {
@@ -58,13 +37,12 @@
     }
 
     th {
-        background: #ffffff;
-        border-bottom: 1px solid #dde6eec5;
+        background: #fff;
         position: sticky;
         top: 0;
         z-index: 5;
+        padding: 1rem;
     }
-
     position: relative;
 
     @media screen and (max-width: 600px) {

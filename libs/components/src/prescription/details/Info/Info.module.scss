@@ -1,57 +1,41 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
     background: #ffffff;
     border-bottom: 1px solid #e3e7f0;
 
     .topBar {
-        height: 5rem;
+        height: 3.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        // padding: 0 1rem;
-        // padding-right: 0;
-        // margin-right: -1.5rem;
     }
 
     .infoDetails {
         display: flex;
         align-items: center;
-        font-size: 1.45rem;
+        font-size: 0.95rem;
         opacity: 0.9;
         font-weight: 500;
         vertical-align: middle;
         overflow: auto;
         z-index: 1;
-        @include gap(2rem);
+        @include gap(1.5rem);
 
         .toggleMore {
             margin: 0;
-            // min-width: 5rem;
-            // height: 5rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            // margin-left: -1rem;
             cursor: pointer;
             transition: all 0.5s;
-            // padding: 2rem;
-            padding: 0.5rem;
-            // padding-right: 0;
+            padding: 0.4rem;
 
             svg {
                 transition: all 0.3s;
             }
-
-            // &:hover {
-            //     background-color: #e3e7f0;
-            // }
         }
-
-        // & > * {
-        //     margin: 0 1rem;
-        // }
 
         .row {
             display: flex;
@@ -59,12 +43,11 @@
             white-space: nowrap;
 
             & > * {
-                margin: 0 0.5rem;
+                margin: 0 0.2rem;
             }
 
             .title {
                 font-weight: 500;
-                font-size: 1.4rem;
             }
         }
     }
@@ -89,19 +72,18 @@
 
 .moreInfoWrapper {
     display: flex;
-    // justify-content: space-between;
     flex-direction: column;
     width: 100%;
-    padding: 1.5rem;
+    padding: 1rem;
     background-color: #ecf1f5;
-    margin: 1.5rem 0;
-    border-radius: 0.8rem;
+    margin: 1rem 0;
+    border-radius: 0.6rem;
     @include gap(1rem, false);
 
     @media screen and (min-width: 768px) {
         flex-flow: row wrap !important;
         align-items: center;
-        padding: 2rem;
+        padding: 1rem 1.5rem;
         @include gap(1rem);
     }
 
@@ -133,7 +115,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    font-size: 1.5rem;
 
     & > * {
         margin: 0.5rem 0;

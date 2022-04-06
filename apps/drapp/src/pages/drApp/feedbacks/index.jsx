@@ -22,7 +22,7 @@ const Feedbacks = () => {
         <div className={styles['wrapper']}>
             {!getFeedbacks.isLoading && (
                 <>
-                    <h3>نظرات بیماران</h3>
+                    <h3 className="text-lg font-bold">نظرات بیماران</h3>
                     {getFeedbacks.data && (
                         <div className={styles['head-wrap']}>
                             <div className={styles['badge-wrap']}>

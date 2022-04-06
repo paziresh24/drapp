@@ -249,15 +249,7 @@ const CenterItem = ({ isAuth, insurance, provider, refetch }) => {
                             justifyContent: 'space-between'
                         }}
                     >
-                        <div
-                            className="flex space-s-2 items-center cursor-pointer"
-                            style={{
-                                display: 'flex',
-                                gap: '1rem',
-                                cursor: 'pointer',
-                                alignItems: 'center'
-                            }}
-                        >
+                        <div className="flex space-s-2 items-center cursor-pointer">
                             <label className={`${styles.checkbox} ${styles.bounce}`}>
                                 <input
                                     type="checkbox"

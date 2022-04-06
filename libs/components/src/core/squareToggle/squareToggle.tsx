@@ -18,11 +18,11 @@ export const SquareToggle: React.FC<SquareToggleProps> = props => {
     return (
         <div
             onClick={() => setIsChecked(prevState => !prevState)}
-            className={`flex items-center justify-center w-20 min-w-20 h-20 border-2 opacity-100 grayscale-0 border-solid border-[#27BDA0] rounded-lg bg-[#27bd9f34] cursor-pointer transition-all ${
+            className={`flex items-center justify-center w-12 min-w-[3rem] h-12 border-2 opacity-100 grayscale-0 border-solid border-[#27BDA0] rounded-md bg-[#27bd9f34] cursor-pointer transition-all ${
                 !isChecked ? 'bg-transparent !opacity-60 !grayscale' : ''
             }`}
         >
-            <span className="text-[#27BDA0] font-bold text-2xl">{label}</span>
+            <span className="text-[#27BDA0] font-bold">{label}</span>
         </div>
     );
 };

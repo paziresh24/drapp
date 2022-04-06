@@ -37,10 +37,10 @@
         flex-direction: column;
         position: absolute;
         inset: 0;
-        padding-bottom: 10rem;
+        padding-bottom: 6rem;
 
         > * {
-            margin: 1rem 0;
+            margin: 0.5rem 0;
         }
 
         > :first-child {
@@ -52,11 +52,10 @@
         }
 
         span {
-            font-size: 1.5rem;
-            padding: 0 5rem;
+            padding: 0 3rem;
             font-weight: 500;
             text-align: center;
-            line-height: 2.6rem;
+            line-height: 1.5rem;
             color: #7f8f9b;
         }
     }
@@ -74,18 +73,17 @@
     }
 
     .item {
-        font-size: 1.4rem;
+        font-size: 0.9rem;
         display: flex;
         flex-direction: column;
         background-color: #fff;
-        border-radius: 0.7rem;
+        border-radius: 0.4rem;
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.05);
 
         .itemInfo {
             opacity: 0.6;
             padding: 1rem;
-            font-size: 1.3rem;
-            // padding-bottom: 0;
+            font-size: 0.8rem;
         }
 
         label {
@@ -124,17 +122,17 @@
 .setting {
     display: flex;
     align-items: center;
-    height: 5rem;
-    min-height: 5rem;
-    max-height: 5rem;
+    height: 3.5rem;
+    min-height: 3.5rem;
+    max-height: 3.5rem;
     padding: 0 1.5rem;
     border-bottom: 1px solid #e3e7f0;
     justify-content: flex-end;
 
     span {
         font-weight: 500;
-        font-size: 1.5rem;
         margin-left: 1rem;
+        font-size: 0.9rem;
     }
 }
 
@@ -152,8 +150,8 @@
     label {
         cursor: pointer;
         text-indent: -9999px;
-        width: 4.5rem;
-        height: 2.5rem;
+        width: 3rem;
+        height: 1.7rem;
         background: grey;
         display: block;
         border-radius: 100px;
@@ -164,9 +162,9 @@
         content: '';
         position: absolute;
         top: 5px;
-        left: 5px;
-        width: 1.5rem;
-        height: 1.5rem;
+        left: 6px;
+        width: 1rem;
+        height: 1rem;
         background: #fff;
         border-radius: 100%;
         transition: 0.3s;

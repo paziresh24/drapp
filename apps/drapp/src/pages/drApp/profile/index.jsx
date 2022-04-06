@@ -19,7 +19,7 @@ import { UploadField } from '@paziresh24/components/core/upload';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useForm } from 'react-hook-form';
 import { formData } from '@paziresh24/utils';
-import Select from '@paziresh24/components/doctorApp/Select';
+import Select from '@paziresh24/components/ui/Select';
 import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
 import provincesData from '@paziresh24/constants/province.json';
 import citiesData from '@paziresh24/constants/city.json';
@@ -605,9 +605,8 @@ const Profile = () => {
                         <div className={styles['row']}>
                             <Select
                                 label="استان"
-                                searchble
                                 onChange={value => {
-                                    if (value) {
+                                    if (value.id) {
                                         setProvince(value.id);
                                         setPosition({
                                             lat: +provincesData.find(item => +item.id === +value.id)
@@ -618,7 +617,7 @@ const Profile = () => {
                                         return setMapZoom(8);
                                     }
                                 }}
-                                defaultValue={+info.center.province}
+                                defaultValue={+province}
                                 items={provincesData.map(item => ({
                                     name: item.name,
                                     value: item.id
@@ -626,9 +625,8 @@ const Profile = () => {
                             ></Select>
                             <Select
                                 label="شهر"
-                                searchble
                                 onChange={value => {
-                                    if (value) {
+                                    if (value.id) {
                                         setCity(value.id);
                                         setPosition({
                                             lat: +citiesData.find(item => +item.id === +value.id)
@@ -639,7 +637,7 @@ const Profile = () => {
                                         return setMapZoom(8);
                                     }
                                 }}
-                                defaultValue={+info.center.city}
+                                defaultValue={+city}
                                 items={citiesData
                                     .filter(city => +city.province_id === +province)
                                     .map(item => ({

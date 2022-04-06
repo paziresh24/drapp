@@ -11,7 +11,7 @@
     transition: all 0.3s;
 
     > * {
-        margin: 1.5rem 0;
+        margin: 1rem 0;
     }
 
     &.blur {
@@ -98,12 +98,12 @@
 
 .open-modal {
     overflow: hidden;
-    // padding-right: 15px;
 }
 
 .brandName {
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-weight: 900;
-    margin-top: -0.5rem;
+    margin-top: -0.3rem;
     user-select: none;
+    color: #3f3f79;
 }

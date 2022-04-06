@@ -17,6 +17,7 @@ import isEmpty from 'lodash/isEmpty';
 import { CSSTransition } from 'react-transition-group';
 
 const Header = () => {
+    const history = useHistory();
     const [page] = usePage();
     const [isOpen, setIsOpen] = useMenu();
     const [info, setInfo] = useDrApp();

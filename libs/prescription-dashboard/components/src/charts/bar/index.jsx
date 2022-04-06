@@ -17,8 +17,8 @@ const Bar = ({ data }) => {
                     }}
                 >
                     <svg
-                        width="92"
-                        height="93"
+                        width="80"
+                        height="80"
                         viewBox="0 0 92 93"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@ const Bar = ({ data }) => {
                     </svg>
                     <span
                         style={{
-                            fontSize: '1.5rem',
+                            fontSize: '1rem',
                             marginTop: '1rem',
                             fontWeight: '500',
                             color: '#96a7ae'

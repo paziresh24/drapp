@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import { useLearnTour } from '@paziresh24/hooks/learn';
 import { useRef, useState } from 'react';
 import { useEffect } from 'react';
@@ -11,7 +10,7 @@ import ReactTooltip from 'react-tooltip';
 import { v4 } from 'uuid';
 import isEmpty from 'lodash/isEmpty';
 
-const Select = ({ items, onChange, defaultValue, simple, error, focus, noModal, ...props }) => {
+const Select = ({ items, onChange, defaultValue, simple, error, focus, ...props }) => {
     const id = v4();
     const randomeKey = Math.random();
 
@@ -46,8 +45,6 @@ const Select = ({ items, onChange, defaultValue, simple, error, focus, noModal, 
 
     useEffect(() => {
         if (showOptions) {
-            // setSelectHover(0);
-
             if (!searchValue) return setOptions(items);
             if (searchValue) {
                 setOptions(

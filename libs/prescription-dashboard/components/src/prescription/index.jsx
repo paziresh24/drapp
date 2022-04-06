@@ -110,7 +110,7 @@ const PrescriptionStatistics = ({ level }) => {
         <div
             style={{
                 alignSelf: 'flex-start',
-                padding: '2rem 2rem',
+                padding: '0 1rem',
                 paddingBottom: '0'
             }}
         >
@@ -172,7 +172,6 @@ const PrescriptionStatistics = ({ level }) => {
                     )}
                     {level !== levelConstants.doctor && getDoctorCenter.isSuccess && (
                         <>
-                            ‍
                             <LevelSelect
                                 icon={
                                     <svg
@@ -251,16 +250,8 @@ const PrescriptionStatistics = ({ level }) => {
             </div>
             <div className={styles.mainWrapper}>
                 <div className={styles.header}>
-                    <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>
-                        گزارش نسخه های ثبت شده
-                    </span>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            gap: '1rem'
-                        }}
-                    >
+                    <span className="text-lg font-bold">گزارش نسخه های ثبت شده</span>
+                    <div className="flex justify-end space-s-3">
                         <LiveMode refetch={refetch} />
                         <ExportExcel
                             data={
@@ -353,26 +344,6 @@ const PrescriptionStatistics = ({ level }) => {
                                             color: 'hsl(37, 70%, 50%)'
                                         }
                                     ]}
-                                    // defs={[
-                                    //     {
-                                    //         id: 'dots',
-                                    //         type: 'patternDots',
-                                    //         background: 'inherit',
-                                    //         color: 'rgba(255, 255, 255, 0.3)',
-                                    //         size: 4,
-                                    //         padding: 1,
-                                    //         stagger: true
-                                    //     },
-                                    //     {
-                                    //         id: 'lines',
-                                    //         type: 'patternDots',
-                                    //         background: 'inherit',
-                                    //         color: 'rgba(255, 255, 255, 0.3)',
-                                    //         rotation: -45,
-                                    //         lineWidth: 6,
-                                    //         spacing: 10
-                                    //     }
-                                    // ]}
                                     fill={[
                                         {
                                             match: {

@@ -1,10 +1,7 @@
 .turn-card {
     background: #fff;
-    // box-shadow: 0 4px 4px rgba(0, 0, 0, 0.04);
     box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-
     border-radius: 0.6rem;
-    padding: 1.5rem;
     padding-top: 1rem;
 
     &.disabled {
@@ -30,7 +27,7 @@
         margin-top: 1rem;
         display: flex;
         justify-content: space-between;
-        font-size: 1.5rem;
+        font-size: 1rem;
         color: $color-text;
         flex-wrap: wrap;
         @include gap(0.75rem);
@@ -41,8 +38,8 @@
     .turn-actions {
         display: flex;
         align-items: center;
-        @include gap(1rem);
-        font-size: 1.5rem;
+        @include gap(0.5rem);
+        font-size: 0.95rem;
         color: $color-text;
         margin-top: 1rem;
         .wrap {
@@ -92,8 +89,8 @@
 }
 
 .turn_action {
-    width: 4rem;
-    height: 4rem;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -106,18 +103,14 @@
     left: 1rem;
     background: #ffffff;
     top: 1rem;
-    border-radius: 1rem;
+    border-radius: 0.6rem;
     box-shadow: 4px 15px 82px 0 #45546070;
-    width: 15rem;
+    width: 10rem;
     flex-direction: column;
     list-style: none;
     z-index: 1;
-    gap: 1.5rem;
-    padding: 1.5rem;
-
-    // &:hover {
-    //     display: flex;
-    // }
+    gap: 1rem;
+    padding: 1rem;
 
     &.show {
         display: flex;
@@ -127,7 +120,7 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-        gap: 0.8rem;
+        gap: 0.5rem;
 
         span {
             font-weight: 500;
@@ -181,34 +174,33 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1.1rem;
+    padding: 1rem;
     background: #ffffff;
 }
 
 .dropDown {
     position: absolute;
-    top: 1rem;
+    top: 0.5rem;
     left: 0.5rem;
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-// flex flex-col space-y-4 opacity-75 text-2xl
-
 .patientInfo {
     display: flex;
     flex-direction: column;
-    @include gap(0.5rem, false);
+    margin-top: 0.5rem;
+    @include gap(0.4rem, false);
 
     .patientInfoRow {
         display: flex;
         opacity: 0.75;
-        font-size: 1.5rem;
+        font-size: 0.95rem;
         width: 100%;
-        @include gap(0.6rem);
+        @include gap(0.5rem);
 
         div {
             width: 50%;
@@ -218,8 +210,8 @@
 
 .cardAction {
     display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .details {

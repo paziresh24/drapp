@@ -35,7 +35,7 @@ const Pie = ({ data, fill, defs, colors }) => {
 
                     <span
                         style={{
-                            fontSize: '1.5rem',
+                            fontSize: '1rem',
                             marginTop: '1rem',
                             fontWeight: '500',
                             color: '#96a7ae'
@@ -64,31 +64,6 @@ const Pie = ({ data, fill, defs, colors }) => {
                     defs={defs}
                     fill={fill}
                     colors={colors}
-                    // legends={[
-                    //     {
-                    //         anchor: 'bottom',
-                    //         direction: 'row',
-                    //         justify: false,
-                    //         translateX: 0,
-                    //         translateY: 56,
-                    //         itemsSpacing: 0,
-                    //         itemWidth: 100,
-                    //         itemHeight: 18,
-                    //         itemTextColor: '#999',
-                    //         itemDirection: 'left-to-right',
-                    //         itemOpacity: 1,
-                    //         symbolSize: 18,
-                    //         symbolShape: 'circle',
-                    //         effects: [
-                    //             {
-                    //                 on: 'hover',
-                    //                 style: {
-                    //                     itemTextColor: '#000'
-                    //                 }
-                    //             }
-                    //         ]
-                    //     }
-                    // ]}
                 />
             )}
         </div>

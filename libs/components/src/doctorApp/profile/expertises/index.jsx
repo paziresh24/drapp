@@ -1,5 +1,5 @@
 import styles from './expertises.module.scss';
-import Select from '@paziresh24/components/doctorApp/Select';
+import Select from '@paziresh24/components/ui/Select';
 import degreeData from '@paziresh24/constants/degree.json';
 import expertisesData from '@paziresh24/constants/expertises.json';
 import TextField from '../../../core/textField';

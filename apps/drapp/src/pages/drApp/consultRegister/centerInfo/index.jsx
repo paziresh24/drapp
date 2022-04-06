@@ -9,7 +9,7 @@ import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { HelpIcon } from '@paziresh24/components/icons/public/help';
-import Select from '@paziresh24/components/doctorApp/Select';
+import Select from '@paziresh24/components/ui/Select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { digitsFaToEn } from '@paziresh24/utils';
 import { InfoIcon } from '@paziresh24/components/icons';
@@ -130,11 +130,11 @@ const CenterInfo = () => {
                     />
                 </div>
                 <div className="bg-[#eaf0f4] rounded-lg p-5 flex flex-col space-y-3">
-                    <span className="text-[#586a79] text-2xl leading-[3rem]">
+                    <span className="text-[#586a79] leading-[1rem]">
                         <InfoIcon color="#586a79" className="inline-block ml-3" />
                         لازم به ذکر است که این شماره در دسترس بیماران قرار خواهد گرفت.
                     </span>
-                    <span className="font-medium text-[#586a79] text-2xl">
+                    <span className="font-medium text-[#586a79]">
                         این شماره می تواند شماره مطب شما، شماره موبایل و یا هر شماره ای که قادر به
                         نصب واتس اپ بیزینس روی آن هستید، باشد.
                     </span>

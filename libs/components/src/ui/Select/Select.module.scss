@@ -10,11 +10,11 @@
 .simple {
     .input {
         border: 0;
-        height: 2rem;
+        height: 1rem;
         padding: 0;
         background-color: transparent;
         border: 1px solid rgba(145, 165, 182, 0.35);
-        padding: 1.5rem 1rem;
+        padding: 1rem 1rem;
     }
 
     .label {
@@ -22,16 +22,16 @@
     }
 
     .options {
-        top: 3rem;
+        top: 2.5rem;
     }
 }
 
 .input {
     border: 1px solid #dce7ef;
-    border-radius: 0.6rem;
+    border-radius: 0.4rem;
     width: 100%;
     padding: 0 1rem;
-    height: 5rem;
+    height: 3rem;
     outline: 0;
     color: $color-text;
     transition: border 0.5s;
@@ -55,14 +55,14 @@
 
 .label {
     position: absolute;
-    right: 1rem;
-    top: 1.2rem;
+    right: 0.6rem;
+    top: 0.7rem;
     white-space: nowrap;
     transform: translate(0, 0);
     transition: transform 120ms ease-in;
-    padding: 0 1rem;
-    color: #91a5b6;
-    font-weight: 500;
+    padding: 0 0.5rem;
+    color: #bac1c7;
+    font-weight: 400;
     cursor: text;
     user-select: none;
 }
@@ -76,17 +76,19 @@
 }
 
 .input:not(:placeholder-shown) + .label {
-    transform: translate(1rem, -2.5rem) scale(0.8);
+    transform: translate(0.3rem, -1.5rem) scale(0.9);
     background: #fff;
     cursor: unset;
     color: $color-text;
+    font-weight: 500 !important;
 }
 
 .input:focus + .label {
-    transform: translate(1rem, -2.5rem) scale(0.8);
+    transform: translate(0.3rem, -1.5rem) scale(0.9);
     background: #fff;
     cursor: unset;
     color: $color-text;
+    font-weight: 500 !important;
 }
 
 .error {
@@ -106,11 +108,11 @@
     position: absolute;
     z-index: 5;
     background-color: #fff;
-    width: 100%;
-    top: 5.5rem;
+    min-width: 100%;
+    top: 3.5rem;
     box-shadow: 0 1px 6px 0 #0000000a, 0 -8px 32px -4px #00000014, 0 16px 24px -6px #0000000a;
     border-radius: 0.5rem;
-    max-height: 22.5rem;
+    max-height: 13rem;
     overflow: auto;
 
     &::-webkit-scrollbar {
@@ -128,13 +130,12 @@
     }
 
     .option {
-        padding: 1.2rem 1.2rem;
-        font-size: 1.3rem;
+        padding: 0.9rem;
+        font-size: 0.9rem;
         font-weight: 500;
         cursor: pointer;
         color: #38386f;
         transition: all 0.3s;
-        // border-bottom: 1px solid #91a5b626;
 
         &:hover {
             background-color: rgba(230, 235, 240, 0.525);

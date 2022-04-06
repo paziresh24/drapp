@@ -380,11 +380,14 @@ const Turning = () => {
 
     var observer = new IntersectionObserver(
         function (entries) {
-            // no intersection
-            if (entries[0].intersectionRatio === 0) headerRef.current.classList.add(styles.sticky);
-            // fully intersects
-            else if (entries[0].intersectionRatio === 1)
-                headerRef.current.classList.remove(styles.sticky);
+            if (headerRef.current) {
+                // no intersection
+                if (entries[0].intersectionRatio === 0)
+                    headerRef.current.classList.add(styles.sticky);
+                // fully intersects
+                else if (entries[0].intersectionRatio === 1)
+                    headerRef.current.classList.remove(styles.sticky);
+            }
         },
         {
             threshold: [0, 1]
@@ -438,43 +441,18 @@ const Turning = () => {
                 refetchData={refetchData}
             />
             <div className={styles['wrapper']}>
-                <div ref={statisticsRef} className={styles.statistics}>
-                    <div
-                        style={{
-                            height: '5rem',
-                            background: '#ebeff8',
-                            borderRadius: '1rem',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: '0 2rem'
-                        }}
-                    >
+                <div
+                    ref={statisticsRef}
+                    className="hidden lg:flex space-s-6 justify-center mb-3 pt-8"
+                >
+                    <div className="h-14 rounded-lg flex justify-center items-center px-4 bg-[#ebeff8]">
                         <TurningIcon />
-                        <span
-                            style={{
-                                fontWeight: 'bold',
-                                marginRight: '0.8rem',
-                                marginLeft: '1rem'
-                            }}
-                        >
-                            تعداد بیماران امروز
-                        </span>
-                        <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
+                        <span className="font-bold mr-2 ml-2">تعداد بیماران امروز</span>
+                        <span className="font-medium">
                             {getTurn.isSuccess && statisticsTurns.allPatientsToday()} بیمار
                         </span>
                     </div>
-                    <div
-                        style={{
-                            height: '5rem',
-                            background: '#ebeff8',
-                            borderRadius: '1rem',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: '0 2rem'
-                        }}
-                    >
+                    <div className="h-14 rounded-lg flex justify-center items-center px-4 bg-[#ebeff8]">
                         <svg
                             width="25"
                             height="25"
@@ -489,30 +467,14 @@ const Turning = () => {
                                 fill="#27BDA0"
                             />
                         </svg>
-                        <span
-                            style={{
-                                fontWeight: 'bold',
-                                marginRight: '0.8rem',
-                                marginLeft: '1rem'
-                            }}
-                        >
+                        <span className="font-bold mr-2 ml-2">
                             {isExpertDoctor ? 'نسخه های صادر شده' : 'بیماران ویزیت شده'}
                         </span>
-                        <span style={{ fontWeight: '500', fontSize: '1.5rem' }}>
+                        <span className="font-medium">
                             {getTurn.isSuccess && statisticsTurns.visitedPatientsToday()} نسخه
                         </span>
                     </div>
-                    <div
-                        style={{
-                            height: '5rem',
-                            background: '#ebeff8',
-                            borderRadius: '1rem',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: ' 0 2rem'
-                        }}
-                    >
+                    <div className="h-14 rounded-lg flex justify-center items-center px-4 bg-[#ebeff8]">
                         <svg
                             width="24"
                             height="24"
@@ -527,16 +489,8 @@ const Turning = () => {
                                 fill="#27BDA0"
                             />
                         </svg>
-                        <span
-                            style={{
-                                fontWeight: 'bold',
-                                marginRight: '0.8rem',
-                                marginLeft: '1rem'
-                            }}
-                        >
-                            بیماران باقی مانده
-                        </span>
-                        <span style={{ fontWeight: '500' }}>
+                        <span className="font-bold mr-2 ml-2">بیماران باقی مانده</span>
+                        <span className="font-medium">
                             {statisticsTurns.activePatientsToday()} بیمار
                         </span>
                     </div>
@@ -583,7 +537,6 @@ const Turning = () => {
                                     setOpenNewTurn(true);
                                     sendEvent('plususer', 'prescription', 'plususer');
                                 }}
-                                size="medium"
                             >
                                 افزودن بیمار
                             </Button>
@@ -699,7 +652,6 @@ const Turning = () => {
                     )}
                     <span
                         style={{
-                            fontSize: '1.45rem',
                             textDecoration: 'underLine',
                             opacity: '0.8',
                             cursor: 'pointer',
@@ -709,7 +661,7 @@ const Turning = () => {
                     >
                         پذیرش از مسیر ارجاع
                     </span>
-                    <div style={{ display: 'flex', gap: '1rem' }}>
+                    <div className="flex space-s-3">
                         {!isEmpty(confirmCellPhone) && (
                             <Button
                                 block

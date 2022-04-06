@@ -1,8 +1,8 @@
 .filterWrapper {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
-    @include gap(2rem, false);
+    padding: 1rem;
+    @include gap(1rem, false);
     background-color: #fff;
     box-shadow: 0px 5px 49px rgba(35, 40, 47, 0.059);
     position: sticky;
@@ -33,7 +33,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem;
+    padding: 1rem;
     padding-bottom: 0;
 
     @media screen and (max-width: 768px) {
@@ -58,27 +58,26 @@
 
 .tableWrapper {
     display: flex;
-    // height: 60rem;
     width: 100%;
     align-items: center;
     align-self: baseline;
     padding: 0.5rem;
     padding-top: 0;
     background-color: #fff;
-    border-radius: 1rem;
+    border-radius: 0.4rem;
     position: relative;
     box-shadow: 0px 14px 49px rgba(35, 40, 47, 0.059);
 }
 
 .chartsWrapper {
     display: flex;
-    height: 50rem;
-    max-height: 50rem;
-    min-height: 50rem;
+    height: 35rem;
+    max-height: 35rem;
+    min-height: 35rem;
     width: 100%;
     align-items: center;
     background-color: #f3f7fa;
-    padding: 2rem;
+    padding: 1rem;
     padding-bottom: 0;
     justify-content: space-between;
     gap: 2rem;
@@ -98,7 +97,7 @@
         align-items: center;
         background-color: #fff;
         box-shadow: 0px 14px 49px rgba(35, 40, 47, 0.059);
-        border-radius: 1rem;
+        border-radius: 0.4rem;
         position: relative;
         overflow: hidden;
 
@@ -112,8 +111,8 @@
 
         &.left {
             flex-direction: column !important;
-            min-width: 40rem;
-            max-width: 40rem;
+            min-width: 25rem;
+            max-width: 25rem;
             gap: 1rem;
             padding: 1rem;
 
@@ -122,23 +121,5 @@
                 max-width: 100%;
             }
         }
-    }
-}
-
-.excelExportButton {
-    height: 4.5rem;
-    padding: 0 1.5rem;
-    border: 1px solid rgba(47, 149, 83, 0.322);
-    // background-color: rgba(58, 199, 105, 0.068);
-    display: flex;
-    align-items: center;
-    border-radius: 0.6rem;
-    cursor: pointer;
-
-    span {
-        color: #2f9552;
-        margin-right: 0.5rem;
-        font-weight: 500;
-        font-size: 1.5rem;
     }
 }

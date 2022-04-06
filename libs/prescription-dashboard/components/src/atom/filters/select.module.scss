@@ -1,20 +1,19 @@
 .wrapper {
     display: flex;
-    height: 4rem;
+    height: 3rem;
     align-items: center;
     background: #e8f0f5;
-    padding: 0 1.5rem;
-    border-radius: 0.6rem;
+    padding: 0 1rem;
+    border-radius: 0.4rem;
     font-weight: 500;
-    font-size: 1.45rem;
+    font-size: 0.95rem;
     cursor: pointer;
     position: relative;
     justify-content: space-between;
 
     .removeButton {
-        width: 2rem;
-        height: 2rem;
-        margin-right: 1rem;
+        padding: 0.2rem;
+        margin-right: 0.5rem;
         background-color: #2e3a421c;
         border-radius: 100%;
         display: flex;
@@ -22,8 +21,8 @@
         justify-content: center;
 
         svg {
-            width: 1.6rem;
-            height: 1.6rem;
+            width: 0.9rem;
+            height: 0.9rem;
             * {
                 fill: #2e3a42;
             }
@@ -32,32 +31,25 @@
 
     .select {
         position: absolute;
-        top: 4.5rem;
+        top: 3rem;
         right: 0;
         z-index: 999;
         width: fit-content;
         white-space: nowrap;
         background-color: #fff;
-        width: 16rem;
+        width: 10rem;
         display: flex;
         flex-direction: column;
-        border-radius: 0.8rem;
+        border-radius: 0.4rem;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 
         li {
             transition: all 0.3s ease;
             display: flex;
-            padding: 1rem;
             color: #2e3a42;
             cursor: pointer;
             width: 100%;
-            padding: 1rem;
-
-            // label {
-            //     input {
-            //         margin-left: 0.5rem;
-            //     }
-            // }
+            padding: 0.8rem;
 
             &:hover {
                 background-color: #e8f0f598;

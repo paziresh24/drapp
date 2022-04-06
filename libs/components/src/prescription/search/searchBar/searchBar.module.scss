@@ -12,20 +12,21 @@
         direction: rtl;
         background: transparent;
         border: 0;
-        height: 5rem;
+        height: 3rem;
         outline: 0;
         color: $color-text;
-        font-size: 1.5rem;
+        font-size: 1rem;
         width: 100%;
         font-weight: 400;
 
         &::placeholder {
+            font-size: 1rem;
             color: #8e92ac;
         }
     }
 
     .icon {
-        width: 2.1rem;
-        height: 2.1rem;
+        width: 1.5rem;
+        height: 1.5rem;
     }
 }

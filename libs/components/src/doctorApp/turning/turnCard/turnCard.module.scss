@@ -1,8 +1,6 @@
 .turn-card {
     background: #fff;
-    // box-shadow: 0 4px 4px rgba(0, 0, 0, 0.04);
     box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-
     border-radius: 0.6rem;
     padding: 1.5rem;
     padding-top: 1rem;
@@ -92,8 +90,8 @@
 }
 
 .turn_action {
-    width: 4rem;
-    height: 4rem;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,10 +112,6 @@
     z-index: 1;
     gap: 1.5rem;
     padding: 1.5rem;
-
-    // &:hover {
-    //     display: flex;
-    // }
 
     &.show {
         display: flex;
@@ -181,10 +175,9 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1.1rem;
+    padding: 1rem;
     background: #ffffff;
 }
-
 .dropDown {
     position: absolute;
     top: 1rem;
@@ -201,12 +194,13 @@
 .patientInfo {
     display: flex;
     flex-direction: column;
+    margin-top: 1rem;
     @include gap(0.5rem, false);
 
     .patientInfoRow {
         display: flex;
         opacity: 0.75;
-        font-size: 1.5rem;
+        font-size: 1rem;
         width: 100%;
         @include gap(0.6rem);
 

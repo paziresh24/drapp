@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 0.5rem;
-    border-radius: 0.8rem;
+    border-radius: 0.4rem;
 
     @media (max-width: 1097px) {
         box-shadow: unset;
@@ -17,12 +17,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 2rem;
+        padding: 1rem;
         border-bottom: 1px solid rgba(189, 201, 211, 0.27);
 
         @media (max-width: 1097px) {
             border-bottom: 0;
-            padding: 1rem 2rem;
+            padding: 1rem;
         }
     }
 }
@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: 1rem;
 
     > * {
         margin: 0 0.5rem;
@@ -60,24 +60,22 @@
 
     .centerItem {
         display: flex;
-        // align-items: center;
-        padding: 2rem;
+        padding: 1rem;
         flex-direction: column;
         @include gap(1.5rem, false);
 
         @media screen and(max-width:1097px) {
-            @include gap(3rem, false);
+            @include gap(1rem, false);
         }
 
         .centerInfo {
             display: flex;
             flex-direction: column;
-            @include gap(1rem, false);
+            @include gap(0.5rem, false);
 
             .centerName {
                 font-weight: 600;
-                font-size: 1.6rem;
-                margin-bottom: 0.5rem;
+                font-size: 1rem;
                 width: auto;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
@@ -86,7 +84,7 @@
             }
 
             .centerAddress {
-                font-size: 1.4rem;
+                font-size: 0.9rem;
                 font-weight: 500;
                 opacity: 0.7;
                 display: -webkit-box;
@@ -99,7 +97,7 @@
 }
 
 .importLabel {
-    font-size: 1.35rem;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
 }

@@ -2,11 +2,9 @@ import classNames from 'classnames';
 import styles from './statusBar.module.scss';
 import { useState, useRef } from 'react';
 import Button from '../../../core/button';
-import { ClockIcon, SettingIcon } from '../../../icons';
+import { ClockIcon } from '../../../icons';
 import Select from '../../../core/select';
 import Modal from '../../../core/modal';
-import { isMobile } from 'react-device-detect';
-import FixedWrapBottom from '../../../core/fixedWrapBottom';
 import { SelectDate } from '../../../doctorApp/turning/selectDate';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -17,8 +15,6 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import { Timeit } from 'react-timeit';
 import { sendEvent } from '@paziresh24/utils';
 import { useHistory, useLocation } from 'react-router';
-import { Default } from '@paziresh24/hooks/core/device';
-import { useMenu } from '@paziresh24/context/core/menu';
 import queryString from 'query-string';
 import { useLearnTour } from '@paziresh24/hooks/learn';
 import range from 'lodash/range';
@@ -35,21 +31,8 @@ const TimeInput = ({ placeholder, onBlur, value }) => {
         value(selectedTime);
     };
 
-    const disabledMinutes = () => {
-        return range(0, 60, 1).filter(a => !range(0, 60, 5).includes(a));
-    };
-
     return (
         <>
-            {/* <TimePicker
-                showSecond={false}
-                className={classNames({ [styles['input']]: true })}
-                onChange={timeSelect}
-                placeholder={placeholder}
-                inputReadOnly
-                disabledMinutes={disabledMinutes}
-            /> */}
-
             <input
                 className={styles['input']}
                 type="text"
@@ -60,24 +43,6 @@ const TimeInput = ({ placeholder, onBlur, value }) => {
                 onClick={modalOpener}
             />
 
-            {/* <input
-                className={styles['input']}
-                type="text"
-                onBlur={onBlur}
-                placeholder={placeholder}
-                ref={timeField}
-                onClick={modalOpener}
-                readOnly
-            />
-            <Modal noHeader isOpen={openModal} onClose={() => setOpenModal(false)}>
-                <TimeKeeper
-                    hour24Mode
-                    switchToMinuteOnHourSelect
-                    time="12:00"
-                    onChange={newTime => setTime(newTime)}
-                />
-                <Button onClick={timeSelect}>تایید</Button>
-            </Modal> */}
             <Modal title="انتخاب زمان" isOpen={openModal} onClose={setOpenModal}>
                 <div className={styles['time-picker-wrapper']}>
                     <Timeit
@@ -93,11 +58,10 @@ const TimeInput = ({ placeholder, onBlur, value }) => {
     );
 };
 
-const StatusBar = props => {
+const StatusBar = () => {
     const history = useHistory();
     const [isOpen, setIsOpen] = useSettingTurns();
     const [moveDeleteModal, setMoveDeleteModal] = useState(false);
-    const [openNewTurn, setOpenNewTurn] = useState(false);
     const [tabName, setTabName] = useState('');
     const [info] = useDrApp();
 
@@ -105,9 +69,7 @@ const StatusBar = props => {
     const urlParams = queryString.parse(search);
     const [selectDate, setSelectDate] = useState();
     const [selectFromTime, setSelectFromTime] = useState();
-    const [fromTime, setFromTime] = useState();
     const [selectToTime, setSelectToTime] = useState();
-    const [toTime, setToTime] = useState();
     const deleteTurns = useDeleteTurns();
     const [deleteTurnsConfirmModal, setDeleteTurnsConfirmModal] = useState(false);
 
@@ -510,7 +472,6 @@ const StatusBar = props => {
 
                             <Button
                                 block
-                                size="medium"
                                 onClick={() => setMoveTurnsConfirmModal(true)}
                                 loading={moveTurns.isLoading}
                                 disabled={
@@ -546,7 +507,6 @@ const StatusBar = props => {
                             <span className={styles['inner']}>مرخصی اعمال شود.</span>
                             <Button
                                 block
-                                size="medium"
                                 onClick={vacationAction}
                                 loading={vacation.isLoading}
                                 disabled={
@@ -699,7 +659,6 @@ const StatusBar = props => {
 
                     <Button
                         block
-                        size="medium"
                         onClick={() => groupVacationMoveAction(false)}
                         loading={moveTurns.isLoading}
                         disabled={!vacationMoveTargetDate || !vacationMoveTargetTime}

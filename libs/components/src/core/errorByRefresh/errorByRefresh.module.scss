@@ -9,7 +9,7 @@
     background: #fff;
 
     .text {
-        font-size: 1.5rem;
+        font-size: 1rem;
         font-weight: 500;
     }
 
@@ -17,12 +17,12 @@
         display: flex;
         align-items: center;
         background-color: rgba(224, 233, 239, 0.63);
-        height: 4.5rem;
+        height: 3rem;
         border-radius: 100rem;
-        padding: 0 1.6rem;
-        margin-bottom: 2rem;
+        padding: 0 1rem;
+        margin-bottom: 1.5rem;
         font-weight: 700;
-        font-size: 1.4rem;
+        font-size: 0.9rem;
         cursor: pointer;
 
         > * {
@@ -47,7 +47,7 @@
     bottom: 5rem;
 
     > * {
-        margin: 0 0.7rem;
+        margin: 0 0.5rem;
     }
 
     :first-child {

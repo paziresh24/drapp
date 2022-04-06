@@ -12,8 +12,8 @@
             left: unset !important;
             border-radius: 1rem !important;
             width: 100%;
-            max-width: 50rem;
-            max-height: 50rem;
+            max-width: 20rem;
+            max-height: 20rem;
             transform: translateY(calc(-100% - 13rem)) !important;
 
             &.fullPage {
@@ -133,8 +133,7 @@
 
     input {
         outline: 0;
-        height: 6rem;
-        font-size: 1.6rem;
+        height: 3.5rem;
         border: 0;
         width: 100%;
         direction: ltr;
@@ -142,15 +141,16 @@
     }
 
     .searchIcon {
-        height: 6rem;
-        min-width: 6rem;
+        height: 3rem;
+        min-width: 3rem;
+        width: 3rem;
         display: flex;
         align-items: center;
         justify-content: center;
 
         svg {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1rem;
+            height: 1rem;
             opacity: 0.8;
         }
     }
@@ -172,10 +172,10 @@
     overflow: auto;
     position: absolute;
     right: 0;
-    top: 4.5rem;
-    width: 48rem;
+    top: 3.5rem;
+    width: 29rem;
     z-index: 1001;
-    max-height: 35rem;
+    max-height: 23rem;
     margin-top: 1rem;
     box-shadow: 0 1px 6px 0 #0000000a, 0 -8px 32px -4px #00000014, 0 16px 24px -6px #0000000a;
 

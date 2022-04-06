@@ -4,14 +4,13 @@
     @include gap(1rem, false);
 
     .description {
-        font-size: 1.5rem;
         font-weight: 500;
         text-align: justify;
     }
 }
 
 .captcha {
-    width: 13rem;
+    width: 7rem;
     align-self: center;
     margin: 1rem;
     border-radius: 0.8rem;

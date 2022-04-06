@@ -183,12 +183,12 @@ const SideBar = () => {
                 style={{
                     paddingBottom: open ? '2rem' : '1rem',
                     alignItems: open ? 'flex-start' : 'center',
-                    width: open ? '27rem' : '6.5rem'
+                    width: open ? '18rem' : '4rem'
                 }}
-                className="bg-white flex flex-col py-8 px-2 gap-4 justify-between z-10 border border-left border-solid border-[#e5e9f0] transition-all duration-300 h-screen"
+                className="bg-white flex flex-col py-3 px-1 gap-4 justify-between z-10 border border-left border-solid border-[#e5e9f0] transition-all duration-300 h-screen"
                 onMouseOver={() => setOpen(true)}
             >
-                <div className="flex flex-col gap-12 w-full">
+                <div className="flex flex-col gap-6 w-full">
                     <div
                         style={{
                             marginRight: open ? '2rem' : 0
@@ -197,7 +197,7 @@ const SideBar = () => {
                         onMouseOver={() => open && setIsDropDownOpen(true)}
                         onMouseLeave={() => setIsDropDownOpen(false)}
                     >
-                        <div className="flex flex-col w-[5.5rem] h-[5.5rem] justify-center items-center">
+                        <div className="flex flex-col w-[4.5rem] h-[4.5rem] justify-center items-center">
                             <img
                                 src={
                                     info.doctor.image
@@ -205,9 +205,9 @@ const SideBar = () => {
                                         : null ?? NoImage
                                 }
                                 style={{
-                                    minWidth: open ? '5.5rem' : '3.5rem',
-                                    width: open ? '5.5rem' : '3.5rem',
-                                    height: open ? '5.5rem' : '3.5rem'
+                                    minWidth: open ? '4.5rem' : '2.5rem',
+                                    width: open ? '4.5rem' : '2.5rem',
+                                    height: open ? '4.5rem' : '2.5rem'
                                 }}
                                 className="self-center overflow-hidden rounded-full transition-all duration-300"
                                 alt="avatar"
@@ -217,17 +217,17 @@ const SideBar = () => {
                         <div
                             style={{
                                 opacity: open ? '1' : '0',
-                                right: open ? '7rem' : '0',
+                                right: open ? '5.5rem' : '0',
                                 transitionDelay: !open ? 'unset' : '0.2s',
                                 width: !open && '0',
                                 overflow: !open && 'hidden'
                             }}
                             className="flex flex-col justify-center transition-all duration-300 absolute text-[#3F3F79]"
                         >
-                            <span className="text-2xl font-bold line-clamp-1 w-11/12">
+                            <span className="font-bold line-clamp-1 w-11/12">
                                 {`${info.doctor.name} ${info.doctor.family}`}
                             </span>
-                            <span className="text-2xl font-normal mt-2">
+                            <span className="text-sm font-normal mt-2">
                                 {info.doctor.expertises.length > 0 && (
                                     <span className=" line-clamp-1 w-60">
                                         {info.doctor.expertises[0].alias_title
@@ -296,17 +296,17 @@ const SideBar = () => {
                             transitionDelay: !open ? 'unset' : '0.2s',
                             opacity: open ? '1' : '0'
                         }}
-                        className="flex items-center justify-center absolute bottom-36 transition-all duration-300 pr-12"
+                        className="flex items-center justify-center absolute bottom-24 transition-all duration-300 pr-6"
                     >
-                        <span className="text-2xl font-bold opacity-60">پشتیبانی: 02125015555</span>
+                        <span className="font-bold opacity-60">پشتیبانی: 02125015555</span>
                     </a>
                     <div
                         style={{
-                            paddingRight: open ? '2rem' : '0'
+                            paddingRight: open ? '1rem' : '0'
                         }}
                         className="flex w-full items-center transition-all duration-300 relative"
                     >
-                        <div className="flex items-center justify-center w-20 h-20">
+                        <div className="flex items-center justify-center w-16 h-10">
                             <svg
                                 width="35"
                                 height="36"
@@ -334,11 +334,11 @@ const SideBar = () => {
                         </div>
                         <span
                             style={{
-                                right: open ? '7.5rem' : '0',
+                                right: open ? '4.5rem' : '0',
                                 transitionDelay: !open ? 'unset' : '0.2s',
                                 opacity: open ? '1' : '0'
                             }}
-                            className="text-3xl font-black absolute transition-all duration-300 text-[#3F3F79]"
+                            className="font-black absolute transition-all duration-300 text-[#3F3F79]"
                         >
                             پذیرش24
                         </span>

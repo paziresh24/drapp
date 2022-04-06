@@ -1,181 +1,16 @@
-// .row {
-//     width: 100%;
-//     display: grid;
-//     grid-auto-flow: column;
-
-//     .col {
-//         display: flex;
-//         // @include gap(1rem);
-
-//         .title {
-//             font-weight: 500;
-//             opacity: 0.6;
-//             white-space: nowrap;
-//         }
-//     }
-// }
-
-// .loading {
-//     display: flex;
-//     justify-content: center;
-//     margin-top: 2rem;
-// }
-
-// td,
-// th {
-//     text-align: right;
-//     border-bottom: 1px solid #e6e6e683;
-//     padding: 1.2rem 2rem;
-//     position: relative;
-//     color: $color-text;
-//     font-weight: 500;
-//     font-size: 1.5rem;
-//     vertical-align: middle;
-
-//     * {
-//         user-select: text;
-//     }
-// }
-
-// // thead {
-// //     tr {
-// //         > :first-child {
-// //             border-top-right-radius: 0.6rem;
-// //         }
-
-// //         > :last-child {
-// //             border-top-left-radius: 0.6rem;
-// //         }
-// //     }
-// // }
-
-// tbody {
-//     background: #fff;
-// }
-
-// th {
-//     background: #e8eef4;
-//     position: sticky;
-//     top: 0;
-//     z-index: 5;
-// }
-
-// table {
-//     position: relative;
-// }
-// // s
-// // table {
-// //     border: 1px solid #ccc;
-// //     border-collapse: collapse;
-// //     margin: 0;
-// //     padding: 0;
-// //     width: 100%;
-// //     table-layout: fixed;
-// // }
-
-// @media screen and (max-width: 600px) {
-//     table {
-//         border: 0;
-//         colgroup {
-//             display: none;
-//         }
-
-//         tbody {
-//             display: flex;
-//             flex-direction: column;
-//             // @include gap(0.8rem, false);
-//             background: transparent;
-//         }
-//     }
-
-//     table thead {
-//         border: none;
-//         clip: rect(0 0 0 0);
-//         height: 1px;
-//         margin: -1px;
-//         overflow: hidden;
-//         padding: 0;
-//         position: absolute;
-//         width: 1px;
-//     }
-
-//     table tr {
-//         display: block;
-//         background: #fff;
-//         box-shadow: 0 21px 30px #2525470a;
-//     }
-
-//     table td {
-//         display: flex;
-//     }
-
-//     table td::before {
-//         content: attr(data-label);
-//         font-weight: bold;
-//         margin-left: 1rem;
-//     }
-
-//     table td:last-child {
-//         display: flex;
-//         justify-content: flex-end;
-//     }
-// }
-
-// .otp-wrapper {
-//     display: flex;
-//     flex-direction: column;
-
-//     > * {
-//         margin-top: 1rem;
-//         margin-bottom: 1rem;
-//     }
-
-//     > :first-child {
-//         margin-top: 0 !important;
-//     }
-
-//     > :last-child {
-//         margin-bottom: 0 !important;
-//     }
-// }
-
-// .head-title {
-//     background: #dde6ee;
-//     width: 100%;
-
-//     @media screen and (max-width: 426px) {
-//         display: flex;
-//     }
-
-//     td {
-//         all: unset;
-//         display: table-cell;
-//         vertical-align: middle;
-//         padding: 0.5rem 2rem;
-//         color: $color-text;
-//         font-weight: 500;
-//         font-size: 1.4rem;
-
-//         @media screen and (max-width: 426px) {
-//             padding: 0.5rem 1rem;
-//         }
-//     }
-// }
-
 .turnsList {
     position: relative;
-    border-radius: 1rem;
+    border-radius: 0.6rem;
     overflow: hidden;
 
     td,
     th {
         text-align: right;
         border-bottom: 1px solid #e6e6e683;
-        padding: 1.2rem 2rem;
+        padding: 0.5rem;
         position: relative;
         color: $color-text;
         font-weight: 500;
-        font-size: 1.5rem;
         vertical-align: middle;
     }
 
@@ -188,6 +23,7 @@
         position: sticky;
         top: 0;
         z-index: 5;
+        padding: 1rem;
     }
 
     @media screen and (max-width: 600px) {

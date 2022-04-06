@@ -11,8 +11,8 @@
         }
         .wrap {
             top: 5rem;
-            border-radius: 1rem !important;
-            transform: translateY(calc(-100% - 13rem)) !important;
+            border-radius: 0.5rem !important;
+            transform: translateY(calc(50%)) !important;
 
             &.fullPage {
                 height: calc((var(--vh, 1vh) * 100) - 7vh);
@@ -53,7 +53,7 @@
         outline: 0;
         overflow: auto;
         z-index: 1001;
-        transition: transform 0.4s;
+        transition: transform 0.3s;
         transform: translateY(100%);
         pointer-events: auto;
 
@@ -65,7 +65,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem;
+            padding: 1.2rem;
             padding-bottom: 0;
 
             .title-wraper {
@@ -86,7 +86,7 @@
 
             .close-button {
                 cursor: pointer;
-                transition: opacity 0.5s ease;
+                transition: opacity 0.3s ease;
                 min-width: 2.2rem;
 
                 &:hover {
@@ -96,10 +96,10 @@
         }
 
         .body {
-            padding: 2rem;
+            padding: 1.2rem;
             display: flex;
             flex-direction: column;
-            grid-gap: 1.5rem;
+            grid-gap: 1rem;
             height: 100%;
             overflow: auto;
 

@@ -1,57 +1,4 @@
-.wrapper {
-    // display: flex;
-    // align-items: center;
-    // // background: #fff;
-    // padding: 0 1rem;
-    // @include gap(1rem);
-    // // box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-    // border-radius: 0.8rem;
-    // height: 6.5rem;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-
-    // @media screen and (max-width: 635px) {
-    //     box-shadow: unset !important;
-    //     height: unset;
-    //     margin: 0 !important;
-    //     // width: 100%;
-    //     // padding: 0;
-    // }
-
-    // > :last-child {
-    //     @media screen and (max-width: 635px) {
-    //         // width: 100%;
-    //     }
-    //     // width: 12rem;
-    // }
-
-    // .icon {
-    //     * {
-    //         fill: #fff;
-    //     }
-    // }
-
-    // &.mobile {
-    //     background: #fff;
-    //     box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-    //     margin: {
-    //         left: -1rem;
-    //         right: -1rem;
-    //     }
-    // }
-    // .title {
-    //     display: flex;
-    //     @include gap(1rem);
-    //     align-items: center;
-    //     font-weight: bold;
-    //     font-size: 1.4rem;
-    //     color: $color-text;
-    // }
-}
-
 .description {
-    font-size: 1.4rem;
     text-align: justify;
     color: $color-text;
 }
@@ -73,15 +20,15 @@
     @include gap(1.5rem, false);
     .input {
         border: 1px solid rgba(63, 63, 121, 0.15);
-        border-radius: 0.8rem;
-        height: 4rem;
+        border-radius: 0.4rem;
+        height: 3rem;
         width: 100%;
         outline: none;
         text-align: center;
-        padding: 0 1rem;
+        padding: 0 0.5rem;
         transition: all 0.5s ease;
         color: $color-text;
-        font-size: 1.3rem;
+        font-size: 0.9rem;
         font-weight: 500;
         &:focus {
             border: 1px solid $color-text;
@@ -93,22 +40,6 @@
         @include gap(1rem);
         white-space: nowrap;
         font-weight: 500;
-        font-size: 1.5rem;
-    }
-}
-
-.new-turn {
-    display: flex;
-    flex-direction: column;
-    @include gap(1.5rem, false);
-    .section-title {
-        font-weight: 500;
-        font-size: 1.5rem;
-        color: $color-text;
-    }
-    .turn-type-select {
-        display: flex;
-        @include gap(1rem);
     }
 }
 
