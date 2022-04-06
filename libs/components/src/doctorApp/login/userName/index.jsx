@@ -166,9 +166,9 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                             nationalCodeField.current = e;
                         }}
                     />
-                    <div className="bg-[#eaf0f4] rounded-lg p-5 mt-5">
-                        <span className="text-[#586a79] text-2xl font-medium leading-[3rem]">
-                            <InfoIcon color="#586a79" className="inline-block ml-3" />
+                    <div className="bg-[#eaf0f4] rounded-lg p-3">
+                        <span className="text-[#586a79] font-medium text-sm leading-6">
+                            <InfoIcon color="#586a79" className="inline-block ml-2" />
                             لازم به ذکر است که مالکیت شماره موبایل وارد شده باید با کد ملی شما تطابق
                             داشته باشد.
                         </span>

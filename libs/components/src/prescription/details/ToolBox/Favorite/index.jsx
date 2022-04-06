@@ -89,32 +89,19 @@ const Favorite = () => {
                 {/* )} */}
             </div>
             {getFavoriteServices.isSuccess && (
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '1.5rem 1rem'
-                    }}
-                >
-                    <span style={{ fontSize: '1.3rem', fontWeight: '500', opacity: '0.8' }}>
+                <div className="flex items-center justify-between p-4">
+                    <span className="font-medium text-opacity-80 text-sm">
                         اقلام و نسخه های پنل{' '}
                         {prescriptionInfo.insuranceType === 'tamin' ? 'تامین اجتماعی' : 'سلامت'}
                     </span>
                     <span
-                        style={{
-                            fontSize: '1.3rem',
-                            fontWeight: '600',
-                            textDecoration: 'underLine',
-                            cursor: 'pointer'
-                        }}
+                        className="font-semibold text-sm underline cursor-pointer"
                         onClick={() => setIsOpenImportModal(true)}
                     >
                         واکشی و نمایش
                     </span>
                 </div>
             )}
-            {/* )} */}
             <div className={styles['items']}>
                 {getFavoriteServices.isLoading && <Overlay />}
                 {favoriteItemByType.length > 0 &&

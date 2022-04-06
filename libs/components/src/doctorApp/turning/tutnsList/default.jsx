@@ -24,7 +24,7 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
     });
 
     const ActivePatientsList = ({ finalized }) => (
-        <div className="flex justify-between items-center bg-[#f6f8fb] w-full py-4 px-8 text-xl font-bold">
+        <div className="flex justify-between items-center bg-[#f6f8fb] w-full py-2 px-4 text-sm font-bold">
             <div>
                 <span className="text-[#68778d]">
                     {finalized
@@ -137,9 +137,9 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                         turn =>
                             !isTurnActive(turn) &&
                             (turn.type === 'book' ? (
-                                <TurnRow.Turn turn={turn} />
+                                <TurnRow.Turn turn={turn} key={turn.id} />
                             ) : (
-                                isExpertDoctor && <TurnRow.Prescription turn={turn} />
+                                isExpertDoctor && <TurnRow.Prescription turn={turn} key={turn.id} />
                             ))
                     )}
 
@@ -158,9 +158,9 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                         turn =>
                             isTurnActive(turn) &&
                             (turn.type === 'book' ? (
-                                <TurnRow.Turn turn={turn} />
+                                <TurnRow.Turn turn={turn} key={turn.id} />
                             ) : (
-                                isExpertDoctor && <TurnRow.Prescription turn={turn} />
+                                isExpertDoctor && <TurnRow.Prescription turn={turn} key={turn.id} />
                             ))
                     )}
             </>

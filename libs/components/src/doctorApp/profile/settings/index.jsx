@@ -49,7 +49,7 @@ const Settings = () => {
             {getSettings.isLoading && <Overlay />}
             {getSettings.isSuccess &&
                 getSettings.data.map(setting => (
-                    <div style={{ display: 'flex' }} key={setting.key}>
+                    <div className="flex items-center space-s-3" key={setting.key}>
                         <div className={styles.toggle}>
                             <input
                                 type="checkbox"

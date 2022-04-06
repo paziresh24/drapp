@@ -1,5 +1,4 @@
 import TextField from '../../../core/textField';
-import styles from './password.module.scss';
 import Button from './../../../core/button/index';
 import { useForm } from 'react-hook-form';
 import { useRef, useEffect, useState } from 'react';
@@ -30,7 +29,7 @@ const Password = ({ userName, loginAction, loginLoading, wrongPassword }) => {
     };
 
     return (
-        <form className={styles.wrapper} onSubmit={handleSubmit(passwordAction)}>
+        <form className="flex flex-col space-y-2" onSubmit={handleSubmit(passwordAction)}>
             <TextField
                 label="رمز عبور"
                 error={errors.password}
@@ -42,7 +41,7 @@ const Password = ({ userName, loginAction, loginLoading, wrongPassword }) => {
                 type="password"
                 style={{ direction: 'ltr' }}
             />
-            <span className={styles.hint}>
+            <span className="text-sm font-medium text-[#678093] leading-8">
                 رمز عبوری را که از قبل، برای خود انتخاب کردید، وارد کنید.
             </span>
             {wrongPassword && <Captcha error={captchaError} captchaEntered={setCaptcha} />}

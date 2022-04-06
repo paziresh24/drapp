@@ -6,7 +6,7 @@
         height: 5rem;
         display: flex;
         align-items: center;
-        padding: 4rem;
+        padding: 1.5rem;
         justify-content: space-between;
         transition: all 0.3s ease;
         cursor: pointer;
@@ -16,17 +16,17 @@
         }
 
         @media screen and (max-width: 768px) {
-            padding: 4rem 2rem;
+            padding: 1.5rem;
         }
 
         .title {
-            font-size: 1.6rem;
+            font-size: 1rem;
             font-weight: bold;
         }
 
         .actionWrapper {
             display: flex;
-            @include gap(1rem);
+            @include gap(0.5rem);
 
             div {
                 cursor: pointer;
@@ -40,15 +40,14 @@
     @include gap(1rem);
     overflow: auto;
     padding-left: 1rem;
-    padding-right: 3.5rem;
-    margin-bottom: 2rem;
+    padding-right: 1rem;
 
     .searchFilterButton {
         padding: 0 1.5rem;
         background: #27bda021;
         border-radius: 100rem;
-        font-size: 1.4rem;
-        height: 3rem;
+        font-size: 0.95rem;
+        height: 2rem;
         color: #107c6a;
         font-weight: 500;
         border: 1px solid #119e87;
@@ -65,19 +64,19 @@
 }
 
 .providerWrapper {
-    padding: 0 4rem;
+    padding: 0 1rem;
     display: flex;
     align-items: center;
     @include gap(1rem);
-    margin-bottom: 2rem;
+    overflow-x: auto;
 }
 
 .providerButton {
     padding: 0 1.5rem;
     background: #1659df13;
     border-radius: 100rem;
-    font-size: 1.4rem;
-    height: 3rem;
+    font-size: 0.95rem;
+    height: 2rem;
     color: #1659df;
     font-weight: 500;
     border: 1px solid #1659df83;
@@ -85,6 +84,7 @@
     min-width: fit-content;
     transition: all 0.5s;
     outline: 0;
+    white-space: nowrap;
 
     &.selected {
         opacity: 1;

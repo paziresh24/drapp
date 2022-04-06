@@ -17,30 +17,21 @@ const MenuItem = ({ item }) => {
                 key={item?.id}
                 to={item?.link ?? '#'}
                 className={styles.menuContent}
-                activeClassName={styles['active']}
+                activeClassName={item?.link ? styles['active'] : undefined}
                 style={{
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center'
                 }}
                 onClick={item?.onClick}
-                exact
+                exact={item?.link ? true : undefined}
                 onMouseOver={() => item?.subMenu && setIsDropDownOpen(true)}
                 onMouseLeave={() => item?.subMenu && setIsDropDownOpen(false)}
             >
-                <div className={styles.menuIcon}>
-                    {item?.icon}
-                    {/* {!getFeedbacks.isLoading && item.badge && (
-                    <span className={styles['badge']} aria-hidden>
-                        <span className={styles['red']}>{calculateNoReplyComments()}</span>
-                    </span>
-                )} */}
-                </div>
-
-                {/* {open && ( */}
+                <div className={styles.menuIcon}>{item?.icon}</div>
                 <span
                     style={{
-                        right: open ? '6rem' : '0',
+                        right: open ? '3.5rem' : '0',
                         transitionDelay: !open ? 'unset' : '0.2s',
                         opacity: open ? '1' : '0'
                     }}
@@ -48,7 +39,6 @@ const MenuItem = ({ item }) => {
                 >
                     {item?.name}
                 </span>
-                {/* )} */}
             </RootNodeComponent>
 
             {item.subMenu && (

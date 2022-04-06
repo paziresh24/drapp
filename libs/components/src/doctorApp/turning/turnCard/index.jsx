@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import Button from '../../../core/button';
-import styles from './turnCard.module.scss';
+import styles from '../prescriptionCard/turnCard.module.scss';
 import moment from 'jalali-moment';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -269,7 +269,6 @@ const TurnCard = ({
         return instructionProvider;
     };
 
-    console.log(turn);
     return (
         <>
             <Loading show={addPrescription.isLoading} simple />
@@ -344,7 +343,7 @@ const TurnCard = ({
                                         type="dark"
                                         effect="solid"
                                     >
-                                        نسخه ای که هنوز ثبت نشده
+                                        نسخه ای هنوز ثبت نشده
                                     </ReactTooltip>
                                 </>
                             ) : turn.prescription?.status === 'FAILED' ? (
@@ -403,8 +402,8 @@ const TurnCard = ({
                                     finalized || (!isExpertDoctor && turn.book_status === 'visited')
                                 }
                                 onClick={() => visitSubmit()}
-                                style={{ marginLeft: '1rem' }}
                                 loading={addPrescription.isLoading}
+                                style={{ marginLeft: '0.5rem' }}
                             >
                                 {finalized || (!isExpertDoctor && turn.book_status === 'visited')
                                     ? 'ویزیت شده'
@@ -506,9 +505,9 @@ const TurnCard = ({
                                 className={styles.details}
                                 style={{
                                     display: 'flex',
-                                    gap: '5rem',
+                                    gap: '2rem',
                                     width: '100%',
-                                    padding: '1.5rem 2rem',
+                                    padding: '0.5rem 1rem',
                                     borderRadius: '0rem'
                                 }}
                             >
@@ -554,24 +553,13 @@ const TurnCard = ({
                                                 {turn.prescription?.insuranceType === 'tamin' &&
                                                     turn.prescription?.tamin_prescription.map(
                                                         item => (
-                                                            <span
-                                                                style={{
-                                                                    fontSize: '1.4rem',
-                                                                    marginRight: '1rem'
-                                                                }}
-                                                                key={item.head_EPRSC_ID}
-                                                            >
+                                                            <span key={item.head_EPRSC_ID}>
                                                                 {item.head_EPRSC_ID ?? '-'}
                                                             </span>
                                                         )
                                                     )}
                                                 {turn.prescription?.insuranceType === 'salamat' && (
-                                                    <span
-                                                        style={{
-                                                            fontSize: '1.4rem',
-                                                            marginRight: '1rem'
-                                                        }}
-                                                    >
+                                                    <span>
                                                         {turn.prescription?.salamat_prescription
                                                             ?.trackingCode ?? ''}
                                                     </span>
@@ -600,19 +588,6 @@ const TurnCard = ({
                     </span>
                     {turn.prescription && (
                         <div className={styles.dropDown}>
-                            {pdfLink && (
-                                <a
-                                    download={
-                                        turn.prescription?.patientAdditionalData?.name +
-                                        ' ' +
-                                        turn.prescription?.patientAdditionalData?.lastName
-                                    }
-                                    href={pdfLink}
-                                    ref={linkClick}
-                                >
-                                    {' '}
-                                </a>
-                            )}
                             <div
                                 className={styles.turn_action}
                                 onClick={e => {

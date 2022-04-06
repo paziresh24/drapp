@@ -106,12 +106,12 @@ const SuperMenu = () => {
                                     <div
                                         style={{
                                             display: 'flex',
-                                            gap: '0.8rem',
+                                            gap: '0.4rem',
                                             alignItems: 'center'
                                         }}
                                     >
                                         <StarIcon color="#27bda0" />
-                                        <span className="text-2xl">
+                                        <span>
                                             {info.doctor.rate.rate} از {info.doctor.rate.count} نظر
                                         </span>
                                     </div>

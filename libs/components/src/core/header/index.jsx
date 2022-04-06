@@ -5,12 +5,10 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { ChevronIcon, HelpIcon } from '../../icons';
 import { useMenu } from '@paziresh24/context/core/menu';
 import classNames from 'classnames';
-import { sendEvent } from '@paziresh24/utils';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useSupport } from '@paziresh24/context/core/supportChat';
 import ReactTooltip from 'react-tooltip';
 import { usePage } from '@paziresh24/context/core/page';
-import { useTour } from '@reactour/tour';
 import Modal from '../../core/modal';
 import Button from '../../core/button';
 import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
@@ -23,27 +21,17 @@ const Header = () => {
     const [page] = usePage();
     const [isOpen, setIsOpen] = useMenu();
     const [info, setInfo] = useDrApp();
-    // const [, setOpenState] = useSupport(false);
-    const { setCurrentStep: setSteps } = useTour();
     const [isCenterSelectOpen, setIsCenterSelectOpen] = useState(false);
     const [centerActiveModal, setCenterActiveModal] = useState(false);
     const createCenter = useCreateCenter();
     const [supportModal, setSupportModal] = useSupport();
-    const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
     const location = useLocation();
     const [hideToolTip, setHideToolTip] = useState(
         location.state?.afterLogin === true ? false : true
     );
-    const [unread, setUnread] = useState(0);
 
     useEffect(() => !hideToolTip && setTimeout(() => setHideToolTip(true), 5000), []);
-
-    const openGoftinoAction = () => {
-        sendEvent('click', 'home', 'clicksupportbutton');
-        // isMobile ? openGoftino() : setOpenState(true);
-        setSupportModal(true);
-    };
 
     const createCenterAction = () => {
         createCenter.mutate(
@@ -73,9 +61,9 @@ const Header = () => {
 
     return (
         <>
-            <header className={styles['header']}>
-                <span className={styles.pageTitle}>{page.title}</span>
-                <div className={styles.right}>
+            <header className="flex justify-between items-center h-16 bg-white px-3 border-b border-solid border-[#e5e9f0] z-[8]">
+                <span className="font-bold pr-3">{page.title}</span>
+                <div className="flex items-center">
                     {!info.center.is_active_booking && info.center.type_id === 1 && (
                         <Button
                             variant="secondary"
@@ -87,7 +75,7 @@ const Header = () => {
                         </Button>
                     )}
                     <div
-                        className={styles.selectCenter}
+                        className="hidden lg:flex items-center space-s-3"
                         onMouseOut={() => setIsCenterSelectOpen(false)}
                     >
                         {info.center.is_active_booking && (
@@ -383,19 +371,13 @@ const Header = () => {
                     />
                 )}
             </header>
-            {/* <div className={styles.alarm}>
-                <div className={styles['ping']} />
-                <span>متاسفانه به دلیل قطعی موقت سرویس سلامت امکان ارسال نسخه وجود ندارد.</span>
-            </div> */}
+
             <Goftino />
             <Modal title="پشتیبانی" isOpen={supportModal} onClose={setSupportModal}>
                 <span>
                     برای ارتباط با پشتیبانی همه روزه از ساعت 7 الی 24 با شماره 02125015555 تماس
                     بگیرید.
                 </span>
-                {/* <Button block onClick={() => window.open('tel:02125015555')}>
-                    تماس با پشتیبانی
-                </Button> */}
             </Modal>
         </>
     );

@@ -1,102 +1,102 @@
-.wrapper {
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-        89.33% 113.63% at -18.16% -4.34%,
-        rgba(63, 63, 121, 0.849) 0%,
-        #3f3f79 100%
-    );
-    border-radius: 1.5rem;
-    overflow: hidden;
-    position: relative;
-    align-items: center;
+// .wrapper {
+//     width: 100%;
+//     height: 100%;
+//     background: radial-gradient(
+//         89.33% 113.63% at -18.16% -4.34%,
+//         rgba(63, 63, 121, 0.849) 0%,
+//         #3f3f79 100%
+//     );
+//     border-radius: 1.5rem;
+//     overflow: hidden;
+//     position: relative;
+//     align-items: center;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     padding: 10rem;
+//     width: 100%;
+//     transition: all 0.5s;
+//     user-select: none;
+
+//     @media screen and(max-width:908px) {
+//         align-items: flex-start;
+//         &.hide {
+//             transform: translateY(-95%);
+//             margin-bottom: -13rem;
+//         }
+//     }
+
+.backToSite {
+    all: unset;
+    cursor: pointer;
+    position: absolute;
+    left: 4rem;
+    top: 4rem;
+    font-weight: 500;
+    font-size: 1.3rem;
+    background: #ffffff1c;
+    height: 4rem;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    padding: 10rem;
-    width: 100%;
-    transition: all 0.5s;
-    user-select: none;
+    padding: 0 1.5rem;
+    border-radius: 0.6rem;
+    opacity: 0.8;
+    z-index: 1;
 
-    @media screen and(max-width:908px) {
-        align-items: flex-start;
-        &.hide {
-            transform: translateY(-95%);
-            margin-bottom: -13rem;
-        }
-    }
+    // @media screen and(max-width:908px) {
+    //     display: none;
+    // }
 
-    .backToSite {
-        all: unset;
-        cursor: pointer;
-        position: absolute;
-        left: 4rem;
-        top: 4rem;
-        font-weight: 500;
-        font-size: 1.3rem;
-        background: #ffffff1c;
-        height: 4rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 1.5rem;
-        border-radius: 0.6rem;
-        opacity: 0.8;
-        z-index: 1;
-
-        // @media screen and(max-width:908px) {
-        //     display: none;
-        // }
-
-        > * {
-            margin: 0 0.5rem;
-            color: #fff;
-        }
-
-        :first-child {
-            margin-right: 0;
-        }
-
-        :last-child {
-            margin-left: 0;
-        }
-
-        * {
-            fill: #fff;
-        }
-    }
-
-    .lines {
-        position: absolute;
-        left: 0rem;
-        top: 0;
-        opacity: 0.5;
-        transform: scale(1.2);
-    }
-
-    .content {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
+    > * {
+        margin: 0 0.5rem;
         color: #fff;
-        z-index: 1;
+    }
 
-        span {
-            color: #fff;
-        }
+    :first-child {
+        margin-right: 0;
+    }
 
-        .title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 2rem;
-        }
+    :last-child {
+        margin-left: 0;
+    }
 
-        .description {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-        }
+    * {
+        fill: #fff;
     }
 }
+
+.lines {
+    position: absolute;
+    left: 0rem;
+    top: 0;
+    opacity: 0.5;
+    transform: scale(1.2);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: #fff;
+    z-index: 1;
+
+    span {
+        color: #fff;
+    }
+
+    .title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin-bottom: 2rem;
+    }
+
+    .description {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+}
+// }
 
 @media screen and(max-width:908px) {
     .wrapper {
@@ -167,8 +167,8 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        background-color: rgba(255, 255, 255, 0.062);
-        border: 2px solid rgba(255, 255, 255, 0.397);
+        background-color: #ffffff10;
+        border: 2px solid #ffffff65;
         border-radius: 0.8rem;
         height: 7rem;
         padding: 0 1.5rem;

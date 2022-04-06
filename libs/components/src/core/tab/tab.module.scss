@@ -1,12 +1,11 @@
 .tab-buttons {
     display: flex;
     justify-content: flex-start;
-    // margin-bottom: 1.5rem;
     background: #ffffff;
     border-bottom: 1px solid #e3e7f0;
-    // border-radius: 0.6rem;
-    height: 5rem;
-    min-height: 5rem;
+    min-height: 3.5rem;
+    max-height: 3.5rem;
+    height: 3.5rem;
     overflow: auto;
 
     div {
@@ -14,17 +13,17 @@
     }
 
     button {
-        font-size: 1.5rem;
         background: transparent;
         border: none;
         outline: none;
         font-weight: 500;
+        font-size: 0.92rem;
         cursor: pointer;
         color: #3f3f7a;
         opacity: 0.5;
         transition: all ease-in-out 0.3s;
         border-bottom: 2px solid transparent;
-        padding: 0 2rem;
+        padding: 0 1.5rem;
         min-width: fit-content;
         display: flex;
         align-items: center;
@@ -44,7 +43,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 0.9rem;
             transition: all ease-in-out 0.3s;
         }
 

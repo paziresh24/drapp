@@ -67,18 +67,19 @@
     display: flex;
     width: 100%;
     flex-direction: column;
-    padding: 2rem;
+    padding: 1rem;
     margin-bottom: 2rem;
     background-color: rgba(215, 224, 231, 0.49);
-    border-radius: 0 0 1rem 1rem;
+    border-radius: 0 0 0.6rem 0.6rem;
     color: #445661;
     font-weight: 500;
-    font-size: 1.4rem;
+    font-size: 0.95rem;
     @include gap(0.8rem, false);
 
     @media screen and(max-width:767px) {
         background-color: transparent;
         color: #5d6f7a;
+        padding: 0.6rem;
     }
 }
 
@@ -88,7 +89,7 @@
     align-items: baseline;
     justify-content: center;
     width: 100%;
-    @include gap(2rem);
+    @include gap(1rem);
 
     @media screen and(max-width:767px) {
         flex-direction: column;

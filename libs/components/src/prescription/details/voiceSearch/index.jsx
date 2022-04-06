@@ -113,16 +113,14 @@ const VoiceSearch = ({ onChange, type, typeId, insuranceType, label }) => {
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            padding: '2rem',
-                            paddingBottom: '3rem',
+                            padding: '1rem',
+                            paddingBottom: '2rem',
                             background: '#e2ecf5'
                         }}
                     >
-                        <span style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
-                            {searchValue}
-                        </span>
+                        <span style={{ fontWeight: 'bold' }}>{searchValue}</span>
                         <span
-                            style={{ fontWeight: '500', fontSize: '1.5rem', marginTop: '0.5rem' }}
+                            style={{ fontWeight: '500', fontSize: '0.9rem', marginTop: '0.5rem' }}
                         >
                             {label.replace('انتخاب ', '')} موردنظر را انتخاب نمایید
                         </span>

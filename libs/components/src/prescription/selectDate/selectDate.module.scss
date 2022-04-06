@@ -9,21 +9,21 @@
     &.simple {
         .input {
             border: 0;
-            height: 2rem;
+            height: 1rem;
             padding: 0;
             background-color: transparent;
             border: 1px solid rgba(145, 165, 182, 0.35) !important;
-            padding: 1.5rem 1rem;
+            padding: 1rem 1rem;
         }
     }
 
     .input {
         direction: ltr;
         border: 1px solid #dce7ef;
-        border-radius: 0.6rem;
+        border-radius: 0.4rem;
         width: 100%;
-        padding: 0 1.5rem;
-        height: 5rem;
+        padding: 0 1rem;
+        height: 3rem;
         outline: 0;
         color: $color-text;
         transition: border 0.5s;

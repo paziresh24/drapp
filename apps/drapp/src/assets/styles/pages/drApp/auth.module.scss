@@ -4,13 +4,13 @@
     height: 100vh;
     min-height: -webkit-fill-available;
     width: 100%;
-    padding: 2.5rem;
+    padding: 1.5rem;
     padding-right: 0;
     background-color: #fff;
 
     @media screen and(max-width:908px) {
         flex-direction: column-reverse !important;
-        @include gap(1.5rem, false, true);
+        // @include gap(1.5rem, false, true);
         justify-content: flex-end !important;
         padding: 0 !important;
     }

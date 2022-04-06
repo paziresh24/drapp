@@ -63,8 +63,8 @@ const Loading = () => {
             row.push(
                 <div
                     key={a}
-                    className="bg-white w-full flex flex-col space-y-6"
-                    style={{ padding: '1.5rem' }}
+                    className="bg-white w-full flex flex-col space-y-3"
+                    style={{ padding: '1rem' }}
                 >
                     <div
                         className="skeleton"
@@ -96,8 +96,8 @@ const Loading = () => {
                             style={{
                                 width: '50%',
                                 background: `rgb(219,223,229,${a * 10 + 20}%)`,
-                                height: '3.5rem',
-                                borderRadius: '0.6rem'
+                                height: '2.5rem',
+                                borderRadius: '0.3rem'
                             }}
                         />
                         <div
@@ -105,8 +105,8 @@ const Loading = () => {
                             style={{
                                 width: '50%',
                                 background: `rgb(219,223,229,${a * 10 + 20}%)`,
-                                height: '3.5rem',
-                                borderRadius: '0.6rem'
+                                height: '2.5rem',
+                                borderRadius: '0.3rem'
                             }}
                         />
                     </div>

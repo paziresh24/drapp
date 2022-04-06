@@ -14,12 +14,6 @@ const Loading = ({ show, blur, simple }) => {
     return ReactDOM.createPortal(
         <CSSTransition in={show} timeout={300} classNames="fade-loading" unmountOnExit>
             <div className={`${styles['loading']} ${blur && styles.blur}`}>
-                {/* <div className={styles['wrapper']}>
-                    <span className={styles['dot']} />
-                    <span className={styles['dot']} />
-                    <span className={styles['dot']} />
-                    <span className={styles['dot']} />
-                </div> */}
                 {!simple && (
                     <svg
                         width="91"

@@ -183,13 +183,8 @@ const EditTemplates = () => {
                 <div className={styles.wrapper}>
                     <div className={styles.templatesWrapper}>
                         <div
-                            className="w-full flex justify-between items-center"
+                            className="w-full flex justify-between items-center p-4"
                             style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                width: '100%',
-                                padding: '1.5rem',
                                 background: isMobile && '#fff'
                             }}
                         >
@@ -230,7 +225,6 @@ const EditTemplates = () => {
 
                             {!isMobile && (
                                 <Button
-                                    size="medium"
                                     onClick={edit}
                                     loading={
                                         deleteFavoritePrescriptions.isLoading ||
@@ -243,7 +237,6 @@ const EditTemplates = () => {
                             {isMobile && (
                                 <FixedWrapBottom>
                                     <Button
-                                        size="medium"
                                         block
                                         onClick={edit}
                                         loading={
@@ -362,15 +355,14 @@ const EditTemplates = () => {
                                               margin: '0 auto',
                                               padding: '10rem',
                                               display: 'flex',
-                                              gap: '2rem',
+                                              gap: '1rem',
                                               justifyContent: 'center',
                                               alignItems: 'center'
                                           }}
                                       >
-                                          <img src={emptyState} alt="" style={{ width: '6rem' }} />
+                                          <img src={emptyState} alt="" style={{ width: '3rem' }} />
                                           <span
                                               style={{
-                                                  fontSize: '1.4rem',
                                                   fontWeight: '500',
                                                   opacity: '0.7'
                                               }}
@@ -389,15 +381,14 @@ const EditTemplates = () => {
                                               margin: '0 auto',
                                               padding: '10rem',
                                               display: 'flex',
-                                              gap: '2rem',
+                                              gap: '1rem',
                                               justifyContent: 'center',
                                               alignItems: 'center'
                                           }}
                                       >
-                                          <img src={emptyState} alt="" style={{ width: '6rem' }} />
+                                          <img src={emptyState} alt="" style={{ width: '3rem' }} />
                                           <span
                                               style={{
-                                                  fontSize: '1.4rem',
                                                   fontWeight: '500',
                                                   opacity: '0.7'
                                               }}

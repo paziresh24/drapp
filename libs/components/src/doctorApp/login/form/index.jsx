@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import styles from './form.module.scss';
 import { useLogin, useResendCode, useCaptcha } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -122,13 +121,13 @@ const Form = ({ focus, setFocus }) => {
     }, [userIsPassword, step]);
 
     return (
-        <div className={styles['wrapper']}>
+        <div className="flex flex-col h-full w-full lg:w-[28rem] lg:min-w-[28rem] items-center lg:justify-center relative space-y-6 p-8 lg:p-12">
             <svg
                 width="126"
                 height="44"
                 viewBox="0 0 126 44"
                 fill="none"
-                className={styles['logo-brand']}
+                className="hidden lg:flex absolute top-6 right-12"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
@@ -152,21 +151,24 @@ const Form = ({ focus, setFocus }) => {
                     fill="white"
                 />
             </svg>
-            <div className={styles['head']}>
+            <div className="flex w-full justify-between items-center">
                 {step === 'USERNAME' && (
-                    <span className={styles['title']}>ورود/ثبت نام پزشکان</span>
+                    <span className="text-lg font-black">ورود/ثبت نام پزشکان</span>
                 )}
-                {step === 'REGISTER' && <span className={styles['title']}>ثبت نام پزشک</span>}
-                {step === 'PASSWORD' ||
-                    (step === 'SALAMATAUTH' && <span className={styles['title']}>ورود پزشک</span>)}
+                {step === 'REGISTER' && <span className="text-lg font-black">ثبت نام پزشک</span>}
+                {(step === 'PASSWORD' || step === 'SALAMATAUTH') && (
+                    <span className="text-lg font-black">ورود پزشک</span>
+                )}
                 {step === 'FORGOTPASSWORD' && (
-                    <span className={styles['title']}>بازیابی رمزعبور</span>
+                    <span className="text-lg font-black">بازیابی رمزعبور</span>
                 )}
-                {step === 'CHANGEPASSWORD' && <span className={styles['title']}>رمزعبور جدید</span>}
+                {step === 'CHANGEPASSWORD' && (
+                    <span className="text-lg font-black">رمزعبور جدید</span>
+                )}
 
                 {step !== 'USERNAME' && step !== 'CHANGEPASSWORD' && step !== 'SALAMATAUTH' && (
                     <button
-                        className={styles['change-number']}
+                        className="border-none text-xs font-medium rounded-full px-4 py-2 cursor-pointer bg-[#e0e8efa9] text-[#586a79]"
                         onClick={() => {
                             resendCode.remove();
                             setTimeout(() => setStep('USERNAME'), 0);
@@ -176,7 +178,7 @@ const Form = ({ focus, setFocus }) => {
                     </button>
                 )}
             </div>
-            <div className={styles['body']}>
+            <div className="flex flex-col w-full relative">
                 {(step === 'USERNAME' || step === 'REGISTER') && (
                     <UserName
                         setStep={setStep}
@@ -184,7 +186,7 @@ const Form = ({ focus, setFocus }) => {
                         userName={userName}
                         setUserName={setUserName}
                         setUserIsPassword={setUserIsPassword}
-                        setFocus={setFocus}
+                        setFocus={isMobile && setFocus}
                     />
                 )}
                 {step === 'SALAMATAUTH' && <SalamatLogin step={step} />}
@@ -219,7 +221,7 @@ const Form = ({ focus, setFocus }) => {
                 {step === 'CHANGEPASSWORD' && <ChangePassword userName={userName} />}
                 {userIsPassword && loginType === 'password' && step === 'PASSWORD' && (
                     <div
-                        className={styles.changeToOtp}
+                        className="flex items-center mt-5 cursor-pointer space-s-2"
                         onClick={() => setStep('FORGOTPASSWORD')}
                         aria-hidden
                     >
@@ -251,82 +253,45 @@ const Form = ({ focus, setFocus }) => {
                                 fill="#27BDA0"
                             />
                         </svg>
-                        <span>رمز عبورم را فراموش کرده ام</span>
-                    </div>
-                )}
-                {step === 'USERNAME' && (
-                    <div>
-                        <div className={styles.lineRoot}>
-                            <div className={styles.line}></div>
-                            <span className="p-5">یا</span>
-                            <div className={styles.line}></div>
-                        </div>
-                        <Button
-                            className={styles.changeToOtp}
-                            onClick={() => {
-                                setFocus(true);
-                                setStep('SALAMATAUTH');
-                            }}
-                            block
-                            variant="secondary"
-                            testId="change-login-with-salamat"
-                        >
-                            ورود با بیمه سلامت
-                        </Button>
-                    </div>
-                )}
-                {step === 'SALAMATAUTH' && (
-                    <div>
-                        <div className={styles.lineRoot}>
-                            <div className={styles.line}></div>
-                            <span className="p-5">یا</span>
-                            <div className={styles.line}></div>
-                        </div>
-                        <Button
-                            className={styles.changeToOtp}
-                            onClick={() => setStep('USERNAME')}
-                            block
-                            variant="secondary"
-                        >
-                            ورود با شماره موبایل
-                        </Button>
+                        <span className="text-sm font-medium">رمز عبورم را فراموش کرده ام</span>
                     </div>
                 )}
             </div>
-            {!focus && isMobile && (
-                <a className={styles['support-wrapper']} href="tel:02125015555">
-                    <svg
-                        width="21"
-                        height="21"
-                        viewBox="0 0 21 21"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <rect
-                            width="20"
-                            height="20"
-                            transform="translate(0.805908 0.421875)"
-                            fill="white"
-                        />
-                        <path
-                            d="M19.1142 15.697C19.1142 15.997 19.0475 16.3053 18.9059 16.6053C18.7642 16.9053 18.5809 17.1886 18.3392 17.4553C17.9309 17.9053 17.4809 18.2303 16.9725 18.4386C16.4725 18.647 15.9309 18.7553 15.3475 18.7553C14.4975 18.7553 13.5892 18.5553 12.6309 18.147C11.6725 17.7386 10.7142 17.1886 9.7642 16.497C8.80587 15.797 7.89753 15.022 7.03087 14.1636C6.17253 13.297 5.39753 12.3886 4.70587 11.4386C4.02253 10.4886 3.47253 9.53862 3.07253 8.59696C2.67253 7.64696 2.47253 6.73862 2.47253 5.87196C2.47253 5.30529 2.57253 4.76362 2.77253 4.26362C2.97253 3.75529 3.2892 3.28862 3.73087 2.87196C4.2642 2.34696 4.84753 2.08862 5.4642 2.08862C5.69753 2.08862 5.93087 2.13862 6.1392 2.23862C6.35587 2.33862 6.54753 2.48862 6.69753 2.70529L8.63087 5.43029C8.78087 5.63862 8.8892 5.83029 8.9642 6.01362C9.0392 6.18862 9.08087 6.36362 9.08087 6.52196C9.08087 6.72196 9.02253 6.92196 8.90587 7.11362C8.79753 7.30529 8.6392 7.50529 8.4392 7.70529L7.80587 8.36362C7.7142 8.45529 7.67253 8.56362 7.67253 8.69696C7.67253 8.76362 7.68087 8.82196 7.69753 8.88862C7.72253 8.95529 7.74753 9.00529 7.7642 9.05529C7.9142 9.33029 8.17253 9.68862 8.5392 10.122C8.9142 10.5553 9.3142 10.997 9.74753 11.4386C10.1975 11.8803 10.6309 12.2886 11.0725 12.6636C11.5059 13.0303 11.8642 13.2803 12.1475 13.4303C12.1892 13.447 12.2392 13.472 12.2975 13.497C12.3642 13.522 12.4309 13.5303 12.5059 13.5303C12.6475 13.5303 12.7559 13.4803 12.8475 13.3886L13.4809 12.7636C13.6892 12.5553 13.8892 12.397 14.0809 12.297C14.2725 12.1803 14.4642 12.122 14.6725 12.122C14.8309 12.122 14.9975 12.1553 15.1809 12.2303C15.3642 12.3053 15.5559 12.4136 15.7642 12.5553L18.5225 14.5136C18.7392 14.6636 18.8892 14.8386 18.9809 15.047C19.0642 15.2553 19.1142 15.4636 19.1142 15.697Z"
-                            stroke="#27BDA0"
-                            strokeWidth="1.5"
-                            strokeMiterlimit="10"
-                        />
-                    </svg>
-                    <div className={styles['support-content']}>
-                        <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>
-                            پشتیبانی: 02125015555
-                        </span>
-                        <span style={{ fontSize: '1.4rem', fontWeight: '400' }}>
-                            همه روزه 7 الی 24
-                        </span>
+
+            {step === 'USERNAME' && (
+                <div className="w-full">
+                    <div className="flex justify-center items-center">
+                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                        <span className="p-5">یا</span>
+                        <div className="border border-solid border-gray-200 w-3/6"></div>
                     </div>
-                </a>
+                    <Button
+                        onClick={() => {
+                            setFocus(true);
+                            setStep('SALAMATAUTH');
+                        }}
+                        block
+                        variant="secondary"
+                        testId="change-login-with-salamat"
+                    >
+                        ورود با بیمه سلامت
+                    </Button>
+                </div>
             )}
-            {!isMobile && !centersConfig[location.hostname]?.hideDownloadBox && (
-                <a className={styles['support-wrapper']} href="tel:02125015555">
+            {step === 'SALAMATAUTH' && (
+                <div className="w-full">
+                    <div className="flex justify-center items-center">
+                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                        <span className="p-5">یا</span>
+                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                    </div>
+                    <Button onClick={() => setStep('USERNAME')} block variant="secondary">
+                        ورود با شماره موبایل
+                    </Button>
+                </div>
+            )}
+            {!focus && (
+                <a className="flex items-center absolute bottom-5" href="tel:02125015555">
                     <svg
                         width="21"
                         height="21"
@@ -347,13 +312,9 @@ const Form = ({ focus, setFocus }) => {
                             strokeMiterlimit="10"
                         />
                     </svg>
-                    <div className={styles['support-content']}>
-                        <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>
-                            پشتیبانی: 02125015555
-                        </span>
-                        <span style={{ fontSize: '1.4rem', fontWeight: '400' }}>
-                            همه روزه 7 الی 24
-                        </span>
+                    <div className="flex flex-col mr-4">
+                        <span className="text-base font-bold">پشتیبانی: 02125015555</span>
+                        <span className="text-sm font-normal mt-1">همه روزه 7 الی 24</span>
                     </div>
                 </a>
             )}

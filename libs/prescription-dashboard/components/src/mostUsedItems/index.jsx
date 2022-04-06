@@ -171,7 +171,6 @@ const PrescriptionStatistics = ({ level }) => {
                     )}
                     {level !== levelConstants.doctor && getDoctorCenter.isSuccess && (
                         <>
-                            ‍
                             <LevelSelect
                                 icon={
                                     <svg
@@ -258,46 +257,8 @@ const PrescriptionStatistics = ({ level }) => {
             </div>
             <div className={styles.mainWrapper}>
                 <div className={styles.header}>
-                    <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>
-                        گزارش پراستفاده ها
-                    </span>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            gap: '1rem'
-                        }}
-                    >
-                        {/* <ExportExcel
-                            data={
-                                getCenterName.isSuccess
-                                    ? statistics?.aggregated.map(item => ({
-                                          ...item,
-
-                                          center_name: getCenterName.data[item.center_id],
-                                          ...(level !== 'DOCTOR' && {
-                                              doctor_id:
-                                                  getDoctors.isSuccess &&
-                                                  getDoctors.data.find(
-                                                      doctor => doctor.doctor_id === item.doctor_id
-                                                  )?.name +
-                                                      ' ' +
-                                                      getDoctors.data.find(
-                                                          doctor =>
-                                                              doctor.doctor_id === item.doctor_id
-                                                      )?.family
-                                          }),
-                                          prescription_type: serviceTypeList['tamin'].find(
-                                              service => service.value === item.prescription_type
-                                          )?.name
-                                      }))
-                                    : []
-                            }
-                            schema={resultSchema[level.toLowerCase()]}
-                        /> */}
-                    </div>
+                    <span className="text-lg font-bold">گزارش پراستفاده ها</span>
                 </div>
-
                 <div className={styles.chartsWrapper}>
                     <div className={styles.tableWrapper}>
                         {statistics?.data && (

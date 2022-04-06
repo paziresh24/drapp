@@ -14,14 +14,14 @@ export const schema = {
         {
             title: 'تعداد',
             meta: {
-                width: '2%'
+                width: '1%'
             }
         },
         {
             title: 'دوره تکرار',
             field: 'repeat',
             meta: {
-                width: '3%',
+                width: '1%',
                 provider: 'tamin'
             }
         },

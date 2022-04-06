@@ -2,14 +2,14 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 1rem !important;
     background: #fff;
+    margin-bottom: 0.5rem;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0.8rem;
     @include gap(1rem);
 
     hr {
-        height: 3rem;
+        height: 2rem;
         background: rgba(224, 233, 239, 0.63);
         width: 0.1rem;
     }
@@ -20,37 +20,15 @@
         align-items: center;
         justify-content: center;
         font-weight: 500;
-        padding: 1.5rem;
+        padding: 0.7rem;
         opacity: 0.6;
+        font-size: 0.9rem;
 
         &.active {
             background: rgba(224, 233, 239, 0.63);
-            border-radius: 0.8rem;
+            border-radius: 0.4rem;
             font-weight: bold;
             opacity: 1;
-        }
-    }
-}
-
-.importButton {
-    all: unset;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 5rem;
-    width: 5rem;
-    min-width: 5rem;
-    box-sizing: border-box;
-    border: 2px solid rgba($color-primary, 0.8);
-    border-radius: 0.6rem;
-    position: relative;
-    cursor: pointer;
-
-    svg {
-        width: 3rem;
-        height: 3rem;
-        * {
-            fill: $color-primary;
         }
     }
 }
@@ -59,12 +37,10 @@
     padding: 5rem;
     display: flex;
     flex-direction: column;
-    @include gap(3rem, false);
     align-items: flex-end;
 
     @media screen and (max-width: 768px) {
         padding: 0rem;
-        @include gap(0, false);
     }
 
     .templatesWrapper {
@@ -73,7 +49,7 @@
         flex-direction: column;
         background: #ffffff;
         box-shadow: 0px 4px 135px rgba(63, 63, 121, 0.07);
-        border-radius: 1rem;
+        border-radius: 0.6rem;
 
         & > div {
             border-bottom: 1px solid rgba(63, 63, 121, 0.123);
@@ -88,27 +64,26 @@
 .items_dropdown {
     display: flex;
     position: absolute;
-    right: -20rem;
-    top: 4rem;
+    right: -13rem;
+    top: 3.5rem;
     z-index: 999;
     background-color: #fff;
-    width: 22rem;
+    width: 15rem;
     border: 1px solid rgba(226, 226, 226, 0.685);
     box-shadow: 0px 4px 25px rgba(65, 65, 65, 0.123);
-    // box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(15, 23, 42, 0.1) 0px 0px 0px 1px,
-    //     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
-    border-radius: 0.8rem;
+    border-radius: 0.4rem;
     flex-direction: column;
     overflow: hidden;
     opacity: 0;
     transition: all 0.3s;
     transform: translateY(2rem);
-    padding: 1rem;
-    @include gap(1rem, false);
+    padding: 0.5rem;
+    @include gap(0.5rem, false);
+    margin: 0 !important;
 
     &.mobile {
         right: 0rem;
-        top: -13rem;
+        top: -8rem;
     }
 
     &.dropdown_enter {
@@ -131,7 +106,7 @@
         align-items: center;
         @include gap(1rem);
         border-bottom: 1px solid rgba(226, 226, 226, 0.404);
-        padding: 1.5rem;
+        padding: 1rem;
         width: 100%;
 
         img {
@@ -145,11 +120,11 @@
         display: flex;
         align-items: center;
         @include gap(1rem);
-        padding: 1rem 1rem;
+        padding: 0.7rem 1rem;
         cursor: pointer;
         transition: all 0.5s;
         border: 1px solid #f3f7fa;
-        border-radius: 0.6rem;
+        border-radius: 0.4rem;
 
         &:hover {
             background-color: #f3f7fa;
@@ -158,13 +133,13 @@
         span {
             color: #415266;
             font-weight: 500;
-            font-size: 1.4rem;
+            font-size: 0.95rem;
             white-space: nowrap;
         }
 
         svg {
-            width: 2rem;
-            height: 2rem;
+            width: 1rem;
+            height: 1rem;
             opacity: 0.8;
 
             * {

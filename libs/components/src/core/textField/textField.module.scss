@@ -14,19 +14,19 @@
     box-sizing: border-box;
     cursor: text;
     border: 1px solid #dce7ef;
-    border-radius: 0.6rem;
+    border-radius: 0.4rem;
     width: 100%;
-    padding: 0 1rem;
-    height: 5rem;
+    padding: 0 0.6rem;
+    height: 3rem;
     outline: 0;
     color: $color-text;
     transition: border 0.5s;
-    font-size: 1em;
+    font-size: 1rem;
     user-select: text;
     -webkit-user-select: text;
 
     &.password {
-        padding-left: 4.5rem;
+        padding-left: 2.75rem;
     }
 }
 
@@ -47,16 +47,17 @@
 
 .label {
     position: absolute;
-    right: 1rem;
-    top: 1.2rem;
+    right: 0.6rem;
+    top: 0.7rem;
     white-space: nowrap;
     transform: translate(0, 0);
     transition: transform 120ms ease-in;
-    padding: 0 1rem;
-    color: #91a5b6;
-    font-weight: 500;
+    padding: 0 0.5rem;
+    color: #bac1c7;
+    font-weight: 400;
     cursor: text;
     user-select: none;
+    font-size: 1rem;
 }
 
 .input:focus {
@@ -68,17 +69,19 @@
 }
 
 .input:not(:placeholder-shown) + .label {
-    transform: translate(1rem, -2.5rem) scale(0.8);
+    transform: translate(0.3rem, -1.5rem) scale(0.9);
     background: #fff;
     cursor: unset;
     color: $color-text;
+    font-weight: 500 !important;
 }
 
 .input:focus + .label {
-    transform: translate(1rem, -2.5rem) scale(0.8);
+    transform: translate(0.3rem, -1.5rem) scale(0.9);
     background: #fff;
     cursor: unset;
     color: $color-text;
+    font-weight: 500 !important;
 }
 
 .error {
@@ -90,7 +93,7 @@
 }
 
 .error-text {
-    font-size: 1.3rem;
+    font-size: 0.9rem;
     font-weight: 500;
     margin-top: 0.8rem;
     color: #ce4b33;
@@ -98,8 +101,8 @@
 
 .show-password {
     position: absolute;
-    left: 1.5rem;
-    top: 1.5rem;
+    left: 0.85rem;
+    top: 0.9rem;
     cursor: pointer;
     opacity: 0.8;
     transition: opacity 0.3s;
@@ -113,7 +116,7 @@
     }
 
     svg {
-        width: 2rem;
-        height: 2rem;
+        width: 1.3rem;
+        height: 1.3rem;
     }
 }

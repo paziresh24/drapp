@@ -181,8 +181,8 @@ const Info = () => {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 cursor: 'pointer',
-                                width: '5rem',
-                                height: '5rem'
+                                width: '3.5rem',
+                                height: '3.5rem'
                             }}
                             onClick={() => setFavoriteFolderNameModal(true)}
                             aria-hidden

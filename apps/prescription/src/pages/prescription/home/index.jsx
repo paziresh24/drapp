@@ -516,18 +516,7 @@ const Home = props => {
                     </div>
                 </div>
             </div>
-            <div
-                className="flex-grow-0 overflow-auto w-full flex flex-col space-y-1"
-                style={{
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    overflow: 'auto',
-                    flexGrow: '0',
-                    gap: '1rem',
-                    alignItems: 'center'
-                }}
-            >
+            <div className="flex-grow-0 overflow-auto w-full flex flex-col space-y-2">
                 <TurnsList
                     refetchData={() => prescriptions.refetch()}
                     turns={results}

@@ -18,7 +18,7 @@ const LiveMode = ({ refetch }) => {
     }, [isActiveLive]);
 
     return (
-        <div className="flex space-s-5">
+        <div className="flex space-s-2">
             <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
             <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
                 با فعالسازی این قابلیت آمار بصورت زنده به روز می شود

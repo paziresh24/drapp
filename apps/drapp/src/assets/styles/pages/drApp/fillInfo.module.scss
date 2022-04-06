@@ -5,7 +5,7 @@
     padding-bottom: 10rem;
     max-width: 768px;
     margin: 0 auto;
-    padding-top: 5rem;
+    padding-top: 2rem;
 
     @media screen and (max-width: 992px) {
         padding-top: 0;
@@ -15,8 +15,8 @@
 .step-wrapper {
     background: #fff;
     box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-    border-radius: 1rem;
-    padding: 2rem 3rem;
+    border-radius: 0.6rem;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,7 +27,7 @@
         @include gap(1rem, false);
         align-items: center;
         font-weight: 500;
-        font-size: 1.2rem;
+        font-size: 0.9rem;
         color: $color-text;
         opacity: 0.5;
         pointer-events: none;

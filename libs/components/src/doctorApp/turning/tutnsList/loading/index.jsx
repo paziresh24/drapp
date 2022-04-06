@@ -63,20 +63,14 @@ const Loading = () => {
             row.push(
                 <div
                     key={a}
-                    style={{
-                        padding: '1.5rem',
-                        backgroundColor: '#fff',
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '1rem'
-                    }}
+                    className="bg-white w-full flex flex-col space-y-3"
+                    style={{ padding: '1rem' }}
                 >
                     <div
                         className="skeleton"
                         style={{ width: '70%', background: `rgb(219,223,229,${a * 10 + 20}%)` }}
                     />
-                    <div style={{ gap: '1rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <div className="flex justify-between" style={{ gap: '1rem' }}>
                         <div
                             className="skeleton"
                             style={{ width: '50%', background: `rgb(219,223,229,${a * 10 + 20}%)` }}
@@ -86,7 +80,7 @@ const Loading = () => {
                             style={{ width: '50%', background: `rgb(219,223,229,${a * 10 + 20}%)` }}
                         />
                     </div>
-                    <div style={{ gap: '1rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <div className="flex justify-between" style={{ gap: '1rem' }}>
                         <div
                             className="skeleton"
                             style={{ width: '50%', background: `rgb(219,223,229,${a * 10 + 20}%)` }}
@@ -96,14 +90,14 @@ const Loading = () => {
                             style={{ width: '50%', background: `rgb(219,223,229,${a * 10 + 20}%)` }}
                         />
                     </div>
-                    <div style={{ gap: '1rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <div className="flex justify-between" style={{ gap: '1rem' }}>
                         <div
                             className="skeleton"
                             style={{
                                 width: '50%',
                                 background: `rgb(219,223,229,${a * 10 + 20}%)`,
-                                height: '3.5rem',
-                                borderRadius: '0.6rem'
+                                height: '2.5rem',
+                                borderRadius: '0.3rem'
                             }}
                         />
                         <div
@@ -111,8 +105,8 @@ const Loading = () => {
                             style={{
                                 width: '50%',
                                 background: `rgb(219,223,229,${a * 10 + 20}%)`,
-                                height: '3.5rem',
-                                borderRadius: '0.6rem'
+                                height: '2.5rem',
+                                borderRadius: '0.3rem'
                             }}
                         />
                     </div>

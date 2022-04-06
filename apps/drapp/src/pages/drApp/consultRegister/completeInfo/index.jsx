@@ -7,7 +7,7 @@ import { useDrApp } from '@paziresh24/context/drapp/index';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
-import Select from '@paziresh24/components/doctorApp/Select';
+import Select from '@paziresh24/components/ui/Select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { CheckBox } from '@paziresh24/components/core/checkBox';
 import { useState } from 'react';

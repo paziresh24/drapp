@@ -33,7 +33,7 @@ const Button = props => {
             type={props.type}
             style={props.style}
             id={props.id}
-            data-testId={props.testId}
+            data-testid={props.testId}
         >
             {props.loading && !buttonIcon ? (
                 <LoadingIcon

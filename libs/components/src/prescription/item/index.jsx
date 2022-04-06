@@ -194,69 +194,37 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                 className={styles.details}
                                 style={{
                                     display: 'flex',
-                                    // justifyContent: 'space-between',
-                                    gap: '5rem',
+                                    gap: '2rem',
                                     width: '100%',
-                                    // background: '#fff',
-                                    padding: '1.5rem 2rem',
+                                    padding: '0.5rem 1rem',
                                     borderRadius: '0rem'
                                 }}
                             >
-                                <div className={styles['row']}>
-                                    <div className={styles['col']}>
-                                        <span className={styles['title']}>شماره موبایل</span>
-                                        <span className={styles['value']}>
-                                            {turn.patientCell ?? '-'}
-                                        </span>
-                                    </div>
+                                <div className="flex space-s-3">
+                                    <span>شماره موبایل</span>
+                                    <span>{turn.patientCell ?? '-'}</span>
                                 </div>
 
-                                <div className={styles['row']}>
-                                    <div className={styles['col']} data-tip data-for="geoInfo">
-                                        <span className={styles['title']}>کد پیگیری</span>
-                                        <span className={styles['value']}>
-                                            {turn?.insuranceType === 'tamin' &&
-                                                turn[turn?.insuranceType + '_prescription'].map(
-                                                    item => (
-                                                        <span
-                                                            style={{
-                                                                fontSize: '1.4rem',
-                                                                marginRight: '1rem'
-                                                            }}
-                                                            key={item.head_EPRSC_ID}
-                                                        >
-                                                            {item.head_EPRSC_ID ?? '-'}
-                                                        </span>
-                                                    )
-                                                )}
-                                            {turn?.insuranceType === 'salamat' && (
-                                                <span
-                                                    style={{
-                                                        fontSize: '1.4rem',
-                                                        marginRight: '1rem'
-                                                    }}
-                                                    key={
-                                                        turn[
-                                                            turn?.prescription?.insuranceType +
-                                                                '_prescription'
-                                                        ]?.trackingCode
-                                                    }
-                                                >
-                                                    {turn[turn?.insuranceType + '_prescription']
-                                                        ?.trackingCode ?? ''}
+                                <div className="flex space-s-3">
+                                    <span>کد پیگیری</span>
+                                    <span>
+                                        {turn?.insuranceType === 'tamin' &&
+                                            turn.tamin_prescription.map(item => (
+                                                <span key={item.head_EPRSC_ID}>
+                                                    {item.head_EPRSC_ID ?? '-'}
                                                 </span>
-                                            )}{' '}
-                                        </span>
-                                    </div>
+                                            ))}
+                                        {turn?.insuranceType === 'salamat' && (
+                                            <span>
+                                                {turn.salamat_prescription?.trackingCode ?? ''}
+                                            </span>
+                                        )}{' '}
+                                    </span>
                                 </div>
 
-                                <div className={styles['row']}>
-                                    <div className={styles['col']}>
-                                        <span className={styles['title']}>کد توالی</span>
-                                        <span className={styles['value']}>
-                                            {turn.salamat_prescription?.sequenceNumber ?? '-'}
-                                        </span>
-                                    </div>
+                                <div className="flex space-s-3">
+                                    <span>کد توالی</span>
+                                    <span>{turn.salamat_prescription?.sequenceNumber ?? '-'}</span>
                                 </div>
                             </div>
                         </td>
@@ -264,24 +232,15 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                 )}
             </Default>
             <Mobile>
-                <div className={styles['turn-card']}>
+                <div className={styles['card']}>
                     <span className="font-medium" style={{ fontWeight: '500' }}>
                         {turn.patientAdditionalData.name +
                             ' ' +
                             turn.patientAdditionalData.lastName}
                     </span>
 
-                    <div
-                        className="flex flex-col space-y-4 opacity-75 text-2xl"
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            opacity: '0.75',
-                            fontSize: '1.5rem',
-                            padding: '0.5rem 0'
-                        }}
-                    >
-                        <div className="flex gap-7" style={{ display: 'flex' }}>
+                    <div className={styles.patientInfo}>
+                        <div className={styles.patientInfoRow}>
                             <div className="w-full" style={{ width: '100%' }}>
                                 <span>شماره موبایل: </span>
                                 <span>{turn.patientCell ?? '-'}</span>
@@ -305,7 +264,7 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                 </span>
                             </div>
                         </div>
-                        <div className="flex gap-7" style={{ display: 'flex' }}>
+                        <div className={styles.patientInfoRow}>
                             <div className="w-full" style={{ width: '100%' }}>
                                 <span>کدپیگیری نسخه: </span>
                                 <span>
@@ -352,7 +311,7 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                             </div>
                         </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 mt-3">
                         {turn.pdf && (
                             <Button variant="secondary" size="small" block onClick={prescription}>
                                 {turn.finalized ? 'مشاهده نسخه' : 'تجویز '}

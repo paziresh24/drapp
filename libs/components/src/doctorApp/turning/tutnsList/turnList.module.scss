@@ -28,11 +28,9 @@
     th {
         text-align: right;
         border-bottom: 1px solid #e6e6e683;
-        padding: 1.2rem 2rem;
+        padding: 0.5rem;
         position: relative;
-        // color: $color-text;
         font-weight: 500;
-        font-size: 1.5rem;
         vertical-align: middle;
     }
 
@@ -45,6 +43,7 @@
         position: sticky;
         top: 0;
         z-index: 5;
+        padding: 1rem;
     }
 
     @media screen and (max-width: 600px) {
@@ -103,13 +102,6 @@
 
     @media screen and (max-width: 426px) {
         display: flex;
-    }
-
-    span {
-        color: #68778d;
-        color: #68778d;
-        font-weight: 700;
-        font-size: 1.3rem;
     }
 
     td {

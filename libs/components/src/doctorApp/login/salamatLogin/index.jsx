@@ -62,8 +62,7 @@ const SalamatLogin = ({ step }) => {
                 event: {
                     cellPhone: digitsFaToEn(cellPhone),
                     nationalCode: digitsFaToEn(nationalCode),
-                    username: usernameField.current.value,
-
+                    username: usernameField.current.value
                 }
             });
             handleLogin({
@@ -106,8 +105,7 @@ const SalamatLogin = ({ step }) => {
                         group: 'login',
                         type: 'successful-salamat',
                         event: {
-                            username: digitsFaToEn(username),
-
+                            username: digitsFaToEn(username)
                         }
                     });
 

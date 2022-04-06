@@ -130,7 +130,7 @@ const Password = () => {
         <>
             {getinfo.isLoading && <Overlay />}
             <>
-                <div style={{ display: 'flex' }}>
+                <div className="flex items-center space-s-3">
                     <div className={styles.toggle}>
                         <input
                             type="checkbox"

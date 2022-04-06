@@ -9,15 +9,15 @@ import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import provincesData from '@paziresh24/constants/province.json';
 import cityData from '@paziresh24/constants/city.json';
-import Select from '@paziresh24/components/doctorApp/Select';
+import Select from '@paziresh24/components/ui/Select';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const CenterInfo = () => {
     const [info] = useDrApp();
     const centerInfoUpdate = useCenterInfoUpdate();
     const [province, setProvince] = useState();
-    const [city, setCity] = useState();
-    const [cityList, setCityList] = useState();
+    const [city, setCity] = useState(info.center.city);
+    const [cityList, setCityList] = useState(info.center.province);
 
     useEffect(() => {
         if (province) {
@@ -82,11 +82,11 @@ const CenterInfo = () => {
                                 label="استان"
                                 searchble
                                 onChange={value => {
-                                    if (value) {
+                                    if (value.id) {
                                         setProvince(value.id);
                                     }
                                 }}
-                                defaultValue={+info.center.province}
+                                defaultValue={+province}
                                 items={provincesData.map(item => ({
                                     name: item.name,
                                     value: item.id
@@ -100,7 +100,7 @@ const CenterInfo = () => {
                                         setCity(value.id);
                                     }
                                 }}
-                                defaultValue={+info.center.city}
+                                defaultValue={+city}
                                 items={cityData
                                     .filter(city => +city.province_id === +province)
                                     .map(item => ({

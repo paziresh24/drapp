@@ -5,7 +5,6 @@ module.exports = {
     content: [
         'src/**/*.{js,ts,jsx,tsx}',
         '../../libs/**/*.{js,jsx,ts,tsx}',
-        '../**/*.{js,jsx,ts,tsx}',
         ...createGlobPatternsForDependencies(__dirname)
     ],
     theme: {

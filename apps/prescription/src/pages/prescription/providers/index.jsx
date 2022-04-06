@@ -9,16 +9,12 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Body } from '@paziresh24/components/prescription/panel/body';
 import { PoroviderItem } from '@paziresh24/components/prescription/providerItem';
 import { useState } from 'react';
-import queryString from 'query-string';
-import { Overlay } from '@paziresh24/components/core/overlay';
 import { useInsurances } from '@paziresh24/hooks/prescription/insurances/index';
-import { useLearnTour } from '@paziresh24/hooks/learn';
 import { Default, Mobile } from '@paziresh24/hooks/device';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { isMobile } from 'react-device-detect';
 
 const Providers = () => {
-    const history = useHistory();
     const insurances = useInsurances();
     const [info] = useDrApp();
     const [isAuthenticated, setIsAuthenticated] = useState();
@@ -73,7 +69,7 @@ const ProviderItemSkeleton = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 width: '100%',
-                padding: '2rem'
+                padding: '1rem'
             }}
         >
             <div
@@ -87,25 +83,25 @@ const ProviderItemSkeleton = () => {
                     className="skeleton"
                     style={{
                         width: '40%',
-                        height: '1.5rem',
+                        height: '0.9rem',
                         borderRadius: '1rem',
                         marginBottom: '1rem'
                     }}
                 ></div>
                 <div
                     className="skeleton"
-                    style={{ width: '20%', height: '1.5rem', borderRadius: '1rem' }}
+                    style={{ width: '20%', height: '0.9rem', borderRadius: '1rem' }}
                 ></div>
             </div>
             <div
                 className="skeleton"
-                style={{ width: '30%', height: '3rem', borderRadius: '100rem' }}
+                style={{ width: '35%', height: '2rem', borderRadius: '100rem' }}
             ></div>
         </div>
     ) : (
         <div
             className="skeleton"
-            style={{ width: '100%', height: '15rem', borderRadius: '1rem' }}
+            style={{ width: '100%', height: '10rem', borderRadius: '0.4rem' }}
         />
     );
 };

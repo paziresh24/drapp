@@ -14,7 +14,6 @@ import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
-import { from } from 'jalali-moment';
 
 const canvasStyles = {
     position: 'absolute',
