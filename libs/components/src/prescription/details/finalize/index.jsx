@@ -28,17 +28,14 @@ const Finalize = () => {
     const urlParams = queryString.parse(search);
     const history = useHistory();
 
-    // global state
     const [diagnosis] = useDiagnosis();
     const [prescriptionInfo, setPrescriptionInfo] = useSelectPrescription();
     const [services] = useServices();
     const [backPage] = useBackPage();
 
-    // local state
     let isServiceWithVisitTamin = false;
     const [isServicesOfDoctors, setIsServicesOfDoctors] = useState(false);
 
-    // api hook
     const bulkItems = useBulkItems();
     const finalizePrescription = useFinalizePrescription();
     const updatePrescription = useUpdatePrescription();
@@ -46,7 +43,6 @@ const Finalize = () => {
     const insurances = useInsurances({ identifier: urlParams.identifier });
     const paziresh = usePaziresh();
 
-    // modal
     const [visitModal, setVisitModal] = useState(false);
     const [deliverModal, setDeliverModal] = useState(false);
     const [deliverConfirmModal, setDeliverConfirmModal] = useState(false);
@@ -76,7 +72,6 @@ const Finalize = () => {
     }, [services]);
 
     useLayoutEffect(() => {
-        // componentWillUnmount
         return () => {
             const servicesWithOutNullItem = servicesCloneRef.current
                 .filter(item => item.item_id !== null)
@@ -92,7 +87,6 @@ const Finalize = () => {
                         prescription_id,
                         use_instruction,
                         use_time
-                        // active_from
                     }) => {
                         return {
                             brand,
@@ -105,8 +99,6 @@ const Finalize = () => {
                             prescription_id,
                             use_instruction,
                             use_time
-
-                            // active_from
                         };
                     }
                 );
