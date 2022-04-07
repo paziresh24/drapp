@@ -26,7 +26,7 @@ import { Mobile, Default } from '@paziresh24/hooks/core/device';
 import { sendEvent } from '@paziresh24/utils';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
 import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
-import { centersId } from '@paziresh24/constants/centersId';
+import { CONSULT_CENTER_ID } from '@paziresh24/constants/consultCenterId';
 
 const TurnCard = ({
     dropDownShowKey,
@@ -271,14 +271,14 @@ const TurnCard = ({
             addPrescription?.data?.result?.insuranceType ??
             'paziresh24';
 
-        if (info.center.id === centersId.CONSULT) return 'paziresh24';
+        if (info.center.id === CONSULT_CENTER_ID) return 'paziresh24';
 
         if (!isExpertDoctor) return 'paziresh24';
         return insuranceProvider;
     };
 
     const VisitButton = () => {
-        if (info.center.id === centersId.CONSULT) {
+        if (info.center.id === CONSULT_CENTER_ID) {
             return (
                 <Button
                     variant="secondary"
@@ -548,7 +548,7 @@ const TurnCard = ({
                                     </span>
                                 </div>
 
-                                {info.center.id === centersId.CONSULT && (
+                                {info.center.id === CONSULT_CENTER_ID && (
                                     <>
                                         <div className="flex space-s-3">
                                             <span>وضعیت پرداخت: </span>
@@ -742,7 +742,7 @@ const TurnCard = ({
                                 </span>
                             </div>
                         </div>
-                        {info.center.id === centersId.CONSULT && (
+                        {info.center.id === CONSULT_CENTER_ID && (
                             <div className={styles.patientInfoRow}>
                                 <div className="w-full">
                                     <span>وضعیت پرداخت: </span>
