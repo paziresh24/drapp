@@ -26,6 +26,7 @@ import { Mobile, Default } from '@paziresh24/hooks/core/device';
 import { sendEvent } from '@paziresh24/utils';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
 import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
+import { CONSULT_CENTER_ID } from '@paziresh24/constants/consultCenterId';
 
 const TurnCard = ({
     dropDownShowKey,
@@ -212,6 +213,11 @@ const TurnCard = ({
         );
     };
 
+    const handlePazireshVisit = () => {
+        if (turn.status === 'visited') return;
+        setVisitModal(true);
+    };
+
     const visitSubmit = async data => {
         sendEvent('onlyvisit', 'prescription', 'onlyvisit');
         setActionType('visit');
@@ -260,13 +266,47 @@ const TurnCard = ({
     };
 
     const visitProvider = () => {
-        const instructionProvider =
+        const insuranceProvider =
             turn.prescription?.insuranceType ??
             addPrescription?.data?.result?.insuranceType ??
             'paziresh24';
 
+        if (info.center.id === CONSULT_CENTER_ID) return 'paziresh24';
+
         if (!isExpertDoctor) return 'paziresh24';
-        return instructionProvider;
+        return insuranceProvider;
+    };
+
+    const VisitButton = () => {
+        if (info.center.id === CONSULT_CENTER_ID) {
+            return (
+                <Button
+                    variant="secondary"
+                    size="small"
+                    block
+                    disabled={turn.book_status === 'visited'}
+                    onClick={() => handlePazireshVisit()}
+                    style={{ marginLeft: '0.3rem' }}
+                >
+                    {turn.book_status === 'visited' ? 'مراجعه شده' : 'اعلام مراجعه'}
+                </Button>
+            );
+        }
+
+        return (
+            <Button
+                variant="secondary"
+                size="small"
+                disabled={finalized || (!isExpertDoctor && turn.book_status === 'visited')}
+                onClick={() => visitSubmit()}
+                loading={addPrescription.isLoading}
+                style={{ marginLeft: '0.5rem' }}
+            >
+                {finalized || (!isExpertDoctor && turn.book_status === 'visited')
+                    ? 'ویزیت شده'
+                    : 'ویزیت '}
+            </Button>
+        );
     };
 
     return (
@@ -395,24 +435,12 @@ const TurnCard = ({
                     </td>
                     <td className={styles.actionCol}>
                         <div className={styles.buttonAction}>
-                            <Button
-                                variant="secondary"
-                                size="small"
-                                disabled={
-                                    finalized || (!isExpertDoctor && turn.book_status === 'visited')
-                                }
-                                onClick={() => visitSubmit()}
-                                loading={addPrescription.isLoading}
-                                style={{ marginLeft: '0.5rem' }}
-                            >
-                                {finalized || (!isExpertDoctor && turn.book_status === 'visited')
-                                    ? 'ویزیت شده'
-                                    : 'ویزیت '}
-                            </Button>
+                            <VisitButton />
                             {isExpertDoctor && (
                                 <Button
                                     className={styles.buttonAction}
                                     size="small"
+                                    block
                                     icon={<ChevronIcon color="#27bda0" />}
                                     variant="secondary"
                                     onClick={prescription}
@@ -520,7 +548,7 @@ const TurnCard = ({
                                     </span>
                                 </div>
 
-                                {info.center.id === '5532' && (
+                                {info.center.id === CONSULT_CENTER_ID && (
                                     <>
                                         <div className="flex space-s-3">
                                             <span>وضعیت پرداخت: </span>
@@ -545,10 +573,15 @@ const TurnCard = ({
                                     </>
                                 )}
 
+                                <div className="flex space-s-3">
+                                    <span>کد پیگیری نوبت</span>
+                                    <span>{turn.ref_id ?? '-'}</span>
+                                </div>
+
                                 {isExpertDoctor && (
                                     <>
                                         <div className="flex space-s-3">
-                                            <span>کد پیگیری</span>
+                                            <span>کد پیگیری نسخه</span>
                                             <span>
                                                 {turn.prescription?.insuranceType === 'tamin' &&
                                                     turn.prescription?.tamin_prescription.map(
@@ -709,7 +742,7 @@ const TurnCard = ({
                                 </span>
                             </div>
                         </div>
-                        {info.center.id === '5532' && (
+                        {info.center.id === CONSULT_CENTER_ID && (
                             <div className={styles.patientInfoRow}>
                                 <div className="w-full">
                                     <span>وضعیت پرداخت: </span>
@@ -731,22 +764,16 @@ const TurnCard = ({
                                 </div>
                             </div>
                         )}
+                        <div className={styles.patientInfoRow}>
+                            <div className="w-full">
+                                <span>کدپیگیری نوبت: </span>
+                                <span>{turn.ref_id ?? '-'}</span>
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.cardAction}>
-                        <Button
-                            variant="secondary"
-                            size="small"
-                            disabled={
-                                finalized || (!isExpertDoctor && turn.book_status === 'visited')
-                            }
-                            block
-                            onClick={() => visitSubmit()}
-                            loading={addPrescription.isLoading}
-                        >
-                            {finalized || (!isExpertDoctor && turn.book_status === 'visited')
-                                ? 'ویزیت شده'
-                                : 'ویزیت '}
-                        </Button>
+                        <VisitButton />
+
                         {isExpertDoctor && (
                             <Button variant="secondary" size="small" block onClick={prescription}>
                                 {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
