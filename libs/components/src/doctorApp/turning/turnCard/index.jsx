@@ -297,6 +297,7 @@ const TurnCard = ({
             <Button
                 variant="secondary"
                 size="small"
+                block
                 disabled={finalized || (!isExpertDoctor && turn.book_status === 'visited')}
                 onClick={() => visitSubmit()}
                 loading={addPrescription.isLoading}
