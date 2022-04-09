@@ -93,7 +93,8 @@ const PrivateRoute = props => {
                 !centers.some(item => item.type_id === 1 || item.id === '5532');
 
             if (
-                (isPrescriptionLocalInstallFieldAvailable &&
+                (!window._env_.P24_IS_PROXY_CENTER &&
+                    isPrescriptionLocalInstallFieldAvailable &&
                     isAllHospitalCentersNotInstalledPrescriptionLocal) ||
                 isEmpty(centers)
             )

@@ -138,12 +138,14 @@ const Header = () => {
                                                         : info.center.id === center.id
                                                     : false,
                                             [styles.disabled]:
+                                                !window._env_.P24_IS_PROXY_CENTER &&
                                                 center?.prescription_local_install !== undefined &&
                                                 !center?.prescription_local_install
                                         })}
                                         onClick={e => {
                                             e.stopPropagation();
                                             if (
+                                                window._env_.P24_IS_PROXY_CENTER ||
                                                 center?.prescription_local_install === undefined ||
                                                 center?.prescription_local_install
                                             ) {
