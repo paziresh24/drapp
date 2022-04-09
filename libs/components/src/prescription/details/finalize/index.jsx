@@ -71,41 +71,6 @@ const Finalize = () => {
         servicesCloneRef.current = services;
     }, [services]);
 
-    useLayoutEffect(() => {
-        return () => {
-            const servicesWithOutNullItem = servicesCloneRef.current
-                .filter(item => item.item_id !== null)
-                .map(
-                    ({
-                        brand,
-                        count,
-                        date_do,
-                        description,
-                        how_to_use,
-                        service,
-                        number_of_period,
-                        prescription_id,
-                        use_instruction,
-                        use_time
-                    }) => {
-                        return {
-                            brand,
-                            count,
-                            date_do,
-                            description,
-                            how_to_use,
-                            id: service.id,
-                            number_of_period,
-                            prescription_id,
-                            use_instruction,
-                            use_time
-                        };
-                    }
-                );
-            addItemToPrescription(servicesWithOutNullItem);
-        };
-    }, []);
-
     const addItemToPrescription = items => {
         return bulkItems.mutateAsync({
             prescriptionId: prescriptionInfo.id,

@@ -85,7 +85,7 @@ const CreateCenter = () => {
                     />
                 </svg>
                 <div className={styles['support-content']}>
-                    <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>
+                    <span style={{ fontSize: '1rem', fontWeight: '600' }}>
                         پشتیبانی: 02125015555
                     </span>
                 </div>
