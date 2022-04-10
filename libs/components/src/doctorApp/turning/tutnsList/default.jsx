@@ -82,7 +82,7 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
         Turn: ({ turn }) => (
             <TurnCard
                 turn={turn}
-                finalized={turn.book_status === 'visited' || turn.prescription.finalized}
+                finalized={turn.book_status === 'visited' || turn.prescription?.finalized}
                 key={turn.id}
                 dropDownShowKey={turn.id}
                 refetchData={refetchData}

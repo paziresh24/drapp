@@ -67,7 +67,6 @@ const Header = () => {
                     {!info.center.is_active_booking && info.center.type_id === 1 && (
                         <Button
                             variant="secondary"
-                            size="medium"
                             style={{ marginLeft: '0.5rem' }}
                             onClick={() => history.push('/fill-info')}
                         >
