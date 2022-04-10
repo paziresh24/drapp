@@ -27,6 +27,19 @@ services:
             - '4030:80'
         restart: always
 
+    drapp-proxy:
+        container_name: drapp-proxy
+        image: dockerhub.paziresh24.com/drapp-local
+        build:
+            context: .
+            dockerfile: Dockerfile.localCenter
+        environment:
+            - P24_DISABLE_THIRD_PARTY=true
+            - P24_IS_PROXY_CENTER=true
+        ports:
+            - '4040:80'
+        restart: always
+
     drapp:
         container_name: drapp
         image: dockerhub.paziresh24.com/drapp
