@@ -496,11 +496,7 @@ const TurnCard = ({
                                 >
                                     {turn.prescription?.finalized && (
                                         <li
-                                            onClick={() =>
-                                                turn.prescription
-                                                    ? getPdf()
-                                                    : setDropDownShow(false)
-                                            }
+                                            onClick={getPdf}
                                             aria-hidden
                                             className={!turn.prescription ? styles.disabled : ''}
                                         >
@@ -510,11 +506,10 @@ const TurnCard = ({
                                     )}
                                     {!turn.prescription?.finalized && (
                                         <li
-                                            onClick={() =>
-                                                turn.prescription
-                                                    ? setDeletePrescriptionModal(true)
-                                                    : setDropDownShow(false)
-                                            }
+                                            onClick={e => {
+                                                e.stopPropagation();
+                                                setDeletePrescriptionModal(true);
+                                            }}
                                             className={!turn.prescription ? styles.disabled : ''}
                                             aria-hidden
                                         >
@@ -650,9 +645,7 @@ const TurnCard = ({
                             >
                                 {turn.prescription?.finalized && (
                                     <li
-                                        onClick={() =>
-                                            turn.prescription ? getPdf() : setDropDownShow(false)
-                                        }
+                                        onClick={getPdf}
                                         aria-hidden
                                         className={!turn.prescription ? styles.disabled : ''}
                                     >
@@ -662,11 +655,10 @@ const TurnCard = ({
                                 )}
                                 {!turn.prescription?.finalized && (
                                     <li
-                                        onClick={() =>
-                                            turn.prescription
-                                                ? setDeletePrescriptionModal(true)
-                                                : setDropDownShow(false)
-                                        }
+                                        onClick={e => {
+                                            e.stopPropagation();
+                                            setDeletePrescriptionModal(true);
+                                        }}
                                         className={!turn.prescription ? styles.disabled : ''}
                                         aria-hidden
                                     >
