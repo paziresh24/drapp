@@ -12,25 +12,23 @@ const Select = memo(
         const randomeKey = Math.random();
 
         const [showOptions, setShowOptopns] = useState(false);
-        const [value, setValue] = useState({
-            id: defaultValue ?? null,
-            name: items.find(item => +item.value == +defaultValue)?.name ?? null
-        });
+        const [value, setValue] = useState({});
         const [searchValue, setSearchValue] = useState('');
         const [selectHover, setSelectHover] = useState(0);
         const [options, setOptions] = useState([]);
 
         useEffect(() => {
-            setOptions(items);
+            items && setOptions(items);
         }, [items]);
 
         useEffect(() => {
-            if (defaultValue) {
-                setValue({
+            if (defaultValue && items.length > 0 && value.id !== defaultValue) {
+                return setValue({
                     id: defaultValue ?? null,
                     name: items.find(item => +item.value == +defaultValue)?.name ?? null
                 });
             }
+            if (!defaultValue) return setValue({});
         }, [items, defaultValue]);
 
         useEffect(() => {
@@ -41,7 +39,7 @@ const Select = memo(
         }, [showOptions]);
 
         useEffect(() => {
-            onChange && value.id && value.id !== defaultValue && onChange(value);
+            onChange && onChange(value);
         }, [value]);
 
         useEffect(() => {
@@ -86,7 +84,7 @@ const Select = memo(
                 if (event.keyCode === 13) {
                     setValue({
                         name: options[selectHover]?.name,
-                        id: options[selectHover]?.value
+                        id: +options[selectHover]?.value
                     });
                     setShowOptopns(false);
                     setFocus && setFocus(false);
@@ -154,7 +152,7 @@ const Select = memo(
                                     key={item.value + Math.random()}
                                     id={randomeKey + i}
                                     onMouseDown={() => {
-                                        setValue({ name: item.name, id: item.value });
+                                        setValue({ id: +item.value, name: item.name });
                                         setShowOptopns(false);
                                     }}
                                     aria-hidden
