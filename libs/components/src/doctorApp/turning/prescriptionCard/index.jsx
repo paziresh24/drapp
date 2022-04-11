@@ -90,7 +90,7 @@ const PrescriptionCard = ({
         );
     };
 
-    const deletePrescriptionAction = async () => {
+    const deletePrescriptionAction = () => {
         sendEvent('deletepriscription', 'prescription', 'deletepriscription');
 
         deletePrescription.mutate(
@@ -342,7 +342,10 @@ const PrescriptionCard = ({
                                     )}
                                     {!turn.finalized && (
                                         <li
-                                            onClick={() => setDeletePrescriptionModal(true)}
+                                            onClick={e => {
+                                                e.stopPropagation();
+                                                setDeletePrescriptionModal(true);
+                                            }}
                                             aria-hidden
                                         >
                                             <RemoveIcon />
@@ -440,7 +443,13 @@ const PrescriptionCard = ({
                                 </li>
                             )}
                             {!turn.finalized && (
-                                <li onClick={() => setDeletePrescriptionModal(true)} aria-hidden>
+                                <li
+                                    onClick={e => {
+                                        e.stopPropagation();
+                                        setDeletePrescriptionModal(true);
+                                    }}
+                                    aria-hidden
+                                >
                                     <RemoveIcon />
                                     <span>حذف نسخه</span>
                                 </li>
