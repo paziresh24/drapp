@@ -22,7 +22,7 @@ const Select = memo(
         }, [items]);
 
         useEffect(() => {
-            if (defaultValue && items.length > 0 && value.id !== defaultValue) {
+            if (defaultValue && items.length > 0 && +value.id !== +defaultValue) {
                 return setValue({
                     id: defaultValue ?? null,
                     name: items.find(item => +item.value == +defaultValue)?.name ?? null
