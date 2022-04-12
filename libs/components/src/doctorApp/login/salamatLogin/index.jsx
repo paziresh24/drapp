@@ -62,8 +62,7 @@ const SalamatLogin = ({ step }) => {
                 event: {
                     cellPhone: digitsFaToEn(cellPhone),
                     nationalCode: digitsFaToEn(nationalCode),
-                    username: usernameField.current.value,
-
+                    username: usernameField.current.value
                 }
             });
             handleLogin({
@@ -86,11 +85,38 @@ const SalamatLogin = ({ step }) => {
     };
 
     const createCenter = async ({ cellPhone, nationalCode }) => {
-        return createCenterReq.mutateAsync({
-            ignore_shahkar: true,
-            mobile: digitsFaToEn(cellPhone),
-            nationalCode: digitsFaToEn(nationalCode)
-        });
+        return createCenterReq.mutateAsync(
+            {
+                ignore_shahkar: true,
+                mobile: digitsFaToEn(cellPhone),
+                nationalCode: digitsFaToEn(nationalCode)
+            },
+            {
+                onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'successful-salamat',
+                        event: {
+                            cellPhone: digitsFaToEn(cellPhone),
+                            nationalCode: digitsFaToEn(nationalCode),
+                            username: usernameField.current.value
+                        }
+                    });
+                },
+                onError: error => {
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'unsuccessful-salamat',
+                        event: {
+                            cellPhone: digitsFaToEn(cellPhone),
+                            nationalCode: digitsFaToEn(nationalCode),
+                            username: usernameField.current.value,
+                            error: error.response.data
+                        }
+                    });
+                }
+            }
+        );
     };
 
     const handleLogin = async ({ username, password }) => {
@@ -106,8 +132,7 @@ const SalamatLogin = ({ step }) => {
                         group: 'login',
                         type: 'successful-salamat',
                         event: {
-                            username: digitsFaToEn(username),
-
+                            username: digitsFaToEn(username)
                         }
                     });
 
