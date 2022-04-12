@@ -580,19 +580,13 @@ const TurnCard = ({
                                             <span>کد پیگیری نسخه</span>
                                             <span>
                                                 {turn.prescription?.insuranceType === 'tamin' &&
-                                                    turn.prescription?.tamin_prescription.map(
-                                                        item => (
-                                                            <span key={item.head_EPRSC_ID}>
-                                                                {item.head_EPRSC_ID ?? '-'}
-                                                            </span>
-                                                        )
-                                                    )}
-                                                {turn.prescription?.insuranceType === 'salamat' && (
-                                                    <span>
-                                                        {turn.prescription?.salamat_prescription
-                                                            ?.trackingCode ?? ''}
-                                                    </span>
-                                                )}
+                                                    turn.prescription?.tamin_prescription
+                                                        .map(item => item.head_EPRSC_ID)
+                                                        .join(' - ')}
+                                                {turn.prescription?.insuranceType === 'salamat' &&
+                                                    (turn.prescription?.salamat_prescription
+                                                        ?.trackingCode ??
+                                                        '-')}
                                             </span>
                                         </div>
 
