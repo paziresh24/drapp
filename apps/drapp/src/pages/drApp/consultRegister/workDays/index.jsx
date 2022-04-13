@@ -105,10 +105,7 @@ const WorkDays = () => {
         if (isEmpty(workDaysTime)) {
             return toast.warning('ساعت کاری نمی تواند خالی باشد.');
         }
-        // console.log({
-        //     ...consult,
-        //     workHours: workDaysTime
-        // });
+
         activeConsult.mutate(
             {
                 ...consult,

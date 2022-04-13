@@ -3,7 +3,7 @@ import TextField from '@paziresh24/components/core/textField';
 import Button from '@paziresh24/components/core/button';
 import { useHistory } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
@@ -24,11 +24,11 @@ const CenterInfo = () => {
     const [consult, setConsult] = useConsult();
 
     const history = useHistory();
-    var days = [
-        { id: '1', name: 'تا 1 روز' },
-        { id: '2', name: 'تا 2 روز' },
-        { id: '3', name: 'تا 3 روز' }
-    ];
+    var days = useRef([
+        { value: '1', name: 'تا 1 روز' },
+        { value: '2', name: 'تا 2 روز' },
+        { value: '3', name: 'تا 3 روز' }
+    ]);
     const updateCenter = () => {
         if (!whatsAppCell) {
             return toast.error('شماره whatsapp business الزامی می باشد');
@@ -69,10 +69,7 @@ const CenterInfo = () => {
                                         setCountVisitDaily(value.id);
                                     }
                                 }}
-                                items={days.map(item => ({
-                                    name: item.name,
-                                    value: item.id
-                                }))}
+                                items={days.current}
                             />
                         </div>
 
