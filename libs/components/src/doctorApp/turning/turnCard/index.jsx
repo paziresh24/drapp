@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '../../../core/button';
 import styles from '../prescriptionCard/turnCard.module.scss';
 import moment from 'jalali-moment';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ChevronIcon, PrintIcon, RemoveIcon } from '../../../icons';
 import Modal from '../../../core/modal';
@@ -147,7 +147,7 @@ const TurnCard = ({
         formState: { errors }
     } = useForm();
 
-    const getPdf = () => {
+    const getPdf = useCallback(() => {
         if (!turn.prescription?.pdf && !getOnePrescription?.data?.pdf) {
             getOnePrescription.remove();
             return setTimeout(() => getOnePrescription.refetch(), 0);
@@ -162,34 +162,32 @@ const TurnCard = ({
                     : window._env_.P24_BASE_URL_PRESCRIPTION_API
             }/pdfs/` + (prescription?.data?.pdf ?? turn.prescription.pdf)
         );
-    };
+    }, [turn]);
 
     const deletePrescriptionAction = async () => {
         sendEvent('deletepriscription', 'prescription', 'deletepriscription');
 
-        deletePrescription.mutate(
-            { baseURL: info.center.local_base_url, id: turn.prescription?.id },
-            {
-                onSuccess: data => {
-                    if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                        return setOtpConfirm(true);
-                    }
-                    refetchData();
-                    setDeletePrescriptionModal(false);
-                },
-                onError: error => {
-                    if (error.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                        return setOtpConfirm(true);
-                    }
-                    setDeletePrescriptionModal(false);
-
-                    !toast.isActive('deletePrescription') &&
-                        toast.error(error.response.data.message, {
-                            toastId: 'deletePrescription'
-                        });
-                }
+        try {
+            const { data } = await deletePrescription.mutateAsync({
+                baseURL: info.center.local_base_url,
+                id: turn.prescription?.id
+            });
+            if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
+                return setOtpConfirm(true);
             }
-        );
+            refetchData();
+            setDeletePrescriptionModal(false);
+        } catch (error) {
+            if (error.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
+                return setOtpConfirm(true);
+            }
+            setDeletePrescriptionModal(false);
+
+            !toast.isActive('deletePrescription') &&
+                toast.error(error.response.data.message, {
+                    toastId: 'deletePrescription'
+                });
+        }
     };
 
     const otpConfirmAction = data => {
