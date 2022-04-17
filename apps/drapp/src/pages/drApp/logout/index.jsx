@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { clearToken } from '@paziresh24/utils/localstorage';
 import { useLogout } from '@paziresh24/hooks/drapp/auth';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { Loading } from '@paziresh24/components/core/loading';
+import { Loading } from '@paziresh24/shared/ui/loading';
 
 const LogOut = () => {
     const logout = useLogout();

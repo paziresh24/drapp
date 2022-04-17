@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Overlay } from '@paziresh24/components/core/overlay';
-import { Tab, Tabs } from '@paziresh24/components/core/tab';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
+import { Tab, Tabs } from '@paziresh24/shared/ui/tab';
 import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
 import MustUsedStatistics from '@paziresh24/prescription-dashboard/components/mostUsedItems';
 import PrescriptionStatistics from '@paziresh24/prescription-dashboard/components/prescription';

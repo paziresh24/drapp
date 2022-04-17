@@ -1,14 +1,14 @@
 import styles from './templates.module.scss';
-import TemplateItem from '@paziresh24/components/prescription/templates/templateItem';
+import TemplateItem from '../../../components/molecules/templates/templateItem';
 import { useGetFavoritePrescriptions } from '@paziresh24/hooks/prescription';
 import { useEffect, useState } from 'react';
-import Button from '@paziresh24/components/core/button';
+import Button from '@paziresh24/shared/ui/button';
 import { useHistory, Link } from 'react-router-dom';
-import TaminImport from '@paziresh24/components/prescription/details/ToolBox/Import';
+import TaminImport from '../../../components/molecules/details/ToolBox/Import';
 import { isMobile } from 'react-device-detect';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { CSSTransition } from 'react-transition-group';
-import SalamatImport from '@paziresh24/components/prescription/details/ToolBox/Import/salamat';
+import SalamatImport from '../../../components/molecules/details/ToolBox/Import/salamat';
 
 const Template = () => {
     const history = useHistory();

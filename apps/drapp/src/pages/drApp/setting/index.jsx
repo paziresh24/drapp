@@ -1,18 +1,18 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import styles from 'assets/styles/pages/drApp/workDays.module.scss';
-import Button from '@paziresh24/components/core/button';
+import Button from '@paziresh24/shared/ui/button';
 import { useWorkDays } from '@paziresh24/context/drapp/workDays';
 import { useGetWorkHours, useWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { TimeRow } from '@paziresh24/components/doctorApp/setting/workDays';
-import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import { TimeRow } from '@components/molecules/setting/workDays';
+import { Duration } from '@components/molecules/setting/duration';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useMenu } from '@paziresh24/context/core/menu';
-import { Overlay } from '@paziresh24/components/core/overlay';
-import { ChevronIcon } from '@paziresh24/components/icons';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
+import { ChevronIcon } from '@paziresh24/shared/icon';
 
 const Setting = () => {
     const [info] = useDrApp();

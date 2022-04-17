@@ -3,20 +3,20 @@ import styles from '../../../assets/styles/pages/drApp/superMenu.module.scss';
 import { useHistory, Link } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
-import Modal from '@paziresh24/components/core/modal';
-import Button from '@paziresh24/components/core/button';
-import { PenIcon, StarIcon } from '@paziresh24/components/icons';
+import Modal from '@paziresh24/shared/ui/modal';
+import Button from '@paziresh24/shared/ui/button';
+import { PenIcon, StarIcon } from '@paziresh24/shared/icon';
 import { toast } from 'react-toastify';
 import { baseURL } from '@paziresh24/utils/baseUrl';
-import Menu from '@paziresh24/components/doctorApp/superMeu/menu';
+import Menu from '@components/molecules/superMeu/menu';
 import bannerTaminImport from '@paziresh24/assets/images/drapp/banner-tamin-import.png';
-import ThreeDots from '@paziresh24/components/icons/public/threeDots';
-import { ChevronIcon } from '@paziresh24/components/icons';
+import ThreeDots from '@paziresh24/shared/icon/public/threeDots';
+import { ChevronIcon } from '@paziresh24/shared/icon';
 import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import { MainMenuData, SubMenuData } from '@paziresh24/configs/drapp/menu.config';
-import { StatusBar } from '@paziresh24/components/doctorApp/turning/statusBar';
+import { StatusBar } from '@components/molecules/turning/statusBar';
 
 const SuperMenu = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState();

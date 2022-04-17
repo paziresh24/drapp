@@ -5,7 +5,7 @@ import { useMe } from '@paziresh24/context/prescription/me-context';
 import styles from '../../../assets/styles/pages/prescription/types.module.scss';
 
 import { useParams } from 'react-router-dom';
-import { Tabs, Tab } from '@paziresh24/components/core/tab';
+import { Tabs, Tab } from '@paziresh24/shared/ui/tab';
 import { useEffect, useLayoutEffect } from 'react';
 import {
     useGetFavoritePrescriptions,
@@ -15,19 +15,19 @@ import {
 } from '@paziresh24/hooks/prescription/index';
 
 // COMPONENTS
-import Error from '@paziresh24/components/core/error';
+import Error from '@paziresh24/shared/ui/error';
 import isEmpty from 'lodash/isEmpty';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { useServices } from '@paziresh24/context/prescription/services-context';
-import Service from '@paziresh24/components/prescription/details/service';
-import ToolBox from '@paziresh24/components/prescription/details/ToolBox/index';
-import Info from '@paziresh24/components/prescription/details/Info';
+import Service from '../../../components/molecules/details/service';
+import ToolBox from '../../../components/molecules/details/ToolBox/index';
+import Info from '../../../components/molecules/details/Info';
 import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
 import { useFavoriteItem } from '@paziresh24/context/prescription/favoriteItem.context';
 import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.context';
 import { useLocation } from 'react-router';
-import LabsList from '@paziresh24/components/prescription/details/lists/lab.list';
+import LabsList from '../../../components/molecules/details/lists/lab.list';
 import { useState } from 'react';
 
 const Types = () => {

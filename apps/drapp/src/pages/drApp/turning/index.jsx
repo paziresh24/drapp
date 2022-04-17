@@ -1,45 +1,45 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import styles from '@assets/styles/pages/drApp/turning.module.scss';
-import { StatusBar } from '@paziresh24/components/doctorApp/turning/statusBar';
-import { SelectDate } from '@paziresh24/components/doctorApp/turning/selectDate';
+import { StatusBar } from '@components/molecules/turning/statusBar';
+import { SelectDate } from '@components/molecules/turning/selectDate';
 import { useGetTurns } from '@paziresh24/hooks/drapp/turning';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { EmptyState } from '@paziresh24/components/core/emptyState';
+import { EmptyState } from '@paziresh24/shared/ui/emptyState';
 import { toast } from 'react-toastify';
-import Button from '@paziresh24/components/core/button';
-import TextField from '@paziresh24/components/core/textField';
-import Modal from '@paziresh24/components/core/modal';
+import Button from '@paziresh24/shared/ui/button';
+import TextField from '@paziresh24/shared/ui/textField';
+import Modal from '@paziresh24/shared/ui/modal';
 import {
     CalendarPlus,
     CircleTick,
     TurningIcon,
     PlusIcon,
     PlusLineIcon
-} from '@paziresh24/components/icons';
+} from '@paziresh24/shared/icon';
 import { useEffect, useState, useRef } from 'react';
 import { useAddPrescription, useCheckOtp } from '@paziresh24/hooks/prescription';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import moment from 'jalali-moment';
-import { TurnTime } from '@paziresh24/components/doctorApp/turning/turnTime';
+import { TurnTime } from '@components/molecules/turning/turnTime';
 import { sendEvent, digitsFaToEn } from '@paziresh24/utils';
 import { v4 as uuid } from 'uuid';
 import { useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
-import Error from '@paziresh24/components/core/error';
+import Error from '@paziresh24/shared/ui/error';
 import { getCookie, setCookie } from '@paziresh24/utils/cookie';
-import { SettingIcon } from '@paziresh24/components/icons';
-import Visit from '@paziresh24/components/doctorApp/turning/visit';
+import { SettingIcon } from '@paziresh24/shared/icon';
+import Visit from '@components/molecules/turning/visit';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
 import { useMediaQuery } from 'react-responsive';
-import TurnsList from '@paziresh24/components/doctorApp/turning/tutnsList/default';
+import TurnsList from '@components/molecules/turning/tutnsList/default';
 import { useTour } from '@reactour/tour';
 import queryString from 'query-string';
 import updatingImage from '@paziresh24/assets/images/drapp/updating.jpg';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
-import { queryClient } from '@paziresh24/components/core/provider';
-import ReferenceModal from '@paziresh24/components/prescription/referenceModal';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { queryClient } from '@paziresh24/shared/ui/provider';
+import ReferenceModal from '@paziresh24/apps/prescription/components/molecules/referenceModal';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
 const Turning = () => {

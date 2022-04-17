@@ -3,7 +3,6 @@
     "projects": {
         "apis": "libs/apis",
         "assets": "libs/assets",
-        "components": "libs/components",
         "configs": "libs/configs",
         "constants": "libs/constants",
         "context": "libs/context",
@@ -15,6 +14,8 @@
         "prescription": "apps/prescription",
         "prescription-dashboard-components": "libs/prescription-dashboard/components",
         "prescription-e2e": "apps/prescription-e2e",
+        "shared-icon": "libs/shared/icon",
+        "shared-ui": "libs/shared/ui",
         "utils": "libs/utils"
     }
 }

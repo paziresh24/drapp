@@ -2,8 +2,8 @@
 import styles from '@assets/styles/pages/drApp/complaints.module.scss';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useComplaintsSummary, useComplaintsDetail } from '@paziresh24/hooks/drapp/profile';
-import { EmptyState } from '@paziresh24/components/core/emptyState';
-import { Overlay } from '@paziresh24/components/core/overlay';
+import { EmptyState } from '@paziresh24/shared/ui/emptyState';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 const Complaints = () => {

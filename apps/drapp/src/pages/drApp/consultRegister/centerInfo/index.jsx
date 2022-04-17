@@ -1,19 +1,19 @@
 import styles from 'assets/styles/pages/drApp/completeInfo.module.scss';
-import TextField from '@paziresh24/components/core/textField';
-import Button from '@paziresh24/components/core/button';
+import TextField from '@paziresh24/shared/ui/textField';
+import Button from '@paziresh24/shared/ui/button';
 import { useHistory } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import { useState } from 'react';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
-import { HelpIcon } from '@paziresh24/components/icons/public/help';
-import Select from '@paziresh24/components/ui/Select';
+import { HelpIcon } from '@paziresh24/shared/icon/public/help';
+import Select from '@paziresh24/shared/ui/select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { digitsFaToEn } from '@paziresh24/utils';
-import { InfoIcon } from '@paziresh24/components/icons';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { InfoIcon } from '@paziresh24/shared/icon';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CenterInfo = () => {
     const [info] = useDrApp();

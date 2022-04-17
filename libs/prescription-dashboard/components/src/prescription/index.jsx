@@ -7,7 +7,7 @@ import Pie from '../charts/pie';
 import Bar from '../charts/bar';
 import { useStatisticsFilters } from '../../../contexts/filters.context';
 import { useStatistics } from '../../../contexts/statistics.context';
-import { Overlay } from '@paziresh24/components/core/overlay';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
 import Result from '../result';
 import ExportExcel from '../exportExcel';
 import { resultSchema } from '../../../schemas/result.schema';

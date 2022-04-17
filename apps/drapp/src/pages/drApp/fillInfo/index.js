@@ -1,5 +1,5 @@
 import styles from 'assets/styles/pages/drApp/fillInfo.module.scss';
-import { TurningIcon, ChevronIcon } from '@paziresh24/components/icons';
+import { TurningIcon, ChevronIcon } from '@paziresh24/shared/icon';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import { routes } from './routes';
 

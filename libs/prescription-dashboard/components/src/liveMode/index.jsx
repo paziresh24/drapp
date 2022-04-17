@@ -1,7 +1,7 @@
 import styles from './liveMode.module.scss';
 import { useState, useEffect, useRef } from 'react';
 import ReactTooltip from 'react-tooltip';
-import { HelpIcon } from '@paziresh24/components/icons/public/help';
+import { HelpIcon } from '@paziresh24/shared/icon/public/help';
 
 const LiveMode = ({ refetch }) => {
     const [isActiveLive, setIsActiveLive] = useState(false);

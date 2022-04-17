@@ -8,8 +8,8 @@ import { getToken } from '@paziresh24/utils/localstorage';
 import { useGetLatestVersion } from '@paziresh24/hooks/core';
 
 // COMPONENTS
-import LoginHero from '@paziresh24/components/doctorApp/login/loginHero';
-import Form from '@paziresh24/components/doctorApp/login/form';
+import LoginHero from '@components/molecules/login/loginHero';
+import Form from '@components/molecules/login/form';
 import * as serviceWorkerRegistration from '../../../serviceWorkerRegistration';
 
 const Auth = () => {

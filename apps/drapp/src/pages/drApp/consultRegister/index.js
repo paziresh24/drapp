@@ -1,5 +1,5 @@
 import styles from 'assets/styles/pages/drApp/fillInfo.module.scss';
-import { TurningIcon, ChevronIcon, ConsultIcon } from '@paziresh24/components/icons';
+import { TurningIcon, ChevronIcon, ConsultIcon } from '@paziresh24/shared/icon';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import { routes } from './routes';
 import { ConsultProvider } from '@paziresh24/context/drapp/consult';

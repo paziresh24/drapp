@@ -1,19 +1,19 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useEffect, useState } from 'react';
 import styles from 'assets/styles/pages/drApp/workDays.module.scss';
-import Modal from '@paziresh24/components/core/modal';
-import Button from '@paziresh24/components/core/button';
+import Modal from '@paziresh24/shared/ui/modal';
+import Button from '@paziresh24/shared/ui/button';
 import { useWorkDays } from '@paziresh24/context/drapp/workDays';
 import { useActiveConsult } from '@paziresh24/hooks/drapp/consultFillInfo';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { TimeRow } from '@paziresh24/components/doctorApp/setting/workDays';
+import { TimeRow } from '@components/molecules/setting/workDays';
 import { toast } from 'react-toastify';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useDuration } from '@paziresh24/context/drapp/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 import { useConsult } from '@paziresh24/context/drapp/consult';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { digitsFaToEn } from '@paziresh24/utils';
 
 const canvasStyles = {

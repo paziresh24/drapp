@@ -1,12 +1,12 @@
 import styles from './createCenter.module.scss';
-import TextField from '@paziresh24/components/core/textField';
-import Button from '@paziresh24/components/core/button';
+import TextField from '@paziresh24/shared/ui/textField';
+import Button from '@paziresh24/shared/ui/button';
 import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { digitsFaToEn } from '@paziresh24/utils';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CreateCenter = () => {
     const getinfo = useGetInfo();

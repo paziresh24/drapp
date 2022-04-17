@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import Modal from '@paziresh24/components/core/modal';
+import Modal from '@paziresh24/shared/ui/modal';
 import DoctorInfo from '../../doctorInfo';
 import TagStatus from '../../tagStatus';
 import DropDown from '../../../atoms/dropDown';
 import Button from '../../../atoms/button';
 import { useBookStore } from '../../../../store';
 import { useRemoveBook } from '../../../../apis/removeBook/hook';
-import ShareIcon from '@paziresh24/components/icons/public/share';
-import TrashIcon from '@paziresh24/components/icons/public/trash';
-import ThreeDotsIcon from '@paziresh24/components/icons/public/threeDots';
+import ShareIcon from '@paziresh24/shared/icon/public/share';
+import TrashIcon from '@paziresh24/shared/icon/public/trash';
+import ThreeDotsIcon from '@paziresh24/shared/icon/public/threeDots';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';

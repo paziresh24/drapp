@@ -1,7 +1,7 @@
 import styles from 'assets/styles/pages/drApp/consult.module.scss';
 import { getToken } from '@paziresh24/utils/localstorage';
 import { useEffect, useRef, useState } from 'react';
-import { Overlay } from '@paziresh24/components/core/overlay';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
 import { useLocation, useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import { toast } from 'react-toastify';

@@ -1,5 +1,5 @@
 import Text from '../../atoms/text';
-import { ChevronIcon } from '@paziresh24/components/icons';
+import { ChevronIcon } from '@paziresh24/shared/icon';
 
 interface RateProps {
     /**

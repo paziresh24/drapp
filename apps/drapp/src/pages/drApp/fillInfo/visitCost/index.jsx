@@ -1,5 +1,5 @@
 import styles from 'assets/styles/pages/drApp/visitCost.module.scss';
-import TextField from '@paziresh24/components/core/textField';
+import TextField from '@paziresh24/shared/ui/textField';
 
 const VisitCost = () => {
     return (

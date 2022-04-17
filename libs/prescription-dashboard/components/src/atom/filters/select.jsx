@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, memo } from 'react';
 import styles from './select.module.scss';
 import isEmpty from 'lodash/isEmpty';
-import { CloseIcon } from '@paziresh24/components/icons';
+import { CloseIcon } from '@paziresh24/shared/icon';
 
 const Select = memo(({ label, items, isOpen, setIsOpen, onChange, defaultValue, removeble }) => {
     const [value, setValue] = useState(defaultValue);

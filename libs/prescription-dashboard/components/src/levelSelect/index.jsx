@@ -1,6 +1,6 @@
 import styles from './levelSelect.module.scss';
 import { useState, useEffect } from 'react';
-import CloseIcon from '@paziresh24/components/icons/public/close';
+import CloseIcon from '@paziresh24/shared/icon/public/close';
 
 const LevelSelect = ({ label, icon, items, onChange, valueField, defaultValue, allLabel }) => {
     const [isOpen, setIsopen] = useState(false);

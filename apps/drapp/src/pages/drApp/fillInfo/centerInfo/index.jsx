@@ -1,16 +1,16 @@
 import styles from 'assets/styles/pages/drApp/completeInfo.module.scss';
-import TextField from '@paziresh24/components/core/textField';
-import Button from '@paziresh24/components/core/button';
+import TextField from '@paziresh24/shared/ui/textField';
+import Button from '@paziresh24/shared/ui/button';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import { useEffect, useState } from 'react';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import provincesData from '@paziresh24/constants/province.json';
 import cityData from '@paziresh24/constants/city.json';
-import Select from '@paziresh24/components/ui/Select';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import Select from '@paziresh24/shared/ui/select';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CenterInfo = () => {
     const [info] = useDrApp();

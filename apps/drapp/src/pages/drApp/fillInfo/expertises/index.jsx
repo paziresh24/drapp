@@ -1,14 +1,14 @@
 import styles from 'assets/styles/pages/drApp/completeInfo.module.scss';
-import Button from '@paziresh24/components/core/button';
+import Button from '@paziresh24/shared/ui/button';
 import { useHistory } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import { useEffect, useState } from 'react';
-import { Expertises } from '@paziresh24/components/doctorApp/profile/expertises';
+import { Expertises } from '@components/molecules/profile/expertises';
 import { useCreateExpertise, useUpdateExpertise } from '@paziresh24/hooks/drapp/profile';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const ExpertisesPage = () => {
     const [info] = useDrApp();

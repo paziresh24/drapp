@@ -1,5 +1,5 @@
 import styles from './date.module.scss';
-import Modal from '@paziresh24/components/core/modal';
+import Modal from '@paziresh24/shared/ui/modal';
 import { Calendar, utils } from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import { useState, useEffect } from 'react';

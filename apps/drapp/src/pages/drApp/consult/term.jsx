@@ -1,6 +1,6 @@
 import styles from 'assets/styles/pages/drApp/consult.module.scss';
 import { useEffect, useRef, useState } from 'react';
-import { Overlay } from '@paziresh24/components/core/overlay';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
 
 const ConsultTerm = () => {
     const [loading, setLoading] = useState(true);

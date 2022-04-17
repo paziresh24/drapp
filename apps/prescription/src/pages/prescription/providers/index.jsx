@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // COMPONENTS
-import { Body } from '@paziresh24/components/prescription/panel/body';
-import { PoroviderItem } from '@paziresh24/components/prescription/providerItem';
+import { Body } from '../../../components/molecules/panel/body';
+import { PoroviderItem } from '../../../components/molecules/providerItem';
 import { useState } from 'react';
 import { useInsurances } from '@paziresh24/hooks/prescription/insurances/index';
 import { Default, Mobile } from '@paziresh24/hooks/device';

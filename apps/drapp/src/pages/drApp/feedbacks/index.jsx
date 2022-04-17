@@ -1,10 +1,10 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import styles from '@assets/styles/pages/drApp/feedbacks.module.scss';
-import { FeedbackCards } from '@paziresh24/components/doctorApp/profile/feedbackCards';
+import { FeedbackCards } from '@components/molecules/profile/feedbackCards';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
-import { EmptyState } from '@paziresh24/components/core/emptyState';
-import { Overlay } from '@paziresh24/components/core/overlay';
+import { EmptyState } from '@paziresh24/shared/ui/emptyState';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
 
 const Feedbacks = () => {
     const [info] = useDrApp();

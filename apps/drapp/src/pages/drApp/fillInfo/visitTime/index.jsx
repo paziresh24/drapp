@@ -2,9 +2,9 @@
 import styles from 'assets/styles/pages/drApp/workDays.module.scss';
 
 import { useDuration } from '@paziresh24/context/drapp/duration';
-import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
-import Button from '@paziresh24/components/core/button';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import { Duration } from '@components/molecules/setting/duration';
+import Button from '@paziresh24/shared/ui/button';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useHistory } from 'react-router-dom';
 
 const VisitTime = () => {

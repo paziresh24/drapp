@@ -18,7 +18,6 @@
             "@paziresh24/apis/*": ["libs/apis/src/*"],
             "@paziresh24/apps/prescription/*": ["apps/prescription/src/*"],
             "@paziresh24/assets/*": ["libs/assets/*"],
-            "@paziresh24/components/*": ["libs/components/src/*"],
             "@paziresh24/configs/*": ["libs/configs/*"],
             "@paziresh24/constants/*": ["libs/constants/src/*"],
             "@paziresh24/context/*": ["libs/context/src/*"],
@@ -28,6 +27,10 @@
             "@paziresh24/prescription-dashboard/components/*": [
                 "libs/prescription-dashboard/components/src/*"
             ],
+            "@paziresh24/shared/icon": ["libs/shared/icon/src/index.ts"],
+            "@paziresh24/shared/icon/*": ["libs/shared/icon/src/lib/*"],
+            "@paziresh24/shared/ui": ["libs/shared/ui/src/index.ts"],
+            "@paziresh24/shared/ui/*": ["libs/shared/ui/src/lib/*"],
             "@paziresh24/utils": ["libs/utils/src/index.js"],
             "@paziresh24/utils/*": ["libs/utils/src/*"]
         }

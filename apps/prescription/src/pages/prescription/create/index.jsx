@@ -15,14 +15,12 @@ import { getToken, setToken } from '@paziresh24/utils/localstorage.js';
 import { digitsFaToEn } from '@paziresh24/utils';
 
 // COMPONENTS
-import { Loading } from '@paziresh24/components/prescription/loading';
-import Error from '@paziresh24/components/core/error';
 import { toast } from 'react-toastify';
 import { useBackPage } from '@paziresh24/context/core/backPage';
-import { Overlay } from '@paziresh24/components/core/overlay';
-import Modal from '@paziresh24/components/core/modal';
-import TextField from '@paziresh24/components/core/textField';
-import Button from '@paziresh24/components/core/button';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
+import Modal from '@paziresh24/shared/ui/modal';
+import TextField from '@paziresh24/shared/ui/textField';
+import Button from '@paziresh24/shared/ui/button';
 import { useForm } from 'react-hook-form';
 import { useDrApp } from '@paziresh24/context/drapp';
 

@@ -1,19 +1,19 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useEffect, useState } from 'react';
 import styles from 'assets/styles/pages/drApp/workDays.module.scss';
-import Modal from '@paziresh24/components/core/modal';
-import Button from '@paziresh24/components/core/button';
+import Modal from '@paziresh24/shared/ui/modal';
+import Button from '@paziresh24/shared/ui/button';
 import { useWorkDays } from '@paziresh24/context/drapp/workDays';
 import { useWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { TimeRow } from '@paziresh24/components/doctorApp/setting/workDays';
+import { TimeRow } from '@components/molecules/setting/workDays';
 import { toast } from 'react-toastify';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useDuration } from '@paziresh24/context/drapp/duration';
-import { Duration } from '@paziresh24/components/doctorApp/setting/duration';
+import { Duration } from '@components/molecules/setting/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const canvasStyles = {
     position: 'absolute',

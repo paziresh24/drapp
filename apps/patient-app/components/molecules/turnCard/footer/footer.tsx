@@ -1,11 +1,11 @@
-import Modal from '@paziresh24/components/core/modal';
+import Modal from '@paziresh24/shared/ui/modal';
 import { Button } from './../../../atoms/button/button';
 import { useState } from 'react';
-import ChatIcon from '@paziresh24/components/icons/public/chat';
+import ChatIcon from '@paziresh24/shared/icon/public/chat';
 import Queue from '../../queue';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';
 import { CenterType } from 'apps/patient-app/types/centerType';
-import { MegaphoneIcon } from '@paziresh24/components/icons';
+import { MegaphoneIcon } from '@paziresh24/shared/icon';
 import { isToday } from '@paziresh24/utils';
 
 interface TurnFooterProps {

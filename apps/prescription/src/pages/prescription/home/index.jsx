@@ -13,32 +13,31 @@ import {
 import classNames from 'classnames';
 
 // COMPONENTS
-import { Body } from '@paziresh24/components/prescription/panel/body';
-import { EmptyState } from '@paziresh24/components/prescription/emptyState';
-import SearchBar from '@paziresh24/components/prescription/search/searchBar';
+import { EmptyState } from '@paziresh24/shared/ui/emptyState';
+import SearchBar from '../../../components/molecules/search/searchBar';
 import { createRef, useEffect, useState } from 'react';
-import { FilterIcon } from '@paziresh24/components/icons/public/duotone/';
-import Modal from '@paziresh24/components/core/modal';
-import Button from '@paziresh24/components/core/button';
+import { FilterIcon } from '@paziresh24/shared/icon/public/duotone/';
+import Modal from '@paziresh24/shared/ui/modal';
+import Button from '@paziresh24/shared/ui/button';
 import { Calendar } from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import moment from 'jalali-moment';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
-import TexFiled from '@paziresh24/components/core/textField';
+import TexFiled from '@paziresh24/shared/ui/textField';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
-import { CalendarIcon } from '@paziresh24/components/icons';
+import { CalendarIcon } from '@paziresh24/shared/icon';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
-import { DeliverCase } from '@paziresh24/components/prescription/deliver/deliverCase';
+import { DeliverCase } from '../../../components/molecules/deliver/deliverCase';
 import { v4 as uuid } from 'uuid';
-import TurnsList from '@paziresh24/components/prescription/turnsList/default';
+import TurnsList from '../../../components/molecules/turnsList/default';
 import { useInView } from 'react-intersection-observer';
-import LoadingIcon from '@paziresh24/components/icons/public/loading';
+import LoadingIcon from '@paziresh24/shared/icon/public/loading';
 import queryString from 'querystring';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Home = props => {
     const [info] = useDrApp();

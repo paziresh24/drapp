@@ -2,7 +2,7 @@ import axios from 'axios';
 import { baseURL } from '@paziresh24/utils/baseUrl';
 import { getToken, setToken, clearToken } from '@paziresh24/utils/localstorage';
 import { refreshToken } from './drApp/auth/refreshToken';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const client = axios.create({
     baseURL: baseURL('DRAPP_API')

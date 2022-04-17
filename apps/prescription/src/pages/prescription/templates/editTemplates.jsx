@@ -3,25 +3,25 @@ import { useEffect, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import styles from './addTemplates.module.scss';
-import Button from '@paziresh24/components/core/button';
-import TextField from '@paziresh24/components/core/textField';
+import Button from '@paziresh24/shared/ui/button';
+import TextField from '@paziresh24/shared/ui/textField';
 import { useState } from 'react';
-import { Tab, Tabs } from '@paziresh24/components/core/tab';
-import LabsList from '@paziresh24/components/prescription/details/lists/lab.list';
+import { Tab, Tabs } from '@paziresh24/shared/ui/tab';
+import LabsList from '../../../components/molecules/details/lists/lab.list';
 import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 
-import DrugDetails from '@paziresh24/components/prescription/details/serviceDetails/details/Drugs';
-import ImagingDetails from '@paziresh24/components/prescription/details/serviceDetails/details/Imaging';
-import LabsDetails from '@paziresh24/components/prescription/details/serviceDetails/details/Labs';
-import OthersDetails from '@paziresh24/components/prescription/details/serviceDetails/details/Others';
-import { Overlay } from '@paziresh24/components/core/overlay';
+import DrugDetails from '../../../components/molecules/details/serviceDetails/details/Drugs';
+import ImagingDetails from '../../../components/molecules/details/serviceDetails/details/Imaging';
+import LabsDetails from '../../../components/molecules/details/serviceDetails/details/Labs';
+import OthersDetails from '../../../components/molecules/details/serviceDetails/details/Others';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
 import {
     useDeleteFavoritePrescriptions,
     usePostFavoritePrescriptions
 } from '@paziresh24/hooks/prescription';
-import emptyState from '@paziresh24/components/prescription/templates/assets/empty_state.png';
+import emptyState from '../../../components/molecules/templates/assets/empty_state.png';
 import { isMobile } from 'react-device-detect';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom/index';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom/index';
 import { toast } from 'react-toastify';
 
 const EditTemplates = () => {

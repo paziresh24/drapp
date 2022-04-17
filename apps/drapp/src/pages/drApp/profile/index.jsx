@@ -7,19 +7,19 @@ import {
     UserIcon,
     LocationIcon,
     ChatIcon
-} from '@paziresh24/components/icons';
+} from '@paziresh24/shared/icon';
 import styles from '@assets/styles/pages/drApp/profile.module.scss';
-import TextField from '@paziresh24/components/core/textField';
-import Button from '@paziresh24/components/core/button';
-import { Accordion } from '@paziresh24/components/core/accordion';
-import { CheckBox } from '@paziresh24/components/core/checkBox';
+import TextField from '@paziresh24/shared/ui/textField';
+import Button from '@paziresh24/shared/ui/button';
+import { Accordion } from '@paziresh24/shared/ui/accordion';
+import { CheckBox } from '@paziresh24/shared/ui/checkBox';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { UploadField } from '@paziresh24/components/core/upload';
+import { UploadField } from '@paziresh24/shared/ui/upload';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useForm } from 'react-hook-form';
 import { formData } from '@paziresh24/utils';
-import Select from '@paziresh24/components/ui/Select';
+import Select from '@paziresh24/shared/ui/select';
 import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
 import provincesData from '@paziresh24/constants/province.json';
 import citiesData from '@paziresh24/constants/city.json';
@@ -39,17 +39,17 @@ import {
     useUpdateWhatsapp
 } from '@paziresh24/hooks/drapp/profile';
 
-import { Overlay } from '@paziresh24/components/core/overlay';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
 import { toast } from 'react-toastify';
-import { AwardIcon } from '@paziresh24/components/icons';
+import { AwardIcon } from '@paziresh24/shared/icon';
 import { useRef } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
-import { ExpertisesWrapper } from '@paziresh24/components/doctorApp/profile/expertisesWrapper';
+import { ExpertisesWrapper } from '@components/molecules/profile/expertisesWrapper';
 import { Suspense } from 'react';
 import { baseURL } from '@paziresh24/utils/baseUrl';
-import Password from '@paziresh24/components/doctorApp/profile/password';
-import Map from '@paziresh24/components/core/map';
-import Settings from '@paziresh24/components/doctorApp/profile/settings';
+import Password from '@components/molecules/profile/password';
+import Map from '@paziresh24/shared/ui/map';
+import Settings from '@components/molecules/profile/settings';
 
 const Profile = () => {
     const [info, setInfo] = useDrApp();

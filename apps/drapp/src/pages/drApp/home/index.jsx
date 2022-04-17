@@ -1,9 +1,9 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import styles from 'assets/styles/pages/drApp/home.module.scss';
-import { PromoteBanner } from '@paziresh24/components/doctorApp/home/promoteBanner';
-import { TurnBoxes } from '@paziresh24/components/doctorApp/home/turnBoxes';
-import { RevenueBox } from '@paziresh24/components/doctorApp/home/revenueBox';
-import { BoxTitle } from '@paziresh24/components/doctorApp/home/boxTitle';
+import { PromoteBanner } from '@components/molecules/home/promoteBanner';
+import { TurnBoxes } from '@components/molecules/home/turnBoxes';
+import { RevenueBox } from '@components/molecules/home/revenueBox';
+import { BoxTitle } from '@components/molecules/home/boxTitle';
 import { useGetRevenue } from '@paziresh24/hooks/drapp/home';
 import { useGetBooks } from '@paziresh24/hooks/drapp/home';
 import { getToken } from '@paziresh24/utils/localstorage';

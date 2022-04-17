@@ -1,7 +1,7 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import styles from 'assets/styles/pages/drApp/smsPanel.module.scss';
-import Button from '@paziresh24/components/core/button';
-import Chevron from '@paziresh24/components/icons/public/chevron';
+import Button from '@paziresh24/shared/ui/button';
+import Chevron from '@paziresh24/shared/icon/public/chevron';
 import classNames from 'classnames';
 import { useState } from 'react';
 
