@@ -2,7 +2,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Button from '@paziresh24/shared/ui/button';
 import styles from './turnCard.module.scss';
 import moment from 'jalali-moment';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Modal from '@paziresh24/shared/ui/modal';
 import TextField from '@paziresh24/shared/ui/textField';
@@ -70,12 +70,15 @@ const PrescriptionCard = ({
         if (getOnePrescription.isSuccess) {
             getPdf();
         }
+        return () => {
+            getOnePrescription.remove();
+        };
     }, [getOnePrescription.status]);
 
-    const getPdf = () => {
+    const getPdf = useCallback(() => {
         if (!turn?.pdf && !getOnePrescription?.data?.pdf) {
             getOnePrescription.remove();
-            return setTimeout(() => getOnePrescription.refetch(), 0);
+            return getOnePrescription.refetch();
         }
 
         window.open(
@@ -88,34 +91,32 @@ const PrescriptionCard = ({
                     : window._env_.P24_BASE_URL_PRESCRIPTION_API
             }/pdfs/` + (getOnePrescription?.data?.pdf ?? turn.pdf)
         );
-    };
+    }, [turn]);
 
     const deletePrescriptionAction = async () => {
+        deletePrescription.reset();
         sendEvent('deletepriscription', 'prescription', 'deletepriscription');
-
-        deletePrescription.mutate(
-            { baseURL: info.center.local_base_url, id: turn.id },
-            {
-                onSuccess: data => {
-                    if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                        return setOtpConfirm(true);
-                    }
-                    refetchData();
-                    setDeletePrescriptionModal(false);
-                },
-                onError: error => {
-                    if (error.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                        return setOtpConfirm(true);
-                    }
-                    setDeletePrescriptionModal(false);
-
-                    !toast.isActive('deletePrescription') &&
-                        toast.error(error.response.data.message, {
-                            toastId: 'deletePrescription'
-                        });
-                }
+        try {
+            const { data } = await deletePrescription.mutateAsync({
+                baseURL: info.center.local_base_url,
+                id: turn.id
+            });
+            if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
+                return setOtpConfirm(true);
             }
-        );
+            refetchData();
+            setDeletePrescriptionModal(false);
+        } catch (error) {
+            if (error.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
+                return setOtpConfirm(true);
+            }
+            setDeletePrescriptionModal(false);
+
+            !toast.isActive('deletePrescription') &&
+                toast.error(error.response.data.message, {
+                    toastId: 'deletePrescription'
+                });
+        }
     };
 
     const otpConfirmAction = data => {
@@ -138,22 +139,6 @@ const PrescriptionCard = ({
             }
         );
     };
-
-    useEffect(() => {
-        if (
-            queryString.parse(search).learnRow &&
-            queryString.parse(search).learnRow === turn.identifier
-        ) {
-            // let stepInterval;
-            // stepInterval = setInterval(() => {
-            if (document.querySelector(`.row-select`)) {
-                tourState(true);
-                setSteps(5);
-                // setTimeout(() => clearInterval(stepInterval), 0);
-            }
-            // }, 500);
-        }
-    }, []);
 
     return (
         <>
@@ -342,7 +327,10 @@ const PrescriptionCard = ({
                                     )}
                                     {!turn.finalized && (
                                         <li
-                                            onClick={() => setDeletePrescriptionModal(true)}
+                                            onClick={e => {
+                                                e.stopPropagation();
+                                                setDeletePrescriptionModal(true);
+                                            }}
                                             aria-hidden
                                         >
                                             <RemoveIcon />
@@ -440,7 +428,13 @@ const PrescriptionCard = ({
                                 </li>
                             )}
                             {!turn.finalized && (
-                                <li onClick={() => setDeletePrescriptionModal(true)} aria-hidden>
+                                <li
+                                    onClick={e => {
+                                        e.stopPropagation();
+                                        setDeletePrescriptionModal(true);
+                                    }}
+                                    aria-hidden
+                                >
                                     <RemoveIcon />
                                     <span>حذف نسخه</span>
                                 </li>

@@ -9,6 +9,15 @@
                 "cypressConfig": "apps/drapp-e2e/cypress.json"
             }
         },
+        "e2e-ci": {
+            "builder": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": [
+                    "start-server-and-test \"nx serve drapp\" http://localhost:4030 \"nx e2e drapp-e2e\""
+                ],
+                "parallel": true
+            }
+        },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],

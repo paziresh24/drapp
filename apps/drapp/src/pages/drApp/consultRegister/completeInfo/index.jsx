@@ -9,10 +9,8 @@ import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
 import Select from '@paziresh24/shared/ui/select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
-import { CheckBox } from '@paziresh24/shared/ui/checkBox';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import { digitsFaToEn } from '@paziresh24/utils';
 
 const CompleteInfo = () => {
     const [info] = useDrApp();
@@ -20,6 +18,10 @@ const CompleteInfo = () => {
     const [consult, setConsult] = useConsult();
     const [gender, setGender] = useState();
     const [genderError, setGenderError] = useState();
+    const genderItems = useRef([
+        { value: '1', name: 'اقا' },
+        { value: '2', name: 'خانم' }
+    ]);
     const {
         register: updateCenterInfo,
         handleSubmit: centerInfoSubmit,
@@ -29,7 +31,7 @@ const CompleteInfo = () => {
     const history = useHistory();
 
     const updateCenter = data => {
-        if (!gender) {
+        if (!gender?.id) {
             return setGenderError(true);
         }
         setConsult({
@@ -67,10 +69,7 @@ const CompleteInfo = () => {
             }
         );
     };
-    var genders = [
-        { id: '1', name: 'اقا' },
-        { id: '2', name: 'خانم' }
-    ];
+
     return (
         <div className={styles['wrapper']}>
             <form className={styles['form']} onSubmit={centerInfoSubmit(updateCenter)}>
@@ -108,10 +107,7 @@ const CompleteInfo = () => {
                                     setGender(value);
                                 }
                             }}
-                            items={genders.map(item => ({
-                                name: item.name,
-                                value: item.id
-                            }))}
+                            items={genderItems.current}
                         />
                         <TextField
                             label="شماره نظام پزشکی"

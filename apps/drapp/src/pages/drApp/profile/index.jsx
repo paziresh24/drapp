@@ -74,8 +74,8 @@ const Profile = () => {
 
     const centerPromises = [];
 
-    const [province, setProvince] = useState();
-    const [city, setCity] = useState();
+    const [province, setProvince] = useState(info.center.province);
+    const [city, setCity] = useState(info.center.city);
 
     const [expertiseAccordion, setExpertiseAccordion] = useState(false);
     const [bankAccordion, setBankAccordion] = useState(false);
@@ -97,11 +97,15 @@ const Profile = () => {
     }, [info.center]);
 
     useEffect(() => {
-        setProvince(info.center.province);
-        setCity(info.center.city);
         if (info.center?.lat && info.center?.lon)
             setPosition({ lat: info.center?.lat, lng: info.center?.lon });
     }, []);
+
+    useEffect(() => {
+        if (province !== info.center.province) {
+            setCity(null);
+        }
+    }, [province]);
 
     useEffect(() => {
         if (getCenterAccess.isSuccess) {
@@ -614,10 +618,10 @@ const Profile = () => {
                                             lng: +provincesData.find(item => +item.id === +value.id)
                                                 ?.lon
                                         });
-                                        return setMapZoom(8);
+                                        setMapZoom(8);
                                     }
                                 }}
-                                defaultValue={+province}
+                                defaultValue={province}
                                 items={provincesData.map(item => ({
                                     name: item.name,
                                     value: item.id
@@ -634,10 +638,10 @@ const Profile = () => {
                                             lng: +citiesData.find(item => +item.id === +value.id)
                                                 ?.lon
                                         });
-                                        return setMapZoom(8);
+                                        setMapZoom(8);
                                     }
                                 }}
-                                defaultValue={+city}
+                                defaultValue={city}
                                 items={citiesData
                                     .filter(city => +city.province_id === +province)
                                     .map(item => ({

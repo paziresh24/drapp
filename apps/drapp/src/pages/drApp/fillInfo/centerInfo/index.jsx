@@ -15,17 +15,12 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 const CenterInfo = () => {
     const [info] = useDrApp();
     const centerInfoUpdate = useCenterInfoUpdate();
-    const [province, setProvince] = useState();
+    const [province, setProvince] = useState(info.center.province);
     const [city, setCity] = useState(info.center.city);
-    const [cityList, setCityList] = useState(info.center.province);
 
     useEffect(() => {
         if (province) {
-            if (+province !== +info.center.province) {
-                setCity('');
-                setCityList('');
-            }
-            setTimeout(() => setCityList(cityData.filter(city => +city.province_id === +province)));
+            setCity(null);
         }
     }, [province]);
 
@@ -86,7 +81,7 @@ const CenterInfo = () => {
                                         setProvince(value.id);
                                     }
                                 }}
-                                defaultValue={+province}
+                                defaultValue={province}
                                 items={provincesData.map(item => ({
                                     name: item.name,
                                     value: item.id
@@ -96,11 +91,11 @@ const CenterInfo = () => {
                                 label="شهر"
                                 searchble
                                 onChange={value => {
-                                    if (value) {
+                                    if (value.id) {
                                         setCity(value.id);
                                     }
                                 }}
-                                defaultValue={+city}
+                                defaultValue={city}
                                 items={cityData
                                     .filter(city => +city.province_id === +province)
                                     .map(item => ({

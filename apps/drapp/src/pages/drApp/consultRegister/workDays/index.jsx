@@ -105,10 +105,7 @@ const WorkDays = () => {
         if (isEmpty(workDaysTime)) {
             return toast.warning('ساعت کاری نمی تواند خالی باشد.');
         }
-        // console.log({
-        //     ...consult,
-        //     workHours: workDaysTime
-        // });
+
         activeConsult.mutate(
             {
                 ...consult,
@@ -144,7 +141,7 @@ const WorkDays = () => {
                 <span>روز و ساعت کاری ویزیت آنلاین خود را مشخص کنید.</span>
                 <div className={styles['time_wrapper']}>
                     {weekDays.map(day => (
-                        <TimeRow key={day.id} day={day} data={{}} duration={duration} />
+                        <TimeRow key={day.id} day={day} data={{}} />
                     ))}
                 </div>
                 <FixedWrapBottom>

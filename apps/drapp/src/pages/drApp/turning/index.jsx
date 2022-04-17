@@ -1,6 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import styles from '@assets/styles/pages/drApp/turning.module.scss';
-import { StatusBar } from '@components/molecules/turning/statusBar';
 import { SelectDate } from '@components/molecules/turning/selectDate';
 import { useGetTurns } from '@paziresh24/hooks/drapp/turning';
 import { useDrApp } from '@paziresh24/context/drapp';
@@ -16,7 +15,7 @@ import {
     PlusIcon,
     PlusLineIcon
 } from '@paziresh24/shared/icon';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useAddPrescription, useCheckOtp } from '@paziresh24/hooks/prescription';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -27,7 +26,6 @@ import { v4 as uuid } from 'uuid';
 import { useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
 import Error from '@paziresh24/shared/ui/error';
 import { getCookie, setCookie } from '@paziresh24/utils/cookie';
-import { SettingIcon } from '@paziresh24/shared/icon';
 import Visit from '@components/molecules/turning/visit';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
 import { useMediaQuery } from 'react-responsive';
@@ -125,6 +123,7 @@ const Turning = () => {
             setPrescriptionSuccessedModal(location.state?.prescriptionInfo);
             history.replace();
         }
+
         if (
             location.state?.prescriptionInfo &&
             !location.state?.prescriptionInfo.finalized &&
@@ -141,10 +140,12 @@ const Turning = () => {
         formState: { errors: otpError }
     } = useForm();
 
-    useEffect(() => {
+    const openNewTurnAction = useCallback(() => {
+        sendEvent('plususer', 'prescription', 'plususer');
+        setOpenNewTurn(true);
         resetTurnForm();
         setConfirmCellPhone(null);
-        if (openNewTurn) nationalCodeRef.current.focus();
+        setTimeout(() => nationalCodeRef.current.focus(), 0);
     }, [openNewTurn]);
 
     useEffect(() => {
@@ -393,8 +394,13 @@ const Turning = () => {
             threshold: [0, 1]
         }
     );
+
     useEffect(() => {
         !isMobile && observer.observe(statisticsRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
     }, []);
 
     const statisticsTurns = {
@@ -532,14 +538,7 @@ const Turning = () => {
                             </div>
                         </div>
                         {!isMobile && isExpertDoctor && (
-                            <Button
-                                onClick={() => {
-                                    setOpenNewTurn(true);
-                                    sendEvent('plususer', 'prescription', 'plususer');
-                                }}
-                            >
-                                افزودن بیمار
-                            </Button>
+                            <Button onClick={openNewTurnAction}>افزودن بیمار</Button>
                         )}
                     </div>
                 )}
@@ -581,9 +580,7 @@ const Turning = () => {
                             <div className={styles['add-turn-button-mask']} />
                             <button
                                 className={styles['add-turn-button']}
-                                onClick={() => {
-                                    setOpenNewTurn(true);
-                                }}
+                                onClick={openNewTurnAction}
                             >
                                 افزودن بیمار
                             </button>
@@ -591,30 +588,6 @@ const Turning = () => {
                     )}
                 </div>
             </div>
-
-            {/* {!isMobile && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        bottom: '8rem',
-                        right: '15rem',
-                        width: '6rem',
-                        height: '6rem',
-                        borderRadius: '100%',
-                        background: '#27bda0',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: '5',
-                        boxShadow: '0 15px 30px 0 #27bda06e',
-                        cursor: 'pointer'
-                    }}
-                    onClick={() => setOpenNewTurn(true)}
-                    aria-hidden
-                >
-                    <PlusLineIcon color="#fff" style={{ width: '3rem', height: '3rem' }} />
-                </div>
-            )} */}
 
             <Modal
                 title="افزودن بیمار"

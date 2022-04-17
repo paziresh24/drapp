@@ -31,7 +31,7 @@ const SelectBox = ({
                 (editable ? (
                     <Consumption
                         simple={simple}
-                        onChange={value => changeAction(value)}
+                        onChange={value => value.id && changeAction(value)}
                         defaultValue={value}
                         insuranceType={insuranceType}
                     />
@@ -49,7 +49,7 @@ const SelectBox = ({
                 (editable ? (
                     <Instructions
                         simple={simple}
-                        onChange={value => changeAction(value)}
+                        onChange={value => value.id && changeAction(value)}
                         defaultValue={value}
                         insuranceType={insuranceType}
                     />
@@ -67,7 +67,7 @@ const SelectBox = ({
                 (editable ? (
                     <Amounts
                         simple={simple}
-                        onChange={value => changeAction(value)}
+                        onChange={value => value.id && changeAction(value)}
                         defaultValue={value}
                         shape={service?.service?.shape?.id}
                         insuranceType={insuranceType}

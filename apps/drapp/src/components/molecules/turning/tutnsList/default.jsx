@@ -2,7 +2,7 @@ import isEmpty from 'lodash/isEmpty';
 import styles from './turnList.module.scss';
 import { TurnCard } from '../turnCard';
 import { PrescriptionCard } from '../prescriptionCard';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Loading from './loading';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
 import { ChevronIcon } from '@paziresh24/shared/icon';
