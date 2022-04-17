@@ -32,6 +32,7 @@
         position: relative;
         font-weight: 500;
         vertical-align: middle;
+        font-size: 0.95rem;
     }
 
     tbody {
@@ -43,7 +44,7 @@
         position: sticky;
         top: 0;
         z-index: 5;
-        padding: 1rem;
+        padding: 0.8rem;
     }
 
     @media screen and (max-width: 600px) {
