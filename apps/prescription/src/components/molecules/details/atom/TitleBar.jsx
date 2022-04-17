@@ -9,7 +9,7 @@ import DrugIcon from './icon/drugIcon.png';
 import LabIcon from './icon/labIcon.png';
 import OthersIcon from './icon/othersIcon.png';
 import ReactTooltip from 'react-tooltip';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { useLearnTour } from '../../../../hooks/learn';
 
 const TitleBar = ({ type }) => {

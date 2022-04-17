@@ -8,7 +8,7 @@ import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 import { RemoveIcon, ChevronIcon } from '@paziresh24/shared/icon';
 import { useDeleteFavoritePrescriptions } from '@paziresh24/hooks/prescription';
 import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.context';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 

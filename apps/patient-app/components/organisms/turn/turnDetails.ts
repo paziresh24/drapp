@@ -1,4 +1,7 @@
-import { convertTimeStampToPersianDate, convertTimeStampToFormattedTime } from '@paziresh24/utils';
+import {
+    convertTimeStampToFormattedTime,
+    convertTimeStampToPersianDate
+} from '@paziresh24/shared/utils';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';
 import { CenterType } from 'apps/patient-app/types/centerType';
 

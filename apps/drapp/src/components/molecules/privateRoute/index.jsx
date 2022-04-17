@@ -11,7 +11,7 @@ import Modal from '@paziresh24/shared/ui/modal';
 // HOOKS
 import { Route, useHistory, useLocation } from 'react-router-dom';
 import { getToken } from '@paziresh24/utils/localstorage';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import classNames from 'classnames';
 import { useGetUserGoftino, useSetUserGoftino } from '@paziresh24/hooks/drapp/goftino';
 import Helmet from 'react-helmet';

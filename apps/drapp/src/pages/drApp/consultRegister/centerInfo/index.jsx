@@ -11,7 +11,7 @@ import ReactTooltip from 'react-tooltip';
 import { HelpIcon } from '@paziresh24/shared/icon/public/help';
 import Select from '@paziresh24/shared/ui/select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { InfoIcon } from '@paziresh24/shared/icon';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 

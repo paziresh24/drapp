@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLogin, useResendCode, useCaptcha } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { setToken } from '@paziresh24/utils/localstorage';
 import { isMobile } from 'react-device-detect';
 import queryString from 'query-string';

@@ -10,7 +10,7 @@ import { useServices } from '@paziresh24/context/prescription/services-context';
 
 import { toast } from 'react-toastify';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { useLearnTour } from '@paziresh24/hooks/learn';
 
 const ItemAction = ({ id }) => {

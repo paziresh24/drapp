@@ -1,5 +1,5 @@
 import { clinicClient } from '../client';
-import { formData } from '@paziresh24/utils';
+import { formData } from '@paziresh24/shared/utils/formData';
 
 export const removeBook = (params: {
     center_id: string;

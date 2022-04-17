@@ -6,7 +6,7 @@ import { useServices } from '@paziresh24/context/prescription/services-context';
 import { useBulkItems, useUpdatePrescription } from '@paziresh24/hooks/prescription/types/index';
 import { useAddItemService, useFinalizePrescription } from '@paziresh24/hooks/prescription';
 import { useBackPage } from '@paziresh24/context/core/backPage';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { toast } from 'react-toastify';
 import Modal from '@paziresh24/shared/ui/modal';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';

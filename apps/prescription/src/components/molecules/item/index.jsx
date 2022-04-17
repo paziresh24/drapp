@@ -14,7 +14,7 @@ import Button from '@paziresh24/shared/ui/button/index';
 import { ChevronIcon } from '@paziresh24/shared/icon';
 import Modal from '@paziresh24/shared/ui/modal/index';
 import { useDeletePrescription } from '@paziresh24/hooks/prescription';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import Visit from '../turnsList/visit/index';
 import { Default, Mobile } from '@paziresh24/hooks/device';
 

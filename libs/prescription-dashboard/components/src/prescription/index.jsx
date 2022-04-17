@@ -11,7 +11,7 @@ import { Overlay } from '@paziresh24/shared/ui/overlay';
 import Result from '../result';
 import ExportExcel from '../exportExcel';
 import { resultSchema } from '../../../schemas/result.schema';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import LiveMode from '../liveMode';
 import { useGetPrescriptionStatistics } from './../../../apis/getPrescriptionStatistics/useGetPrescriptionStatistics.hook';
 import { useGetDoctorCenter } from './../../../apis/getDoctorCenter/useGetDoctorCenter.hook';

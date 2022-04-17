@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Button from '@paziresh24/shared/ui/button';
 import { useResendCode } from '@paziresh24/hooks/drapp/auth';
 import { useForm } from 'react-hook-form';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import Captcha from '../../login/captcha';
 
 const OtoCode = ({ userName, loginAction, loginLoading, wrongPassword }) => {

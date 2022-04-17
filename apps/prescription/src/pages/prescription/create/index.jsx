@@ -12,7 +12,7 @@ import {
 } from '@paziresh24/hooks/prescription/';
 import { v4 as uuid } from 'uuid';
 import { getToken, setToken } from '@paziresh24/utils/localstorage.js';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 
 // COMPONENTS
 import { toast } from 'react-toastify';

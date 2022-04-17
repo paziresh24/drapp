@@ -14,7 +14,7 @@ import queryString from 'query-string';
 import TextField from '@paziresh24/shared/ui/textField';
 import { useEffect, useState } from 'react';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 
 const SalamatImport = ({ isOpen, onClose, provider }) => {
     const [prescriptionInfo] = useSelectPrescription();

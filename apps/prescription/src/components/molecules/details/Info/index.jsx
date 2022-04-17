@@ -15,7 +15,7 @@ import { useTemplateItem } from '@paziresh24/context/prescription/templateItem.c
 import { Default, Mobile } from '@paziresh24/hooks/device';
 import isEmpty from 'lodash/isEmpty';
 import { toast } from 'react-toastify';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 
 const Info = () => {
     const [isOpen, setIsOpen] = useState(false);

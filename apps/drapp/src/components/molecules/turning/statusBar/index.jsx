@@ -12,7 +12,7 @@ import moment from 'jalali-moment';
 import { useDeleteTurns, useMoveTurns, useVacation } from '@paziresh24/hooks/drapp/turning';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Timeit } from 'react-timeit';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { useHistory, useLocation } from 'react-router';
 import queryString from 'query-string';
 import { useLearnTour } from '@paziresh24/hooks/learn';

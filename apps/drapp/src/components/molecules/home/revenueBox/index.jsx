@@ -1,7 +1,7 @@
 import styles from './revenueBox.module.scss';
 import { Revenue } from '../revenue';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
-import { addCommaPrice } from '@paziresh24/utils';
+import { addCommaPrice } from '@paziresh24/shared/utils/addCommaPrice';
 import isEmpty from 'lodash/isEmpty';
 
 const RevenueBox = ({ revenue, consultTurn }) => {

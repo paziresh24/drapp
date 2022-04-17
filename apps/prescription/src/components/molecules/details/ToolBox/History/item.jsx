@@ -4,7 +4,7 @@ import { useServices } from '@paziresh24/context/prescription/services-context';
 import { isMobile } from 'react-device-detect';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
 import { toast } from 'react-toastify';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { useSelectType } from '@paziresh24/context/prescription/selectType-context';
 import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';

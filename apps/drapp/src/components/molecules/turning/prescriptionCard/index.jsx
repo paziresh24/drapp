@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import Modal from '@paziresh24/shared/ui/modal';
 import TextField from '@paziresh24/shared/ui/textField';
 import { useForm } from 'react-hook-form';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { ChevronIcon, PrintIcon, RemoveIcon } from '@paziresh24/shared/icon';
 import Chips from '@paziresh24/shared/ui/chips';
 import { createRef } from 'react';

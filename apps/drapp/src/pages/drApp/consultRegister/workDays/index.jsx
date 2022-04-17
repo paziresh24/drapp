@@ -14,7 +14,7 @@ import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 
 const canvasStyles = {
     position: 'absolute',

@@ -7,7 +7,7 @@ import { useSelectPrescription } from '@paziresh24/context/prescription/selectPr
 import { toast } from 'react-toastify';
 import styles from './Import.module.scss';
 import { useUpdateTaminDoctor } from '@paziresh24/hooks/prescription/insurances';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 
 const Import = ({ isOpen, onClose, provider, taminId }) => {
     const [prescriptionInfo] = useSelectPrescription();

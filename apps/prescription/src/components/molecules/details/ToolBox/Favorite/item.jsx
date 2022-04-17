@@ -11,7 +11,7 @@ import { useSelectPrescription } from '@paziresh24/context/prescription/selectPr
 import { isMobile } from 'react-device-detect';
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Item = ({ service, setFavoriteListSelect, favoriteListSelect }) => {

@@ -13,7 +13,8 @@ import {
     useDeletePrescription,
     useGetOnePrescription
 } from '@paziresh24/hooks/prescription';
-import { digitsFaToEn, addCommaPrice } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
+import { addCommaPrice } from '@paziresh24/shared/utils/addCommaPrice';
 import { toast } from 'react-toastify';
 import { Loading } from '@paziresh24/shared/ui/loading';
 import Chips from '@paziresh24/shared/ui/chips';
@@ -23,7 +24,7 @@ import { useDrApp } from '@paziresh24/context/drapp/index';
 import ReactTooltip from 'react-tooltip';
 import Visit from '../visit';
 import { Mobile, Default } from '@paziresh24/hooks/core/device';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 import { CONSULT_CENTER_ID } from '@paziresh24/constants/consultCenterId';

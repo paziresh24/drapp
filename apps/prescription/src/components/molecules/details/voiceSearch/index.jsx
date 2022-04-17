@@ -4,7 +4,7 @@ import styles from './voiceSearch.module.scss';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { Search } from '../Search';
 import { isMobile } from 'react-device-detect';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 
 const VoiceSearch = ({ onChange, type, typeId, insuranceType, label }) => {
     const [isOpen, setIsOpen] = useState(false);

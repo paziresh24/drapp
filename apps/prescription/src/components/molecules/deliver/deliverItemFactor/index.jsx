@@ -1,6 +1,6 @@
 import styles from './deliverItemFactor.module.scss';
 
-import { addCommaPrice } from '@paziresh24/utils';
+import { addCommaPrice } from '@paziresh24/shared/utils/addCommaPrice';
 import Chips from '@paziresh24/shared/ui/chips';
 
 const DeliverItemFactor = ({ name, count, total, orgAmount, insuredAmount }) => {

@@ -18,7 +18,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { UploadField } from '@paziresh24/shared/ui/upload';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useForm } from 'react-hook-form';
-import { formData } from '@paziresh24/utils';
+import { formData } from '@paziresh24/shared/utils/formData';
 import Select from '@paziresh24/shared/ui/select';
 import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
 import provincesData from '@paziresh24/constants/province.json';

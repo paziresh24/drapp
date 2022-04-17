@@ -1,7 +1,8 @@
 import styles from './searchItem.module.scss';
 import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { extractTypeFromName, translateType } from '@paziresh24/utils';
+import { extractTypeFromName } from './functions/extractTypeFromName';
+import { translateType } from './functions/translateType';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const SearchItem = props => {

@@ -12,7 +12,8 @@ import TextField from '@paziresh24/shared/ui/textField';
 import Button from '@paziresh24/shared/ui/button';
 
 import Modal from '@paziresh24/shared/ui/modal';
-import { digitsFaToEn, sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import {
     useCreateSalamatDoctor,
     useCreateTaminDoctor,

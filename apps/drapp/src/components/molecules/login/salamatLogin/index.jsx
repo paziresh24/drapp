@@ -3,7 +3,7 @@ import styles from './salamatLogin.module.scss';
 import Button from '@paziresh24/shared/ui/button/index';
 import { useCreateCenter, useSalamatLogin } from '@paziresh24/hooks/drapp/auth';
 import { useEffect, useRef, useState } from 'react';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { setToken } from '@paziresh24/utils/localstorage';

@@ -16,7 +16,7 @@ import { Overlay } from '@paziresh24/shared/ui/overlay';
 import { useLearnTour } from '@paziresh24/hooks/learn';
 import { Mobile } from '@paziresh24/hooks/device';
 import { useToolBox } from '@paziresh24/context/prescription/toolBox.context';
-import { sendEvent } from '@paziresh24/utils';
+import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const History = ({ isOpen, onClose }) => {

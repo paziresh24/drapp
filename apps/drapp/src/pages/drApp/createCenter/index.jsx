@@ -5,7 +5,7 @@ import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { digitsFaToEn } from '@paziresh24/utils';
+import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CreateCenter = () => {

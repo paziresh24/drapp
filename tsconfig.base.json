@@ -31,6 +31,8 @@
             "@paziresh24/shared/icon/*": ["libs/shared/icon/src/lib/*"],
             "@paziresh24/shared/ui": ["libs/shared/ui/src/index.ts"],
             "@paziresh24/shared/ui/*": ["libs/shared/ui/src/lib/*"],
+            "@paziresh24/shared/utils": ["libs/shared/utils/src/index.ts"],
+            "@paziresh24/shared/utils/*": ["libs/shared/utils/src/lib/*"],
             "@paziresh24/utils": ["libs/utils/src/index.js"],
             "@paziresh24/utils/*": ["libs/utils/src/*"]
         }

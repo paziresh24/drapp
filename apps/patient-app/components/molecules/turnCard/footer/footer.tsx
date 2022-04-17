@@ -6,7 +6,7 @@ import Queue from '../../queue';
 import { BookStatus } from 'apps/patient-app/types/bookStatus';
 import { CenterType } from 'apps/patient-app/types/centerType';
 import { MegaphoneIcon } from '@paziresh24/shared/icon';
-import { isToday } from '@paziresh24/utils';
+import { isToday } from '@paziresh24/shared/utils/isToday';
 
 interface TurnFooterProps {
     id: string;

@@ -2,7 +2,7 @@ import { useGetPagingBook } from '../../../apis/getPagingBook/hook';
 import { Text } from '../../atoms/text/text';
 import { useEffect } from 'react';
 import Loading from '../../atoms/loading';
-import { convertTimeStampToFormattedTime } from '@paziresh24/utils';
+import { convertTimeStampToFormattedTime } from '@paziresh24/shared/utils/convertTimeStampToFormattedTime';
 
 interface QueueProps {
     bookId: string;

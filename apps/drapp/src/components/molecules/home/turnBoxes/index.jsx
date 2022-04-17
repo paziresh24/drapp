@@ -1,7 +1,7 @@
 import styles from './turnBoxes.module.scss';
 import { TurnBox } from '../turnBox';
 import Guy from '@paziresh24/shared/icon/public/guy';
-import { addCommaPrice } from '@paziresh24/utils';
+import { addCommaPrice } from '@paziresh24/shared/utils/addCommaPrice';
 import ConsultIcon from '@paziresh24/shared/icon/doctorApp/consult';
 import { useDrApp } from '@paziresh24/context/drapp';
 

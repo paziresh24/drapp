@@ -1,4 +1,4 @@
-import { formData } from '@paziresh24/utils';
+import { formData } from '@paziresh24/shared/utils/formData';
 import { clinicClient } from '../client';
 
 export const getPagingBook = (params: { book_id: string }) => {
