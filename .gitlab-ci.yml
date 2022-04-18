@@ -55,7 +55,7 @@ drApp-test:
   extends: .drApp
   needs: ["drApp-build"]
   script:
-    - nx e2e-ci drapp-e2e
+    - ./node_modules/.bin/nx e2e-ci drapp-e2e
 
 
 
