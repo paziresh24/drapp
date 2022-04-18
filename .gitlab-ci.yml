@@ -31,8 +31,7 @@ services:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
         - $RULES_CHANGES_PATH
-    - when: manual
-      allow_failure: true
+
 
 .drApp:
   extends: .base-rules
@@ -43,7 +42,6 @@ services:
 drApp-build:
   stage: build
   extends: .drApp
-  needs: []
   script:
     - npm install --force --silent
     - npm install -g nx
@@ -61,7 +59,6 @@ drApp-build-push-docker-image:
   stage: build
   image: dockerhub.paziresh24.com/docker:stable
   extends: .drApp
-  needs: []
   before_script:
     - docker info
     - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
@@ -75,7 +72,6 @@ drApp-build-push-docker-image:
 drApp-deploy-production:
   image: dockerhub.paziresh24.com/docker-ansible:latest
   stage: deploy
-  extends: .drApp
   when: manual
   needs: ["drApp-test"]
   script:
@@ -87,7 +83,6 @@ drApp-deploy-production:
 drApp-deploy-locals:
   image: dockerhub.paziresh24.com/docker-ansible:latest
   stage: deploy
-  extends: .drApp
   when: manual
   needs: ["drApp-test"]
   script:
@@ -99,7 +94,6 @@ drApp-deploy-locals:
 drApp-deploy-qc:
   image: dockerhub.paziresh24.com/docker-ansible:latest
   stage: deploy
-  extends: .drApp
   when: manual
   needs: ["drApp-test"]
   script:
