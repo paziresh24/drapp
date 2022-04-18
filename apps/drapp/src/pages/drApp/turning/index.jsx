@@ -20,7 +20,7 @@ import { useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
 import Error from '@paziresh24/components/core/error';
 import { getCookie, setCookie } from '@paziresh24/utils/cookie';
 import Visit from '@paziresh24/components/doctorApp/turning/visit';
-import { Mobile } from '@paziresh24/hooks/core/device';
+import { Default, Mobile } from '@paziresh24/hooks/core/device';
 import { useMediaQuery } from 'react-responsive';
 import TurnsList from '@paziresh24/components/doctorApp/turning/tutnsList/default';
 import { useTour } from '@reactour/tour';
@@ -507,7 +507,9 @@ const Turning = () => {
                                 />
                             </div>
                         </div>
-                        <Button onClick={openNewTurnAction}>افزودن بیمار</Button>
+                        <Default>
+                            <Button onClick={openNewTurnAction}>افزودن بیمار</Button>
+                        </Default>
                     </div>
                 )}
 
