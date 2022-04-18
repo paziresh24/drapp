@@ -1,4 +1,4 @@
-image: dockerhub.paziresh24.com/node:14.17.5-alpine
+image: dockerhub.paziresh24.com/node:14.18.2-alpine
 
 stages:
   - build
