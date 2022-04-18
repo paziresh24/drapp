@@ -2,8 +2,8 @@ image: dockerhub.paziresh24.com/node:14.18.2-alpine
 
 stages:
   - build
-  - build-image
   - test
+  - build-image
   - deploy
 
 variables:
