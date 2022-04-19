@@ -1,11 +1,11 @@
 # => Build container
 FROM node:14.17.5-alpine as build
 WORKDIR /app
-COPY package.json ./
-RUN yarn --silent
+COPY package.json package-lock.json ./
+RUN npm install --silent
 COPY . .
 ENV PUBLIC_URL /doctorapp
-RUN yarn build drapp
+RUN npm run build drapp
 
 # => Run container
 FROM nginx:alpine
