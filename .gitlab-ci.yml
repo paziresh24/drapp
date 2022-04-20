@@ -47,7 +47,7 @@ drApp-build:
     - yarn config set registry https://npm.iranrepo.ir
     - yarn config get registry
     - yarn
-    - yarn install -g nx
+    - yarn global add nx
 
 drApp-test:
   stage: test
