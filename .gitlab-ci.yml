@@ -44,8 +44,8 @@ drApp-build:
   stage: build
   extends: .drApp
   script:
-    - npm install
-    - npm install -g nx
+    - yarn
+    - yarn install -g nx
 
 drApp-test:
   stage: test
