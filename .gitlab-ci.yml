@@ -43,11 +43,8 @@ services:
 drApp-build:
   stage: build
   extends: .drApp
-  before_script:
-    - echo 'nameserver 178.22.122.100' >> /etc/resolv.conf
-    - echo 'nameserver 185.51.200.2' >> /etc/resolv.conf
   script:
-    - npm install 
+    - npm install
     - npm install -g nx
 
 drApp-test:
@@ -67,8 +64,6 @@ drApp-build-push-docker-image:
   before_script:
     - docker info
     - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
-    - echo 'nameserver 178.22.122.100' >> /etc/resolv.conf
-    - echo 'nameserver 185.51.200.2' >> /etc/resolv.conf
   script:
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
     - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -f Dockerfile.localCenter .
