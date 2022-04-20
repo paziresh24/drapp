@@ -44,6 +44,8 @@ drApp-build:
   stage: build
   extends: .drApp
   script:
+    - yarn config set registry https://npm.iranrepo.ir
+    - yarn config get registry
     - yarn
     - yarn install -g nx
 
