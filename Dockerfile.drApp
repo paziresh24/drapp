@@ -1,10 +1,10 @@
 # => Build container
 FROM node:16.14.2-alpine as build
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install --silent
+COPY package.json yarn.lock .yarnrc ./
+RUN yarn install
 COPY . .
-RUN npm run build drapp
+RUN yarn build drapp
 
 # => Run container
 FROM nginx:alpine
