@@ -44,11 +44,10 @@ drApp-build:
   stage: build
   extends: .drApp
   script:
-    - docker version
-    - yarn config set registry https://npm.iranrepo.ir
-    - yarn config get registry
-    - yarn
-    - yarn global add nx
+    - npm config set registry https://npm.iranrepo.ir
+    - npm config get registry
+    - npm install --prefer-offline --no-audit
+    - npm install -g nx
 
 drApp-test:
   stage: test
