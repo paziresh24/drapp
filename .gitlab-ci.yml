@@ -10,12 +10,32 @@ variables:
   RULES_CHANGES_PATH: "**/*"
   DOCKER_IMAGE_TAG_LOCAL: dockerhub.paziresh24.com/drapp-local
   DOCKER_IMAGE_TAG_COM: dockerhub.paziresh24.com/drapp
+  FF_USE_FASTZIP: "true"
+  # These can be specified per job or per pipeline
+  ARTIFACT_COMPRESSION_LEVEL: "fast"
+  CACHE_COMPRESSION_LEVEL: "fast"
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
+# Caches
+.node_modules-cache: &node_modules-cache
+  key:
+    files:
+      - yarn.lock
+  paths:
+    - node_modules
+    - apps/*/node_modules/
+  policy: pull
+
+.yarn-cache: &yarn-cache
+  key: yarn-$CI_JOB_IMAGE
+  paths:
+    - .yarn
+
+.cache:
+  key: ${$CI_PROJECT_ID}
   paths:
     - node_modules/
     - apps/drapp/node_modules/
+
 before_script:
   - export DOCKER_BUILD=1
 
@@ -46,10 +66,14 @@ drApp-build:
   stage: build
   extends: .drApp
   script:
-    - npm config set registry https://npm.iranrepo.ir
-    - npm config get registry
-    - npm install --prefer-offline --no-audit
-    - npm install -g nx
+    - yarn config set registry https://yarn.iranrepo.ir
+    - yarn config get registry
+    - yarn install --prefer-offline --no-audit
+    - yarn add --global nx
+  cache:
+    - <<: *node_modules-cache
+      policy: pull-push # We override the policy
+    - <<: *yarn-cache # This is not required if your internet speed is good or if you use a local npm registry.
 
 drApp-test:
   stage: test
