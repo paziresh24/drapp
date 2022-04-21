@@ -30,8 +30,10 @@ variables:
   paths:
     - .yarn
 
-.cache:
-  key: ${$CI_PROJECT_ID}
+cache:
+  key: $CI_PROJECT_ID
+  policy: pull
+  untracked: true
   paths:
     - node_modules/
     - apps/drapp/node_modules/
@@ -71,9 +73,13 @@ drApp-build:
     - yarn install --prefer-offline --no-audit
     - yarn add --global nx
   cache:
-    - <<: *node_modules-cache
-      policy: pull-push # We override the policy
-    - <<: *yarn-cache # This is not required if your internet speed is good or if you use a local npm registry.
+    key: $CI_PROJECT_ID
+    policy: pull-push
+    paths:
+      - yarn.lock
+      - .yarn
+      - node_modules
+      - 'apps/*/node_modules'
 
 drApp-test:
   stage: test
