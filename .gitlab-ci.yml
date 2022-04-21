@@ -71,7 +71,7 @@ drApp-build:
     - yarn config set registry https://yarn.iranrepo.ir
     - yarn config get registry
     - yarn install --prefer-offline --no-audit
-    - yarn add --global nx
+    - yarn global add nx
   cache:
     key: $CI_PROJECT_ID
     policy: pull-push
