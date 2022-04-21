@@ -16,6 +16,8 @@ cache:
   paths:
     - node_modules/
     - apps/drapp/node_modules/
+before_script:
+  - export DOCKER_BUILD=1
 
 services:
   - name: dockerhub.paziresh24.com/docker:dind
@@ -54,7 +56,7 @@ drApp-test:
   extends: .drApp
   needs: ["drApp-build"]
   script:
-    - npm nx e2e-ci drapp-e2e
+    - nx e2e-ci drapp-e2e
 
 
 
@@ -67,6 +69,7 @@ drApp-build-push-docker-image:
     - docker info
     - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
   script:
+    - export DOCKER_BUILD=1
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
     - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -f Dockerfile.localCenter .
     - docker build -t $DOCKER_IMAGE_TAG_COM:latest -f Dockerfile.drApp .
