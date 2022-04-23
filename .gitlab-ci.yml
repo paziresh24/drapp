@@ -71,7 +71,6 @@ drApp-build:
     - yarn config set registry https://yarn.iranrepo.ir
     - yarn config get registry
     - yarn install --prefer-offline --no-audit
-    - yarn global add nx
   cache:
     key: $CI_PROJECT_ID
     policy: pull-push
@@ -81,7 +80,7 @@ drApp-build:
       - node_modules
       - 'apps/*/node_modules'
 
-drApp-test:
+.drApp-test:
   stage: test
   extends: .drApp
   needs: ["drApp-build"]
@@ -92,7 +91,7 @@ drApp-test:
 
 drApp-build-push-docker-image:
   stage: build-image
-  needs: ["drApp-test"]
+#  needs: ["drApp-test"]
   image: dockerhub.paziresh24.com/docker:stable
   extends: .drApp
   before_script:
@@ -101,10 +100,10 @@ drApp-build-push-docker-image:
   script:
     - export DOCKER_BUILD=1
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
-    - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -f Dockerfile.localCenter .
-    - docker build -t $DOCKER_IMAGE_TAG_COM:latest -f Dockerfile.drApp .
-    - docker push $DOCKER_IMAGE_TAG_LOCAL:latest
-    - docker push $DOCKER_IMAGE_TAG_COM:latest
+    - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest-cicd -f Dockerfile.localCenter .
+    - docker build -t $DOCKER_IMAGE_TAG_COM:latest-cicd -f Dockerfile.drApp .
+    - docker push $DOCKER_IMAGE_TAG_LOCAL:latest-cicd
+    - docker push $DOCKER_IMAGE_TAG_COM:latest-cicd
 
 drApp-deploy-production:
   image: dockerhub.paziresh24.com/docker-ansible:latest
