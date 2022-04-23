@@ -68,9 +68,9 @@ drApp-build:
   stage: build
   extends: .drApp
   script:
-    - yarn config set registry http://192.168.216.74:8081/repository/npm-proxy/
-    - yarn config get registry
-    - yarn install --prefer-offline --no-audit
+    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
+    - npm config get registry
+    - npm install --prefer-offline --no-audit
   cache:
     key: $CI_PROJECT_ID
     policy: pull-push
