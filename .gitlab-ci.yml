@@ -68,7 +68,7 @@ drApp-build:
   stage: build
   extends: .drApp
   script:
-    - yarn config set registry https://yarn.iranrepo.ir
+    - yarn config set registry http://192.168.216.74:8081/repository/npm-proxy/
     - yarn config get registry
     - yarn install --prefer-offline --no-audit
   cache:
