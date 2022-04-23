@@ -109,7 +109,7 @@ drApp-deploy-production:
   image: dockerhub.paziresh24.com/docker-ansible:latest
   stage: deploy
   when: manual
-  needs: ["drApp-test"]
+#  needs: ["drApp-test"]
   script:
     - apk add --update bash openssh sshpass
     - ansible-galaxy collection install community.docker
@@ -120,7 +120,7 @@ drApp-deploy-locals:
   image: dockerhub.paziresh24.com/docker-ansible:latest
   stage: deploy
   when: manual
-  needs: ["drApp-test"]
+#  needs: ["drApp-test"]
   script:
     - apk add --update bash openssh sshpass
     - ansible-galaxy collection install community.docker
@@ -131,7 +131,7 @@ drApp-deploy-qc:
   image: dockerhub.paziresh24.com/docker-ansible:latest
   stage: deploy
   when: manual
-  needs: ["drApp-test"]
+#  needs: ["drApp-test"]
   script:
     - apk add --update bash openssh sshpass
     - ansible-galaxy collection install community.docker
