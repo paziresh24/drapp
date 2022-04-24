@@ -89,7 +89,7 @@ services:
 
 
 
-drApp-build-push-docker-image:
+drApp-build-local-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
   image: dockerhub.paziresh24.com/docker:stable
@@ -101,8 +101,20 @@ drApp-build-push-docker-image:
     - export DOCKER_BUILD=1
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
     - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest-cicd -f Dockerfile.localCenter .
-    - docker build -t $DOCKER_IMAGE_TAG_COM:latest-cicd -f Dockerfile.drApp .
     - docker push $DOCKER_IMAGE_TAG_LOCAL:latest-cicd
+
+drApp-build-cloud-push-docker-image:
+  stage: build-image
+#  needs: ["drApp-test"]
+  image: dockerhub.paziresh24.com/docker:stable
+  extends: .drApp
+  before_script:
+    - docker info
+    - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
+  script:
+    - export DOCKER_BUILD=1
+    - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
+    - docker build -t $DOCKER_IMAGE_TAG_COM:latest-cicd -f Dockerfile.drApp .
     - docker push $DOCKER_IMAGE_TAG_COM:latest-cicd
 
 drApp-deploy-production:
