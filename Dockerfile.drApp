@@ -1,5 +1,5 @@
 # => Build container
-FROM node:14.17.5-alpine as build
+FROM dockerhub.paziresh24.com/node:14.18.2-alpine as build
 WORKDIR /app
 COPY package.json ./
 RUN yarn config set registry http://192.168.216.74:8081/repository/npm-proxy/ && npm config get registry
@@ -9,7 +9,7 @@ COPY . .
 RUN yarn build drapp
 
 # => Run container
-FROM nginx:alpine
+FROM dockerhub.paziresh24.com/nginx:alpine
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d

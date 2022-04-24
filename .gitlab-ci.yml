@@ -64,7 +64,7 @@ services:
     RULES_CHANGES_PATH: "apps/drapp/**/*"
 
 
-drApp-build:
+.drApp-build:
   stage: build
   extends: .drApp
   script:
