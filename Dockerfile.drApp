@@ -6,7 +6,7 @@ ENV YARN_REGISTRY=http://192.168.216.74:8081/repository/npm-proxy/
 RUN npm config set registry http://192.168.216.74:8081/repository/npm-proxy/ && npm config get registry
 RUN npm install --prefer-offline --no-audit --production --force
 COPY . .
-RUN npm build drapp
+RUN npm run build drapp
 
 # => Run container
 FROM dockerhub.paziresh24.com/nginx:alpine
