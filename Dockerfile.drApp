@@ -1,7 +1,7 @@
 # => Build container
 FROM dockerhub.paziresh24.com/node:14.18.2-alpine as build
 WORKDIR /app
-COPY package.json ./
+COPY package.json package-lock.json .npmrc ./
 ENV YARN_REGISTRY=http://192.168.216.74:8081/repository/npm-proxy/
 RUN npm config set registry http://192.168.216.74:8081/repository/npm-proxy/ && npm config get registry
 RUN npm install --prefer-offline --no-audit --production --force
