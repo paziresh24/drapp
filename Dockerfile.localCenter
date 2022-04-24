@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json package-lock.json .npmrc ./
 ENV YARN_REGISTRY=http://192.168.216.74:8081/repository/npm-proxy/
 RUN npm config set registry http://192.168.216.74:8081/repository/npm-proxy/ && npm config get registry
-RUN npm --no-audit --production --force
+RUN npm install --production
 COPY . .
 ENV PUBLIC_URL /doctorapp
 RUN npm run build drapp
