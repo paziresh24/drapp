@@ -2,7 +2,9 @@
 FROM dockerhub.paziresh24.com/node:14.18.2-alpine as build
 WORKDIR /app
 COPY package.json ./
-RUN yarn --silent
+RUN yarn config set registry http://192.168.216.74:8081/repository/npm-proxy/ && npm config get registry
+
+RUN yarn --no-audit --production --force
 COPY . .
 ENV PUBLIC_URL /doctorapp
 RUN yarn build drapp
