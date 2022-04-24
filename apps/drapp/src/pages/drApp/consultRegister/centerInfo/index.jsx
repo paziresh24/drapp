@@ -48,7 +48,7 @@ const CenterInfo = () => {
             ...consult,
             whatsapp: digitsFaToEn(whatsAppCell.replace(/^0+/, '')),
             price: costVisit * 10,
-            service_length: countVisitDaily?countVisitDaily:'2'
+            service_length: countVisitDaily ?? '2'
         });
 
         history.push('/consult/fill-info/expertises');
