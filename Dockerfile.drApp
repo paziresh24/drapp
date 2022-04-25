@@ -6,7 +6,7 @@ RUN apk update && apk add git
 COPY package.json package-lock.json .npmrc ./
 ENV YARN_REGISTRY=http://192.168.216.74:8081/repository/npm-proxy/
 RUN npm config set registry http://192.168.216.74:8081/repository/npm-proxy/ && npm config get registry
-RUN npm install -g nx && npm install
+RUN npm install --force
 COPY . .
 RUN npm run build drapp
 
