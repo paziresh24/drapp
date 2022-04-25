@@ -43,7 +43,7 @@ const Setting = () => {
             {
                 center_id: info.center.id,
                 cost: 0,
-                duration: duration,
+                duration: duration ?? 10,
                 workHours: workDaysTime
             },
             {
