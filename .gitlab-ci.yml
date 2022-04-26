@@ -129,7 +129,7 @@ drApp-deploy-production:
   script:
     - apk add --update bash openssh sshpass
     - ansible-galaxy collection install community.docker
-    - ansible-playbook ./ansible/drapp/playbook-com.yml -i ./ansible/drapp/inventory.yml
+    - ansible-playbook ./ansible/drapp/playbook-com.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 
 
 drApp-deploy-locals:
@@ -140,7 +140,7 @@ drApp-deploy-locals:
   script:
     - apk add --update bash openssh sshpass
     - ansible-galaxy collection install community.docker
-    - ansible-playbook ./ansible/drapp/playbook-locals.yml -i ./ansible/drapp/inventory.yml
+    - ansible-playbook ./ansible/drapp/playbook-locals.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 
 
 drApp-deploy-qc:
@@ -151,4 +151,4 @@ drApp-deploy-qc:
   script:
     - apk add --update bash openssh sshpass
     - ansible-galaxy collection install community.docker
-    - ansible-playbook ./ansible/drapp/playbook-qc.yml -i ./ansible/drapp/inventory.yml
+    - ansible-playbook ./ansible/drapp/playbook-qc.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
