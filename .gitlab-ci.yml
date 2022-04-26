@@ -91,7 +91,7 @@ services:
 
 
 
-.drApp-build-local-push-docker-image:
+drApp-build-local-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
   image: dockerhub.paziresh24.com/docker:stable
@@ -103,10 +103,10 @@ services:
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
-    - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest-cicd -f Dockerfile.localCenter .
-    - docker push $DOCKER_IMAGE_TAG_LOCAL:latest-cicd
+    - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -f Dockerfile.localCenter .
+    - docker push $DOCKER_IMAGE_TAG_LOCAL:latest
 
-.drApp-build-cloud-push-docker-image:
+drApp-build-cloud-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
   image: dockerhub.paziresh24.com/docker:stable
@@ -118,8 +118,8 @@ services:
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
-    - docker build -t $DOCKER_IMAGE_TAG_COM:latest-cicd -f Dockerfile.drApp .
-    - docker push $DOCKER_IMAGE_TAG_COM:latest-cicd
+    - docker build -t $DOCKER_IMAGE_TAG_COM:latest -f Dockerfile.drApp .
+    - docker push $DOCKER_IMAGE_TAG_COM:latest
 
 drApp-deploy-production:
   image: dockerhub.paziresh24.com/docker-ansible:latest
