@@ -4,7 +4,7 @@ WORKDIR /app
 ENV DOCKER_BUILDKIT 1
 COPY package.json package-lock.json .npmrc ./
 RUN npm config set registry https://registry.npmmirror.com
-RUN npm install --production
+RUN npm install
 COPY . .
 ENV PUBLIC_URL /doctorapp
 WORKDIR /app/apps/drapp
