@@ -96,6 +96,7 @@ drApp-build-local-push-docker-image:
 #  needs: ["drApp-test"]
   image: dockerhub.paziresh24.com/docker:stable
   extends: .drApp
+  when: manual
   before_script:
     - docker info
     - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
@@ -111,6 +112,7 @@ drApp-build-cloud-push-docker-image:
 #  needs: ["drApp-test"]
   image: dockerhub.paziresh24.com/docker:stable
   extends: .drApp
+  when: manual
   before_script:
     - docker info
     - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
