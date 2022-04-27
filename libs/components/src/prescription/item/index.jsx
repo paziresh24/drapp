@@ -5,7 +5,7 @@ import { useGetPrescriptionPDF } from '@paziresh24/hooks/prescription';
 import { RemoveIcon, PrintIcon } from '../../icons';
 
 import moment from 'jalali-moment';
-import queryString from 'querystring';
+import queryString from 'query-string';
 
 // hooks
 import { createRef, useEffect, useState } from 'react';

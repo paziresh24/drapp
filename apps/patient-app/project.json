@@ -28,7 +28,9 @@
             "executor": "@nrwl/next:server",
             "options": {
                 "buildTarget": "patient-app:build",
-                "dev": true
+                "dev": true,
+                "port": 4200,
+                "hostname": "localhost"
             },
             "configurations": {
                 "production": {
