@@ -560,7 +560,9 @@ const TurnCard = ({
                                             <span>مبلغ ویزیت: </span>
                                             <span>
                                                 {turn.user_payment
-                                                    ? `${addCommaPrice(turn.user_payment)} تومان`
+                                                    ? `${addCommaPrice(
+                                                          turn.user_payment / 10
+                                                      )} تومان`
                                                     : '-'}
                                             </span>
                                         </div>
@@ -749,7 +751,7 @@ const TurnCard = ({
                                     <span>مبلغ ویزیت: </span>
                                     <span>
                                         {turn.user_payment
-                                            ? `${addCommaPrice(turn.user_payment)} تومان`
+                                            ? `${addCommaPrice(turn.user_payment / 10)} تومان`
                                             : '-'}
                                     </span>
                                 </div>
