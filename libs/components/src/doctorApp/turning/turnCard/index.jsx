@@ -25,7 +25,6 @@ import Visit from '../visit';
 import { Mobile, Default } from '@paziresh24/hooks/core/device';
 import { sendEvent } from '@paziresh24/utils';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
-import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 import { CONSULT_CENTER_ID } from '@paziresh24/constants/consultCenterId';
 
 const TurnCard = ({
@@ -50,7 +49,6 @@ const TurnCard = ({
     const [actionType, setActionType] = useState();
     const getOnePrescription = useGetOnePrescription({ id: turn.prescription?.id });
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-    const isExpertDoctor = !isLessThanExpertDegreeDoctor(info.doctor?.expertises);
 
     const {
         register: otpRegister,
@@ -228,8 +226,6 @@ const TurnCard = ({
             setVisitModal(true);
         } else {
             try {
-                if (!isExpertDoctor) return setVisitModal(true);
-
                 const prescriptionData = await createPrescription({
                     national_code: turn.national_code ?? data.national_code,
                     cell: turn.cell,
@@ -271,7 +267,6 @@ const TurnCard = ({
 
         if (info.center.id === CONSULT_CENTER_ID) return 'paziresh24';
 
-        if (!isExpertDoctor) return 'paziresh24';
         return insuranceProvider;
     };
 
@@ -296,14 +291,20 @@ const TurnCard = ({
                 variant="secondary"
                 size="small"
                 block
-                disabled={finalized || (!isExpertDoctor && turn.book_status === 'visited')}
+                disabled={finalized || turn.book_status === 'visited'}
                 onClick={() => visitSubmit()}
                 loading={addPrescription.isLoading}
                 style={{ marginLeft: '0.5rem' }}
             >
-                {finalized || (!isExpertDoctor && turn.book_status === 'visited')
-                    ? 'ویزیت شده'
-                    : 'ویزیت '}
+                {finalized || turn.book_status === 'visited' ? 'ویزیت شده' : 'ویزیت '}
+            </Button>
+        );
+    };
+
+    const PrescriptionButton = () => {
+        return (
+            <Button size="small" block variant="secondary" onClick={prescription}>
+                {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
             </Button>
         );
     };
@@ -335,9 +336,9 @@ const TurnCard = ({
                                 )}
                             <span
                                 className={styles.name}
-                                onClick={isExpertDoctor && prescription}
+                                onClick={prescription}
                                 aria-hidden
-                                style={{ cursor: isExpertDoctor && 'pointer' }}
+                                style={{ cursor: 'pointer' }}
                             >
                                 {turn.display_name !== '' ? turn.display_name : '-'}
                             </span>
@@ -435,56 +436,31 @@ const TurnCard = ({
                     <td className={styles.actionCol}>
                         <div className={styles.buttonAction}>
                             <VisitButton />
-                            {isExpertDoctor && (
-                                <Button
-                                    className={styles.buttonAction}
-                                    size="small"
-                                    block
-                                    icon={<ChevronIcon color="#27bda0" />}
-                                    variant="secondary"
-                                    onClick={prescription}
-                                >
-                                    {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
-                                </Button>
-                            )}
+
+                            <PrescriptionButton />
                             <div className={styles.action}>
-                                {isExpertDoctor && (
-                                    <div
-                                        className={styles.turn_action}
-                                        onClick={e => {
+                                <div
+                                    className={styles.turn_action}
+                                    onClick={e => {
+                                        if (turn.prescription) {
                                             !dropDownShow && e.stopPropagation();
                                             !dropDownShow && setDropDownShow(dropDownShowKey);
-                                        }}
-                                        aria-hidden
+                                        }
+                                    }}
+                                    aria-hidden
+                                >
+                                    <svg
+                                        width="5"
+                                        height="15"
+                                        viewBox="0 0 3 13"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
                                     >
-                                        <svg
-                                            width="5"
-                                            height="15"
-                                            viewBox="0 0 3 13"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <circle
-                                                cx="1.35281"
-                                                cy="1.75977"
-                                                r="1"
-                                                fill="#3F3F79"
-                                            />
-                                            <circle
-                                                cx="1.35281"
-                                                cy="6.75977"
-                                                r="1"
-                                                fill="#3F3F79"
-                                            />
-                                            <circle
-                                                cx="1.35281"
-                                                cy="11.7598"
-                                                r="1"
-                                                fill="#3F3F79"
-                                            />
-                                        </svg>
-                                    </div>
-                                )}
+                                        <circle cx="1.35281" cy="1.75977" r="1" fill="#3F3F79" />
+                                        <circle cx="1.35281" cy="6.75977" r="1" fill="#3F3F79" />
+                                        <circle cx="1.35281" cy="11.7598" r="1" fill="#3F3F79" />
+                                    </svg>
+                                </div>
 
                                 <ul
                                     className={classNames({
@@ -574,37 +550,31 @@ const TurnCard = ({
                                     <span>{turn.ref_id ?? '-'}</span>
                                 </div>
 
-                                {isExpertDoctor && (
-                                    <>
-                                        <div className="flex space-s-3">
-                                            <span>کد پیگیری نسخه</span>
-                                            <span>
-                                                {turn.prescription?.insuranceType === 'tamin' &&
-                                                    turn.prescription?.tamin_prescription.map(
-                                                        item => (
-                                                            <span key={item.head_EPRSC_ID}>
-                                                                {item.head_EPRSC_ID ?? '-'}
-                                                            </span>
-                                                        )
-                                                    )}
-                                                {turn.prescription?.insuranceType === 'salamat' && (
-                                                    <span>
-                                                        {turn.prescription?.salamat_prescription
-                                                            ?.trackingCode ?? ''}
-                                                    </span>
-                                                )}
-                                            </span>
-                                        </div>
-
-                                        <div className="flex space-s-3">
-                                            <span>کد توالی</span>
+                                <div className="flex space-s-3">
+                                    <span>کد پیگیری نسخه</span>
+                                    <span>
+                                        {turn.prescription?.insuranceType === 'tamin' &&
+                                            turn.prescription?.tamin_prescription.map(item => (
+                                                <span key={item.head_EPRSC_ID}>
+                                                    {item.head_EPRSC_ID ?? '-'}
+                                                </span>
+                                            ))}
+                                        {turn.prescription?.insuranceType === 'salamat' && (
                                             <span>
                                                 {turn.prescription?.salamat_prescription
-                                                    ?.sequenceNumber ?? '-'}
+                                                    ?.trackingCode ?? ''}
                                             </span>
-                                        </div>
-                                    </>
-                                )}
+                                        )}
+                                    </span>
+                                </div>
+
+                                <div className="flex space-s-3">
+                                    <span>کد توالی</span>
+                                    <span>
+                                        {turn.prescription?.salamat_prescription?.sequenceNumber ??
+                                            '-'}
+                                    </span>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -694,47 +664,54 @@ const TurnCard = ({
                                 </span>
                             </div>
                         </div>
-                        <div className={styles.patientInfoRow}>
-                            <div className="w-full">
-                                <span>کدپیگیری نسخه: </span>
-                                <span>
-                                    {turn.prescription?.insuranceType === 'tamin' &&
-                                        turn.prescription?.tamin_prescription.map(item => (
-                                            <span key={item.head_EPRSC_ID}>
-                                                {item.head_EPRSC_ID ?? '-'}
-                                            </span>
-                                        ))}
-                                    {turn.prescription?.insuranceType === 'salamat' && (
+                        {turn.prescription && (
+                            <>
+                                {' '}
+                                <div className={styles.patientInfoRow}>
+                                    <div className="w-full">
+                                        <span>کدپیگیری نسخه: </span>
                                         <span>
-                                            {turn.prescription?.salamat_prescription
-                                                ?.trackingCode ?? ''}
+                                            {turn.prescription?.insuranceType === 'tamin' &&
+                                                turn.prescription?.tamin_prescription.map(item => (
+                                                    <span key={item.head_EPRSC_ID}>
+                                                        {item.head_EPRSC_ID ?? '-'}
+                                                    </span>
+                                                ))}
+                                            {turn.prescription?.insuranceType === 'salamat' && (
+                                                <span>
+                                                    {turn.prescription?.salamat_prescription
+                                                        ?.trackingCode ?? ''}
+                                                </span>
+                                            )}
                                         </span>
-                                    )}
-                                </span>
-                            </div>
-                            <div className="w-full">
-                                <span>وضعیت نسخه: </span>
-                                <span>
-                                    {!turn.prescription && '-'}
-                                    {turn.prescription &&
-                                        (turn.prescription?.finalized ? (
-                                            <span data-tip data-for="finalizedhint">
-                                                ثبت شده
-                                            </span>
-                                        ) : turn.prescription?.status === null ? (
-                                            <span data-tip data-for="notFinalized">
-                                                ثبت نشده
-                                            </span>
-                                        ) : turn.prescription?.status === 'FAILED' ? (
-                                            <span className={styles.notFinalized}>خطا در ثبت</span>
-                                        ) : (
-                                            <span data-tip data-for="finalizing">
-                                                در صف ثبت
-                                            </span>
-                                        ))}
-                                </span>
-                            </div>
-                        </div>
+                                    </div>
+                                    <div className="w-full">
+                                        <span>وضعیت نسخه: </span>
+                                        <span>
+                                            {!turn.prescription && '-'}
+                                            {turn.prescription &&
+                                                (turn.prescription?.finalized ? (
+                                                    <span data-tip data-for="finalizedhint">
+                                                        ثبت شده
+                                                    </span>
+                                                ) : turn.prescription?.status === null ? (
+                                                    <span data-tip data-for="notFinalized">
+                                                        ثبت نشده
+                                                    </span>
+                                                ) : turn.prescription?.status === 'FAILED' ? (
+                                                    <span className={styles.notFinalized}>
+                                                        خطا در ثبت
+                                                    </span>
+                                                ) : (
+                                                    <span data-tip data-for="finalizing">
+                                                        در صف ثبت
+                                                    </span>
+                                                ))}
+                                        </span>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                         {info.center.id === CONSULT_CENTER_ID && (
                             <div className={styles.patientInfoRow}>
                                 <div className="w-full">
@@ -758,7 +735,7 @@ const TurnCard = ({
                             </div>
                         )}
                         <div className={styles.patientInfoRow}>
-                            <div className="w-full">
+                            <div className="!w-full">
                                 <span>کدپیگیری نوبت: </span>
                                 <span>{turn.ref_id ?? '-'}</span>
                             </div>
@@ -766,12 +743,7 @@ const TurnCard = ({
                     </div>
                     <div className={styles.cardAction}>
                         <VisitButton />
-
-                        {isExpertDoctor && (
-                            <Button variant="secondary" size="small" block onClick={prescription}>
-                                {turn.prescription?.finalized ? 'مشاهده نسخه' : 'تجویز '}
-                            </Button>
-                        )}
+                        <PrescriptionButton />
                     </div>
                 </div>
             </Mobile>
