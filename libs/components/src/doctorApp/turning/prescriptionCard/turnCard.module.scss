@@ -153,6 +153,7 @@
     float: left;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .actionCol {
@@ -198,7 +199,7 @@
     .patientInfoRow {
         display: flex;
         opacity: 0.75;
-        font-size: 0.95rem;
+        font-size: 0.88rem;
         width: 100%;
         @include gap(0.5rem);
 

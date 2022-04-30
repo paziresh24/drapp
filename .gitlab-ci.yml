@@ -1,0 +1,154 @@
+image: dockerhub.paziresh24.com/node:14.18.2-alpine
+
+stages:
+  - build
+  - test
+  - build-image
+  - deploy
+
+variables:
+  RULES_CHANGES_PATH: "**/*"
+  DOCKER_IMAGE_TAG_LOCAL: dockerhub.paziresh24.com/drapp-local
+  DOCKER_IMAGE_TAG_COM: dockerhub.paziresh24.com/drapp
+  FF_USE_FASTZIP: "true"
+  # These can be specified per job or per pipeline
+  ARTIFACT_COMPRESSION_LEVEL: "fast"
+  CACHE_COMPRESSION_LEVEL: "fast"
+  ANSIBLE_HOST_KEY_CHECKING: 'false'
+  ANSIBLE_FORCE_COLOR: 'true'
+
+# Caches
+.node_modules-cache: &node_modules-cache
+  key:
+    files:
+      - yarn.lock
+  paths:
+    - node_modules
+    - apps/*/node_modules/
+  policy: pull
+
+.yarn-cache: &yarn-cache
+  key: yarn-$CI_JOB_IMAGE
+  paths:
+    - .yarn
+
+cache:
+  key: $CI_PROJECT_ID
+  policy: pull
+  untracked: true
+  paths:
+    - node_modules/
+    - apps/drapp/node_modules/
+
+before_script:
+  - export DOCKER_BUILD=1
+
+services:
+  - name: dockerhub.paziresh24.com/docker:dind
+    alias: docker
+
+.base-rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: manual
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - $RULES_CHANGES_PATH
+
+
+.drApp:
+  extends: .base-rules
+  variables:
+    RULES_CHANGES_PATH: "apps/drapp/**/*"
+
+
+.drApp-build:
+  stage: build
+  extends: .drApp
+  script:
+    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
+    - npm config get registry
+    - npm install --prefer-offline --no-audit --production --force
+  cache:
+    key: $CI_PROJECT_ID
+    policy: pull-push
+    paths:
+      - yarn.lock
+      - .yarn
+      - node_modules
+      - 'apps/*/node_modules'
+
+.drApp-test:
+  stage: test
+  extends: .drApp
+  needs: ["drApp-build"]
+  script:
+    - nx e2e-ci drapp-e2e
+
+
+
+drApp-build-local-push-docker-image:
+  stage: build-image
+#  needs: ["drApp-test"]
+  image: dockerhub.paziresh24.com/docker:stable
+  extends: .drApp
+  before_script:
+    - docker info
+    - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
+  script:
+    - export DOCKER_BUILD=1
+    - export DOCKER_BUILDKIT=1
+    - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
+    - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -f Dockerfile.localCenter .
+    - docker push $DOCKER_IMAGE_TAG_LOCAL:latest
+
+drApp-build-cloud-push-docker-image:
+  stage: build-image
+#  needs: ["drApp-test"]
+  image: dockerhub.paziresh24.com/docker:stable
+  extends: .drApp
+  before_script:
+    - docker info
+    - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
+  script:
+    - export DOCKER_BUILD=1
+    - export DOCKER_BUILDKIT=1
+    - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
+    - docker build -t $DOCKER_IMAGE_TAG_COM:latest -f Dockerfile.drApp .
+    - docker push $DOCKER_IMAGE_TAG_COM:latest
+
+drApp-deploy-production:
+  image: dockerhub.paziresh24.com/docker-ansible:latest
+  stage: deploy
+  when: manual
+#  needs: ["drApp-test"]
+  script:
+    - apk add --update bash openssh sshpass
+    - ansible-galaxy collection install community.docker
+    - ansible-playbook ./ansible/drapp/playbook-com.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+
+
+drApp-deploy-locals:
+  image: dockerhub.paziresh24.com/docker-ansible:latest
+  stage: deploy
+  when: manual
+#  needs: ["drApp-test"]
+  script:
+    - apk add --update bash openssh sshpass
+    - ansible-galaxy collection install community.docker
+    - ansible-playbook ./ansible/drapp/playbook-locals.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+
+
+drApp-deploy-qc:
+  image: dockerhub.paziresh24.com/docker-ansible:latest
+  stage: deploy
+  when: manual
+#  needs: ["drApp-test"]
+  script:
+    - apk add --update bash openssh sshpass
+    - ansible-galaxy collection install community.docker
+    - ansible-playbook ./ansible/drapp/playbook-qc.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'

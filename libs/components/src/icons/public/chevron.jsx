@@ -5,6 +5,7 @@ const Chevron = ({
     color = '#3f3f79',
     width = '7',
     height = '11',
+    style,
     className = undefined,
     onClick = undefined
 }) => {
@@ -16,6 +17,7 @@ const Chevron = ({
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className={`${styles[dir]} ${className}`}
+            style={style}
             onClick={onClick}
         >
             <path

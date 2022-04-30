@@ -2,12 +2,11 @@ import isEmpty from 'lodash/isEmpty';
 import styles from './turnList.module.scss';
 import { TurnCard } from '../turnCard';
 import { PrescriptionCard } from '../prescriptionCard';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Loading from './loading';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
 import { ChevronIcon } from '@paziresh24/components/icons';
 import { isMobile } from 'react-device-detect';
-import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 import { useDrApp } from '@paziresh24/context/drapp';
 
 const TurnsWrapper = ({ loading, turns, refetchData }) => {
@@ -15,7 +14,6 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
     const [dropDownShow, setDropDownShow] = useState(false);
     const [isOpenActiveTurns, setIsOpenActiveTurns] = useState(true);
     const [isOpenFinalizedTurns, setIsOpenFinalizedTurns] = useState(true);
-    const isExpertDoctor = !isLessThanExpertDegreeDoctor(info.doctor?.expertises);
 
     document.body.addEventListener('click', () => {
         if (dropDownShow) {
@@ -27,32 +25,7 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
         <div className="flex justify-between items-center bg-[#f6f8fb] w-full py-2 px-4 text-sm font-bold">
             <div>
                 <span className="text-[#68778d]">
-                    {finalized
-                        ? isExpertDoctor
-                            ? 'نسخه های ثبت شده'
-                            : 'ویزیت شده'
-                        : 'لیست بیماران'}
-                </span>
-                <span className="text-[#68778d] mr-2">
-                    (
-                    {
-                        turns.filter(turn =>
-                            isExpertDoctor
-                                ? turn.prescription?.finalized === finalized ||
-                                  turn.finalized === finalized ||
-                                  (finalized &&
-                                      turn.book_status &&
-                                      turn.book_status === 'visited') ||
-                                  (!finalized &&
-                                      turn.book_status &&
-                                      turn.prescription == finalized &&
-                                      turn.book_status !== 'visited')
-                                : finalized
-                                ? turn.book_status === 'visited'
-                                : turn.book_status && turn.book_status !== 'visited'
-                        ).length
-                    }
-                    )
+                    {finalized ? 'بیماران ویزیت شده' : 'لیست بیماران'}
                 </span>
             </div>
 
@@ -103,19 +76,13 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
     };
 
     const isTurnActive = turn => {
-        if (!isExpertDoctor) {
-            if (turn.book_status !== 'visited') return false;
-            return true;
-        }
+        if (turn.finalized) return true;
         if (turn.type === 'book') {
             if (turn.book_status === 'visited') return true;
             if (!turn.prescription?.finalized) return false;
             return true;
         }
-        if (turn.type === 'book') {
-            return true;
-        }
-        if (turn.finalized) return true;
+
         return false;
     };
 
@@ -139,7 +106,7 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                             (turn.type === 'book' ? (
                                 <TurnRow.Turn turn={turn} key={turn.id} />
                             ) : (
-                                isExpertDoctor && <TurnRow.Prescription turn={turn} key={turn.id} />
+                                <TurnRow.Prescription turn={turn} key={turn.id} />
                             ))
                     )}
 
@@ -160,7 +127,7 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                             (turn.type === 'book' ? (
                                 <TurnRow.Turn turn={turn} key={turn.id} />
                             ) : (
-                                isExpertDoctor && <TurnRow.Prescription turn={turn} key={turn.id} />
+                                <TurnRow.Prescription turn={turn} key={turn.id} />
                             ))
                     )}
             </>
@@ -179,7 +146,7 @@ const TurnsList = ({ turns, loading, refetchData }) => {
                         <col span="1" style={{ width: '10%' }} />
                         <col span="1" style={{ width: '10%' }} />
                         <col span="1" style={{ width: '10%' }} />
-                        <col span="1" style={{ width: '7%' }} />
+                        <col span="1" style={{ width: '3%' }} />
                     </colgroup>
                     <thead>
                         <tr className={styles.red}>

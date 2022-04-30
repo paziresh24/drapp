@@ -36,7 +36,6 @@ import { v4 as uuid } from 'uuid';
 import TurnsList from '@paziresh24/components/prescription/turnsList/default';
 import { useInView } from 'react-intersection-observer';
 import LoadingIcon from '@paziresh24/components/icons/public/loading';
-import queryString from 'querystring';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
@@ -49,7 +48,6 @@ const Home = props => {
     const [results, setResults] = useState([]);
 
     const { search } = useLocation();
-    const urlParams = queryString.parse(search);
 
     const [rangeDate, setRangeDate] = useState();
 

@@ -135,7 +135,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                 disabled={step === 'REGISTER'}
                 onFocus={() => {
                     setError(false);
-                    setFocus(true);
+                    setFocus && setFocus(true);
                 }}
                 error={error || errors.cellPhone}
                 {...cellPhoneRegister}

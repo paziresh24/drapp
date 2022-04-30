@@ -1,5 +1,4 @@
 import queryString from 'query-string';
-import FormData from 'form-data';
 
 // convert string date to date  14001206 => 1400/12/06
 export const strDateToDate = strDate => {
