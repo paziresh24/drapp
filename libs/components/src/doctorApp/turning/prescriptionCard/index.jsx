@@ -368,16 +368,11 @@ const PrescriptionCard = ({
                                     <span>کد پیگیری</span>
                                     <span>
                                         {turn?.insuranceType === 'tamin' &&
-                                            turn.tamin_prescription.map(item => (
-                                                <span key={item.head_EPRSC_ID}>
-                                                    {item.head_EPRSC_ID ?? '-'}
-                                                </span>
-                                            ))}
-                                        {turn?.insuranceType === 'salamat' && (
-                                            <span>
-                                                {turn.salamat_prescription?.trackingCode ?? ''}
-                                            </span>
-                                        )}{' '}
+                                            turn.tamin_prescription
+                                                .map(item => item.head_EPRSC_ID)
+                                                .join(' - ')}
+                                        {turn?.insuranceType === 'salamat' &&
+                                            (turn.salamat_prescription?.trackingCode ?? '')}
                                     </span>
                                 </div>
 
