@@ -1,7 +1,6 @@
 image: dockerhub.paziresh24.com/node:14.18.2-alpine
 
 stages:
-  - build
   - test
   - build-image
   - deploy
@@ -50,12 +49,13 @@ services:
 .base-rules:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: manual
+      when: always
     - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: manual
+      when: never
     - if: $CI_COMMIT_TAG
       when: never
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
       changes:
         - $RULES_CHANGES_PATH
 
@@ -66,13 +66,18 @@ services:
     RULES_CHANGES_PATH: "apps/drapp/**/*"
 
 
-.drApp-build:
-  stage: build
+.drApp-test:
+  stage: test
   extends: .drApp
   script:
-    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
+#    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
+    - apk update && apk add xvfb x11vnc fluxbox xdpyinfo st vim terminus-font \
+      && sed -r -i "s/\[exec\] \(xterm\) \{xterm\}/\[exec\] \(st\) \{st -f 'xos4 Terminus-14'\}/" /usr/share/fluxbox/menu \
+      && [[ ! -d /opt ]] && mkdir /opt \
+      && rm -vrf /var/cache/apk/*
     - npm config get registry
-    - npm install --prefer-offline --no-audit --production --force
+    - npm install --prefer-offline --no-audit --force
+    - npm run e2e-ci drapp-e2e
   cache:
     key: $CI_PROJECT_ID
     policy: pull-push
@@ -81,14 +86,6 @@ services:
       - .yarn
       - node_modules
       - 'apps/*/node_modules'
-
-.drApp-test:
-  stage: test
-  extends: .drApp
-  needs: ["drApp-build"]
-  script:
-    - nx e2e-ci drapp-e2e
-
 
 
 drApp-build-local-push-docker-image:
