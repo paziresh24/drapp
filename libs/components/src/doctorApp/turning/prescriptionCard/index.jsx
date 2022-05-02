@@ -140,6 +140,28 @@ const PrescriptionCard = ({
         );
     };
 
+    const VisitButton = () => (
+        <Button
+            variant="secondary"
+            size="small"
+            block
+            disabled={turn.finalized}
+            onClick={() => {
+                setVisitModal(true);
+                sendEvent('onlyvisit', 'prescription', 'tajonlyvisitviz');
+            }}
+            style={{ marginLeft: '0.5rem' }}
+        >
+            {turn.finalized ? 'ویزیت شده' : 'ویزیت '}
+        </Button>
+    );
+
+    const PrescriptionButton = () => (
+        <Button size="small" variant="secondary" onClick={prescription} block>
+            {turn.finalized ? 'مشاهده نسخه' : 'تجویز '}
+        </Button>
+    );
+
     return (
         <>
             <Default>
@@ -270,26 +292,8 @@ const PrescriptionCard = ({
                     </td>
                     <td className={styles.actionCol}>
                         <div className={styles.buttonAction}>
-                            <Button
-                                variant="secondary"
-                                size="small"
-                                disabled={turn.finalized}
-                                onClick={() => {
-                                    setVisitModal(true);
-                                    sendEvent('onlyvisit', 'prescription', 'tajonlyvisitviz');
-                                }}
-                                style={{ marginLeft: '0.5rem' }}
-                            >
-                                {turn.finalized ? 'ویزیت شده' : 'ویزیت '}
-                            </Button>
-                            <Button
-                                size="small"
-                                icon={<ChevronIcon color="#27bda0" />}
-                                variant="secondary"
-                                onClick={prescription}
-                            >
-                                {turn.finalized ? 'مشاهده نسخه' : 'تجویز '}
-                            </Button>
+                            <VisitButton />
+                            <PrescriptionButton />
 
                             <div className={styles.action}>
                                 <div
@@ -364,16 +368,11 @@ const PrescriptionCard = ({
                                     <span>کد پیگیری</span>
                                     <span>
                                         {turn?.insuranceType === 'tamin' &&
-                                            turn.tamin_prescription.map(item => (
-                                                <span key={item.head_EPRSC_ID}>
-                                                    {item.head_EPRSC_ID ?? '-'}
-                                                </span>
-                                            ))}
-                                        {turn?.insuranceType === 'salamat' && (
-                                            <span>
-                                                {turn.salamat_prescription?.trackingCode ?? ''}
-                                            </span>
-                                        )}{' '}
+                                            turn.tamin_prescription
+                                                .map(item => item.head_EPRSC_ID)
+                                                .join(' - ')}
+                                        {turn?.insuranceType === 'salamat' &&
+                                            (turn.salamat_prescription?.trackingCode ?? '')}
                                     </span>
                                 </div>
 
@@ -505,21 +504,8 @@ const PrescriptionCard = ({
                         </div>
                     </div>
                     <div className={styles.cardAction}>
-                        <Button
-                            variant="secondary"
-                            size="small"
-                            disabled={turn.finalized}
-                            block
-                            onClick={() => {
-                                setVisitModal(true);
-                                sendEvent('onlyvisit', 'prescription', 'tajonlyvisitviz');
-                            }}
-                        >
-                            {turn.finalized ? 'ویزیت شده' : 'ویزیت '}
-                        </Button>
-                        <Button variant="secondary" size="small" block onClick={prescription}>
-                            {turn.finalized ? 'مشاهده نسخه' : 'تجویز '}
-                        </Button>
+                        <VisitButton />
+                        <PrescriptionButton />
                     </div>
                 </div>
             </Mobile>

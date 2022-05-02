@@ -117,19 +117,9 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                     </td>
                     <td data-label="وضعیت نسخه:">
                         {turn?.insuranceType === 'tamin' &&
-                            turn[turn?.insuranceType + '_prescription'].map(item => (
-                                <span key={item.head_EPRSC_ID}>{item.head_EPRSC_ID ?? '-'}</span>
-                            ))}
-                        {turn?.insuranceType === 'salamat' && (
-                            <span
-                                key={
-                                    turn[turn?.prescription?.insuranceType + '_prescription']
-                                        ?.trackingCode
-                                }
-                            >
-                                {turn[turn?.insuranceType + '_prescription']?.trackingCode ?? ''}
-                            </span>
-                        )}
+                            turn.tamin_prescription.map(item => item.head_EPRSC_ID).join(' - ')}
+                        {turn?.insuranceType === 'salamat' &&
+                            (turn[turn?.insuranceType + '_prescription']?.trackingCode ?? '')}
                     </td>
                     <td data-label="بیمه بیمار:">
                         {turn.insuranceType === 'tamin' ? (
@@ -209,16 +199,11 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                     <span>کد پیگیری</span>
                                     <span>
                                         {turn?.insuranceType === 'tamin' &&
-                                            turn.tamin_prescription.map(item => (
-                                                <span key={item.head_EPRSC_ID}>
-                                                    {item.head_EPRSC_ID ?? '-'}
-                                                </span>
-                                            ))}
-                                        {turn?.insuranceType === 'salamat' && (
-                                            <span>
-                                                {turn.salamat_prescription?.trackingCode ?? ''}
-                                            </span>
-                                        )}{' '}
+                                            turn.tamin_prescription
+                                                .map(item => item.head_EPRSC_ID)
+                                                .join(' - ')}
+                                        {turn?.insuranceType === 'salamat' &&
+                                            (turn.salamat_prescription?.trackingCode ?? '')}
                                     </span>
                                 </div>
 
