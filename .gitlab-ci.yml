@@ -71,7 +71,7 @@ drApp-test:
   extends: .drApp
   script:
 #    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
-    - apk update && apk add git
+    - apk update && apk add git Xvfb xauth 
     - npm config get registry
     - npm install --prefer-offline --no-audit --force
     - npm run e2e-ci drapp-e2e
