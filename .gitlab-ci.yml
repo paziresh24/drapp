@@ -1,7 +1,6 @@
 image: dockerhub.paziresh24.com/node:14.18.2-alpine
 
 stages:
-  - build
   - test
   - build-image
   - deploy
@@ -67,13 +66,15 @@ services:
     RULES_CHANGES_PATH: "apps/drapp/**/*"
 
 
-drApp-build:
-  stage: build
+drApp-test:
+  stage: test
   extends: .drApp
   script:
 #    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
+    - apk update && apk add git
     - npm config get registry
     - npm install --prefer-offline --no-audit --force
+    - npm run e2e-ci drapp-e2e
   cache:
     key: $CI_PROJECT_ID
     policy: pull-push
@@ -82,14 +83,6 @@ drApp-build:
       - .yarn
       - node_modules
       - 'apps/*/node_modules'
-
-drApp-test:
-  stage: test
-  extends: .drApp
-  needs: ["drApp-build"]
-  script:
-    - npm run e2e-ci drapp-e2e
-
 
 
 drApp-build-local-push-docker-image:
