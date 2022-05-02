@@ -71,7 +71,10 @@ drApp-test:
   extends: .drApp
   script:
 #    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
-    - apk update && apk add git Xvfb xauth 
+    - apk update && apk add xvfb x11vnc fluxbox xdpyinfo st vim terminus-font \
+      && sed -r -i "s/\[exec\] \(xterm\) \{xterm\}/\[exec\] \(st\) \{st -f 'xos4 Terminus-14'\}/" /usr/share/fluxbox/menu \
+      && [[ ! -d /opt ]] && mkdir /opt \
+      && rm -vrf /var/cache/apk/*
     - npm config get registry
     - npm install --prefer-offline --no-audit --force
     - npm run e2e-ci drapp-e2e
