@@ -54,7 +54,10 @@ services:
       when: never
     - if: $CI_COMMIT_TAG
       when: never
-
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+      changes:
+        - $RULES_CHANGES_PATH
 
 
 .drApp:
