@@ -88,7 +88,7 @@ drApp-test:
   extends: .drApp
   needs: ["drApp-build"]
   script:
-    - nx e2e-ci drapp-e2e
+    - npm run e2e-ci drapp-e2e
 
 
 
