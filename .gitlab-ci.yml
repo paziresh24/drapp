@@ -73,7 +73,7 @@ drApp-build:
   script:
 #    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
     - npm config get registry
-    - npm install --prefer-offline --no-audit --production --force
+    - npm install --prefer-offline --no-audit --force
   cache:
     key: $CI_PROJECT_ID
     policy: pull-push
