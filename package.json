@@ -9,6 +9,7 @@
         "start": "nx serve",
         "build": "nx build",
         "test": "nx test",
+        "e2e-ci": "nx e2e-ci",
         "commit": "git-cz"
     },
     "resolutions": {
