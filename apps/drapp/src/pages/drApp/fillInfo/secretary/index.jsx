@@ -44,11 +44,12 @@ const Secretary = () => {
         <div className={styles['wrapper']}>
             <form className={styles['form']} onSubmit={centerInfoSubmit(updateCenter)}>
                 <div className={styles['register-form']}>
-                    <VectorSecretary className="!mx-auto !mb-8 w-44" />
-                    <div className="flex flex-col space-y-2">
+                    <VectorSecretary className="!mx-auto !mb-6 w-44" />
+                    <div className="flex flex-col space-y-1 mb-5">
                         <span className={styles['title']}>اطلاعات منشی مطب</span>
                         <span className={styles['sub-title']}>
-                            اگر نیاز به ارسال پیام برای منشی است، شماره ایشان را وارد کنید.
+                            برای مدیریت بهتر مطب و اطلاع منشی از نوبت های شما، شماره منشی خود را
+                            وارد کنید.
                         </span>
                     </div>
                     <TextField
@@ -59,7 +60,7 @@ const Secretary = () => {
                         defaultValue={info.doctor.secretary_phone}
                         {...updateCenterInfo('secretary_phone', { required: true })}
                     />
-                    <FixedWrapBottom>
+                    <FixedWrapBottom className="mt-4">
                         <Button type="submit" loading={doctorInfoUpdate.isLoading} block>
                             ثبت اطلاعات
                         </Button>
