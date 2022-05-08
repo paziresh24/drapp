@@ -11,7 +11,7 @@
                 "commands": [
                     "chmod +x env.sh",
                     "sh env.sh && mv env-config.js public",
-                    "node ../../node_modules/@craco/craco/bin/craco.js start"
+                    "cross-env BROWSER=none node ../../node_modules/@craco/craco/bin/craco.js start"
                 ]
             }
         },
