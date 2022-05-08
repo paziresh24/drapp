@@ -184,6 +184,14 @@ export const routes = [
         exact: true
     },
     {
+        path: '/fill-info/secretary',
+        name: 'Secretary',
+        title: 'اطلاعات منشی',
+        component: lazy(() => import('./fillInfo/secretary')),
+        isPrivate: true,
+        exact: false
+    },
+    {
         path: '/fill-info/',
         name: 'FillInfo',
         title: 'فعال سازی نوبت دهی',
