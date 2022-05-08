@@ -35,7 +35,6 @@ import { v4 as uuid } from 'uuid';
 import TurnsList from '../../../components/molecules/turnsList/default';
 import { useInView } from 'react-intersection-observer';
 import LoadingIcon from '@paziresh24/shared/icon/public/loading';
-import queryString from 'querystring';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
@@ -48,7 +47,6 @@ const Home = props => {
     const [results, setResults] = useState([]);
 
     const { search } = useLocation();
-    const urlParams = queryString.parse(search);
 
     const [rangeDate, setRangeDate] = useState();
 

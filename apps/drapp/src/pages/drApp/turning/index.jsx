@@ -39,7 +39,6 @@ import debounce from 'lodash/debounce';
 import { queryClient } from '@paziresh24/shared/ui/provider';
 import ReferenceModal from '@paziresh24/apps/prescription/components/molecules/referenceModal';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import { isLessThanExpertDegreeDoctor } from 'apps/drapp/src/functions/isLessThanExpertDegreeDoctor';
 
 const Turning = () => {
     const history = useHistory();
@@ -77,7 +76,6 @@ const Turning = () => {
     const nationalCodeRef = useRef();
     const [prescriptionPendingModal, setPrescriptionPendingModal] = useState(false);
     const [referenceModal, setReferenceModal] = useState(false);
-    const isExpertDoctor = !isLessThanExpertDegreeDoctor(info.doctor?.expertises);
 
     useEffect(() => {
         if (location.state?.prescriptionInfo && getTurn.data?.data) {
@@ -287,10 +285,6 @@ const Turning = () => {
                     if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                         return setOtpConfirm(true);
                     }
-                    // if (data.result.insuranceType === 'tamin' && data.result.patientCell !== null) {
-                    //     tourState(false);
-                    //     return setConfirmCellPhone(data.result);
-                    // }
                     refetchData();
                     setOpenNewTurn(false);
                     setVisitModal(true);
@@ -406,35 +400,20 @@ const Turning = () => {
 
     const statisticsTurns = {
         allPatientsToday: () => {
-            if (isExpertDoctor) {
-                return getTurn?.data?.data?.length;
-            }
-            return getTurn?.data?.data?.filter(turn => turn.type === 'book').length;
+            return getTurn?.data?.data?.length;
         },
         activePatientsToday: () => {
-            if (isExpertDoctor) {
-                getTurn.isSuccess &&
-                    getTurn.data?.data?.filter(item =>
-                        item.type === 'prescription'
-                            ? !item.finalized
-                            : !item.prescription?.finalized
-                    )?.length;
-            }
-            return getTurn?.data?.data?.filter(
-                turn => turn.type === 'book' && turn.book_status !== 'visited'
-            ).length;
+            getTurn.isSuccess &&
+                getTurn.data?.data?.filter(item =>
+                    item.type === 'prescription' ? !item.finalized : !item.prescription?.finalized
+                )?.length;
         },
         visitedPatientsToday: () => {
-            if (isExpertDoctor) {
-                return getTurn?.data?.data?.filter(turn =>
-                    turn.type === 'prescription'
-                        ? turn.finalized
-                        : turn.prescription?.finalized ?? turn.book_status === 'visited'
-                )?.length;
-            }
-            return getTurn?.data?.data?.filter(
-                turn => turn.type === 'book' && turn.book_status === 'visited'
-            ).length;
+            return getTurn?.data?.data?.filter(turn =>
+                turn.type === 'prescription'
+                    ? turn.finalized
+                    : turn.prescription?.finalized ?? turn.book_status === 'visited'
+            )?.length;
         }
     };
 
@@ -474,11 +453,9 @@ const Turning = () => {
                                 fill="#27BDA0"
                             />
                         </svg>
-                        <span className="font-bold mr-2 ml-2">
-                            {isExpertDoctor ? 'نسخه های صادر شده' : 'بیماران ویزیت شده'}
-                        </span>
+                        <span className="font-bold mr-2 ml-2">بیماران ویزیت شده</span>
                         <span className="font-medium">
-                            {getTurn.isSuccess && statisticsTurns.visitedPatientsToday()} نسخه
+                            {getTurn.isSuccess && statisticsTurns.visitedPatientsToday()} بیمار
                         </span>
                     </div>
                     <div className="h-14 rounded-lg flex justify-center items-center px-4 bg-[#ebeff8]">
@@ -538,9 +515,9 @@ const Turning = () => {
                                 />
                             </div>
                         </div>
-                        {!isMobile && isExpertDoctor && (
+                        <Default>
                             <Button onClick={openNewTurnAction}>افزودن بیمار</Button>
-                        )}
+                        </Default>
                     </div>
                 )}
 
@@ -576,17 +553,12 @@ const Turning = () => {
                         refetchData={refetchData}
                     />
 
-                    {isExpertDoctor && (
-                        <Mobile>
-                            <div className={styles['add-turn-button-mask']} />
-                            <button
-                                className={styles['add-turn-button']}
-                                onClick={openNewTurnAction}
-                            >
-                                افزودن بیمار
-                            </button>
-                        </Mobile>
-                    )}
+                    <Mobile>
+                        <div className={styles['add-turn-button-mask']} />
+                        <button className={styles['add-turn-button']} onClick={openNewTurnAction}>
+                            افزودن بیمار
+                        </button>
+                    </Mobile>
                 </div>
             </div>
 

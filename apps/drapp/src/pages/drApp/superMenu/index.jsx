@@ -130,13 +130,22 @@ const SuperMenu = () => {
                         }}
                         aria-hidden
                     >
-                        <span>
-                            {info.centers.find(item => item.id == localStorage.getItem('center_id'))
-                                ? info.centers.find(
-                                      item => item.id == localStorage.getItem('center_id')
-                                  ).name
-                                : info.center.name}
-                        </span>
+                        <div>
+                            <span>
+                                {info.centers.find(
+                                    item => item.id == localStorage.getItem('center_id')
+                                )
+                                    ? info.centers.find(
+                                          item => item.id == localStorage.getItem('center_id')
+                                      ).name
+                                    : info.center.name}
+                            </span>
+                            {info.center.type_id === 1 && !info.center.is_active_booking && (
+                                <span className={`text-xs !text-[#27bda0] ${styles.flicker}`}>
+                                    فعالسازی نوبت دهی
+                                </span>
+                            )}
+                        </div>
                         <ChevronIcon
                             className={styles.chevronIcon}
                             dir={isCenterSelectOpen ? 'top' : 'bottom'}
@@ -252,6 +261,16 @@ const SuperMenu = () => {
                                             </span>
                                         </div>
                                     </div>
+                                    {center.type_id === 1 && !center.is_active_booking && (
+                                        <button
+                                            className={styles.activeOfficeType}
+                                            onClick={e => {
+                                                history.push('/fill-info');
+                                            }}
+                                        >
+                                            فعال سازی
+                                        </button>
+                                    )}
                                 </div>
                             ))}
                             {isEmpty(info.centerConsult) && (

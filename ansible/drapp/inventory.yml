@@ -1,0 +1,21 @@
+all:
+  children:
+    qc_server:
+      hosts: 192.168.216.83
+      vars:
+        ansible_user: root
+        ansible_password: '{{ lookup("env", "PRESCRIPTION_QC_SERVER_PASSWORD") }}'
+        ansible_python_interpreter: /usr/bin/python3
+    com_server:
+      hosts: 192.168.216.35
+      vars:
+        ansible_user: root
+        ansible_password: '{{ lookup("env", "COM_PRESCRIPTION_SERVER_PASSWORD") }}'
+        ansible_python_interpreter: /usr/bin/python3
+    local_prescription_servers:
+      hosts:
+        192.168.195.151:
+      vars:
+        ansible_user: root
+        ansible_python_interpreter: /usr/bin/python3
+        ansible_password: '{{ lookup("env", "ANSIBLE_LOCAL_PASSWORD") }}'

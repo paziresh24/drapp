@@ -60,42 +60,39 @@ const Header = () => {
 
     return (
         <>
-            <header className="flex justify-between items-center h-16 bg-white px-3 border-b border-solid border-[#e5e9f0] z-[8]">
+            <header className="flex justify-between items-center h-16 bg-white px-3 pl-1 border-b border-solid border-[#e5e9f0] z-[8]">
                 <span className="font-bold pr-3">{page.title}</span>
                 <div className="flex items-center">
-                    {!info.center.is_active_booking && info.center.type_id === 1 && (
-                        <Button
-                            variant="secondary"
-                            style={{ marginLeft: '0.5rem' }}
-                            onClick={() => history.push('/fill-info')}
-                        >
-                            فعالسازی نوبت دهی
-                        </Button>
-                    )}
-                    <div
-                        className="hidden lg:flex items-center space-s-3"
-                        onMouseOut={() => setIsCenterSelectOpen(false)}
-                    >
-                        {info.center.is_active_booking && (
-                            <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
-                        )}
+                    <div className="hidden lg:flex items-center space-s-3">
+                        <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
                         <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
                             از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب کنید
                         </ReactTooltip>
+
                         <div
                             className={styles.centerSelectInput}
-                            onMouseOver={() => setIsCenterSelectOpen(true)}
+                            onClick={e => {
+                                e.stopPropagation();
+                                setIsCenterSelectOpen(true);
+                            }}
                             aria-hidden
                         >
-                            <span>
-                                {info.centers.find(
-                                    item => item.id == localStorage.getItem('center_id')
-                                )
-                                    ? info.centers.find(
-                                          item => item.id == localStorage.getItem('center_id')
-                                      ).name
-                                    : info.center.name}
-                            </span>
+                            <div>
+                                <span className="flex">
+                                    {info.centers.find(
+                                        item => item.id == localStorage.getItem('center_id')
+                                    )
+                                        ? info.centers.find(
+                                              item => item.id == localStorage.getItem('center_id')
+                                          ).name
+                                        : info.center.name}
+                                </span>
+                                {info.center.type_id === 1 && !info.center.is_active_booking && (
+                                    <span className={`text-xs !text-[#27bda0] ${styles.flicker}`}>
+                                        فعالسازی نوبت دهی
+                                    </span>
+                                )}
+                            </div>
                             <ChevronIcon
                                 className={styles.chevron_dropdown}
                                 color="#758599"
@@ -114,11 +111,7 @@ const Header = () => {
                             }}
                             unmountOnExit
                         >
-                            <div
-                                className={styles.selectWrapper}
-                                aria-hidden
-                                onMouseOver={() => setIsCenterSelectOpen(true)}
-                            >
+                            <div className={styles.selectWrapper} aria-hidden>
                                 {info.centers.map(center => (
                                     <div
                                         key={center.id}
@@ -234,6 +227,16 @@ const Header = () => {
                                                 </span>
                                             </div>
                                         </div>
+                                        {center.type_id === 1 && !center.is_active_booking && (
+                                            <button
+                                                className={styles.activeOfficeType}
+                                                onClick={e => {
+                                                    history.push('/fill-info');
+                                                }}
+                                            >
+                                                فعال سازی
+                                            </button>
+                                        )}
                                     </div>
                                 ))}
                                 {isEmpty(info.centerConsult) && (

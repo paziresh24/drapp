@@ -1,0 +1,5 @@
+---
+- name: Update Dr App for local servers
+  hosts: local_prescription_servers
+  roles:
+    - drapp

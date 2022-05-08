@@ -1,5 +1,5 @@
 import axios from 'axios';
-import queryString from 'querystring';
+import queryString from 'query-string';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isMainDomain = window.location.host === window._env_.P24_MAIN_DOMAIN;
