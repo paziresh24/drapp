@@ -8,6 +8,7 @@ import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
 import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
 import { getSplunkInstance } from '@paziresh24/components/core/provider';
+import { useEffect } from 'react';
 
 const CompleteInfo = () => {
     const [info] = useDrApp();
@@ -21,7 +22,27 @@ const CompleteInfo = () => {
 
     const history = useHistory();
 
+    useEffect(() => {
+        getSplunkInstance().sendEvent({
+            group: 'register',
+            type: 'loading-/fill-info'
+        });
+    }, []);
+
     const updateCenter = data => {
+        if (data.secretary_phone)
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'entered-num-secretary',
+                event: {
+                    secretary_number: data.secretary_phone
+                }
+            });
+        if (!data.secretary_phone)
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'dont-entered-num-secretary'
+            });
         doctorInfoUpdate.mutate(
             {
                 name: info.doctor.name,

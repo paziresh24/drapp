@@ -50,6 +50,7 @@ import { baseURL } from '@paziresh24/utils/baseUrl';
 import Password from '@paziresh24/components/doctorApp/profile/password';
 import Map from '@paziresh24/components/core/map';
 import Settings from '@paziresh24/components/doctorApp/profile/settings';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 
 const Profile = () => {
     const [info, setInfo] = useDrApp();
@@ -97,6 +98,10 @@ const Profile = () => {
     }, [info.center]);
 
     useEffect(() => {
+        getSplunkInstance().sendEvent({
+            group: 'register',
+            type: 'loading-/profile'
+        });
         if (info.center?.lat && info.center?.lon)
             setPosition({ lat: info.center?.lat, lng: info.center?.lon });
     }, []);
@@ -138,6 +143,19 @@ const Profile = () => {
     } = useForm();
 
     const updateDoctor = async data => {
+        if (data.secretary_phone)
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'loading-/profile-entered-num-secretary',
+                event: {
+                    secretary_number: data.secretary_phone
+                }
+            });
+        if (!data.secretary_phone)
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'loading-/profile-dont-entered-num-secretary'
+            });
         doctorInfoUpdate.mutate(
             {
                 name: data.name,
