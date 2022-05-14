@@ -125,16 +125,6 @@ const LoginHero = ({ focus }) => {
                     )}
                 </div>
                 <div className="hidden xl:flex items-end absolute bottom-10 left-10 opacity-80 space-s-3">
-                    {centersConfig[window.location.hostname]?.logo && (
-                        <img
-                            src={
-                                process.env.PUBLIC_URL +
-                                centersConfig[window.location.hostname].logoWhite
-                            }
-                            className="w-20"
-                            alt=""
-                        />
-                    )}
                     <img src={taminLogo} className="w-16" alt="" />
                     <img src={salamatLogo} className="w-16" alt="" />
                     <img src={govLogo} alt="" className="w-20" />
