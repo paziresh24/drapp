@@ -30,19 +30,6 @@ const CompleteInfo = () => {
     }, []);
 
     const updateCenter = data => {
-        if (data.secretary_phone)
-            getSplunkInstance().sendEvent({
-                group: 'register',
-                type: 'entered-num-secretary',
-                event: {
-                    secretary_number: data.secretary_phone
-                }
-            });
-        if (!data.secretary_phone)
-            getSplunkInstance().sendEvent({
-                group: 'register',
-                type: 'dont-entered-num-secretary'
-            });
         doctorInfoUpdate.mutate(
             {
                 name: info.doctor.name,
@@ -53,6 +40,19 @@ const CompleteInfo = () => {
             },
             {
                 onSuccess: () => {
+                    if (data.secretary_phone)
+                        getSplunkInstance().sendEvent({
+                            group: 'register',
+                            type: 'entered-num-secretary',
+                            event: {
+                                secretary_number: data.secretary_phone
+                            }
+                        });
+                    if (!data.secretary_phone)
+                        getSplunkInstance().sendEvent({
+                            group: 'register',
+                            type: 'dont-entered-num-secretary'
+                        });
                     getSplunkInstance().sendEvent({
                         group: 'complete_info_active_booking',
                         type: 'successful'
