@@ -1,8 +1,10 @@
 import Button from '@paziresh24/components/core/button';
 import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
+import { getSplunkInstance } from '@paziresh24/components/core/provider';
 import TextField from '@paziresh24/components/core/textField';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -20,6 +22,13 @@ const Secretary = () => {
         formState: { errors: centerInfoErrors }
     } = useForm();
 
+    useEffect(() => {
+        getSplunkInstance().sendEvent({
+            group: 'register',
+            type: 'loading-/fill-info/secretary'
+        });
+    }, []);
+
     const updateCenter = data => {
         doctorInfoUpdate.mutate(
             {
@@ -30,6 +39,13 @@ const Secretary = () => {
             },
             {
                 onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'register',
+                        type: 'secretary-page/entered-num-secretary',
+                        event: {
+                            secretary_number: data.secretary_phone
+                        }
+                    });
                     toast.success('اطلاعات منشی شما ثبت شد.');
                     history.push('/');
                 },
