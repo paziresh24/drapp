@@ -124,7 +124,13 @@ const SideBar = () => {
                         info.center.is_active_booking &&
                         (info.center.type_id === 1 || info.center.id === '5532'),
                     icon: <SettingIcon color="#3F3F79" />,
-                    onClick: () => setSettingIsOpen(true)
+                    onClick: () => {
+                        setSettingIsOpen(true);
+                        getSplunkInstance().sendEvent({
+                            group: 'sidebar',
+                            type: 'click-setting-menu'
+                        });
+                    }
                 },
                 {
                     id: 11,

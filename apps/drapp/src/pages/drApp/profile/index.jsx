@@ -50,6 +50,7 @@ import { baseURL } from '@paziresh24/utils/baseUrl';
 import Password from '@components/molecules/profile/password';
 import Map from '@paziresh24/shared/ui/map';
 import Settings from '@components/molecules/profile/settings';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Profile = () => {
     const [info, setInfo] = useDrApp();
@@ -97,6 +98,10 @@ const Profile = () => {
     }, [info.center]);
 
     useEffect(() => {
+        getSplunkInstance().sendEvent({
+            group: 'register',
+            type: 'loading-/profile'
+        });
         if (info.center?.lat && info.center?.lon)
             setPosition({ lat: info.center?.lat, lng: info.center?.lon });
     }, []);
@@ -151,6 +156,19 @@ const Profile = () => {
             },
             {
                 onSuccess: res => {
+                    if (data.secretary_phone)
+                        getSplunkInstance().sendEvent({
+                            group: 'register',
+                            type: 'loading-/profile-entered-num-secretary',
+                            event: {
+                                secretary_number: data.secretary_phone
+                            }
+                        });
+                    if (!data.secretary_phone)
+                        getSplunkInstance().sendEvent({
+                            group: 'register',
+                            type: 'loading-/profile-dont-entered-num-secretary'
+                        });
                     toast.success(res.message);
                     setUserInfoAccordion(false);
 

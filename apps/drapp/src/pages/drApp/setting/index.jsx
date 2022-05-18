@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import { useMenu } from '@paziresh24/context/core/menu';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
 import { ChevronIcon } from '@paziresh24/shared/icon';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Setting = () => {
     const [info] = useDrApp();
@@ -51,6 +52,10 @@ const Setting = () => {
                     toast.success(data.message);
                     getWorkDays.refetch();
                     history.push('/');
+                    getSplunkInstance().sendEvent({
+                        group: 'setting',
+                        type: 'change-work-hours'
+                    });
                 },
                 onError: err => {
                     toast.error('ساعت کاری وارد شده نادرست می باشد.');

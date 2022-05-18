@@ -1,8 +1,0 @@
-@media screen and (min-width: 426px) {
-    div#btn-close-chat {
-        display: none !important;
-    }
-}
-::-webkit-scrollbar {
-    width: 0;
-}

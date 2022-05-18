@@ -200,29 +200,6 @@ a {
     }
 }
 
-// iframe#goftino_w {
-//     height: 100vh !important;
-//     right: 0 !important;
-//     left: unset !important;
-//     width: 45rem !important;
-//     bottom: 0 !important;
-//     top: unset !important;
-// }
-
-// div#box-widget-icon {
-//     display: none !important;
-// }
-
-@media screen and (min-width: 426px) {
-    iframe#goftino_w {
-        display: none;
-        height: 100vh !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        width: 45rem !important;
-    }
-}
-
 ::-webkit-scrollbar {
     width: 0;
     height: 0;

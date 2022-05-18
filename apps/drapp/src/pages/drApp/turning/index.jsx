@@ -403,10 +403,9 @@ const Turning = () => {
             return getTurn?.data?.data?.length;
         },
         activePatientsToday: () => {
-            getTurn.isSuccess &&
-                getTurn.data?.data?.filter(item =>
-                    item.type === 'prescription' ? !item.finalized : !item.prescription?.finalized
-                )?.length;
+            return getTurn.data?.data?.filter(item =>
+                item.type === 'prescription' ? !item.finalized : !item.prescription?.finalized
+            )?.length;
         },
         visitedPatientsToday: () => {
             return getTurn?.data?.data?.filter(turn =>
