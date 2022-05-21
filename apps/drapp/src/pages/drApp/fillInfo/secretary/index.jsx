@@ -1,7 +1,8 @@
-import Button from '@paziresh24/components/core/button';
-import FixedWrapBottom from '@paziresh24/components/core/fixedWrapBottom';
-import { getSplunkInstance } from '@paziresh24/components/core/provider';
-import TextField from '@paziresh24/components/core/textField';
+import Button from '@paziresh24/shared/ui/button';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
+
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import TextField from '@paziresh24/shared/ui/textField';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { useEffect } from 'react';
