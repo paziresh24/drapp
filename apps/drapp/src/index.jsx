@@ -7,6 +7,8 @@ import { App } from './app';
 import { Provider } from '@paziresh24/shared/ui/provider';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { TourProvider } from '@reactour/tour';
+import { ThemeProvider } from '@mui/material';
+import theme from '../mui.theme';
 
 const steps = [
     {
@@ -28,9 +30,11 @@ ReactDOM.render(
             return;
         }}
     >
-        <Provider>
-            <App />
-        </Provider>
+        <ThemeProvider theme={theme}>
+            <Provider>
+                <App />
+            </Provider>
+        </ThemeProvider>
     </TourProvider>,
     document.getElementById('root')
 );
