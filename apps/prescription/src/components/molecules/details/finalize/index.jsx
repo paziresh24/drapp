@@ -22,6 +22,7 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
 import { prescriptionType } from '@paziresh24/constants/prescriptionType';
 import { serviceType } from '@paziresh24/constants/serviceType';
+import deletedSalamatServices from '../../../../constants/deletedSalamatServices';
 
 const Finalize = () => {
     const { search } = useLocation();
@@ -171,6 +172,20 @@ const Finalize = () => {
 
     const submitServices = async () => {
         insurances.remove();
+
+        const deletedSalamatServicesSelected = services.filter(service => {
+            if (deletedSalamatServices.includes(service.service.code))
+                return toast.error(
+                    `${service.service.name} به دلیل حذف از دیتابیس ${
+                        prescriptionInfo.insuranceType === 'tamin' ? 'تامین اجتماعی' : 'سلامت'
+                    }، امکان تجویز نخواهد بود. درصورت نیاز دارو/خدمت جایگزین را وارد کنید.`,
+                    {
+                        autoClose: false
+                    }
+                );
+        });
+
+        if (deletedSalamatServicesSelected.length > 0) return;
 
         if (services.length === 0 && !prescriptionInfo.finalized) {
             return setVisitModal(true);
