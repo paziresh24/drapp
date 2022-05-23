@@ -16,7 +16,7 @@
     - debug: var=is_docker_compose_install
 
     - name: rename old image tag
-      shell: docker tag dockerhub.paziresh24.com/drapp:latest dockerhub.paziresh24.com/drapp:prev-latest
+      shell: docker tag dockerhub.paziresh24.com/drapp-local:latest dockerhub.paziresh24.com/drapp-local:prev-latest
 
     - name: pull
       docker_compose:
