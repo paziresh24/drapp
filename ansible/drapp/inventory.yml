@@ -17,8 +17,11 @@ all:
         77.81.76.66: # shahrood
           ansible_port: 2399
         192.168.114.4: # ghalbe tehran
-        #172.21.122.16: # hormozgan koodakan
-        #  ansible_port: 122
+        172.21.122.16: # hormozgan koodakan
+          ansible_port: 122
+        109.162.255.195: #Hazrate Rasool
+        5.190.116.236: #larestan
+          ansible_password: '{{ lookup("env", "ANSIBLE_LARESTAN_PASSWORD") }}'
       vars:
         ansible_user: root
         ansible_python_interpreter: /usr/bin/python3
