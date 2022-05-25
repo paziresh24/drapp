@@ -4,7 +4,7 @@
     @include gap(1.5rem, false);
     color: $color-text;
     margin: auto;
-    margin-top: 5rem;
+    margin-top: 1rem;
     padding: 0 15px;
     max-width: 678px;
 
@@ -16,6 +16,7 @@
     }
 
     .get-more-feedback {
+        font-size: 0.85rem;
         p {
             margin-bottom: 1rem;
         }
@@ -23,7 +24,7 @@
         .description {
             margin-top: 0.5rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-align: justify;
         }
 
@@ -65,7 +66,7 @@
                 border-radius: 0.4rem;
                 align-items: center;
                 width: max-content;
-                font-size: 1rem;
+                font-size: 0.8rem;
                 font-weight: 500;
                 display: flex;
 
@@ -75,7 +76,7 @@
                     justify-content: center;
                     text-align: center;
                     background: #ff5252;
-                    font-size: 0.9rem;
+                    font-size: 0.8rem;
                     font-weight: 400;
                     color: #fff;
                     line-height: 1;
@@ -83,7 +84,7 @@
                     padding: 0 0.5rem;
                     min-width: 1.5rem;
                     min-height: 1.5rem;
-                    margin-right: 1rem;
+                    margin-right: 0.5rem;
                 }
             }
         }
@@ -92,6 +93,7 @@
             text-decoration: underline;
             color: $color-text;
             font-size: 0.9rem;
+            font-weight: 500;
         }
     }
 }

@@ -5,6 +5,9 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { EmptyState } from '@paziresh24/shared/ui/emptyState';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
+import { useEffect } from 'react';
+import queryString from 'query-string';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Feedbacks = () => {
     const [info] = useDrApp();
@@ -18,11 +21,20 @@ const Feedbacks = () => {
         return noReplyComment.length;
     };
 
+    useEffect(() => {
+        if (window.location.search) {
+            getSplunkInstance().sendEvent({
+                group: 'doctor interaction',
+                type: 'doctor interaction',
+                event: queryString.parse(window.location.search)
+            });
+        }
+    }, []);
+
     return (
         <div className={styles['wrapper']}>
             {!getFeedbacks.isLoading && (
                 <>
-                    <h3 className="text-lg font-bold">نظرات بیماران</h3>
                     {getFeedbacks.data && (
                         <div className={styles['head-wrap']}>
                             <div className={styles['badge-wrap']}>
