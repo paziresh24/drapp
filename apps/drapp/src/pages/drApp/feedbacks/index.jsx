@@ -26,7 +26,7 @@ const Feedbacks = () => {
             getSplunkInstance().sendEvent({
                 group: 'doctor interaction',
                 type: 'doctor interaction',
-                event: queryString.parse(window.location.search)
+                event: { action: 'load', ...queryString.parse(window.location.search) }
             });
         }
     }, []);
