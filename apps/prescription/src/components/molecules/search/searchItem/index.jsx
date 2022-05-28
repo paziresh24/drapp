@@ -14,6 +14,7 @@ const SearchItem = props => {
         props.setSelectItem({
             id: props.id,
             name: props.title,
+            code: props.serviceCode,
             defaultValue: {
                 count: props.default?.count ?? props.count ?? null,
                 use_time: props.default?.use_time ?? props.use_time?.id ?? null,

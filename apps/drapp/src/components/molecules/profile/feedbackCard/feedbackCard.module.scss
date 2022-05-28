@@ -13,11 +13,11 @@
         .info-wrapper__row {
             display: flex;
             align-items: center;
-            @include gap(1rem);
+            @include gap(0.5rem);
 
             img {
-                width: 3.5rem;
-                height: 3.5rem;
+                width: 2.6rem;
+                height: 2.6rem;
                 border-radius: 100%;
             }
 
@@ -27,7 +27,7 @@
                 align-items: unset;
 
                 .date {
-                    font-size: 0.95rem;
+                    font-size: 0.8rem;
                     opacity: 0.8;
                     font-weight: 400;
                 }
@@ -37,6 +37,7 @@
 
     .feedback-text {
         font-weight: 500;
+        font-size: 0.9rem;
     }
 
     .actionWrapper {
@@ -49,7 +50,7 @@
             display: flex;
             align-items: center;
             color: #27bda0;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             @include gap(0.5rem);
             cursor: pointer;
 

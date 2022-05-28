@@ -57,7 +57,7 @@ const Frequent = ({
                                 default={item?.default ?? []}
                                 selectHoverId={i}
                                 selectHover={selectHover}
-                                serviceCode={item.wsSrvCode}
+                                serviceCode={item.service.code}
                                 serviceType={item.serviceType}
                             />
                         ) : (
@@ -70,7 +70,7 @@ const Frequent = ({
                                 shape={item?.service.shape ?? null}
                                 selectHoverId={i}
                                 selectHover={selectHover}
-                                serviceCode={item.nationalNumber}
+                                serviceCode={item.service.code}
                                 serviceType={item.serviceType}
                             />
                         )
