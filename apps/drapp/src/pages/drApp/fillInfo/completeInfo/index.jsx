@@ -9,6 +9,7 @@ import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useEffect } from 'react';
+import Container from '@mui/material/Container';
 
 const CompleteInfo = () => {
     const [info] = useDrApp();
@@ -75,7 +76,10 @@ const CompleteInfo = () => {
     };
 
     return (
-        <div className={styles['wrapper']}>
+        <Container
+            maxWidth="sm"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+        >
             <form className={styles['form']} onSubmit={centerInfoSubmit(updateCenter)}>
                 <div className={styles['register-form']}>
                     <span className={styles['title']}>راه اندازی نوبت دهی مطب</span>
@@ -127,7 +131,7 @@ const CompleteInfo = () => {
                     </FixedWrapBottom>
                 </div>
             </form>
-        </div>
+        </Container>
     );
 };
 

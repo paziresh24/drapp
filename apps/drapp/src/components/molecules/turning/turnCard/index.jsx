@@ -329,7 +329,10 @@ const TurnCard = ({
                                 aria-hidden
                                 style={{ cursor: 'pointer' }}
                             >
-                                <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                                <ChevronIcon
+                                    color="#0070f3"
+                                    dir={isDetailsOpen ? 'top' : 'bottom'}
+                                />
                             </div>
                             {turn.prescription?.insuranceType === 'salamat' &&
                                 turn.prescription?.salamat_prescription?.isReference && (

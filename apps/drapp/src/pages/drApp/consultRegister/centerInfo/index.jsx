@@ -13,6 +13,7 @@ import Select from '@paziresh24/shared/ui/select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { InfoIcon } from '@paziresh24/shared/icon';
+import Container from '@mui/material/Container';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CenterInfo = () => {
@@ -55,7 +56,11 @@ const CenterInfo = () => {
     };
 
     return (
-        <div className={styles['wrapper']}>
+        <Container
+            maxWidth="sm"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+        >
+            {' '}
             <div className={styles['register-form']}>
                 <div className={styles['form-control']}>
                     <div className="flex space-s-2 w-full">
@@ -115,7 +120,7 @@ const CenterInfo = () => {
                     </Button>
                 </FixedWrapBottom>
             </div>
-        </div>
+        </Container>
     );
 };
 

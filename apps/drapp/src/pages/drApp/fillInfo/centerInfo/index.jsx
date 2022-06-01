@@ -10,6 +10,7 @@ import { useCenterInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import provincesData from '@paziresh24/constants/province.json';
 import cityData from '@paziresh24/constants/city.json';
 import Select from '@paziresh24/shared/ui/select';
+import Container from '@mui/material/Container';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CenterInfo = () => {
@@ -65,7 +66,10 @@ const CenterInfo = () => {
     };
 
     return (
-        <div className={styles['wrapper']}>
+        <Container
+            maxWidth="sm"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+        >
             <form className={styles['form']} onSubmit={centerInfoSubmit(updateCenter)}>
                 <div className={styles['register-form']}>
                     <span className={styles['sub-title']}>
@@ -129,7 +133,7 @@ const CenterInfo = () => {
                     </FixedWrapBottom>
                 </div>
             </form>
-        </div>
+        </Container>
     );
 };
 

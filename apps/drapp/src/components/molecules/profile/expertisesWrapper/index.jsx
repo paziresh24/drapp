@@ -126,7 +126,7 @@ export const ExpertisesWrapper = props => {
                     }
                     variant="secondary"
                     square
-                    buttonIcon={<PlusLineIcon />}
+                    buttonIcon={<PlusLineIcon color="#0070f3" />}
                 />
             </div>
         </>

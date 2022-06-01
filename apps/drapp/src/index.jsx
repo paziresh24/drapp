@@ -8,7 +8,16 @@ import { Provider } from '@paziresh24/shared/ui/provider';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { TourProvider } from '@reactour/tour';
 import { ThemeProvider } from '@mui/material';
-import theme from '../mui.theme';
+import theme from '../theme';
+import rtlPlugin from 'stylis-plugin-rtl';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import { prefixer } from 'stylis';
+
+const cacheRtl = createCache({
+    key: 'muirtl',
+    stylisPlugins: [prefixer, rtlPlugin]
+});
 
 const steps = [
     {
@@ -30,11 +39,13 @@ ReactDOM.render(
             return;
         }}
     >
-        <ThemeProvider theme={theme}>
-            <Provider>
-                <App />
-            </Provider>
-        </ThemeProvider>
+        <CacheProvider value={cacheRtl}>
+            <ThemeProvider theme={theme}>
+                <Provider>
+                    <App />
+                </Provider>
+            </ThemeProvider>
+        </CacheProvider>
     </TourProvider>,
     document.getElementById('root')
 );

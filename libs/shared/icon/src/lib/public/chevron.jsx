@@ -6,7 +6,7 @@ const Chevron = ({
     width = '7',
     height = '11',
     style,
-    className = undefined,
+    className = '',
     onClick = undefined
 }) => {
     return (

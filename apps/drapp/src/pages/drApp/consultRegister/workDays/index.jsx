@@ -13,8 +13,8 @@ import { useDuration } from '@paziresh24/context/drapp/duration';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import isEmpty from 'lodash/isEmpty';
 import { useConsult } from '@paziresh24/context/drapp/consult';
+import Container from '@mui/material/Container';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 
 const canvasStyles = {
     position: 'absolute',
@@ -137,19 +137,29 @@ const WorkDays = () => {
 
     return (
         <>
-            <div id={styles['workDaysPage']}>
-                <span>روز و ساعت کاری ویزیت آنلاین خود را مشخص کنید.</span>
-                <div className={styles['time_wrapper']}>
-                    {weekDays.map(day => (
-                        <TimeRow key={day.id} day={day} data={{}} />
-                    ))}
+            <Container
+                maxWidth="sm"
+                className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+            >
+                <div id={styles['workDaysPage']}>
+                    <span>روز و ساعت کاری ویزیت آنلاین خود را مشخص کنید.</span>
+                    <div className={styles['time_wrapper']}>
+                        {weekDays.map(day => (
+                            <TimeRow key={day.id} day={day} data={{}} />
+                        ))}
+                    </div>
+                    <FixedWrapBottom>
+                        <Button
+                            type="submit"
+                            block
+                            onClick={submit}
+                            loading={activeConsult.isLoading}
+                        >
+                            فعالسازی
+                        </Button>
+                    </FixedWrapBottom>
                 </div>
-                <FixedWrapBottom>
-                    <Button type="submit" block onClick={submit} loading={activeConsult.isLoading}>
-                        فعالسازی
-                    </Button>
-                </FixedWrapBottom>
-            </div>
+            </Container>
             <Modal isOpen={success} noHeader noBodyPad fullPage>
                 <div className={styles['hero-wrapper']}>
                     <div className={styles['hero-content']}>

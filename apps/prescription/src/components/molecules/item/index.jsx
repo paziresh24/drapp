@@ -151,7 +151,7 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                             {turn.pdf && (
                                 <Button
                                     size="small"
-                                    icon={<ChevronIcon color="#27bda0" />}
+                                    icon={<ChevronIcon color="#0070f3" />}
                                     variant="secondary"
                                     onClick={prescription}
                                 >

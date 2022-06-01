@@ -24,18 +24,6 @@
         }
     }
 
-    @media screen and (max-width: 992px) {
-        .inner {
-            flex-grow: 1;
-            overflow: auto;
-            position: relative;
-
-            &.turning {
-                max-width: 100%;
-            }
-        }
-    }
-
     .inner {
         flex-grow: 1;
         height: 100%;
@@ -61,5 +49,17 @@
             max-width: 100%;
         }
         width: 100%;
+    }
+
+    @media screen and (max-width: 992px) {
+        .inner {
+            flex-grow: 1;
+            overflow: auto;
+            position: relative;
+
+            &.turning {
+                max-width: 100%;
+            }
+        }
     }
 }

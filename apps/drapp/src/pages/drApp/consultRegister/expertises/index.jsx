@@ -5,6 +5,7 @@ import { useDrApp } from '@paziresh24/context/drapp/index';
 import { useEffect, useState } from 'react';
 import { Expertises } from '@components/molecules/profile/expertises';
 import { useCreateExpertise, useUpdateExpertise } from '@paziresh24/hooks/drapp/profile';
+import Container from '@mui/material/Container';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
@@ -119,7 +120,10 @@ const ExpertisesPage = () => {
     };
 
     return (
-        <div className={styles['wrapper']}>
+        <Container
+            maxWidth="sm"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+        >
             <div className={styles['register-form']}>
                 <div className={styles['form-control']}>
                     {expertises.length > 0 &&
@@ -150,7 +154,7 @@ const ExpertisesPage = () => {
                     </Button>
                 </FixedWrapBottom>
             </div>
-        </div>
+        </Container>
     );
 };
 

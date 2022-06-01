@@ -2,7 +2,7 @@ import styles from 'assets/styles/pages/drApp/index.module.scss';
 import { Header } from '@paziresh24/shared/ui/header';
 import { SideBar } from '../home/sideBar';
 import { useDrApp } from '@paziresh24/context/drapp';
-import BottomBar from '../bottomBar';
+import BottomBar from '../bottomBar/bottomBar';
 import { isMobile } from 'react-device-detect';
 
 const Wrapper = ({ children }) => {
