@@ -18,6 +18,7 @@ import queryString from 'query-string';
 import { useLearnTour } from '@paziresh24/hooks/learn';
 import range from 'lodash/range';
 import { useSettingTurns } from './settingTurns.context';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const TimeInput = ({ placeholder, onBlur, value }) => {
     const [openModal, setOpenModal] = useState(false);
@@ -161,6 +162,10 @@ const StatusBar = () => {
             },
             {
                 onSuccess: data => {
+                    getSplunkInstance().sendEvent({
+                        group: 'setting',
+                        type: 'delete-book'
+                    });
                     if (data?.status === 'NO_RECORD') {
                         return toast.error('نوبتی یافت نشد.');
                     }
@@ -250,6 +255,10 @@ const StatusBar = () => {
             },
             {
                 onSuccess: data => {
+                    getSplunkInstance().sendEvent({
+                        group: 'setting',
+                        type: 'move-book'
+                    });
                     if (data?.status === 'NO_RECORD') {
                         return toast.error('نوبتی یافت نشد.');
                     }
@@ -350,8 +359,16 @@ const StatusBar = () => {
             {
                 onError: err => {
                     setVacationConfirm(true);
+                    getSplunkInstance().sendEvent({
+                        group: 'setting',
+                        type: 'vacation'
+                    });
                 },
                 onSuccess: data => {
+                    getSplunkInstance().sendEvent({
+                        group: 'setting',
+                        type: 'vacation'
+                    });
                     if (data?.status === 'NO_RECORD') {
                         return toast.error('نوبتی یافت نشد.');
                     }
@@ -400,6 +417,10 @@ const StatusBar = () => {
                                     group="actionType"
                                     title="ﺣﺬف ﻧﻮﺑﺖ ﻫﺎ"
                                     onChange={() => {
+                                        getSplunkInstance().sendEvent({
+                                            group: 'click-setting-menu',
+                                            type: 'delete-book'
+                                        });
                                         setTabName('delete');
                                         setModalTitle('حذف نوبت');
                                     }}
@@ -409,6 +430,10 @@ const StatusBar = () => {
                                     group="actionType"
                                     title="جابجایی نوبت ها"
                                     onChange={() => {
+                                        getSplunkInstance().sendEvent({
+                                            group: 'click-setting-menu',
+                                            type: 'move-book'
+                                        });
                                         setTabName('move');
                                         setModalTitle('جابجایی نوبت');
                                     }}
@@ -418,6 +443,10 @@ const StatusBar = () => {
                                     group="actionType"
                                     title="اعلام مرخصی"
                                     onChange={() => {
+                                        getSplunkInstance().sendEvent({
+                                            group: 'click-setting-menu',
+                                            type: 'vacation'
+                                        });
                                         setTabName('vacation');
                                         setModalTitle('اعلام مرخصی');
                                     }}

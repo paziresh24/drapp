@@ -12,12 +12,12 @@ import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
 import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useSupport } from '@paziresh24/context/core/supportChat';
-// import { useSettingTurns } from '@paziresh24/components/doctorApp/turning/statusBar/settingTurns.context';
+import { useSettingTurns } from 'apps/drapp/src/components/molecules/turning/statusBar/settingTurns.context.js';
 
 export const MainMenuData = () => {
     const [info] = useDrApp();
     const getFeedbacks = useGetFeedbacks({ center_id: info.center.id });
-    // const [, setIsOpen] = useSettingTurns();
+    const [, setIsOpen] = useSettingTurns();
 
     const calculateNoReplyComments = () => {
         if (!getFeedbacks.data.result) return 0;
@@ -49,7 +49,7 @@ export const MainMenuData = () => {
         },
         {
             title: 'تنظیمات نوبت دهی',
-            // onClick: () => setIsOpen(true),
+            onClick: () => setIsOpen(true),
             icon: <SettingIcon color="#3F3F79" />
         },
         {
