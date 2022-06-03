@@ -18,18 +18,25 @@ import { ChevronIcon } from '@paziresh24/shared/icon';
 import { isDesktop } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
 import uniq from 'lodash/uniq';
+import moment from 'jalali-moment';
 
 const initialHours = {
     from: '09:00',
     to: '21:00'
 };
 
+const convertTimeToTimeStamp = (time: string) => {
+    const [hour, minute] = time.split(':');
+    return +moment()
+        .hour(+hour)
+        .minute(+minute)
+        .unix();
+};
+
 const workHoursValidation = (workHours: Day[]) => {
     const isValidTime = workHours.every(workHour => {
         const { from, to } = workHour;
-        const fromTime = new Date(`1970-01-01 ${from}`);
-        const toTime = new Date(`1970-01-01 ${to}`);
-        return fromTime < toTime;
+        return convertTimeToTimeStamp(from) < convertTimeToTimeStamp(to);
     });
 
     return isValidTime;
@@ -45,12 +52,12 @@ const oldAndNewWorkHours = ({
     const confilitedDays: DayIds[] = [];
     workHours.forEach(workHour => {
         const { from, to } = workHour;
-        const fromTime = new Date(`1970-01-01 ${from}`).getTime();
-        const toTime = new Date(`1970-01-01 ${to}`).getTime();
+        const fromTime = convertTimeToTimeStamp(from);
+        const toTime = convertTimeToTimeStamp(to);
         prevWorkHours.forEach(prevWorkHour => {
             const { from: prevFrom, to: prevTo } = prevWorkHour;
-            const prevFromTime = new Date(`1970-01-01 ${prevFrom}`).getTime();
-            const prevToTime = new Date(`1970-01-01 ${prevTo}`).getTime();
+            const prevFromTime = convertTimeToTimeStamp(prevTo);
+            const prevToTime = convertTimeToTimeStamp(prevFrom);
             if (workHour.day === prevWorkHour.day) {
                 if (
                     (fromTime < prevFromTime && toTime <= prevFromTime) ||
@@ -87,19 +94,14 @@ const WorkHours = () => {
     const handleAdd = useCallback(() => {
         if (!days.length) return;
 
-        const getNotSelectDaysInTime = (day: DayIds) =>
-            !workHours.some(
-                workHour =>
-                    workHour.day === day && workHour.from === hours.from && workHour.to === hours.to
-            );
-
-        const workDays = days.filter(getNotSelectDaysInTime).map(day => ({
+        const workDays = days.map(day => ({
             day,
             ...hours
         }));
 
-        if (!workHoursValidation(workDays))
+        if (!workHoursValidation(workDays)) {
             return toast.error('زمان های کاری باید به صورت صحیح وارد شود.');
+        }
 
         if (oldAndNewWorkHours({ workHours: workDays, prevWorkHours: workHours }).length > 0) {
             return oldAndNewWorkHours({
@@ -159,7 +161,7 @@ const WorkHours = () => {
                     بازگشت
                 </Button>
             )}
-            <Stack className="space-y-5 overflow-auto pb-32 md:pb-0">
+            <Stack className="space-y-5 pb-32 md:pb-0">
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
                 <Button onClick={handleAdd} variant="contained" className="self-end">

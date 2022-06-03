@@ -51,7 +51,7 @@ const Result = (props: Props) => {
                 >
                     <Stack direction="row" spacing={0.5} alignItems="center">
                         <IconButton onClick={() => removeWorkHours({ ...workDay })}>
-                            <CloseIcon className="w-4 h-4 min-w-min" />
+                            <CloseIcon className="w-4 h-4" />
                         </IconButton>
                         <Typography variant="body2" component="span">
                             {workDay.days
