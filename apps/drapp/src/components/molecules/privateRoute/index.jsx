@@ -52,19 +52,12 @@ const PrivateRoute = props => {
 
     const isProduction = process.env.NODE_ENV === 'production';
     const isMainDomain = window.location.host === window._env_.P24_MAIN_DOMAIN;
-
     useEffect(() => {
         setPage(props);
         if (isEmpty(info) && !isEmpty(getToken())) {
             props.path !== '/create-center' && centerInfo.refetch();
             getUserGoftino.refetch();
             window._env_.P24_STATISTICS_API && getLevels.refetch();
-            if (isProduction && isMainDomain) {
-                // ChatSupport.init(); props.path !== '/create-center' &&
-            }
-            if (!isProduction) {
-                // ChatSupport.init();
-            }
         }
     }, []);
 
@@ -244,28 +237,11 @@ const PrivateRoute = props => {
                 )}
             </div>
             <LearnControl />
-            <Modal title="تغییرات نسخه جدید" isOpen={changeLogModal} onClose={setChangeLogModal}>
-                <span
-                    style={{
-                        whiteSpace: 'pre-line',
-                        lineHeight: '3.5rem',
-                        borderRight: '3px solid #c5d7e682',
-                        paddingRight: '1.5rem',
-                        color: '#76838c',
-                        fontWeight: '500',
-                        fontSize: ' 1.45rem'
-                    }}
-                >
+            <Modal title="تغییرات اخیر" isOpen={changeLogModal} onClose={setChangeLogModal}>
+                <span className="text-gray-500 font-medium text-sm pr-3 whitespace-pre-line leading-8 border-r-2 border-solid border-gray-300">
                     {getLatestVersion.isSuccess && getLatestVersion.data.changeLog}
                 </span>
-                <span
-                    style={{
-                        margin: '0 auto',
-                        color: '#76838c60',
-                        fontWeight: '500',
-                        fontSize: ' 1.45rem'
-                    }}
-                >
+                <span className="text-sm font-medium text-gray-300 mx-auto">
                     {getLatestVersion.isSuccess && getLatestVersion.data.name}
                 </span>
             </Modal>

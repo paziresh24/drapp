@@ -310,6 +310,10 @@ const TurnCard = ({
         );
     };
 
+    const issuerType = turn.prescription?.patientAdditionalData?.accountValidto
+        ? turn.prescription?.patientAdditionalData?.issuerType ?? '-'
+        : 'فاقد بیمه (آزاد)';
+
     return (
         <>
             <Loading show={addPrescription.isLoading} simple />
@@ -412,8 +416,7 @@ const TurnCard = ({
                         {!turn.prescription && '-'}
                     </td>
                     <td data-label="بیمه بیمار:">
-                        {turn.prescription?.insuranceType === 'tamin' && <span>تامین اجتماعی</span>}
-                        {turn.prescription?.insuranceType === 'salamat' && <span>سلامت</span>}
+                        {issuerType}
                         {!turn.prescription && '-'}
                     </td>
                     <td data-label="زمان نوبت:">
