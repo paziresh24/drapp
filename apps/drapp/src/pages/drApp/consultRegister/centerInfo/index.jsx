@@ -65,7 +65,7 @@ const CenterInfo = () => {
                 <div className={styles['form-control']}>
                     <div className="flex space-s-2 w-full">
                         <div className="flex flex-col w-full space-y-3">
-                            <span>مدت زمان پاسخگویی پزشک</span>
+                            <span className="text-sm">مدت زمان پاسخگویی پزشک</span>
 
                             <Select
                                 placeholder="تا 2 روز"
@@ -83,7 +83,7 @@ const CenterInfo = () => {
                         </ReactTooltip>
                         <div className="flex flex-col w-full space-y-3">
                             <div className="flex space-s-2">
-                                <span className="inline">مبلغ هر ویزیت</span>
+                                <span className="inline text-sm">مبلغ هر ویزیت</span>
                                 <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
                             </div>
 
@@ -104,9 +104,9 @@ const CenterInfo = () => {
                         onChange={e => setWhatsAppCell(e.target.value)}
                     />
                 </div>
-                <div className="bg-[#eaf0f4] rounded-lg p-5 flex flex-col space-y-3">
-                    <span className="text-[#586a79] leading-[1rem]">
-                        <InfoIcon color="#586a79" className="inline-block ml-3" />
+                <div className="bg-[#eaf0f4] rounded-lg p-5 flex flex-col space-y-3 text-sm">
+                    <span className="text-[#586a79]">
+                        <InfoIcon color="#586a79" className="inline-block ml-2" />
                         لازم به ذکر است که این شماره در دسترس بیماران قرار خواهد گرفت.
                     </span>
                     <span className="font-medium text-[#586a79]">

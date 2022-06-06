@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import RadioQuestionBox from '@paziresh24/shared/ui/radioQuestionBox';
@@ -8,16 +8,35 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import SelectTime from '../../../components/molecules/setting/duration/selectTime';
 import { useWorkHoursStore } from '../../../store/workhours.store';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Duration = () => {
     const router = useHistory();
-    const isAnotherProvider = useWorkHoursStore(state => state.isAnotherProvider);
-    const setIsAnotherProvider = useWorkHoursStore(state => state.setIsAnotherProvider);
+    const durationValue = useWorkHoursStore(state => state.duration);
+    const [isAnotherProvider, setIsAnotherProvider] = useWorkHoursStore(state => [
+        state.isAnotherProvider,
+        state.setIsAnotherProvider
+    ]);
 
     const handleQuestion = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
         setIsAnotherProvider(value === 'true');
     }, []);
+
+    const handleNext = useCallback(() => {
+        getSplunkInstance().sendEvent({
+            group: 'duration',
+            type: isAnotherProvider ? 'other-booking-channel' : 'only-p24'
+        });
+        getSplunkInstance().sendEvent({
+            group: 'duration',
+            type: 'time-of-visit',
+            event: {
+                value: durationValue
+            }
+        });
+        router.push(`/setting/workhours${window.location.search}`);
+    }, [durationValue, isAnotherProvider]);
 
     const questionProps = {
         title: 'آیا با سایت های دیگر نوبت دهی اینترنتی همکاری دارید؟',
@@ -47,12 +66,7 @@ const Duration = () => {
                 <RadioQuestionBox onChange={handleQuestion} {...questionProps} />
 
                 <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        size="large"
-                        onClick={() => router.push('/setting/workhours')}
-                    >
+                    <Button fullWidth variant="contained" size="large" onClick={handleNext}>
                         ثبت ساعت کاری
                     </Button>
                 </FixedWrapBottom>

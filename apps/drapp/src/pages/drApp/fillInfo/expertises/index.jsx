@@ -100,7 +100,7 @@ const ExpertisesPage = () => {
         Promise.allSettled(promises)
             .then(() => {
                 setLoading(false);
-                history.push('/setting/duration');
+                history.push('/setting/duration?action=enable-booking');
             })
             .catch(() => {
                 setLoading(false);

@@ -19,6 +19,7 @@ import { isDesktop } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
 import uniq from 'lodash/uniq';
 import moment from 'jalali-moment';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const initialHours = {
     from: '09:00',
@@ -56,8 +57,8 @@ const oldAndNewWorkHours = ({
         const toTime = convertTimeToTimeStamp(to);
         prevWorkHours.forEach(prevWorkHour => {
             const { from: prevFrom, to: prevTo } = prevWorkHour;
-            const prevFromTime = convertTimeToTimeStamp(prevTo);
-            const prevToTime = convertTimeToTimeStamp(prevFrom);
+            const prevFromTime = convertTimeToTimeStamp(prevFrom);
+            const prevToTime = convertTimeToTimeStamp(prevTo);
             if (workHour.day === prevWorkHour.day) {
                 if (
                     (fromTime < prevFromTime && toTime <= prevFromTime) ||
@@ -86,6 +87,10 @@ const WorkHours = () => {
     const getWorkHoursRequest = useGetWorkHours({ center_id: docotorInfo.center.id });
 
     useEffect(() => {
+        getWorkHoursRequest.refetch();
+    }, []);
+
+    useEffect(() => {
         if (getWorkHoursRequest.isSuccess) {
             setWorkHours(getWorkHoursRequest.data.data.workhours);
         }
@@ -103,11 +108,13 @@ const WorkHours = () => {
             return toast.error('زمان های کاری باید به صورت صحیح وارد شود.');
         }
 
-        if (oldAndNewWorkHours({ workHours: workDays, prevWorkHours: workHours }).length > 0) {
-            return oldAndNewWorkHours({
-                workHours: workDays,
-                prevWorkHours: workHours
-            }).forEach(dayId => {
+        const confilitedDays = oldAndNewWorkHours({
+            workHours: workDays,
+            prevWorkHours: workHours
+        });
+
+        if (confilitedDays.length > 0) {
+            return confilitedDays.forEach(dayId => {
                 toast.error(
                     `روز ${
                         weekDays.find(day => day.id === dayId)?.name
@@ -133,6 +140,13 @@ const WorkHours = () => {
 
             {
                 onError: (error: any) => {
+                    getSplunkInstance().sendEvent({
+                        group: 'workdays_active_booking',
+                        type: 'unsuccessful',
+                        event: {
+                            error: error.response.data
+                        }
+                    });
                     Object.values(error.response.data.errors).forEach((messages: any) => {
                         messages.forEach((message: string) => {
                             toast.error(message);
@@ -140,7 +154,13 @@ const WorkHours = () => {
                     });
                 },
                 onSuccess: () => {
+                    getSplunkInstance().sendEvent({
+                        group: 'workdays_active_booking',
+                        type: 'successful'
+                    });
                     toast.success('ساعت کاری شما ذخیره شد.');
+                    if (window.location.search.includes('action'))
+                        return window.location.assign('/');
                     router.push('/');
                 }
             }
