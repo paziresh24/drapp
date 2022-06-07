@@ -162,6 +162,10 @@ const PrescriptionCard = ({
         </Button>
     );
 
+    const issuerType = turn.patientAdditionalData?.accountValidto
+        ? turn.patientAdditionalData?.issuerType ?? '-'
+        : 'فاقد بیمه (آزاد)';
+
     return (
         <>
             <Default>
@@ -265,13 +269,7 @@ const PrescriptionCard = ({
                             </>
                         )}
                     </td>
-                    <td data-label="بیمه بیمار:">
-                        {turn.insuranceType === 'tamin' ? (
-                            <span>تامین اجتماعی</span>
-                        ) : (
-                            <span>سلامت</span>
-                        )}
-                    </td>
+                    <td data-label="بیمه بیمار:">{issuerType}</td>
                     <td data-label="زمان نوبت:">
                         <span className={styles['value']}>
                             {moment(new Date(turn.created_at).getTime())
