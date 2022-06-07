@@ -14,6 +14,9 @@ import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
 import { CSSTransition } from 'react-transition-group';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
+import { isMobile } from 'react-device-detect';
 
 const Header = () => {
     const history = useHistory();
@@ -61,7 +64,14 @@ const Header = () => {
     return (
         <>
             <header className="flex justify-between items-center h-16 bg-white px-3 pl-1 border-b border-solid border-[#e5e9f0] z-[8]">
-                <span className="font-bold pr-3">{page.title}</span>
+                <div>
+                    {!isMobile && (
+                        <IconButton onClick={() => setIsOpen(prev => !prev)}>
+                            <MenuIcon sx={{ fontSize: '20px', color: '#000' }}></MenuIcon>
+                        </IconButton>
+                    )}
+                    <span className="font-bold pr-3">{page.title}</span>
+                </div>
                 <div className="flex items-center">
                     <div className="hidden lg:flex items-center space-s-3">
                         <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
@@ -365,14 +375,6 @@ const Header = () => {
                         </Modal>
                     </div>
                 </div>
-
-                {isOpen && (
-                    <div
-                        className={styles['overlay']}
-                        onClick={() => setIsOpen(prevVal => !prevVal)}
-                        aria-hidden
-                    />
-                )}
             </header>
 
             <Modal title="پشتیبانی" isOpen={supportModal} onClose={setSupportModal}>

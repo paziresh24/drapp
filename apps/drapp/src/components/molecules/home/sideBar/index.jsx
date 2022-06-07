@@ -27,6 +27,8 @@ import { StatusBar } from '../../turning/statusBar';
 import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useTour } from '@reactour/tour';
+import Button from '@mui/material/Button';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
@@ -81,7 +83,7 @@ const SideBar = () => {
                     name: 'پراستفاده ها',
                     shouldShow: true,
                     icon: <StarIcon color="#3F3F79" />,
-                    link: '/favorite/templates',
+                    // link: '/favorite/templates',
                     subMenu: [
                         { name: 'نسخه پراستفاده', link: '/favorite/templates' },
                         { name: 'اقلام پراستفاده', link: '/favorite/service' }
@@ -182,8 +184,21 @@ const SideBar = () => {
         }
     }, [open, isDropDownOpen]);
 
+    const handleClickOutside = e => {
+        if (isDropDownOpen) {
+            setIsDropDownOpen(false);
+        }
+    };
+    useEffect(() => {
+        document.body.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.body.removeEventListener('click', handleClickOutside);
+        };
+    }, [isDropDownOpen]);
+
     return (
-        <div className="flex" onMouseLeave={() => setOpen(false)}>
+        <div className="flex">
             <div
                 style={{
                     paddingBottom: open ? '2rem' : '1rem',
@@ -191,58 +206,66 @@ const SideBar = () => {
                     width: open ? '18rem' : '4rem'
                 }}
                 className="bg-white flex flex-col py-3 px-1 gap-4 justify-between z-10 border border-left border-solid border-[#e5e9f0] transition-all duration-300 h-screen"
-                onMouseOver={() => setOpen(true)}
             >
                 <div className="flex flex-col gap-6 w-full">
                     <div
                         style={{
-                            marginRight: open ? '2rem' : 0
+                            marginRight: open ? '1rem' : 0
                         }}
-                        className="flex w-full self-center items-center transition-all duration-300 relative cursor-pointer"
-                        onMouseOver={() => open && setIsDropDownOpen(true)}
-                        onMouseLeave={() => setIsDropDownOpen(false)}
+                        className="relative"
                     >
-                        <div className="flex flex-col w-[4.5rem] h-[4.5rem] justify-center items-center">
-                            <img
-                                src={
-                                    info.doctor.image
-                                        ? baseURL('UPLOADER') + info.doctor.image
-                                        : null ?? NoImage
-                                }
-                                style={{
-                                    minWidth: open ? '4.5rem' : '2.5rem',
-                                    width: open ? '4.5rem' : '2.5rem',
-                                    height: open ? '4.5rem' : '2.5rem'
-                                }}
-                                className="self-center overflow-hidden rounded-full transition-all duration-300"
-                                alt="avatar"
-                            />
-                        </div>
-
                         <div
-                            style={{
-                                opacity: open ? '1' : '0',
-                                right: open ? '5.5rem' : '0',
-                                transitionDelay: !open ? 'unset' : '0.2s',
-                                width: !open && '0',
-                                overflow: !open && 'hidden'
+                            onClick={e => {
+                                e.stopPropagation();
+                                setIsDropDownOpen(prev => !prev);
                             }}
-                            className="flex flex-col justify-center transition-all duration-300 absolute text-[#3F3F79]"
+                            className="flex w- self-center items-center transition-all duration-300 cursor-pointer"
                         >
-                            <span className="font-bold line-clamp-1 w-11/12">
-                                {`${info.doctor.name} ${info.doctor.family}`}
-                            </span>
-                            <span className="text-sm font-normal mt-2">
-                                {info.doctor.expertises.length > 0 && (
-                                    <span className=" line-clamp-1 w-60">
-                                        {info.doctor.expertises[0].alias_title
-                                            ? info.doctor.expertises[0].alias_title
-                                            : `${info.doctor.expertises[0].degree?.name ?? ''} ${
-                                                  info.doctor.expertises[0].expertise?.name ?? ''
-                                              }`}
-                                    </span>
-                                )}{' '}
-                            </span>
+                            <div className="flex flex-col w-[4.5rem] h-[4.5rem] justify-center items-center">
+                                <img
+                                    src={
+                                        info.doctor.image
+                                            ? baseURL('UPLOADER') + info.doctor.image
+                                            : null ?? NoImage
+                                    }
+                                    style={{
+                                        minWidth: open ? '4.5rem' : '2.5rem',
+                                        width: open ? '4.5rem' : '2.5rem',
+                                        height: open ? '4.5rem' : '2.5rem'
+                                    }}
+                                    className="self-center overflow-hidden rounded-full transition-all duration-300"
+                                    alt="avatar"
+                                />
+                            </div>
+
+                            <div
+                                style={{
+                                    opacity: open ? '1' : '0',
+                                    right: open ? '5.5rem' : '0',
+                                    transitionDelay: !open ? 'unset' : '0.2s',
+                                    width: !open && '0',
+                                    overflow: !open && 'hidden'
+                                }}
+                                className="flex flex-col justify-center transition-all duration-300 absolute text-[#3F3F79] w-40"
+                            >
+                                <span className="font-bold line-clamp-1 w-11/12">
+                                    {`${info.doctor.name} ${info.doctor.family}`}
+                                </span>
+                                <span className="text-sm font-normal mt-2">
+                                    {info.doctor.expertises.length > 0 && (
+                                        <span className="line-clamp-1">
+                                            {info.doctor.expertises[0].alias_title
+                                                ? info.doctor.expertises[0].alias_title
+                                                : `${
+                                                      info.doctor.expertises[0].degree?.name ?? ''
+                                                  } ${
+                                                      info.doctor.expertises[0].expertise?.name ??
+                                                      ''
+                                                  }`}
+                                        </span>
+                                    )}{' '}
+                                </span>
+                            </div>
                         </div>
 
                         <CSSTransition
@@ -261,7 +284,6 @@ const SideBar = () => {
                                 className={`${styles.items_dropdown} ${
                                     isDropDownOpen === 'open' ? styles.open : ''
                                 } ${isDropDownOpen === 'closing' ? styles.closing : ''}`}
-                                onMouseOver={() => setIsDropDownOpen(true)}
                             >
                                 <ul>
                                     <li
