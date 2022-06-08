@@ -57,6 +57,7 @@ const Button = props => {
 
 Button.propTypes = {
     variant: PropTypes.oneOf(['primary', 'secondary']).isRequired,
+    children: PropTypes.node,
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     onClick: PropTypes.func,
     loading: PropTypes.bool,

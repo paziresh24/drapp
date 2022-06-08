@@ -4,19 +4,18 @@
     @include gap(2rem, false);
     background: #fff;
     box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-    border-radius: 1rem;
-    padding: 1.5rem;
+    border-radius: 0.6rem;
+    padding: 1rem;
     font-weight: bold;
     font-size: 0.95rem;
     margin-top: 2rem;
     color: $color-text;
     position: relative;
     overflow: hidden;
-    // height: 67rem;
     margin-bottom: 8rem;
     max-width: 768px;
     margin: 0 auto;
-    margin-top: 5rem;
+    margin-top: 2rem;
 
     @media screen and (max-width: 992px) {
         margin-top: 0;
@@ -26,19 +25,13 @@
 
 #workDaysPage {
     display: flex;
-    margin-bottom: 8rem;
     flex-direction: column;
     @include gap(2rem, false);
     background: #fff;
-    box-shadow: 0 21px 30px rgba(37, 37, 71, 0.04);
-    border-radius: 1rem;
-    padding: 1rem;
     font-weight: bold;
     font-size: 0.95rem;
     color: $color-text;
     position: relative;
-    // height: 55.8rem;
-    overflow: hidden;
 }
 
 .time_wrapper {

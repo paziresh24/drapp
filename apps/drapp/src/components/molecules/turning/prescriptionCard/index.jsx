@@ -189,7 +189,10 @@ const PrescriptionCard = ({
                                     aria-hidden
                                     style={{ cursor: 'pointer' }}
                                 >
-                                    <ChevronIcon dir={isDetailsOpen ? 'top' : 'bottom'} />
+                                    <ChevronIcon
+                                        color="#0070f3"
+                                        dir={isDetailsOpen ? 'top' : 'bottom'}
+                                    />
                                 </div>
                             )}
 

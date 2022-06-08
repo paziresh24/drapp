@@ -85,7 +85,6 @@ const FillInfo = () => {
     return (
         <ConsultProvider>
             <div className={styles['wrapper']}>
-                <StepWrapper />
                 <Switch>
                     {routes.map(({ path, Component, exact }) => (
                         <Route key={path} exact={exact} path={path}>

@@ -89,7 +89,7 @@ const SelectDate = props => {
                     inputPlaceholder="Select a day"
                     minimumDate={props.minimumDate}
                     shouldHighlightWeekends
-                    colorPrimary="#27bda0"
+                    colorPrimary="#0070f3"
                     locale="fa"
                     calendarClassName={styles['calendarWrap']}
                 />

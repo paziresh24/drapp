@@ -456,7 +456,9 @@ const StatusBar = () => {
                                     group="actionType"
                                     title="تغییر ساعت کاری"
                                     onChange={() => {
-                                        history.push('/turning/setting');
+                                        info.center.id === '5532'
+                                            ? history.push('/turning/setting')
+                                            : history.push('/setting/duration');
                                         setMoveDeleteModal(false);
                                     }}
                                 />

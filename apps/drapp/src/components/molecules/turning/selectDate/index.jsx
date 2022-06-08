@@ -81,7 +81,7 @@ const SelectDate = props => {
                     onChange={setSelectedDay}
                     inputPlaceholder="یک روز انتخاب کنید"
                     shouldHighlightWeekends
-                    colorPrimary="#27bda0"
+                    colorPrimary="#0070f3"
                     locale="fa"
                     calendarClassName={styles['calendarWrap']}
                 />

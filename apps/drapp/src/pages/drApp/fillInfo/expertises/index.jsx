@@ -9,6 +9,7 @@ import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import Container from '@mui/material/Container';
 
 const ExpertisesPage = () => {
     const [info] = useDrApp();
@@ -99,7 +100,7 @@ const ExpertisesPage = () => {
         Promise.allSettled(promises)
             .then(() => {
                 setLoading(false);
-                history.push('/fill-info/work-days');
+                history.push('/setting/duration?action=enable-booking');
             })
             .catch(() => {
                 setLoading(false);
@@ -107,7 +108,10 @@ const ExpertisesPage = () => {
     };
 
     return (
-        <div className={styles['wrapper']}>
+        <Container
+            maxWidth="sm"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+        >
             <div className={styles['register-form']}>
                 <div className={styles['form-control']}>
                     {expertises.length > 0 &&
@@ -135,7 +139,7 @@ const ExpertisesPage = () => {
                     </Button>
                 </FixedWrapBottom>
             </div>
-        </div>
+        </Container>
     );
 };
 

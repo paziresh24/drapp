@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import styles from 'assets/styles/pages/drApp/completeInfo.module.scss';
 import TextField from '@paziresh24/shared/ui/textField';
 import Button from '@paziresh24/shared/ui/button';
@@ -6,10 +7,10 @@ import { useHistory } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
+import Container from '@mui/material/Container';
 import { toast } from 'react-toastify';
 import Select from '@paziresh24/shared/ui/select';
 import { useConsult } from '@paziresh24/context/drapp/consult';
-import { useRef, useState } from 'react';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CompleteInfo = () => {
@@ -71,7 +72,11 @@ const CompleteInfo = () => {
     };
 
     return (
-        <div className={styles['wrapper']}>
+        <Container
+            maxWidth="sm"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+        >
+            {' '}
             <form className={styles['form']} onSubmit={centerInfoSubmit(updateCenter)}>
                 <div className={styles['register-form']}>
                     <span className={styles['title']}>فعال سازی ویزیت آنلاین</span>
@@ -124,7 +129,7 @@ const CompleteInfo = () => {
                     </FixedWrapBottom>
                 </div>
             </form>
-        </div>
+        </Container>
     );
 };
 

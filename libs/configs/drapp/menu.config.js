@@ -12,7 +12,7 @@ import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
 import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useSupport } from '@paziresh24/context/core/supportChat';
-import { useSettingTurns } from 'apps/drapp/src/components/molecules/turning/statusBar/settingTurns.context.js';
+import { useSettingTurns } from 'apps/drapp/src/components/molecules/turning/statusBar/settingTurns.context';
 
 export const MainMenuData = () => {
     const [info] = useDrApp();

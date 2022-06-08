@@ -9,7 +9,8 @@
                 "@typescript-eslint/no-unused-vars": "off",
                 "react-hooks/exhaustive-deps": "off",
                 "eqeqeq": "off",
-                "no-sequences": "off"
+                "no-sequences": "off",
+                "@typescript-eslint/no-explicit-any": "off"
             }
         },
         {

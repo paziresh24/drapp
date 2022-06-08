@@ -224,6 +224,22 @@ export const routes = [
         exact: false
     },
     {
+        path: '/setting/duration',
+        name: 'duration',
+        title: 'ساعت کاری من',
+        component: lazy(() => import('./duration')),
+        isPrivate: true,
+        exact: false
+    },
+    {
+        path: '/setting/workhours',
+        name: 'workhours',
+        title: 'ساعت کاری من',
+        component: lazy(() => import('./workHours')),
+        isPrivate: true,
+        exact: false
+    },
+    {
         path: '/logout',
         name: 'logout',
         component: lazy(() => import('./logout')),
