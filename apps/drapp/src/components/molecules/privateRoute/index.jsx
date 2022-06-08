@@ -159,16 +159,16 @@ const PrivateRoute = props => {
             getLatestVersion.data.name !== localStorage.getItem('APP_VERSION')
         ) {
             localStorage.setItem('APP_VERSION', getLatestVersion.data.name);
-            if ('serviceWorker' in navigator) {
-                caches.keys().then(keys =>
-                    keys.forEach(key =>
-                        caches.delete(key).then(() => {
-                            serviceWorkerRegistration.unregister();
-                            window.location.reload();
-                        })
-                    )
-                );
-            }
+            // if ('serviceWorker' in navigator) {
+            //     caches.keys().then(keys =>
+            //         keys.forEach(key =>
+            //             caches.delete(key).then(() => {
+            //                 serviceWorkerRegistration.unregister();
+            //                 window.location.reload();
+            //             })
+            //         )
+            //     );
+            // }
             getLatestVersion.data.changeLog && setChangeLogModal(true);
         }
     }, [getLatestVersion.status]);
