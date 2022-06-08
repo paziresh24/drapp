@@ -97,7 +97,7 @@ const WorkHours = () => {
     }, [getWorkHoursRequest.status]);
 
     const handleAdd = useCallback(() => {
-        if (!days.length) return;
+        if (!days.length) return toast.error('لطفا روز های کاری خود را انتخاب کنید.');
 
         const workDays = days.map(day => ({
             day,
