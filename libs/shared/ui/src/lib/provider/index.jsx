@@ -94,6 +94,18 @@ export const getSplunkInstance = () =>
         }
     });
 
+export const getSplunkRateAndReviewInstance = () =>
+    splunkEvent.create({
+        baseUrl: window._env_.P24_SPLUNK_BASE_URL,
+        token: '26018e14-efd5-41a3-8b3d-ca263f0c68ac',
+        constant: {
+            client_information: {
+                user_agent: window.navigator.userAgent
+            },
+            current_url: window.location.href
+        }
+    });
+
 const Provider = ({ children }) => {
     return (
         <Router basename={process.env.PUBLIC_URL}>

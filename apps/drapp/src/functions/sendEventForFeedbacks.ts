@@ -1,4 +1,4 @@
-import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { getSplunkRateAndReviewInstance } from '@paziresh24/shared/ui/provider';
 import queryString from 'query-string';
 
 type Action = 'load' | 'like' | 'reply';
@@ -9,7 +9,7 @@ interface SendEventForFeedbacks {
 
 export const sendEventForFeedbacks = ({ action }: SendEventForFeedbacks) => {
     if (window.location.search) {
-        getSplunkInstance().sendEvent({
+        getSplunkRateAndReviewInstance().sendEvent({
             group: 'doctor interaction',
             type: 'doctor interaction',
             event: { action, ...queryString.parse(window.location.search) }
