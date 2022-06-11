@@ -6,9 +6,8 @@ import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { EmptyState } from '@paziresh24/shared/ui/emptyState';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
 import { useEffect } from 'react';
-import queryString from 'query-string';
-import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import Button from '@paziresh24/shared/ui/button';
+import { sendEventForFeedbacks } from '../../../functions/sendEventForFeedbacks';
 
 const Feedbacks = () => {
     const [info] = useDrApp();
@@ -23,13 +22,9 @@ const Feedbacks = () => {
     };
 
     useEffect(() => {
-        if (window.location.search) {
-            getSplunkInstance().sendEvent({
-                group: 'doctor interaction',
-                type: 'doctor interaction',
-                event: { action: 'load', ...queryString.parse(window.location.search) }
-            });
-        }
+        sendEventForFeedbacks({
+            action: 'load'
+        });
     }, []);
 
     return (
