@@ -97,6 +97,13 @@ const ExpertisesPage = () => {
             );
         });
 
+        if (expertises.some(expertise => expertise.alias_title)) {
+            getSplunkInstance().sendEvent({
+                group: 'update_expertise_active_booking',
+                type: 'fill-in-expertise-title'
+            });
+        }
+
         Promise.allSettled(promises)
             .then(() => {
                 setLoading(false);

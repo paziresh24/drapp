@@ -44,6 +44,20 @@ const CenterInfo = () => {
             group: 'center_info_consult',
             type: 'successful'
         });
+        getSplunkInstance().sendEvent({
+            group: 'center_info_consult',
+            type: 'days',
+            event: {
+                days: countVisitDaily ?? '2'
+            }
+        });
+        getSplunkInstance().sendEvent({
+            group: 'center_info_consult',
+            type: 'pricing',
+            event: {
+                price: costVisit
+            }
+        });
 
         setConsult({
             ...consult,
