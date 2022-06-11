@@ -162,9 +162,7 @@ const PrescriptionCard = ({
         </Button>
     );
 
-    const issuerType = turn.patientAdditionalData?.accountValidto
-        ? turn.patientAdditionalData?.issuerType ?? '-'
-        : 'فاقد بیمه (آزاد)';
+    const issuerType = turn.patientAdditionalData?.issuerType;
 
     return (
         <>
