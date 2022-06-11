@@ -15,6 +15,7 @@ import Chips from '@paziresh24/shared/ui/chips';
 
 import Male from '@paziresh24/assets/images/drapp/male.png';
 import Female from '@paziresh24/assets/images/drapp/female.png';
+import { sendEventForFeedbacks } from '../../../../functions/sendEventForFeedbacks';
 
 const FeedbackCard = ({ feedback }) => {
     const likeFeedbacks = useLikeFeedbacks();
@@ -35,6 +36,9 @@ const FeedbackCard = ({ feedback }) => {
             },
             {
                 onSuccess: () => {
+                    sendEventForFeedbacks({
+                        action: 'reply'
+                    });
                     setReplyModal(false);
                     toast.success('نظر شما بعد از تایید نمایش داده می شود.');
                 }
@@ -44,6 +48,9 @@ const FeedbackCard = ({ feedback }) => {
 
     const likeAction = () => {
         if (!like) {
+            sendEventForFeedbacks({
+                action: 'like'
+            });
             setLike(true);
             setCountLike(prev => prev + 1);
             return likeFeedbacks.mutate({ id: feedback.id });
