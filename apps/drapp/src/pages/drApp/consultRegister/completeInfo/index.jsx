@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from 'assets/styles/pages/drApp/completeInfo.module.scss';
 import TextField from '@paziresh24/shared/ui/textField';
 import Button from '@paziresh24/shared/ui/button';
@@ -30,6 +30,13 @@ const CompleteInfo = () => {
     } = useForm();
 
     const history = useHistory();
+
+    useEffect(() => {
+        getSplunkInstance().sendEvent({
+            group: 'complete_info_consult',
+            type: 'loading-complete_info_consult'
+        });
+    }, []);
 
     const updateCenter = data => {
         if (!gender?.id) {

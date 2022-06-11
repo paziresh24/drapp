@@ -310,9 +310,7 @@ const TurnCard = ({
         );
     };
 
-    const issuerType = turn.prescription?.patientAdditionalData?.accountValidto
-        ? turn.prescription?.patientAdditionalData?.issuerType ?? '-'
-        : 'فاقد بیمه (آزاد)';
+    const issuerType = turn.prescription?.patientAdditionalData?.issuerType;
 
     return (
         <>

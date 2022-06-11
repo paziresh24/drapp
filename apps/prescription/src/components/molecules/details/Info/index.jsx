@@ -81,9 +81,7 @@ const Info = () => {
         );
     };
 
-    const issuerType = prescriptionInfo.patientAdditionalData?.accountValidto
-        ? prescriptionInfo.patientAdditionalData?.issuerType ?? '-'
-        : 'فاقد بیمه (آزاد)';
+    const issuerType = prescriptionInfo.patientAdditionalData?.issuerType;
 
     return (
         <div className={styles.wrapper}>
