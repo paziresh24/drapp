@@ -715,33 +715,35 @@ const Turning = () => {
             >
                 {prescriptionPendingModal?.insuranceType === 'tamin' ? (
                     <span style={{ textAlign: 'justify', lineHeight: '2.5rem' }}>
-                        نسخه {}{' '}
+                        {prescriptionPendingModal?.tamin_prescriptions?.filter(
+                            item => item.finalized
+                        ) > 0 && (
+                            <>
+                                نسخه{' '}
+                                {prescriptionPendingModal?.tamin_prescriptions
+                                    ?.filter(item => item.finalized)
+                                    ?.map(
+                                        taminP =>
+                                            taminPrescriptionsType[taminP.taminPrescriptionType]
+                                    )
+                                    .join(' و ')}{' '}
+                                {prescriptionPendingModal?.patientAdditionalData?.name +
+                                    ' ' +
+                                    prescriptionPendingModal?.patientAdditionalData?.lastName}{' '}
+                                با کد پیگیری{' '}
+                                {prescriptionPendingModal?.insuranceType === 'tamin' &&
+                                    prescriptionPendingModal?.[
+                                        prescriptionPendingModal?.insuranceType + '_prescriptions'
+                                    ]?.[0]?.head_EPRSC_ID}
+                                {''}
+                                با موفقیت ثبت شد.
+                                {'  '}
+                            </>
+                        )}
+                        خطا در ثبت نسخه{' '}
                         {prescriptionPendingModal?.tamin_prescriptions
-                            ?.map(
-                                taminP =>
-                                    taminP.finalized === true &&
-                                    taminPrescriptionsType[taminP.taminPrescriptionType]
-                            )
-                            .join(' و ')}{' '}
-                        {prescriptionPendingModal?.patientAdditionalData?.name +
-                            ' ' +
-                            prescriptionPendingModal?.patientAdditionalData?.lastName}{' '}
-                        با کد پیگیری{' '}
-                        {prescriptionPendingModal?.insuranceType === 'tamin' &&
-                            prescriptionPendingModal?.[
-                                prescriptionPendingModal?.insuranceType + '_prescriptions'
-                            ]?.[0]?.head_EPRSC_ID}
-                        {''}
-                        با موفقیت ثبت شد.
-                        {'  '}
-                        خطا در ثبت نسخه{''}
-                        {prescriptionPendingModal?.tamin_prescriptions
-                            ?.filter(item => item.finalized === false)
-                            .map(
-                                taminP =>
-                                    taminP.finalized === false &&
-                                    taminPrescriptionsType[taminP.taminPrescriptionType]
-                            )
+                            ?.filter(item => !item.finalized)
+                            .map(taminP => taminPrescriptionsType[taminP.taminPrescriptionType])
                             .join(' و ')}{' '}
                         به دلیل خطا از سمت سازمان بیمه گر در صف ارسال قرار گرفت{''}
                     </span>
