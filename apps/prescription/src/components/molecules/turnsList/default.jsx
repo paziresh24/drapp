@@ -52,7 +52,7 @@ const TurnsList = ({ turns, loading, refetchData }) => {
                     <thead>
                         <tr className={styles.red}>
                             <th>نام بیمار</th>
-                            <th>کدملی</th>
+                            <th>کد توالی</th>
                             <th>کدپیگیری</th>
                             <th>بیمه</th>
                             <th>زمان ثبت</th>
