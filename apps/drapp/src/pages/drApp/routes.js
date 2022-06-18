@@ -33,14 +33,14 @@ export const routes = [
         ),
         exact: true
     },
-    // {
-    //     path: '/turning/',
-    //     name: 'Turning',
-    //     title: 'لیست بیماران',
-    //     component: lazy(() => import('./turning')),
-    //     isPrivate: true,
-    //     exact: true
-    // },
+    {
+        path: '/activation/',
+        name: 'Activation',
+        title: 'راه اندازی',
+        component: lazy(() => import('./activation')),
+        isPrivate: true,
+        exact: true
+    },
     {
         path: '/Services',
         name: 'Services',
