@@ -18,14 +18,14 @@ const servicesList = [
 export const ActivationModal = ({ isOpen, onClose, currentType }: ActivationModalProps) => {
     const [{ centers }] = useDrApp();
 
-    const isClinicActived = centers.find(
+    const isClinicActivated = centers.find(
         (center: { type_id: number }) => center.type_id === 1
     ).is_active_booking;
 
     const servicesText = servicesList
         .filter(
             service =>
-                service.type !== currentType && (!isClinicActived || service.type !== 'office')
+                service.type !== currentType && (!isClinicActivated || service.type !== 'office')
         )
         .map(service => service.text)
         .join(' یا ');

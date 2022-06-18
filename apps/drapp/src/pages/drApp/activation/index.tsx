@@ -30,7 +30,7 @@ const Activation = () => {
         setSelectedService(prev => [...prev, service]);
     };
 
-    const isClinicActived = centers.find(
+    const isClinicActivated = centers.find(
         (center: { type_id: number }) => center.type_id === 1
     ).is_active_booking;
 
@@ -81,7 +81,7 @@ const Activation = () => {
                     خدماتی که تمایل به فعالسازی آن دارید انتخاب نمایید.
                 </Typography>
                 <List className="space-y-3 !mt-3">
-                    {!isClinicActived && (
+                    {!isClinicActivated && (
                         <Service
                             title="نوبت دهی مطب"
                             description="مدیریت نوبت دهی بیماران مطب"
