@@ -191,7 +191,7 @@ const PrivateRoute = props => {
     return (
         <>
             <Helmet>
-                <title>{`${props.title} | پذیرش24` ?? ''}</title>
+                <title>{props.title}</title>
                 <link rel="canonical" href={`https://dr.paziresh24.com${props.path}`} />
             </Helmet>
             <Loading
