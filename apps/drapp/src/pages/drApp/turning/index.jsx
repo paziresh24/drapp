@@ -411,7 +411,9 @@ const Turning = () => {
         },
         activePatientsToday: () => {
             return getTurn.data?.data?.filter(item =>
-                item.type === 'prescription' ? !item.finalized : !item.prescription?.finalized
+                item.type === 'prescription'
+                    ? !item.finalized
+                    : !item.prescription?.finalized && item.book_status !== 'visited'
             )?.length;
         },
         visitedPatientsToday: () => {
