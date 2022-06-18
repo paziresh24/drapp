@@ -65,6 +65,13 @@ const Turning = () => {
         search: searchValue,
         user_id: info.center.user_info_id
     });
+    const taminPrescriptionsType = {
+        1: 'دارو',
+        2: 'پاراکلينيک',
+        3: 'ويزيت',
+        4: 'ويزيت و خدمات',
+        5: 'خدمات'
+    };
     const [turnTimeModal, setTurnTimeModal] = useState(false);
     const uuidInstance = uuid();
     const [confirmCellPhone, setConfirmCellPhone] = useState(null);
@@ -706,10 +713,46 @@ const Turning = () => {
                 isOpen={prescriptionPendingModal}
                 onClose={setPrescriptionPendingModal}
             >
-                <span style={{ textAlign: 'justify', lineHeight: '2.5rem' }}>
-                    به محض اتصال مجدد ارتباط با سازمان بیمه گر، نسخه ارسال و به وسیله پیامک به شما و
-                    بیمار اطلاع داده خواهد شد.
-                </span>
+                {prescriptionPendingModal?.insuranceType === 'tamin' ? (
+                    <span style={{ textAlign: 'justify', lineHeight: '2.5rem' }}>
+                        {prescriptionPendingModal?.tamin_prescriptions?.filter(
+                            item => item.finalized
+                        ) > 0 && (
+                            <>
+                                نسخه{' '}
+                                {prescriptionPendingModal?.tamin_prescriptions
+                                    ?.filter(item => item.finalized)
+                                    ?.map(
+                                        taminP =>
+                                            taminPrescriptionsType[taminP.taminPrescriptionType]
+                                    )
+                                    .join(' و ')}{' '}
+                                {prescriptionPendingModal?.patientAdditionalData?.name +
+                                    ' ' +
+                                    prescriptionPendingModal?.patientAdditionalData?.lastName}{' '}
+                                با کد پیگیری{' '}
+                                {prescriptionPendingModal?.insuranceType === 'tamin' &&
+                                    prescriptionPendingModal?.[
+                                        prescriptionPendingModal?.insuranceType + '_prescriptions'
+                                    ]?.[0]?.head_EPRSC_ID}
+                                {''}
+                                با موفقیت ثبت شد.
+                                {'  '}
+                            </>
+                        )}
+                        خطا در ثبت نسخه{' '}
+                        {prescriptionPendingModal?.tamin_prescriptions
+                            ?.filter(item => !item.finalized)
+                            .map(taminP => taminPrescriptionsType[taminP.taminPrescriptionType])
+                            .join(' و ')}{' '}
+                        به دلیل خطا از سمت سازمان بیمه گر در صف ارسال قرار گرفت{''}
+                    </span>
+                ) : (
+                    <span style={{ textAlign: 'justify', lineHeight: '2.5rem' }}>
+                        به محض اتصال مجدد ارتباط با سازمان بیمه گر، نسخه ارسال و به وسیله پیامک به
+                        شما و بیمار اطلاع داده خواهد شد.
+                    </span>
+                )}
             </Modal>
 
             <ReferenceModal
