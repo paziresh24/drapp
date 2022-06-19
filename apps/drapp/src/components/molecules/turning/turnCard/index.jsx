@@ -347,7 +347,7 @@ const TurnCard = ({
                                 aria-hidden
                                 style={{ cursor: 'pointer' }}
                             >
-                                {lineNumber + '- '}
+                                {lineNumber} {'- '}
                                 {turn.display_name !== '' ? turn.display_name : '-'}
                             </span>
                         </div>

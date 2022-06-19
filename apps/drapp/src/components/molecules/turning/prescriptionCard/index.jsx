@@ -206,8 +206,8 @@ const PrescriptionCard = ({
                                 aria-hidden
                                 style={{ cursor: 'pointer' }}
                             >
-                                {lineNumber + '- '}
-
+                                {lineNumber}
+                                {'- '}
                                 {turn.patientAdditionalData.name +
                                     ' ' +
                                     turn.patientAdditionalData.lastName}
