@@ -48,8 +48,7 @@ export const useDelay = () => {
     };
 
     const handleLoading = useMemo(() => {
-        if (moveTurns.isLoading || deleteTurns.isLoading) setIsLoading(true);
-        else setIsLoading(false);
+        setIsLoading(moveTurns.isLoading || deleteTurns.isLoading);
     }, [moveTurns.isLoading, deleteTurns.isLoading]);
 
     return { mutate, isLoading };
