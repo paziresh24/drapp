@@ -52,7 +52,7 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
     );
 
     const TurnRow = {
-        Turn: ({ turn }) => (
+        Turn: ({ turn, lineNumber }) => (
             <TurnCard
                 turn={turn}
                 finalized={turn.book_status === 'visited' || turn.prescription?.finalized}
@@ -61,9 +61,10 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                 refetchData={refetchData}
                 dropDownShow={dropDownShow}
                 setDropDownShow={setDropDownShow}
+                lineNumber={lineNumber}
             />
         ),
-        Prescription: ({ turn }) => (
+        Prescription: ({ turn, lineNumber }) => (
             <PrescriptionCard
                 dropDownShow={dropDownShow}
                 setDropDownShow={setDropDownShow}
@@ -71,6 +72,7 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                 key={turn.id}
                 dropDownShowKey={turn.id}
                 refetchData={refetchData}
+                lineNumber={lineNumber}
             />
         )
     };
@@ -100,15 +102,19 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                 )}
 
                 {isOpenActiveTurns &&
-                    turns.map(
-                        turn =>
-                            !isTurnActive(turn) &&
-                            (turn.type === 'book' ? (
-                                <TurnRow.Turn turn={turn} key={turn.id} />
+                    turns
+                        .filter(turn => !isTurnActive(turn))
+                        .map((turn, index) =>
+                            turn.type === 'book' ? (
+                                <TurnRow.Turn turn={turn} key={turn.id} lineNumber={index + 1} />
                             ) : (
-                                <TurnRow.Prescription turn={turn} key={turn.id} />
-                            ))
-                    )}
+                                <TurnRow.Prescription
+                                    turn={turn}
+                                    key={turn.id}
+                                    lineNumber={index + 1}
+                                />
+                            )
+                        )}
 
                 {!isMobile ? (
                     <tr>
@@ -121,15 +127,19 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
                 )}
 
                 {isOpenFinalizedTurns &&
-                    turns.map(
-                        turn =>
-                            isTurnActive(turn) &&
-                            (turn.type === 'book' ? (
-                                <TurnRow.Turn turn={turn} key={turn.id} />
+                    turns
+                        .filter(turn => isTurnActive(turn))
+                        .map((turn, index) =>
+                            turn.type === 'book' ? (
+                                <TurnRow.Turn turn={turn} key={turn.id} lineNumber={index + 1} />
                             ) : (
-                                <TurnRow.Prescription turn={turn} key={turn.id} />
-                            ))
-                    )}
+                                <TurnRow.Prescription
+                                    turn={turn}
+                                    key={turn.id}
+                                    lineNumber={index + 1}
+                                />
+                            )
+                        )}
             </>
         )
     );

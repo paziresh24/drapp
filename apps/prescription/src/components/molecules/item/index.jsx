@@ -112,8 +112,8 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                             </span>
                         </div>
                     </td>
-                    <td data-label="کدملی:">
-                        <span>{turn.patientNationalCode ?? '-'}</span>
+                    <td data-label="کد توالی:">
+                        <span>{turn.salamat_prescription?.trackingCode ?? '-'}</span>
                     </td>
                     <td data-label="وضعیت نسخه:">
                         {turn?.insuranceType === 'tamin' &&
@@ -208,8 +208,8 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                 </div>
 
                                 <div className="flex space-s-3">
-                                    <span>کد توالی</span>
-                                    <span>{turn.salamat_prescription?.sequenceNumber ?? '-'}</span>
+                                    <span>کد ملی</span>
+                                    <span>{turn.patientNationalCode ?? '-'}</span>
                                 </div>
                             </div>
                         </td>

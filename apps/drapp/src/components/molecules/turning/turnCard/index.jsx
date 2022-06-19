@@ -34,7 +34,8 @@ const TurnCard = ({
     refetchData,
     dropDownShow,
     setDropDownShow,
-    finalized
+    finalized,
+    lineNumber
 }) => {
     const [info] = useDrApp();
     const [visitModal, setVisitModal] = useState(false);
@@ -346,6 +347,7 @@ const TurnCard = ({
                                 aria-hidden
                                 style={{ cursor: 'pointer' }}
                             >
+                                {lineNumber} {'- '}
                                 {turn.display_name !== '' ? turn.display_name : '-'}
                             </span>
                         </div>

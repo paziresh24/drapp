@@ -30,7 +30,8 @@ const PrescriptionCard = ({
     turn,
     refetchData,
     dropDownShow,
-    setDropDownShow
+    setDropDownShow,
+    lineNumber
 }) => {
     const { search } = useLocation();
 
@@ -205,6 +206,8 @@ const PrescriptionCard = ({
                                 aria-hidden
                                 style={{ cursor: 'pointer' }}
                             >
+                                {lineNumber}
+                                {'- '}
                                 {turn.patientAdditionalData.name +
                                     ' ' +
                                     turn.patientAdditionalData.lastName}
