@@ -240,6 +240,14 @@ export const routes = [
         exact: false
     },
     {
+        path: '/setting/delay',
+        name: 'delay',
+        title: 'اعلام تاخیر به بیماران',
+        component: lazy(() => import('./setting/delay/delay')),
+        isPrivate: true,
+        exact: false
+    },
+    {
         path: '/logout',
         name: 'logout',
         component: lazy(() => import('./logout')),
