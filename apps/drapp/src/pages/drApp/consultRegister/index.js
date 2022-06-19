@@ -84,15 +84,13 @@ const StepWrapper = () => {
 const FillInfo = () => {
     return (
         <ConsultProvider>
-            <div className={styles['wrapper']}>
-                <Switch>
-                    {routes.map(({ path, Component, exact }) => (
-                        <Route key={path} exact={exact} path={path}>
-                            <Component />
-                        </Route>
-                    ))}
-                </Switch>
-            </div>
+            <Switch>
+                {routes.map(({ path, Component, exact }) => (
+                    <Route key={path} exact={exact} path={path}>
+                        <Component />
+                    </Route>
+                ))}
+            </Switch>
         </ConsultProvider>
     );
 };

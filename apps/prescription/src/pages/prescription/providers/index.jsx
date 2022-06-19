@@ -3,7 +3,6 @@ import styles from '../../../assets/styles/pages/prescription/auth.module.scss';
 
 // HOOKS
 import { useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 
 // COMPONENTS
 import { Body } from '../../../components/molecules/panel/body';
@@ -13,11 +12,19 @@ import { useInsurances } from '@paziresh24/hooks/prescription/insurances/index';
 import { Default, Mobile } from '@paziresh24/hooks/device';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { isMobile } from 'react-device-detect';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
+import Button from '@mui/lab/LoadingButton';
+import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
+import { useHistory } from 'react-router-dom';
 
 const Providers = () => {
+    const router = useHistory();
     const insurances = useInsurances();
     const [info] = useDrApp();
     const [isAuthenticated, setIsAuthenticated] = useState();
+    const [questionActivation, setQuestionActivation] = useState(false);
+
+    const isSourceActivation = window.location.search.includes('source=activation');
 
     useEffect(() => {
         insurances.refetch();
@@ -56,7 +63,31 @@ const Providers = () => {
                 <Mobile>
                     <DescriptionBox />
                 </Mobile>
+                {isSourceActivation && (
+                    <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
+                        <Button
+                            fullWidth={isMobile}
+                            sx={{
+                                alignSelf: !isMobile && 'end',
+                                marginTop: !isMobile && '1rem'
+                            }}
+                            variant="contained"
+                            size="large"
+                            onClick={() => setQuestionActivation(true)}
+                        >
+                            پایان
+                        </Button>
+                    </FixedWrapBottom>
+                )}
             </div>
+            <ActivationModal
+                isOpen={questionActivation}
+                onClose={() => {
+                    setQuestionActivation(false);
+                    window.location.assign('/');
+                }}
+                currentType="prescription"
+            />
         </Body>
     );
 };

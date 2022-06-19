@@ -91,16 +91,13 @@ const StepWrapper = () => {
 
 const FillInfo = () => {
     return (
-        <div className={styles['wrapper']}>
-            {/* <StepWrapper /> */}
-            <Switch>
-                {routes.map(({ path, Component, exact }) => (
-                    <Route key={path} exact={exact} path={path}>
-                        <Component />
-                    </Route>
-                ))}
-            </Switch>
-        </div>
+        <Switch>
+            {routes.map(({ path, Component, exact }) => (
+                <Route key={path} exact={exact} path={path}>
+                    <Component />
+                </Route>
+            ))}
+        </Switch>
     );
 };
 
