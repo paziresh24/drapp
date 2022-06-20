@@ -95,7 +95,7 @@ const CenterInfo = () => {
 
                         <PriceField
                             label="مبلغ هر ویزیت (تومان)"
-                            onChange={e => setCostVisit(e)}
+                            onChange={value => setCostVisit(value)}
                             value={costVisit}
                             limit={7}
                         />
@@ -107,16 +107,16 @@ const CenterInfo = () => {
                         onChange={e => setWhatsAppCell(e.target.value)}
                     />
                 </div>
-                <div className="bg-[#eaf0f4] rounded-lg p-5 flex flex-col space-y-3 text-sm">
-                    <span className="text-[#586a79]">
+                <div className="bg-gray-100 rounded-lg p-5 flex flex-col space-y-3 text-sm">
+                    <span className="text-gray-500">
                         <InfoIcon color="#586a79" className="inline-block ml-2" />
                         لازم به ذکر است که این شماره در دسترس بیماران قرار خواهد گرفت.
                     </span>
-                    <span className="font-medium text-[#586a79]">
+                    <span className="font-medium text-gray-500">
                         این شماره می تواند شماره مطب شما، شماره موبایل و یا هر شماره ای که قادر به
                         نصب واتس اپ بیزینس روی آن هستید، باشد.
                     </span>
-                    <span className="font-medium text-[#586a79]">
+                    <span className="font-medium text-gray-500">
                         هفتاد درصد از مبلغ هر ویزیت به پزشک تعلق دارد.
                     </span>
                 </div>
