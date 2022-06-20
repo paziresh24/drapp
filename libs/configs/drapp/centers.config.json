@@ -2,9 +2,11 @@
     "dr.paziresh24.com": {},
     "nobat.mui.ac.ir": {},
     "nobat.sums.ac.ir": {
+        "title": "نسخه نویسی یکپارچه دانشگاه شیراز",
         "logo": "/centersLogo/sums.jpg",
         "logoWhite": "/centersLogo/sums-white.jpg",
         "hideDownloadBox": true,
-        "hideSupportCell": true
+        "hideSupportCell": true,
+        "hidePaziresh24": true
     }
 }

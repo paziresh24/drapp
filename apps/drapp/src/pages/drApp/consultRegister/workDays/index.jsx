@@ -1,5 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from 'assets/styles/pages/drApp/workDays.module.scss';
 import Modal from '@paziresh24/shared/ui/modal';
 import Button from '@paziresh24/shared/ui/button';
@@ -15,6 +15,8 @@ import isEmpty from 'lodash/isEmpty';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import Container from '@mui/material/Container';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
+import { useHistory } from 'react-router-dom';
 
 const canvasStyles = {
     position: 'absolute',
@@ -27,6 +29,7 @@ const canvasStyles = {
 
 const WorkDays = () => {
     const [info] = useDrApp();
+    const router = useHistory();
     const [duration, setDuration] = useDuration();
     const [success, setSuccess] = useState();
 
@@ -34,6 +37,8 @@ const WorkDays = () => {
     const activeConsult = useActiveConsult();
     const [consult] = useConsult();
     const workDaysTime = [];
+
+    const [questionActivation, setQuestionActivation] = useState(false);
 
     const [animationInstance, setAnimationInstance] = useState(null);
 
@@ -118,8 +123,10 @@ const WorkDays = () => {
                         type: 'successful'
                     });
                     setSuccess(true);
+                    setQuestionActivation(true);
                 },
                 onError: error => {
+                    setQuestionActivation(true);
                     getSplunkInstance().sendEvent({
                         group: 'workdays_consult',
                         type: 'unsuccessful',
@@ -134,6 +141,10 @@ const WorkDays = () => {
             }
         );
     };
+
+    const handleClose = useCallback(() => {
+        router.push('/');
+    }, []);
 
     return (
         <>
@@ -160,6 +171,14 @@ const WorkDays = () => {
                     </FixedWrapBottom>
                 </div>
             </Container>
+            <ActivationModal
+                isOpen={questionActivation}
+                onClose={() => {
+                    setQuestionActivation(false);
+                    handleClose();
+                }}
+                currentType="consult"
+            />
             <Modal isOpen={success} noHeader noBodyPad fullPage>
                 <div className={styles['hero-wrapper']}>
                     <div className={styles['hero-content']}>

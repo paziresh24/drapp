@@ -10,7 +10,7 @@ import { useGetLatestVersion } from '@paziresh24/hooks/core';
 // COMPONENTS
 import LoginHero from '@components/molecules/login/loginHero';
 import Form from '@components/molecules/login/form';
-import * as serviceWorkerRegistration from '../../../serviceWorkerRegistration';
+import Helmet from 'react-helmet';
 
 const Auth = () => {
     const history = useHistory();
@@ -22,6 +22,9 @@ const Auth = () => {
 
     return (
         <div className={styles.wrapper}>
+            <Helmet>
+                <title>اپلیکیشن نوبت دهی</title>
+            </Helmet>
             <Form setFocus={setFocus} focus={focus} />
             <LoginHero focus={focus} setFocus={setFocus} />
         </div>

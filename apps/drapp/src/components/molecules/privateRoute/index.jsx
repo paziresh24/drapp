@@ -136,6 +136,15 @@ const PrivateRoute = props => {
             Sentry.setUser({ user: doctor });
 
             ChatSupport.setUserInfo(doctor);
+
+            if (
+                info.centers.every(
+                    center =>
+                        center.id !== '5532' || (center.type_id === 1 && !center.is_active_booking)
+                )
+            ) {
+                history.push('/activation');
+            }
         }
         if (doctorInfo.isError) {
             if (centersDoctor.length <= info.centers.length) {
@@ -191,7 +200,7 @@ const PrivateRoute = props => {
     return (
         <>
             <Helmet>
-                <title>{`${props.title} | پذیرش24` ?? ''}</title>
+                <title>{props.title}</title>
                 <link rel="canonical" href={`https://dr.paziresh24.com${props.path}`} />
             </Helmet>
             <Loading

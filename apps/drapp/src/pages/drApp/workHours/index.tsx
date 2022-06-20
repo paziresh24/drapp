@@ -20,6 +20,7 @@ import { useHistory } from 'react-router-dom';
 import uniq from 'lodash/uniq';
 import moment from 'jalali-moment';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
 
 const initialHours = {
     from: '09:00',
@@ -82,9 +83,12 @@ const WorkHours = () => {
     const addWorkHours = useWorkHoursStore(state => state.addWorkHours);
     const workHours = useWorkHoursStore(state => state.workHours);
     const duration = useWorkHoursStore(state => state.duration);
+    const [questionActivation, setQuestionActivation] = useState(false);
 
     const workHoursMutateRequest = useWorkHours();
     const getWorkHoursRequest = useGetWorkHours({ center_id: docotorInfo.center.id });
+
+    const isRegisterFunnel = window.location.search.includes('action=enable-booking');
 
     useEffect(() => {
         getWorkHoursRequest.refetch();
@@ -158,14 +162,20 @@ const WorkHours = () => {
                         group: 'workdays_active_booking',
                         type: 'successful'
                     });
+
                     toast.success('ساعت کاری شما ذخیره شد.');
-                    if (window.location.search.includes('action'))
-                        return window.location.assign('/');
-                    router.push('/');
+                    if (isRegisterFunnel) return setQuestionActivation(true);
+
+                    handleClose();
                 }
             }
         );
     }, [duration, workHours]);
+
+    const handleClose = useCallback(() => {
+        if (isRegisterFunnel) return window.location.assign('/');
+        router.push('/');
+    }, []);
 
     return (
         <Container
@@ -200,6 +210,14 @@ const WorkHours = () => {
                         ذخیره
                     </Button>
                 </FixedWrapBottom>
+                <ActivationModal
+                    isOpen={questionActivation}
+                    onClose={() => {
+                        setQuestionActivation(false);
+                        handleClose();
+                    }}
+                    currentType="office"
+                />
             </Stack>
         </Container>
     );
