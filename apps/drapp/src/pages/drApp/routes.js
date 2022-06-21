@@ -53,7 +53,7 @@ export const routes = [
         path: '/turning/setting/',
         name: 'Setting',
         title: 'تقویم کاری',
-        component: lazy(() => import('./setting')),
+        component: lazy(() => import('./setting/cosnult')),
         isPrivate: true,
         exact: false
     },
@@ -222,6 +222,14 @@ export const routes = [
         component: lazy(() => import('./learn')),
         isPrivate: true,
         exact: false
+    },
+    {
+        path: '/setting',
+        name: 'duration',
+        title: 'تنظیمات نوبت های من',
+        component: lazy(() => import('./setting')),
+        isPrivate: true,
+        exact: true
     },
     {
         path: '/setting/duration',
