@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { HelpIcon } from '@paziresh24/shared/icon/public/help';
 import Select from '@paziresh24/shared/ui/select';
+import PriceField from '@paziresh24/shared/ui/priceField';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { InfoIcon } from '@paziresh24/shared/icon';
@@ -92,24 +93,12 @@ const CenterInfo = () => {
                             />
                         </div>
 
-                        <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
-                            هفتاد درصد از این مبلغ به پزشک تعلق دارد
-                        </ReactTooltip>
-                        <div className="flex flex-col w-full space-y-3">
-                            <div className="flex space-s-2">
-                                <span className="inline text-sm">مبلغ هر ویزیت</span>
-                                <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
-                            </div>
-
-                            <TextField
-                                placeHolder="50,000 تومان"
-                                unit="تومان"
-                                type="number"
-                                onChange={e => {
-                                    setCostVisit(e.target.value);
-                                }}
-                            />
-                        </div>
+                        <PriceField
+                            label="مبلغ هر ویزیت (تومان)"
+                            onChange={value => setCostVisit(value)}
+                            value={costVisit}
+                            limit={7}
+                        />
                     </div>
 
                     <TextField
@@ -118,14 +107,17 @@ const CenterInfo = () => {
                         onChange={e => setWhatsAppCell(e.target.value)}
                     />
                 </div>
-                <div className="bg-[#eaf0f4] rounded-lg p-5 flex flex-col space-y-3 text-sm">
-                    <span className="text-[#586a79]">
+                <div className="bg-gray-100 rounded-lg p-5 flex flex-col space-y-3 text-sm">
+                    <span className="text-gray-500">
                         <InfoIcon color="#586a79" className="inline-block ml-2" />
                         لازم به ذکر است که این شماره در دسترس بیماران قرار خواهد گرفت.
                     </span>
-                    <span className="font-medium text-[#586a79]">
+                    <span className="font-medium text-gray-500">
                         این شماره می تواند شماره مطب شما، شماره موبایل و یا هر شماره ای که قادر به
                         نصب واتس اپ بیزینس روی آن هستید، باشد.
+                    </span>
+                    <span className="font-medium text-gray-500">
+                        هفتاد درصد از مبلغ هر ویزیت به پزشک تعلق دارد.
                     </span>
                 </div>
                 <FixedWrapBottom>
