@@ -66,6 +66,7 @@ const Home = props => {
         finalized: 1,
         _start: page,
         _limit: 20,
+        tag: info.center.id,
         ...params
     });
 
@@ -269,7 +270,7 @@ const Home = props => {
     useEffect(() => {
         prescriptions.remove();
         prescriptions.refetch();
-    }, [params]);
+    }, [params, info.center]);
 
     useEffect(() => {
         if (searchValue.length > 0) {
@@ -292,12 +293,6 @@ const Home = props => {
             setTimeout(() => prescriptions.refetch(), 0);
         }
     }, [searchValue]);
-
-    // useEffect(() => {
-    //     if (filterModal && prescriptions.isSuccess) {
-    //         getTypes.refetch();
-    //     }
-    // }, [filterModal, prescriptions.status]);
 
     const setFilter = () => {
         setResults([]);
