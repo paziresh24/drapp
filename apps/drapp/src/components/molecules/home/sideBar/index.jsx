@@ -317,7 +317,7 @@ const SideBar = () => {
 
                 <div className="flex flex-col items-start w-full">
                     <a
-                        href="tel:02125015555"
+                        href="tel:02191012787"
                         style={{
                             right: open ? '1rem' : '0',
                             transitionDelay: !open ? 'unset' : '0.2s',
@@ -325,7 +325,7 @@ const SideBar = () => {
                         }}
                         className="flex items-center justify-center absolute bottom-24 transition-all duration-300 pr-6"
                     >
-                        <span className="font-bold opacity-60">پشتیبانی: 02125015555</span>
+                        <span className="font-bold opacity-60">پشتیبانی: 02191012787</span>
                     </a>
                     <div
                         style={{

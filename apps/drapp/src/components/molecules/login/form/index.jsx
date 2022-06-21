@@ -303,7 +303,7 @@ const Form = ({ focus, setFocus }) => {
             )}
             {!focus &&
                 (!centersConfig[window.location.hostname]?.hideSupportCell ? (
-                    <a className="flex items-center absolute bottom-5" href="tel:02125015555">
+                    <a className="flex items-center absolute bottom-5" href="tel:02191012787">
                         <svg
                             width="21"
                             height="21"
@@ -325,7 +325,7 @@ const Form = ({ focus, setFocus }) => {
                             />
                         </svg>
                         <div className="flex flex-col mr-4">
-                            <span className="text-base font-bold">پشتیبانی: 02125015555</span>
+                            <span className="text-base font-bold">پشتیبانی: 02191012787</span>
                             <span className="text-sm font-normal mt-1">همه روزه 7 الی 24</span>
                         </div>
                     </a>
