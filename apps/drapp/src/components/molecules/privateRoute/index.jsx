@@ -137,14 +137,14 @@ const PrivateRoute = props => {
 
             ChatSupport.setUserInfo(doctor);
 
+            const doctorNotActiveOfficeAndConsult = !info.centers.some(
+                center =>
+                    center.id === '5532' || (center?.type_id === 1 && center?.is_active_booking)
+            );
             if (
                 !window._env_.P24_IS_PROXY_CENTER &&
                 !window._env_.P24_IS_LOCAL_CENTER &&
-                info.centers.every(
-                    center =>
-                        center.id !== '5532' ||
-                        (center?.type_id === 1 && !center?.is_active_booking)
-                )
+                doctorNotActiveOfficeAndConsult
             ) {
                 history.push('/activation');
             }
