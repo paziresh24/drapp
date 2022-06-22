@@ -1,5 +1,5 @@
-import { ChangeEvent, useCallback, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { ChangeEvent, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import RadioQuestionBox from '@paziresh24/shared/ui/radioQuestionBox';
@@ -34,6 +34,10 @@ const Duration = () => {
             event: {
                 value: durationValue
             }
+        });
+        getSplunkInstance().sendEvent({
+            group: 'workdays_active_booking-duration',
+            type: 'successful'
         });
         router.push(`/setting/workhours${window.location.search}`);
     }, [durationValue, isAnotherProvider]);

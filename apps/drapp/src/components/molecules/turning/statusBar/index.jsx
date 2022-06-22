@@ -456,10 +456,21 @@ const StatusBar = () => {
                                     group="actionType"
                                     title="تغییر ساعت کاری"
                                     onChange={() => {
-                                        info.center.id === '5532'
-                                            ? history.push('/turning/setting')
-                                            : history.push('/setting/duration');
                                         setMoveDeleteModal(false);
+                                        if (info.center.id === '5532') {
+                                            getSplunkInstance().sendEvent({
+                                                group: 'click-setting-menu',
+                                                type: 'change-work-hours',
+                                                event: { action: 'load-for-consult' }
+                                            });
+                                            return history.push('/turning/setting');
+                                        }
+                                        history.push('/setting/duration');
+                                        getSplunkInstance().sendEvent({
+                                            group: 'click-setting-menu',
+                                            type: 'change-work-hours',
+                                            event: { action: 'load-for-office' }
+                                        });
                                     }}
                                 />
                             </div>
