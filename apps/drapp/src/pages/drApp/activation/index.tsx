@@ -30,9 +30,9 @@ const Activation = () => {
         setSelectedService(prev => [...prev, service]);
     };
 
-    const isClinicActivated = centers.find(
-        (center: { type_id: number }) => center.type_id === 1
-    ).is_active_booking;
+    const isClinicActivated =
+        centers.find((center: { type_id: number }) => center.type_id === 1)?.is_active_booking ??
+        false;
 
     const handleSubmit = () => {
         const url = activationPaths[selectedService[0]];
