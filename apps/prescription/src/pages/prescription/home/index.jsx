@@ -37,6 +37,7 @@ import { useInView } from 'react-intersection-observer';
 import LoadingIcon from '@paziresh24/shared/icon/public/loading';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { useUpdateEffect } from 'react-use';
 
 const Home = props => {
     const [info] = useDrApp();
@@ -270,7 +271,15 @@ const Home = props => {
     useEffect(() => {
         prescriptions.remove();
         prescriptions.refetch();
-    }, [params, info.center]);
+    }, [params]);
+
+    useUpdateEffect(() => {
+        setResults([]);
+        setPage(0);
+        setIsLoading(true);
+        prescriptions.remove();
+        setTimeout(() => prescriptions.refetch(), 0);
+    }, [info.center]);
 
     useEffect(() => {
         if (searchValue.length > 0) {
