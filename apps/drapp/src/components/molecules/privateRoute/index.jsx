@@ -144,7 +144,8 @@ const PrivateRoute = props => {
             if (
                 !window._env_.P24_IS_PROXY_CENTER &&
                 !window._env_.P24_IS_LOCAL_CENTER &&
-                doctorNotActiveOfficeAndConsult
+                doctorNotActiveOfficeAndConsult&&
+                info.centers.length === 1 && info.centers.find(center=>+center.type_id ===1)
             ) {
                 history.push('/activation');
             }
