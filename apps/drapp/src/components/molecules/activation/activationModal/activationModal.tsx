@@ -20,7 +20,7 @@ export const ActivationModal = ({ isOpen, onClose, currentType }: ActivationModa
 
     const isClinicActivated = centers.find(
         (center: { type_id: number }) => center.type_id === 1
-    ).is_active_booking;
+    )?.is_active_booking;
 
     const servicesText = servicesList
         .filter(

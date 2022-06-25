@@ -123,7 +123,7 @@ const SideBar = () => {
                     id: 8,
                     name: 'تنظیمات نوبت دهی',
                     shouldShow:
-                        info.center.is_active_booking &&
+                        info.center?.is_active_booking &&
                         (info.center.type_id === 1 || info.center.id === '5532'),
                     icon: <SettingIcon color="#3F3F79" />,
                     onClick: () => {

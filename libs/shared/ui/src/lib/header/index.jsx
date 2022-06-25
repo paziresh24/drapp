@@ -97,7 +97,7 @@ const Header = () => {
                                           ).name
                                         : info.center.name}
                                 </span>
-                                {info.center.type_id === 1 && !info.center.is_active_booking && (
+                                {info.center.type_id === 1 && !info.center?.is_active_booking && (
                                     <span className={`text-xs !text-[#27bda0] ${styles.flicker}`}>
                                         فعالسازی نوبت دهی
                                     </span>
@@ -237,7 +237,7 @@ const Header = () => {
                                                 </span>
                                             </div>
                                         </div>
-                                        {center.type_id === 1 && !center.is_active_booking && (
+                                        {center.type_id === 1 && !center?.is_active_booking && (
                                             <button
                                                 className={styles.activeOfficeType}
                                                 onClick={e => {
