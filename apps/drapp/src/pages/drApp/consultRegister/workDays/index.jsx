@@ -134,6 +134,9 @@ const WorkDays = () => {
                             error: error.response?.data
                         }
                     });
+                    if (error.response?.data.status === 'FAILED') {
+                        return toast.error(error.response?.data.message);
+                    }
                     toast.warning(
                         'اطلاعات مرکز مشاوره آنلاین شما قبلا ثبت شده است.تا زمان فعالسازی لطفا منتظر بمانید.'
                     );

@@ -16,6 +16,7 @@ import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { InfoIcon } from '@paziresh24/shared/icon';
 import Container from '@mui/material/Container';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { removeCommas } from '@persian-tools/persian-tools';
 
 const CenterInfo = () => {
     const [info] = useDrApp();
@@ -95,7 +96,7 @@ const CenterInfo = () => {
 
                         <PriceField
                             label="مبلغ هر ویزیت (تومان)"
-                            onChange={value => setCostVisit(value)}
+                            onChange={value => setCostVisit(removeCommas(value))}
                             value={costVisit}
                             limit={7}
                         />
