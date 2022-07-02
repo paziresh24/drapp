@@ -56,15 +56,7 @@ client.interceptors.response.use(
                 return client(originalRequest);
             } catch (error) {
                 clearToken();
-                return window.location.replace(
-                    `${
-                        process.env.NODE_ENV === 'production'
-                            ? window.location.host === 'dr.paziresh24.com'
-                                ? ''
-                                : process.env.PUBLIC_URL
-                            : ''
-                    }/auth`
-                );
+                return window.location.reload();
             }
         }
         return Promise.reject(err);

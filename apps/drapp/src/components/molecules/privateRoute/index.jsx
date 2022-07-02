@@ -144,8 +144,9 @@ const PrivateRoute = props => {
             if (
                 !window._env_.P24_IS_PROXY_CENTER &&
                 !window._env_.P24_IS_LOCAL_CENTER &&
-                doctorNotActiveOfficeAndConsult&&
-                info.centers.length === 1 && info.centers.find(center=>+center.type_id ===1)
+                doctorNotActiveOfficeAndConsult &&
+                info.centers.length === 1 &&
+                info.centers.find(center => +center.type_id === 1)
             ) {
                 history.push('/activation');
             }
@@ -172,24 +173,21 @@ const PrivateRoute = props => {
             getLatestVersion.data.name !== localStorage.getItem('APP_VERSION')
         ) {
             localStorage.setItem('APP_VERSION', getLatestVersion.data.name);
-            // if ('serviceWorker' in navigator) {
-            //     caches.keys().then(keys =>
-            //         keys.forEach(key =>
-            //             caches.delete(key).then(() => {
-            //                 serviceWorkerRegistration.unregister();
-            //                 window.location.reload();
-            //             })
-            //         )
-            //     );
-            // }
+            if ('serviceWorker' in navigator) {
+                caches.keys().then(keys =>
+                    keys.forEach(key =>
+                        caches.delete(key).then(() => {
+                            serviceWorkerRegistration.unregister();
+                        })
+                    )
+                );
+            }
             getLatestVersion.data.changeLog && setChangeLogModal(true);
         }
     }, [getLatestVersion.status]);
 
     if (isEmpty(getToken()))
-        history.replace(
-            `/auth${props.path !== '/' ? '?url=' + encodeURIComponent(window.location.href) : ''}`
-        );
+        history.replace(`/auth?url=${encodeURIComponent(window.location.href)}`);
 
     if (info.center && !info.center?.is_active_booking && props.name === 'Setting') {
         sendEvent('click', 'home', 'clickturningbutton');
