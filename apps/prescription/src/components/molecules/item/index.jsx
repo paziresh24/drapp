@@ -113,7 +113,7 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                         </div>
                     </td>
                     <td data-label="کد توالی:">
-                        <span>{turn.salamat_prescription?.trackingCode ?? '-'}</span>
+                        <span>{turn.salamat_prescription?.sequenceNumber ?? '-'}</span>
                     </td>
                     <td data-label="وضعیت نسخه:">
                         {turn?.insuranceType === 'tamin' &&

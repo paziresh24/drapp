@@ -37,6 +37,7 @@ import { useInView } from 'react-intersection-observer';
 import LoadingIcon from '@paziresh24/shared/icon/public/loading';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { useUpdateEffect } from 'react-use';
 
 const Home = props => {
     const [info] = useDrApp();
@@ -66,6 +67,7 @@ const Home = props => {
         finalized: 1,
         _start: page,
         _limit: 20,
+        tag: info.center.id,
         ...params
     });
 
@@ -271,6 +273,14 @@ const Home = props => {
         prescriptions.refetch();
     }, [params]);
 
+    useUpdateEffect(() => {
+        setResults([]);
+        setPage(0);
+        setIsLoading(true);
+        prescriptions.remove();
+        setTimeout(() => prescriptions.refetch(), 0);
+    }, [info.center]);
+
     useEffect(() => {
         if (searchValue.length > 0) {
             setResults([]);
@@ -292,12 +302,6 @@ const Home = props => {
             setTimeout(() => prescriptions.refetch(), 0);
         }
     }, [searchValue]);
-
-    // useEffect(() => {
-    //     if (filterModal && prescriptions.isSuccess) {
-    //         getTypes.refetch();
-    //     }
-    // }, [filterModal, prescriptions.status]);
 
     const setFilter = () => {
         setResults([]);

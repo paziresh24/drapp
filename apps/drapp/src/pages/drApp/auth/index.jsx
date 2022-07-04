@@ -11,14 +11,35 @@ import { useGetLatestVersion } from '@paziresh24/hooks/core';
 import LoginHero from '@components/molecules/login/loginHero';
 import Form from '@components/molecules/login/form';
 import Helmet from 'react-helmet';
+import * as serviceWorkerRegistration from '../../../serviceWorkerRegistration';
 
 const Auth = () => {
     const history = useHistory();
     const [focus, setFocus] = useState(false);
+    const getLatestVersion = useGetLatestVersion();
 
     useEffect(() => {
-        if (getToken()) return history.replace('/');
+        if (getToken()) return history.replace(`/${window.location.search}`);
     }, []);
+
+    useEffect(() => {
+        if (
+            getLatestVersion.isSuccess &&
+            localStorage.getItem('APP_VERSION') !== getLatestVersion.data.name
+        ) {
+            localStorage.setItem('APP_VERSION', getLatestVersion.data.name);
+            if ('serviceWorker' in navigator) {
+                caches.keys().then(keys =>
+                    keys.forEach(key =>
+                        caches.delete(key).then(() => {
+                            serviceWorkerRegistration.unregister();
+                            window.location.reload();
+                        })
+                    )
+                );
+            }
+        }
+    }, [getLatestVersion.status]);
 
     return (
         <div className={styles.wrapper}>
