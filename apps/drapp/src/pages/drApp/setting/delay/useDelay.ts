@@ -5,10 +5,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { useGetWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import { getWorkHours } from '@paziresh24/apis/drApp/fillInfo/getWorkHours';
-import { weekDays } from 'apps/drapp/src/constants/weekDays';
-import { isEmpty, sortBy } from 'lodash';
+import sortBy from 'lodash/sortBy';
 import getCurrentDate from 'apps/drapp/src/functions/getCurrentDate';
 
 export const useDelay = () => {
@@ -45,9 +43,9 @@ export const useDelay = () => {
                 center_id: center.id
             });
             const nearestTimeShift = await getClosetShift(workHours?.data?.workhours);
+
             if (!nearestTimeShift) {
-                toast.error('ساعت کاری برای امروز وجود ندارد.');
-                return;
+                return toast.error('ساعت کاری برای امروز وجود ندارد.');
             }
 
             const targetTime =
@@ -63,7 +61,7 @@ export const useDelay = () => {
                 centerId: center.id,
                 data: {
                     book_from: now >= nearestTimeShift.from ? now : nearestTimeShift.from,
-                    book_to: nearestTimeShift.to,
+                    book_to: targetTime,
                     target_from: targetTime,
                     confirmed: true
                 }
@@ -74,6 +72,7 @@ export const useDelay = () => {
             }
 
             toast.success('تاخیر شما ثبت شد و به بیماران پیام ارسال شد.');
+            router.push('/setting');
         } catch (error) {
             if (axios.isAxiosError(error)) error.response?.data?.message;
         }
@@ -85,40 +84,6 @@ export const useDelay = () => {
 
     return { mutate, isLoading };
 };
-
-// const getNearestEndOfTimeShift = (workHours: any[]) => {
-//     const now = moment().unix();
-//     const todayTimeEndShifts = workHours
-//         .filter((workHour: any) => workHour.day === new Date().getDay())
-//         .map((workHour: any) => moment(workHour.to, 'HH:mm').unix());
-//     if (todayTimeEndShifts.length === 0) return null;
-//     const nearestTimeShift = todayTimeEndShifts.reduce(
-//         (prev, curr) => (curr >= now ? curr : prev),
-//         0
-//     );
-//     return nearestTimeShift;
-// };
-
-// const getNearestTimeShift = (workHours: any[]) => {
-//     const now = moment().unix();
-//     const todayTimeStartShifts = workHours.filter(
-//         (workHour: any) => workHour.day === new Date().getDay()
-//     );
-//     if (todayTimeStartShifts.length === 0) return {};
-//     console.log(todayTimeStartShifts);
-//     const nearestTimeShift = todayTimeStartShifts.reduce(
-//         (prev, curr) =>
-//             timeFormmatedToUnix(curr.from) >= now || timeFormmatedToUnix(curr.to) >= now
-//                 ? curr
-//                 : prev,
-//         {}
-//     );
-//     console.log(nearestTimeShift);
-//     return {
-//         from: timeFormmatedToUnix(nearestTimeShift?.from),
-//         to: timeFormmatedToUnix(nearestTimeShift?.to)
-//     };
-// };
 
 const timeFormmatedToUnix = (time: string) => {
     return moment(time, 'HH:mm').unix();
