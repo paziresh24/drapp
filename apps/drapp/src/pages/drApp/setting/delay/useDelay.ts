@@ -36,7 +36,7 @@ export const useDelay = () => {
                 }
 
                 toast.success('تاخیر شما ثبت شد و به بیماران پیام ارسال شد.');
-                return;
+                return router.push('/setting');
             }
 
             const workHours = await getWorkHours({
