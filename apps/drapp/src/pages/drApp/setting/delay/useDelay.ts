@@ -45,6 +45,7 @@ export const useDelay = () => {
             const nearestTimeShift = await getClosetShift(workHours?.data?.workhours);
 
             if (!nearestTimeShift) {
+                setIsLoading(false);
                 return toast.error('ساعت کاری برای امروز وجود ندارد.');
             }
 
