@@ -16,11 +16,10 @@ export const useDelay = () => {
     const deleteTurns = useDeleteTurns();
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => handleLoading, [moveTurns.status, deleteTurns.status]);
-
     const mutate = async ({ value, type }: DelayType) => {
         const now = (await getCurrentDate()).getTime() / 1000;
         const endOfDay = moment().endOf('day').unix();
+        setIsLoading(true);
 
         try {
             if (type === 'days') {
@@ -31,10 +30,11 @@ export const useDelay = () => {
                         to: endOfDay
                     }
                 });
+                setIsLoading(false);
+
                 if ((data.status as any) === 'NO_RECORD') {
                     return toast.warn('نوبتی در شیفت فعلی وجود ندارد.');
                 }
-
                 toast.success('تاخیر شما ثبت شد و به بیماران پیام ارسال شد.');
                 return router.push('/setting');
             }
@@ -67,20 +67,17 @@ export const useDelay = () => {
                 }
             });
 
+            setIsLoading(false);
             if ((data.status as any) === 'NO_RECORD') {
                 return toast.warn('نوبتی در شیفت فعلی وجود ندارد.');
             }
-
             toast.success('تاخیر شما ثبت شد و به بیماران پیام ارسال شد.');
             router.push('/setting');
         } catch (error) {
+            setIsLoading(false);
             if (axios.isAxiosError(error)) error.response?.data?.message;
         }
     };
-
-    const handleLoading = useMemo(() => {
-        setIsLoading(moveTurns.isLoading || deleteTurns.isLoading);
-    }, [moveTurns.isLoading, deleteTurns.isLoading]);
 
     return { mutate, isLoading };
 };
