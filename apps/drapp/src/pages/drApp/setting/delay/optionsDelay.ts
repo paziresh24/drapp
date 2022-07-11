@@ -2,26 +2,25 @@ export const optionsDelay = [
     {
         label: '30 دقیقه',
         value: '30',
-        type: 'minutes'
+        unit: 'minutes'
     },
     {
-        label: '45 ساعت',
+        label: '45 دقیقه',
         value: '45',
-        type: 'minutes'
+        unit: 'minutes'
     },
     {
         label: 'یک ساعت',
         value: '1',
-        type: 'hours'
+        unit: 'hours'
     },
     {
         label: 'دو ساعت',
         value: '2',
-        type: 'hours'
+        unit: 'hours'
     },
     {
         label: 'امروز مطب نمی روم',
-        value: '24',
-        type: 'days'
+        value: 'vacation'
     }
 ];

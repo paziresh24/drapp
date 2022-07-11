@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
@@ -10,6 +10,7 @@ import RadioQuestionBox from '@paziresh24/shared/ui/radioQuestionBox';
 
 import { optionsDelay } from './optionsDelay';
 import { useDelay } from './useDelay';
+import { sendEventForDelay } from './sendEventForDelay';
 
 const questionProps = {
     title: 'چند دقیقه دیر می رسید؟',
@@ -20,13 +21,24 @@ const Delay = () => {
     const [delay, setDelay] = useState<DelayType | null>();
     const { mutate, isLoading } = useDelay();
 
+    useEffect(() => {
+        sendEventForDelay({
+            action: 'load'
+        });
+    }, []);
+
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const type = optionsDelay.find(({ value }) => value === e.target.value)?.type;
-        setDelay({ value: e.target.value, type } as DelayType);
+        const unit = optionsDelay.find(({ value }) => value === e.target.value)?.unit;
+        setDelay({ value: e.target.value, unit } as DelayType);
     };
 
     const handleSubmit = () => {
         if (!delay) return;
+
+        sendEventForDelay({
+            action: delay.value === 'vacation' ? 'vacation' : `${delay.value}${delay.unit}`
+        });
+
         mutate({
             ...delay
         });

@@ -1,13 +1,24 @@
-import { useDrApp } from '@paziresh24/context/drapp';
-import { useDeleteTurns, useMoveTurns } from '@paziresh24/hooks/drapp/turning';
-import moment from 'jalali-moment';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
+import moment from 'jalali-moment';
 import axios from 'axios';
-import { getWorkHours } from '@paziresh24/apis/drApp/fillInfo/getWorkHours';
 import sortBy from 'lodash/sortBy';
-import getCurrentDate from 'apps/drapp/src/functions/getCurrentDate';
+
+import { useDrApp } from '@paziresh24/context/drapp';
+import { useDeleteTurns, useMoveTurns } from '@paziresh24/hooks/drapp/turning';
+import { getWorkHours } from '@paziresh24/apis/drApp/fillInfo/getWorkHours';
+import getCurrentDate from '../../../../functions/getCurrentDate';
+
+type WorkHours = {
+    from: string;
+    to: string;
+    day: number;
+};
+
+const timeFormmatedToUnix = (time: string) => {
+    return moment(time, 'HH:mm').unix();
+};
 
 export const useDelay = () => {
     const router = useHistory();
@@ -16,14 +27,14 @@ export const useDelay = () => {
     const deleteTurns = useDeleteTurns();
     const [isLoading, setIsLoading] = useState(false);
 
-    const mutate = async ({ value, type }: DelayType) => {
-        const now = (await getCurrentDate()).getTime() / 1000;
+    const mutate = async ({ value, unit }: DelayType) => {
+        const now = moment(await getCurrentDate()).unix();
         const endOfDay = moment().endOf('day').unix();
         setIsLoading(true);
 
         try {
-            if (type === 'days') {
-                const data = await deleteTurns.mutateAsync({
+            if (value === 'vacation') {
+                await deleteTurns.mutateAsync({
                     centerId: center.id,
                     data: {
                         from: now,
@@ -32,36 +43,33 @@ export const useDelay = () => {
                 });
                 setIsLoading(false);
 
-                if ((data.status as any) === 'NO_RECORD') {
-                    return toast.warn('نوبتی در شیفت فعلی وجود ندارد.');
-                }
-                toast.success('تاخیر شما ثبت شد و به بیماران پیام ارسال شد.');
+                toast.success('امروز برای شما مرخصی ثبت شد.');
                 return router.push('/setting');
             }
 
             const workHours = await getWorkHours({
                 center_id: center.id
             });
-            const nearestTimeShift = await getClosetShift(workHours?.data?.workhours);
+            const nearestShift = await getNearestShift(workHours?.data?.workhours);
 
-            if (!nearestTimeShift) {
+            if (!nearestShift) {
                 setIsLoading(false);
                 return toast.error('ساعت کاری برای امروز وجود ندارد.');
             }
 
             const targetTime =
-                now >= nearestTimeShift.from
+                now >= nearestShift.from
                     ? moment(now * 1000)
-                          .add(value, type)
+                          .add(value, unit)
                           .unix()
-                    : moment(nearestTimeShift.from * 1000)
-                          .add(value, type)
+                    : moment(nearestShift.from * 1000)
+                          .add(value, unit)
                           .unix();
 
             const data = await moveTurns.mutateAsync({
                 centerId: center.id,
                 data: {
-                    book_from: now >= nearestTimeShift.from ? now : nearestTimeShift.from,
+                    book_from: now >= nearestShift.from ? now : nearestShift.from,
                     book_to: targetTime,
                     target_from: targetTime,
                     confirmed: true
@@ -76,34 +84,26 @@ export const useDelay = () => {
             router.push('/setting');
         } catch (error) {
             setIsLoading(false);
-            if (axios.isAxiosError(error)) error.response?.data?.message;
+            if (axios.isAxiosError(error)) toast.error(error.response?.data?.message);
         }
     };
 
     return { mutate, isLoading };
 };
 
-const timeFormmatedToUnix = (time: string) => {
-    return moment(time, 'HH:mm').unix();
-};
-
-const getClosetShift = async (workHours: any[]) => {
-    const now = (await getCurrentDate()).getTime() / 1000;
+const getNearestShift = async (workHours: WorkHours[]) => {
+    const now = moment(await getCurrentDate()).unix();
     const sortedWorkHours = sortBy(
-        workHours.filter((workHour: any) => workHour.day === new Date().getDay()),
+        workHours.filter(workHour => +workHour.day === new Date().getDay()),
         ['from']
     );
 
-    const onShiftNow = sortedWorkHours.filter(workHour => {
-        if (now >= timeFormmatedToUnix(workHour.from) && now < timeFormmatedToUnix(workHour.to))
-            return true;
-        return false;
-    })?.[0];
+    const onShiftNow = sortedWorkHours.find(
+        workHour =>
+            now >= timeFormmatedToUnix(workHour.from) && now < timeFormmatedToUnix(workHour.to)
+    );
 
-    const beforeShift = sortedWorkHours.filter(workHour => {
-        if (now < timeFormmatedToUnix(workHour.from)) return true;
-        return false;
-    })?.[0];
+    const beforeShift = sortedWorkHours.find(workHour => now < timeFormmatedToUnix(workHour.from));
 
     if (onShiftNow) {
         return {
