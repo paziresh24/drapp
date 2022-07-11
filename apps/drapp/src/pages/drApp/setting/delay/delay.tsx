@@ -1,3 +1,8 @@
+/*
+    documation for delay page 👇
+    https://dash-team.notion.site/e52a2caf553845609e96e06cd81b2146
+*/
+
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import Container from '@mui/material/Container';
