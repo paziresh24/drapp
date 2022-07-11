@@ -53,7 +53,7 @@ export const routes = [
         path: '/turning/setting/',
         name: 'Setting',
         title: 'تقویم کاری',
-        component: lazy(() => import('./setting')),
+        component: lazy(() => import('./setting/cosnult')),
         isPrivate: true,
         exact: false
     },
@@ -224,6 +224,14 @@ export const routes = [
         exact: false
     },
     {
+        path: '/setting',
+        name: 'duration',
+        title: 'تنظیمات نوبت های من',
+        component: lazy(() => import('./setting')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/setting/duration',
         name: 'duration',
         title: 'ساعت کاری من',
@@ -236,6 +244,14 @@ export const routes = [
         name: 'workhours',
         title: 'ساعت کاری من',
         component: lazy(() => import('./workHours')),
+        isPrivate: true,
+        exact: false
+    },
+    {
+        path: '/setting/delay',
+        name: 'delay',
+        title: 'اعلام تاخیر به بیماران',
+        component: lazy(() => import('./setting/delay/delay')),
         isPrivate: true,
         exact: false
     },
