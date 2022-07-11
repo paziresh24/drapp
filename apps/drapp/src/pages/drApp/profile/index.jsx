@@ -51,6 +51,8 @@ import Password from '@components/molecules/profile/password';
 import Map from '@paziresh24/shared/ui/map';
 import Settings from '@components/molecules/profile/settings';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
+import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 
 const Profile = () => {
     const [info, setInfo] = useDrApp();
@@ -90,7 +92,7 @@ const Profile = () => {
     const [mapZoom, setMapZoom] = useState();
 
     useEffect(() => {
-        if (info.center.type_id === 1) {
+        if (info.center.type_id === OFFICE_CENTER) {
             getCenterAccess.remove();
             getGallery.refetch();
             getCenterAccess.refetch();
@@ -452,13 +454,15 @@ const Profile = () => {
                         defaultValue={info.doctor.medical_code}
                         {...updateDoctorInfo('medical_code', { required: false })}
                     />
-                    <TextField
-                        label="شماره موبایل منشی"
-                        type="tel"
-                        error={doctorInfoErrors.secretary_phone}
-                        defaultValue={info.doctor.secretary_phone}
-                        {...updateDoctorInfo('secretary_phone', { required: false })}
-                    />
+                    {info.center.type_id === OFFICE_CENTER && (
+                        <TextField
+                            label="شماره موبایل منشی"
+                            type="tel"
+                            error={doctorInfoErrors.secretary_phone}
+                            defaultValue={info.doctor.secretary_phone}
+                            {...updateDoctorInfo('secretary_phone', { required: false })}
+                        />
+                    )}
                     <div className={styles['col']}>
                         <span style={{ marginBottom: '1rem' }}>بیوگرافی</span>
                         <CKEditor
@@ -503,7 +507,7 @@ const Profile = () => {
                             }}
                         />
                     </div>
-                    {info.center.id === '5532' && (
+                    {info.center.id === CONSULT_CENTER_ID && (
                         <div className={styles['col']}>
                             <span style={{ marginBottom: '1rem' }}>توضیحات خدمات مشاوره</span>
                             <CKEditor
@@ -616,7 +620,7 @@ const Profile = () => {
             >
                 <Settings />
             </Accordion>
-            {info.center.type_id === 1 && (
+            {info.center.type_id === OFFICE_CENTER && (
                 <Accordion
                     title="اطلاعات مطب"
                     icon={<LocationIcon color="#3F3F79" />}
@@ -794,7 +798,7 @@ const Profile = () => {
                     </form>
                 </Accordion>
             )}
-            {(info.center.type_id === 1 || info.center.id === '5532') && (
+            {(info.center.type_id === OFFICE_CENTER || info.center.id === CONSULT_CENTER_ID) && (
                 <Accordion
                     title="اطلاعات بانکی"
                     icon={<UserIcon color="#3F3F79" />}
@@ -822,7 +826,7 @@ const Profile = () => {
                     </form>
                 </Accordion>
             )}
-            {info.center.id === '5532' && (
+            {info.center.id === CONSULT_CENTER_ID && (
                 <Accordion
                     title="شماره whatsapp business"
                     icon={<ChatIcon color="#3F3F79" />}
