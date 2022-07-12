@@ -1,5 +1,5 @@
 {
-    "root": "apps/drapp-e2e",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "apps/drapp-e2e/src",
     "projectType": "application",
     "targets": {
@@ -10,7 +10,7 @@
             }
         },
         "e2e-ci": {
-            "builder": "@nrwl/workspace:run-commands",
+            "executor": "@nrwl/workspace:run-commands",
             "options": {
                 "commands": [
                     "start-server-and-test \"nx serve drapp\" http://localhost:4030 \"nx e2e drapp-e2e\""

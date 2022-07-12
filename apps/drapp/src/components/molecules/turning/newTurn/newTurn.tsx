@@ -59,7 +59,7 @@ const NewTurn = () => {
         if (confirmCellPhone) patientCellInput.current?.focus();
     }, [confirmCellPhone]);
 
-    const checkPatient = useCallback(({ nationalCode }) => {
+    const checkPatient = useCallback(({ nationalCode }: { nationalCode: string }) => {
         const identifier = uuid();
         const tags = [];
         tags.push({
@@ -80,13 +80,16 @@ const NewTurn = () => {
         });
     }, []);
 
-    const updatePatient = useCallback(({ patientCell, prescriptionId }) => {
-        return updatePrescription.mutateAsync({
-            baseURL: info.center.local_base_url,
-            prescriptionId,
-            patientCell: digitsFaToEn(patientCell)
-        });
-    }, []);
+    const updatePatient = useCallback(
+        ({ patientCell, prescriptionId }: { patientCell: string; prescriptionId: string }) => {
+            return updatePrescription.mutateAsync({
+                baseURL: info.center.local_base_url,
+                prescriptionId,
+                patientCell: digitsFaToEn(patientCell)
+            });
+        },
+        []
+    );
 
     const handleCreatePrescription = useCallback(async () => {
         try {
@@ -125,7 +128,7 @@ const NewTurn = () => {
         try {
             await updatePatient({
                 patientCell,
-                prescriptionId: patientData.current?.id
+                prescriptionId: patientData.current?.id ?? ''
             });
             typeAction === 'create' ? createAction() : visitAction();
         } catch (error) {
@@ -148,7 +151,7 @@ const NewTurn = () => {
         }
     };
 
-    const showError = useCallback(error => {
+    const showError = useCallback((error: unknown) => {
         if (axios.isAxiosError(error)) {
             toast.error(error.response?.data?.message);
             if (

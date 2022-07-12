@@ -1,11 +1,11 @@
 {
-    "root": "apps/drapp",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "apps/drapp/src",
     "projectType": "application",
     "tags": [],
-    "architect": {
+    "targets": {
         "serve": {
-            "builder": "@nrwl/workspace:run-commands",
+            "executor": "@nrwl/workspace:run-commands",
             "options": {
                 "cwd": "apps/drapp",
                 "commands": [
@@ -16,21 +16,21 @@
             }
         },
         "changeEnv": {
-            "builder": "@nrwl/workspace:run-commands",
+            "executor": "@nrwl/workspace:run-commands",
             "options": {
                 "cwd": "apps/drapp",
                 "commands": ["chmod +x env.sh", "sh env.sh && mv env-config.js public"]
             }
         },
         "build": {
-            "builder": "@nrwl/workspace:run-commands",
+            "executor": "@nrwl/workspace:run-commands",
             "options": {
                 "cwd": "apps/drapp",
                 "commands": ["node ../../node_modules/@craco/craco/bin/craco.js build"]
             }
         },
         "test": {
-            "builder": "@nrwl/workspace:run-commands",
+            "executor": "@nrwl/workspace:run-commands",
             "options": {
                 "cwd": "apps/drapp",
                 "command": "node ../../node_modules/@craco/craco/bin/craco.js test"

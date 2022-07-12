@@ -9,8 +9,6 @@
         "drapp": "apps/drapp",
         "drapp-e2e": "apps/drapp-e2e",
         "hooks": "libs/hooks",
-        "patient-app": "apps/patient-app",
-        "patient-app-e2e": "apps/patient-app-e2e",
         "prescription": "apps/prescription",
         "prescription-dashboard-components": "libs/prescription-dashboard/components",
         "prescription-e2e": "apps/prescription-e2e",
@@ -18,5 +16,6 @@
         "shared-ui": "libs/shared/ui",
         "shared-utils": "libs/shared/utils",
         "utils": "libs/utils"
-    }
+    },
+    "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

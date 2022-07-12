@@ -1,19 +1,6 @@
 version: '3.7'
 
 services:
-    patient-app:
-        container_name: patient-app
-        image: dockerhub.paziresh24.com/patient-app
-        build:
-            context: .
-            dockerfile: Dockerfile.patientApp
-        ports:
-            - 8030:3000
-        command: 'yarn start'
-        extra_hosts:
-            - prescription-api.paziresh24.com:192.168.216.16
-        restart: always
-
     drapp-local:
         container_name: drapp-local
         image: dockerhub.paziresh24.com/drapp-local

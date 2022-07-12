@@ -1,5 +1,5 @@
 {
-    "root": "libs/shared/icon",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "libs/shared/icon/src",
     "projectType": "library",
     "tags": [],
@@ -15,7 +15,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/libs/shared/icon"],
             "options": {
-                "jestConfig": "libs/shared/icon/jest.config.js",
+                "jestConfig": "libs/shared/icon/jest.config.ts",
                 "passWithNoTests": true
             }
         }

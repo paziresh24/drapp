@@ -3,9 +3,6 @@
     "affected": {
         "defaultBase": "main"
     },
-    "cli": {
-        "defaultCollection": "@nrwl/react"
-    },
     "implicitDependencies": {
         "package.json": {
             "dependencies": "*",
@@ -22,14 +19,6 @@
                 "accessToken": "ZDc2ODQ4ZDMtNDAzMS00NzU1LTkwNTktMTVmNmEwY2I1MzgzfHJlYWQtd3JpdGU="
             }
         }
-    },
-    "targetDependencies": {
-        "build": [
-            {
-                "target": "build",
-                "projects": "dependencies"
-            }
-        ]
     },
     "generators": {
         "@nrwl/react": {
@@ -53,5 +42,11 @@
             }
         }
     },
-    "defaultProject": "drapp"
+    "defaultProject": "drapp",
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "targetDefaults": {
+        "build": {
+            "dependsOn": ["^build"]
+        }
+    }
 }
