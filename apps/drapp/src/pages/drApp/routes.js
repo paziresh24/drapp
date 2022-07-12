@@ -106,14 +106,6 @@ export const routes = [
         exact: true
     },
     {
-        path: '/qa/',
-        name: 'Qa',
-        title: 'پرسش و پاسخ',
-        component: lazy(() => import('./qa')),
-        isPrivate: true,
-        exact: true
-    },
-    {
         path: '/prescription/',
         name: 'Prescription',
         title: 'نسخه های ثبت شده',
