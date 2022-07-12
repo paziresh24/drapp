@@ -34,7 +34,9 @@ const ErrorByRefresh = ({ show, blur, error }) => {
                     <span>تلاش مجدد</span>
                 </div>
                 <span className={styles.text}>
-                    {error?.message ?? 'در دریافت اطلاعات مشکلی پیش آمده است.'}
+                    {error?.message
+                        ? `یک خطای غیرمنتظره رخ داد: ${error?.message}`
+                        : 'در دریافت اطلاعات مشکلی پیش آمده است.'}
                 </span>
                 <a className={styles['support-wrapper']} href="tel:02191012787">
                     <svg

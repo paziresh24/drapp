@@ -89,7 +89,7 @@ const TurnRow = (props: TurnRowProps) => {
                     : (info.center?.local_base_url ?? window.location.origin) +
                       process.env.REACT_APP_BASE_URL_PRESCRIPTION_ROUTE
                 : window._env_.P24_BASE_URL_PRESCRIPTION_API
-        }/pdfs/` + prescription.pdfName 
+        }/pdfs/` + prescription.pdfName
     );
     const turn = useRef(turns.find(turn => turn.id === id));
 
@@ -405,7 +405,6 @@ const TurnRow = (props: TurnRowProps) => {
 
     return (
         <>
-            <ReactTooltip />
             <Default>
                 <tr className="bg-white border-b border-solid border-b-gray-100 font-medium text-gray-900">
                     {data.map((col, index) => (
@@ -425,6 +424,7 @@ const TurnRow = (props: TurnRowProps) => {
                             <PrescriptionButton />
                             <TurnDropDown />
                         </Stack>
+                        <ReactTooltip />
                     </td>
                 </tr>
                 {isDetailsOpen && (

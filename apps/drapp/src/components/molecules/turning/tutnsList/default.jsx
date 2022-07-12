@@ -3,11 +3,12 @@ import { useState } from 'react';
 import Loading from './loading';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
 import { ChevronIcon } from '@paziresh24/shared/icon';
-import { isMobile } from 'react-device-detect';
 import TurnRowc from '../turnRow';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
+import { useMediaQuery } from 'react-responsive';
 
 const TurnsWrapper = () => {
+    const isMobile = useMediaQuery({ maxWidth: 767 });
     const [isOpenActiveTurns, setIsOpenActiveTurns] = useState(true);
     const [isOpenFinalizedTurns, setIsOpenFinalizedTurns] = useState(true);
     const turns = useTurnsStore(state => state.turns);

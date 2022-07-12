@@ -3,15 +3,16 @@ import { Header } from '@paziresh24/shared/ui/header';
 import { SideBar } from '../home/sideBar';
 import { useDrApp } from '@paziresh24/context/drapp';
 import BottomBar from '../bottomBar/bottomBar';
-import { isMobile } from 'react-device-detect';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorByRefresh from '@paziresh24/shared/ui/errorByRefresh';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { toast } from 'react-toastify';
+import { useMediaQuery } from 'react-responsive';
 
 const Wrapper = ({ children }) => {
     const [info] = useDrApp();
+    const isMobile = useMediaQuery({ maxWidth: 767 });
     const [isOffline, setIsOffline] = useState(false);
     const isLogined = info.doctor ? true : false;
 

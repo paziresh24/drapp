@@ -16,10 +16,11 @@ import isEmpty from 'lodash/isEmpty';
 import { CSSTransition } from 'react-transition-group';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
-import { isMobile } from 'react-device-detect';
+import { useMediaQuery } from 'react-responsive';
 
 const Header = () => {
     const history = useHistory();
+    const isMobile = useMediaQuery({ maxWidth: 767 });
     const [page] = usePage();
     const [isOpen, setIsOpen] = useMenu();
     const [info, setInfo] = useDrApp();
