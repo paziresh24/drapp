@@ -118,7 +118,7 @@ const PrivateRoute = props => {
 
     useEffect(() => {
         if (doctorInfo.isSuccess) {
-            if (!doctorInfo.data?.data) return setIsError(true);
+            // if (!doctorInfo.data?.data) return setIsError(true);
             const doctor = doctorInfo.data.data ?? {};
             setInfo(prev => ({
                 ...prev,

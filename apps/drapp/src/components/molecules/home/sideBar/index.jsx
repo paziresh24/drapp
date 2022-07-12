@@ -219,7 +219,7 @@ const SideBar = () => {
                                 <img
                                     src={
                                         info.doctor.image
-                                            ? baseURL('UPLOADER') + info.doctor.image
+                                            ? baseURL('UPLOADER') + info.doctor?.image
                                             : null ?? NoImage
                                     }
                                     style={{
@@ -243,10 +243,10 @@ const SideBar = () => {
                                 className="flex flex-col justify-center transition-all duration-300 absolute text-[#3F3F79] w-40"
                             >
                                 <span className="font-bold line-clamp-1 w-11/12">
-                                    {`${info.doctor.name} ${info.doctor.family}`}
+                                    {`${info.doctor?.name} ${info.doctor?.family}`}
                                 </span>
                                 <span className="text-sm font-normal mt-2">
-                                    {info.doctor.expertises.length > 0 && (
+                                    {info.doctor?.expertises?.length > 0 && (
                                         <span className="line-clamp-1">
                                             {info.doctor.expertises[0].alias_title
                                                 ? info.doctor.expertises[0].alias_title

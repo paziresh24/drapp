@@ -4,20 +4,55 @@ import { SideBar } from '../home/sideBar';
 import { useDrApp } from '@paziresh24/context/drapp';
 import BottomBar from '../bottomBar/bottomBar';
 import { isMobile } from 'react-device-detect';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorByRefresh from '@paziresh24/shared/ui/errorByRefresh';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import { toast } from 'react-toastify';
 
 const Wrapper = ({ children }) => {
     const [info] = useDrApp();
+    const [isOffline, setIsOffline] = useState(false);
     const isLogined = info.doctor ? true : false;
 
+    useEffect(() => {
+        window.addEventListener('offline', () => {
+            setIsOffline(true);
+        });
+        window.addEventListener('online', () => {
+            setIsOffline(false);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (isOffline) {
+            toast.loading('ارتباط شما با اینترنت قطع شده است.', {
+                toastId: 'offline'
+            });
+        } else {
+            toast.dismiss('offline');
+        }
+    }, [isOffline]);
+
     return (
-        <div className={styles['wrapper']} id="wrapper">
-            {isLogined && !isMobile && <SideBar />}
-            <div className={styles['article']}>
-                {isLogined && <Header />}
-                {children}
-                {isLogined && <BottomBar />}
+        <ErrorBoundary
+            FallbackComponent={props => <ErrorByRefresh {...props} show={true} />}
+            onError={error => console.log(error)}
+        >
+            <div
+                className={classNames(styles['wrapper'], 'transition-all duration-700', {
+                    'blur-sm grayscale pointer-events-none': isOffline
+                })}
+                id="wrapper"
+            >
+                {isLogined && !isMobile && <SideBar />}
+                <div className={styles['article']}>
+                    {isLogined && <Header />}
+                    {children}
+                    {isLogined && <BottomBar />}
+                </div>
             </div>
-        </div>
+        </ErrorBoundary>
     );
 };
 

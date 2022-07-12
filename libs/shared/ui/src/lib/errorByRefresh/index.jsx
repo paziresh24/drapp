@@ -1,7 +1,7 @@
 import styles from './errorByRefresh.module.scss';
 import { CSSTransition } from 'react-transition-group';
 
-const ErrorByRefresh = ({ show, blur }) => {
+const ErrorByRefresh = ({ show, blur, error }) => {
     return (
         <CSSTransition in={show} timeout={300} classNames="fade-loading" unmountOnExit>
             <div className={`${styles['wrapper']} ${blur && styles.blur}`}>
@@ -33,7 +33,9 @@ const ErrorByRefresh = ({ show, blur }) => {
 
                     <span>تلاش مجدد</span>
                 </div>
-                <span className={styles.text}>در دریافت اطلاعات مشکلی پیش آمده است.</span>
+                <span className={styles.text}>
+                    {error?.message ?? 'در دریافت اطلاعات مشکلی پیش آمده است.'}
+                </span>
                 <a className={styles['support-wrapper']} href="tel:02191012787">
                     <svg
                         width="21"

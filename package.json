@@ -66,6 +66,7 @@
         "react-device-detect": "1.17.0",
         "react-dom": "17.0.2",
         "react-drag-reorder": "1.1.0",
+        "react-error-boundary": "3.1.4",
         "react-export-excel-xlsx-fix": "0.5.3",
         "react-gtm-module": "2.0.11",
         "react-helmet": "6.1.0",
