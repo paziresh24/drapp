@@ -3,7 +3,7 @@ import styles from 'assets/styles/pages/drApp/index.module.scss';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { setToken } from '@paziresh24/utils/localstorage';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Loading } from '@paziresh24/shared/ui/loading';
 import { useGetCenterInfo, useGetDoctorInfo } from '@paziresh24/hooks/drapp/profile';
@@ -17,7 +17,6 @@ import { useGetUserGoftino, useSetUserGoftino } from '@paziresh24/hooks/drapp/go
 import Helmet from 'react-helmet';
 import * as Sentry from '@sentry/browser';
 import { ChatSupport } from '@paziresh24/utils/services/chatSupport';
-import Button from '@paziresh24/shared/ui/button';
 import { useGetLatestVersion } from '@paziresh24/hooks/core';
 import * as serviceWorkerRegistration from 'apps/drapp/src/serviceWorkerRegistration';
 import { usePage } from '@paziresh24/context/core/page';
@@ -26,6 +25,7 @@ import LearnControl from './../learnControl/index';
 import ErrorByRefresh from '@paziresh24/shared/ui/errorByRefresh';
 import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
 import { useLevel } from '@paziresh24/context/core/level';
+import OtpCodePresciprion from '../otpCodePrescription/otpCodePrescription';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -38,20 +38,16 @@ const PrivateRoute = props => {
 
     const doctorInfo = useGetDoctorInfo({
         center_id: centersDoctor?.[centersDoctor?.length - 1]?.id
-        // center_id: 5532
     });
     const history = useHistory();
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const [changeLogModal, setChangeLogModal] = useState(false);
-    const [promoteModal, setPromoteModal] = useState(false);
     const getUserGoftino = useGetUserGoftino();
     const setUserGoftino = useSetUserGoftino();
     const getLatestVersion = useGetLatestVersion();
     const [isError, setIsError] = useState(false);
 
-    const isProduction = process.env.NODE_ENV === 'production';
-    const isMainDomain = window.location.host === window._env_.P24_MAIN_DOMAIN;
     useEffect(() => {
         setPage(props);
         if (isEmpty(info) && !isEmpty(getToken())) {
@@ -122,6 +118,7 @@ const PrivateRoute = props => {
 
     useEffect(() => {
         if (doctorInfo.isSuccess) {
+            if (!doctorInfo.data?.data) return setIsError(true);
             const doctor = doctorInfo.data.data ?? {};
             setInfo(prev => ({
                 ...prev,
@@ -194,11 +191,6 @@ const PrivateRoute = props => {
         history.replace('/fill-info');
     }
 
-    const closePromothModal = () => {
-        setPromoteModal(false);
-        window.__promote_turn_close = true;
-    };
-
     return (
         <>
             <Helmet>
@@ -256,28 +248,9 @@ const PrivateRoute = props => {
                     {getLatestVersion.isSuccess && getLatestVersion.data.name}
                 </span>
             </Modal>
-            <Modal isOpen={promoteModal} onClose={closePromothModal}>
-                <span
-                    style={{
-                        fontSize: '1.6rem',
-                        fontWeight: '500',
-                        textAlign: 'center',
-                        lineHeight: '3.5rem'
-                    }}
-                >
-                    در کمتر از 5 دقیقه نوبت دهی مطب خود را در روز و ساعت دلخواه فعال کنید.
-                </span>
-                <Button
-                    onClick={() => {
-                        window.__promote_turn_close = true;
-                        history.push('/fill-info');
-                    }}
-                >
-                    فعالسازی
-                </Button>
-            </Modal>
+            <OtpCodePresciprion />
         </>
     );
 };
 
-export default PrivateRoute;
+export default memo(PrivateRoute);

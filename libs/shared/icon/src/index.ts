@@ -51,6 +51,7 @@ export { Statistics } from './lib/public/statistics';
 export { ShareIcon } from './lib/public/share';
 export { MegaphoneIcon } from './lib/public/megaphone';
 export { CheckIcon } from './lib/public/check';
+export { DotsIcon } from './lib/public/dots';
 
 export {
     LearnIcon,

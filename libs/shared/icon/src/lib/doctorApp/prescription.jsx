@@ -1,4 +1,6 @@
-const Prescription = ({ color }) => {
+import { memo } from 'react';
+
+const Prescription = memo(({ color }) => {
     return (
         <svg
             width="24"
@@ -15,7 +17,7 @@ const Prescription = ({ color }) => {
             />
         </svg>
     );
-};
+});
 
 Prescription.defaultProps = {
     color: '#27BDA0'

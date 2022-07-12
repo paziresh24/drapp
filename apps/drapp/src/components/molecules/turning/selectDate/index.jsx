@@ -8,6 +8,23 @@ import Modal from '@paziresh24/shared/ui/modal';
 import moment from 'jalali-moment';
 import isEmpty from 'lodash/isEmpty';
 
+const returnDate = selectedDay => {
+    return `${selectedDay?.year}/${selectedDay?.month}/${selectedDay?.day}`;
+};
+
+const unixToDate = unix => {
+    const date = moment(unix * 1000).locale('fa');
+    return {
+        year: date.year(),
+        month: date.month() + 1,
+        day: date.date()
+    };
+};
+
+const dateToUnix = date => {
+    return +moment.from(returnDate(date), 'fa', 'YYYY/MM/DD').format('X');
+};
+
 const SelectDate = props => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -16,7 +33,7 @@ const SelectDate = props => {
     useEffect(() => {
         setSelectedDay(
             props.defaultValue
-                ? JSON.parse(props.defaultValue)
+                ? unixToDate(props.defaultValue)
                 : props.today
                 ? utils('fa').getToday()
                 : ''
@@ -25,25 +42,16 @@ const SelectDate = props => {
 
     useEffect(() => {
         setIsOpen(false);
-
-        if (props.unix) {
-            props.value &&
-                props.value(
-                    moment(
-                        `${selectedDay.year}/${selectedDay.month}/${selectedDay.day}`,
-                        'jYYYY/jMM/jDD'
-                    )
-                        .locale('fa')
-                        .format('x') ?? utils('fa').getToday()
-                );
-        } else {
-            props.value && props.value(selectedDay);
+        if (selectedDay) {
+            if (props.unix) {
+                if (props.value) {
+                    props.value(dateToUnix(selectedDay));
+                }
+            } else {
+                props.value && props.value(selectedDay);
+            }
         }
     }, [selectedDay]);
-
-    const returnDate = selectedDay => {
-        return `${selectedDay?.year}/${selectedDay?.month}/${selectedDay?.day}`;
-    };
 
     return (
         <>
@@ -72,7 +80,7 @@ const SelectDate = props => {
                         </span>
                     )}
                 </span>
-                {!props.nagivateDate && <CalendarIcon />}
+                {!props.nagivateDate && <CalendarIcon color="#000" />}
                 {props.nagivateDate && <ChevronIcon dir="left" />}
             </button>
             <Modal title="انتخاب تاریخ" isOpen={isOpen} onClose={setIsOpen}>

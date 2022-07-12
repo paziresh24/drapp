@@ -1,7 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 import styles from './turnList.module.scss';
 import { Item } from '../item';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Default, Mobile } from '@paziresh24/hooks/device';
 import Loading from './loading';
 // import { Default, Mobile } from '../../../hooks/device';
@@ -73,4 +73,4 @@ const TurnsList = ({ turns, loading, refetchData }) => {
     );
 };
 
-export default TurnsList;
+export default memo(TurnsList);

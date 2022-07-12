@@ -600,7 +600,7 @@ const Home = props => {
                         variant="secondary"
                         className={styles['calandar-button']}
                         onClick={() => setOpenCalendar(true)}
-                        icon={<CalendarIcon />}
+                        icon={<CalendarIcon color="#000" />}
                     >
                         {selectedDayRange.from && selectedDayRange.to
                             ? ` از ${moment

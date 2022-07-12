@@ -185,7 +185,7 @@ const WorkHours = () => {
             {isDesktop && (
                 <Button
                     className="!mb-3"
-                    startIcon={<ChevronIcon style={{}} dir="right" color="#0070f3" />}
+                    startIcon={<ChevronIcon dir="right" color="#0070f3" />}
                     onClick={() => router.goBack()}
                 >
                     بازگشت

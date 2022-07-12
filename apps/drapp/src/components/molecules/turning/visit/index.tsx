@@ -1,22 +1,32 @@
 import { useRef } from 'react';
 import { toast } from 'react-toastify';
 import { useAddItemService, useFinalizePrescription } from '@paziresh24/hooks/prescription';
-import Button from '@paziresh24/shared/ui/button';
 import Modal from '@paziresh24/shared/ui/modal';
-import TextArea from '@paziresh24/shared/ui/textArea';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
+import axios from 'axios';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
+import Button from '@mui/lab/LoadingButton';
 
-const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData }) => {
+interface Props {
+    isOpen: boolean;
+    onClose: (isClose: boolean) => void;
+    provider: 'tamin' | 'salamat' | 'paziresh24';
+    prescriptionId?: string;
+    bookId?: string;
+    refetchData: () => void;
+}
+
+const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData }: Props) => {
     const [info] = useDrApp();
     const addItem = useAddItemService();
     const finalize = useFinalizePrescription();
     const paziresh = usePaziresh();
-    const commentRef = useRef();
+    const commentRef = useRef<TextFieldProps>();
 
     const submitVisit = {
-        tamin: ({ prescriptionId, bookId }) => {
+        tamin: ({ prescriptionId, bookId }: { prescriptionId?: string; bookId?: string }) => {
             getSplunkInstance().sendEvent({
                 group: 'turning-list',
                 type: 'visit-prescription-action'
@@ -25,7 +35,7 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
                 {
                     baseURL: info.center.local_base_url,
                     prescriptionId,
-                    comments: commentRef.current.value
+                    comments: commentRef.current?.value
                 },
                 {
                     onSuccess: () => {
@@ -39,12 +49,14 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
                                         }
                                         refetchData();
                                         onClose(false);
-                                    } catch (e) {
-                                        toast.error(e.response.data.message);
+                                    } catch (error) {
+                                        if (axios.isAxiosError(error))
+                                            toast.error(error.response?.data?.message);
                                     }
                                 },
                                 onError: error => {
-                                    toast.warn(error.response.data.message);
+                                    if (axios.isAxiosError(error))
+                                        toast.warn(error.response?.data?.message);
                                 }
                             }
                         );
@@ -55,7 +67,7 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
                 }
             );
         },
-        salamat: ({ prescriptionId, bookId }) => {
+        salamat: ({ prescriptionId, bookId }: { prescriptionId?: string; bookId?: string }) => {
             getSplunkInstance().sendEvent({
                 group: 'turning-list',
                 type: 'visit-prescription-action'
@@ -70,25 +82,26 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
                             }
                             refetchData();
                             onClose(false);
-                        } catch (e) {
-                            toast.error(e.response.data.message);
+                        } catch (error) {
+                            if (axios.isAxiosError(error))
+                                toast.error(error.response?.data?.message);
                         }
                     }
                 }
             );
         },
-        paziresh24: async ({ bookId }) => {
+        paziresh24: async ({ bookId }: { bookId?: string }) => {
             try {
                 await submitPaziresh24Visit(bookId);
                 refetchData();
                 onClose(false);
-            } catch (e) {
-                toast.error(e.response.data.message);
+            } catch (error) {
+                if (axios.isAxiosError(error)) toast.error(error.response?.data?.message);
             }
         }
     };
 
-    const submitPaziresh24Visit = id => {
+    const submitPaziresh24Visit = (id?: string) => {
         return paziresh.mutateAsync({
             book_id: id,
             status: true
@@ -97,10 +110,12 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
 
     return (
         <Modal title="تایید ویزیت" isOpen={isOpen} onClose={onClose}>
-            {provider === 'tamin' && <TextArea label="توضیحات" ref={commentRef} />}
-            <div className="flex gap-5">
+            {provider === 'tamin' && (
+                <TextField label="توضیحات" multiline rows={4} inputRef={commentRef} />
+            )}
+            <div className="flex space-s-2">
                 <Button
-                    block
+                    fullWidth
                     onClick={() =>
                         submitVisit[provider]({
                             prescriptionId,
@@ -108,10 +123,11 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
                         })
                     }
                     loading={addItem.isLoading || finalize.isLoading || paziresh.isLoading}
+                    variant="contained"
                 >
                     ویزیت
                 </Button>
-                <Button block variant="secondary" onClick={() => onClose(false)}>
+                <Button fullWidth variant="outlined" onClick={() => onClose(false)}>
                     انصراف
                 </Button>
             </div>

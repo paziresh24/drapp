@@ -47,7 +47,7 @@ const SideBar = () => {
                     id: 'turnning-list-step',
                     name: 'لیست بیماران',
                     shouldShow: true,
-                    icon: <HouseIcon color="#3F3F79" />,
+                    icon: <HouseIcon color="#000" />,
                     link: '/',
                     onClick: () =>
                         getSplunkInstance().sendEvent({
@@ -63,14 +63,14 @@ const SideBar = () => {
                     id: '50',
                     shouldShow: window._env_.P24_STATISTICS_API,
                     name: 'گزارش نسخه نویسی',
-                    icon: <Statistics color="#3F3F79" />,
+                    icon: <Statistics color="#000" />,
                     link: '/dashboard'
                 },
                 {
                     id: 10,
                     name: 'نسخه های ثبت شده',
                     shouldShow: true,
-                    icon: <PrescriptionMenuIcon color="#3F3F79" />,
+                    icon: <PrescriptionMenuIcon color="#000" />,
                     onClick: () =>
                         getSplunkInstance().sendEvent({
                             group: 'sidebar',
@@ -82,8 +82,7 @@ const SideBar = () => {
                     id: 25,
                     name: 'پراستفاده ها',
                     shouldShow: true,
-                    icon: <StarIcon color="#3F3F79" />,
-                    // link: '/favorite/templates',
+                    icon: <StarIcon color="#000" />,
                     subMenu: [
                         { name: 'نسخه پراستفاده', link: '/favorite/templates' },
                         { name: 'اقلام پراستفاده', link: '/favorite/service' }
@@ -93,21 +92,21 @@ const SideBar = () => {
                     id: 4,
                     name: 'چت',
                     shouldShow: info.center.id === '5532',
-                    icon: <ChatIcon color="#3F3F79" />,
+                    icon: <ChatIcon color="#000" />,
                     link: '/consult'
                 },
                 {
                     id: 7,
                     name: 'قوانین مشاوره',
                     shouldShow: info.center.id === '5532',
-                    icon: <InfoIcon color="#3F3F79" />,
+                    icon: <InfoIcon color="#000" />,
                     link: '/consult-term'
                 },
                 {
                     id: 'provider-step',
                     name: 'بیمه های من',
                     shouldShow: true,
-                    icon: <PrescriptionIcon color="#3F3F79" />,
+                    icon: <PrescriptionIcon color="#000" />,
                     link: `/providers`,
                     onClick: () =>
                         getSplunkInstance().sendEvent({
@@ -125,7 +124,7 @@ const SideBar = () => {
                     shouldShow:
                         info.center?.is_active_booking &&
                         (info.center.type_id === 1 || info.center.id === '5532'),
-                    icon: <SettingIcon color="#3F3F79" />,
+                    icon: <SettingIcon color="#000" />,
 
                     link: '/setting'
                 },
@@ -133,7 +132,7 @@ const SideBar = () => {
                     id: 11,
                     name: 'نظرات بیماران',
                     shouldShow: true,
-                    icon: <MessageIcon color="#3F3F79" />,
+                    icon: <MessageIcon color="#000" />,
                     link: '/feedbacks',
                     badge: true
                 },
@@ -141,14 +140,14 @@ const SideBar = () => {
                     id: 6,
                     name: 'تسویه حساب',
                     shouldShow: info.center.id === '5532' || info.center.type_id === 1,
-                    icon: <CardIcon color="#3F3F79" />,
+                    icon: <CardIcon color="#000" />,
                     link: '/financial'
                 },
                 {
                     id: 23,
                     name: 'خروج',
                     shouldShow: true,
-                    icon: <ExitIcon color="#3F3F79" />,
+                    icon: <ExitIcon color="#000" />,
                     link: '/logout'
                 }
             ]);
@@ -158,14 +157,14 @@ const SideBar = () => {
                 id: 'turnning-list-step',
                 name: 'گزارش نسخه نویسی',
                 shouldShow: true,
-                icon: <Statistics color="#3F3F79" />,
+                icon: <Statistics color="#000" />,
                 link: '/dashboard'
             },
             {
                 id: 23,
                 name: 'خروج',
                 shouldShow: true,
-                icon: <ExitIcon color="#3F3F79" />,
+                icon: <ExitIcon color="#000" />,
                 link: '/logout'
             }
         ]);
@@ -314,7 +313,7 @@ const SideBar = () => {
                     <a
                         href="tel:02191012787"
                         style={{
-                            right: open ? '1rem' : '0',
+                            right: open ? '1rem' : '-100%',
                             transitionDelay: !open ? 'unset' : '0.2s',
                             opacity: open ? '1' : '0'
                         }}

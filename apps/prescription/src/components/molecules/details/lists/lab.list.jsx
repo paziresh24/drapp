@@ -136,6 +136,7 @@ const LabsList = ({
                                                         {!readOnly && (
                                                             <>
                                                                 <CalendarIcon
+                                                                    color="#000"
                                                                     data-tip
                                                                     data-for="dateAll"
                                                                 />
@@ -177,6 +178,7 @@ const LabsList = ({
                                                         {!readOnly && (
                                                             <>
                                                                 <CalendarIcon
+                                                                    color="#000"
                                                                     data-tip
                                                                     data-for="dateAll"
                                                                 />

@@ -1,25 +1,16 @@
 import isEmpty from 'lodash/isEmpty';
-import styles from './turnList.module.scss';
-import { TurnCard } from '../turnCard';
-import { PrescriptionCard } from '../prescriptionCard';
 import { useState } from 'react';
 import Loading from './loading';
 import { Default, Mobile } from '@paziresh24/hooks/core/device';
 import { ChevronIcon } from '@paziresh24/shared/icon';
 import { isMobile } from 'react-device-detect';
-import { useDrApp } from '@paziresh24/context/drapp';
+import TurnRowc from '../turnRow';
+import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 
-const TurnsWrapper = ({ loading, turns, refetchData }) => {
-    const [info] = useDrApp();
-    const [dropDownShow, setDropDownShow] = useState(false);
+const TurnsWrapper = () => {
     const [isOpenActiveTurns, setIsOpenActiveTurns] = useState(true);
     const [isOpenFinalizedTurns, setIsOpenFinalizedTurns] = useState(true);
-
-    document.body.addEventListener('click', () => {
-        if (dropDownShow) {
-            setDropDownShow(false);
-        }
-    });
+    const turns = useTurnsStore(state => state.turns);
 
     const ActivePatientsList = ({ finalized }) => (
         <div className="flex justify-between items-center bg-[#f6f8fb] w-full py-2 px-4 text-sm font-bold">
@@ -53,26 +44,67 @@ const TurnsWrapper = ({ loading, turns, refetchData }) => {
 
     const TurnRow = {
         Turn: ({ turn, lineNumber }) => (
-            <TurnCard
-                turn={turn}
-                finalized={turn.book_status === 'visited' || turn.prescription?.finalized}
+            <TurnRowc
                 key={turn.id}
-                dropDownShowKey={turn.id}
-                refetchData={refetchData}
-                dropDownShow={dropDownShow}
-                setDropDownShow={setDropDownShow}
-                lineNumber={lineNumber}
+                id={turn.id}
+                date={turn?.from}
+                name={turn.name ?? ''}
+                family={turn.family ?? ''}
+                mobileNumber={turn?.cell}
+                nationalCode={
+                    turn.national_code
+                        ? turn.national_code
+                        : turn?.prescription?.patientNationalCode
+                }
+                type={turn.type}
+                number={lineNumber}
+                paymentStatus={turn.payment_status}
+                paymentPrice={turn.user_payment}
+                refId={turn.ref_id}
+                bookStatus={turn.book_status}
+                prescription={{
+                    id: turn.prescription?.id,
+                    finalized: turn.book_status === 'visited' || turn.prescription?.finalized,
+                    isReference: turn?.prescription?.salamat_prescription?.isReference,
+                    issuerType: turn?.prescription?.patientAdditionalData?.issuerType,
+                    status: turn.prescription?.status,
+                    pdfName: turn?.prescription?.pdf,
+                    provider: turn?.prescription?.insuranceType,
+                    trackingCode:
+                        turn.prescription &&
+                        (turn.prescription?.insuranceType === 'tamin'
+                            ? turn.prescription.tamin_prescription.map(item => item.head_EPRSC_ID)
+                            : [turn.prescription.salamat_prescription?.trackingCode]),
+                    sequenceNumber:
+                        turn.prescription.salamat_prescription?.trackingCode?.sequenceNumber
+                }}
             />
         ),
         Prescription: ({ turn, lineNumber }) => (
-            <PrescriptionCard
-                dropDownShow={dropDownShow}
-                setDropDownShow={setDropDownShow}
-                turn={turn}
+            <TurnRowc
                 key={turn.id}
-                dropDownShowKey={turn.id}
-                refetchData={refetchData}
-                lineNumber={lineNumber}
+                id={turn.id}
+                date={new Date(turn.created_at).getTime() / 1000}
+                name={turn.patientAdditionalData?.name}
+                family={turn.patientAdditionalData?.lastName}
+                mobileNumber={turn.patientCell ?? turn?.patientAdditionalData?.cellPhoneNumber}
+                nationalCode={turn?.patientNationalCode}
+                type={turn.type}
+                number={lineNumber}
+                prescription={{
+                    id: turn.id,
+                    finalized: turn?.finalized,
+                    isReference: turn?.salamat_prescription?.isReference,
+                    issuerType: turn?.patientAdditionalData?.issuerType,
+                    status: turn?.status,
+                    pdfName: turn.pdf,
+                    provider: turn.insuranceType,
+                    trackingCode:
+                        turn?.insuranceType === 'tamin'
+                            ? turn.tamin_prescription.map(item => item.head_EPRSC_ID)
+                            : [turn.salamat_prescription?.trackingCode],
+                    sequenceNumber: turn.salamat_prescription?.trackingCode?.sequenceNumber
+                }}
             />
         )
     };
@@ -149,34 +181,36 @@ const TurnsList = ({ turns, loading, refetchData }) => {
     return (
         <>
             <Default>
-                <table width="100%" className={styles.turnsList}>
-                    <colgroup>
-                        <col span="1" style={{ width: '17%' }} />
-                        <col span="1" style={{ width: '10%' }} />
-                        <col span="1" style={{ width: '10%' }} />
-                        <col span="1" style={{ width: '10%' }} />
-                        <col span="1" style={{ width: '10%' }} />
-                        <col span="1" style={{ width: '3%' }} />
-                    </colgroup>
-                    <thead>
-                        <tr className={styles.red}>
-                            <th>نام بیمار</th>
-                            <th>شماره‌موبایل</th>
-                            <th>وضعیت نسخه</th>
-                            <th>بیمه</th>
-                            <th>تاریخ نوبت</th>
-                            <th> </th>
+                <table className="w-full text-sm text-right">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b border-solid border-b-gray-100">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                نام بیمار
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                شماره‌موبایل
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                وضعیت نسخه
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                بیمه
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                تاریخ نوبت
+                            </th>
+                            <th scope="col" className="px-6 py-3" />
                         </tr>
                     </thead>
                     <tbody>
                         {loading && Loading()}
-                        <TurnsWrapper turns={turns} refetchData={refetchData} loading={loading} />
+                        <TurnsWrapper refetchData={refetchData} loading={loading} />
                     </tbody>
                 </table>
             </Default>
             <Mobile>
                 {loading && Loading()}
-                <TurnsWrapper turns={turns} refetchData={refetchData} loading={loading} />
+                <TurnsWrapper refetchData={refetchData} loading={loading} />
             </Mobile>
         </>
     );

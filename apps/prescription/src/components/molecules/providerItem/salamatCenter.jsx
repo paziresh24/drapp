@@ -72,14 +72,11 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                             status: 'success',
                             action: 'created'
                         });
-                        if (data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                            setOtpConfirm(true);
-                        } else {
-                            setIsAuthentication(true);
-                            isImport && setImportModal(true);
-                            refetch();
-                            toast.success('اطلاعات شما ثبت شد.');
-                        }
+
+                        setIsAuthentication(true);
+                        isImport && setImportModal(true);
+                        refetch();
+                        toast.success('اطلاعات شما ثبت شد.');
                     },
                     onError: error => {
                         sendEventForProviderAuth({
@@ -119,14 +116,11 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                             status: 'success',
                             action: 'edited'
                         });
-                        if (data?.message == 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                            setOtpConfirm(true);
-                        } else {
-                            setIsAuthentication(true);
-                            isImport && setImportModal(true);
-                            refetch();
-                            toast.success('اطلاعات شما ویرایش شد.');
-                        }
+
+                        setIsAuthentication(true);
+                        isImport && setImportModal(true);
+                        refetch();
+                        toast.success('اطلاعات شما ویرایش شد.');
                     },
                     onError: error => {
                         getSplunkInstance().sendEvent({
@@ -311,7 +305,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                 </form>
             )}
 
-            <Modal
+            {/* <Modal
                 isOpen={otpConfirm}
                 onClose={setOtpConfirm}
                 title="کد تایید ارسال شده را وارد نمایید."
@@ -332,7 +326,7 @@ const SalamatCenter = ({ isAuth, insurance, name, address, refetch, identifier }
                         تایید
                     </Button>
                 </form>
-            </Modal>
+            </Modal> */}
             <SalamatImport isOpen={importModal} onClose={setImportModal} provider="salamat" />
         </div>
     );

@@ -68,10 +68,8 @@ const SelectDate = props => {
                     onFocus={props.onFocus}
                     aria-hidden
                 >
-                    {!props.simple && <CalendarIcon />}
-                    {/* {selectedDay
-                        ? !props.simple && <CloseIcon onClick={() => setSelectedDay('')} />
-                        : !props.simple && <CalendarIcon />} */}
+                    {!props.simple && <CalendarIcon color="#000" />}
+
                     {selectedDay ? (
                         <span>
                             {selectedDay.year}/{selectedDay.month}/{selectedDay.day}

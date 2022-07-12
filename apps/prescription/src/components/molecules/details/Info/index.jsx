@@ -3,7 +3,7 @@ import Button from '@paziresh24/shared/ui/button';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import ReactTooltip from 'react-tooltip';
 import { ChevronIcon, EditIcon, PrescriptionIcon } from '@paziresh24/shared/icon';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Finalize from '../finalize';
 import Modal from '@paziresh24/shared/ui/modal';
 import TextField from '@paziresh24/shared/ui/textField';
@@ -182,7 +182,7 @@ const Info = () => {
                         data-tip
                         data-for="template"
                     >
-                        <PrescriptionIcon />
+                        <PrescriptionIcon color="#000" />
                         <ReactTooltip id="template" place="top" type="dark" effect="solid">
                             <p>
                                 بعد از اینکه نسخه را کامل کردید، <br />
@@ -332,4 +332,4 @@ const Info = () => {
     );
 };
 
-export default Info;
+export default memo(Info);

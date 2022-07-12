@@ -102,21 +102,6 @@ const PrivateRoute = props => {
         }
     }, [clinicLogin.status]);
 
-    client.interceptors.response.use(
-        res => {
-            if (res?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                props.name !== 'providers' && setOtpConfirm(true);
-            }
-            return res;
-        },
-        err => {
-            if (err?.response?.data?.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
-                props.name !== 'providers' && setOtpConfirm(true);
-            }
-            return Promise.reject(err);
-        }
-    );
-
     // onRequest
     client.interceptors.request.use(
         config => {
