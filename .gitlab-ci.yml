@@ -156,7 +156,7 @@ drApp-rollback-production:
   image: dockerhub.paziresh24.com/docker-ansible:latest
   stage: rollback
   when: manual
-  needs: ["drApp-deploy-production"]
+  #needs: ["drApp-deploy-production"]
   script:
     - apk add --update bash openssh sshpass
     - ansible-galaxy collection install community.docker
