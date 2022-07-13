@@ -189,11 +189,6 @@ const PrivateRoute = props => {
     if (isEmpty(getToken()))
         history.replace(`/auth?url=${encodeURIComponent(window.location.href)}`);
 
-    if (info.center && !info.center?.is_active_booking && props.name === 'Setting') {
-        sendEvent('click', 'home', 'clickturningbutton');
-        history.replace('/fill-info');
-    }
-
     const closePromothModal = () => {
         setPromoteModal(false);
         window.__promote_turn_close = true;
