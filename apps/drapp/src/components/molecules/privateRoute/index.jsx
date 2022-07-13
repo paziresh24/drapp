@@ -21,7 +21,6 @@ import { useGetLatestVersion } from '@paziresh24/hooks/core';
 import * as serviceWorkerRegistration from 'apps/drapp/src/serviceWorkerRegistration';
 import { usePage } from '@paziresh24/context/core/page';
 import { CSSTransition } from 'react-transition-group';
-import LearnControl from './../learnControl/index';
 import ErrorByRefresh from '@paziresh24/shared/ui/errorByRefresh';
 import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
 import { useLevel } from '@paziresh24/context/core/level';
@@ -235,7 +234,6 @@ const PrivateRoute = props => {
                     </Route>
                 )}
             </div>
-            <LearnControl />
             <Modal title="تغییرات اخیر" isOpen={changeLogModal} onClose={setChangeLogModal}>
                 <span className="text-gray-500 font-medium text-sm pr-3 whitespace-pre-line leading-8 border-r-2 border-solid border-gray-300">
                     {getLatestVersion.isSuccess && getLatestVersion.data.changeLog}

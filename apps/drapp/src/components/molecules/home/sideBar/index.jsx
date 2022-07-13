@@ -22,7 +22,6 @@ import { useMenu } from '@paziresh24/context/core/menu';
 import { baseURL } from '@paziresh24/utils/baseUrl';
 import { CSSTransition } from 'react-transition-group';
 import { MenuItem } from '../menuItem';
-import { useSettingTurns } from '../../turning/statusBar/settingTurns.context';
 import { StatusBar } from '../../turning/statusBar';
 import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
@@ -32,7 +31,6 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 const SideBar = memo(() => {
     const [open, setOpen] = useMenu();
     const { setIsOpen: setIsOpenTour } = useTour();
-    const [, setSettingIsOpen] = useSettingTurns();
     const [level] = useLevel();
     const history = useHistory();
     const [info] = useDrApp();

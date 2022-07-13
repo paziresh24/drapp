@@ -1,5 +1,4 @@
 import { isMobile } from 'react-device-detect';
-import { Goftino } from '../../goftino';
 import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
 import taminLogo from '@paziresh24/assets/images/drapp/provider/tamin.png';
 import salamatLogo from '@paziresh24/assets/images/drapp/provider/salamat.png';
@@ -8,8 +7,6 @@ import govLogo from '@paziresh24/assets/images/drapp/provider/gov.png';
 const LoginHero = ({ focus }) => {
     return (
         <>
-            <Goftino smsSupport={false} />
-
             <div
                 className={`w-full min-h-[40%] h-[40%] lg:min-h-full lg:h-full lg:rounded-2xl overflow-hidden relative flex flex-col justify-between lg:justify-center p-10 transition-all duration-500 bg-gradient-to-bl from-[#3f3f79] to-[#3f3f79] ${
                     isMobile && focus ? 'translate-y-[-97%] -mb-[10rem]' : ''
