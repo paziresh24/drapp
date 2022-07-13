@@ -155,7 +155,7 @@ const Form = ({ focus, setFocus }) => {
                 )}
                 {centersConfig[window.location.hostname]?.logo && (
                     <img
-                        src={process.env.PUBLIC_URL + centersConfig[window.location.hostname].logo}
+                        src={centersConfig[window.location.hostname].logo}
                         className="w-28 mx-auto"
                         alt=""
                     />

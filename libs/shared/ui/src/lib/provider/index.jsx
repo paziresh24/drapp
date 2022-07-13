@@ -99,7 +99,7 @@ export const getSplunkRateAndReviewInstance = () =>
 
 const Provider = ({ children }) => {
     return (
-        <Router basename={process.env.PUBLIC_URL}>
+        <Router>
             <ScrollToTop />
             <QueryClientProvider client={queryClient}>
                 <TransitionGroup>{children}</TransitionGroup>

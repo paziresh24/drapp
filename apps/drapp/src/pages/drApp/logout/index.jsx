@@ -14,13 +14,7 @@ const LogOut = () => {
             onSuccess: () => {
                 setInfo('');
                 clearToken();
-                window.location = `${
-                    process.env.NODE_ENV === 'production'
-                        ? window.location.host === 'dr.paziresh24.com'
-                            ? ''
-                            : process.env.PUBLIC_URL
-                        : ''
-                }/auth`;
+                window.location = 'auth';
             }
         });
     }, []);

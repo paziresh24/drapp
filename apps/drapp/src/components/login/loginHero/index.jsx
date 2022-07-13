@@ -43,7 +43,7 @@ const LoginHero = ({ focus }) => {
                 </svg>
                 {centersConfig[window.location.hostname]?.logo && (
                     <img
-                        src={process.env.PUBLIC_URL + centersConfig[window.location.hostname].logo}
+                        src={centersConfig[window.location.hostname].logo}
                         className="lg:hidden w-20 absolute left-5 top-5 rounded-lg"
                         alt=""
                     />

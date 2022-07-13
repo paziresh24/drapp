@@ -4,11 +4,6 @@ const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 
 module.exports = {
-    // style: {
-    //     postcss: {
-    //         plugins: [require('tailwindcss'), require('autoprefixer')]
-    //     }
-    // },
     webpack: {
         alias: {
             '@components': path.resolve(__dirname, 'src/components/'),
@@ -53,6 +48,8 @@ module.exports = {
                     delete r.include;
                 }
             });
+
+            config.output.publicPath = '';
 
             return config;
         }

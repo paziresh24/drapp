@@ -1,7 +1,5 @@
-import { client } from '../client';
+import axios from 'axios';
 
 export const getLatestVersion = async () => {
-    return await client.get(
-        `${window.location.origin + process.env.PUBLIC_URL}/pwa-versions/latest.json`
-    );
+    return await axios.get(`pwa-versions/latest.json`);
 };

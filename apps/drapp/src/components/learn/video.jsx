@@ -61,7 +61,7 @@ const Video = ({ video, setSelectVideo, selectVideo }) => {
                             type: 'video',
                             sources: [
                                 {
-                                    src: process.env.PUBLIC_URL + video.src
+                                    src: video.src
                                 }
                             ]
                         }}
@@ -80,7 +80,7 @@ const Video = ({ video, setSelectVideo, selectVideo }) => {
                             type: 'video',
                             sources: [
                                 {
-                                    src: process.env.PUBLIC_URL + video?.src
+                                    src: video?.src
                                 }
                             ]
                         }}
