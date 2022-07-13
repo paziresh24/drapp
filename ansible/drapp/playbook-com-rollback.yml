@@ -1,0 +1,5 @@
+---
+- name: Update Dr App
+  hosts: com_server
+  roles:
+    - drapp_com_rollback
