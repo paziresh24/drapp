@@ -1,5 +1,5 @@
 import styles from '@assets/styles/pages/drApp/turning.module.scss';
-import { SelectDate } from '@components/molecules/turning/selectDate';
+import { SelectDate } from '@components/turning/selectDate';
 import { useGetTurns } from '@paziresh24/hooks/drapp/turning';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { EmptyState } from '@paziresh24/shared/ui/emptyState';
@@ -9,12 +9,12 @@ import { useHistory, useLocation } from 'react-router-dom';
 import moment from 'jalali-moment';
 import Error from '@paziresh24/shared/ui/error';
 import { useMediaQuery } from 'react-responsive';
-import TurnsList from '@components/molecules/turning/tutnsList/default';
+import TurnsList from '@components/turning/tutnsList/default';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import ReferenceModal from '@paziresh24/apps/prescription/components/molecules/referenceModal';
-import NewTurn from 'apps/drapp/src/components/molecules/turning/newTurn/newTurn';
-import Statistics from 'apps/drapp/src/components/molecules/turning/statistics';
+import NewTurn from '@components/turning/newTurn/newTurn';
+import Statistics from '@components/turning/statistics';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 
 const Turning = () => {

@@ -6,7 +6,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
 import { CheckIcon } from '@paziresh24/shared/icon';
-import { useWorkHoursStore } from '../../../../store/workhours.store';
+import { useWorkHoursStore } from '../../../store/workhours.store';
 import AlertForDuration from './alertForDuration';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useGetWorkHours } from '@paziresh24/hooks/drapp/fillInfo';

@@ -4,9 +4,9 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 
-import SelectDay from '../../../components/molecules/setting/workDays/selectDay';
-import SelectHours from '../../../components/molecules/setting/workDays/selectHours';
-import Result from '../../../components/molecules/setting/workDays/result';
+import SelectDay from '../../../components/setting/workDays/selectDay';
+import SelectHours from '../../../components/setting/workDays/selectHours';
+import Result from '../../../components/setting/workDays/result';
 
 import { useCallback, useEffect, useState } from 'react';
 import { useWorkHoursStore } from 'apps/drapp/src/store/workhours.store';
@@ -20,7 +20,7 @@ import { useHistory } from 'react-router-dom';
 import uniq from 'lodash/uniq';
 import moment from 'jalali-moment';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
+import ActivationModal from 'apps/drapp/src/components/activation/activationModal';
 
 const initialHours = {
     from: '09:00',

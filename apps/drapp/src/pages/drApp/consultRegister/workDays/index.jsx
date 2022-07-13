@@ -6,7 +6,7 @@ import Button from '@paziresh24/shared/ui/button';
 import { useWorkDays } from '@paziresh24/context/drapp/workDays';
 import { useActiveConsult } from '@paziresh24/hooks/drapp/consultFillInfo';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { TimeRow } from '@components/molecules/setting/workDays';
+import { TimeRow } from '@components/setting/workDays';
 import { toast } from 'react-toastify';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useDuration } from '@paziresh24/context/drapp/duration';
@@ -15,7 +15,7 @@ import isEmpty from 'lodash/isEmpty';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import Container from '@mui/material/Container';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
+import ActivationModal from 'apps/drapp/src/components/activation/activationModal';
 import { useHistory } from 'react-router-dom';
 
 const canvasStyles = {

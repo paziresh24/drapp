@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import IconButton from '@mui/material/IconButton';
 import { CloseIcon } from '@paziresh24/shared/icon';
-import { weekDays } from '../../../../constants/weekDays';
+import { weekDays } from '../../../constants/weekDays';
 
 interface Props {
     isLoading: boolean;

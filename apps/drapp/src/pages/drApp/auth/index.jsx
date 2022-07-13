@@ -8,8 +8,8 @@ import { getToken } from '@paziresh24/utils/localstorage';
 import { useGetLatestVersion } from '@paziresh24/hooks/core';
 
 // COMPONENTS
-import LoginHero from '@components/molecules/login/loginHero';
-import Form from '@components/molecules/login/form';
+import LoginHero from '@components/login/loginHero';
+import Form from '@components/login/form';
 import Helmet from 'react-helmet';
 import * as serviceWorkerRegistration from '../../../serviceWorkerRegistration';
 

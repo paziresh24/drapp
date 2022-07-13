@@ -14,7 +14,7 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import { isMobile } from 'react-device-detect';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import Button from '@mui/lab/LoadingButton';
-import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
+import ActivationModal from 'apps/drapp/src/components/activation/activationModal';
 import { useHistory } from 'react-router-dom';
 
 const Providers = () => {

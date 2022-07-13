@@ -6,7 +6,7 @@ import Alert from '@mui/material/Alert';
 import { CheckIcon } from '@paziresh24/shared/icon';
 import { Dispatch, memo, SetStateAction, useCallback } from 'react';
 import { useWorkHoursStore } from 'apps/drapp/src/store/workhours.store';
-import { weekDays } from '../../../../constants/weekDays';
+import { weekDays } from '../../../constants/weekDays';
 
 interface Props {
     onChange: Dispatch<SetStateAction<DayIds[]>>;

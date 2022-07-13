@@ -3,7 +3,7 @@ import Button from '@paziresh24/shared/ui/button';
 import { useHistory } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import { useEffect, useState } from 'react';
-import { Expertises } from '@components/molecules/profile/expertises';
+import { Expertises } from '@components/profile/expertises';
 import { useCreateExpertise, useUpdateExpertise } from '@paziresh24/hooks/drapp/profile';
 import Container from '@mui/material/Container';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';

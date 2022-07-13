@@ -4,9 +4,9 @@ import { routes } from './routes';
 import Helmet from 'react-helmet';
 import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
 
-import PrivateRoute from '@components/molecules/privateRoute';
-import Provider from '@components/molecules/provider';
-import Wrapper from '@components/molecules/wrapper';
+import PrivateRoute from '@components/privateRoute';
+import Provider from '@components/provider';
+import Wrapper from '@components/wrapper';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
 
 const DoctorApp = () => {

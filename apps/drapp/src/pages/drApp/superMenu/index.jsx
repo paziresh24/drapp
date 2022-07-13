@@ -8,7 +8,7 @@ import Button from '@paziresh24/shared/ui/button';
 import { PenIcon, StarIcon } from '@paziresh24/shared/icon';
 import { toast } from 'react-toastify';
 import { baseURL } from '@paziresh24/utils/baseUrl';
-import Menu from '@components/molecules/superMeu/menu';
+import Menu from '@components/superMeu/menu';
 import bannerTaminImport from '@paziresh24/assets/images/drapp/banner-tamin-import.png';
 import ThreeDots from '@paziresh24/shared/icon/public/threeDots';
 import { ChevronIcon } from '@paziresh24/shared/icon';
@@ -16,7 +16,7 @@ import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import { MainMenuData, SubMenuData } from '@paziresh24/configs/drapp/menu.config';
-import { StatusBar } from '@components/molecules/turning/statusBar';
+import { StatusBar } from '@components/turning/statusBar';
 
 const SuperMenu = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState();

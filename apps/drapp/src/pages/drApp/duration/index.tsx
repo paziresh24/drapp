@@ -6,7 +6,7 @@ import RadioQuestionBox from '@paziresh24/shared/ui/radioQuestionBox';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import SelectTime from '../../../components/molecules/setting/duration/selectTime';
+import SelectTime from '../../../components/setting/duration/selectTime';
 import { useWorkHoursStore } from '../../../store/workhours.store';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 

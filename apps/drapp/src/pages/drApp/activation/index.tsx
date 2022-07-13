@@ -1,4 +1,4 @@
-import Service from '../../../components/molecules/activation/service';
+import Service from '../../../components/activation/service';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';

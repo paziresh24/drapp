@@ -1,8 +1,8 @@
 import styles from '@assets/styles/pages/drApp/learn.module.scss';
 
 import { useState, useEffect } from 'react';
-import Sidebar from '@components/molecules/learn/sidebar';
-import Video from '@components/molecules/learn/video';
+import Sidebar from '@components/learn/sidebar';
+import Video from '@components/learn/video';
 
 import { isMobile } from 'react-device-detect';
 import videos from '@paziresh24/constants/learnVideos.json';

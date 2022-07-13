@@ -2,7 +2,7 @@
 import styles from 'assets/styles/pages/drApp/workDays.module.scss';
 
 import { useDuration } from '@paziresh24/context/drapp/duration';
-import { Duration } from '@components/molecules/setting/duration';
+import { Duration } from '@components/setting/duration';
 import Button from '@paziresh24/shared/ui/button';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { useHistory } from 'react-router-dom';
