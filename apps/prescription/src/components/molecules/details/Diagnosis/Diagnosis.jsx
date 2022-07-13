@@ -31,18 +31,6 @@ const Diagnosis = ({ isOpen, onClose, setSelectItem, searchValue }) => {
         if (inView) setPage(prevState => prevState + 10);
     }, [inView]);
 
-    // useEffect(async () => {
-    //     if (search.isSuccess) {
-    //         await setIsLoading(false);
-    //         await search.remove();
-    //         return setResults(prevState => prevState.concat(search.data));
-    //     }
-    //     if (search.isError) {
-    //         console.clear();
-    //         return setIsLoading(false);
-    //     }
-    // }, [search.status]);
-
     useEffect(() => {
         if (page > 0) search.refetch();
     }, [page]);

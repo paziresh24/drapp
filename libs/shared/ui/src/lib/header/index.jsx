@@ -1,5 +1,5 @@
 import styles from './header.module.scss';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ChevronIcon, HelpIcon } from '@paziresh24/shared/icon';
 import { useMenu } from '@paziresh24/context/core/menu';
@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMediaQuery } from 'react-responsive';
 
-const Header = () => {
+const Header = memo(() => {
     const history = useHistory();
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const [page] = usePage();
@@ -34,7 +34,9 @@ const Header = () => {
         location.state?.afterLogin === true ? false : true
     );
 
-    useEffect(() => !hideToolTip && setTimeout(() => setHideToolTip(true), 5000), []);
+    useEffect(() => {
+        !hideToolTip && setTimeout(() => setHideToolTip(true), 5000);
+    }, []);
 
     const createCenterAction = () => {
         createCenter.mutate(
@@ -386,6 +388,6 @@ const Header = () => {
             </Modal>
         </>
     );
-};
+});
 
 export { Header };

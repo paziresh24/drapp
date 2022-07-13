@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './sideBar.module.scss';
 import { useDrApp } from '@paziresh24/context/drapp';
@@ -27,10 +27,8 @@ import { StatusBar } from '../../turning/statusBar';
 import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useTour } from '@reactour/tour';
-import Button from '@mui/material/Button';
-import MenuIcon from '@mui/icons-material/Menu';
 
-const SideBar = () => {
+const SideBar = memo(() => {
     const [open, setOpen] = useMenu();
     const { setIsOpen: setIsOpenTour } = useTour();
     const [, setSettingIsOpen] = useSettingTurns();
@@ -369,6 +367,6 @@ const SideBar = () => {
             <StatusBar />
         </div>
     );
-};
+});
 
 export { SideBar };

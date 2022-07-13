@@ -73,10 +73,10 @@ export const Search = ({
         if (inView) setPage(prevState => prevState + 10);
     }, [inView]);
 
-    useEffect(async () => {
+    useEffect(() => {
         if (search.isSuccess) {
-            await setIsLoading(false);
-            await search.remove();
+            setIsLoading(false);
+            search.remove();
             return setResults(prevState => prevState.concat(search.data.result.serviceList));
         }
         if (search.isError) {
@@ -282,10 +282,10 @@ export const SearchFullPage = ({
         if (inView) setPage(prevState => prevState + 10);
     }, [inView]);
 
-    useEffect(async () => {
+    useEffect(() => {
         if (search.isSuccess) {
-            await setIsLoading(false);
-            await search.remove();
+            setIsLoading(false);
+            search.remove();
             return setResults(prevState => prevState.concat(search.data.result.serviceList));
         }
         if (search.isError) {

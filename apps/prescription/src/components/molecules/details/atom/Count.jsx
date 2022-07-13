@@ -20,7 +20,9 @@ const Count = ({
         ref.current.value = defaultValue;
     }, [defaultValue]);
 
-    useEffect(() => (focus ? ref.current.focus() : ref.current.blur()), [focus]);
+    useEffect(() => {
+        focus ? ref.current.focus() : ref.current.blur();
+    }, [focus]);
 
     return (
         <TextField

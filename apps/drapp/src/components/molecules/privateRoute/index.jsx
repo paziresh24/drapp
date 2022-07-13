@@ -3,7 +3,7 @@ import styles from 'assets/styles/pages/drApp/index.module.scss';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { setToken } from '@paziresh24/utils/localstorage';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useState } from 'react';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Loading } from '@paziresh24/shared/ui/loading';
 import { useGetCenterInfo, useGetDoctorInfo } from '@paziresh24/hooks/drapp/profile';
@@ -47,11 +47,15 @@ const PrivateRoute = props => {
     const setUserGoftino = useSetUserGoftino();
     const getLatestVersion = useGetLatestVersion();
     const [isError, setIsError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setPage(props);
         if (isEmpty(info) && !isEmpty(getToken())) {
-            props.path !== '/create-center' && centerInfo.refetch();
+            if (props.path !== '/create-center') {
+                centerInfo.refetch();
+                setIsLoading(true);
+            }
             getUserGoftino.refetch();
             window._env_.P24_STATISTICS_API && getLevels.refetch();
         }
@@ -108,6 +112,9 @@ const PrivateRoute = props => {
                 onlyConsult
             });
         }
+        if (centerInfo.isError) {
+            setIsLoading(false);
+        }
     }, [centerInfo.status]);
 
     useEffect(() => {
@@ -118,7 +125,6 @@ const PrivateRoute = props => {
 
     useEffect(() => {
         if (doctorInfo.isSuccess) {
-            // if (!doctorInfo.data?.data) return setIsError(true);
             const doctor = doctorInfo.data.data ?? {};
             setInfo(prev => ({
                 ...prev,
@@ -147,12 +153,14 @@ const PrivateRoute = props => {
             ) {
                 history.push('/activation');
             }
+            setIsLoading(false);
         }
         if (doctorInfo.isError) {
             if (centersDoctor.length <= info.centers.length) {
                 setCentersDoctor(prev => [...prev, info.centers[prev.length - 1 + 1]]);
             } else {
                 setIsError(true);
+                setIsLoading(false);
             }
         }
     }, [doctorInfo.status]);
@@ -191,20 +199,13 @@ const PrivateRoute = props => {
         history.replace('/fill-info');
     }
 
+    if (isLoading) return <Loading show={true} />;
+
     return (
         <>
             <Helmet>
                 <title>{props.title}</title>
-                <link rel="canonical" href={`https://dr.paziresh24.com${props.path}`} />
             </Helmet>
-            <Loading
-                show={
-                    !info.doctor &&
-                    !centerInfo.isError &&
-                    !isError &&
-                    props.path !== '/create-center'
-                }
-            />
             <ErrorByRefresh show={centerInfo.isError || isError} />
             <div
                 className={classNames({

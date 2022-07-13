@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './assets/styles/index.scss';
 import './assets/styles/reset.scss';
 import './assets/styles/base.scss';
@@ -26,7 +26,11 @@ const steps = [
         content: 'به منظور شناخت بهتر بیماران، بیوگرافی خود را تکمیل نمایید.'
     }
 ];
-ReactDOM.render(
+
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+
+root.render(
     <TourProvider
         steps={steps}
         showBadge={false}
@@ -46,8 +50,7 @@ ReactDOM.render(
                 </Provider>
             </ThemeProvider>
         </CacheProvider>
-    </TourProvider>,
-    document.getElementById('root')
+    </TourProvider>
 );
 
 serviceWorkerRegistration.register();

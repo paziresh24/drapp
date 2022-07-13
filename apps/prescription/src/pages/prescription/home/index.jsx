@@ -123,10 +123,6 @@ const Home = props => {
 
     const [dropDownShow, setDropDownShow] = useState(false);
 
-    // useEffect(() => {
-    //     if (!prescriptionSuccessedModal) history.replace();
-    // }, [prescriptionSuccessedModal]);
-
     const confirmRangeDate = () => {
         if (selectedDayRange.to !== null) {
             setOpenCalendar(false);
@@ -168,10 +164,10 @@ const Home = props => {
         if (page > 0) prescriptions.refetch();
     }, [page]);
 
-    useEffect(async () => {
+    useEffect(() => {
         if (deletePrescription.isSuccess) {
             setDeletePrescriptionModal(false);
-            await prescriptions.remove();
+            prescriptions.remove();
             prescriptions.refetch();
         }
         if (deletePrescription.isError) {
