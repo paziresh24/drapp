@@ -4,6 +4,7 @@ stages:
   - test
   - build-image
   - deploy
+  - rollback
 
 variables:
   RULES_CHANGES_PATH: "**/*"
@@ -149,3 +150,14 @@ drApp-deploy-qc:
     - apk add --update bash openssh sshpass
     - ansible-galaxy collection install community.docker
     - ansible-playbook ./ansible/drapp/playbook-qc.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+
+
+drApp-rollback-production:
+  image: dockerhub.paziresh24.com/docker-ansible:latest
+  stage: rollback
+  when: manual
+  #needs: ["drApp-deploy-production"]
+  script:
+    - apk add --update bash openssh sshpass
+    - ansible-galaxy collection install community.docker
+    - ansible-playbook ./ansible/drapp/playbook-com-rollback.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
