@@ -99,7 +99,9 @@ export const getSplunkRateAndReviewInstance = () =>
 
 const Provider = ({ children }) => {
     return (
-        <Router>
+        <Router
+            basename={window.location.pathname.split('/')[1] === 'doctorapp' ? '/doctorapp/' : ''}
+        >
             <ScrollToTop />
             <QueryClientProvider client={queryClient}>
                 <TransitionGroup>{children}</TransitionGroup>
