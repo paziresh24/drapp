@@ -121,7 +121,7 @@ const SideBar = memo(() => {
                     shouldShow:
                         (info.center?.is_active_booking && info.center.type_id === 1) ||
                         info.center.id === '5532',
-                    icon: <SettingIcon color="#3F3F79" />,
+                    icon: <SettingIcon color="#000" />,
 
                     link: info.center.id === CONSULT_CENTER_ID ? '/turning/setting/' : '/setting'
                 },
