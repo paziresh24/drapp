@@ -1,5 +1,6 @@
 import axios from 'axios';
 
 export const getLatestVersion = async () => {
-    return await axios.get(`pwa-versions/latest.json`);
+    const { data } = await axios.get(`pwa-versions/latest.json`);
+    return data;
 };

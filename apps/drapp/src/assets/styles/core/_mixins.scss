@@ -1,11 +1,11 @@
 @mixin mixin-font($font-family, $file-name, $font-weight, $font-path) {
     @font-face {
         font-family: $font-family;
-        src: url('#{$font-path}/eot/#{$file-name}.eot');
-        src: url('#{$font-path}/eot/#{$file-name}.eot?#iefix') format('embedded-opentype'),
-            url('#{$font-path}/ttf/#{$file-name}.ttf') format('truetype'),
-            url('#{$font-path}/woff/#{$file-name}.woff') format('woff'),
-            url('#{$font-path}/woff2/#{$file-name}.woff2') format('woff2');
+        src: url('/fonts/eot/#{$file-name}.eot');
+        src: url('/fonts//eot/#{$file-name}.eot?#iefix') format('embedded-opentype'),
+            url('/fonts/ttf/#{$file-name}.ttf') format('truetype'),
+            url('/fonts/woff/#{$file-name}.woff') format('woff'),
+            url('/fonts/woff2/#{$file-name}.woff2') format('woff2');
         font-weight: $font-weight;
         font-style: normal;
         font-display: swap;

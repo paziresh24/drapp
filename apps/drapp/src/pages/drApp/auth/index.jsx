@@ -33,7 +33,6 @@ const Auth = () => {
                     keys.forEach(key =>
                         caches.delete(key).then(() => {
                             serviceWorkerRegistration.unregister();
-                            window.location.reload();
                         })
                     )
                 );
