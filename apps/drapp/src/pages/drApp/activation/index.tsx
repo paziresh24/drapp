@@ -12,6 +12,7 @@ import { baseURL } from '@paziresh24/utils/baseUrl';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { getCookie } from '@paziresh24/utils/cookie';
 
 const activationPaths = {
     office: '/fill-info',
@@ -33,6 +34,8 @@ const Activation = () => {
     const isClinicActivated =
         centers.find((center: { type_id: number }) => center.type_id === 1)?.is_active_booking ??
         false;
+
+    const isConsultActivated = getCookie('consult_activated') === 'true';
 
     const handleSubmit = () => {
         const url = activationPaths[selectedService[0]];
@@ -90,13 +93,15 @@ const Activation = () => {
                             onSelect={handleSelectService}
                         />
                     )}
-                    <Service
-                        title="مشاوره آنلاین"
-                        description="ویزیت آنلاین بیماران از سراسر دنیا"
-                        type="consult"
-                        selected={selectedService.includes('consult')}
-                        onSelect={handleSelectService}
-                    />
+                    {!isConsultActivated && (
+                        <Service
+                            title="مشاوره آنلاین"
+                            description="ویزیت آنلاین بیماران از سراسر دنیا"
+                            type="consult"
+                            selected={selectedService.includes('consult')}
+                            onSelect={handleSelectService}
+                        />
+                    )}
                     <Service
                         title="نسخه نویسی آنلاین"
                         description="صدور آنلاین نسخه های بیماران"

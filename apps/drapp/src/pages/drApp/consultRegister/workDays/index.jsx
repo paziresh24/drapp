@@ -17,6 +17,8 @@ import Container from '@mui/material/Container';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
 import { useHistory } from 'react-router-dom';
+import { setCookie } from '@paziresh24/utils/cookie';
+import moment from 'jalali-moment';
 
 const canvasStyles = {
     position: 'absolute',
@@ -124,6 +126,11 @@ const WorkDays = () => {
                     });
                     setSuccess(true);
                     setQuestionActivation(true);
+                    setCookie(
+                        'consult_activated',
+                        true,
+                        moment().add(1, 'days').startOf('day').toDate()
+                    );
                 },
                 onError: error => {
                     setQuestionActivation(true);
