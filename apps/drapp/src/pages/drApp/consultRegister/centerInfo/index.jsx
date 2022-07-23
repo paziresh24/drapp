@@ -99,6 +99,11 @@ const CenterInfo = () => {
                             onChange={value => setCostVisit(removeCommas(value))}
                             value={costVisit}
                             limit={7}
+                            onClick={() => {
+                                toast.info('هفتاد درصد از مبلغ هر ویزیت به پزشک تعلق دارد.', {
+                                    autoClose: 5000
+                                });
+                            }}
                         />
                     </div>
 

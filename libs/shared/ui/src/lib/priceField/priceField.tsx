@@ -10,7 +10,7 @@ interface PriceFieldProps {
 }
 
 export const PriceField = (props: PriceFieldProps) => {
-    const { onChange, value, limit } = props;
+    const { onChange, value, limit, ...rest } = props;
     const ref = useRef<HTMLInputElement>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +21,7 @@ export const PriceField = (props: PriceFieldProps) => {
         }
     };
     return (
-        <div className="flex flex-col w-full space-y-3">
+        <div className="flex flex-col w-full space-y-3" {...rest}>
             <span className="inline text-sm">مبلغ هر ویزیت (تومان)</span>
             <TextField ref={ref} onChange={handleChange} maxLength={limit} />
             {value && <span className="text-xs">{numberToWords(value)} تومان</span>}
