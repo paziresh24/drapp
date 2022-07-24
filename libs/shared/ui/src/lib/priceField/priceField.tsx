@@ -3,7 +3,7 @@ import { addCommas, numberToWords, removeCommas } from '@persian-tools/persian-t
 import { useRef } from 'react';
 
 interface PriceFieldProps {
-    onChange: (e: string) => void;
+    onChange: (value: string) => void;
     value: string;
     label: string;
     limit?: number;
