@@ -14,11 +14,11 @@ import { useHistory } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { getCookie } from '@paziresh24/utils/cookie';
 
-const activationPaths = {
-    office: '/fill-info',
-    consult: '/consult/fill-info',
-    prescription: '/providers?source=activation'
-};
+enum ActivationPaths {
+    office = '/fill-info',
+    consult = '/consult/fill-info',
+    prescription = '/providers?source=activation'
+}
 
 const Activation = () => {
     const router = useHistory();
@@ -31,14 +31,14 @@ const Activation = () => {
         setSelectedService(prev => [...prev, service]);
     };
 
-    const isClinicActivated =
+    const isClinicActivated: boolean =
         centers.find((center: { type_id: number }) => center.type_id === 1)?.is_active_booking ??
         false;
 
-    const isConsultActivated = getCookie('consult_activated') === 'true';
+    const isConsultActivated: boolean = getCookie('consult_activated') === 'true';
 
     const handleSubmit = () => {
-        const url = activationPaths[selectedService[0]];
+        const url = ActivationPaths[selectedService[0]];
         selectedService.forEach(service => {
             getSplunkInstance().sendEvent({
                 group: 'register',
@@ -67,17 +67,15 @@ const Activation = () => {
                 <Typography fontWeight="500">
                     {docotorInfo.name} {docotorInfo.family}
                 </Typography>
-                <Typography fontSize={14}>
-                    {docotorInfo.expertises.length > 0 && (
-                        <span className="line-clamp-1">
-                            {docotorInfo.expertises[0].alias_title
-                                ? docotorInfo.expertises[0].alias_title
-                                : `${docotorInfo.expertises[0].degree?.name ?? ''} ${
-                                      docotorInfo.expertises[0].expertise?.name ?? ''
-                                  }`}
-                        </span>
-                    )}
-                </Typography>
+                {docotorInfo.expertises.length > 0 && (
+                    <Typography fontSize={14} className="line-clamp-1">
+                        {docotorInfo.expertises[0].alias_title
+                            ? docotorInfo.expertises[0].alias_title
+                            : `$
+                        {docotorInfo.expertises[0].degree?.name ?? ''} $
+                        {docotorInfo.expertises[0].expertise?.name ?? ''}`}
+                    </Typography>
+                )}
             </Stack>
             <Stack className="p-5">
                 <Typography fontSize={14} fontWeight="500">
