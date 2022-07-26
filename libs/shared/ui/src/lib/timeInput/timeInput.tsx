@@ -34,6 +34,7 @@ const TimeInput = (props: Props) => {
             <TextField
                 label={label}
                 value={timeLabel}
+                fullWidth
                 inputProps={{ readOnly: true }}
                 onClick={() => setOpenModal(true)}
                 InputLabelProps={{

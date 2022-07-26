@@ -127,21 +127,22 @@ export const Vacation = () => {
         <>
             <Container
                 maxWidth="sm"
-                className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+                className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md space-y-5"
             >
-                <p className="mb-5 font-bold">ﺑﺎ اﻧﺘﺨﺎب بازه مدنظر، مرخصی اعمال می شود.</p>
-                <span className="text-sm font-medium">از</span>
-                <Stack mt={2} mb={2} direction="row" spacing={2}>
-                    <DateInput label="تاریخ" onCahnge={value => setFromDate(value)} />
-                    <TimeInput label="ساعت" onCahnge={value => setFromTime(value)} />
+                <Stack>
+                    <p className="mb-5 font-bold">ﺑﺎ اﻧﺘﺨﺎب بازه مدنظر، مرخصی اعمال می شود.</p>
+                    <span className="text-sm font-medium">از</span>
+                    <Stack mt={2} mb={2} direction="row" spacing={2}>
+                        <DateInput label="تاریخ" onCahnge={value => setFromDate(value)} />
+                        <TimeInput label="ساعت" onCahnge={value => setFromTime(value)} />
+                    </Stack>
+                    <span className="text-sm font-medium">تا</span>
+                    <Stack mt={2} mb={2} direction="row" spacing={2}>
+                        <DateInput label="تاریخ" onCahnge={value => setToDate(value)} />
+                        <TimeInput label="ساعت" onCahnge={value => setToTime(value)} />
+                    </Stack>
+                    <span className="text-sm font-medium">مرخصی اعمال شود.</span>
                 </Stack>
-                <span className="text-sm font-medium">تا</span>
-                <Stack mt={2} mb={2} direction="row" spacing={2}>
-                    <DateInput label="تاریخ" onCahnge={value => setToDate(value)} />
-                    <TimeInput label="ساعت" onCahnge={value => setToTime(value)} />
-                </Stack>
-                <span className="text-sm font-medium">مرخصی اعمال شود.</span>
-
                 <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
                     <Stack spacing={1} width="100%">
                         <Alert icon={false} className="!bg-[#F3F6F9]">

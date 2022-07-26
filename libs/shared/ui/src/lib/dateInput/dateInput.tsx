@@ -47,6 +47,7 @@ const DateInput = (props: Props) => {
             <TextField
                 label={label}
                 value={dateLabel}
+                fullWidth
                 inputProps={{ readOnly: true }}
                 onClick={() => setOpenModal(true)}
                 InputLabelProps={{
