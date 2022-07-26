@@ -27,7 +27,7 @@ const CenterInfo = () => {
     const [consult, setConsult] = useConsult();
 
     const history = useHistory();
-    var days = useRef([
+    const days = useRef([
         { value: '1', name: 'تا 1 روز' },
         { value: '2', name: 'تا 2 روز' },
         { value: '3', name: 'تا 3 روز' }
@@ -99,6 +99,11 @@ const CenterInfo = () => {
                             onChange={value => setCostVisit(removeCommas(value))}
                             value={costVisit}
                             limit={7}
+                            onClick={() => {
+                                toast.info('هفتاد درصد از مبلغ هر ویزیت به پزشک تعلق دارد.', {
+                                    autoClose: 5000
+                                });
+                            }}
                         />
                     </div>
 
