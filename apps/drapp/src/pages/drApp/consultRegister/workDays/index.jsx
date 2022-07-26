@@ -15,8 +15,11 @@ import isEmpty from 'lodash/isEmpty';
 import { useConsult } from '@paziresh24/context/drapp/consult';
 import Container from '@mui/material/Container';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
+import ActivationModal from '@components/molecules/activation/activationModal';
 import { useHistory } from 'react-router-dom';
+import { setCookie } from '@paziresh24/utils/cookie';
+import moment from 'jalali-moment';
+import { weekDays } from '@constants/weekDays';
 
 const canvasStyles = {
     position: 'absolute',
@@ -90,16 +93,6 @@ const WorkDays = () => {
 
     useEffect(() => handlerFire(), []);
 
-    const weekDays = [
-        { id: 6, day: 'شنبه' },
-        { id: 7, day: 'یکشنبه' },
-        { id: 1, day: 'دوشنبه' },
-        { id: 2, day: 'سه‌شنبه' },
-        { id: 3, day: 'چهارشنبه' },
-        { id: 4, day: 'پنج‌شنبه' },
-        { id: 5, day: 'جمعه' }
-    ];
-
     const submit = () => {
         Object.keys(workDays).forEach(dayKey => {
             Object.keys(workDays[dayKey]).forEach(key => {
@@ -124,6 +117,11 @@ const WorkDays = () => {
                     });
                     setSuccess(true);
                     setQuestionActivation(true);
+                    setCookie(
+                        'consult_activated',
+                        true,
+                        moment().add(1, 'days').startOf('day').toDate()
+                    );
                 },
                 onError: error => {
                     setQuestionActivation(true);
@@ -158,8 +156,15 @@ const WorkDays = () => {
                 <div id={styles['workDaysPage']}>
                     <span>روز و ساعت کاری ویزیت آنلاین خود را مشخص کنید.</span>
                     <div className={styles['time_wrapper']}>
-                        {weekDays.map(day => (
-                            <TimeRow key={day.id} day={day} data={{}} />
+                        {weekDays.map(({ id, name: day }) => (
+                            <TimeRow
+                                key={id}
+                                day={{
+                                    id,
+                                    day
+                                }}
+                                data={{}}
+                            />
                         ))}
                     </div>
                     <FixedWrapBottom>
