@@ -9,6 +9,7 @@ import { useBackPage } from '@paziresh24/context/core/backPage';
 import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import { toast } from 'react-toastify';
 import Modal from '@paziresh24/shared/ui/modal';
+import { useDrApp } from '@paziresh24/context/drapp';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { DeliverCase } from '../../deliver/deliverCase';
 import TextArea from '@paziresh24/shared/ui/textArea';
@@ -23,11 +24,13 @@ import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
 import { prescriptionType } from '@paziresh24/constants/prescriptionType';
 import { serviceType } from '@paziresh24/constants/serviceType';
 import deletedSalamatServices from '../../../../constants/deletedSalamatServices';
+import Info from '../Info';
 
 const Finalize = () => {
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const history = useHistory();
+    const [info] = useDrApp();
 
     const [diagnosis] = useDiagnosis();
     const [prescriptionInfo, setPrescriptionInfo] = useSelectPrescription();
@@ -124,7 +127,8 @@ const Finalize = () => {
     const finalizePrescriptionAction = () => {
         return finalizePrescription.mutateAsync({
             prescriptionId: prescriptionInfo.id,
-            referenceFeedback: referenceFeedback?.current?.value
+            referenceFeedback: referenceFeedback?.current?.value,
+            shouldIgnoreSms: info.center?.type_id !== 1 && info.center?.id !== '5532'
         });
     };
 
