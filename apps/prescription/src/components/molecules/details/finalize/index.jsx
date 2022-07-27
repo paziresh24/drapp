@@ -24,7 +24,6 @@ import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
 import { prescriptionType } from '@paziresh24/constants/prescriptionType';
 import { serviceType } from '@paziresh24/constants/serviceType';
 import deletedSalamatServices from '../../../../constants/deletedSalamatServices';
-import Info from '../Info';
 
 const Finalize = () => {
     const { search } = useLocation();
