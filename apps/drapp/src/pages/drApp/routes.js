@@ -251,7 +251,15 @@ export const routes = [
         path: '/setting/delay',
         name: 'delay',
         title: 'اعلام تاخیر به بیماران',
-        component: lazy(() => import('./setting/delay/delay')),
+        component: lazy(() => import('./setting/delay')),
+        isPrivate: true,
+        exact: false
+    },
+    {
+        path: '/setting/vacation',
+        name: 'delay',
+        title: 'اعلام مرخصی',
+        component: lazy(() => import('./setting/vacation')),
         isPrivate: true,
         exact: false
     },
