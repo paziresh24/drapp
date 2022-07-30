@@ -27,6 +27,8 @@ const Password = () => {
     const {
         register,
         handleSubmit,
+        setValue,
+        getValues,
         formState: { errors }
     } = useForm();
     const {
@@ -43,6 +45,8 @@ const Password = () => {
     const oldPasswordField = useRef();
 
     const savePassword = ({ password, verifyPassword }) => {
+        password = password.trim();
+        verifyPassword = verifyPassword.trim();
         if (password !== verifyPassword) {
             return toast.warn('رمزعبور و تکرار رمز عبور باید یکسان باشد.');
         }
@@ -140,34 +144,44 @@ const Password = () => {
                         />
                         <label htmlFor="switch">Toggle</label>
                     </div>
-                    <span>فعالسازی رمزعبور</span>
+                    <span>
+                        {enabledPassword ? 'رمزعبور ثابت فعال است' : 'رمزعبور ثابت غیرفعال است'}
+                    </span>
                 </div>
-                <form onSubmit={handleSubmit(savePassword)}>
-                    <div className={styles.row}>
-                        <TextField
+                {enabledPassword && (
+                    <form onSubmit={handleSubmit(savePassword)}>
+                        <div className={styles.row}>
+                            <TextField
+                                disabled={!enabledPassword}
+                                label="رمزعبور"
+                                error={errors.password}
+                                type="password"
+                                defaultValue="     "
+                                onFocus={() => setValue('password', getValues('password').trim())}
+                                {...register('password', { required: true })}
+                            />
+                            <TextField
+                                disabled={!enabledPassword}
+                                label="تکرار رمزعبور"
+                                error={errors.verifyPassword}
+                                type="password"
+                                defaultValue="     "
+                                onFocus={() =>
+                                    setValue('verifyPassword', getValues('verifyPassword').trim())
+                                }
+                                {...register('verifyPassword', { required: true })}
+                            />
+                        </div>
+                        <Button
                             disabled={!enabledPassword}
-                            label="رمزعبور"
-                            error={errors.password}
-                            type="password"
-                            {...register('password', { required: true })}
-                        />
-                        <TextField
-                            disabled={!enabledPassword}
-                            label="تکرار رمزعبور"
-                            error={errors.verifyPassword}
-                            type="password"
-                            {...register('verifyPassword', { required: true })}
-                        />
-                    </div>
-                    <Button
-                        disabled={!enabledPassword}
-                        block
-                        type="submit"
-                        loading={enablePassword.isLoading || changePassword.isLoading}
-                    >
-                        ذخیره رمزعبور
-                    </Button>
-                </form>
+                            block
+                            type="submit"
+                            loading={enablePassword.isLoading || changePassword.isLoading}
+                        >
+                            ذخیره رمزعبور
+                        </Button>
+                    </form>
+                )}
             </>
 
             <Modal
