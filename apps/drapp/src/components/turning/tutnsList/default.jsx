@@ -135,7 +135,7 @@ const TurnsWrapper = () => {
                         .filter(turn => !isTurnActive(turn))
                         .map((turn, index) =>
                             turn.type === 'book' ? (
-                                <TurnRow turn={turn} key={turn.id} lineNumber={index + 1} />
+                                <TurnRow.Turn turn={turn} key={turn.id} lineNumber={index + 1} />
                             ) : (
                                 <TurnRow.Prescription
                                     turn={turn}
