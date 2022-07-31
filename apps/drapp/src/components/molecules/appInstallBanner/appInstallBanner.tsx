@@ -112,7 +112,7 @@ export const AppInstallBanner = () => {
                     onClick={() => setShouldShowAppsModal(true)}
                 >
                     <div className="flex items-center space-s-3">
-                        <img width="35" height="35" src="/icons-192.png" alt="" />
+                        <img width="35" height="35" src="icons-192.png" alt="" />
                         <span className="text-sm font-semibold">اپلیکیشن مدیریت مطب</span>
                         <button className="bg-black px-4 rounded-full">
                             <span className="text-white text-sm font-medium">نصب</span>
@@ -156,7 +156,7 @@ export const AppInstallBanner = () => {
                 noHeader
             >
                 <div className="flex flex-col items-center space-y-2 border-b border-solid border-b-gray-300 pb-4">
-                    <img width="50" height="50" src="/icons-192.png" alt="" />
+                    <img width="50" height="50" src="icons-192.png" alt="" />
                     <span className="font-semibold">نصب نسخه وب اپلیکیشن</span>
                 </div>
                 <ul className="flex flex-col space-y-5 mb-4">

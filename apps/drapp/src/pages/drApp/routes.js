@@ -208,14 +208,6 @@ export const routes = [
         exact: false
     },
     {
-        path: '/learn/',
-        name: 'Learn',
-        title: 'آموزش سامانه',
-        component: lazy(() => import('./learn')),
-        isPrivate: true,
-        exact: false
-    },
-    {
         path: '/setting',
         name: 'duration',
         title: 'تنظیمات نوبت های من',

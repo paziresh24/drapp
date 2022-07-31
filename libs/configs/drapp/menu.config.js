@@ -2,7 +2,6 @@ import {
     ConsultIcon,
     CardIcon,
     MessageIcon,
-    LearnIcon,
     ComplaintsIcon,
     PrescriptionMenuIcon,
     PrescriptionIcon
@@ -49,11 +48,6 @@ export const MainMenuData = () => {
             title: 'تسویه حساب',
             path: '/financial',
             icon: <CardIcon color="#000" />
-        },
-        {
-            title: 'آموزش',
-            path: '/learn',
-            icon: <LearnIcon color="#000" />
         },
         {
             title: 'نظرات بیماران',
