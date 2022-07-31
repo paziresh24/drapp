@@ -12,6 +12,9 @@ import LoginHero from '@components/login/loginHero';
 import Form from '@components/login/form';
 import Helmet from 'react-helmet';
 import * as serviceWorkerRegistration from '../../../serviceWorkerRegistration';
+import AppInstallBanner from '@components/molecules/appInstallBanner';
+import { sendEventWhenUseApp } from 'apps/drapp/src/functions/sendEventWhenUseApp';
+import { Mobile } from '@paziresh24/hooks/device';
 
 const Auth = () => {
     const history = useHistory();
@@ -19,6 +22,7 @@ const Auth = () => {
     const getLatestVersion = useGetLatestVersion();
 
     useEffect(() => {
+        sendEventWhenUseApp();
         if (getToken()) return history.replace(`/${window.location.search}`);
     }, []);
 
@@ -47,6 +51,9 @@ const Auth = () => {
             </Helmet>
             <Form setFocus={setFocus} focus={focus} />
             <LoginHero focus={focus} setFocus={setFocus} />
+            <Mobile>
+                <AppInstallBanner />
+            </Mobile>
         </div>
     );
 };

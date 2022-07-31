@@ -3,29 +3,42 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Modal from '@paziresh24/shared/ui/modal';
 import { memo, useEffect, useState } from 'react';
-import { Timeit } from 'react-timeit';
+import { Calendar, DayValue, utils } from '@hassanmojab/react-modern-calendar-datepicker';
+import moment from 'jalali-moment';
 
 interface Props {
     label: string;
     defaultValue?: string;
     onCahnge?: (value: string) => void;
-    minuteExclude?: number[];
-    hourExclude?: number[];
 }
 
-const TimeInput = (props: Props) => {
-    const { label, defaultValue = '', onCahnge, minuteExclude, hourExclude } = props;
-    const [timeLabel, setTimeLabel] = useState(defaultValue);
+const dateObjectToFormattedDate = (dateObject: DayValue): string => {
+    return `${dateObject?.year}/${dateObject?.month}/${dateObject?.day}`;
+};
+
+const formattedDateToDateObject = (formattedDate: string): DayValue => {
+    if (!formattedDate) return null;
+    const dateObject = moment(formattedDate);
+    return {
+        year: dateObject.year(),
+        month: dateObject.month() + 1,
+        day: dateObject.date()
+    };
+};
+
+const DateInput = (props: Props) => {
+    const { label, defaultValue = '', onCahnge } = props;
+    const [dateLabel, setDateLabel] = useState(defaultValue);
     const [openModal, setOpenModal] = useState(false);
 
     const handleSubmit = () => {
-        onCahnge && onCahnge(timeLabel);
+        onCahnge && onCahnge(dateLabel);
         setOpenModal(false);
     };
 
     useEffect(() => {
-        if (defaultValue !== timeLabel) {
-            setTimeLabel(defaultValue);
+        if (defaultValue !== dateLabel) {
+            setDateLabel(defaultValue);
         }
     }, [defaultValue]);
 
@@ -33,7 +46,7 @@ const TimeInput = (props: Props) => {
         <>
             <TextField
                 label={label}
-                value={timeLabel}
+                value={dateLabel}
                 fullWidth
                 inputProps={{ readOnly: true }}
                 onClick={() => setOpenModal(true)}
@@ -42,7 +55,7 @@ const TimeInput = (props: Props) => {
                 }}
             />
             <Modal
-                title="انتخاب زمان"
+                title="انتخاب تاریخ"
                 isOpen={openModal}
                 onClose={() => {
                     setOpenModal(false);
@@ -50,12 +63,13 @@ const TimeInput = (props: Props) => {
                 }}
             >
                 <Stack alignItems="center" spacing="1rem">
-                    <Timeit
-                        onChange={value => setTimeLabel(value)}
-                        defualtValue={timeLabel}
-                        notShowExclude
-                        minuteExclude={minuteExclude}
-                        hourExclude={hourExclude}
+                    <Calendar
+                        value={formattedDateToDateObject(dateLabel)}
+                        onChange={date => setDateLabel(dateObjectToFormattedDate(date))}
+                        shouldHighlightWeekends
+                        colorPrimary="#0070f3"
+                        locale="fa"
+                        calendarClassName="!shadow-none"
                     />
                     <Button fullWidth variant="contained" size="large" onClick={handleSubmit}>
                         تایید
@@ -66,4 +80,4 @@ const TimeInput = (props: Props) => {
     );
 };
 
-export default memo(TimeInput);
+export default memo(DateInput);

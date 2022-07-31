@@ -53,8 +53,10 @@ import Settings from '@components/profile/settings';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { useHistory } from 'react-router-dom';
 
 const Profile = () => {
+    const router = useHistory();
     const [info, setInfo] = useDrApp();
     const [position, setPosition] = useState({ lat: 35.68818464807401, lng: 51.393077373504646 });
     const doctorInfoUpdate = useDoctorInfoUpdate();
@@ -412,7 +414,10 @@ const Profile = () => {
                         </ScrollContainer>
                     )}
                     {info.doctor?.rate?.rate && (
-                        <div className={styles['doctor-rate']}>
+                        <div
+                            className={styles['doctor-rate']}
+                            onClick={() => router.push('/feedbacks')}
+                        >
                             <StarIcon />
                             <span>
                                 {info.doctor.rate.rate} از {info.doctor.rate.count} نظر
@@ -567,7 +572,7 @@ const Profile = () => {
                 <ExpertisesWrapper setExpertiseAccordion={setExpertiseAccordion} />
             </Accordion>
             <Accordion
-                title="تنظیم رمزعبور ثابت"
+                title="رمزعبور ثابت"
                 icon={
                     <svg
                         width="22"

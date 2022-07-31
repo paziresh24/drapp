@@ -42,7 +42,7 @@ const Password = ({ userName, loginAction, loginLoading, wrongPassword }) => {
                 style={{ direction: 'ltr' }}
             />
             <span className="text-sm font-medium text-[#678093] leading-8">
-                رمز عبوری را که از قبل، برای خود انتخاب کردید، وارد کنید.
+                رمز عبوری را که از قبل برای خود انتخاب کردید، وارد کنید.
             </span>
             {wrongPassword && <Captcha error={captchaError} captchaEntered={setCaptcha} />}
             <Button block type="submit" loading={loginLoading}>
