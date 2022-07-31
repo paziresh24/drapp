@@ -35,6 +35,7 @@ const Turning = () => {
         user_id: info.center.user_info_id
     });
     const setTurns = useTurnsStore(state => state.setTurns);
+    const setStatistics = useTurnsStore(state => state.setStatistics);
     const taminPrescriptionsType = {
         1: 'دارو',
         2: 'پاراکلينيک',
@@ -68,6 +69,19 @@ const Turning = () => {
 
     useEffect(() => {
         setTurns(getTurn?.data?.data ?? []);
+        setStatistics({
+            total: getTurn?.data?.data?.length ?? 0,
+            activePatients: getTurn?.data?.data?.filter(item =>
+                item.type === 'prescription'
+                    ? !item.finalized
+                    : !item.prescription?.finalized && item.book_status !== 'visited'
+            )?.length,
+            visitedPatients: getTurn?.data?.data?.filter(turn =>
+                turn.type === 'prescription'
+                    ? turn.finalized
+                    : turn.prescription?.finalized ?? turn.book_status === 'visited'
+            )?.length
+        });
     }, [getTurn]);
 
     const onChangeSearch = debounce(
@@ -82,10 +96,7 @@ const Turning = () => {
     return (
         <>
             <div className={styles['wrapper']}>
-                <Statistics
-                    data={getTurn?.data?.data}
-                    loading={getTurn.isLoading || getTurn.isIdle}
-                />
+                <Statistics loading={getTurn.isLoading || getTurn.isIdle} />
                 <div className={styles['head-bar']}>
                     <div className={styles.selectDate}>
                         <SelectDate

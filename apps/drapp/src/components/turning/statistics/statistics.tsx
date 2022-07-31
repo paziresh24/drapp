@@ -1,31 +1,14 @@
 import { Skeleton } from '@mui/material';
 import { TurningIcon } from '@paziresh24/shared/icon';
+import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 
 interface Props {
-    data: any[];
     loading: boolean;
 }
 
-const Statistics = ({ data, loading }: Props) => {
-    const statisticsTurns = {
-        allPatientsToday: () => {
-            return data.length;
-        },
-        activePatientsToday: () => {
-            return data.filter((item: any) =>
-                item.type === 'prescription'
-                    ? !item.finalized
-                    : !item.prescription?.finalized && item.book_status !== 'visited'
-            )?.length;
-        },
-        visitedPatientsToday: () => {
-            return data.filter((turn: any) =>
-                turn.type === 'prescription'
-                    ? turn.finalized
-                    : turn.prescription?.finalized ?? turn.book_status === 'visited'
-            )?.length;
-        }
-    };
+const Statistics = ({ loading }: Props) => {
+    const statisticsTurns = useTurnsStore(state => state.statistics);
+
     if (loading)
         return (
             <div className="hidden lg:flex space-s-6 justify-center pt-5">
@@ -39,7 +22,7 @@ const Statistics = ({ data, loading }: Props) => {
             <div className="h-14 rounded-lg flex justify-center items-center px-4 bg-[#ebeff8]">
                 <TurningIcon color="#000" />
                 <span className="font-bold mr-2 ml-2">تعداد بیماران امروز</span>
-                <span className="font-medium">{statisticsTurns.allPatientsToday()} بیمار</span>
+                <span className="font-medium">{statisticsTurns.total} بیمار</span>
             </div>
             <div className="h-14 rounded-lg flex justify-center items-center px-4 bg-[#ebeff8]">
                 <svg
@@ -57,7 +40,7 @@ const Statistics = ({ data, loading }: Props) => {
                     />
                 </svg>
                 <span className="font-bold mr-2 ml-2">بیماران ویزیت شده</span>
-                <span className="font-medium">{statisticsTurns.visitedPatientsToday()} بیمار</span>
+                <span className="font-medium">{statisticsTurns.visitedPatients} بیمار</span>
             </div>
             <div className="h-14 rounded-lg flex justify-center items-center px-4 bg-[#ebeff8]">
                 <svg
@@ -75,7 +58,7 @@ const Statistics = ({ data, loading }: Props) => {
                     />
                 </svg>
                 <span className="font-bold mr-2 ml-2">بیماران باقی مانده</span>
-                <span className="font-medium">{statisticsTurns.activePatientsToday()} بیمار</span>
+                <span className="font-medium">{statisticsTurns.activePatients} بیمار</span>
             </div>
         </div>
     );
