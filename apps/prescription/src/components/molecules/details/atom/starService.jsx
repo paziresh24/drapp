@@ -21,7 +21,6 @@ const StarService = ({ service, insuranceType }) => {
                     item.service.id === service.service.id &&
                     +item.count === +service.count &&
                     +item.use_time === +service.use_time &&
-                    +item.use_instruction === +service.use_instruction &&
                     +item.how_to_use === +service.how_to_use
             )
         ) {
@@ -31,7 +30,6 @@ const StarService = ({ service, insuranceType }) => {
                         item.service.id === service.service.id &&
                         +item.count === +service.count &&
                         +item.use_time === +service.use_time &&
-                        +item.use_instruction === +service.use_instruction &&
                         +item.how_to_use === +service.how_to_use
                 );
             setServices(services);
