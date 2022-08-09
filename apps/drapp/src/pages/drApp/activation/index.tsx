@@ -29,12 +29,7 @@ const Activation = () => {
         if (selectedService.includes(service))
             return setSelectedService(() => selectedService.filter(s => s !== service));
         setSelectedService(prev => [...prev, service]);
-        console.log([service]);
     };
-
-    useEffect(() => {
-        console.log(selectedService);
-    }, [selectedService]);
 
     const handleSubmit = () => {
         const url = ActivationPaths[selectedService[0]];
