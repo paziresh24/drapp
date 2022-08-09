@@ -197,6 +197,12 @@ const NewTurn = () => {
                         onChange={e => setNationalCode(e.target.value)}
                         onKeyDown={keyPress}
                         disabled={confirmCellPhone}
+                        inputProps={{
+                            style: {
+                                textAlign: 'left',
+                                direction: 'ltr'
+                            }
+                        }}
                     />
                     {confirmCellPhone && (
                         <TextField
@@ -205,6 +211,12 @@ const NewTurn = () => {
                             inputMode="tel"
                             inputRef={patientCellInput}
                             error={patientCell.length !== 11}
+                            inputProps={{
+                                style: {
+                                    textAlign: 'left',
+                                    direction: 'ltr'
+                                }
+                            }}
                         />
                     )}
                     <Link
