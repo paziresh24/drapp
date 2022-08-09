@@ -6,7 +6,6 @@ COPY package.json package-lock.json .npmrc ./
 RUN npm config set registry https://registry.npmmirror.com
 RUN npm install
 COPY . .
-ENV PUBLIC_URL /doctorapp
 WORKDIR /app/apps/drapp
 RUN node ../../node_modules/@craco/craco/bin/craco.js build
 
