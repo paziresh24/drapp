@@ -4,49 +4,49 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 
-import SelectDay from '../../../components/molecules/setting/workDays/selectDay';
-import SelectHours from '../../../components/molecules/setting/workDays/selectHours';
-import Result from '../../../components/molecules/setting/workDays/result';
+import SelectDay from '../../../../components/molecules/setting/workDays/selectDay';
+import SelectHours from '../../../../components/molecules/setting/workDays/selectHours';
+import Result from '../../../../components/molecules/setting/workDays/result';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkHoursStore } from 'apps/drapp/src/store/workhours.store';
 import { useGetWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { ChevronIcon } from '@paziresh24/shared/icon';
 import { isDesktop } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
-import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useWorkHoursValidation } from 'apps/drapp/src/hooks/useWorkHoursValidation';
 import { useSubmitOfficeWorkHour } from 'apps/drapp/src/hooks/useSubmitOfficeWorkHour';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import axios from 'axios';
 import SelectTime from 'apps/drapp/src/components/molecules/setting/duration/selectTime';
+import { useConsultActivationStore } from 'apps/drapp/src/store/consultActivation.store';
 import { range } from 'lodash';
+import { useActiveConsult } from '@paziresh24/hooks/drapp/consultFillInfo';
+import { digitsFaToEn } from '@persian-tools/persian-tools';
+import { setCookie } from '@paziresh24/utils/cookie';
+import moment from 'jalali-moment';
+import { toast } from 'react-toastify';
+import { useActivationStore } from '../activation.store';
+import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
 
-const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
+const durationList = range(1, 4);
 
-const WorkHours = () => {
+const ConsultOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
-    const { submitOfficeWorkHour, isLoading } = useSubmitOfficeWorkHour();
+    const activeConsult = useActiveConsult();
+
     const router = useHistory();
-    const [docotorInfo] = useDrApp();
-    const setWorkHours = useWorkHoursStore(state => state.setWorkHours);
-    const workHours = useWorkHoursStore(state => state.workHours);
-    const addWorkHours = useWorkHoursStore(state => state.addWorkHours);
-    const getWorkHoursRequest = useGetWorkHours({ center_id: docotorInfo.center.id });
-    const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
-    const duration = useWorkHoursStore(state => state.duration);
-    const setDuration = useWorkHoursStore(state => state.setDuration);
-
-    useEffect(() => {
-        getWorkHoursRequest.refetch();
-    }, []);
-
-    useEffect(() => {
-        if (getWorkHoursRequest.isSuccess) {
-            setWorkHours(getWorkHoursRequest.data.data.workhours);
-            setDuration(getWorkHoursRequest.data.data.duration);
-        }
-    }, [getWorkHoursRequest.status]);
+    const getWorkHoursRequest = useGetWorkHours({ center_id: 5532 });
+    const addWorkHours = useConsultActivationStore(state => state.addWorkHours);
+    const workHours = useConsultActivationStore(state => state.workHours);
+    const removeWorkHours = useConsultActivationStore(state => state.removeWorkHours);
+    const duration = useConsultActivationStore(state => state.duration);
+    const setDuration = useConsultActivationStore(state => state.setDuration);
+    const whatsapp = useConsultActivationStore(state => state.whatsapp);
+    const price = useConsultActivationStore(state => state.price);
+    const [questionActivation, setQuestionActivation] = useState(false);
+    const selectedService = useActivationStore(state => state.selectedService);
 
     const handleAdd = () => {
         if (
@@ -65,21 +65,25 @@ const WorkHours = () => {
 
     const handleSubmit = async () => {
         try {
-            await submitOfficeWorkHour();
-            getSplunkInstance().sendEvent({
-                group: 'workdays_active_booking',
-                type: 'successful'
+            await activeConsult.mutateAsync({
+                workHours,
+                service_length: duration,
+                whatsapp: digitsFaToEn(whatsapp.replace(/^0+/, '')),
+                price: price * 10
             });
+            setCookie('consult_activated', true, moment().add(1, 'days').startOf('day').toDate());
+            if (selectedService.length > 0) {
+                setQuestionActivation(true);
+                return;
+            }
             router.push('/');
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                getSplunkInstance().sendEvent({
-                    group: 'workdays_active_booking',
-                    type: 'unsuccessful',
-                    event: {
-                        error: error.response?.data
-                    }
-                });
+                toast.warning(error.response?.data?.message);
+            }
+            if (selectedService.length > 0) {
+                setQuestionActivation(true);
+                return;
             }
         }
     };
@@ -101,12 +105,13 @@ const WorkHours = () => {
             <Stack className="space-y-5 pb-32 md:pb-0">
                 <SelectTime
                     items={durationList}
+                    label="مدت پاسخگویی پزشک"
                     value={duration}
                     onChange={setDuration}
-                    label="مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟"
                     isLoading={getWorkHoursRequest.isLoading}
-                    prefix="دقیقه"
+                    prefix="روز"
                 />
+
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
                 <Button onClick={handleAdd} variant="contained" className="self-end">
@@ -118,20 +123,28 @@ const WorkHours = () => {
                     values={workHours}
                     removeAction={removeWorkHours}
                 />
-                <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
+                <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                     <Button
                         fullWidth
                         variant="outlined"
                         size="large"
                         onClick={handleSubmit}
-                        loading={isLoading}
+                        loading={activeConsult.isLoading}
                     >
                         ذخیره
                     </Button>
                 </FixedWrapBottom>
             </Stack>
+            <ActivationModal
+                isOpen={questionActivation}
+                onClose={() => {
+                    setQuestionActivation(false);
+                    router.push('/');
+                }}
+                currentType="consult"
+            />
         </Container>
     );
 };
 
-export default WorkHours;
+export default ConsultOfficeActivation;

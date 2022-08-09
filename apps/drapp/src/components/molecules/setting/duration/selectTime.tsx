@@ -1,64 +1,49 @@
-import range from 'lodash/range';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
 import { CheckIcon } from '@paziresh24/shared/icon';
-import { useWorkHoursStore } from '../../../../store/workhours.store';
-import AlertForDuration from './alertForDuration';
-import { useDrApp } from '@paziresh24/context/drapp';
-import { useGetWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import Skeleton from '@mui/material/Skeleton';
 
-const SelectTime = () => {
-    const [docotorInfo] = useDrApp();
-    const duration = useWorkHoursStore(state => state.duration);
-    const setDuration = useWorkHoursStore(state => state.setDuration);
-    const getWorkHoursRequest = useGetWorkHours({ center_id: docotorInfo.center.id });
+interface SelectTimeProps {
+    label: string;
+    items: number[];
+    value: number;
+    onChange: (value: number) => void;
+    isLoading: boolean;
+    prefix?: string;
+}
 
-    useEffect(() => {
-        getWorkHoursRequest.remove();
-        getWorkHoursRequest.refetch();
-    }, []);
+const SelectTime = (props: SelectTimeProps) => {
+    const { label, items, onChange, value, isLoading, prefix } = props;
 
-    useEffect(() => {
-        if (getWorkHoursRequest.isSuccess) {
-            setDuration(getWorkHoursRequest.data.data.duration);
-        }
-    }, [getWorkHoursRequest.status]);
-
-    const handleSelctedDuration = (duration: number) => {
-        setDuration(duration);
+    const handleChange = (value: number) => {
+        onChange(value);
     };
-
-    const durationList = range(5, 61, 5).filter(
-        number => ![25, 35, 40, 45, 50, 55].includes(number)
-    );
 
     return (
         <FormControl className="space-y-4">
-            <FormLabel focused={false}>مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟</FormLabel>
+            <FormLabel focused={false}>{label}</FormLabel>
             <Stack direction="row-reverse" gap={1.5} className="mt-5 flex-wrap">
-                {getWorkHoursRequest.isLoading && <DurationLoading />}
-                {getWorkHoursRequest.isSuccess &&
-                    durationList.map((number: number) => (
+                {isLoading && <DurationLoading />}
+                {!isLoading &&
+                    items.map(item => (
                         <Chip
-                            key={number}
-                            label={`${number} دقیقه`}
+                            key={item}
+                            label={`${item}${prefix ? ` ${prefix}` : ''}`}
                             variant="outlined"
                             icon={
-                                duration === number ? (
+                                value === item ? (
                                     <CheckIcon className="!mr-2 fill-primary" />
                                 ) : undefined
                             }
-                            color={duration === number ? 'primary' : 'default'}
-                            onClick={() => handleSelctedDuration(number)}
+                            color={value === item ? 'primary' : 'default'}
+                            onClick={() => handleChange(item)}
                         />
                     ))}
             </Stack>
-            <AlertForDuration />
         </FormControl>
     );
 };

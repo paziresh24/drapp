@@ -4,38 +4,36 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 
-import SelectDay from '../../../components/molecules/setting/workDays/selectDay';
-import SelectHours from '../../../components/molecules/setting/workDays/selectHours';
-import Result from '../../../components/molecules/setting/workDays/result';
+import SelectDay from '../../../../components/molecules/setting/workDays/selectDay';
+import SelectHours from '../../../../components/molecules/setting/workDays/selectHours';
+import Result from '../../../../components/molecules/setting/workDays/result';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkHoursStore } from 'apps/drapp/src/store/workhours.store';
 import { useGetWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { ChevronIcon } from '@paziresh24/shared/icon';
 import { isDesktop } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
-import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useWorkHoursValidation } from 'apps/drapp/src/hooks/useWorkHoursValidation';
 import { useSubmitOfficeWorkHour } from 'apps/drapp/src/hooks/useSubmitOfficeWorkHour';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import axios from 'axios';
-import SelectTime from 'apps/drapp/src/components/molecules/setting/duration/selectTime';
-import { range } from 'lodash';
+import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
+import { useActivationStore } from '../activation.store';
 
-const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
-
-const WorkHours = () => {
+const WorkHoursOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
     const { submitOfficeWorkHour, isLoading } = useSubmitOfficeWorkHour();
     const router = useHistory();
     const [docotorInfo] = useDrApp();
+    const selectedService = useActivationStore(state => state.selectedService);
     const setWorkHours = useWorkHoursStore(state => state.setWorkHours);
     const workHours = useWorkHoursStore(state => state.workHours);
     const addWorkHours = useWorkHoursStore(state => state.addWorkHours);
     const getWorkHoursRequest = useGetWorkHours({ center_id: docotorInfo.center.id });
     const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
-    const duration = useWorkHoursStore(state => state.duration);
-    const setDuration = useWorkHoursStore(state => state.setDuration);
+    const [questionActivation, setQuestionActivation] = useState(false);
 
     useEffect(() => {
         getWorkHoursRequest.refetch();
@@ -44,7 +42,6 @@ const WorkHours = () => {
     useEffect(() => {
         if (getWorkHoursRequest.isSuccess) {
             setWorkHours(getWorkHoursRequest.data.data.workhours);
-            setDuration(getWorkHoursRequest.data.data.duration);
         }
     }, [getWorkHoursRequest.status]);
 
@@ -70,6 +67,10 @@ const WorkHours = () => {
                 group: 'workdays_active_booking',
                 type: 'successful'
             });
+            if (selectedService.length > 0) {
+                setQuestionActivation(true);
+                return;
+            }
             router.push('/');
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -99,14 +100,6 @@ const WorkHours = () => {
                 </Button>
             )}
             <Stack className="space-y-5 pb-32 md:pb-0">
-                <SelectTime
-                    items={durationList}
-                    value={duration}
-                    onChange={setDuration}
-                    label="مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟"
-                    isLoading={getWorkHoursRequest.isLoading}
-                    prefix="دقیقه"
-                />
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
                 <Button onClick={handleAdd} variant="contained" className="self-end">
@@ -118,7 +111,7 @@ const WorkHours = () => {
                     values={workHours}
                     removeAction={removeWorkHours}
                 />
-                <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
+                <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                     <Button
                         fullWidth
                         variant="outlined"
@@ -130,8 +123,16 @@ const WorkHours = () => {
                     </Button>
                 </FixedWrapBottom>
             </Stack>
+            <ActivationModal
+                isOpen={questionActivation}
+                onClose={() => {
+                    setQuestionActivation(false);
+                    router.push('/');
+                }}
+                currentType="office"
+            />
         </Container>
     );
 };
 
-export default WorkHours;
+export default WorkHoursOfficeActivation;

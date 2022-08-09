@@ -76,7 +76,7 @@ const Setting = () => {
                     action: 'click',
                     type: 'workHoues'
                 });
-                router.push('/setting/duration');
+                router.push('/setting/workhours');
             }
         },
 

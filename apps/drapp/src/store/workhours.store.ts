@@ -2,7 +2,7 @@ import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 interface WorkHoursState {
-    duration: number | null;
+    duration: number;
     workHours: Day[];
     isAnotherProvider: boolean;
     setDuration: (duration: number) => void;

@@ -780,7 +780,7 @@ const Profile = () => {
                                 />
                             </>
                         )}
-                        <Suspense fallback={<Overlay />}>
+                        <div className="h-64">
                             <Map
                                 lat={position.lat}
                                 lng={position.lng}
@@ -788,7 +788,7 @@ const Profile = () => {
                                 setZoom={setMapZoom}
                                 sendPosition={pos => setPosition(pos)}
                             />
-                        </Suspense>
+                        </div>
                         <Button
                             type="submit"
                             loading={updateCenterAccess.isLoading || centerInfoUpdate.isLoading}

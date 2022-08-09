@@ -241,7 +241,7 @@ const Header = () => {
                                             <button
                                                 className={styles.activeOfficeType}
                                                 onClick={e => {
-                                                    history.push('/fill-info');
+                                                    history.push('/activation/office/center');
                                                 }}
                                             >
                                                 فعال سازی
@@ -296,7 +296,7 @@ const Header = () => {
                                             onClick={e => {
                                                 e.stopPropagation();
 
-                                                history.push('/consult/fill-info');
+                                                history.push('/activation/consult/whatsapp');
                                             }}
                                         >
                                             فعال سازی
