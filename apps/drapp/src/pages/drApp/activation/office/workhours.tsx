@@ -21,19 +21,28 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import axios from 'axios';
 import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
 import { useActivationStore } from '../activation.store';
+import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 
 const WorkHoursOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
     const { submitOfficeWorkHour, isLoading } = useSubmitOfficeWorkHour();
     const router = useHistory();
-    const [docotorInfo] = useDrApp();
+    const [doctorInfo]: [
+        {
+            centers: any[];
+            center: any;
+        },
+        any
+    ] = useDrApp();
+    const officeCenter = doctorInfo?.centers.find(center => center.type_id === 1);
     const selectedService = useActivationStore(state => state.selectedService);
     const setWorkHours = useWorkHoursStore(state => state.setWorkHours);
     const workHours = useWorkHoursStore(state => state.workHours);
     const addWorkHours = useWorkHoursStore(state => state.addWorkHours);
-    const getWorkHoursRequest = useGetWorkHours({ center_id: docotorInfo.center.id });
+    const getWorkHoursRequest = useGetWorkHours({ center_id: officeCenter.id });
     const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
     const [questionActivation, setQuestionActivation] = useState(false);
+    const getCentersDoctor = useGetCentersDoctor();
 
     useEffect(() => {
         getWorkHoursRequest.refetch();
@@ -67,6 +76,7 @@ const WorkHoursOfficeActivation = () => {
                 group: 'workdays_active_booking',
                 type: 'successful'
             });
+            await getCentersDoctor.refetch();
             if (selectedService.length > 0) {
                 setQuestionActivation(true);
                 return;
@@ -88,7 +98,7 @@ const WorkHoursOfficeActivation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
             {isDesktop && (
                 <Button
@@ -117,7 +127,7 @@ const WorkHoursOfficeActivation = () => {
                         variant="outlined"
                         size="large"
                         onClick={handleSubmit}
-                        loading={isLoading}
+                        loading={isLoading || getCentersDoctor.status.loading}
                     >
                         ذخیره
                     </Button>

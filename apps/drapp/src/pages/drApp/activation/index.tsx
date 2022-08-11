@@ -45,7 +45,7 @@ const Activation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="h-full !p-0 md:h-auto md:bg-white md:!p-5 rounded-md pt-4 md:mt-8 md:shadow-md"
+            className="h-full !p-0 md:h-auto md:bg-white md:!p-5 rounded-md pt-4 md:mt-14 md:shadow-2xl md:shadow-slate-300"
         >
             <Stack
                 justifyContent="center"

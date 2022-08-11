@@ -27,7 +27,7 @@ const WhatsappConsultActivation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md flex flex-col space-y-5"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col space-y-5"
         >
             <Typography>
                 ویزیت آنلاین در بستر whatsapp business به هر یک از طرق text، video call، call که
@@ -41,6 +41,7 @@ const WhatsappConsultActivation = () => {
                     style: { textAlign: 'left', direction: 'ltr' }
                 }}
                 error={fieldError}
+                placeholder="09123456789"
                 onFocus={() => setFieldError(false)}
                 value={whatsappNumber}
                 helperText={fieldError ? 'شماره whatsapp business را به درستی وارد کنید.' : ''}

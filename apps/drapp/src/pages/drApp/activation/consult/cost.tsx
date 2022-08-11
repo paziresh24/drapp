@@ -35,7 +35,7 @@ const CostConsultActivation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md flex flex-col space-y-5"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col space-y-5"
         >
             <Alert icon={false} className="!bg-[#F3F6F9]">
                 <Typography fontSize="0.9rem" fontWeight="medium">

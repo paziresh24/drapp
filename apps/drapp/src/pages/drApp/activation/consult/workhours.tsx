@@ -29,6 +29,7 @@ import moment from 'jalali-moment';
 import { toast } from 'react-toastify';
 import { useActivationStore } from '../activation.store';
 import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
+import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 
 const durationList = range(1, 4);
 
@@ -47,6 +48,7 @@ const ConsultOfficeActivation = () => {
     const price = useConsultActivationStore(state => state.price);
     const [questionActivation, setQuestionActivation] = useState(false);
     const selectedService = useActivationStore(state => state.selectedService);
+    const getCentersDoctor = useGetCentersDoctor();
 
     const handleAdd = () => {
         if (
@@ -71,7 +73,12 @@ const ConsultOfficeActivation = () => {
                 whatsapp: digitsFaToEn(whatsapp.replace(/^0+/, '')),
                 price: price * 10
             });
-            setCookie('consult_activated', true, moment().add(1, 'days').startOf('day').toDate());
+            await getCentersDoctor.refetch();
+            setCookie(
+                'CONSULT_ACTIVATION_PENDING',
+                true,
+                moment().add(1, 'days').startOf('day').toDate()
+            );
             if (selectedService.length > 0) {
                 setQuestionActivation(true);
                 return;
@@ -91,7 +98,7 @@ const ConsultOfficeActivation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md"
+            className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
             {isDesktop && (
                 <Button
@@ -129,7 +136,7 @@ const ConsultOfficeActivation = () => {
                         variant="outlined"
                         size="large"
                         onClick={handleSubmit}
-                        loading={activeConsult.isLoading}
+                        loading={activeConsult.isLoading || getCentersDoctor.status.loading}
                     >
                         ذخیره
                     </Button>

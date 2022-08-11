@@ -1,10 +1,11 @@
 import {
     Alert,
+    BaseTextFieldProps,
     Container,
     InputAdornment,
     Skeleton,
-    TextareaAutosize,
     TextField,
+    TextFieldProps,
     Typography
 } from '@mui/material';
 import Button from '@mui/lab/LoadingButton';
@@ -19,6 +20,7 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useActivationStore } from '../activation.store';
 import { useGetReverseGeocoding } from '@paziresh24/hooks/drapp/geocoding';
+import { iranCityWithPrefixPhoneNumber } from 'apps/drapp/src/constants/iranCityWithPrefixPhoneNumber';
 
 const CenterOfficeActivation = () => {
     const [{ doctor, center }] = useDrApp();
@@ -39,6 +41,7 @@ const CenterOfficeActivation = () => {
     const [addressEditModal, setAddressEditModal] = useState(false);
     const setSelectedService = useActivationStore(state => state.setSelectedService);
     const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
 
     useEffect(() => {
         setSelectedService(prev => prev.filter(service => service !== 'office'));
@@ -50,6 +53,16 @@ const CenterOfficeActivation = () => {
 
     useEffect(() => {
         setAddress((getReverseGeocoding.data as any)?.formatted_address);
+        const cityFormatted = (getReverseGeocoding.data as any)?.state
+            .split(' ')
+            .filter((_: any, i: number) => i !== 0)
+            .join(' ');
+        setCity(cityFormatted);
+        if (officePhoneNumber.length <= 3) {
+            setOfficePhoneNumber(
+                iranCityWithPrefixPhoneNumber.find(city => city.name === cityFormatted)?.code ?? ''
+            );
+        }
     }, [getReverseGeocoding.data]);
 
     const handleSubmit = async () => {
@@ -81,7 +94,7 @@ const CenterOfficeActivation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="h-full md:h-[50rem] rounded-md !p-0 md:!p-1 bg-white md:mt-8 md:shadow-md !flex flex-col items-center relative"
+            className="h-full md:h-[35rem] rounded-md !p-0 md:!p-1 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 !flex flex-col items-center relative"
         >
             <div className="bg-white absolute top-4 z-[900] h-10 px-8 rounded-full flex items-center justify-center shadow-xl space-s-2">
                 {(getReverseGeocoding.isLoading || getReverseGeocoding.isIdle) && (
@@ -106,9 +119,7 @@ const CenterOfficeActivation = () => {
                             />
                         </svg>
 
-                        <span className="font-medium">
-                            {(getReverseGeocoding.data as any)?.city}
-                        </span>
+                        <span className="font-medium">{city}</span>
                     </>
                 )}
             </div>
@@ -147,7 +158,12 @@ const CenterOfficeActivation = () => {
                         </span>
                     </div>
                 )}
-                <Button variant="contained" onClick={() => setCenterInfoModal(true)}>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        setCenterInfoModal(true);
+                    }}
+                >
                     انجام شد
                 </Button>
             </div>
@@ -160,6 +176,8 @@ const CenterOfficeActivation = () => {
                         inputMode: 'tel',
                         style: { textAlign: 'left', direction: 'ltr' }
                     }}
+                    inputRef={input => input && input.focus()}
+                    placeholder="02123456789"
                     onChange={e => setOfficePhoneNumber(e.target.value)}
                     value={officePhoneNumber}
                     InputProps={{
@@ -190,6 +208,7 @@ const CenterOfficeActivation = () => {
                         inputMode: 'tel',
                         style: { textAlign: 'left', direction: 'ltr' }
                     }}
+                    placeholder="09123456789"
                     onChange={e => setSecretaryPhoneNumber(e.target.value)}
                     value={secretaryPhoneNumber}
                     InputProps={{

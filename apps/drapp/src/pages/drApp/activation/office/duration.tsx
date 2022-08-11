@@ -82,7 +82,7 @@ const DurationOfficeActivation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="bg-white h-full md:h-auto md:p-5 rounded-md pt-4 md:mt-8 md:shadow-md"
+            className="bg-white h-full md:h-auto md:p-5 rounded-md pt-4 md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
             <Stack className="space-y-5">
                 <SelectTime
