@@ -34,7 +34,7 @@ const ErrorByRefresh = ({ show, blur }) => {
                     <span>تلاش مجدد</span>
                 </div>
                 <span className={styles.text}>در دریافت اطلاعات مشکلی پیش آمده است.</span>
-                <a className={styles['support-wrapper']} href="tel:02191012787">
+                <a className={styles['support-wrapper']} href="tel:02125015555">
                     <svg
                         width="21"
                         height="21"
@@ -57,7 +57,7 @@ const ErrorByRefresh = ({ show, blur }) => {
                     </svg>
                     <div className={styles['support-content']}>
                         <span style={{ fontSize: '1rem', fontWeight: '600' }}>
-                            پشتیبانی: 02191012787
+                            پشتیبانی: 02125015555
                         </span>
                     </div>
                 </a>
