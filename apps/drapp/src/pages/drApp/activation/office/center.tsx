@@ -1,26 +1,23 @@
-import {
-    Alert,
-    BaseTextFieldProps,
-    Container,
-    InputAdornment,
-    Skeleton,
-    TextField,
-    TextFieldProps,
-    Typography
-} from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Container from '@mui/material/Container';
+import InputAdornment from '@mui/material/InputAdornment';
+import Skeleton from '@mui/material/Skeleton';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/lab/LoadingButton';
-import { useDrApp } from '@paziresh24/context/drapp';
-import { useCenterInfoUpdate, useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
-import { EditIcon, PhoneIcon } from '@paziresh24/shared/icon';
 import Map from '@paziresh24/shared/ui/map';
 import Modal from '@paziresh24/shared/ui/modal';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+
+import { useEffect, useRef, useState } from 'react';
+import { useDrApp } from '@paziresh24/context/drapp';
+import { useCenterInfoUpdate, useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useActivationStore } from '../activation.store';
 import { useGetReverseGeocoding } from '@paziresh24/hooks/drapp/geocoding';
 import { iranCityWithPrefixPhoneNumber } from 'apps/drapp/src/constants/iranCityWithPrefixPhoneNumber';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CenterOfficeActivation = () => {
     const [{ doctor, center }] = useDrApp();
@@ -42,6 +39,13 @@ const CenterOfficeActivation = () => {
     const setSelectedService = useActivationStore(state => state.setSelectedService);
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
+    const officePhoneNumberField = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (centerInfoModal) {
+            officePhoneNumberField.current?.focus();
+        }
+    }, [centerInfoModal]);
 
     useEffect(() => {
         setSelectedService(prev => prev.filter(service => service !== 'office'));
@@ -67,6 +71,12 @@ const CenterOfficeActivation = () => {
 
     const handleSubmit = async () => {
         try {
+            if (officePhoneNumber) {
+                getSplunkInstance().sendEvent({
+                    group: 'activation-office-center-data-phone',
+                    type: `office-num`
+                });
+            }
             await centerUpdate.mutateAsync({
                 centerId: center.id,
                 data: {
@@ -76,19 +86,44 @@ const CenterOfficeActivation = () => {
                     lon: lng
                 }
             });
-            if (secretaryPhoneNumber)
+            if (secretaryPhoneNumber) {
+                getSplunkInstance().sendEvent({
+                    group: 'activation-office-center-data-phone',
+                    type: `secretary-num`
+                });
                 await doctorInfoUpdate.mutateAsync({
                     name: doctor.name,
                     family: doctor.family,
                     medical_code: doctor.medical_code,
                     secretary_phone: secretaryPhoneNumber
                 });
+            }
+            getSplunkInstance().sendEvent({
+                group: 'activation-office-center-data-phone',
+                type: `done`
+            });
             router.push('/activation/office/duration');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
             }
         }
+    };
+
+    const setPosition = ({ lat, lng }: { lat: number; lng: number }) => {
+        setLatLng({ lat, lng });
+        getSplunkInstance().sendEvent({
+            group: 'activation-office-center',
+            type: `click-map`
+        });
+    };
+
+    const handleSubmitLocation = () => {
+        getSplunkInstance().sendEvent({
+            group: 'activation-office-center',
+            type: `done`
+        });
+        setCenterInfoModal(true);
     };
 
     return (
@@ -123,7 +158,7 @@ const CenterOfficeActivation = () => {
                     </>
                 )}
             </div>
-            <Map lat={lat} lng={lng} zoom={1} sendPosition={setLatLng} />
+            <Map lat={lat} lng={lng} zoom={1} sendPosition={setPosition} />
             <div className="bg-white flex flex-col space-y-3 p-4 w-full">
                 <span className="font-medium">محل مطب خود را از روی نقشه انتخاب کنید.</span>
                 {(getReverseGeocoding.isLoading || getReverseGeocoding.isIdle) && (
@@ -158,12 +193,7 @@ const CenterOfficeActivation = () => {
                         </span>
                     </div>
                 )}
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        setCenterInfoModal(true);
-                    }}
-                >
+                <Button variant="contained" onClick={handleSubmitLocation}>
                     انجام شد
                 </Button>
             </div>
@@ -176,7 +206,7 @@ const CenterOfficeActivation = () => {
                         inputMode: 'tel',
                         style: { textAlign: 'left', direction: 'ltr' }
                     }}
-                    inputRef={input => input && input.focus()}
+                    inputRef={officePhoneNumberField}
                     placeholder="02123456789"
                     onChange={e => setOfficePhoneNumber(e.target.value)}
                     value={officePhoneNumber}

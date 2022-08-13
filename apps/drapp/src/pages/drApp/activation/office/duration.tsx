@@ -45,20 +45,17 @@ const DurationOfficeActivation = () => {
 
     const handleNext = useCallback(() => {
         getSplunkInstance().sendEvent({
-            group: 'duration',
+            group: 'activation-office-duration',
             type: isAnotherProvider ? 'other-booking-channel' : 'only-p24'
         });
         getSplunkInstance().sendEvent({
-            group: 'duration',
+            group: 'activation-office-duration',
             type: 'time-of-visit',
             event: {
-                value: duration
+                action: duration
             }
         });
-        getSplunkInstance().sendEvent({
-            group: 'workdays_active_booking-duration',
-            type: 'successful'
-        });
+
         router.push(`/activation/office/workhours${window.location.search}`);
     }, [duration, isAnotherProvider]);
 

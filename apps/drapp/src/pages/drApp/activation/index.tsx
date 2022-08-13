@@ -21,7 +21,7 @@ enum ActivationPaths {
 
 const Activation = () => {
     const router = useHistory();
-    const [{ doctor: docotorInfo, centers }] = useDrApp();
+    const [{ doctor: docotorInfo }] = useDrApp();
     const selectedService = useActivationStore(state => state.selectedService);
     const setSelectedService = useActivationStore(state => state.setSelectedService);
 
@@ -33,12 +33,23 @@ const Activation = () => {
 
     const handleSubmit = () => {
         const url = ActivationPaths[selectedService[0]];
-        selectedService.forEach(service => {
+        if (selectedService.length > 1)
             getSplunkInstance().sendEvent({
-                group: 'register',
-                type: `register-${service}`
+                group: 'activation',
+                type: `click-${selectedService.sort().reverse().join('&')}`,
+                event: {
+                    action: 'done'
+                }
             });
-        });
+        else
+            getSplunkInstance().sendEvent({
+                group: 'activation',
+                type: `click-${selectedService[0]}`,
+                event: {
+                    action: 'done'
+                }
+            });
+
         router.push(url);
     };
 

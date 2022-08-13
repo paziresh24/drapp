@@ -60,6 +60,10 @@ const WorkHoursOfficeActivation = () => {
                 currentWorkHours: workHours
             })
         ) {
+            getSplunkInstance().sendEvent({
+                group: 'activation-office-workhours',
+                type: 'add'
+            });
             addWorkHours(
                 days.map(day => ({
                     day,
@@ -73,8 +77,15 @@ const WorkHoursOfficeActivation = () => {
         try {
             await submitOfficeWorkHour();
             getSplunkInstance().sendEvent({
-                group: 'workdays_active_booking',
-                type: 'successful'
+                group: 'activation-office-workhours',
+                type: 'days',
+                event: {
+                    action: days.map(day => day)
+                }
+            });
+            getSplunkInstance().sendEvent({
+                group: 'activation-office-workhours',
+                type: 'done'
             });
             await getCentersDoctor.refetch();
             if (selectedService.length > 0) {
@@ -85,7 +96,7 @@ const WorkHoursOfficeActivation = () => {
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 getSplunkInstance().sendEvent({
-                    group: 'workdays_active_booking',
+                    group: 'activation-office-workhours',
                     type: 'unsuccessful',
                     event: {
                         error: error.response?.data

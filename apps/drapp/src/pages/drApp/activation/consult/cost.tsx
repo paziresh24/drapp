@@ -1,7 +1,11 @@
-import { Alert, Button, Container, InputAdornment, TextField, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import { useDrApp } from '@paziresh24/context/drapp';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import PriceField from '@paziresh24/shared/ui/priceField';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, removeCommas } from '@persian-tools/persian-tools';
 import { useConsultActivationStore } from 'apps/drapp/src/store/consultActivation.store';
 import { round } from 'lodash';
@@ -21,6 +25,13 @@ const CostConsultActivation = () => {
             setFieldError(true);
             return;
         }
+        getSplunkInstance().sendEvent({
+            group: 'activation-consult-cost',
+            type: 'pricing',
+            event: {
+                action: 'done'
+            }
+        });
         router.push(`/activation/consult/workhours`);
     };
 

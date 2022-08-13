@@ -1,5 +1,10 @@
-import { Button, Container, InputAdornment, TextField, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useConsultActivationStore } from 'apps/drapp/src/store/consultActivation.store';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -21,6 +26,13 @@ const WhatsappConsultActivation = () => {
             setFieldError(true);
             return;
         }
+        getSplunkInstance().sendEvent({
+            group: 'activation-consult-whatsapp',
+            type: 'click-whatsapp-num',
+            event: {
+                action: 'done'
+            }
+        });
         router.push(`/activation/consult/cost/`);
     };
 
@@ -46,6 +58,12 @@ const WhatsappConsultActivation = () => {
                 value={whatsappNumber}
                 helperText={fieldError ? 'شماره whatsapp business را به درستی وارد کنید.' : ''}
                 onChange={e => setWhatsappNumber(e.target.value)}
+                onClick={() => {
+                    getSplunkInstance().sendEvent({
+                        group: 'activation-consult-whatsapp',
+                        type: 'click-whatsapp-num'
+                    });
+                }}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="start">

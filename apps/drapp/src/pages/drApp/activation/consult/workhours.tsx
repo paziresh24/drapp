@@ -8,15 +8,12 @@ import SelectDay from '../../../../components/molecules/setting/workDays/selectD
 import SelectHours from '../../../../components/molecules/setting/workDays/selectHours';
 import Result from '../../../../components/molecules/setting/workDays/result';
 
-import { useEffect, useState } from 'react';
-import { useWorkHoursStore } from 'apps/drapp/src/store/workhours.store';
+import { useState } from 'react';
 import { useGetWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
-import { useDrApp } from '@paziresh24/context/drapp';
 import { ChevronIcon } from '@paziresh24/shared/icon';
 import { isDesktop } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
 import { useWorkHoursValidation } from 'apps/drapp/src/hooks/useWorkHoursValidation';
-import { useSubmitOfficeWorkHour } from 'apps/drapp/src/hooks/useSubmitOfficeWorkHour';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import axios from 'axios';
 import SelectTime from 'apps/drapp/src/components/molecules/setting/duration/selectTime';
@@ -56,6 +53,10 @@ const ConsultOfficeActivation = () => {
                 currentWorkHours: workHours
             })
         ) {
+            getSplunkInstance().sendEvent({
+                group: 'activation-consult-workhours',
+                type: 'add'
+            });
             addWorkHours(
                 days.map(day => ({
                     day,
@@ -72,6 +73,24 @@ const ConsultOfficeActivation = () => {
                 service_length: duration,
                 whatsapp: digitsFaToEn(whatsapp.replace(/^0+/, '')),
                 price: price * 10
+            });
+            getSplunkInstance().sendEvent({
+                group: 'activation-consult-workhours',
+                type: 'visit-days',
+                event: {
+                    action: duration
+                }
+            });
+            getSplunkInstance().sendEvent({
+                group: 'activation-consult-workhours',
+                type: 'days',
+                event: {
+                    action: days.map(day => day)
+                }
+            });
+            getSplunkInstance().sendEvent({
+                group: 'activation-consult-workhours',
+                type: 'done'
             });
             await getCentersDoctor.refetch();
             setCookie(
