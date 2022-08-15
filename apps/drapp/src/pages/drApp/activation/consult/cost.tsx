@@ -62,7 +62,7 @@ const CostConsultActivation = () => {
             )}
             <PriceField
                 label="مبلغ هر ویزیت (تومان)"
-                onChange={value => setPrice(+removeCommas(value))}
+                onChange={e => setPrice(+e.target.value)}
                 value={price ? price.toString() : ''}
                 limit={7}
                 error={fieldError}

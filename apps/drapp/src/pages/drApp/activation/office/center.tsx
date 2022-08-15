@@ -102,7 +102,7 @@ const CenterOfficeActivation = () => {
                 group: 'activation-office-center-data-phone',
                 type: `done`
             });
-            router.push('/activation/office/duration');
+            router.push('/activation/office/cost');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);

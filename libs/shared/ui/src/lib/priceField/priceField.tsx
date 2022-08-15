@@ -1,37 +1,31 @@
-import { OutlinedTextFieldProps, TextField, TextFieldProps } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 import { addCommas, numberToWords, removeCommas } from '@persian-tools/persian-tools';
 import { useRef } from 'react';
+import PriceFieldFormatCustom from './priceFieldFormatCustom';
 
-interface PriceFieldProps extends Omit<TextFieldProps, 'onChange'> {
-    onChange: (value: string) => void;
-    value: string;
+interface PriceFieldProps extends Omit<TextFieldProps, 'helperText'> {
     limit?: number;
+    helperText?: string;
 }
 
 export const PriceField = (props: PriceFieldProps) => {
-    const { onChange, value, label, limit, helperText, ...rest } = props;
-    const ref = useRef<HTMLInputElement>(null);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/[^0-9,]/g, '');
-        onChange(value);
-        if (ref.current?.value) {
-            ref.current.value = addCommas(removeCommas(value));
-        }
-    };
+    const { limit, helperText, value, inputProps, InputProps, ...rest } = props;
 
     return (
         <TextField
-            inputRef={ref}
-            label={label}
-            onChange={handleChange}
-            defaultValue={value ? addCommas(removeCommas(value)) : ''}
+            value={value}
+            defaultValue={value ? value : ''}
             inputProps={{
-                inputMode: 'tel',
+                ...inputProps,
                 maxLength: limit,
+                inputMode: 'tel',
                 style: { textAlign: 'left', direction: 'ltr' }
             }}
-            helperText={helperText ? helperText : +value ? `${numberToWords(value)} تومان` : ''}
+            InputProps={{
+                ...InputProps,
+                inputComponent: PriceFieldFormatCustom as any
+            }}
+            helperText={helperText ? helperText : value ? `${numberToWords(+value)} تومان` : ''}
             {...rest}
         />
     );

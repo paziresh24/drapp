@@ -50,6 +50,14 @@ export const routes = [
         exact: true
     },
     {
+        path: '/activation/office/cost/',
+        name: 'OfficeCostActivation',
+        title: 'مبلغ بیعانه',
+        component: lazy(() => import('./activation/office/cost')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/activation/office/workhours/',
         name: 'OfficeWorkhoursActivation',
         title: 'مدت زمان ویزیت',
