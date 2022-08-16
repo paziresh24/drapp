@@ -20,6 +20,11 @@ const CostConsultActivation = () => {
     const price = useConsultActivationStore(state => state.price);
     const [fieldError, setFieldError] = useState(false);
 
+    const priceExpertise = costs.find(
+        cost => +cost.expertiseId === +doctor.expertises[0].expertise.id
+    )?.avg;
+    const priceAvarage = priceExpertise ? round(Math.floor(+priceExpertise), -3) / 10 : 0;
+
     const handleSubmit = () => {
         if (!+price) {
             setFieldError(true);
@@ -32,16 +37,19 @@ const CostConsultActivation = () => {
                 action: 'done'
             }
         });
+
+        getSplunkInstance().sendEvent({
+            group: 'activation-consult-cost',
+            type: 'pricing',
+            event: {
+                action: 'avg-teammate',
+                value: price * 10,
+                avgPrice: priceAvarage
+            }
+        });
+
         router.push(`/activation/consult/workhours`);
     };
-
-    const priceExpertise = costs.find(
-        cost =>
-            +cost.degree === +doctor.expertises[0].degree.id &&
-            +cost.expertise === +doctor.expertises[0].expertise.id
-    )?.avg;
-
-    const priceAvarage = priceExpertise ? round(Math.floor(+priceExpertise), -2) : 0;
 
     return (
         <Container
@@ -53,13 +61,13 @@ const CostConsultActivation = () => {
                     لازم به ذکر است 30 درصد از مبلغ تعیین شده به پذیرش24 اختصاص می یابد.
                 </Typography>
             </Alert>
-            {priceAvarage && (
+            {priceAvarage ? (
                 <Typography>
                     همکاران شما بصورت میانگین مبلغ{' '}
                     <span className="font-medium">{addCommas(priceAvarage)}</span> تومان را در نظر
                     گرفته اند.
                 </Typography>
-            )}
+            ) : null}
             <PriceField
                 label="مبلغ هر ویزیت (تومان)"
                 onChange={value => setPrice(+removeCommas(value))}

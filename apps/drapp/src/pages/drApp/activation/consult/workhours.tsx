@@ -27,6 +27,8 @@ import { toast } from 'react-toastify';
 import { useActivationStore } from '../activation.store';
 import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
+import { weekDays } from 'apps/drapp/src/constants/weekDays';
+import uniq from 'lodash/uniq';
 
 const durationList = range(1, 4);
 
@@ -81,13 +83,17 @@ const ConsultOfficeActivation = () => {
                     action: duration
                 }
             });
-            getSplunkInstance().sendEvent({
-                group: 'activation-consult-workhours',
-                type: 'days',
-                event: {
-                    action: days.map(day => day)
+            uniq(workHours.map(({ day }) => weekDays.find(({ id }) => day === id)?.nameEn)).forEach(
+                day => {
+                    getSplunkInstance().sendEvent({
+                        group: 'activation-consult-workhours',
+                        type: 'days',
+                        event: {
+                            action: day
+                        }
+                    });
                 }
-            });
+            );
             getSplunkInstance().sendEvent({
                 group: 'activation-consult-workhours',
                 type: 'done'

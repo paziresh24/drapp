@@ -1,462 +1,653 @@
 export const costs = [
     {
-        degree: '2',
-        expertise: '1',
-        avg: '27083.33333'
+        degree: 'کاردان',
+        expertise: 'اتاق عمل',
+        degreeId: '1',
+        expertiseId: '1',
+        avg: '400000'
     },
     {
-        degree: '2',
-        expertise: '17',
-        avg: '73142.85714'
+        degree: 'دانشجوی تخصص',
+        expertise: 'ارتودانتیکس',
+        degreeId: '6',
+        expertiseId: '126',
+        avg: '500000'
     },
     {
-        degree: '2',
-        expertise: '20',
-        avg: '97777.77778'
+        degree: 'دانشجوی تخصص',
+        expertise: 'ارتوپدی',
+        degreeId: '6',
+        expertiseId: '125',
+        avg: '800000'
     },
     {
-        degree: '2',
-        expertise: '29',
-        avg: '198333.3333'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'ارتوپدی کودکان',
+        degreeId: '12',
+        expertiseId: '234',
+        avg: '800000'
     },
     {
-        degree: '2',
-        expertise: '31',
-        avg: '79266.66667'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'ارولوژی ترمیمی',
+        degreeId: '12',
+        expertiseId: '237',
+        avg: '600000'
     },
     {
-        degree: '2',
-        expertise: '34',
-        avg: '50000'
+        degree: 'کارشناس ارشد',
+        expertise: 'ارگونومی',
+        degreeId: '3',
+        expertiseId: '49',
+        avg: '500000'
     },
     {
-        degree: '2',
-        expertise: '35',
-        avg: '107647.0588'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'استریوتاکسی',
+        degreeId: '12',
+        expertiseId: '240',
+        avg: '500000'
     },
     {
-        degree: '2',
-        expertise: '37',
-        avg: '127818.2727'
+        degree: 'کارشناس ارشد',
+        expertise: 'اعضاء مصنوعی',
+        degreeId: '3',
+        expertiseId: '50',
+        avg: '500000'
     },
     {
-        degree: '3',
-        expertise: '17',
-        avg: '153681.8182'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'ایمونولوژی و آلرژی بالینی',
+        degreeId: '10',
+        expertiseId: '205',
+        avg: '800000'
     },
     {
-        degree: '3',
-        expertise: '20',
-        avg: '345000'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'اینترونشنال کاردیولوژی',
+        degreeId: '12',
+        expertiseId: '248',
+        avg: '800000'
     },
     {
-        degree: '3',
-        expertise: '29',
-        avg: '15000'
+        degree: 'دانشجوی دکترای تخصصی',
+        expertise: 'بهداشت باروری',
+        degreeId: '8',
+        expertiseId: '166',
+        avg: '500000'
     },
     {
-        degree: '3',
-        expertise: '31',
-        avg: '93790'
+        degree: 'کاردان',
+        expertise: 'بهداشت حرفه ای',
+        degreeId: '1',
+        expertiseId: '2',
+        avg: '500000'
     },
     {
-        degree: '3',
-        expertise: '34',
-        avg: '51666.66667'
+        degree: 'فلوشیپ',
+        expertise: 'بیماری صرع',
+        degreeId: '13',
+        expertiseId: '321',
+        avg: '800000'
     },
     {
-        degree: '3',
-        expertise: '50',
-        avg: '37500'
+        degree: 'دانشجوی تخصص',
+        expertise: 'بیماریهای داخلی',
+        degreeId: '6',
+        expertiseId: '131',
+        avg: '880000'
     },
     {
-        degree: '3',
-        expertise: '86',
-        avg: '155000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'بیماریهای دهان وفک و صورت',
+        degreeId: '6',
+        expertiseId: '132',
+        avg: '650000'
     },
     {
-        degree: '3',
-        expertise: '88',
-        avg: '128250'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'بیماریهای ریه',
+        degreeId: '10',
+        expertiseId: '206',
+        avg: '800000'
     },
     {
-        degree: '3',
-        expertise: '106',
-        avg: '91000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'بیماریهای عفونی و گرمسیری',
+        degreeId: '6',
+        expertiseId: '133',
+        avg: '800000'
     },
     {
-        degree: '3',
-        expertise: '109',
-        avg: '189333.3333'
+        degree: 'دانشجوی تخصص',
+        expertise: 'بیماریهای قلب و عروق',
+        degreeId: '6',
+        expertiseId: '134',
+        avg: '900000'
     },
     {
-        degree: '3',
-        expertise: '114',
-        avg: '30000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'بیماریهای مغز و اعصاب',
+        degreeId: '6',
+        expertiseId: '135',
+        avg: '800000'
     },
     {
-        degree: '4',
-        expertise: '123',
-        avg: '65000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'بیماریهای پوست',
+        degreeId: '6',
+        expertiseId: '130',
+        avg: '800000'
     },
     {
-        degree: '5',
-        expertise: '24',
-        avg: '127800'
+        degree: 'کارشناس',
+        expertise: 'بینایی سنجی',
+        degreeId: '2',
+        expertiseId: '20',
+        avg: '500000'
     },
     {
-        degree: '5',
-        expertise: '123',
-        avg: '86542.55319'
+        degree: 'کارشناس ارشد',
+        expertise: 'بیهوشی',
+        degreeId: '3',
+        expertiseId: '66',
+        avg: '700000'
     },
     {
-        degree: '5',
-        expertise: '124',
-        avg: '54892.85714'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'بیهوشی قلب',
+        degreeId: '12',
+        expertiseId: '259',
+        avg: '700000'
     },
     {
-        degree: '6',
-        expertise: '125',
-        avg: '50000'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'بیهوشی کودکان',
+        degreeId: '12',
+        expertiseId: '260',
+        avg: '700000'
     },
     {
-        degree: '6',
-        expertise: '152',
-        avg: '100000'
+        degree: 'کاردان',
+        expertise: 'تکنولوژی پرتودرمانی- رادیوتراپی',
+        degreeId: '1',
+        expertiseId: '11',
+        avg: '700000'
     },
     {
-        degree: '6',
-        expertise: '159',
-        avg: '50000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'جراحی اطفال',
+        degreeId: '10',
+        expertiseId: '207',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '10',
-        avg: '45000'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'جراحی ستون فقرات',
+        degreeId: '12',
+        expertiseId: '284',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '11',
-        avg: '109500'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'جراحی عروق',
+        degreeId: '10',
+        expertiseId: '209',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '66',
-        avg: '190000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'جراحی عمومی',
+        degreeId: '6',
+        expertiseId: '143',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '77',
-        avg: '60000'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'جراحی عمومی درون بین- لاپاراسکوپی',
+        degreeId: '12',
+        expertiseId: '287',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '125',
-        avg: '150824.1176'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'جراحی قفسه صدری',
+        degreeId: '10',
+        expertiseId: '210',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '130',
-        avg: '98625'
+        degree: 'دانشجوی تخصص',
+        expertise: 'جراحی مغز و اعصاب',
+        degreeId: '6',
+        expertiseId: '145',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '131',
-        avg: '96666.66667'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'جراحی پستان',
+        degreeId: '12',
+        expertiseId: '278',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '132',
-        avg: '67333.33333'
+        degree: 'دانشجوی تخصص',
+        expertise: 'جراحی کلیه و مجاری ادراری تناسلی',
+        degreeId: '6',
+        expertiseId: '144',
+        avg: '850000'
     },
     {
-        degree: '7',
-        expertise: '133',
-        avg: '185428.5714'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'خون و سرطان بالغین',
+        degreeId: '10',
+        expertiseId: '213',
+        avg: '850000'
     },
     {
-        degree: '7',
-        expertise: '134',
-        avg: '83000'
+        degree: 'کارشناس',
+        expertise: 'داروسازی',
+        degreeId: '2',
+        expertiseId: '24',
+        avg: '600000'
     },
     {
-        degree: '7',
-        expertise: '135',
-        avg: '180909.0909'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'درد',
+        degreeId: '12',
+        expertiseId: '293',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '137',
-        avg: '100000'
+        degree: 'دکترای',
+        expertise: 'دندانپزشکی',
+        degreeId: '5',
+        expertiseId: '124',
+        avg: '550000'
     },
     {
-        degree: '7',
-        expertise: '138',
-        avg: '100000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'دندانپزشکی ترمیمی',
+        degreeId: '6',
+        expertiseId: '148',
+        avg: '550000'
     },
     {
-        degree: '7',
-        expertise: '139',
-        avg: '80000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'دندانپزشکی کودکان',
+        degreeId: '6',
+        expertiseId: '149',
+        avg: '550000'
     },
     {
-        degree: '7',
-        expertise: '140',
-        avg: '100000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'رادیولوژی',
+        degreeId: '6',
+        expertiseId: '150',
+        avg: '500000'
     },
     {
-        degree: '7',
-        expertise: '143',
-        avg: '84090.90909'
+        degree: 'کارشناس',
+        expertise: 'روانشناسی بالینی',
+        degreeId: '2',
+        expertiseId: '26',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '144',
-        avg: '92875'
+        degree: 'کارشناس ارشد',
+        expertise: 'روانشناسی وآموزش کودکان استثنایی',
+        degreeId: '3',
+        expertiseId: '86',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '145',
-        avg: '115500'
+        degree: 'دانشجوی تخصص',
+        expertise: 'روانپزشکی',
+        degreeId: '6',
+        expertiseId: '152',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '146',
-        avg: '78000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'روانپزشکی کودک و نوجوان',
+        degreeId: '10',
+        expertiseId: '215',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '148',
-        avg: '50000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'روماتولوژی کودکان',
+        degreeId: '10',
+        expertiseId: '217',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '149',
-        avg: '10000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'ریه کودکان',
+        degreeId: '10',
+        expertiseId: '218',
+        avg: '900000'
     },
     {
-        degree: '7',
-        expertise: '150',
-        avg: '90000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'زنان و زایمان',
+        degreeId: '6',
+        expertiseId: '153',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '152',
-        avg: '97500'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'سرطانهای دستگاه ادراری- تناسلی',
+        degreeId: '12',
+        expertiseId: '302',
+        avg: '800000'
     },
     {
-        degree: '7',
-        expertise: '153',
-        avg: '102621.6216'
+        degree: 'کارشناس',
+        expertise: 'شنوایی شناسی',
+        degreeId: '2',
+        expertiseId: '29',
+        avg: '500000'
     },
     {
-        degree: '7',
-        expertise: '154',
-        avg: '100000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'طب اورژانس',
+        degreeId: '6',
+        expertiseId: '154',
+        avg: '600000'
     },
     {
-        degree: '7',
-        expertise: '155',
-        avg: '150000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'طب سالمندی',
+        degreeId: '6',
+        expertiseId: '155',
+        avg: '500000'
     },
     {
-        degree: '7',
-        expertise: '156',
-        avg: '50000'
+        degree: 'کارشناس ارشد',
+        expertise: 'طب سنتی ایرانی',
+        degreeId: '3',
+        expertiseId: '94',
+        avg: '500000'
     },
     {
-        degree: '7',
-        expertise: '159',
-        avg: '134166.6667'
+        degree: 'دانشجوی تخصص',
+        expertise: 'طب فیزیکی و توانبخشی',
+        degreeId: '6',
+        expertiseId: '156',
+        avg: '500000'
     },
     {
-        degree: '7',
-        expertise: '160',
-        avg: '97500'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'طب مادر و جنین',
+        degreeId: '12',
+        expertiseId: '308',
+        avg: '500000'
     },
     {
-        degree: '9',
-        expertise: '26',
-        avg: '200000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'طب نوزادی و پیرامون تولد',
+        degreeId: '10',
+        expertiseId: '219',
+        avg: '500000'
     },
     {
-        degree: '9',
-        expertise: '31',
-        avg: '59333.33333'
+        degree: 'دانشجوی تخصص',
+        expertise: 'طب هوا و فضا و زیر سطحی',
+        degreeId: '6',
+        expertiseId: '158',
+        avg: '500000'
     },
     {
-        degree: '9',
-        expertise: '94',
-        avg: '255000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'عفونی اطفال',
+        degreeId: '10',
+        expertiseId: '220',
+        avg: '800000'
     },
     {
-        degree: '9',
-        expertise: '166',
-        avg: '100000'
+        degree: 'دانشجوی دکترای تخصصی',
+        expertise: 'علوم اعصاب',
+        degreeId: '8',
+        expertiseId: '185',
+        avg: '800000'
     },
     {
-        degree: '9',
-        expertise: '176',
-        avg: '50000'
+        degree: 'کارشناس',
+        expertise: 'علوم تغذیه',
+        degreeId: '2',
+        expertiseId: '31',
+        avg: '500000'
     },
     {
-        degree: '9',
-        expertise: '185',
-        avg: '75000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'غدد درون ریز و متابولیسم',
+        degreeId: '10',
+        expertiseId: '222',
+        avg: '800000'
     },
     {
-        degree: '10',
-        expertise: '213',
-        avg: '130000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'غدد درون ریز و متابولیسم کودکان',
+        degreeId: '10',
+        expertiseId: '223',
+        avg: '800000'
     },
     {
-        degree: '11',
-        expertise: '134',
-        avg: '120000'
+        degree: 'کارشناس',
+        expertise: 'فیزیوتراپی',
+        degreeId: '2',
+        expertiseId: '34',
+        avg: '500000'
     },
     {
-        degree: '11',
-        expertise: '205',
-        avg: '100000'
+        degree: 'کاردان',
+        expertise: 'مامایی',
+        degreeId: '1',
+        expertiseId: '17',
+        avg: '500000'
     },
     {
-        degree: '11',
-        expertise: '206',
-        avg: '132000'
+        degree: 'کارشناس ارشد',
+        expertise: 'مدیریت توانبخشی',
+        degreeId: '3',
+        expertiseId: '112',
+        avg: '500000'
     },
     {
-        degree: '11',
-        expertise: '209',
-        avg: '130000'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'مراقبت های ویژه پزشکی- ICU',
+        degreeId: '12',
+        expertiseId: '313',
+        avg: '500000'
     },
     {
-        degree: '11',
-        expertise: '210',
-        avg: '100000'
+        degree: 'کارشناس ارشد',
+        expertise: 'مشاوره در مامایی',
+        degreeId: '3',
+        expertiseId: '114',
+        avg: '500000'
     },
     {
-        degree: '11',
-        expertise: '213',
-        avg: '115000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'مغز و اعصاب کودکان',
+        degreeId: '10',
+        expertiseId: '228',
+        avg: '900000'
     },
     {
-        degree: '11',
-        expertise: '215',
-        avg: '383333.3333'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'ناباروری',
+        degreeId: '12',
+        expertiseId: '315',
+        avg: '900000'
     },
     {
-        degree: '11',
-        expertise: '217',
-        avg: '20000'
+        degree: 'نامشخص',
+        expertise: 'نامشخص',
+        degreeId: '14',
+        expertiseId: '325',
+        avg: '500000'
     },
     {
-        degree: '11',
-        expertise: '218',
-        avg: '91666.66667'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'نفرولوژی',
+        degreeId: '10',
+        expertiseId: '229',
+        avg: '800000'
     },
     {
-        degree: '11',
-        expertise: '220',
-        avg: '140000'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'ویتره ورتین- سگمان خلفی',
+        degreeId: '12',
+        expertiseId: '319',
+        avg: '800000'
     },
     {
-        degree: '11',
-        expertise: '222',
-        avg: '100000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'پاتولوژی دهان و فک- آسیب شناسی دهان و دندان',
+        degreeId: '6',
+        expertiseId: '136',
+        avg: '800000'
     },
     {
-        degree: '11',
-        expertise: '223',
-        avg: '100000'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'پاتولوژی مولکولاروسیتوژنتیک',
+        degreeId: '12',
+        expertiseId: '264',
+        avg: '800000'
     },
     {
-        degree: '11',
-        expertise: '226',
-        avg: '130000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'پرتودرمانی',
+        degreeId: '6',
+        expertiseId: '137',
+        avg: '800000'
     },
     {
-        degree: '11',
-        expertise: '227',
-        avg: '439285.7143'
+        degree: 'کاردان',
+        expertise: 'پروتزهای دندانی',
+        degreeId: '1',
+        expertiseId: '10',
+        avg: '500000'
     },
     {
-        degree: '11',
-        expertise: '229',
-        avg: '115000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'پریودانتیکس',
+        degreeId: '6',
+        expertiseId: '138',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '234',
-        avg: '165000'
+        degree: 'دانشجوی دکترای',
+        expertise: 'پزشکی',
+        degreeId: '4',
+        expertiseId: '123',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '237',
-        avg: '135000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'پزشکی اجتماعی',
+        degreeId: '6',
+        expertiseId: '139',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '240',
-        avg: '150000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'پزشکی قانونی',
+        degreeId: '6',
+        expertiseId: '140',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '248',
-        avg: '80000'
+        degree: 'کارشناس ارشد',
+        expertise: 'پزشکی ورزشی',
+        degreeId: '3',
+        expertiseId: '77',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '259',
-        avg: '100000'
+        degree: 'دانشجوی فلوشیپ',
+        expertise: 'پیشگیری و کنترل عفونت‌های بیمارستانی',
+        degreeId: '12',
+        expertiseId: '272',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '260',
-        avg: '120000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'چشم پزشکی',
+        degreeId: '6',
+        expertiseId: '146',
+        avg: '800000'
     },
     {
-        degree: '13',
-        expertise: '272',
-        avg: '100000'
+        degree: 'کارشناس ارشد',
+        expertise: 'ژنتیک انسانی',
+        degreeId: '3',
+        expertiseId: '88',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '278',
-        avg: '135000'
+        degree: 'دانشجوی دکترای تخصصی',
+        expertise: 'ژنتیک پزشکی',
+        degreeId: '8',
+        expertiseId: '176',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '284',
-        avg: '156666.6667'
+        degree: 'کارشناس ارشد',
+        expertise: 'کار درمانی',
+        degreeId: '3',
+        expertiseId: '106',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '293',
-        avg: '266666.6667'
+        degree: 'کارشناس',
+        expertise: 'کاردرمانی',
+        degreeId: '2',
+        expertiseId: '35',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '302',
-        avg: '200000'
+        degree: 'دانشجوی تخصص',
+        expertise: 'کودکان',
+        degreeId: '6',
+        expertiseId: '159',
+        avg: '800000'
     },
     {
-        degree: '13',
-        expertise: '308',
-        avg: '100000'
+        degree: 'کارشناس',
+        expertise: 'گفتار درمانی',
+        degreeId: '2',
+        expertiseId: '37',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '313',
-        avg: '130000'
+        degree: 'کارشناس ارشد',
+        expertise: 'گفتاردرمانی',
+        degreeId: '3',
+        expertiseId: '109',
+        avg: '500000'
     },
     {
-        degree: '13',
-        expertise: '315',
-        avg: '130000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'گوارش اطفال',
+        degreeId: '10',
+        expertiseId: '226',
+        avg: '900000'
     },
     {
-        degree: '13',
-        expertise: '321',
-        avg: '65000'
+        degree: 'دانشجوی فوق تخصص',
+        expertise: 'گوارش و کبد بالغین',
+        degreeId: '10',
+        expertiseId: '227',
+        avg: '900000'
+    },
+    {
+        degree: 'دانشجوی تخصص',
+        expertise: 'گوش و حلق و بینی و جراحی سر و گردن',
+        degreeId: '6',
+        expertiseId: '160',
+        avg: '800000'
     }
 ];

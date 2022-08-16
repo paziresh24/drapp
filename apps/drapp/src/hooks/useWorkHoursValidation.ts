@@ -3,7 +3,6 @@ import uniq from 'lodash/uniq';
 import { toast } from 'react-toastify';
 import { weekDays } from 'apps/drapp/src/constants/weekDays';
 import { useState } from 'react';
-import { useWorkHoursStore } from '../store/workhours.store';
 
 const convertTimeToTimeStamp = (time: string) => {
     const [hour, minute] = time.split(':');
