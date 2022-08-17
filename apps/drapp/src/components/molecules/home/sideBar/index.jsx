@@ -89,13 +89,6 @@ const SideBar = () => {
                     ]
                 },
                 {
-                    id: 4,
-                    name: 'چت',
-                    shouldShow: info.center.id === '5532',
-                    icon: <ChatIcon color="#3F3F79" />,
-                    link: '/consult'
-                },
-                {
                     id: 7,
                     name: 'قوانین مشاوره',
                     shouldShow: info.center.id === '5532',
