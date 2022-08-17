@@ -1,1 +1,1 @@
-type ServicesType = 'office' | 'consult' | 'prescription';
+type ServicesType = 'office' | 'consult';

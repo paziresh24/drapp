@@ -11,16 +11,16 @@ import { weekDays } from '../../../../constants/weekDays';
 
 interface Props {
     isLoading: boolean;
+    values: Day[];
+    removeAction: (workDay: DaysInSameTime) => void;
 }
 
 const Result = (props: Props) => {
-    const { isLoading } = props;
-    const workHours = useWorkHoursStore(state => state.workHours);
-    const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
+    const { isLoading, values, removeAction } = props;
     const [formattedWorkHours, setFormattedWorkHours] = useState<DaysInSameTime[]>([]);
 
     useEffect(() => {
-        const grp = groupBy(workHours, workDay => workDay.from + '-' + workDay.to);
+        const grp = groupBy(values, workDay => workDay.from + '-' + workDay.to);
 
         const formattedWorkHours = Object.values(grp).map(workDays => ({
             days: workDays.map(workDay => workDay.day),
@@ -29,7 +29,7 @@ const Result = (props: Props) => {
         }));
 
         setFormattedWorkHours(formattedWorkHours);
-    }, [workHours]);
+    }, [values]);
 
     if (isLoading)
         return (
@@ -50,7 +50,7 @@ const Result = (props: Props) => {
                     className="flex justify-between items-center space-s-3"
                 >
                     <Stack direction="row" spacing={0.5} alignItems="center">
-                        <IconButton onClick={() => removeWorkHours({ ...workDay })}>
+                        <IconButton onClick={() => removeAction({ ...workDay })}>
                             <CloseIcon className="w-4 h-4" />
                         </IconButton>
                         <Typography variant="body2" component="span">

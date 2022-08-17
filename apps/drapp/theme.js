@@ -7,7 +7,7 @@ const theme = createTheme({
     },
     palette: {
         primary: {
-            main: '#0070f3'
+            main: '#3861fb'
         },
         secondary: {
             main: '#ff9800'
@@ -21,8 +21,19 @@ const theme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
-                    borderRadius: '0.4rem',
+                    borderRadius: '7px'
+                },
+                sizeMedium: {
+                    padding: '11px 16px',
                     fontSize: '0.85rem'
+                },
+                sizeLarge: {
+                    padding: '11px 16px',
+                    fontSize: '0.85rem'
+                },
+                sizeSmall: {
+                    padding: '8px 14px',
+                    fontSize: '0.7rem'
                 }
             }
         },
@@ -48,6 +59,29 @@ const theme = createTheme({
                 root: {
                     paddingRight: '1.5rem',
                     paddingLeft: '1.5rem'
+                }
+            }
+        },
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold',
+                    color: '#000'
+                }
+            }
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    paddingRight: '7px',
+                    borderRadius: '9px'
+                },
+                notchedOutline: {
+                    borderColor: '#e1e4e6'
+                },
+                input: {
+                    padding: '16.5px 14px'
                 }
             }
         }

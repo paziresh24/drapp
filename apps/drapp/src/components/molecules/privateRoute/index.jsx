@@ -11,7 +11,6 @@ import Modal from '@paziresh24/shared/ui/modal';
 // HOOKS
 import { Route, useHistory, useLocation } from 'react-router-dom';
 import { getToken } from '@paziresh24/utils/localstorage';
-import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import classNames from 'classnames';
 import { useGetUserGoftino, useSetUserGoftino } from '@paziresh24/hooks/drapp/goftino';
 import Helmet from 'react-helmet';
@@ -26,6 +25,7 @@ import LearnControl from './../learnControl/index';
 import ErrorByRefresh from '@paziresh24/shared/ui/errorByRefresh';
 import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
 import { useLevel } from '@paziresh24/context/core/level';
+import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -33,12 +33,12 @@ const PrivateRoute = props => {
 
     const [, setPage] = usePage();
     const [centersDoctor, setCentersDoctor] = useState([]);
-    const centerInfo = useGetCenterInfo();
+    const getCentersDoctor = useGetCentersDoctor();
+
     const getLevels = useGetLevels();
 
     const doctorInfo = useGetDoctorInfo({
         center_id: centersDoctor?.[centersDoctor?.length - 1]?.id
-        // center_id: 5532
     });
     const history = useHistory();
     const { search } = useLocation();
@@ -50,75 +50,37 @@ const PrivateRoute = props => {
     const getLatestVersion = useGetLatestVersion();
     const [isError, setIsError] = useState(false);
 
-    const isProduction = process.env.NODE_ENV === 'production';
-    const isMainDomain = window.location.host === window._env_.P24_MAIN_DOMAIN;
     useEffect(() => {
         setPage(props);
         if (isEmpty(info) && !isEmpty(getToken())) {
-            props.path !== '/create-center' && centerInfo.refetch();
+            if (props.path !== '/create-center') {
+                handleGetCenters();
+            }
             getUserGoftino.refetch();
             window._env_.P24_STATISTICS_API && getLevels.refetch();
         }
     }, []);
 
+    const handleGetCenters = async () => {
+        const centers = await getCentersDoctor.refetch();
+        setCentersDoctor([centers[0]]);
+    };
+
     useEffect(() => {
-        if (getLevels.isSuccess && doctorInfo.isSuccess && centerInfo.isSuccess) {
+        if (getLevels.isSuccess && doctorInfo.isSuccess && getCentersDoctor.status.success) {
             const level = getLevels.data.data?.[0]?.user_level ?? 'DOCTOR';
             setLevel(level);
             if ((props.path !== '/dashbord' || props.path !== '/logout') && level !== 'DOCTOR') {
                 history.replace('/dashboard');
             }
         }
-    }, [getLevels.status, doctorInfo.status, centerInfo.status]);
+    }, [getLevels.status, doctorInfo.status, getCentersDoctor.status.success]);
 
     useEffect(() => {
-        if (!info && centerInfo.isSuccess) {
-            let center;
-            const centers = centerInfo.data.data;
-
-            const isPrescriptionLocalInstallFieldAvailable =
-                centers[0]?.prescription_local_install !== undefined;
-
-            const isAllHospitalCentersNotInstalledPrescriptionLocal =
-                centers
-                    .filter(item => item.type_id !== 1 && item.id !== '5532')
-                    .every(item => item?.prescription_local_install === false) &&
-                !centers.some(item => item.type_id === 1 || item.id === '5532');
-
-            if (
-                (!window._env_.P24_IS_PROXY_CENTER &&
-                    isPrescriptionLocalInstallFieldAvailable &&
-                    isAllHospitalCentersNotInstalledPrescriptionLocal) ||
-                isEmpty(centers)
-            )
-                return history.push('/create-center');
-
-            if (isEmpty(centers.find(item => item.id === localStorage.getItem('center_id')))) {
-                center = centerInfo.data.data[0];
-                localStorage.setItem('center_id', center.id);
-            } else {
-                center = centerInfo.data.data.find(
-                    item => item.id === localStorage.getItem('center_id')
-                );
-            }
-            const centerConsult = centerInfo.data.data.find(center => center.id === '5532') ?? {};
-            const onlyConsult = centerConsult.id === '5532' && isEmpty(center);
-            setCentersDoctor(prev => [...prev, center]);
-
-            setInfo({
-                centers,
-                center,
-                centerConsult,
-                onlyConsult
-            });
-        }
-    }, [centerInfo.status]);
-
-    useEffect(() => {
-        if (!isEmpty(centersDoctor)) {
+        if (getCentersDoctor.status.success && centersDoctor.length !== 0) {
             doctorInfo.refetch();
         }
-    }, [centersDoctor]);
+    }, [getCentersDoctor.status, centersDoctor]);
 
     useEffect(() => {
         if (doctorInfo.isSuccess) {
@@ -203,12 +165,12 @@ const PrivateRoute = props => {
             <Loading
                 show={
                     !info.doctor &&
-                    !centerInfo.isError &&
+                    !getCentersDoctor.status.error &&
                     !isError &&
                     props.path !== '/create-center'
                 }
             />
-            <ErrorByRefresh show={centerInfo.isError || isError} />
+            <ErrorByRefresh show={getCentersDoctor.status.error || isError} />
             <div
                 className={classNames({
                     [styles['inner']]: true,

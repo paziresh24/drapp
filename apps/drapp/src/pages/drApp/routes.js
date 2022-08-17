@@ -42,6 +42,54 @@ export const routes = [
         exact: true
     },
     {
+        path: '/activation/office/center/',
+        name: 'OfficeCenterActivation',
+        title: 'محل مطب من',
+        component: lazy(() => import('./activation/office/center')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/activation/office/workhours/',
+        name: 'OfficeWorkhoursActivation',
+        title: 'مدت زمان ویزیت',
+        component: lazy(() => import('./activation/office/workhours')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/activation/office/duration/',
+        name: 'OfficeDurationActivation',
+        title: 'ساعت کاری',
+        component: lazy(() => import('./activation/office/duration')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/activation/consult/whatsapp/',
+        name: 'OfficeWhatsappActivation',
+        title: 'شماره واتس اپ',
+        component: lazy(() => import('./activation/consult/whatsapp')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/activation/consult/cost/',
+        name: 'OfficeCostActivation',
+        title: 'مبلغ ویزیت آنلاین',
+        component: lazy(() => import('./activation/consult/cost')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/activation/consult/workhours/',
+        name: 'ConsultWorkhoursActivation',
+        title: 'ساعت کاری',
+        component: lazy(() => import('./activation/consult/workhours')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/Services',
         name: 'Services',
         title: 'پذیرش24',
@@ -225,19 +273,11 @@ export const routes = [
     },
     {
         path: '/setting',
-        name: 'duration',
+        name: 'setting',
         title: 'تنظیمات نوبت های من',
         component: lazy(() => import('./setting')),
         isPrivate: true,
         exact: true
-    },
-    {
-        path: '/setting/duration',
-        name: 'duration',
-        title: 'ساعت کاری من',
-        component: lazy(() => import('./duration')),
-        isPrivate: true,
-        exact: false
     },
     {
         path: '/setting/workhours',

@@ -4,7 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
 import Modal from '@paziresh24/shared/ui/modal';
-import Button from '@paziresh24/shared/ui/button';
+import Button from '@mui/lab/LoadingButton';
 import { PenIcon, StarIcon } from '@paziresh24/shared/icon';
 import { toast } from 'react-toastify';
 import { baseURL } from '@paziresh24/utils/baseUrl';
@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import { MainMenuData, SubMenuData } from '@paziresh24/configs/drapp/menu.config';
 import { StatusBar } from '@components/molecules/turning/statusBar';
+import { getCookie } from '@paziresh24/utils/cookie';
 
 const SuperMenu = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState();
@@ -262,14 +263,15 @@ const SuperMenu = () => {
                                         </div>
                                     </div>
                                     {center.type_id === 1 && !center?.is_active_booking && (
-                                        <button
-                                            className={styles.activeOfficeType}
-                                            onClick={e => {
-                                                history.push('/fill-info');
+                                        <Button
+                                            size="small"
+                                            variant="contained"
+                                            onClick={() => {
+                                                history.push('/activation/office/center');
                                             }}
                                         >
                                             فعال سازی
-                                        </button>
+                                        </Button>
                                     )}
                                 </div>
                             ))}
@@ -313,16 +315,21 @@ const SuperMenu = () => {
                                         </div>
                                     </div>
 
-                                    <button
-                                        className={styles.activeOfficeType}
-                                        onClick={e => {
-                                            e.stopPropagation();
-
-                                            history.push('/consult/fill-info');
-                                        }}
-                                    >
-                                        فعال سازی
-                                    </button>
+                                    {getCookie('CONSULT_ACTIVATION_PENDING') ? (
+                                        <Button size="small" variant="contained">
+                                            در حال بررسی
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            size="small"
+                                            variant="contained"
+                                            onClick={() => {
+                                                history.push('/activation/consult/whatsapp');
+                                            }}
+                                        >
+                                            فعال سازی
+                                        </Button>
+                                    )}
                                 </div>
                             )}
                             {isEmpty(info.centers.find(center => center.type_id === 1)) && (
@@ -354,8 +361,9 @@ const SuperMenu = () => {
                                         </div>
                                     </div>
 
-                                    <button
-                                        className={styles.activeOfficeType}
+                                    <Button
+                                        size="small"
+                                        variant="contained"
                                         onClick={e => {
                                             e.stopPropagation();
 
@@ -364,7 +372,7 @@ const SuperMenu = () => {
                                         }}
                                     >
                                         فعال سازی
-                                    </button>
+                                    </Button>
                                 </div>
                             )}
                         </div>
@@ -380,15 +388,16 @@ const SuperMenu = () => {
                         </span>
                         <div style={{ display: 'flex', gap: '1rem' }}>
                             <Button
-                                block
+                                fullWidth
+                                variant="contained"
                                 onClick={createCenterAction}
                                 loading={createCenter.isLoading}
                             >
                                 ساخت مطب
                             </Button>
                             <Button
-                                block
-                                variant="secondary"
+                                fullWidth
+                                variant="outlined"
                                 onClick={() => setCenterActiveModal(false)}
                             >
                                 انصراف

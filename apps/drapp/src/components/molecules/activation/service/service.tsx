@@ -32,7 +32,7 @@ export const Service = (props: Props) => {
             )}
             onClick={() => onSelect(type)}
         >
-            <ListItemAvatar className="bg-primary bg-opacity-10 flex justify-center items-center rounded-md ml-3">
+            <ListItemAvatar className="bg-gray-500 bg-opacity-10 flex justify-center items-center rounded-md ml-3">
                 {icons[type]}
             </ListItemAvatar>
             <ListItemText primary={title} secondary={description} />

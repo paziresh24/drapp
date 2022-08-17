@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useDrApp } from '@paziresh24/context/drapp';
+import { useHistory } from 'react-router-dom';
 
 interface ActivationModalProps {
     isOpen: boolean;
@@ -10,35 +11,26 @@ interface ActivationModalProps {
     currentType: ServicesType;
 }
 const servicesList = [
-    { text: 'مشاوره آنلاین', type: 'consult' },
-    { text: 'نسخه نویسی', type: 'prescription' },
-    { text: 'نوبت دهی مطب', type: 'office' }
+    { text: 'نوبت دهی مطب', type: 'office', url: '/activation/office/center' },
+    { text: 'مشاوره آنلاین', type: 'consult', url: '/activation/consult/whatsapp' }
 ];
 
 export const ActivationModal = ({ isOpen, onClose, currentType }: ActivationModalProps) => {
-    const [{ centers }] = useDrApp();
-
-    const isClinicActivated = centers.find(
-        (center: { type_id: number }) => center.type_id === 1
-    )?.is_active_booking;
+    const router = useHistory();
 
     const servicesText = servicesList
-        .filter(
-            service =>
-                service.type !== currentType && (!isClinicActivated || service.type !== 'office')
-        )
+        .filter(service => service.type !== currentType)
         .map(service => service.text)
         .join(' یا ');
+
+    const serviceLink =
+        servicesList.find(service => service.type !== currentType)?.url ?? servicesList[0].url;
 
     return (
         <Modal title="یه سوال!" isOpen={isOpen} onClose={onClose}>
             <Typography lineHeight={2}>آیا تمایل به فعال سازی {servicesText} دارید؟</Typography>
             <Stack direction="row" spacing={1}>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    onClick={() => window.location.assign('/activation')}
-                >
+                <Button fullWidth variant="contained" onClick={() => router.push(serviceLink)}>
                     بله
                 </Button>
                 <Button fullWidth variant="outlined" onClick={onClose}>
