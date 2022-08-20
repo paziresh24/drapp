@@ -8,6 +8,7 @@
     position: relative;
     overflow: hidden;
     height: 3rem;
+    min-height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,11 +51,13 @@
 
     &.small {
         height: 2.3rem !important;
+        min-height: 2.3rem !important;
         font-size: 0.8rem;
     }
 
     &.medium {
         height: 4.5rem !important;
+        min-height: 4.5rem !important;
         font-size: 1.4rem;
     }
 
