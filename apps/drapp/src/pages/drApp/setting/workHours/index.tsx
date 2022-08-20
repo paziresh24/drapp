@@ -4,9 +4,9 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 
-import SelectDay from '../../../components/molecules/setting/workDays/selectDay';
-import SelectHours from '../../../components/molecules/setting/workDays/selectHours';
-import Result from '../../../components/molecules/setting/workDays/result';
+import SelectDay from '../../../../components/molecules/setting/workDays/selectDay';
+import SelectHours from '../../../../components/molecules/setting/workDays/selectHours';
+import Result from '../../../../components/molecules/setting/workDays/result';
 
 import { useEffect } from 'react';
 import { useWorkHoursStore } from 'apps/drapp/src/store/workhours.store';
@@ -21,6 +21,7 @@ import { useSubmitOfficeWorkHour } from 'apps/drapp/src/hooks/useSubmitOfficeWor
 import axios from 'axios';
 import SelectTime from 'apps/drapp/src/components/molecules/setting/duration/selectTime';
 import { range } from 'lodash';
+import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
@@ -38,8 +39,9 @@ const WorkHours = () => {
     const setDuration = useWorkHoursStore(state => state.setDuration);
 
     useEffect(() => {
+        getWorkHoursRequest.remove();
         getWorkHoursRequest.refetch();
-    }, []);
+    }, [docotorInfo.center]);
 
     useEffect(() => {
         if (getWorkHoursRequest.isSuccess) {
@@ -99,14 +101,16 @@ const WorkHours = () => {
                 </Button>
             )}
             <Stack className="space-y-5 pb-32 md:pb-0">
-                <SelectTime
-                    items={durationList}
-                    value={duration}
-                    onChange={setDuration}
-                    label="مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟"
-                    isLoading={getWorkHoursRequest.isLoading}
-                    prefix="دقیقه"
-                />
+                {getCenterType(docotorInfo.center) !== 'consult' && (
+                    <SelectTime
+                        items={durationList}
+                        value={duration}
+                        onChange={setDuration}
+                        label="مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟"
+                        isLoading={getWorkHoursRequest.isLoading}
+                        prefix="دقیقه"
+                    />
+                )}
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
                 <Button onClick={handleAdd} variant="contained" className="self-end">

@@ -8,8 +8,11 @@ import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { sendEventForSetting } from './sendEventForSetting';
 import moment from 'jalali-moment';
+import { useDrApp } from '@paziresh24/context/drapp';
+import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
 
 const Setting = () => {
+    const [{ center }] = useDrApp();
     const router = useHistory();
 
     useEffect(() => {
@@ -45,7 +48,8 @@ const Setting = () => {
                     type: 'delay'
                 });
                 router.push('/setting/delay');
-            }
+            },
+            shouldShow: ['office'].includes(getCenterType(center))
         },
         {
             primary: 'ساعت کاری',
@@ -77,12 +81,14 @@ const Setting = () => {
                     type: 'workHoues'
                 });
                 router.push('/setting/workhours');
-            }
+            },
+            shouldShow: ['office', 'consult'].includes(getCenterType(center))
         },
-
         {
             primary: 'اعلام مرخصی',
-            secondary: 'اعلام روز تعطیل مطب',
+            secondary: `اعلام روز تعطیل ${
+                getCenterType(center) === 'office' ? 'مطب' : 'مشاوره آنلاین'
+            }`,
             icon: (
                 <svg
                     width="28"
@@ -106,7 +112,8 @@ const Setting = () => {
                     type: 'vacation'
                 });
                 router.push('/setting/vacation');
-            }
+            },
+            shouldShow: ['office', 'consult'].includes(getCenterType(center))
         }
     ];
 
@@ -116,18 +123,21 @@ const Setting = () => {
             className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md space-y-5"
         >
             <List className="space-y-3">
-                {listItems.map((item, index) => (
-                    <ListItemButton
-                        key={index}
-                        className="!bg-white !rounded-md !p-3 !items-stretch !shadow-sm"
-                        onClick={item.onclick}
-                    >
-                        <ListItemAvatar className="bg-gray-500 bg-opacity-10 flex justify-center items-center rounded-md ml-3">
-                            {item.icon}
-                        </ListItemAvatar>
-                        <ListItemText primary={item.primary} secondary={item.secondary} />
-                    </ListItemButton>
-                ))}
+                {listItems.map(
+                    (item, index) =>
+                        item.shouldShow && (
+                            <ListItemButton
+                                key={index}
+                                className="!bg-white !rounded-md !p-3 !items-stretch !shadow-sm"
+                                onClick={item.onclick}
+                            >
+                                <ListItemAvatar className="bg-gray-500 bg-opacity-10 flex justify-center items-center rounded-md ml-3">
+                                    {item.icon}
+                                </ListItemAvatar>
+                                <ListItemText primary={item.primary} secondary={item.secondary} />
+                            </ListItemButton>
+                        )
+                )}
             </List>
         </Container>
     );
