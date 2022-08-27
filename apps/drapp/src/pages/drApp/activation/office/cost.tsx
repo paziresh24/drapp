@@ -1,67 +1,64 @@
-import Button from '@mui/material/Button';
+import Button from '@mui/lab/LoadingButton';
 import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useDrApp } from '@paziresh24/context/drapp';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
-import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, numberToWords, removeCommas } from '@persian-tools/persian-tools';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Autocomplete, Checkbox, FormControl, FormControlLabel, TextField } from '@mui/material';
 import Modal from '@paziresh24/shared/ui/modal';
-
-const costs = [
-    {
-        label: '10,000 تومان',
-        value: '10000'
-    },
-    {
-        label: '20,000 تومان',
-        value: '20000'
-    },
-    {
-        label: '30,000 تومان',
-        value: '30000'
-    },
-    {
-        label: '40,000 تومان',
-        value: '40000'
-    },
-    {
-        label: '50,000 تومان',
-        value: '50000'
-    },
-    {
-        label: '100,000 تومان',
-        value: '100000'
-    }
-];
+import { PaymentForm } from 'apps/drapp/src/components/molecules/payment/form';
+import { usePaymentForm } from 'apps/drapp/src/components/molecules/payment/usePaymentForm';
 
 const CostConsultActivation = () => {
+    const [doctorInfo]: [
+        {
+            centers: any[];
+            center: any;
+        },
+        any
+    ] = useDrApp();
     const router = useHistory();
-    const [price, setPrice] = useState('');
-    const [fieldError, setFieldError] = useState(false);
-    const [cartNumber, setCartNumber] = useState('');
+    const officeCenter = doctorInfo?.centers.find(center => center.type_id === 1);
     const [shouldShowTipCostModal, setShouldShowTipCostModal] = useState(false);
+    const { validate, submit, isLoading, ...formProps } = usePaymentForm();
 
-    const handleSubmit = () => {
-        if (!+price) {
-            setFieldError(true);
-            return;
-        }
-        getSplunkInstance().sendEvent({
-            group: 'activation-consult-cost',
-            type: 'pricing',
-            event: {
-                action: 'done'
-            }
-        });
-        router.push(`/activation/office/duration`);
+    const handleSubmit = async () => {
+        submit({
+            centerId: officeCenter.id
+        })
+            .then(() => {
+                if (formProps.isActivePayment) {
+                    getSplunkInstance().sendEvent({
+                        group: 'activation-office-center',
+                        type: 'price-value',
+                        event: { value: +formProps.price * 10, action: 'done' }
+                    });
+                    getSplunkInstance().sendEvent({
+                        group: 'activation-office-center',
+                        type: 'enter-cardnum',
+                        event: { action: 'done' }
+                    });
+                }
+                getSplunkInstance().sendEvent({
+                    group: 'activation-office-center',
+                    type: 'save',
+                    event: { value: formProps.isActivePayment ? 'active' : 'deActive' }
+                });
+                router.push(`/activation/office/duration`);
+            })
+            .catch(error => {
+                getSplunkInstance().sendEvent({
+                    group: 'activation-office-center',
+                    type: 'unsuccessful-save',
+                    event: {
+                        error: error.response?.data?.message
+                    }
+                });
+            });
     };
-
-    console.log(price);
 
     return (
         <>
@@ -81,47 +78,42 @@ const CostConsultActivation = () => {
                     <span className="font-medium">{addCommas(10000)}</span> تومان را در نظر گرفته
                     اند.
                 </Typography>
-                <FormControl className="space-y-4 w-full">
-                    <Autocomplete
-                        disablePortal
-                        options={costs}
-                        fullWidth
-                        onChange={(e, newValue) => {
-                            setPrice(newValue?.value ?? '');
-                        }}
-                        onFocus={() => setFieldError(false)}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                error={fieldError}
-                                label="مبلغ بیعانه"
-                                helperText={
-                                    fieldError
-                                        ? 'لطفا مبلغ را وارد کنید.'
-                                        : price
-                                        ? `${numberToWords(+price)} تومان`
-                                        : ''
-                                }
-                            />
-                        )}
-                    />
-                    <BankNumberField
-                        onChange={e => setCartNumber(e.target.value)}
-                        value={cartNumber}
-                        fullWidth
-                    />
-                    <FormControlLabel
-                        control={<Checkbox />}
-                        label="تمایل به فعالسازی بیعانه ندارم."
-                    />
-                </FormControl>
+
+                <PaymentForm
+                    {...formProps}
+                    clickPriceFiled={() =>
+                        getSplunkInstance().sendEvent({
+                            group: 'activation-office-center',
+                            type: 'price-value',
+                            event: { action: 'click' }
+                        })
+                    }
+                    clickCartNumberFiled={() =>
+                        getSplunkInstance().sendEvent({
+                            group: 'activation-office-center',
+                            type: 'enter-cardnum',
+                            event: { action: 'click' }
+                        })
+                    }
+                />
 
                 <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                     <Button
                         fullWidth
                         variant="contained"
                         size="large"
-                        onClick={() => setShouldShowTipCostModal(true)}
+                        loading={isLoading}
+                        onClick={() => {
+                            if (validate()) {
+                                getSplunkInstance().sendEvent({
+                                    group: 'activation-office-center',
+                                    type: 'continue '
+                                });
+                                if (formProps.isActivePayment)
+                                    return setShouldShowTipCostModal(true);
+                                handleSubmit();
+                            }
+                        }}
                     >
                         ادامه
                     </Button>
@@ -145,7 +137,9 @@ const CostConsultActivation = () => {
                     </li>
                     <li>مبالغ به صورت روزانه به شماره کارت درج شده واریز می گردد.</li>
                 </ul>
-                <Button variant="outlined">ذخیره</Button>
+                <Button variant="outlined" onClick={handleSubmit} loading={isLoading}>
+                    ذخیره
+                </Button>
             </Modal>
         </>
     );

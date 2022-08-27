@@ -59,64 +59,22 @@ const SideBar = () => {
                     }
                 },
                 {
-                    id: '50',
-                    shouldShow: window._env_.P24_STATISTICS_API,
-                    name: 'گزارش نسخه نویسی',
-                    icon: <Statistics color="#3F3F79" />,
-                    link: '/dashboard'
-                },
-                {
-                    id: 10,
-                    name: 'نسخه های ثبت شده',
-                    shouldShow: true,
+                    id: '52',
+                    name: 'نسخه نویسی',
                     icon: <PrescriptionMenuIcon color="#3F3F79" />,
-                    onClick: () =>
-                        getSplunkInstance().sendEvent({
-                            group: 'sidebar',
-                            type: 'click-prescription-menu'
-                        }),
-                    link: '/prescription'
-                },
-                {
-                    id: 25,
-                    name: 'پراستفاده ها',
                     shouldShow: true,
-                    icon: <StarIcon color="#3F3F79" />,
-                    // link: '/favorite/templates',
                     subMenu: [
+                        {
+                            name: 'نسخه های ثبت شده',
+                            link: '/prescription'
+                        },
+                        {
+                            name: 'بیمه های من',
+                            link: '/providers'
+                        },
                         { name: 'نسخه پراستفاده', link: '/favorite/templates' },
                         { name: 'اقلام پراستفاده', link: '/favorite/service' }
                     ]
-                },
-                {
-                    id: 4,
-                    name: 'چت',
-                    shouldShow: info.center.id === '5532',
-                    icon: <ChatIcon color="#3F3F79" />,
-                    link: '/consult'
-                },
-                {
-                    id: 7,
-                    name: 'قوانین مشاوره',
-                    shouldShow: info.center.id === '5532',
-                    icon: <InfoIcon color="#3F3F79" />,
-                    link: '/consult-term'
-                },
-                {
-                    id: 'provider-step',
-                    name: 'بیمه های من',
-                    shouldShow: true,
-                    icon: <PrescriptionIcon color="#3F3F79" />,
-                    link: `/providers`,
-                    onClick: () =>
-                        getSplunkInstance().sendEvent({
-                            group: 'sidebar',
-                            type: 'click-providers-menu'
-                        }),
-                    tourStep: {
-                        key: 1,
-                        value: '?learn=true'
-                    }
                 },
                 {
                     id: 8,
@@ -129,6 +87,30 @@ const SideBar = () => {
                     link: info.center.id === CONSULT_CENTER_ID ? '/turning/setting/' : '/setting'
                 },
                 {
+                    id: 6,
+                    name: 'پرداخت',
+                    shouldShow: info.center.id === '5532' || info.center.type_id === 1,
+                    icon: <CardIcon color="#3F3F79" />,
+                    subMenu: [
+                        { name: 'تسویه حساب', link: '/financial' },
+                        { name: 'تنظیمات پرداخت', link: '/setting/payment' }
+                    ]
+                },
+                {
+                    id: '50',
+                    shouldShow: window._env_.P24_STATISTICS_API,
+                    name: 'گزارش نسخه نویسی',
+                    icon: <Statistics color="#3F3F79" />,
+                    link: '/dashboard'
+                },
+                {
+                    id: 7,
+                    name: 'قوانین مشاوره',
+                    shouldShow: info.center.id === '5532',
+                    icon: <InfoIcon color="#3F3F79" />,
+                    link: '/consult-term'
+                },
+                {
                     id: 11,
                     name: 'نظرات بیماران',
                     shouldShow: true,
@@ -136,13 +118,7 @@ const SideBar = () => {
                     link: '/feedbacks',
                     badge: true
                 },
-                {
-                    id: 6,
-                    name: 'تسویه حساب',
-                    shouldShow: info.center.id === '5532' || info.center.type_id === 1,
-                    icon: <CardIcon color="#3F3F79" />,
-                    link: '/financial'
-                },
+
                 {
                     id: 23,
                     name: 'خروج',
@@ -150,6 +126,53 @@ const SideBar = () => {
                     icon: <ExitIcon color="#3F3F79" />,
                     link: '/logout'
                 }
+                // {
+                //     id: 10,
+                //     name: 'نسخه های ثبت شده',
+                //     shouldShow: true,
+                //     icon: <PrescriptionMenuIcon color="#3F3F79" />,
+                //     onClick: () =>
+                //         getSplunkInstance().sendEvent({
+                //             group: 'sidebar',
+                //             type: 'click-prescription-menu'
+                //         }),
+                //     link: '/prescription'
+                // },
+                // {
+                //     id: 25,
+                //     name: 'پراستفاده ها',
+                //     shouldShow: true,
+                //     icon: <StarIcon color="#3F3F79" />,
+                //     // link: '/favorite/templates',
+                //     subMenu: [
+                //         { name: 'نسخه پراستفاده', link: '/favorite/templates' },
+                //         { name: 'اقلام پراستفاده', link: '/favorite/service' }
+                //     ]
+                // },
+                // {
+                //     id: 4,
+                //     name: 'چت',
+                //     shouldShow: info.center.id === '5532',
+                //     icon: <ChatIcon color="#3F3F79" />,
+                //     link: '/consult'
+                // },
+
+                // {
+                //     id: 'provider-step',
+                //     name: 'بیمه های من',
+                //     shouldShow: true,
+                //     icon: <PrescriptionIcon color="#3F3F79" />,
+                //     link: `/providers`,
+                //     onClick: () =>
+                //         getSplunkInstance().sendEvent({
+                //             group: 'sidebar',
+                //             type: 'click-providers-menu'
+                //         }),
+                //     tourStep: {
+                //         key: 1,
+                //         value: '?learn=true'
+                //     }
+                // },
             ]);
         }
         return setMenuItems([

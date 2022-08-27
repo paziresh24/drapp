@@ -810,27 +810,6 @@ const Profile = () => {
                     </form>
                 </Accordion>
             )}
-            {(info.center.type_id === OFFICE_CENTER || info.center.id === CONSULT_CENTER_ID) && (
-                <Accordion
-                    title="اطلاعات بانکی"
-                    icon={<UserIcon color="#3F3F79" />}
-                    open={bankAccordion}
-                    setOpen={setBankAccordion}
-                >
-                    <div className={styles['form']}>
-                        <BankNumberField
-                            fullWidth
-                            defaultValue={getBankInfo.isSuccess && getBankInfo.data.data}
-                            value={cartNumber}
-                            onChange={e => setCartNumber(e.target.value)}
-                        />
-                        <Button block onClick={bankAction} loading={getBankInfo.isLoading}>
-                            ذخیره تغییرات
-                        </Button>
-                    </div>
-                </Accordion>
-            )}
-
             {info.center.id === CONSULT_CENTER_ID && (
                 <Accordion
                     title="شماره whatsapp business"

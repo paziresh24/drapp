@@ -52,8 +52,8 @@ const MenuItem = ({ item }) => {
                     onClick={
                         item?.subMenu
                             ? e => {
-                                  e.stopPropagation();
-                                  setIsDropDownOpen(prev => !prev);
+                                  //   / e.stopPropagation();
+                                  setTimeout(() => setIsDropDownOpen(prev => !prev), 0);
                               }
                             : item?.onClick
                     }

@@ -272,6 +272,14 @@ export const routes = [
         exact: false
     },
     {
+        path: '/setting/payment',
+        name: 'Payment',
+        title: 'تنظیمات پرداخت',
+        component: lazy(() => import('./setting/payment')),
+        isPrivate: true,
+        exact: false
+    },
+    {
         path: '/learn/',
         name: 'Learn',
         title: 'آموزش سامانه',
