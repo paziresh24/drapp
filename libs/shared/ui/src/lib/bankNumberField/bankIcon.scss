@@ -1,22 +1,102 @@
-$bank-sprite-list: bsi mellat tejarat bmi sepah bki parsian maskan rb en ansar bpi sb sina post ghbi
-    tt shahr ba sarmayeh day hi iz kar tourism bim edbi me ivbb resalat miran melal;
-$bank-sprite-col: 5;
-$width-list: 32;
-
-@each $width in $width-list {
-    .ibl#{$width} {
-        background: url('ibls#{$width}.png') no-repeat;
-        display: inline-block;
-        width: $width * 1px;
-        height: $width * 1px;
-
-        @for $i from 1 through length($bank-sprite-list) {
-            &.ibl-#{nth($bank-sprite-list, $i)} {
-                $row: floor(($i - 1) / $bank-sprite-col);
-                $col: floor(($i - 1) % $bank-sprite-col);
-                background-position: if($col==0, 0, -1px * $width * $col)
-                    if($row==0, 0, -1px * $width * $row);
-            }
-        }
-    }
+.ibl32 {
+    background: url('ibls32.png') no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+.ibl32.ibl-bsi {
+    background-position: 0 0;
+}
+.ibl32.ibl-mellat {
+    background-position: -32px 0;
+}
+.ibl32.ibl-tejarat {
+    background-position: -64px 0;
+}
+.ibl32.ibl-bmi {
+    background-position: -96px 0;
+}
+.ibl32.ibl-sepah {
+    background-position: -128px 0;
+}
+.ibl32.ibl-bki {
+    background-position: 0 -32px;
+}
+.ibl32.ibl-parsian {
+    background-position: -32px -32px;
+}
+.ibl32.ibl-maskan {
+    background-position: -64px -32px;
+}
+.ibl32.ibl-rb {
+    background-position: -96px -32px;
+}
+.ibl32.ibl-en {
+    background-position: -128px -32px;
+}
+.ibl32.ibl-ansar {
+    background-position: 0 -64px;
+}
+.ibl32.ibl-bpi {
+    background-position: -32px -64px;
+}
+.ibl32.ibl-sb {
+    background-position: -64px -64px;
+}
+.ibl32.ibl-sina {
+    background-position: -96px -64px;
+}
+.ibl32.ibl-post {
+    background-position: -128px -64px;
+}
+.ibl32.ibl-ghbi {
+    background-position: 0 -96px;
+}
+.ibl32.ibl-tt {
+    background-position: -32px -96px;
+}
+.ibl32.ibl-shahr {
+    background-position: -64px -96px;
+}
+.ibl32.ibl-ba {
+    background-position: -96px -96px;
+}
+.ibl32.ibl-sarmayeh {
+    background-position: -128px -96px;
+}
+.ibl32.ibl-day {
+    background-position: 0 -128px;
+}
+.ibl32.ibl-hi {
+    background-position: -32px -128px;
+}
+.ibl32.ibl-iz {
+    background-position: -64px -128px;
+}
+.ibl32.ibl-kar {
+    background-position: -96px -128px;
+}
+.ibl32.ibl-tourism {
+    background-position: -128px -128px;
+}
+.ibl32.ibl-bim {
+    background-position: 0 -160px;
+}
+.ibl32.ibl-edbi {
+    background-position: -32px -160px;
+}
+.ibl32.ibl-me {
+    background-position: -64px -160px;
+}
+.ibl32.ibl-ivbb {
+    background-position: -96px -160px;
+}
+.ibl32.ibl-resalat {
+    background-position: -128px -160px;
+}
+.ibl32.ibl-miran {
+    background-position: 0 -192px;
+}
+.ibl32.ibl-melal {
+    background-position: -32px -192px;
 }
