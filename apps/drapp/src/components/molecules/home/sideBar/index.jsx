@@ -91,7 +91,7 @@ const SideBar = () => {
                         info.center.id === '5532',
                     icon: <SettingIcon color="#3F3F79" />,
 
-                    link: info.center.id === CONSULT_CENTER_ID ? '/turning/setting/' : '/setting'
+                    link: '/setting'
                 },
                 {
                     id: 6,

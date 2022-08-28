@@ -27,7 +27,7 @@ export const ActivationModal = ({ isOpen, onClose, currentType }: ActivationModa
         servicesList.find(service => service.type !== currentType)?.url ?? servicesList[0].url;
 
     return (
-        <Modal title="یه سوال!" isOpen={isOpen} onClose={onClose}>
+        <Modal title="" isOpen={isOpen} onClose={onClose}>
             <Typography lineHeight={2}>آیا تمایل به فعال سازی {servicesText} دارید؟</Typography>
             <Stack direction="row" spacing={1}>
                 <Button fullWidth variant="contained" onClick={() => router.push(serviceLink)}>
