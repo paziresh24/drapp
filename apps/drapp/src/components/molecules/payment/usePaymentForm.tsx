@@ -17,7 +17,9 @@ export const usePaymentForm = () => {
     useEffect(() => {
         if (getSetting?.active) {
             setCartNumber(getSetting?.card_number);
-            setPrice((+getSetting?.deposit_amount / 10)?.toString());
+            setPrice(
+                getSetting?.deposit_amount ? (+getSetting?.deposit_amount / 10)?.toString() : ''
+            );
             return;
         }
         setCartNumber('');

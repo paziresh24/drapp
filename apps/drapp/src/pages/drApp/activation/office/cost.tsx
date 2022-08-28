@@ -70,7 +70,7 @@ const CostConsultActivation = () => {
                 <Alert icon={false} className="!bg-[#F3F6F9]">
                     <Typography fontSize="0.9rem" fontWeight="medium">
                         بیش از 80 درصد بیمارانی که در هنگام دریافت نوبت، بیعانه پرداخت می کنند، در
-                        مطب حاظر می شوند.
+                        مطب حاضر می شوند.
                     </Typography>
                 </Alert>
 
