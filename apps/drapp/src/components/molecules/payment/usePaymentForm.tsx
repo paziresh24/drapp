@@ -1,16 +1,28 @@
-import { usePaymentActive } from '@paziresh24/hooks/drapp/payment';
+import { useSetPaymentSetting } from '@paziresh24/hooks/drapp/payment';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { verifyCardNumber } from '@persian-tools/persian-tools';
+import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 
 export const usePaymentForm = () => {
     const [cartNumber, setCartNumber] = useState('');
     const [isActivePayment, setIsActivePayment] = useState(true);
     const [price, setPrice] = useState('');
-    const paymentActive = usePaymentActive();
+    const setPaymentSetting = useSetPaymentSetting();
     const [priceFieldError, setPriceFieldError] = useState(false);
     const [cartNumberFieldError, setCartNumberFieldError] = useState(false);
+    const getSetting = usePaymentSettingStore(state => state.setting);
+
+    useEffect(() => {
+        if (getSetting?.active) {
+            setCartNumber(getSetting?.card_number);
+            setPrice((+getSetting?.deposit_amount / 10)?.toString());
+            return;
+        }
+        setCartNumber('');
+        setPrice('');
+    }, [getSetting]);
 
     const validate = () => {
         if (isActivePayment) {
@@ -28,11 +40,11 @@ export const usePaymentForm = () => {
 
     const submit = async ({ centerId }: { centerId: string }) => {
         try {
-            const data = await paymentActive.mutateAsync({
+            const data = await setPaymentSetting.mutateAsync({
                 active: isActivePayment ? 1 : 0,
-                ...(isActivePayment && { depositAmount: +price * 10 }),
-                ...(isActivePayment && { cardNumber: cartNumber }),
-                centerId: centerId
+                ...(isActivePayment && { deposit_amount: +price * 10 }),
+                ...(isActivePayment && { card_number: cartNumber }),
+                center_id: centerId
             });
             return Promise.resolve(data);
         } catch (error) {
@@ -54,7 +66,7 @@ export const usePaymentForm = () => {
     return {
         submit,
         validate,
-        isLoading: paymentActive.isLoading,
+        isLoading: setPaymentSetting.isLoading,
         price,
         setPrice,
         cartNumber,

@@ -42,6 +42,7 @@ const PaymentPage = () => {
                     event: { value: formProps.isActivePayment ? 'active' : 'deActive' }
                 });
                 toast.success('تنظیمات پرداخت شما با موفقیت ثبت شد.');
+                setShouldShowTipCostModal(false);
             })
             .catch(error => {
                 getSplunkInstance().sendEvent({
@@ -51,12 +52,9 @@ const PaymentPage = () => {
                         error: error.response?.data?.message
                     }
                 });
+                setShouldShowTipCostModal(false);
             });
     };
-
-    useEffect(() => {
-        formProps.setIsActivePayment(true);
-    }, [center]);
 
     return (
         <Container

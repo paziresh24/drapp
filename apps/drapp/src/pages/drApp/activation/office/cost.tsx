@@ -57,6 +57,7 @@ const CostConsultActivation = () => {
                         error: error.response?.data?.message
                     }
                 });
+                setShouldShowTipCostModal(false);
             });
     };
 

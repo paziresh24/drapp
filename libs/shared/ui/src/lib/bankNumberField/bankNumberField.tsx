@@ -14,7 +14,9 @@ export const BankNumberField = (props: TextFieldProps) => {
                     getBankNameFromCardNumber(props.value as string)?.includes(bank.name)
                 )?.icon
             );
+            return;
         }
+        setIcon(undefined);
     }, [props.value]);
 
     return (

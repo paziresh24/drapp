@@ -28,6 +28,7 @@ import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useTour } from '@reactour/tour';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
@@ -38,6 +39,7 @@ const SideBar = () => {
     const [info] = useDrApp();
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
     const [menuItems, setMenuItems] = useState([]);
+    const getPaymentSetting = usePaymentSettingStore(state => state.setting);
 
     useEffect(() => {
         if (level === 'DOCTOR') {
@@ -73,7 +75,12 @@ const SideBar = () => {
                             link: '/providers'
                         },
                         { name: 'نسخه پراستفاده', link: '/favorite/templates' },
-                        { name: 'اقلام پراستفاده', link: '/favorite/service' }
+                        { name: 'اقلام پراستفاده', link: '/favorite/service' },
+                        {
+                            name: 'گزارش نسخه نویسی',
+                            link: '/dashboard',
+                            shouldShow: window._env_.P24_STATISTICS_API
+                        }
                     ]
                 },
                 {
@@ -89,7 +96,9 @@ const SideBar = () => {
                 {
                     id: 6,
                     name: 'پرداخت',
-                    shouldShow: info.center.id === '5532' || info.center.type_id === 1,
+                    shouldShow:
+                        (info.center.id === '5532' || info.center.type_id === 1) &&
+                        getPaymentSetting.active,
                     icon: <CardIcon color="#3F3F79" />,
                     subMenu: [
                         { name: 'تسویه حساب', link: '/financial' },
@@ -97,11 +106,13 @@ const SideBar = () => {
                     ]
                 },
                 {
-                    id: '50',
-                    shouldShow: window._env_.P24_STATISTICS_API,
-                    name: 'گزارش نسخه نویسی',
-                    icon: <Statistics color="#3F3F79" />,
-                    link: '/dashboard'
+                    id: 65,
+                    name: 'فعالسازی پرداخت',
+                    shouldShow:
+                        (info.center.id === '5532' || info.center.type_id === 1) &&
+                        !getPaymentSetting.active,
+                    icon: <CardIcon color="#3F3F79" />,
+                    link: '/setting/payment'
                 },
                 {
                     id: 7,
@@ -191,7 +202,7 @@ const SideBar = () => {
                 link: '/logout'
             }
         ]);
-    }, [info.center]);
+    }, [info.center, getPaymentSetting]);
 
     useEffect(() => {
         if (localStorage.getItem('shouldFillProfile')) {

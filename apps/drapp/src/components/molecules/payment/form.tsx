@@ -74,6 +74,14 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                         onChange={(e, newValue) => {
                             setPrice(newValue?.value ?? '');
                         }}
+                        value={
+                            price
+                                ? {
+                                      label: costs.find(item => item.value === price)?.label,
+                                      value: price
+                                  }
+                                : null
+                        }
                         onFocus={() => setPriceFieldError(false)}
                         renderInput={params => (
                             <TextField
