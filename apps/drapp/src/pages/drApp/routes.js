@@ -299,7 +299,7 @@ export const routes = [
         path: '/setting/workhours',
         name: 'workhours',
         title: 'ساعت کاری من',
-        component: lazy(() => import('./workHours')),
+        component: lazy(() => import('./setting/workHours')),
         isPrivate: true,
         exact: false
     },

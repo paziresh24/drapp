@@ -1,4 +1,4 @@
-const CalendarIcon = ({ color = '27BDA0', ...rest }) => {
+const CalendarIcon = ({ color = '#27BDA0', ...rest }) => {
     return (
         <svg
             width="20"

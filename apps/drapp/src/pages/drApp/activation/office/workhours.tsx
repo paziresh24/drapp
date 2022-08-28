@@ -22,6 +22,8 @@ import axios from 'axios';
 import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
 import { useActivationStore } from '../activation.store';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
+import { weekDays } from 'apps/drapp/src/constants/weekDays';
+import uniq from 'lodash/uniq';
 
 const WorkHoursOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
@@ -76,16 +78,27 @@ const WorkHoursOfficeActivation = () => {
     const handleSubmit = async () => {
         try {
             await submitOfficeWorkHour();
-            getSplunkInstance().sendEvent({
-                group: 'activation-office-workhours',
-                type: 'days',
-                event: {
-                    action: days.map(day => day)
+            uniq(workHours.map(({ day }) => weekDays.find(({ id }) => day === id)?.nameEn)).forEach(
+                day => {
+                    getSplunkInstance().sendEvent({
+                        group: 'activation-office-workhours',
+                        type: 'days',
+                        event: {
+                            action: day
+                        }
+                    });
                 }
-            });
+            );
             getSplunkInstance().sendEvent({
                 group: 'activation-office-workhours',
                 type: 'done'
+            });
+            getSplunkInstance().sendEvent({
+                group: 'activation',
+                type: `click-office`,
+                event: {
+                    action: 'done'
+                }
             });
             await getCentersDoctor.refetch();
             if (selectedService.length > 0) {
@@ -97,6 +110,13 @@ const WorkHoursOfficeActivation = () => {
             if (axios.isAxiosError(error)) {
                 getSplunkInstance().sendEvent({
                     group: 'activation-office-workhours',
+                    type: 'unsuccessful',
+                    event: {
+                        error: error.response?.data
+                    }
+                });
+                getSplunkInstance().sendEvent({
+                    group: 'activation-office',
                     type: 'unsuccessful',
                     event: {
                         error: error.response?.data

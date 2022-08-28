@@ -36,18 +36,12 @@ const Activation = () => {
         if (selectedService.length > 1)
             getSplunkInstance().sendEvent({
                 group: 'activation',
-                type: `click-${selectedService.sort().reverse().join('&')}`,
-                event: {
-                    action: 'done'
-                }
+                type: `click-${selectedService.sort().reverse().join('&')}`
             });
         else
             getSplunkInstance().sendEvent({
                 group: 'activation',
-                type: `click-${selectedService[0]}`,
-                event: {
-                    action: 'done'
-                }
+                type: `click-${selectedService[0]}`
             });
 
         router.push(url);

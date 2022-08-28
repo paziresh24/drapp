@@ -40,8 +40,6 @@ const isMainDomain = window.location.host === window._env_.P24_MAIN_DOMAIN;
 if (!window._env_.P24_DISABLE_THIRD_PARTY) {
     Sentry.init({
         dsn: process.env.REACT_APP_SENTRY_DSN,
-        integrations: [new Integrations.BrowserTracing()],
-        tracesSampleRate: 1.0,
         environment: process.env.NODE_ENV
     });
 }
