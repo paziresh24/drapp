@@ -12,12 +12,27 @@ import { toast } from 'react-toastify';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 
 const PaymentPage = () => {
     const [{ center }] = useDrApp();
     const { validate, submit, isLoading, ...formProps } = usePaymentForm();
     const [shouldShowTipCostModal, setShouldShowTipCostModal] = useState(false);
     const centerType = center.id === CONSULT_CENTER_ID ? 'consult' : 'office';
+    const getSetting = usePaymentSettingStore(state => state.setting);
+
+    useEffect(() => {
+        console.log(getSetting);
+        if (getSetting?.active) {
+            formProps.setCartNumber(getSetting?.card_number);
+            formProps.setPrice(
+                getSetting?.deposit_amount ? (+getSetting?.deposit_amount / 10)?.toString() : ''
+            );
+            return;
+        }
+        formProps.setCartNumber('');
+        formProps.setPrice('');
+    }, [getSetting]);
 
     const handleSubmit = async () => {
         submit({

@@ -1,9 +1,8 @@
-import { useSetPaymentSetting } from '@paziresh24/hooks/drapp/payment';
+import { useSetPaymentSetting } from '../../../apis/payment/useSetPaymentSetting';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { verifyCardNumber } from '@persian-tools/persian-tools';
-import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 
 export const usePaymentForm = () => {
     const [cartNumber, setCartNumber] = useState('');
@@ -12,19 +11,6 @@ export const usePaymentForm = () => {
     const setPaymentSetting = useSetPaymentSetting();
     const [priceFieldError, setPriceFieldError] = useState(false);
     const [cartNumberFieldError, setCartNumberFieldError] = useState(false);
-    const getSetting = usePaymentSettingStore(state => state.setting);
-
-    useEffect(() => {
-        if (getSetting?.active) {
-            setCartNumber(getSetting?.card_number);
-            setPrice(
-                getSetting?.deposit_amount ? (+getSetting?.deposit_amount / 10)?.toString() : ''
-            );
-            return;
-        }
-        setCartNumber('');
-        setPrice('');
-    }, [getSetting]);
 
     const validate = () => {
         if (isActivePayment) {

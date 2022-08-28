@@ -63,6 +63,12 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         clickCartNumberFiled
     } = props;
 
+    useEffect(() => {
+        if (!costs.some(item => item.value === price)) {
+            setPrice('');
+        }
+    }, [price]);
+
     return (
         <FormControl className="space-y-4 w-full">
             {isActivePayment && (

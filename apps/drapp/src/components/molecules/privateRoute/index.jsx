@@ -26,13 +26,11 @@ import ErrorByRefresh from '@paziresh24/shared/ui/errorByRefresh';
 import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
 import { useLevel } from '@paziresh24/context/core/level';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
-import { useGetPaymentSetting } from '@paziresh24/hooks/drapp/payment';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
     const [, setLevel] = useLevel();
-    const setPaymentSetting = usePaymentSettingStore(state => state.setSetting);
 
     const [, setPage] = usePage();
     const [centersDoctor, setCentersDoctor] = useState([]);
@@ -51,7 +49,6 @@ const PrivateRoute = props => {
     const getUserGoftino = useGetUserGoftino();
     const setUserGoftino = useSetUserGoftino();
     const getLatestVersion = useGetLatestVersion();
-    const getPaymentSetting = useGetPaymentSetting({ center_id: info?.center?.id });
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
@@ -64,19 +61,6 @@ const PrivateRoute = props => {
             window._env_.P24_STATISTICS_API && getLevels.refetch();
         }
     }, []);
-
-    useEffect(() => {
-        if (info.center?.id) {
-            getPaymentSetting.remove();
-            getPaymentSetting.refetch();
-        }
-    }, [info.center]);
-
-    useEffect(() => {
-        if (getPaymentSetting.isSuccess) {
-            setPaymentSetting(getPaymentSetting.data);
-        }
-    }, [getPaymentSetting.status]);
 
     const handleGetCenters = async () => {
         const centers = await getCentersDoctor.refetch();

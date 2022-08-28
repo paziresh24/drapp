@@ -29,6 +29,7 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useTour } from '@reactour/tour';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
+import { useGetPaymentSetting } from '../../../../apis/payment/useGetPaymentSetting';
 
 const SideBar = () => {
     const [open, setOpen] = useMenu();
@@ -39,7 +40,13 @@ const SideBar = () => {
     const [info] = useDrApp();
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
     const [menuItems, setMenuItems] = useState([]);
-    const getPaymentSetting = usePaymentSettingStore(state => state.setting);
+    const paymentSetting = usePaymentSettingStore(state => state.setting);
+    const getPaymentSetting = useGetPaymentSetting({ center_id: info?.center?.id });
+
+    useEffect(() => {
+        getPaymentSetting.remove();
+        getPaymentSetting.refetch();
+    }, [info.center]);
 
     useEffect(() => {
         if (level === 'DOCTOR') {
@@ -98,7 +105,7 @@ const SideBar = () => {
                     name: 'پرداخت',
                     shouldShow:
                         (info.center.id === '5532' || info.center.type_id === 1) &&
-                        getPaymentSetting.active,
+                        paymentSetting.active,
                     icon: <CardIcon color="#3F3F79" />,
                     subMenu: [
                         { name: 'تسویه حساب', link: '/financial' },
@@ -110,7 +117,7 @@ const SideBar = () => {
                     name: 'فعالسازی پرداخت',
                     shouldShow:
                         (info.center.id === '5532' || info.center.type_id === 1) &&
-                        !getPaymentSetting.active,
+                        !paymentSetting.active,
                     icon: <CardIcon color="#3F3F79" />,
                     link: '/setting/payment'
                 },
@@ -202,7 +209,7 @@ const SideBar = () => {
                 link: '/logout'
             }
         ]);
-    }, [info.center, getPaymentSetting]);
+    }, [info.center, paymentSetting]);
 
     useEffect(() => {
         if (localStorage.getItem('shouldFillProfile')) {
