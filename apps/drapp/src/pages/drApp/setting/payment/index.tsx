@@ -13,6 +13,9 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
+import CartInfo from 'apps/drapp/src/components/molecules/payment/cartInfo';
+import { useIbanInquiry } from 'apps/drapp/src/apis/payment/ibanInquiry';
+import { useGetPaymentSetting } from 'apps/drapp/src/apis/payment/useGetPaymentSetting';
 
 const PaymentPage = () => {
     const [{ center }] = useDrApp();
@@ -20,9 +23,25 @@ const PaymentPage = () => {
     const [shouldShowTipCostModal, setShouldShowTipCostModal] = useState(false);
     const centerType = center.id === CONSULT_CENTER_ID ? 'consult' : 'office';
     const getSetting = usePaymentSettingStore(state => state.setting);
+    const [inquiryModal, setInquiryModal] = useState(false);
+    const ibanInquiry = useIbanInquiry({
+        card_number: formProps.cartNumber ?? ''
+    });
+    const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
 
     useEffect(() => {
-        console.log(getSetting);
+        getPaymentSetting.remove();
+        getPaymentSetting.refetch();
+    }, [center]);
+
+    useEffect(() => {
+        if (ibanInquiry.isSuccess) {
+            setInquiryModal(true);
+            setShouldShowTipCostModal(false);
+        }
+    }, [ibanInquiry.status]);
+
+    useEffect(() => {
         if (getSetting?.active) {
             formProps.setCartNumber(getSetting?.card_number);
             formProps.setPrice(
@@ -36,7 +55,10 @@ const PaymentPage = () => {
 
     const handleSubmit = async () => {
         submit({
-            centerId: center.id
+            centerId: center.id,
+            bankName: (ibanInquiry.data as any)?.bank_name,
+            IBAN: (ibanInquiry.data as any)?.IBAN,
+            depositOwners: (ibanInquiry.data as any)?.deposit_owners?.join(',')
         })
             .then(() => {
                 if (formProps.isActivePayment) {
@@ -57,7 +79,7 @@ const PaymentPage = () => {
                     event: { value: formProps.isActivePayment ? 'active' : 'deActive' }
                 });
                 toast.success('تنظیمات پرداخت شما با موفقیت ثبت شد.');
-                setShouldShowTipCostModal(false);
+                setInquiryModal(false);
             })
             .catch(error => {
                 getSplunkInstance().sendEvent({
@@ -67,7 +89,7 @@ const PaymentPage = () => {
                         error: error.response?.data?.message
                     }
                 });
-                setShouldShowTipCostModal(false);
+                setInquiryModal(false);
             });
     };
 
@@ -117,7 +139,7 @@ const PaymentPage = () => {
                     fullWidth
                     variant="contained"
                     size="large"
-                    loading={isLoading}
+                    loading={isLoading || ibanInquiry.isLoading}
                     onClick={() => {
                         if (validate()) {
                             getSplunkInstance().sendEvent({
@@ -126,7 +148,9 @@ const PaymentPage = () => {
                             });
                             if (center.id !== CONSULT_CENTER_ID && formProps.isActivePayment)
                                 return setShouldShowTipCostModal(true);
-                            handleSubmit();
+
+                            ibanInquiry.remove();
+                            ibanInquiry.refetch();
                         }
                     }}
                 >
@@ -151,9 +175,33 @@ const PaymentPage = () => {
                     </li>
                     <li>مبالغ به صورت روزانه به شماره کارت درج شده واریز می گردد.</li>
                 </ul>
-                <Button variant="outlined" onClick={handleSubmit} loading={isLoading}>
+                <Button
+                    variant="outlined"
+                    onClick={() => {
+                        ibanInquiry.remove();
+                        ibanInquiry.refetch();
+                    }}
+                    loading={ibanInquiry.isLoading}
+                >
                     تایید
                 </Button>
+            </Modal>
+            <Modal title="تایید اطلاعات" onClose={setInquiryModal} isOpen={inquiryModal}>
+                <span>آیا اطلاعات حساب مورد تایید می باشد؟ </span>
+                <CartInfo info={ibanInquiry.data} />
+                <div className="flex space-s-3 mt-1">
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={handleSubmit}
+                        loading={isLoading}
+                    >
+                        تایید
+                    </Button>
+                    <Button fullWidth variant="outlined" onClick={() => setInquiryModal(false)}>
+                        ویرایش
+                    </Button>
+                </div>
             </Modal>
         </Container>
     );

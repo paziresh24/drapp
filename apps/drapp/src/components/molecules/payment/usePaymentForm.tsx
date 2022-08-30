@@ -26,13 +26,26 @@ export const usePaymentForm = () => {
         return true;
     };
 
-    const submit = async ({ centerId }: { centerId: string }) => {
+    const submit = async ({
+        centerId,
+        bankName,
+        IBAN,
+        depositOwners
+    }: {
+        centerId: string;
+        bankName: string;
+        IBAN: string;
+        depositOwners: string;
+    }) => {
         try {
             const data = await setPaymentSetting.mutateAsync({
                 active: isActivePayment ? 1 : 0,
                 ...(isActivePayment && { deposit_amount: +price * 10 }),
                 ...(isActivePayment && { card_number: cartNumber }),
-                center_id: centerId
+                center_id: centerId,
+                bank_name: bankName,
+                IBAN: IBAN,
+                deposit_owners: depositOwners
             });
             return Promise.resolve(data);
         } catch (error) {

@@ -6,11 +6,13 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, numberToWords, removeCommas } from '@persian-tools/persian-tools';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Modal from '@paziresh24/shared/ui/modal';
 import { PaymentForm } from 'apps/drapp/src/components/molecules/payment/form';
 import { usePaymentForm } from 'apps/drapp/src/components/molecules/payment/usePaymentForm';
+import { useIbanInquiry } from 'apps/drapp/src/apis/payment/ibanInquiry';
+import CartInfo from 'apps/drapp/src/components/molecules/payment/cartInfo';
 
 const CostConsultActivation = () => {
     const [doctorInfo]: [
@@ -24,10 +26,24 @@ const CostConsultActivation = () => {
     const officeCenter = doctorInfo?.centers.find(center => center.type_id === 1);
     const [shouldShowTipCostModal, setShouldShowTipCostModal] = useState(false);
     const { validate, submit, isLoading, ...formProps } = usePaymentForm();
+    const [inquiryModal, setInquiryModal] = useState(false);
+    const ibanInquiry = useIbanInquiry({
+        card_number: formProps.cartNumber ?? ''
+    });
+
+    useEffect(() => {
+        if (ibanInquiry.isSuccess) {
+            setInquiryModal(true);
+            setShouldShowTipCostModal(false);
+        }
+    }, [ibanInquiry.status]);
 
     const handleSubmit = async () => {
         submit({
-            centerId: officeCenter.id
+            centerId: officeCenter.id,
+            bankName: (ibanInquiry.data as any)?.bank_name,
+            IBAN: (ibanInquiry.data as any)?.IBAN,
+            depositOwners: (ibanInquiry.data as any)?.deposit_owners?.join(',')
         })
             .then(() => {
                 if (formProps.isActivePayment) {
@@ -57,7 +73,7 @@ const CostConsultActivation = () => {
                         error: error.response?.data?.message
                     }
                 });
-                setShouldShowTipCostModal(false);
+                setInquiryModal(false);
             });
     };
 
@@ -138,9 +154,33 @@ const CostConsultActivation = () => {
                     </li>
                     <li>مبالغ به صورت روزانه به شماره کارت درج شده واریز می گردد.</li>
                 </ul>
-                <Button variant="outlined" onClick={handleSubmit} loading={isLoading}>
+                <Button
+                    variant="outlined"
+                    onClick={() => {
+                        ibanInquiry.remove();
+                        ibanInquiry.refetch();
+                    }}
+                    loading={ibanInquiry.isLoading}
+                >
                     ذخیره
                 </Button>
+            </Modal>
+            <Modal title="تایید اطلاعات" onClose={setInquiryModal} isOpen={inquiryModal}>
+                <span>آیا اطلاعات حساب مورد تایید می باشد؟ </span>
+                <CartInfo info={ibanInquiry.data} />
+                <div className="flex space-s-3 mt-1">
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={handleSubmit}
+                        loading={isLoading}
+                    >
+                        تایید
+                    </Button>
+                    <Button fullWidth variant="outlined" onClick={() => setInquiryModal(false)}>
+                        ویرایش
+                    </Button>
+                </div>
             </Modal>
         </>
     );
