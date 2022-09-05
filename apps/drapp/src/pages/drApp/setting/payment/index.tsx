@@ -146,6 +146,7 @@ const PaymentPage = () => {
                                 group: `setting-payment-${centerType}`,
                                 type: 'continue '
                             });
+                            if (!formProps.isActivePayment) return handleSubmit();
                             if (center.id !== CONSULT_CENTER_ID && formProps.isActivePayment)
                                 return setShouldShowTipCostModal(true);
 
