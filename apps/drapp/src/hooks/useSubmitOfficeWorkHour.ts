@@ -7,6 +7,7 @@ import { useWorkHoursStore } from '../store/workhours.store';
 
 export const useSubmitOfficeWorkHour = () => {
     const [doctorInfo] = useDrApp();
+    const officeCenter = doctorInfo?.centers.find((center: any) => center.type_id === 1);
     const workHoursMutateRequest = useWorkHours();
     const duration = useWorkHoursStore(state => state.duration);
     const workHours = useWorkHoursStore(state => state.workHours);
@@ -14,7 +15,7 @@ export const useSubmitOfficeWorkHour = () => {
     const submitOfficeWorkHour = async () => {
         try {
             const data = await workHoursMutateRequest.mutateAsync({
-                center_id: doctorInfo.center.id,
+                center_id: officeCenter.id,
                 cost: 0,
                 duration,
                 workHours
