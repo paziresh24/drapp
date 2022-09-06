@@ -93,6 +93,13 @@ const WorkHoursOfficeActivation = () => {
                 group: 'activation-office-workhours',
                 type: 'done'
             });
+            getSplunkInstance().sendEvent({
+                group: 'activation',
+                type: `click-office`,
+                event: {
+                    action: 'done'
+                }
+            });
             await getCentersDoctor.refetch();
             if (selectedService.length > 0) {
                 setQuestionActivation(true);
@@ -103,6 +110,13 @@ const WorkHoursOfficeActivation = () => {
             if (axios.isAxiosError(error)) {
                 getSplunkInstance().sendEvent({
                     group: 'activation-office-workhours',
+                    type: 'unsuccessful',
+                    event: {
+                        error: error.response?.data
+                    }
+                });
+                getSplunkInstance().sendEvent({
+                    group: 'activation-office',
                     type: 'unsuccessful',
                     event: {
                         error: error.response?.data

@@ -106,6 +106,13 @@ const CenterOfficeActivation = () => {
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
+                getSplunkInstance().sendEvent({
+                    group: 'activation-office-center',
+                    type: 'unsuccessful',
+                    event: {
+                        error: error.response?.data?.message
+                    }
+                });
             }
         }
     };

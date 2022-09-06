@@ -104,6 +104,14 @@ const ConsultOfficeActivation = () => {
                 true,
                 moment().add(1, 'days').startOf('day').toDate()
             );
+            getSplunkInstance().sendEvent({
+                group: 'activation',
+                type: `click-cosnult`,
+                event: {
+                    action: 'done'
+                }
+            });
+
             if (selectedService.length > 0) {
                 setQuestionActivation(true);
                 return;
@@ -112,6 +120,13 @@ const ConsultOfficeActivation = () => {
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.warning(error.response?.data?.message);
+                getSplunkInstance().sendEvent({
+                    group: 'activation-consult',
+                    type: 'unsuccessful',
+                    event: {
+                        error: error.response?.data?.message
+                    }
+                });
             }
             if (selectedService.length > 0) {
                 setQuestionActivation(true);
