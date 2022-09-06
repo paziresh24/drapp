@@ -18,10 +18,11 @@ const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].
 
 const DurationOfficeActivation = () => {
     const [doctorInfo] = useDrApp();
+    const officeCenter = doctorInfo.centers.find((center: any) => center.type_id === 1);
     const router = useHistory();
     const duration = useWorkHoursStore(state => state.duration);
     const setDuration = useWorkHoursStore(state => state.setDuration);
-    const getWorkHoursRequest = useGetWorkHours({ center_id: doctorInfo.center.id });
+    const getWorkHoursRequest = useGetWorkHours({ center_id: officeCenter.id });
     const [isAnotherProvider, setIsAnotherProvider] = useWorkHoursStore(state => [
         state.isAnotherProvider,
         state.setIsAnotherProvider

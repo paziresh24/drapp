@@ -20,7 +20,8 @@ import { iranCityWithPrefixPhoneNumber } from 'apps/drapp/src/constants/iranCity
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const CenterOfficeActivation = () => {
-    const [{ doctor, center }] = useDrApp();
+    const [{ doctor, center, centers }] = useDrApp();
+    const officeCenter = centers.find((center: any) => center.type_id === 1);
     const centerUpdate = useCenterInfoUpdate();
     const doctorInfoUpdate = useDoctorInfoUpdate();
     const router = useHistory();
@@ -78,7 +79,7 @@ const CenterOfficeActivation = () => {
                 });
             }
             await centerUpdate.mutateAsync({
-                centerId: center.id,
+                centerId: officeCenter.id,
                 data: {
                     address,
                     ...(officePhoneNumber && { tell: officePhoneNumber }),
@@ -102,7 +103,7 @@ const CenterOfficeActivation = () => {
                 group: 'activation-office-center-data-phone',
                 type: `done`
             });
-            router.push('/activation/office/duration');
+            router.push('/activation/office/cost');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);

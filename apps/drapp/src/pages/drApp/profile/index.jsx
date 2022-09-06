@@ -54,6 +54,7 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useHistory } from 'react-router-dom';
+import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 
 const Profile = () => {
     const router = useHistory();
@@ -87,6 +88,7 @@ const Profile = () => {
     const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
+    const [cartNumber, setCartNumber] = useState('');
     const biographyRef = useRef();
     const serviceRef = useRef();
 
@@ -230,16 +232,21 @@ const Profile = () => {
         });
     };
 
-    const bankAction = data => {
-        bankInfo.mutate(data, {
-            onSuccess: () => {
-                setBankAccordion(false);
-                toast.success('اطلاعات بانکی با موفقیت ذخیره شد.');
+    const bankAction = () => {
+        bankInfo.mutate(
+            {
+                IBAN: cartNumber
             },
-            onError: err => {
-                toast.error(err.response.data.errors.IBAN[0]);
+            {
+                onSuccess: () => {
+                    setBankAccordion(false);
+                    toast.success('اطلاعات بانکی با موفقیت ذخیره شد.');
+                },
+                onError: err => {
+                    toast.error(err.response.data.errors.IBAN[0]);
+                }
             }
-        });
+        );
     };
 
     const whatsappAction = data => {
@@ -798,34 +805,6 @@ const Profile = () => {
                             type="submit"
                             loading={updateCenterAccess.isLoading || centerInfoUpdate.isLoading}
                         >
-                            ذخیره تغییرات
-                        </Button>
-                    </form>
-                </Accordion>
-            )}
-            {(info.center.type_id === OFFICE_CENTER || info.center.id === CONSULT_CENTER_ID) && (
-                <Accordion
-                    title="اطلاعات بانکی"
-                    icon={<UserIcon color="#3F3F79" />}
-                    open={bankAccordion}
-                    setOpen={setBankAccordion}
-                >
-                    <form className={styles['form']} onSubmit={bankSubmit(bankAction)}>
-                        <div className={styles['bank_row']}>
-                            <TextField
-                                label="شماره شبا"
-                                type="tel"
-                                error={bankInfoErrors.IBAN}
-                                defaultValue={getBankInfo.isSuccess && getBankInfo.data.data}
-                                {...bankInfoRegister('IBAN', {
-                                    required: true,
-                                    maxLength: 24,
-                                    minLength: 24
-                                })}
-                            />
-                            <span>IR</span>
-                        </div>
-                        <Button block type="submit" loading={bankInfo.isLoading}>
                             ذخیره تغییرات
                         </Button>
                     </form>

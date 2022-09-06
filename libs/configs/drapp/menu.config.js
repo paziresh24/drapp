@@ -41,6 +41,16 @@ export const MainMenuData = () => {
             icon: <StarIcon color="#000" />
         },
         {
+            title: 'مشاوره',
+            path: '/consult',
+            icon: <ConsultIcon color="#000" />
+        },
+        {
+            title: 'تنظیمات پرداخت',
+            path: '/setting/payment',
+            icon: <CardIcon color="#000" />
+        },
+        {
             title: 'تسویه حساب',
             path: '/financial',
             icon: <CardIcon color="#000" />

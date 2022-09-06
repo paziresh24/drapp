@@ -50,6 +50,14 @@ export const routes = [
         exact: true
     },
     {
+        path: '/activation/office/cost/',
+        name: 'OfficeCostActivation',
+        title: 'مبلغ بیعانه',
+        component: lazy(() => import('./activation/office/cost')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/activation/office/workhours/',
         name: 'OfficeWorkhoursActivation',
         title: 'مدت زمان ویزیت',
@@ -260,6 +268,14 @@ export const routes = [
         name: 'Financial',
         title: 'مدیریت مالی',
         component: lazy(() => import('./financial')),
+        isPrivate: true,
+        exact: false
+    },
+    {
+        path: '/setting/payment',
+        name: 'Payment',
+        title: 'تنظیمات پرداخت',
+        component: lazy(() => import('./setting/payment')),
         isPrivate: true,
         exact: false
     },

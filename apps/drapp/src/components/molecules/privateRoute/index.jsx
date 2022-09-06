@@ -26,6 +26,7 @@ import ErrorByRefresh from '@paziresh24/shared/ui/errorByRefresh';
 import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
 import { useLevel } from '@paziresh24/context/core/level';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
+import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
