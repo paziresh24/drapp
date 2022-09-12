@@ -1,7 +1,19 @@
-import { Autocomplete, Checkbox, FormControl, FormControlLabel, TextField } from '@mui/material';
+import {
+    Autocomplete,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    TextField,
+    Typography
+} from '@mui/material';
+import { useDrApp } from '@paziresh24/context/drapp';
 import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
-import { numberToWords } from '@persian-tools/persian-tools';
 import { Dispatch, memo, SetStateAction, useEffect, useState } from 'react';
+import { costs } from 'apps/drapp/src/pages/drApp/activation/consult/costAvg';
+import { round } from 'lodash';
+import { addCommas } from '@persian-tools/persian-tools';
+import PriceField from '@paziresh24/shared/ui/priceField';
+import { numberToWords } from '@persian-tools/persian-tools';
 
 export interface PaymentFormProps {
     setPrice: Dispatch<SetStateAction<string>>;
@@ -18,8 +30,7 @@ export interface PaymentFormProps {
     clickPriceFiled?: () => void;
     clickCartNumberFiled?: () => void;
 }
-
-const costs = [
+const costsOffice = [
     {
         label: '10,000 تومان',
         value: '10000'
@@ -47,6 +58,14 @@ const costs = [
 ];
 
 export const PaymentForm = memo((props: PaymentFormProps) => {
+    const [{ doctor, center }] = useDrApp();
+
+    const isConsultCenter = center.id === '5532';
+
+    const priceExpertise = costs.find(
+        cost => +cost.expertiseId === +doctor.expertises[0].expertise.id
+    )?.avg;
+    const priceAvarage = priceExpertise ? round(Math.floor(+priceExpertise), -3) / 10 : 0;
     const {
         setPrice,
         price,
@@ -62,49 +81,77 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         clickPriceFiled,
         clickCartNumberFiled
     } = props;
-
     useEffect(() => {
-        if (!costs.some(item => item.value === price)) {
-            setPrice('');
+        if (!isConsultCenter) {
+            if (!costsOffice.some(item => item.value === price)) {
+                setPrice('');
+            }
         }
     }, [price]);
-
     return (
         <FormControl className="space-y-4 w-full">
             {isActivePayment && (
                 <>
-                    <Autocomplete
-                        disablePortal
-                        options={costs}
-                        fullWidth
-                        onChange={(e, newValue) => {
-                            setPrice(newValue?.value ?? '');
-                        }}
-                        value={
-                            price
-                                ? {
-                                      label: costs.find(item => item.value === price)?.label,
-                                      value: price
-                                  }
-                                : null
-                        }
-                        onFocus={() => setPriceFieldError(false)}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                error={priceFieldError}
-                                label="مبلغ بیعانه"
-                                helperText={
-                                    priceFieldError
-                                        ? 'لطفا مبلغ را وارد کنید.'
-                                        : price
-                                        ? `${numberToWords(+price)} تومان`
-                                        : ''
-                                }
-                                onClick={clickPriceFiled}
-                            />
-                        )}
-                    />
+                    {isConsultCenter ? (
+                        priceAvarage ? (
+                            <Typography>
+                                همکاران شما بصورت میانگین مبلغ{' '}
+                                <span className="font-medium">{addCommas(priceAvarage)}</span> تومان
+                                را در نظر گرفته اند.
+                            </Typography>
+                        ) : null
+                    ) : (
+                        ''
+                    )}
+
+                    {isConsultCenter ? (
+                        <PriceField
+                            label="مبلغ هر ویزیت (تومان)"
+                            onChange={e => setPrice(e.target.value)}
+                            value={price ? price.toString() : ''}
+                            limit={7}
+                            error={priceFieldError}
+                            helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
+                            onFocus={() => setPriceFieldError(false)}
+                            fullWidth
+                            onClick={clickPriceFiled}
+                        />
+                    ) : (
+                        <Autocomplete
+                            disablePortal
+                            options={costsOffice}
+                            fullWidth
+                            onChange={(e, newValue) => {
+                                setPrice(newValue?.value ?? '');
+                            }}
+                            value={
+                                price
+                                    ? {
+                                          label: costsOffice.find(item => item.value === price)
+                                              ?.label,
+                                          value: price
+                                      }
+                                    : null
+                            }
+                            onFocus={() => setPriceFieldError(false)}
+                            renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    error={priceFieldError}
+                                    label="مبلغ بیعانه"
+                                    helperText={
+                                        priceFieldError
+                                            ? 'لطفا مبلغ را وارد کنید.'
+                                            : price
+                                            ? `${numberToWords(+price)} تومان`
+                                            : ''
+                                    }
+                                    onClick={clickPriceFiled}
+                                />
+                            )}
+                        />
+                    )}
+
                     <BankNumberField
                         onChange={e => setCartNumber(e.target.value)}
                         value={cartNumber}
