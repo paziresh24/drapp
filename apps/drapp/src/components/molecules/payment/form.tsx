@@ -12,7 +12,6 @@ import { Dispatch, memo, SetStateAction, useEffect, useState } from 'react';
 import { costs } from 'apps/drapp/src/pages/drApp/activation/consult/costAvg';
 import { round } from 'lodash';
 import { addCommas } from '@persian-tools/persian-tools';
-import PriceField from '@paziresh24/shared/ui/priceField';
 import { numberToWords } from '@persian-tools/persian-tools';
 
 export interface PaymentFormProps {
@@ -59,6 +58,7 @@ const costsOffice = [
 
 export const PaymentForm = memo((props: PaymentFormProps) => {
     const [{ doctor, center }] = useDrApp();
+    console.log(center);
 
     const isConsultCenter = center.id === '5532';
 
@@ -92,75 +92,68 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         <FormControl className="space-y-4 w-full">
             {isActivePayment && (
                 <>
-                    {isConsultCenter ? (
-                        priceAvarage ? (
-                            <Typography>
-                                همکاران شما بصورت میانگین مبلغ{' '}
-                                <span className="font-medium">{addCommas(priceAvarage)}</span> تومان
-                                را در نظر گرفته اند.
-                            </Typography>
-                        ) : null
-                    ) : (
-                        ''
-                    )}
+                    {!isConsultCenter && (
+                        <>
+                            <Autocomplete
+                                disablePortal
+                                options={costsOffice}
+                                fullWidth
+                                onChange={(e, newValue) => {
+                                    setPrice(newValue?.value ?? '');
+                                }}
+                                value={
+                                    price
+                                        ? {
+                                              label: costsOffice.find(item => item.value === price)
+                                                  ?.label,
+                                              value: price
+                                          }
+                                        : null
+                                }
+                                onFocus={() => setPriceFieldError(false)}
+                                renderInput={params => (
+                                    <TextField
+                                        {...params}
+                                        error={priceFieldError}
+                                        label="مبلغ بیعانه"
+                                        helperText={
+                                            priceFieldError
+                                                ? 'لطفا مبلغ را وارد کنید.'
+                                                : price
+                                                ? `${numberToWords(+price)} تومان`
+                                                : ''
+                                        }
+                                        onClick={clickPriceFiled}
+                                    />
+                                )}
+                            />
 
-                    {isConsultCenter ? (
-                        <PriceField
-                            label="مبلغ هر ویزیت (تومان)"
-                            onChange={e => setPrice(e.target.value)}
-                            value={price ? price.toString() : ''}
-                            limit={7}
-                            error={priceFieldError}
-                            helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
-                            onFocus={() => setPriceFieldError(false)}
+                            <BankNumberField
+                                onChange={e => setCartNumber(e.target.value)}
+                                value={cartNumber}
+                                fullWidth
+                                onClick={clickCartNumberFiled}
+                                onFocus={() => setCartNumberFieldError(false)}
+                                error={cartNumberFieldError}
+                                helperText={
+                                    cartNumberFieldError ? 'لطفا شماره کارت معتبر وارد کنید.' : ''
+                                }
+                            />
+                        </>
+                    )}
+                    {isConsultCenter && (
+                        <BankNumberField
+                            onChange={e => setCartNumber(e.target.value)}
+                            value={cartNumber}
                             fullWidth
-                            onClick={clickPriceFiled}
-                        />
-                    ) : (
-                        <Autocomplete
-                            disablePortal
-                            options={costsOffice}
-                            fullWidth
-                            onChange={(e, newValue) => {
-                                setPrice(newValue?.value ?? '');
-                            }}
-                            value={
-                                price
-                                    ? {
-                                          label: costsOffice.find(item => item.value === price)
-                                              ?.label,
-                                          value: price
-                                      }
-                                    : null
+                            onClick={clickCartNumberFiled}
+                            onFocus={() => setCartNumberFieldError(false)}
+                            error={cartNumberFieldError}
+                            helperText={
+                                cartNumberFieldError ? 'لطفا شماره کارت معتبر وارد کنید.' : ''
                             }
-                            onFocus={() => setPriceFieldError(false)}
-                            renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    error={priceFieldError}
-                                    label="مبلغ بیعانه"
-                                    helperText={
-                                        priceFieldError
-                                            ? 'لطفا مبلغ را وارد کنید.'
-                                            : price
-                                            ? `${numberToWords(+price)} تومان`
-                                            : ''
-                                    }
-                                    onClick={clickPriceFiled}
-                                />
-                            )}
                         />
                     )}
-
-                    <BankNumberField
-                        onChange={e => setCartNumber(e.target.value)}
-                        value={cartNumber}
-                        fullWidth
-                        onClick={clickCartNumberFiled}
-                        onFocus={() => setCartNumberFieldError(false)}
-                        error={cartNumberFieldError}
-                        helperText={cartNumberFieldError ? 'لطفا شماره کارت معتبر وارد کنید.' : ''}
-                    />
                 </>
             )}
             {toggleable && (
