@@ -41,8 +41,6 @@ export const usePaymentForm = () => {
     }) => {
         if (centerId === '5532') {
             try {
-                console.log(IBAN);
-
                 const data = await setPaymentConsult.mutateAsync({
                     active: isActivePayment ? 1 : 0,
                     ...(isActivePayment && { deposit_amount: +price * 10 }),
