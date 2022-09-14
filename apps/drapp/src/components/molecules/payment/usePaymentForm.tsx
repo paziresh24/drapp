@@ -43,8 +43,6 @@ export const usePaymentForm = () => {
             try {
                 const data = await setPaymentConsult.mutateAsync({
                     active: isActivePayment ? 1 : 0,
-                    ...(isActivePayment && { deposit_amount: +price * 10 }),
-                    ...(isActivePayment && { card_number: cartNumber }),
                     IBAN: IBAN.replace('IR', '')
                 });
                 return Promise.resolve(data);
