@@ -58,7 +58,6 @@ const costsOffice = [
 
 export const PaymentForm = memo((props: PaymentFormProps) => {
     const [{ doctor, center }] = useDrApp();
-    console.log(center);
 
     const isConsultCenter = center.id === '5532';
 
