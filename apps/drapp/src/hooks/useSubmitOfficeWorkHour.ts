@@ -6,8 +6,7 @@ import { toast } from 'react-toastify';
 import { useWorkHoursStore } from '../store/workhours.store';
 
 export const useSubmitOfficeWorkHour = () => {
-    const [doctorInfo] = useDrApp();
-    const officeCenter = doctorInfo?.centers.find((center: any) => center.type_id === 1);
+    const [{ center }] = useDrApp();
     const workHoursMutateRequest = useWorkHours();
     const duration = useWorkHoursStore(state => state.duration);
     const workHours = useWorkHoursStore(state => state.workHours);
@@ -15,7 +14,7 @@ export const useSubmitOfficeWorkHour = () => {
     const submitOfficeWorkHour = async () => {
         try {
             const data = await workHoursMutateRequest.mutateAsync({
-                center_id: officeCenter.id,
+                center_id: center.id,
                 cost: 0,
                 duration,
                 workHours
