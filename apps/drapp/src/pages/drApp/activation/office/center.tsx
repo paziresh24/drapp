@@ -238,6 +238,9 @@ const CenterOfficeActivation = () => {
                             </InputAdornment>
                         )
                     }}
+                    InputLabelProps={{
+                        shrink: true
+                    }}
                 />
                 <TextField
                     label="شماره موبایل منشی"
@@ -268,6 +271,9 @@ const CenterOfficeActivation = () => {
                                 </svg>
                             </InputAdornment>
                         )
+                    }}
+                    InputLabelProps={{
+                        shrink: true
                     }}
                 />
                 <Alert icon={false} className="!bg-[#F3F6F9]">
