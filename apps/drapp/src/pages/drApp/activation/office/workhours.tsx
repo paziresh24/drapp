@@ -16,7 +16,7 @@ import { ChevronIcon } from '@paziresh24/shared/icon';
 import { isDesktop } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
 import { useWorkHoursValidation } from 'apps/drapp/src/hooks/useWorkHoursValidation';
-import { useSubmitOfficeWorkHour } from 'apps/drapp/src/hooks/useSubmitOfficeWorkHour';
+import { useSubmitWorkHour } from 'apps/drapp/src/hooks/useSubmitWorkHour';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import axios from 'axios';
 import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
@@ -27,7 +27,7 @@ import uniq from 'lodash/uniq';
 
 const WorkHoursOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
-    const { submitOfficeWorkHour, isLoading } = useSubmitOfficeWorkHour();
+    const { submitWorkHour, isLoading } = useSubmitWorkHour();
     const router = useHistory();
     const [doctorInfo]: [
         {
@@ -77,7 +77,9 @@ const WorkHoursOfficeActivation = () => {
 
     const handleSubmit = async () => {
         try {
-            await submitOfficeWorkHour();
+            await submitWorkHour({
+                centerId: officeCenter.id
+            });
             uniq(workHours.map(({ day }) => weekDays.find(({ id }) => day === id)?.nameEn)).forEach(
                 day => {
                     getSplunkInstance().sendEvent({

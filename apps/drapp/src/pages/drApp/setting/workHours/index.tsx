@@ -17,7 +17,7 @@ import { isDesktop } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useWorkHoursValidation } from 'apps/drapp/src/hooks/useWorkHoursValidation';
-import { useSubmitOfficeWorkHour } from 'apps/drapp/src/hooks/useSubmitOfficeWorkHour';
+import { useSubmitWorkHour } from 'apps/drapp/src/hooks/useSubmitWorkHour';
 import axios from 'axios';
 import SelectTime from 'apps/drapp/src/components/molecules/setting/duration/selectTime';
 import { range } from 'lodash';
@@ -27,13 +27,13 @@ const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].
 
 const WorkHours = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
-    const { submitOfficeWorkHour, isLoading } = useSubmitOfficeWorkHour();
+    const { submitWorkHour, isLoading } = useSubmitWorkHour();
     const router = useHistory();
-    const [docotorInfo] = useDrApp();
+    const [doctorInfo] = useDrApp();
     const setWorkHours = useWorkHoursStore(state => state.setWorkHours);
     const workHours = useWorkHoursStore(state => state.workHours);
     const addWorkHours = useWorkHoursStore(state => state.addWorkHours);
-    const getWorkHoursRequest = useGetWorkHours({ center_id: docotorInfo.center.id });
+    const getWorkHoursRequest = useGetWorkHours({ center_id: doctorInfo.center.id });
     const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
     const duration = useWorkHoursStore(state => state.duration);
     const setDuration = useWorkHoursStore(state => state.setDuration);
@@ -41,7 +41,7 @@ const WorkHours = () => {
     useEffect(() => {
         getWorkHoursRequest.remove();
         getWorkHoursRequest.refetch();
-    }, [docotorInfo.center]);
+    }, [doctorInfo.center]);
 
     useEffect(() => {
         if (getWorkHoursRequest.isSuccess) {
@@ -67,7 +67,9 @@ const WorkHours = () => {
 
     const handleSubmit = async () => {
         try {
-            await submitOfficeWorkHour();
+            await submitWorkHour({
+                centerId: doctorInfo.center.id
+            });
             getSplunkInstance().sendEvent({
                 group: 'workdays_active_booking',
                 type: 'successful'
@@ -101,7 +103,7 @@ const WorkHours = () => {
                 </Button>
             )}
             <Stack className="space-y-5 pb-32 md:pb-0">
-                {getCenterType(docotorInfo.center) !== 'consult' && (
+                {getCenterType(doctorInfo.center) !== 'consult' && (
                     <SelectTime
                         items={durationList}
                         value={duration}

@@ -1,22 +1,26 @@
+import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { useWorkHoursStore } from '../store/workhours.store';
 
-export const useSubmitOfficeWorkHour = () => {
-    const [{ center }] = useDrApp();
+export const useSubmitWorkHour = () => {
     const workHoursMutateRequest = useWorkHours();
     const duration = useWorkHoursStore(state => state.duration);
     const workHours = useWorkHoursStore(state => state.workHours);
 
-    const submitOfficeWorkHour = async () => {
+    const submitWorkHour = async ({
+        centerId
+    }: {
+        centerId: string;
+    }): Promise<AxiosResponse<any, any>> => {
         try {
             const data = await workHoursMutateRequest.mutateAsync({
-                center_id: center.id,
+                center_id: centerId,
                 cost: 0,
-                duration,
+                ...(centerId !== CONSULT_CENTER_ID && { duration }),
                 workHours
             });
 
@@ -34,11 +38,10 @@ export const useSubmitOfficeWorkHour = () => {
                 } else {
                     toast.error(error.response?.data?.message);
                 }
-
-                return Promise.reject(error);
             }
+            return Promise.reject(error);
         }
     };
 
-    return { submitOfficeWorkHour, isLoading: workHoursMutateRequest.isLoading };
+    return { submitWorkHour, isLoading: workHoursMutateRequest.isLoading };
 };
