@@ -118,6 +118,7 @@ const PaymentPage = () => {
             <PaymentForm
                 {...formProps}
                 toggleable={center.id !== CONSULT_CENTER_ID}
+                disabledPriceField={center.id === CONSULT_CENTER_ID}
                 clickPriceFiled={() =>
                     getSplunkInstance().sendEvent({
                         group: `setting-payment-${centerType}`,
