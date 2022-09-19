@@ -72,11 +72,15 @@ const CostConsultActivation = () => {
                 label="مبلغ هر ویزیت (تومان)"
                 onChange={e => setPrice(+e.target.value)}
                 value={price ? price.toString() : ''}
+                placeholder={priceAvarage ? addCommas(priceAvarage) : addCommas(50000)}
                 limit={7}
                 error={fieldError}
                 helperText={fieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
                 onFocus={() => setFieldError(false)}
                 fullWidth
+                InputLabelProps={{
+                    shrink: true
+                }}
             />
             <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                 <Button fullWidth variant="contained" size="large" onClick={handleSubmit}>

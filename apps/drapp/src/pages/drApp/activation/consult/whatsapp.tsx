@@ -82,6 +82,9 @@ const WhatsappConsultActivation = () => {
                         </InputAdornment>
                     )
                 }}
+                InputLabelProps={{
+                    shrink: true
+                }}
             />
             <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                 <Button fullWidth variant="contained" size="large" onClick={handleSubmit}>

@@ -37,6 +37,9 @@ export const BankNumberField = (props: TextFieldProps) => {
                     </InputAdornment>
                 )
             }}
+            InputLabelProps={{
+                shrink: true
+            }}
         />
     );
 };
