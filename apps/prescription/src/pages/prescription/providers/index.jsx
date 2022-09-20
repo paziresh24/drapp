@@ -16,6 +16,9 @@ import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import Button from '@mui/lab/LoadingButton';
 import ActivationModal from 'apps/drapp/src/components/molecules/activation/activationModal';
 import { useHistory } from 'react-router-dom';
+import classNames from 'classnames';
+import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
+import { InfoIcon } from 'libs/shared/icon/src';
 
 const Providers = () => {
     const router = useHistory();
@@ -23,6 +26,7 @@ const Providers = () => {
     const [info] = useDrApp();
     const [isAuthenticated, setIsAuthenticated] = useState();
     const [questionActivation, setQuestionActivation] = useState(false);
+    const editProviders = usePrescriptionSettingStore(state => state.setting.editProviders);
 
     const isSourceActivation = window.location.search.includes('source=activation');
 
@@ -36,30 +40,39 @@ const Providers = () => {
                 <Default>
                     <DescriptionBox />
                 </Default>
-                <div className={styles.providerColumn}>
-                    {!insurances.isSuccess ? (
-                        <>
-                            <ProviderItemSkeleton />
-                            <ProviderItemSkeleton />
-                        </>
-                    ) : (
-                        <>
-                            <PoroviderItem
-                                provider="tamin"
-                                data={insurances.data}
-                                setIsAuthenticated={setIsAuthenticated}
-                                refetch={insurances.refetch}
-                            />
-                            <PoroviderItem
-                                provider="salamat"
-                                centers={info.centers}
-                                data={insurances.data}
-                                setIsAuthenticated={setIsAuthenticated}
-                                refetch={insurances.refetch}
-                            />
-                        </>
-                    )}
-                </div>
+                {!editProviders && (
+                    <span className="p-3 mb-4 flex items-center font-bold text-sm bg-slate-200 rounded-lg w-full">
+                        <InfoIcon color="#000" className="ml-2" />
+                        امکان ویرایش برای اطلاعات احراز هویت، غیرفعال شده است.
+                    </span>
+                )}
+                {!insurances.isSuccess ? (
+                    <div className={styles.providerColumn}>
+                        <ProviderItemSkeleton />
+                        <ProviderItemSkeleton />
+                    </div>
+                ) : (
+                    <div
+                        className={classNames(styles.providerColumn, {
+                            'opacity-40 pointer-events-none': !editProviders
+                        })}
+                    >
+                        <PoroviderItem
+                            provider="tamin"
+                            data={insurances.data}
+                            setIsAuthenticated={setIsAuthenticated}
+                            refetch={insurances.refetch}
+                        />
+                        <PoroviderItem
+                            provider="salamat"
+                            centers={info.centers}
+                            data={insurances.data}
+                            setIsAuthenticated={setIsAuthenticated}
+                            refetch={insurances.refetch}
+                        />
+                    </div>
+                )}
+
                 <Mobile>
                     <DescriptionBox />
                 </Mobile>
