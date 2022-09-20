@@ -27,6 +27,7 @@ import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/u
 import { useLevel } from '@paziresh24/context/core/level';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
+import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -50,10 +51,15 @@ const PrivateRoute = props => {
     const setUserGoftino = useSetUserGoftino();
     const getLatestVersion = useGetLatestVersion();
     const [isError, setIsError] = useState(false);
+    const setPrescriptionSetting = usePrescriptionSettingStore(state => state.setSetting);
 
     useEffect(() => {
         setPage(props);
         if (isEmpty(info) && !isEmpty(getToken())) {
+            if (location.hostname.includes('sum'))
+                setPrescriptionSetting({
+                    editProviders: false
+                });
             if (props.path !== '/create-center') {
                 handleGetCenters();
             }

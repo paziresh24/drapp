@@ -7,11 +7,14 @@ import {
     useRemoveSetting,
     useSetSetting
 } from '@paziresh24/hooks/prescription/settings';
+import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
 
 const Settings = () => {
     const getSettings = useGetSettings();
     const setSetting = useSetSetting();
     const removeSetting = useRemoveSetting();
+    const setEditProviders = usePrescriptionSettingStore(state => state.setSetting);
+    const editProviders = usePrescriptionSettingStore(state => state.setting.editProviders);
 
     useEffect(() => {
         getSettings.remove();
@@ -62,6 +65,22 @@ const Settings = () => {
                         <span>{setting.name}</span>
                     </div>
                 ))}
+            <div className="flex items-center space-s-3">
+                <div className={styles.toggle}>
+                    <input
+                        type="checkbox"
+                        id="edit-providers"
+                        checked={editProviders}
+                        onChange={e =>
+                            setEditProviders({
+                                editProviders: e.target.checked
+                            })
+                        }
+                    />
+                    <label htmlFor="edit-providers">Toggle</label>
+                </div>
+                <span>ویرایش اطلاعات احراز هویت</span>
+            </div>
         </>
     );
 };
