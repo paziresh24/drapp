@@ -118,7 +118,7 @@ const PaymentPage = () => {
             <PaymentForm
                 {...formProps}
                 toggleable={center.id !== CONSULT_CENTER_ID}
-                disabledPriceField={center.id === CONSULT_CENTER_ID}
+                selectBoxPrice={center.id !== CONSULT_CENTER_ID}
                 clickPriceFiled={() =>
                     getSplunkInstance().sendEvent({
                         group: `setting-payment-${centerType}`,
@@ -172,10 +172,10 @@ const PaymentPage = () => {
                         داده اند.
                     </li>
                     <li>
-                        در صورتی که بیمار نوبت خود را تا 24 ساعت پیش از ساعت نوبت لغو نماید، وجه
+                        در صورتی که بیمار نوبت خود را تا 5 ساعت پیش از ساعت نوبت لغو نماید، وجه
                         پرداختی بیمار استرداد می گردد.
                     </li>
-                    <li>مبالغ به صورت روزانه به شماره کارت درج شده واریز می گردد.</li>
+                    <li>مبالغ به صورت اتوماتیک؛ روزانه به شماره کارت درج شده واریز میگردد.</li>
                 </ul>
                 <Button
                     variant="outlined"

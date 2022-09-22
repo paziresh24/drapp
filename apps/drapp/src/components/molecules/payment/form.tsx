@@ -3,6 +3,7 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import { Dispatch, memo, SetStateAction, useEffect, useState } from 'react';
 import { numberToWords } from '@persian-tools/persian-tools';
+import PriceField from '@paziresh24/shared/ui/priceField';
 
 export interface PaymentFormProps {
     setPrice: Dispatch<SetStateAction<string>>;
@@ -16,7 +17,7 @@ export interface PaymentFormProps {
     cartNumberFieldError: boolean;
     setCartNumberFieldError: Dispatch<SetStateAction<boolean>>;
     toggleable?: boolean;
-    disabledPriceField?: boolean;
+    selectBoxPrice?: boolean;
     clickPriceFiled?: () => void;
     clickCartNumberFiled?: () => void;
 }
@@ -61,12 +62,12 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         priceFieldError,
         setPriceFieldError,
         toggleable = true,
-        disabledPriceField = false,
+        selectBoxPrice = true,
         clickPriceFiled,
         clickCartNumberFiled
     } = props;
     useEffect(() => {
-        if (!disabledPriceField && !costsOffice.some(item => item.value === price)) {
+        if (selectBoxPrice && !costsOffice.some(item => item.value === price)) {
             setPrice('');
         }
     }, [price]);
@@ -75,7 +76,7 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         <FormControl className="space-y-4 w-full">
             {isActivePayment && (
                 <>
-                    {!disabledPriceField && (
+                    {selectBoxPrice && (
                         <Autocomplete
                             disablePortal
                             options={costsOffice}
@@ -108,6 +109,17 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                                     onClick={clickPriceFiled}
                                 />
                             )}
+                        />
+                    )}
+                    {!selectBoxPrice && (
+                        <PriceField
+                            label="مبلغ ویزیت"
+                            onChange={e => setPrice(e.target.value)}
+                            value={price}
+                            helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
+                            onClick={clickPriceFiled}
+                            onFocus={() => setPriceFieldError(false)}
+                            error={priceFieldError}
                         />
                     )}
                     <BankNumberField
