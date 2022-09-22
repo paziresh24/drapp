@@ -20,7 +20,7 @@ export const useSubmitWorkHour = () => {
             const data = await workHoursMutateRequest.mutateAsync({
                 center_id: centerId,
                 cost: 0,
-                ...(centerId !== CONSULT_CENTER_ID && { duration }),
+                duration,
                 workHours
             });
 

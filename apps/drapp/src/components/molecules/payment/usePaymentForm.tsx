@@ -10,7 +10,6 @@ export const usePaymentForm = () => {
     const [isActivePayment, setIsActivePayment] = useState(true);
     const [price, setPrice] = useState('');
     const setPaymentSetting = useSetPaymentSetting();
-    const setPaymentConsult = useSetPaymentConsult();
     const [priceFieldError, setPriceFieldError] = useState(false);
     const [cartNumberFieldError, setCartNumberFieldError] = useState(false);
 
@@ -39,52 +38,29 @@ export const usePaymentForm = () => {
         IBAN: string;
         depositOwners: string;
     }) => {
-        if (centerId === '5532') {
-            try {
-                const data = await setPaymentConsult.mutateAsync({
-                    active: isActivePayment ? 1 : 0,
-                    IBAN: IBAN.replace('IR', '')
-                });
-                return Promise.resolve(data);
-            } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    if (error.response?.data?.errors) {
-                        Object.values(error.response?.data?.errors).forEach((messages: any) => {
-                            messages.forEach((message: string) => {
-                                toast.error(message);
-                            });
+        try {
+            const data = await setPaymentSetting.mutateAsync({
+                active: isActivePayment ? 1 : 0,
+                ...(isActivePayment && { deposit_amount: +price * 10 }),
+                ...(isActivePayment && { card_number: cartNumber }),
+                center_id: centerId,
+                bank_name: bankName,
+                IBAN: IBAN,
+                deposit_owners: depositOwners
+            });
+            return Promise.resolve(data);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                if (error.response?.data?.errors) {
+                    Object.values(error.response?.data?.errors).forEach((messages: any) => {
+                        messages.forEach((message: string) => {
+                            toast.error(message);
                         });
-                    } else {
-                        toast.error(error.response?.data?.message);
-                    }
-                    return Promise.reject(error);
+                    });
+                } else {
+                    toast.error(error.response?.data?.message);
                 }
-            }
-        } else {
-            try {
-                const data = await setPaymentSetting.mutateAsync({
-                    active: isActivePayment ? 1 : 0,
-                    ...(isActivePayment && { deposit_amount: +price * 10 }),
-                    ...(isActivePayment && { card_number: cartNumber }),
-                    center_id: centerId,
-                    bank_name: bankName,
-                    IBAN: IBAN,
-                    deposit_owners: depositOwners
-                });
-                return Promise.resolve(data);
-            } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    if (error.response?.data?.errors) {
-                        Object.values(error.response?.data?.errors).forEach((messages: any) => {
-                            messages.forEach((message: string) => {
-                                toast.error(message);
-                            });
-                        });
-                    } else {
-                        toast.error(error.response?.data?.message);
-                    }
-                    return Promise.reject(error);
-                }
+                return Promise.reject(error);
             }
         }
     };
