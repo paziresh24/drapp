@@ -41,8 +41,7 @@ export const usePaymentForm = () => {
         try {
             const data = await setPaymentSetting.mutateAsync({
                 active: isActivePayment ? 1 : 0,
-                ...(isActivePayment && { deposit_amount: +price * 10 }),
-                ...(isActivePayment && { card_number: cartNumber }),
+                ...(isActivePayment && { deposit_amount: +price * 10, card_number: cartNumber }),
                 center_id: centerId,
                 bank_name: bankName,
                 IBAN: IBAN,
