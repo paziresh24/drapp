@@ -4,13 +4,10 @@ import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { memo, useState } from 'react';
 import { SettingIcon } from '@paziresh24/shared/icon';
 import { useDrApp } from '@paziresh24/context/drapp';
-import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 
 export const BottomBar = () => {
-    const [info] = useDrApp();
     const router = useLocation();
-    const settingPage = info.center.id === CONSULT_CENTER_ID ? '/turning/setting/' : '/setting';
-    const pathMap = [settingPage, '/', '/services'];
+    const pathMap = ['/setting', '/', '/services'];
     const [value, setValue] = useState(pathMap.indexOf(router.pathname));
 
     const handleChange = (event, value) => {

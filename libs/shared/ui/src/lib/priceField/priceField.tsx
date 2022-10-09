@@ -1,31 +1,33 @@
-import TextField from '@paziresh24/shared/ui/textField';
+import { TextField, TextFieldProps } from '@mui/material';
 import { addCommas, numberToWords, removeCommas } from '@persian-tools/persian-tools';
 import { useRef } from 'react';
+import PriceFieldFormatCustom from './priceFieldFormatCustom';
 
-interface PriceFieldProps {
-    onChange: (value: string) => void;
-    value: string;
-    label: string;
+interface PriceFieldProps extends Omit<TextFieldProps, 'helperText'> {
     limit?: number;
+    helperText?: string;
 }
 
 export const PriceField = (props: PriceFieldProps) => {
-    const { onChange, value, limit, ...rest } = props;
-    const ref = useRef<HTMLInputElement>(null);
+    const { limit, helperText, value, inputProps, InputProps, ...rest } = props;
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/[^0-9,]/g, '');
-        onChange(value);
-        if (ref.current?.value) {
-            ref.current.value = addCommas(removeCommas(value));
-        }
-    };
     return (
-        <div className="flex flex-col w-full space-y-3" {...rest}>
-            <span className="inline text-sm">مبلغ هر ویزیت (تومان)</span>
-            <TextField ref={ref} onChange={handleChange} maxLength={limit} />
-            {value && <span className="text-xs">{numberToWords(value)} تومان</span>}
-        </div>
+        <TextField
+            value={value}
+            defaultValue={value ? value : ''}
+            inputProps={{
+                ...inputProps,
+                maxLength: limit,
+                inputMode: 'tel',
+                style: { textAlign: 'left', direction: 'ltr' }
+            }}
+            InputProps={{
+                ...InputProps,
+                inputComponent: PriceFieldFormatCustom as any
+            }}
+            helperText={helperText ? helperText : value ? `${numberToWords(+value)} تومان` : ''}
+            {...rest}
+        />
     );
 };
 

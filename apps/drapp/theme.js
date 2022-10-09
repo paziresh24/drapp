@@ -23,13 +23,17 @@ const theme = createTheme({
                 root: {
                     borderRadius: '7px'
                 },
+                sizeMedium: {
+                    padding: '11px 16px',
+                    fontSize: '0.85rem'
+                },
                 sizeLarge: {
                     padding: '11px 16px',
                     fontSize: '0.85rem'
                 },
-                sizeMedium: {
-                    padding: '11px 16px',
-                    fontSize: '0.85rem'
+                sizeSmall: {
+                    padding: '6px 14px',
+                    fontSize: '0.75rem'
                 }
             }
         },
@@ -78,6 +82,18 @@ const theme = createTheme({
                 },
                 input: {
                     padding: '16.5px 14px'
+                }
+            }
+        },
+        MuiAutocomplete: {
+            styleOverrides: {
+                proper: {},
+                paper: {
+                    borderRadius: '9px',
+                    boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -4px rgba(0,0,0,0.1)'
+                },
+                option: {
+                    padding: '20px 14px'
                 }
             }
         }

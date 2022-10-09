@@ -9,49 +9,48 @@ import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 
 import { useDrApp } from '@paziresh24/context/drapp';
 import { baseURL } from '@paziresh24/utils/baseUrl';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import { getCookie } from '@paziresh24/utils/cookie';
+import { useActivationStore } from './activation.store';
 
 enum ActivationPaths {
-    office = '/fill-info',
-    consult = '/consult/fill-info',
-    prescription = '/providers?source=activation'
+    office = '/activation/office/center',
+    consult = '/activation/consult/whatsapp'
 }
 
 const Activation = () => {
     const router = useHistory();
-    const [{ doctor: docotorInfo, centers }] = useDrApp();
-    const [selectedService, setSelectedService] = useState<ServicesType[]>([]);
+    const [{ doctor: docotorInfo }] = useDrApp();
+    const selectedService = useActivationStore(state => state.selectedService);
+    const setSelectedService = useActivationStore(state => state.setSelectedService);
 
     const handleSelectService = (service: ServicesType) => {
         if (selectedService.includes(service))
-            return setSelectedService(selectedService.filter(s => s !== service));
+            return setSelectedService(() => selectedService.filter(s => s !== service));
         setSelectedService(prev => [...prev, service]);
     };
 
-    const isClinicActivated: boolean =
-        centers.find((center: { type_id: number }) => center.type_id === 1)?.is_active_booking ??
-        false;
-
-    const isConsultActivated: boolean = getCookie('consult_activated') === 'true';
-
     const handleSubmit = () => {
         const url = ActivationPaths[selectedService[0]];
-        selectedService.forEach(service => {
+        if (selectedService.length > 1)
             getSplunkInstance().sendEvent({
-                group: 'register',
-                type: `register-${service}`
+                group: 'activation',
+                type: `click-${selectedService.sort().reverse().join('&')}`
             });
-        });
+        else
+            getSplunkInstance().sendEvent({
+                group: 'activation',
+                type: `click-${selectedService[0]}`
+            });
+
         router.push(url);
     };
 
     return (
         <Container
             maxWidth="sm"
-            className="h-full !p-0 md:h-auto md:bg-white md:!p-5 rounded-md pt-4 md:mt-8 md:shadow-md"
+            className="h-full !p-0 md:h-auto md:bg-white md:!p-5 rounded-md pt-4 md:mt-14 md:shadow-2xl md:shadow-slate-300"
         >
             <Stack
                 justifyContent="center"
@@ -82,34 +81,23 @@ const Activation = () => {
                     خدماتی که تمایل به فعالسازی آن دارید انتخاب نمایید.
                 </Typography>
                 <List className="space-y-3 !mt-3">
-                    {!isClinicActivated && (
-                        <Service
-                            title="نوبت دهی مطب"
-                            description="مدیریت نوبت دهی بیماران مطب"
-                            type="office"
-                            selected={selectedService.includes('office')}
-                            onSelect={handleSelectService}
-                        />
-                    )}
-                    {!isConsultActivated && (
-                        <Service
-                            title="مشاوره آنلاین"
-                            description="ویزیت آنلاین بیماران از سراسر دنیا"
-                            type="consult"
-                            selected={selectedService.includes('consult')}
-                            onSelect={handleSelectService}
-                        />
-                    )}
                     <Service
-                        title="نسخه نویسی آنلاین"
-                        description="صدور آنلاین نسخه های بیماران"
-                        type="prescription"
-                        selected={selectedService.includes('prescription')}
+                        title="نوبت دهی مطب"
+                        description="مدیریت نوبت دهی بیماران مطب"
+                        type="office"
+                        selected={selectedService.includes('office')}
+                        onSelect={handleSelectService}
+                    />
+                    <Service
+                        title="مشاوره آنلاین"
+                        description="ویزیت آنلاین بیماران از سراسر دنیا"
+                        type="consult"
+                        selected={selectedService.includes('consult')}
                         onSelect={handleSelectService}
                     />
                 </List>
             </Stack>
-            <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
+            <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                 <Button
                     fullWidth
                     variant="contained"

@@ -9,12 +9,14 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { toast } from 'react-toastify';
 import { useMediaQuery } from 'react-responsive';
+import useShouldShowActionBars from '../../hooks/useShouldShowActionBars';
 
 const Wrapper = ({ children }) => {
     const [info] = useDrApp();
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const [isOffline, setIsOffline] = useState(false);
     const isLogined = info.doctor ? true : false;
+    const shouldShowActionBars = useShouldShowActionBars();
 
     useEffect(() => {
         window.addEventListener('offline', () => {
@@ -46,11 +48,11 @@ const Wrapper = ({ children }) => {
                 })}
                 id="wrapper"
             >
-                {isLogined && !isMobile && <SideBar />}
+                {isLogined && !isMobile && shouldShowActionBars && <SideBar />}
                 <div className={styles['article']}>
                     {isLogined && <Header />}
                     {children}
-                    {isLogined && <BottomBar />}
+                    {isLogined && shouldShowActionBars && <BottomBar />}
                 </div>
             </div>
         </ErrorBoundary>

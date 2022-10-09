@@ -6,10 +6,8 @@ import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
 
 import {
     CardIcon,
-    PrescriptionIcon,
     InfoIcon,
     ExitIcon,
-    ChatIcon,
     MessageIcon,
     PrescriptionMenuIcon,
     HouseIcon,
@@ -17,7 +15,6 @@ import {
     SettingIcon,
     Statistics
 } from '@paziresh24/shared/icon';
-import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
 import { useMenu } from '@paziresh24/context/core/menu';
 import { baseURL } from '@paziresh24/utils/baseUrl';
 import { CSSTransition } from 'react-transition-group';
@@ -26,7 +23,8 @@ import { StatusBar } from '../../turning/statusBar';
 import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useTour } from '@reactour/tour';
-import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
+import { useGetPaymentSetting } from '../../../apis/payment/useGetPaymentSetting';
 
 const SideBar = memo(() => {
     const [open, setOpen] = useMenu();
@@ -36,6 +34,13 @@ const SideBar = memo(() => {
     const [info] = useDrApp();
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
     const [menuItems, setMenuItems] = useState([]);
+    const paymentSetting = usePaymentSettingStore(state => state.setting);
+    const getPaymentSetting = useGetPaymentSetting({ center_id: info?.center?.id });
+
+    useEffect(() => {
+        getPaymentSetting.remove();
+        getPaymentSetting.refetch();
+    }, [info.center]);
 
     useEffect(() => {
         if (level === 'DOCTOR') {
@@ -57,56 +62,27 @@ const SideBar = memo(() => {
                     }
                 },
                 {
-                    id: '50',
-                    shouldShow: window._env_.P24_STATISTICS_API,
-                    name: 'گزارش نسخه نویسی',
-                    icon: <Statistics color="#000" />,
-                    link: '/dashboard'
-                },
-                {
-                    id: 10,
-                    name: 'نسخه های ثبت شده',
-                    shouldShow: true,
+                    id: '52',
+                    name: 'نسخه نویسی',
                     icon: <PrescriptionMenuIcon color="#000" />,
-                    onClick: () =>
-                        getSplunkInstance().sendEvent({
-                            group: 'sidebar',
-                            type: 'click-prescription-menu'
-                        }),
-                    link: '/prescription'
-                },
-                {
-                    id: 25,
-                    name: 'پراستفاده ها',
                     shouldShow: true,
-                    icon: <StarIcon color="#000" />,
                     subMenu: [
+                        {
+                            name: 'نسخه های ثبت شده',
+                            link: '/prescription'
+                        },
+                        {
+                            name: 'بیمه های من',
+                            link: '/providers'
+                        },
                         { name: 'نسخه پراستفاده', link: '/favorite/templates' },
-                        { name: 'اقلام پراستفاده', link: '/favorite/service' }
+                        { name: 'اقلام پراستفاده', link: '/favorite/service' },
+                        {
+                            name: 'گزارش نسخه نویسی',
+                            link: '/dashboard',
+                            shouldShow: window._env_.P24_STATISTICS_API
+                        }
                     ]
-                },
-                {
-                    id: 7,
-                    name: 'قوانین مشاوره',
-                    shouldShow: info.center.id === '5532',
-                    icon: <InfoIcon color="#000" />,
-                    link: '/consult-term'
-                },
-                {
-                    id: 'provider-step',
-                    name: 'بیمه های من',
-                    shouldShow: true,
-                    icon: <PrescriptionIcon color="#000" />,
-                    link: `/providers`,
-                    onClick: () =>
-                        getSplunkInstance().sendEvent({
-                            group: 'sidebar',
-                            type: 'click-providers-menu'
-                        }),
-                    tourStep: {
-                        key: 1,
-                        value: '?learn=true'
-                    }
                 },
                 {
                     id: 8,
@@ -116,7 +92,35 @@ const SideBar = memo(() => {
                         info.center.id === '5532',
                     icon: <SettingIcon color="#000" />,
 
-                    link: info.center.id === CONSULT_CENTER_ID ? '/turning/setting/' : '/setting'
+                    link: '/setting'
+                },
+                {
+                    id: 6,
+                    name: 'پرداخت',
+                    shouldShow:
+                        (info.center.id === '5532' || info.center.type_id === 1) &&
+                        paymentSetting.active,
+                    icon: <CardIcon color="#000" />,
+                    subMenu: [
+                        { name: 'تسویه حساب', link: '/financial' },
+                        { name: 'تنظیمات پرداخت', link: '/setting/payment' }
+                    ]
+                },
+                {
+                    id: 65,
+                    name: 'فعالسازی پرداخت',
+                    shouldShow:
+                        (info.center.id === '5532' || info.center.type_id === 1) &&
+                        !paymentSetting.active,
+                    icon: <CardIcon color="#000" />,
+                    link: '/setting/payment'
+                },
+                {
+                    id: 7,
+                    name: 'قوانین مشاوره',
+                    shouldShow: info.center.id === '5532',
+                    icon: <InfoIcon color="#000" />,
+                    link: '/consult-term'
                 },
                 {
                     id: 11,
@@ -127,19 +131,59 @@ const SideBar = memo(() => {
                     badge: true
                 },
                 {
-                    id: 6,
-                    name: 'تسویه حساب',
-                    shouldShow: info.center.id === '5532' || info.center.type_id === 1,
-                    icon: <CardIcon color="#000" />,
-                    link: '/financial'
-                },
-                {
                     id: 23,
                     name: 'خروج',
                     shouldShow: true,
                     icon: <ExitIcon color="#000" />,
                     link: '/logout'
                 }
+                // {
+                //     id: 10,
+                //     name: 'نسخه های ثبت شده',
+                //     shouldShow: true,
+                //     icon: <PrescriptionMenuIcon color="#3F3F79" />,
+                //     onClick: () =>
+                //         getSplunkInstance().sendEvent({
+                //             group: 'sidebar',
+                //             type: 'click-prescription-menu'
+                //         }),
+                //     link: '/prescription'
+                // },
+                // {
+                //     id: 25,
+                //     name: 'پراستفاده ها',
+                //     shouldShow: true,
+                //     icon: <StarIcon color="#3F3F79" />,
+                //     // link: '/favorite/templates',
+                //     subMenu: [
+                //         { name: 'نسخه پراستفاده', link: '/favorite/templates' },
+                //         { name: 'اقلام پراستفاده', link: '/favorite/service' }
+                //     ]
+                // },
+                // {
+                //     id: 4,
+                //     name: 'چت',
+                //     shouldShow: info.center.id === '5532',
+                //     icon: <ChatIcon color="#3F3F79" />,
+                //     link: '/consult'
+                // },
+
+                // {
+                //     id: 'provider-step',
+                //     name: 'بیمه های من',
+                //     shouldShow: true,
+                //     icon: <PrescriptionIcon color="#3F3F79" />,
+                //     link: `/providers`,
+                //     onClick: () =>
+                //         getSplunkInstance().sendEvent({
+                //             group: 'sidebar',
+                //             type: 'click-providers-menu'
+                //         }),
+                //     tourStep: {
+                //         key: 1,
+                //         value: '?learn=true'
+                //     }
+                // },
             ]);
         }
         return setMenuItems([
@@ -158,7 +202,7 @@ const SideBar = memo(() => {
                 link: '/logout'
             }
         ]);
-    }, [info.center]);
+    }, [info.center, paymentSetting]);
 
     useEffect(() => {
         if (localStorage.getItem('shouldFillProfile')) {
@@ -191,7 +235,7 @@ const SideBar = memo(() => {
                 }}
                 className="bg-white flex flex-col py-3 px-1 gap-4 justify-between z-10 border border-left border-solid border-[#e5e9f0] transition-all duration-300 h-screen"
             >
-                <div className="flex flex-col gap-6 w-full">
+                <div className="flex flex-col w-full gap-6">
                     <div
                         style={{
                             marginRight: open ? '1rem' : 0
@@ -203,7 +247,7 @@ const SideBar = memo(() => {
                                 e.stopPropagation();
                                 setIsDropDownOpen(prev => !prev);
                             }}
-                            className="flex w- self-center items-center transition-all duration-300 cursor-pointer"
+                            className="flex items-center self-center transition-all duration-300 cursor-pointer w-"
                         >
                             <div className="flex flex-col w-[4.5rem] h-[4.5rem] justify-center items-center">
                                 <img
@@ -217,7 +261,7 @@ const SideBar = memo(() => {
                                         width: open ? '4.5rem' : '2.5rem',
                                         height: open ? '4.5rem' : '2.5rem'
                                     }}
-                                    className="self-center overflow-hidden rounded-full transition-all duration-300"
+                                    className="self-center overflow-hidden transition-all duration-300 rounded-full"
                                     alt="avatar"
                                 />
                             </div>
@@ -232,10 +276,10 @@ const SideBar = memo(() => {
                                 }}
                                 className="flex flex-col justify-center transition-all duration-300 absolute text-[#3F3F79] w-40"
                             >
-                                <span className="font-bold line-clamp-1 w-11/12">
+                                <span className="w-11/12 font-bold line-clamp-1">
                                     {`${info.doctor?.name} ${info.doctor?.family}`}
                                 </span>
-                                <span className="text-sm font-normal mt-2">
+                                <span className="mt-2 text-sm font-normal">
                                     {info.doctor?.expertises?.length > 0 && (
                                         <span className="line-clamp-1">
                                             {info.doctor.expertises[0].alias_title
@@ -307,7 +351,7 @@ const SideBar = memo(() => {
                             transitionDelay: !open ? 'unset' : '0.2s',
                             opacity: open ? '1' : '0'
                         }}
-                        className="flex items-center justify-center absolute bottom-24 transition-all duration-300 pr-6"
+                        className="absolute flex items-center justify-center pr-6 transition-all duration-300 bottom-24"
                     >
                         <span className="font-bold opacity-60">پشتیبانی: 02125015555</span>
                     </a>
@@ -315,7 +359,7 @@ const SideBar = memo(() => {
                         style={{
                             paddingRight: open ? '1rem' : '0'
                         }}
-                        className="flex w-full items-center transition-all duration-300 relative"
+                        className="relative flex items-center w-full transition-all duration-300"
                     >
                         <div className="flex items-center justify-center w-16 h-10">
                             <svg

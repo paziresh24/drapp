@@ -12,7 +12,7 @@ import LoginHero from '@components/login/loginHero';
 import Form from '@components/login/form';
 import Helmet from 'react-helmet';
 import * as serviceWorkerRegistration from '../../../serviceWorkerRegistration';
-import AppInstallBanner from '@components/molecules/appInstallBanner';
+import AppInstallBanner from '@components/appInstallBanner';
 import { sendEventWhenUseApp } from 'apps/drapp/src/functions/sendEventWhenUseApp';
 import { Mobile } from '@paziresh24/hooks/device';
 

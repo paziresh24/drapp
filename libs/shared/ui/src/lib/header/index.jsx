@@ -9,7 +9,7 @@ import { useSupport } from '@paziresh24/context/core/supportChat';
 import ReactTooltip from 'react-tooltip';
 import { usePage } from '@paziresh24/context/core/page';
 import Modal from '@paziresh24/shared/ui/modal';
-import Button from '@paziresh24/shared/ui/button';
+import Button from '@mui/lab/LoadingButton';
 import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
@@ -17,6 +17,8 @@ import { CSSTransition } from 'react-transition-group';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMediaQuery } from 'react-responsive';
+import useShouldShowActionBars from '@hooks/useShouldShowActionBars';
+import { getCookie } from '@paziresh24/utils/cookie';
 
 const Header = memo(() => {
     const history = useHistory();
@@ -28,6 +30,7 @@ const Header = memo(() => {
     const [centerActiveModal, setCenterActiveModal] = useState(false);
     const createCenter = useCreateCenter();
     const [supportModal, setSupportModal] = useSupport();
+    const shouldShowActionBars = useShouldShowActionBars();
 
     const location = useLocation();
     const [hideToolTip, setHideToolTip] = useState(
@@ -68,50 +71,65 @@ const Header = memo(() => {
         <>
             <header className="flex justify-between items-center h-16 bg-white px-3 pl-1 border-b border-solid border-[#e5e9f0] z-[8]">
                 <div>
-                    {!isMobile && (
+                    {!isMobile && shouldShowActionBars && (
                         <IconButton onClick={() => setIsOpen(prev => !prev)}>
                             <MenuIcon sx={{ fontSize: '20px', color: '#000' }}></MenuIcon>
                         </IconButton>
                     )}
-                    <span className="font-bold pr-3">{page.title}</span>
+                    <span className="pr-3 font-bold">{page.title}</span>
                 </div>
                 <div className="flex items-center">
-                    <div className="hidden lg:flex items-center space-s-3">
-                        <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
-                        <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
-                            از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب کنید
-                        </ReactTooltip>
+                    <div className="items-center hidden lg:flex space-s-3">
+                        {shouldShowActionBars && (
+                            <>
+                                <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
+                                <ReactTooltip
+                                    id="centerSelect"
+                                    place="top"
+                                    type="dark"
+                                    effect="solid"
+                                >
+                                    از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب
+                                    کنید
+                                </ReactTooltip>
 
-                        <div
-                            className={styles.centerSelectInput}
-                            onClick={e => {
-                                e.stopPropagation();
-                                setIsCenterSelectOpen(true);
-                            }}
-                            aria-hidden
-                        >
-                            <div>
-                                <span className="flex">
-                                    {info.centers.find(
-                                        item => item.id == localStorage.getItem('center_id')
-                                    )
-                                        ? info.centers.find(
-                                              item => item.id == localStorage.getItem('center_id')
-                                          ).name
-                                        : info.center.name}
-                                </span>
-                                {info.center.type_id === 1 && !info.center?.is_active_booking && (
-                                    <span className={`text-xs !text-[#27bda0] ${styles.flicker}`}>
-                                        فعالسازی نوبت دهی
-                                    </span>
-                                )}
-                            </div>
-                            <ChevronIcon
-                                className={styles.chevron_dropdown}
-                                color="#758599"
-                                dir={isCenterSelectOpen ? 'top' : 'bottom'}
-                            />
-                        </div>
+                                <div
+                                    className={styles.centerSelectInput}
+                                    onClick={e => {
+                                        e.stopPropagation();
+                                        setIsCenterSelectOpen(true);
+                                    }}
+                                    aria-hidden
+                                >
+                                    <div>
+                                        <span className="flex">
+                                            {info.centers.find(
+                                                item => item.id == localStorage.getItem('center_id')
+                                            )
+                                                ? info.centers.find(
+                                                      item =>
+                                                          item.id ==
+                                                          localStorage.getItem('center_id')
+                                                  ).name
+                                                : info.center.name}
+                                        </span>
+                                        {info.center.type_id === 1 &&
+                                            !info.center?.is_active_booking && (
+                                                <span
+                                                    className={`text-xs !text-[#27bda0] ${styles.flicker}`}
+                                                >
+                                                    فعالسازی نوبت دهی
+                                                </span>
+                                            )}
+                                    </div>
+                                    <ChevronIcon
+                                        className={styles.chevron_dropdown}
+                                        color="#758599"
+                                        dir={isCenterSelectOpen ? 'top' : 'bottom'}
+                                    />
+                                </div>
+                            </>
+                        )}
 
                         <CSSTransition
                             in={isCenterSelectOpen}
@@ -241,14 +259,15 @@ const Header = memo(() => {
                                             </div>
                                         </div>
                                         {center.type_id === 1 && !center?.is_active_booking && (
-                                            <button
-                                                className={styles.activeOfficeType}
-                                                onClick={e => {
-                                                    history.push('/fill-info');
+                                            <Button
+                                                size="small"
+                                                variant="contained"
+                                                onClick={() => {
+                                                    history.push('/activation/office/center');
                                                 }}
                                             >
                                                 فعال سازی
-                                            </button>
+                                            </Button>
                                         )}
                                     </div>
                                 ))}
@@ -293,17 +312,21 @@ const Header = memo(() => {
                                                 </span>
                                             </div>
                                         </div>
-
-                                        <button
-                                            className={styles.activeOfficeType}
-                                            onClick={e => {
-                                                e.stopPropagation();
-
-                                                history.push('/consult/fill-info');
-                                            }}
-                                        >
-                                            فعال سازی
-                                        </button>
+                                        {getCookie('CONSULT_ACTIVATION_PENDING') ? (
+                                            <Button size="small" variant="contained">
+                                                در حال بررسی
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                size="small"
+                                                variant="contained"
+                                                onClick={() => {
+                                                    history.push('/activation/consult/whatsapp');
+                                                }}
+                                            >
+                                                فعال سازی
+                                            </Button>
+                                        )}
                                     </div>
                                 )}
                                 {isEmpty(info.centers.find(center => center.type_id === 1)) && (
@@ -335,8 +358,9 @@ const Header = memo(() => {
                                             </div>
                                         </div>
 
-                                        <button
-                                            className={styles.activeOfficeType}
+                                        <Button
+                                            size="small"
+                                            variant="contained"
                                             onClick={e => {
                                                 e.stopPropagation();
 
@@ -345,7 +369,7 @@ const Header = memo(() => {
                                             }}
                                         >
                                             فعال سازی
-                                        </button>
+                                        </Button>
                                     </div>
                                 )}
                             </div>
@@ -361,15 +385,16 @@ const Header = memo(() => {
                             </span>
                             <div style={{ display: 'flex', gap: '1rem' }}>
                                 <Button
-                                    block
+                                    fullWidth
+                                    variant="contained"
                                     onClick={createCenterAction}
                                     loading={createCenter.isLoading}
                                 >
                                     ساخت مطب
                                 </Button>
                                 <Button
-                                    block
-                                    variant="secondary"
+                                    fullWidth
+                                    variant="outlined"
                                     onClick={() => setCenterActiveModal(false)}
                                 >
                                     انصراف

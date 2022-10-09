@@ -2,11 +2,10 @@
     .root {
         .mask {
             max-width: 420px;
-            margin: 4.75rem auto;
-            max-height: calc(100% - 9.5rem);
-            min-height: calc(100% - 9.5rem);
+            margin: 0rem auto;
+            max-height: calc(100%);
+            min-height: calc(100%);
             justify-content: center !important;
-            padding-bottom: 8rem;
             padding-top: 0 !important;
         }
         .wrap {
@@ -102,6 +101,18 @@
             grid-gap: 1rem;
             height: 100%;
             overflow: auto;
+
+            &::-webkit-scrollbar {
+                width: 0.4rem;
+            }
+            &::-webkit-scrollbar-track {
+                background: rgb(236, 240, 243);
+                border-radius: 100px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: rgb(212, 217, 221);
+                border-radius: 100px;
+            }
 
             &.scrollable {
                 overflow-y: auto;

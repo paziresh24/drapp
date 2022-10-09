@@ -12,7 +12,7 @@ const Phone = () => {
                 fill="#27BDA0"
                 fill-opacity="0.15"
                 stroke="#27BDA0"
-                stroke-width="2"
+                strokeWidth="2"
             />
         </svg>
     );

@@ -52,8 +52,8 @@ const MenuItem = ({ item }) => {
                     onClick={
                         item?.subMenu
                             ? e => {
-                                  e.stopPropagation();
-                                  setIsDropDownOpen(prev => !prev);
+                                  //   / e.stopPropagation();
+                                  setTimeout(() => setIsDropDownOpen(prev => !prev), 0);
                               }
                             : item?.onClick
                     }
@@ -90,11 +90,14 @@ const MenuItem = ({ item }) => {
                             isDropDownOpen === 'open' ? styles.open : ''
                         } ${isDropDownOpen === 'closing' ? styles.closing : ''}`}
                     >
-                        {item.subMenu.map(item => (
-                            <Link key={item.link} to={item.link}>
-                                <span>{item.name}</span>
-                            </Link>
-                        ))}
+                        {item.subMenu.map(
+                            item =>
+                                (item.shouldShow === undefined || item.shouldShow) && (
+                                    <Link key={item.link} to={item.link}>
+                                        <span>{item.name}</span>
+                                    </Link>
+                                )
+                        )}
                     </div>
                 </CSSTransition>
             )}

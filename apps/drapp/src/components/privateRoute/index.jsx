@@ -11,7 +11,6 @@ import Modal from '@paziresh24/shared/ui/modal';
 // HOOKS
 import { Route, useHistory, useLocation } from 'react-router-dom';
 import { getToken } from '@paziresh24/utils/localstorage';
-import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import classNames from 'classnames';
 import { useGetUserGoftino, useSetUserGoftino } from '@paziresh24/hooks/drapp/goftino';
 import Helmet from 'react-helmet';
@@ -25,6 +24,9 @@ import ErrorByRefresh from '@paziresh24/shared/ui/errorByRefresh';
 import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/useGetLevel.hook';
 import { useLevel } from '@paziresh24/context/core/level';
 import OtpCodePresciprion from '../otpCodePrescription/otpCodePrescription';
+import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
+import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
+import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -32,7 +34,8 @@ const PrivateRoute = props => {
 
     const [, setPage] = usePage();
     const [centersDoctor, setCentersDoctor] = useState([]);
-    const centerInfo = useGetCenterInfo();
+    const getCentersDoctor = useGetCentersDoctor();
+
     const getLevels = useGetLevels();
 
     const doctorInfo = useGetDoctorInfo({
@@ -46,81 +49,46 @@ const PrivateRoute = props => {
     const setUserGoftino = useSetUserGoftino();
     const getLatestVersion = useGetLatestVersion();
     const [isError, setIsError] = useState(false);
+    const setPrescriptionSetting = usePrescriptionSettingStore(state => state.setSetting);
     const [isLoading, setIsLoading] = useState(false);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         setPage(props);
         if (isEmpty(info) && !isEmpty(getToken())) {
+            if (location.hostname.includes('sum'))
+                setPrescriptionSetting({
+                    editProviders: false
+                });
             if (props.path !== '/create-center') {
-                centerInfo.refetch();
-                setIsLoading(true);
+                handleGetCenters();
             }
             getUserGoftino.refetch();
             window._env_.P24_STATISTICS_API && getLevels.refetch();
         }
     }, []);
 
+    const handleGetCenters = async () => {
+        const centers = await getCentersDoctor.refetch();
+        setCentersDoctor([centers[0]]);
+    };
+
     useEffect(() => {
-        if (getLevels.isSuccess && doctorInfo.isSuccess && centerInfo.isSuccess) {
+        if (getLevels.isSuccess && doctorInfo.isSuccess && getCentersDoctor.status.success) {
             const level = getLevels.data.data?.[0]?.user_level ?? 'DOCTOR';
             setLevel(level);
             if ((props.path !== '/dashbord' || props.path !== '/logout') && level !== 'DOCTOR') {
                 history.replace('/dashboard');
             }
         }
-    }, [getLevels.status, doctorInfo.status, centerInfo.status]);
-
-    useEffect(() => {
-        if (!info && centerInfo.isSuccess) {
-            let center;
-            const centers = centerInfo.data.data;
-
-            const isPrescriptionLocalInstallFieldAvailable =
-                centers[0]?.prescription_local_install !== undefined;
-
-            const isAllHospitalCentersNotInstalledPrescriptionLocal =
-                centers
-                    .filter(item => item.type_id !== 1 && item.id !== '5532')
-                    .every(item => item?.prescription_local_install === false) &&
-                !centers.some(item => item.type_id === 1 || item.id === '5532');
-
-            if (
-                (!window._env_.P24_IS_PROXY_CENTER &&
-                    isPrescriptionLocalInstallFieldAvailable &&
-                    isAllHospitalCentersNotInstalledPrescriptionLocal) ||
-                isEmpty(centers)
-            )
-                return history.push('/create-center');
-
-            if (isEmpty(centers.find(item => item.id === localStorage.getItem('center_id')))) {
-                center = centerInfo.data.data[0];
-                localStorage.setItem('center_id', center.id);
-            } else {
-                center = centerInfo.data.data.find(
-                    item => item.id === localStorage.getItem('center_id')
-                );
-            }
-            const centerConsult = centerInfo.data.data.find(center => center.id === '5532') ?? {};
-            const onlyConsult = centerConsult.id === '5532' && isEmpty(center);
-            setCentersDoctor(prev => [...prev, center]);
-
-            setInfo({
-                centers,
-                center,
-                centerConsult,
-                onlyConsult
-            });
-        }
-        if (centerInfo.isError) {
-            setIsLoading(false);
-        }
-    }, [centerInfo.status]);
+    }, [getLevels.status, doctorInfo.status, getCentersDoctor.status.success]);
 
     useEffect(() => {
         if (!isEmpty(centersDoctor)) {
-            doctorInfo.refetch();
+            if (getCentersDoctor.status.success && centersDoctor.length !== 0) {
+                doctorInfo.refetch();
+            }
         }
-    }, [centersDoctor]);
+    }, [getCentersDoctor.status, centersDoctor]);
 
     useEffect(() => {
         if (doctorInfo.isSuccess) {
@@ -200,7 +168,15 @@ const PrivateRoute = props => {
             <Helmet>
                 <title>{props.title}</title>
             </Helmet>
-            <ErrorByRefresh show={centerInfo.isError || isError} />
+            <Loading
+                show={
+                    !info.doctor &&
+                    !getCentersDoctor.status.error &&
+                    !isError &&
+                    props.path !== '/create-center'
+                }
+            />
+            <ErrorByRefresh show={getCentersDoctor.status.error || isError} />
             <div
                 className={classNames({
                     [styles['inner']]: true,
@@ -235,10 +211,10 @@ const PrivateRoute = props => {
                 )}
             </div>
             <Modal title="تغییرات اخیر" isOpen={changeLogModal} onClose={setChangeLogModal}>
-                <span className="text-gray-500 font-medium text-sm pr-3 whitespace-pre-line leading-8 border-r-2 border-solid border-gray-300">
+                <span className="pr-3 text-sm font-medium leading-8 text-gray-500 whitespace-pre-line border-r-2 border-gray-300 border-solid">
                     {getLatestVersion.isSuccess && getLatestVersion.data.changeLog}
                 </span>
-                <span className="text-sm font-medium text-gray-300 mx-auto">
+                <span className="mx-auto text-sm font-medium text-gray-300">
                     {getLatestVersion.isSuccess && getLatestVersion.data.name}
                 </span>
             </Modal>

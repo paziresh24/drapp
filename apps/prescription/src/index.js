@@ -204,72 +204,72 @@ const steps = [
     }
 ];
 
-ReactDOM.render(
-    <Provider>
-        <TourProvider
-            steps={steps}
-            showBadge={false}
-            showCloseButton={false}
-            disableFocusLock={true}
-            scrollSmooth={true}
-            rtl={true}
-            onClickMask={e => {
-                return;
-            }}
-            prevButton={fn => {
-                let interval = 0;
-                if (!steps.find(item => item.id === fn.currentStep)?.buttonText) {
-                    interval = setInterval(() => {
-                        if (document.querySelector("[aria-label^='Go to next step']")) {
-                            document.querySelector(
-                                "[aria-label^='Go to next step']"
-                            ).style.display = 'none';
-                            document.querySelector('.reactour__popover > div').style.display =
-                                'none';
-                            clearInterval(interval);
-                        }
-                    }, 100);
-                } else {
-                    interval = setInterval(() => {
-                        if (document.querySelector("[aria-label^='Go to next step']")) {
-                            document.querySelector(
-                                "[aria-label^='Go to next step']"
-                            ).style.display = 'flex';
-                            document.querySelector("[aria-label^='Go to next step']").dataset.text =
-                                steps.find(item => item.id === fn.currentStep)?.buttonText;
-                            document.querySelector(
-                                "[aria-label^='Go to next step']"
-                            ).style.display = 'flex';
-                            if (steps.find(item => item.id === fn.currentStep)?.buttonFn) {
-                                document
-                                    .querySelector("[aria-label^='Go to next step']")
-                                    .addEventListener('click', e => {
-                                        e.stopPropagation();
-                                        fn.setIsOpen(false);
-                                        steps.find(item => item.id === fn.currentStep)?.buttonFn();
-                                    });
-                            }
-                            if (steps.find(item => item.id === fn.currentStep)?.nextStep) {
-                                document
-                                    .querySelector("[aria-label^='Go to next step']")
-                                    .addEventListener('click', e => {
-                                        e.stopPropagation();
-                                        fn.setCurrentStep(
-                                            steps.find(item => item.id === fn.currentStep)?.nextStep
-                                        );
-                                    });
-                            }
-                            clearInterval(interval);
-                        }
-                    }, 100);
-                }
-            }}
-            // showNavigation={false}
-        >
-            <App />
-        </TourProvider>
-    </Provider>,
-    document.getElementById('root')
-);
+// ReactDOM.render(
+//     <Provider>
+//         <TourProvider
+//             steps={steps}
+//             showBadge={false}
+//             showCloseButton={false}
+//             disableFocusLock={true}
+//             scrollSmooth={true}
+//             rtl={true}
+//             onClickMask={e => {
+//                 return;
+//             }}
+//             prevButton={fn => {
+//                 let interval = 0;
+//                 if (!steps.find(item => item.id === fn.currentStep)?.buttonText) {
+//                     interval = setInterval(() => {
+//                         if (document.querySelector("[aria-label^='Go to next step']")) {
+//                             document.querySelector(
+//                                 "[aria-label^='Go to next step']"
+//                             ).style.display = 'none';
+//                             document.querySelector('.reactour__popover > div').style.display =
+//                                 'none';
+//                             clearInterval(interval);
+//                         }
+//                     }, 100);
+//                 } else {
+//                     interval = setInterval(() => {
+//                         if (document.querySelector("[aria-label^='Go to next step']")) {
+//                             document.querySelector(
+//                                 "[aria-label^='Go to next step']"
+//                             ).style.display = 'flex';
+//                             document.querySelector("[aria-label^='Go to next step']").dataset.text =
+//                                 steps.find(item => item.id === fn.currentStep)?.buttonText;
+//                             document.querySelector(
+//                                 "[aria-label^='Go to next step']"
+//                             ).style.display = 'flex';
+//                             if (steps.find(item => item.id === fn.currentStep)?.buttonFn) {
+//                                 document
+//                                     .querySelector("[aria-label^='Go to next step']")
+//                                     .addEventListener('click', e => {
+//                                         e.stopPropagation();
+//                                         fn.setIsOpen(false);
+//                                         steps.find(item => item.id === fn.currentStep)?.buttonFn();
+//                                     });
+//                             }
+//                             if (steps.find(item => item.id === fn.currentStep)?.nextStep) {
+//                                 document
+//                                     .querySelector("[aria-label^='Go to next step']")
+//                                     .addEventListener('click', e => {
+//                                         e.stopPropagation();
+//                                         fn.setCurrentStep(
+//                                             steps.find(item => item.id === fn.currentStep)?.nextStep
+//                                         );
+//                                     });
+//                             }
+//                             clearInterval(interval);
+//                         }
+//                     }, 100);
+//                 }
+//             }}
+//             // showNavigation={false}
+//         >
+//             <App />
+//         </TourProvider>
+//     </Provider>,
+//     document.getElementById('root')
+// );
 
 serviceWorkerRegistration.register();

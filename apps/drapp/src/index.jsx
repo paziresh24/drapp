@@ -19,38 +19,17 @@ const cacheRtl = createCache({
     stylisPlugins: [prefixer, rtlPlugin]
 });
 
-const steps = [
-    {
-        id: 0,
-        selector: '#profile-dropdown',
-        content: 'به منظور شناخت بهتر بیماران، بیوگرافی خود را تکمیل نمایید.'
-    }
-];
-
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
 root.render(
-    <TourProvider
-        steps={steps}
-        showBadge={false}
-        showCloseButton={false}
-        disableFocusLock={true}
-        scrollSmooth={true}
-        rtl={true}
-        showNavigation={false}
-        onClickMask={() => {
-            return;
-        }}
-    >
-        <CacheProvider value={cacheRtl}>
-            <ThemeProvider theme={theme}>
-                <Provider>
-                    <App />
-                </Provider>
-            </ThemeProvider>
-        </CacheProvider>
-    </TourProvider>
+    <CacheProvider value={cacheRtl}>
+        <ThemeProvider theme={theme}>
+            <Provider>
+                <App />
+            </Provider>
+        </ThemeProvider>
+    </CacheProvider>
 );
 
 serviceWorkerRegistration.register();
