@@ -13,8 +13,8 @@ import { ReplyCard } from '../replyCard';
 import { toast } from 'react-toastify';
 import Chips from '@paziresh24/shared/ui/chips';
 
-import Male from '@paziresh24/assets/images/drapp/male.png';
-import Female from '@paziresh24/assets/images/drapp/female.png';
+import Male from '@assets/image/male.png';
+import Female from '@assets/image/female.png';
 import { sendEventForFeedbacks } from '../../../functions/sendEventForFeedbacks';
 
 const FeedbackCard = ({ feedback }) => {

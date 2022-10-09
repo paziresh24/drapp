@@ -1,8 +1,8 @@
 import { isMobile } from 'react-device-detect';
-import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
-import taminLogo from '@paziresh24/assets/images/drapp/provider/tamin.png';
-import salamatLogo from '@paziresh24/assets/images/drapp/provider/salamat.png';
-import govLogo from '@paziresh24/assets/images/drapp/provider/gov.png';
+import centersConfig from '@configs/centers.json';
+import taminLogo from '@assets/image/provider/tamin.png';
+import salamatLogo from '@assets/image/provider/salamat.png';
+import govLogo from '@assets/image/provider/gov.png';
 import { useLongPress } from 'react-use';
 
 const LoginHero = ({ focus }) => {

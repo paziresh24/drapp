@@ -1,9 +1,8 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Mobile } from '@paziresh24/hooks/core/device';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { memo, useState } from 'react';
 import { SettingIcon } from '@paziresh24/shared/icon';
-import { useDrApp } from '@paziresh24/context/drapp';
 
 export const BottomBar = () => {
     const router = useLocation();

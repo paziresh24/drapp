@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { routes } from './routes';
 import Helmet from 'react-helmet';
-import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
+import centersConfig from '@configs/centers.json';
 
 import PrivateRoute from '@components/privateRoute';
 import Provider from '@components/provider';

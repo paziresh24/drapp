@@ -138,22 +138,6 @@ export const routes = [
         exact: true
     },
     {
-        path: '/complaints/',
-        name: 'Complaints',
-        title: 'شکایات',
-        component: lazy(() => import('./complaints')),
-        isPrivate: true,
-        exact: true
-    },
-    {
-        path: '/consult/',
-        name: 'Consult',
-        title: 'چت مشاوره',
-        component: lazy(() => import('./consult')),
-        isPrivate: true,
-        exact: true
-    },
-    {
         path: '/consult-term/',
         name: 'ConsultTerm',
         title: 'قوانین و مقررات',
@@ -165,7 +149,7 @@ export const routes = [
         path: '/prescription/',
         name: 'Prescription',
         title: 'نسخه های ثبت شده',
-        component: lazy(() => import('./prescription')),
+        component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/home')),
         isPrivate: true,
         exact: true
     },
@@ -239,22 +223,7 @@ export const routes = [
         isPrivate: true,
         exact: false
     },
-    {
-        path: '/fill-info/',
-        name: 'FillInfo',
-        title: 'فعال سازی نوبت دهی',
-        component: lazy(() => import('./fillInfo')),
-        isPrivate: true,
-        exact: false
-    },
-    {
-        path: '/consult/fill-info/',
-        name: 'FillInfo',
-        title: 'ثبت نام ویزیت آنلاین',
-        component: lazy(() => import('./consultRegister')),
-        isPrivate: true,
-        exact: false
-    },
+
     {
         path: '/financial/',
         name: 'Financial',

@@ -22,8 +22,8 @@ module.exports = {
             'pages': path.resolve(__dirname, 'src/pages'),
             '@utils': path.resolve(__dirname, 'src/utils'),
             'utils': path.resolve(__dirname, 'src/utils'),
-            '@config': path.resolve(__dirname, 'src/config'),
-            'config': path.resolve(__dirname, 'src/config')
+            '@configs': path.resolve(__dirname, 'src/configs'),
+            'configs': path.resolve(__dirname, 'src/configs')
         },
         configure: config => {
             // Remove guard against importing modules outside of \`src\`.

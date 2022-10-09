@@ -2,26 +2,22 @@ import { useEffect, useState } from 'react';
 import styles from '../../../assets/styles/pages/drApp/superMenu.module.scss';
 import { useHistory, Link } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
-import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
+import NoImage from '@assets/image/noimage.png';
 import Modal from '@paziresh24/shared/ui/modal';
 import Button from '@mui/lab/LoadingButton';
 import { PenIcon, StarIcon } from '@paziresh24/shared/icon';
 import { toast } from 'react-toastify';
 import { baseURL } from '@paziresh24/utils/baseUrl';
 import Menu from '@components/superMeu/menu';
-import bannerTaminImport from '@paziresh24/assets/images/drapp/banner-tamin-import.png';
-import ThreeDots from '@paziresh24/shared/icon/public/threeDots';
 import { ChevronIcon } from '@paziresh24/shared/icon';
 import { useCreateCenter } from '@paziresh24/hooks/drapp/auth';
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
-import { MainMenuData, SubMenuData } from '@paziresh24/configs/drapp/menu.config';
+import { MainMenuData, SubMenuData } from '@configs/menu';
 import { StatusBar } from '@components/turning/statusBar';
 import { getCookie } from '@paziresh24/utils/cookie';
 
 const SuperMenu = () => {
-    const [isDropdownOpen, setIsDropdownOpen] = useState();
-
     const history = useHistory();
     const [info, setInfo] = useDrApp();
     const [userCompleteProfile, setUserCompleteProfile] = useState();

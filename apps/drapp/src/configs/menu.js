@@ -2,7 +2,6 @@ import {
     ConsultIcon,
     CardIcon,
     MessageIcon,
-    ComplaintsIcon,
     PrescriptionMenuIcon,
     PrescriptionIcon
 } from '@paziresh24/shared/icon';
@@ -59,11 +58,6 @@ export const MainMenuData = () => {
             path: '/feedbacks',
             icon: <MessageIcon color="#000" />,
             badge: getFeedbacks.isSuccess && calculateNoReplyComments()
-        },
-        {
-            title: 'شکایات',
-            path: '/complaints',
-            icon: <ComplaintsIcon color="#000" />
         }
     ];
 };

@@ -21,7 +21,7 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import { useForm } from 'react-hook-form';
 import { formData } from '@paziresh24/shared/utils/formData';
 import Select from '@paziresh24/shared/ui/select';
-import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
+import NoImage from '@assets/image/noimage.png';
 import provincesData from '@paziresh24/constants/province.json';
 import citiesData from '@paziresh24/constants/city.json';
 

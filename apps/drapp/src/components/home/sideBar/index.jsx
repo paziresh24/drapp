@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './sideBar.module.scss';
 import { useDrApp } from '@paziresh24/context/drapp';
-import NoImage from '@paziresh24/assets/images/drapp/noimage.png';
+import NoImage from '@assets/image/noimage.png';
 
 import {
     CardIcon,

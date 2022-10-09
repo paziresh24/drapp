@@ -2,8 +2,6 @@
     "version": 2,
     "projects": {
         "apis": "libs/apis",
-        "assets": "libs/assets",
-        "configs": "libs/configs",
         "constants": "libs/constants",
         "context": "libs/context",
         "drapp": "apps/drapp",

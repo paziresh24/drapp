@@ -6,7 +6,7 @@ import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { setToken } from '@paziresh24/utils/localstorage';
 import { isMobile } from 'react-device-detect';
 import queryString from 'query-string';
-import centersConfig from '@paziresh24/configs/drapp/centers.config.json';
+import centersConfig from '@configs/centers.json';
 import Password from './../password';
 import OtpCode from './../otpCode';
 import UserName from '../userName';

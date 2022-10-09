@@ -1,21 +1,17 @@
 import styles from 'assets/styles/pages/drApp/index.module.scss';
-
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { setToken } from '@paziresh24/utils/localstorage';
-import { memo, useEffect, useLayoutEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Loading } from '@paziresh24/shared/ui/loading';
-import { useGetCenterInfo, useGetDoctorInfo } from '@paziresh24/hooks/drapp/profile';
+import { useGetDoctorInfo } from '@paziresh24/hooks/drapp/profile';
 import Modal from '@paziresh24/shared/ui/modal';
-// HOOKS
 import { Route, useHistory, useLocation } from 'react-router-dom';
 import { getToken } from '@paziresh24/utils/localstorage';
 import classNames from 'classnames';
-import { useGetUserGoftino, useSetUserGoftino } from '@paziresh24/hooks/drapp/goftino';
 import Helmet from 'react-helmet';
 import * as Sentry from '@sentry/browser';
-import { ChatSupport } from '@paziresh24/utils/services/chatSupport';
 import { useGetLatestVersion } from '@paziresh24/hooks/core';
 import * as serviceWorkerRegistration from 'apps/drapp/src/serviceWorkerRegistration';
 import { usePage } from '@paziresh24/context/core/page';
@@ -25,19 +21,15 @@ import { useGetLevels } from '@paziresh24/prescription-dashboard/apis/getLevel/u
 import { useLevel } from '@paziresh24/context/core/level';
 import OtpCodePresciprion from '../otpCodePrescription/otpCodePrescription';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
-import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
     const [, setLevel] = useLevel();
-
     const [, setPage] = usePage();
     const [centersDoctor, setCentersDoctor] = useState([]);
     const getCentersDoctor = useGetCentersDoctor();
-
     const getLevels = useGetLevels();
-
     const doctorInfo = useGetDoctorInfo({
         center_id: centersDoctor?.[centersDoctor?.length - 1]?.id
     });
@@ -45,12 +37,9 @@ const PrivateRoute = props => {
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const [changeLogModal, setChangeLogModal] = useState(false);
-    const getUserGoftino = useGetUserGoftino();
-    const setUserGoftino = useSetUserGoftino();
     const getLatestVersion = useGetLatestVersion();
     const [isError, setIsError] = useState(false);
     const setPrescriptionSetting = usePrescriptionSettingStore(state => state.setSetting);
-    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setPage(props);
@@ -62,7 +51,6 @@ const PrivateRoute = props => {
             if (props.path !== '/create-center') {
                 handleGetCenters();
             }
-            getUserGoftino.refetch();
             window._env_.P24_STATISTICS_API && getLevels.refetch();
         }
     }, []);
@@ -83,10 +71,8 @@ const PrivateRoute = props => {
     }, [getLevels.status, doctorInfo.status, getCentersDoctor.status.success]);
 
     useEffect(() => {
-        if (!isEmpty(centersDoctor)) {
-            if (getCentersDoctor.status.success && centersDoctor.length !== 0) {
-                doctorInfo.refetch();
-            }
+        if (getCentersDoctor.status.success && centersDoctor.length !== 0) {
+            doctorInfo.refetch();
         }
     }, [getCentersDoctor.status, centersDoctor]);
 
@@ -105,8 +91,6 @@ const PrivateRoute = props => {
 
             Sentry.setUser({ user: doctor });
 
-            ChatSupport.setUserInfo(doctor);
-
             const doctorNotActiveOfficeAndConsult = !info.centers.some(
                 center =>
                     center.id === '5532' || (center?.type_id === 1 && center?.is_active_booking)
@@ -120,22 +104,15 @@ const PrivateRoute = props => {
             ) {
                 history.push('/activation');
             }
-            setIsLoading(false);
         }
         if (doctorInfo.isError) {
             if (centersDoctor.length <= info.centers.length) {
                 setCentersDoctor(prev => [...prev, info.centers[prev.length - 1 + 1]]);
             } else {
                 setIsError(true);
-                setIsLoading(false);
             }
         }
     }, [doctorInfo.status]);
-
-    useEffect(() => {
-        if (getUserGoftino.isSuccess)
-            ChatSupport.setUserId(getUserGoftino.data.data, setUserGoftino.mutate);
-    }, [getUserGoftino.status]);
 
     if (urlParams.token) setToken(urlParams.token);
 
@@ -161,21 +138,12 @@ const PrivateRoute = props => {
     if (isEmpty(getToken()))
         history.replace(`/auth?url=${encodeURIComponent(window.location.href)}`);
 
-    if (isLoading) return <Loading show={true} />;
-
+    if (!info.doctor && !isError && !getCentersDoctor.status.error) return <Loading show={true} />;
     return (
         <>
             <Helmet>
                 <title>{props.title}</title>
             </Helmet>
-            <Loading
-                show={
-                    !info.doctor &&
-                    !getCentersDoctor.status.error &&
-                    !isError &&
-                    props.path !== '/create-center'
-                }
-            />
             <ErrorByRefresh show={getCentersDoctor.status.error || isError} />
             <div
                 className={classNames({
