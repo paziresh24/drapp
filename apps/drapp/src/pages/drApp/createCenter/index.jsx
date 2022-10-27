@@ -63,7 +63,7 @@ const CreateCenter = () => {
                     ایجاد مطب
                 </Button>
             </div>
-            <a className={styles['support-wrapper']} href="tel:02125015555">
+            <a className={styles['support-wrapper']} href="tel:02191012787">
                 <svg
                     width="21"
                     height="21"
@@ -86,7 +86,7 @@ const CreateCenter = () => {
                 </svg>
                 <div className={styles['support-content']}>
                     <span style={{ fontSize: '1rem', fontWeight: '600' }}>
-                        پشتیبانی: 02125015555
+                        پشتیبانی: 02191012787
                     </span>
                 </div>
             </a>
