@@ -1,17 +1,56 @@
 import { Button, InputAdornment, TextField } from '@mui/material';
-import { useLayoutEffect } from 'react';
+import { useDrApp } from '@paziresh24/context/drapp';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { useVisitChannle } from 'apps/drapp/src/apis/onlineVisit/visitChannels';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import igapLogo from './logo.png';
 import onboard from './onboard.jpg';
 
 export const IgapLanding = () => {
-    useLayoutEffect;
+    const router = useHistory();
+    const [{ doctor }] = useDrApp();
+    const channle = useVisitChannle();
+    const [username, setUsername] = useState('');
+
+    const handleSaveChannle = () => {
+        if (!username) {
+            return toast.error('لطفا نام کاربری خود را وارد کنید.');
+        }
+        channle.mutate({
+            type: 'igap',
+            channel: username
+        });
+        toast.success('نام کاربری شما با موفقیت ثبت شد.');
+        getSplunkInstance().sendEvent({
+            group: 'iGap',
+            type: 'save'
+        });
+        router.push('/');
+    };
+
+    const handleClickDownloadButton = () => {
+        getSplunkInstance().sendEvent({
+            group: 'iGap',
+            type: 'download-iGap'
+        });
+        window.open('https://igap.net/#download');
+    };
+
+    const handleClickUsernameInput = () => {
+        getSplunkInstance().sendEvent({
+            group: 'iGap',
+            type: 'username'
+        });
+    };
+
     return (
         <div className="bg-white">
-            <div className="flex items-center justify-center h-16 border-b border-solid border-slate-200">
-                <span className="font-medium">ویزیت آنلاین</span>
-            </div>
             <div className="flex flex-col p-5 space-y-4">
-                <p className="text-center">دکتر آیدا عزیز</p>
+                <p className="text-center font-semibold">
+                    دکتر {doctor.name} {doctor.family} عزیز
+                </p>
                 <p>2500 بیمار از عدم ارسال مدارک پزشکی در ویزیت آنلاین شکایت داشتند!</p>
                 <div className="flex flex-col p-3 space-y-2 text-sm font-medium leading-6 rounded-lg bg-orange-50">
                     <span className="text-stone-600">
@@ -27,7 +66,10 @@ export const IgapLanding = () => {
                     برای نصب آی گپ برای روی دکمه زیر کلیک نمایید و ثبت نام را با شماره ای که در واتس
                     اپ بیزینس عضویت داشتید انجام دهید.
                 </p>
-                <div className="flex flex-col items-center self-center justify-center px-8 py-3 font-bold rounded-lg bg-stone-200">
+                <div
+                    onClick={handleClickDownloadButton}
+                    className="flex flex-col items-center self-center justify-center px-8 py-3 font-bold rounded-lg bg-stone-200"
+                >
                     <img src={igapLogo} alt="" width={80} />
                 </div>
                 <p>
@@ -50,8 +92,12 @@ export const IgapLanding = () => {
                             direction: 'ltr'
                         }
                     }}
+                    onChange={e => setUsername(e.target.value)}
+                    onClick={handleClickUsernameInput}
                 />
-                <Button variant="contained">ذخیره</Button>
+                <Button onClick={handleSaveChannle} variant="contained">
+                    ذخیره
+                </Button>
             </div>
         </div>
     );

@@ -1,15 +1,9 @@
 // IMPORT MAIN PAGES
 import NotFoundPage from '../pages/404';
 import DoctorApp from '../pages/drApp';
-import IgapLanding from '../pages/landing/igap';
+import IgapLanding from '../pages/drApp/landing/igap';
 
 export const routes = [
-    {
-        path: '/landing/igap',
-        name: 'Index',
-        exact: true,
-        component: IgapLanding
-    },
     {
         path: '/',
         name: 'DoctorApp',
