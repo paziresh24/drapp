@@ -1,4 +1,6 @@
-import { Button, InputAdornment, TextField } from '@mui/material';
+import Button from '@mui/lab/LoadingButton';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useVisitChannle } from 'apps/drapp/src/apis/onlineVisit/visitChannels';
@@ -7,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import igapLogo from './logo.png';
 import onboard from './onboard.jpg';
+import axios from 'axios';
 
 export const IgapLanding = () => {
     const router = useHistory();
@@ -15,19 +18,28 @@ export const IgapLanding = () => {
     const [username, setUsername] = useState('');
 
     const handleSaveChannle = () => {
-        if (!username) {
+        if (!username.trim()) {
             return toast.error('لطفا نام کاربری خود را وارد کنید.');
         }
-        channle.mutate({
-            type: 'igap',
-            channel: username
-        });
-        toast.success('نام کاربری شما با موفقیت ثبت شد.');
-        getSplunkInstance().sendEvent({
-            group: 'iGap',
-            type: 'save'
-        });
-        router.push('/');
+        channle.mutate(
+            {
+                type: 'igap',
+                channel: username
+            },
+            {
+                onSuccess: () => {
+                    toast.success('نام کاربری شما با موفقیت ثبت شد.');
+                    getSplunkInstance().sendEvent({
+                        group: 'iGap',
+                        type: 'save'
+                    });
+                    router.push('/');
+                },
+                onError: error => {
+                    if (axios.isAxiosError(error)) toast.error(error.response?.data?.message);
+                }
+            }
+        );
     };
 
     const handleClickDownloadButton = () => {
@@ -95,7 +107,7 @@ export const IgapLanding = () => {
                     onChange={e => setUsername(e.target.value)}
                     onClick={handleClickUsernameInput}
                 />
-                <Button onClick={handleSaveChannle} variant="contained">
+                <Button onClick={handleSaveChannle} loading={channle.isLoading} variant="contained">
                     ذخیره
                 </Button>
             </div>
