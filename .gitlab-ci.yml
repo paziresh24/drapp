@@ -103,6 +103,9 @@ drApp-build-local-push-docker-image:
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
     - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -f Dockerfile.localCenter .
     - docker push $DOCKER_IMAGE_TAG_LOCAL:latest
+  tags:
+    - france-loc
+
 
 drApp-build-cloud-push-docker-image:
   stage: build-image
@@ -118,6 +121,9 @@ drApp-build-cloud-push-docker-image:
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
     - docker build -t $DOCKER_IMAGE_TAG_COM:latest -f Dockerfile.drApp .
     - docker push $DOCKER_IMAGE_TAG_COM:latest
+  tags:
+    - france-loc
+
 
 drApp-deploy-production:
   image: dockerhub.paziresh24.com/docker-ansible:latest
