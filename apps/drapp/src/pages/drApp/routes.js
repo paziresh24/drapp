@@ -273,6 +273,14 @@ export const routes = [
         exact: false
     },
     {
+        path: '/landing/igap',
+        name: 'igap-landing',
+        title: 'ویزیت آنلاین',
+        component: lazy(() => import('./landing/igap')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/logout',
         name: 'logout',
         component: lazy(() => import('./logout')),
