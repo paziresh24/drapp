@@ -345,7 +345,7 @@ const SideBar = memo(() => {
 
                 <div className="flex flex-col items-start w-full">
                     <a
-                        href="tel:02191012787"
+                        href="tel:02125015555"
                         style={{
                             right: open ? '1rem' : '-100%',
                             transitionDelay: !open ? 'unset' : '0.2s',
@@ -353,7 +353,7 @@ const SideBar = memo(() => {
                         }}
                         className="absolute flex items-center justify-center pr-6 transition-all duration-300 bottom-24"
                     >
-                        <span className="font-bold opacity-60">پشتیبانی: 02191012787</span>
+                        <span className="font-bold opacity-60">پشتیبانی: 02125015555</span>
                     </a>
                     <div
                         style={{
