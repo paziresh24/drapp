@@ -50,7 +50,7 @@ const Turning = () => {
 
     useEffect(() => {
         if (location.state?.prescriptionInfo?.finalized) {
-            setPrescriptionSuccessedModal(location.state?.prepscriptionInfo);
+            setPrescriptionSuccessedModal(location.state?.prescriptionInfo);
             history.replace();
         }
 
