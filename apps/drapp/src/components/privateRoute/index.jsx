@@ -138,7 +138,13 @@ const PrivateRoute = props => {
     if (isEmpty(getToken()))
         history.replace(`/auth?url=${encodeURIComponent(window.location.href)}`);
 
-    if (!info.doctor && !isError && !getCentersDoctor.status.error) return <Loading show={true} />;
+    if (
+        props.path !== '/create-center' &&
+        !info.doctor &&
+        !isError &&
+        !getCentersDoctor.status.error
+    )
+        return <Loading show={true} />;
     return (
         <>
             <Helmet>
