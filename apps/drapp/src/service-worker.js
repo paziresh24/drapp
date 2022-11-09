@@ -33,7 +33,7 @@ registerRoute(
             return false;
         } // If this is a URL that starts with /_, skip.
 
-        if (url.pathname.startsWith('/_')) {
+        if (url.pathname.startsWith('_')) {
             return false;
         } // If this looks like a URL for a resource, because it contains // a file extension, skip.
 
@@ -43,7 +43,7 @@ registerRoute(
 
         return true;
     },
-    createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
+    createHandlerBoundToURL(process.env.PUBLIC_URL + 'index.html')
 );
 
 // An example runtime caching route for requests that aren't handled by the
