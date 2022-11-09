@@ -15,7 +15,7 @@ import Visit from '../visit';
 import ReferenceModal from '@paziresh24/apps/prescription/components/molecules/referenceModal';
 import { PlusLineIcon } from '@paziresh24/shared/icon';
 
-import { useAddPrescription } from '@paziresh24/hooks/prescription';
+import { useAddPrescription, useDeletePrescription } from '@paziresh24/hooks/prescription';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Default, Mobile } from '@paziresh24/hooks/device';
 import { useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
@@ -37,6 +37,7 @@ const NewTurn = () => {
     const nationalCodeInput = useRef<HTMLInputElement>(null);
     const patientCellInput = useRef<HTMLInputElement>(null);
     const queryClient = useQueryClient();
+    const deletePrescription = useDeletePrescription();
 
     const addPrescription = useAddPrescription();
     const updatePrescription = useUpdatePrescription();
@@ -124,7 +125,8 @@ const NewTurn = () => {
     }, [nationalCode]);
 
     const handleInsertCellPhone = useCallback(async () => {
-        if (!patientCell) return toast.error('لطفا شماره موبایل را وارد کنید.');
+        if (!patientCell || patientCell.length !== 11)
+            return toast.error('لطفا شماره موبایل را به درستی وارد کنید.');
         try {
             await updatePatient({
                 patientCell,
@@ -169,6 +171,20 @@ const NewTurn = () => {
         }
     }, []);
 
+    const handleDeletePrescription = async () => {
+        try {
+            await deletePrescription.mutateAsync({
+                baseURL: info.center.local_base_url,
+                id: patientData.current?.id
+            });
+
+            queryClient.refetchQueries('turns');
+            setOpenNewTurn(false);
+        } catch (error) {
+            setOpenNewTurn(false);
+        }
+    };
+
     return (
         <>
             <Default>
@@ -188,7 +204,18 @@ const NewTurn = () => {
                 </Fab>
             </Mobile>
 
-            <Modal title="افزودن بیمار" isOpen={openNewTurn} onClose={setOpenNewTurn}>
+            <Modal
+                title="افزودن بیمار"
+                isOpen={openNewTurn}
+                onClose={
+                    confirmCellPhone
+                        ? () =>
+                              toast.info('لطفا شماره موبایل بیمار را وارد کنید.', {
+                                  toastId: 'phoneNumber'
+                              })
+                        : setOpenNewTurn
+                }
+            >
                 <div className="flex flex-col space-y-4">
                     <TextField
                         label="کدملی/کداتباع"
@@ -219,24 +246,35 @@ const NewTurn = () => {
                             }}
                         />
                     )}
-                    <Link
-                        component="button"
-                        textAlign="left"
-                        variant="body2"
-                        onClick={() => setReferenceModal(true)}
-                    >
-                        پذیرش از مسیر ارجاع
-                    </Link>
+                    {!confirmCellPhone && (
+                        <Link
+                            component="button"
+                            textAlign="left"
+                            variant="body2"
+                            onClick={() => setReferenceModal(true)}
+                        >
+                            پذیرش از مسیر ارجاع
+                        </Link>
+                    )}
                     <div className="flex space-s-3">
                         {confirmCellPhone && (
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                onClick={handleInsertCellPhone}
-                                loading={updatePrescription.isLoading}
-                            >
-                                تایید
-                            </Button>
+                            <>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    onClick={handleInsertCellPhone}
+                                    loading={updatePrescription.isLoading}
+                                >
+                                    تایید
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    onClick={handleDeletePrescription}
+                                    loading={deletePrescription.isLoading}
+                                >
+                                    انصراف
+                                </Button>
+                            </>
                         )}
                         {!confirmCellPhone && (
                             <>
