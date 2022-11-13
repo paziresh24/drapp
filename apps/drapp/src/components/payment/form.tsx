@@ -78,13 +78,13 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
             setPrice('');
         }
 
-        if (!selectBoxPrice && price && !costsOffice.some(item => item.value === price)) {
+        if (selectBoxPrice && price && !costsOffice.some(item => item.value === price)) {
             setCustomPrice(true);
         }
     }, [price]);
 
     return (
-        <FormControl className="space-y-4 w-full">
+        <FormControl className="w-full space-y-4">
             {isActivePayment && (
                 <>
                     {selectBoxPrice && !customPrice && (
