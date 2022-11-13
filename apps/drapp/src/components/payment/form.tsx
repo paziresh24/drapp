@@ -20,6 +20,7 @@ export interface PaymentFormProps {
     selectBoxPrice?: boolean;
     clickPriceFiled?: () => void;
     clickCartNumberFiled?: () => void;
+    priceLable: string;
 }
 
 const costsOffice = [
@@ -46,6 +47,10 @@ const costsOffice = [
     {
         label: '100,000 تومان',
         value: '100000'
+    },
+    {
+        label: 'قیمت دلخواه',
+        value: 'custom'
     }
 ];
 
@@ -64,11 +69,17 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         toggleable = true,
         selectBoxPrice = true,
         clickPriceFiled,
-        clickCartNumberFiled
+        clickCartNumberFiled,
+        priceLable
     } = props;
+    const [customPrice, setCustomPrice] = useState(false);
     useEffect(() => {
-        if (selectBoxPrice && !costsOffice.some(item => item.value === price)) {
+        if (selectBoxPrice && !customPrice && !costsOffice.some(item => item.value === price)) {
             setPrice('');
+        }
+
+        if (!selectBoxPrice && price && !costsOffice.some(item => item.value === price)) {
+            setCustomPrice(true);
         }
     }, [price]);
 
@@ -76,13 +87,14 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         <FormControl className="space-y-4 w-full">
             {isActivePayment && (
                 <>
-                    {selectBoxPrice && (
+                    {selectBoxPrice && !customPrice && (
                         <Autocomplete
                             disablePortal
                             options={costsOffice}
                             fullWidth
                             onChange={(e, newValue) => {
-                                setPrice(newValue?.value ?? '');
+                                setCustomPrice(newValue?.value === 'custom');
+                                if (newValue?.value !== 'custom') setPrice(newValue?.value ?? '');
                             }}
                             value={
                                 price
@@ -98,7 +110,7 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                                 <TextField
                                     {...params}
                                     error={priceFieldError}
-                                    label="مبلغ بیعانه"
+                                    label={priceLable}
                                     helperText={
                                         priceFieldError
                                             ? 'لطفا مبلغ را وارد کنید.'
@@ -111,15 +123,16 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                             )}
                         />
                     )}
-                    {!selectBoxPrice && (
+                    {(!selectBoxPrice || customPrice) && (
                         <PriceField
-                            label="مبلغ ویزیت"
+                            label={priceLable}
                             onChange={e => setPrice(e.target.value)}
                             value={price}
                             helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
                             onClick={clickPriceFiled}
                             onFocus={() => setPriceFieldError(false)}
                             error={priceFieldError}
+                            autoFocus
                         />
                     )}
                     <BankNumberField

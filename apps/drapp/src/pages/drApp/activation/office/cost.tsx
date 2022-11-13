@@ -85,8 +85,8 @@ const CostConsultActivation = () => {
             >
                 <Alert icon={false} className="!bg-[#F3F6F9]">
                     <Typography fontSize="0.9rem" fontWeight="medium">
-                        بیش از 80 درصد بیمارانی که در هنگام دریافت نوبت، بیعانه پرداخت می کنند، در
-                        مطب حاضر می شوند.
+                        تعداد مراجعین پزشکانی که در هنگام ثبت نوبت بیعانه دریافت می کنند{' '}
+                        <b>دو برابر</b> پزشکانی است که بیعانه دریافت نمی کنند.
                     </Typography>
                 </Alert>
 
@@ -98,6 +98,7 @@ const CostConsultActivation = () => {
 
                 <PaymentForm
                     {...formProps}
+                    priceLable="قیمت بیعانه"
                     clickPriceFiled={() =>
                         getSplunkInstance().sendEvent({
                             group: 'activation-office-center',
