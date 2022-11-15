@@ -36,6 +36,7 @@ const TextField = forwardRef(({ autoComplete = 'off', ...props }, ref) => {
                 max={props.max}
                 data-testid={props.testId}
                 maxLength={props.maxLength}
+                {...props}
             />
             <span className={styles['label']}>{props.label}</span>
             {props.type === 'password' && (

@@ -56,6 +56,7 @@ import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useHistory } from 'react-router-dom';
 import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
+import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
 
 const Profile = () => {
     const router = useHistory();
@@ -450,6 +451,7 @@ const Profile = () => {
                         defaultValue={info.doctor.medical_code}
                         {...updateDoctorInfo('medical_code', { required: false })}
                     />
+                    <ChangePhoneNumber />
                     {info.center.type_id === OFFICE_CENTER && (
                         <TextField
                             label="شماره موبایل منشی"
