@@ -56,7 +56,7 @@ const TurnRow = {
                     (turn.prescription?.insuranceType === 'tamin'
                         ? turn.prescription.tamin_prescription.map(item => item.head_EPRSC_ID)
                         : [turn.prescription.salamat_prescription?.trackingCode]),
-                sequenceNumber: turn.prescription.salamat_prescription?.trackingCode?.sequenceNumber
+                sequenceNumber: turn.prescription.salamat_prescription?.sequenceNumber
             }}
         />
     ),
@@ -83,7 +83,7 @@ const TurnRow = {
                     turn?.insuranceType === 'tamin'
                         ? turn.tamin_prescription.map(item => item.head_EPRSC_ID)
                         : [turn.salamat_prescription?.trackingCode],
-                sequenceNumber: turn.salamat_prescription?.trackingCode?.sequenceNumber
+                sequenceNumber: turn.salamat_prescription?.sequenceNumber
             }}
         />
     )
@@ -189,7 +189,7 @@ const TurnsList = ({ turns, loading, refetchData }) => {
         <>
             <Default>
                 <table className="w-full text-sm text-right">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b border-solid border-b-gray-100">
+                    <thead className="text-xs text-gray-700 uppercase border-b border-solid bg-gray-50 border-b-gray-100">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 نام بیمار
