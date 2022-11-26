@@ -276,24 +276,25 @@ const TurnRow = (props: TurnRowProps) => {
             name: 'وضعیت نسخه',
             component: (
                 <>
-                    {prescription?.finalized ? (
-                        <span data-tip="نسخه ثبت شده است" className="text-green-500">
-                            ثبت شده
-                        </span>
-                    ) : !prescription?.status ? (
-                        <span data-tip="نسخه ای هنوز ثبت نشده" className="text-red-500">
-                            ثبت نشده
-                        </span>
-                    ) : prescription?.status === 'FAILED' ? (
-                        <span className="text-red-500">خطا در ثبت</span>
-                    ) : (
-                        <span
-                            data-tip="نسخه ای که به هر علتی با موفقیت صادر نشده اما در بکگراند برای ارسال آن درحال اقدام هستیم"
-                            className="text-gray-500"
-                        >
-                            در صف ثبت
-                        </span>
-                    )}
+                    {prescription?.status !== undefined &&
+                        (prescription?.finalized ? (
+                            <span data-tip="نسخه ثبت شده است" className="text-green-500">
+                                ثبت شده
+                            </span>
+                        ) : !prescription?.status ? (
+                            <span data-tip="نسخه ای هنوز ثبت نشده" className="text-red-500">
+                                ثبت نشده
+                            </span>
+                        ) : prescription?.status === 'FAILED' ? (
+                            <span className="text-red-500">خطا در ثبت</span>
+                        ) : (
+                            <span
+                                data-tip="نسخه ای که به هر علتی با موفقیت صادر نشده اما در بکگراند برای ارسال آن درحال اقدام هستیم"
+                                className="text-gray-500"
+                            >
+                                در صف ثبت
+                            </span>
+                        ))}
                 </>
             )
         },
@@ -406,14 +407,14 @@ const TurnRow = (props: TurnRowProps) => {
     return (
         <>
             <Default>
-                <tr className="bg-white border-b border-solid border-b-gray-100 font-medium text-gray-900">
+                <tr className="font-medium text-gray-900 bg-white border-b border-solid border-b-gray-100">
                     {data.map((col, index) => (
                         <td key={index} className="px-6 py-3 align-middle">
                             {col.component}
                         </td>
                     ))}
 
-                    <td className="px-6 pl-4 py-3 w-52 whitespace-nowrap align-middle">
+                    <td className="px-6 py-3 pl-4 align-middle w-52 whitespace-nowrap">
                         <Stack
                             direction="row"
                             justifyContent="flex-end"
@@ -428,7 +429,7 @@ const TurnRow = (props: TurnRowProps) => {
                     </td>
                 </tr>
                 {isDetailsOpen && (
-                    <tr className="bg-gray-50 border-b border-solid border-b-gray-100">
+                    <tr className="border-b border-solid bg-gray-50 border-b-gray-100">
                         <td colSpan={6} className="px-6 py-3">
                             <div className="flex flex-wrap md:space-s-3">
                                 {turnDetails
@@ -444,8 +445,8 @@ const TurnRow = (props: TurnRowProps) => {
                 )}
             </Default>
             <Mobile>
-                <div className="bg-white w-full flex flex-col p-5 space-y-2">
-                    <div className="flex justify-between items-center">
+                <div className="flex flex-col w-full p-5 space-y-2 bg-white">
+                    <div className="flex items-center justify-between">
                         <div className="w-full font-bold">{data[0].component}</div>
                         <TurnDropDown />
                     </div>
@@ -454,11 +455,11 @@ const TurnRow = (props: TurnRowProps) => {
                         data.filter((_, index) => index !== 0),
                         2
                     ).map((row, index) => (
-                        <div key={index} className="w-full flex items-center">
+                        <div key={index} className="flex items-center w-full">
                             {row.map(col => (
                                 <div
                                     key={col.name}
-                                    className="flex w-1/2 whitespace-nowrap text-sm font-medium space-s-1"
+                                    className="flex w-1/2 text-sm font-medium whitespace-nowrap space-s-1"
                                 >
                                     <span>{col.name}</span>: {col.component}
                                 </div>
@@ -471,11 +472,11 @@ const TurnRow = (props: TurnRowProps) => {
                             turnDetails.filter(col => col.isShow === undefined || col.isShow),
                             2
                         ).map((row, index) => (
-                            <div key={index} className="w-full flex items-center">
+                            <div key={index} className="flex items-center w-full">
                                 {row.map(col => (
                                     <div
                                         key={col.name}
-                                        className="flex w-1/2 whitespace-nowrap text-sm font-medium space-s-1"
+                                        className="flex w-1/2 text-sm font-medium whitespace-nowrap space-s-1"
                                     >
                                         <span>{col.name}</span>: {col.component}
                                     </div>
