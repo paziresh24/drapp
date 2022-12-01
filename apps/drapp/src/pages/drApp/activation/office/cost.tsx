@@ -38,15 +38,16 @@ const CostConsultActivation = () => {
         }
     }, [ibanInquiry.status]);
 
-    const handleSubmit = async () => {
+    const handleSubmit = async ({ isActivePayment = true }: { isActivePayment?: boolean }) => {
         submit({
             centerId: officeCenter.id,
             bankName: (ibanInquiry.data as any)?.bank_name,
             IBAN: (ibanInquiry.data as any)?.IBAN,
-            depositOwners: (ibanInquiry.data as any)?.deposit_owners?.join(',')
+            depositOwners: (ibanInquiry.data as any)?.deposit_owners?.join(','),
+            isActivePayment
         })
             .then(() => {
-                if (formProps.isActivePayment) {
+                if (isActivePayment) {
                     getSplunkInstance().sendEvent({
                         group: 'activation-office-center',
                         type: 'price-value',
@@ -61,7 +62,7 @@ const CostConsultActivation = () => {
                 getSplunkInstance().sendEvent({
                     group: 'activation-office-center',
                     type: 'save',
-                    event: { value: formProps.isActivePayment ? 'active' : 'deActive' }
+                    event: { value: isActivePayment ? 'active' : 'deActive' }
                 });
                 router.push(`/activation/office/duration`);
             })
@@ -85,8 +86,8 @@ const CostConsultActivation = () => {
             >
                 <Alert icon={false} className="!bg-[#F3F6F9]">
                     <Typography fontSize="0.9rem" fontWeight="medium">
-                        تعداد مراجعین پزشکانی که در هنگام ثبت نوبت بیعانه دریافت می کنند{' '}
-                        <b>دو برابر</b> پزشکانی است که بیعانه دریافت نمی کنند.
+                        دریافت بیعانه به هنگام ثبت نوبت اینترنتی باعث می شود کسانی که نوبت گرفته
+                        اند، مقید به حضور حتمی و به موقع در مطب شوند.
                     </Typography>
                 </Alert>
 
@@ -127,13 +128,25 @@ const CostConsultActivation = () => {
                                     group: 'activation-office-center',
                                     type: 'continue '
                                 });
-                                if (formProps.isActivePayment)
-                                    return setShouldShowTipCostModal(true);
-                                handleSubmit();
+                                setShouldShowTipCostModal(true);
                             }
                         }}
                     >
                         ادامه
+                    </Button>
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        className="grayscale opacity-90"
+                        size="large"
+                        loading={isLoading || ibanInquiry.isLoading}
+                        onClick={() => {
+                            handleSubmit({
+                                isActivePayment: false
+                            });
+                        }}
+                    >
+                        انصراف
                     </Button>
                 </FixedWrapBottom>
             </Container>
@@ -172,7 +185,7 @@ const CostConsultActivation = () => {
                     <Button
                         fullWidth
                         variant="contained"
-                        onClick={handleSubmit}
+                        onClick={() => handleSubmit({})}
                         loading={isLoading}
                     >
                         تایید

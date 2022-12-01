@@ -7,22 +7,19 @@ import { useSetPaymentConsult } from 'apps/drapp/src/apis/payment/useSetPaymentC
 
 export const usePaymentForm = () => {
     const [cartNumber, setCartNumber] = useState('');
-    const [isActivePayment, setIsActivePayment] = useState(true);
     const [price, setPrice] = useState('');
     const setPaymentSetting = useSetPaymentSetting();
     const [priceFieldError, setPriceFieldError] = useState(false);
     const [cartNumberFieldError, setCartNumberFieldError] = useState(false);
 
     const validate = () => {
-        if (isActivePayment) {
-            if (!+price) {
-                setPriceFieldError(true);
-                return false;
-            }
-            if (!cartNumber || !verifyCardNumber(+cartNumber)) {
-                setCartNumberFieldError(true);
-                return false;
-            }
+        if (!+price) {
+            setPriceFieldError(true);
+            return false;
+        }
+        if (!cartNumber || !verifyCardNumber(+cartNumber)) {
+            setCartNumberFieldError(true);
+            return false;
         }
         return true;
     };
@@ -31,12 +28,14 @@ export const usePaymentForm = () => {
         centerId,
         bankName,
         IBAN,
-        depositOwners
+        depositOwners,
+        isActivePayment = true
     }: {
         centerId: string;
         bankName: string;
         IBAN: string;
         depositOwners: string;
+        isActivePayment?: boolean;
     }) => {
         try {
             const data = await setPaymentSetting.mutateAsync({
@@ -72,8 +71,6 @@ export const usePaymentForm = () => {
         setPrice,
         cartNumber,
         setCartNumber,
-        setIsActivePayment,
-        isActivePayment,
         priceFieldError,
         setPriceFieldError,
         cartNumberFieldError,

@@ -16,9 +16,11 @@ import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.stor
 import CartInfo from 'apps/drapp/src/components/payment/cartInfo';
 import { useIbanInquiry } from 'apps/drapp/src/apis/payment/ibanInquiry';
 import { useGetPaymentSetting } from 'apps/drapp/src/apis/payment/useGetPaymentSetting';
+import { useHistory } from 'react-router-dom';
 
 const PaymentPage = () => {
     const [{ center }] = useDrApp();
+    const router = useHistory();
     const { validate, submit, isLoading, ...formProps } = usePaymentForm();
     const [shouldShowTipCostModal, setShouldShowTipCostModal] = useState(false);
     const centerType = center.id === CONSULT_CENTER_ID ? 'consult' : 'office';
@@ -53,15 +55,16 @@ const PaymentPage = () => {
         formProps.setPrice('');
     }, [getSetting]);
 
-    const handleSubmit = async () => {
+    const handleSubmit = async ({ isActivePayment = true }: { isActivePayment?: boolean }) => {
         submit({
             centerId: center.id,
             bankName: (ibanInquiry.data as any)?.bank_name,
             IBAN: (ibanInquiry.data as any)?.IBAN,
-            depositOwners: (ibanInquiry.data as any)?.deposit_owners?.join(',')
+            depositOwners: (ibanInquiry.data as any)?.deposit_owners?.join(','),
+            isActivePayment
         })
             .then(() => {
-                if (formProps.isActivePayment) {
+                if (isActivePayment) {
                     getSplunkInstance().sendEvent({
                         group: `setting-payment-${centerType}`,
                         type: 'price-value',
@@ -76,10 +79,16 @@ const PaymentPage = () => {
                 getSplunkInstance().sendEvent({
                     group: `setting-payment-${centerType}`,
                     type: 'save',
-                    event: { value: formProps.isActivePayment ? 'active' : 'deActive' }
+                    event: { value: isActivePayment ? 'active' : 'deActive' }
                 });
-                toast.success('تنظیمات پرداخت شما با موفقیت ثبت شد.');
+                toast.success(
+                    isActivePayment
+                        ? 'تنظیمات پرداخت شما با موفقیت ثبت شد.'
+                        : 'تنظیمات پرداخت بیعانه شما غیرفعال شد.'
+                );
+                router.push('/');
                 setInquiryModal(false);
+                ibanInquiry.remove();
             })
             .catch(error => {
                 getSplunkInstance().sendEvent({
@@ -102,8 +111,8 @@ const PaymentPage = () => {
                 <>
                     <Alert icon={false} className="!bg-[#F3F6F9]">
                         <Typography fontSize="0.9rem" fontWeight="medium">
-                            تعداد مراجعین پزشکانی که در هنگام ثبت نوبت بیعانه دریافت می کنند{' '}
-                            <b>دو برابر</b> پزشکانی است که بیعانه دریافت نمی کنند.
+                            دریافت بیعانه به هنگام ثبت نوبت اینترنتی باعث می شود کسانی که نوبت گرفته
+                            اند، مقید به حضور حتمی و به موقع در مطب شوند.
                         </Typography>
                     </Alert>
 
@@ -117,7 +126,6 @@ const PaymentPage = () => {
 
             <PaymentForm
                 {...formProps}
-                toggleable={center.id !== CONSULT_CENTER_ID}
                 selectBoxPrice={center.id !== CONSULT_CENTER_ID}
                 priceLable={center.id !== CONSULT_CENTER_ID ? 'قیمت بیعانه' : 'مبلغ ویزیت'}
                 clickPriceFiled={() =>
@@ -148,8 +156,7 @@ const PaymentPage = () => {
                                 group: `setting-payment-${centerType}`,
                                 type: 'continue '
                             });
-                            if (!formProps.isActivePayment) return handleSubmit();
-                            if (center.id !== CONSULT_CENTER_ID && formProps.isActivePayment)
+                            if (center.id !== CONSULT_CENTER_ID)
                                 return setShouldShowTipCostModal(true);
 
                             ibanInquiry.remove();
@@ -157,8 +164,24 @@ const PaymentPage = () => {
                         }
                     }}
                 >
-                    ذخیره
+                    {center.id !== CONSULT_CENTER_ID ? 'فعالسازی' : 'ذخیره'}
                 </Button>
+                {center.id !== CONSULT_CENTER_ID && (
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        className="grayscale opacity-90"
+                        size="large"
+                        loading={isLoading || ibanInquiry.isLoading}
+                        onClick={() => {
+                            handleSubmit({
+                                isActivePayment: false
+                            });
+                        }}
+                    >
+                        انصراف
+                    </Button>
+                )}
             </FixedWrapBottom>
             <Modal
                 title="نکات بیعانه"
@@ -188,19 +211,33 @@ const PaymentPage = () => {
                     تایید
                 </Button>
             </Modal>
-            <Modal title="تایید اطلاعات" onClose={setInquiryModal} isOpen={inquiryModal}>
+            <Modal
+                title="تایید اطلاعات"
+                onClose={() => {
+                    setInquiryModal(false);
+                    ibanInquiry.remove();
+                }}
+                isOpen={inquiryModal}
+            >
                 <span>آیا اطلاعات حساب مورد تایید می باشد؟ </span>
                 <CartInfo info={ibanInquiry.data} />
                 <div className="flex mt-1 space-s-3">
                     <Button
                         fullWidth
                         variant="contained"
-                        onClick={handleSubmit}
+                        onClick={() => handleSubmit({})}
                         loading={isLoading}
                     >
                         تایید
                     </Button>
-                    <Button fullWidth variant="outlined" onClick={() => setInquiryModal(false)}>
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        onClick={() => {
+                            ibanInquiry.remove();
+                            setInquiryModal(false);
+                        }}
+                    >
                         ویرایش
                     </Button>
                 </div>
