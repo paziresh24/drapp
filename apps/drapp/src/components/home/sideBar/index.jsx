@@ -103,7 +103,10 @@ const SideBar = memo(() => {
                     icon: <CardIcon color="#000" />,
                     subMenu: [
                         { name: 'تسویه حساب', link: '/financial' },
-                        { name: 'تنظیمات پرداخت', link: '/setting/payment' }
+                        {
+                            name: info.center.id === '5532' ? 'تنظیمات پرداخت' : 'تنظیمات بیعانه',
+                            link: '/setting/payment'
+                        }
                     ]
                 },
                 {

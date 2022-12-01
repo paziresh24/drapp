@@ -1,5 +1,4 @@
-import { Autocomplete, Checkbox, FormControl, FormControlLabel, TextField } from '@mui/material';
-import { useDrApp } from '@paziresh24/context/drapp';
+import { Autocomplete, FormControl, TextField } from '@mui/material';
 import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import { Dispatch, memo, SetStateAction, useEffect, useState } from 'react';
 import { numberToWords } from '@persian-tools/persian-tools';
@@ -10,13 +9,10 @@ export interface PaymentFormProps {
     price: string;
     setCartNumber: Dispatch<SetStateAction<string>>;
     cartNumber: string;
-    setIsActivePayment: Dispatch<SetStateAction<boolean>>;
-    isActivePayment: boolean;
     priceFieldError: boolean;
     setPriceFieldError: Dispatch<SetStateAction<boolean>>;
     cartNumberFieldError: boolean;
     setCartNumberFieldError: Dispatch<SetStateAction<boolean>>;
-    toggleable?: boolean;
     selectBoxPrice?: boolean;
     clickPriceFiled?: () => void;
     clickCartNumberFiled?: () => void;
@@ -60,13 +56,10 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         price,
         setCartNumber,
         cartNumber,
-        setIsActivePayment,
-        isActivePayment,
         cartNumberFieldError,
         setCartNumberFieldError,
         priceFieldError,
         setPriceFieldError,
-        toggleable = true,
         selectBoxPrice = true,
         clickPriceFiled,
         clickCartNumberFiled,
@@ -74,10 +67,6 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
     } = props;
     const [customPrice, setCustomPrice] = useState(false);
     useEffect(() => {
-        if (selectBoxPrice && !customPrice && !costsOffice.some(item => item.value === price)) {
-            setPrice('');
-        }
-
         if (selectBoxPrice && price && !costsOffice.some(item => item.value === price)) {
             setCustomPrice(true);
         }
@@ -85,78 +74,68 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
 
     return (
         <FormControl className="w-full space-y-4">
-            {isActivePayment && (
-                <>
-                    {selectBoxPrice && !customPrice && (
-                        <Autocomplete
-                            disablePortal
-                            options={costsOffice}
-                            fullWidth
-                            onChange={(e, newValue) => {
-                                setCustomPrice(newValue?.value === 'custom');
-                                if (newValue?.value !== 'custom') setPrice(newValue?.value ?? '');
-                            }}
-                            value={
-                                price
-                                    ? {
-                                          label: costsOffice.find(item => item.value === price)
-                                              ?.label,
-                                          value: price
-                                      }
-                                    : null
-                            }
-                            onFocus={() => setPriceFieldError(false)}
-                            renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    error={priceFieldError}
-                                    label={priceLable}
-                                    helperText={
-                                        priceFieldError
-                                            ? 'لطفا مبلغ را وارد کنید.'
-                                            : price
-                                            ? `${numberToWords(+price)} تومان`
-                                            : ''
-                                    }
-                                    onClick={clickPriceFiled}
-                                />
-                            )}
-                        />
-                    )}
-                    {(!selectBoxPrice || customPrice) && (
-                        <PriceField
-                            label={priceLable}
-                            onChange={e => setPrice(e.target.value)}
-                            value={price}
-                            helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
-                            onClick={clickPriceFiled}
-                            onFocus={() => setPriceFieldError(false)}
-                            error={priceFieldError}
-                            autoFocus
-                        />
-                    )}
-                    <BankNumberField
-                        onChange={e => setCartNumber(e.target.value)}
-                        value={cartNumber}
+            <>
+                {selectBoxPrice && !customPrice && (
+                    <Autocomplete
+                        disablePortal
+                        options={costsOffice}
                         fullWidth
-                        onClick={clickCartNumberFiled}
-                        onFocus={() => setCartNumberFieldError(false)}
-                        error={cartNumberFieldError}
-                        helperText={cartNumberFieldError ? 'لطفا شماره کارت معتبر وارد کنید.' : ''}
+                        onChange={(e, newValue) => {
+                            setCustomPrice(newValue?.value === 'custom');
+                            if (newValue?.value !== 'custom') setPrice(newValue?.value ?? '');
+                        }}
+                        value={
+                            price
+                                ? {
+                                      label: costsOffice.find(item => item.value === price)?.label,
+                                      value: price
+                                  }
+                                : null
+                        }
+                        onFocus={() => setPriceFieldError(false)}
+                        renderInput={params => (
+                            <TextField
+                                {...params}
+                                error={priceFieldError}
+                                label={priceLable}
+                                helperText={
+                                    priceFieldError
+                                        ? 'لطفا مبلغ را وارد کنید.'
+                                        : price
+                                        ? `${numberToWords(+price)} تومان`
+                                        : ''
+                                }
+                                onClick={clickPriceFiled}
+                            />
+                        )}
                     />
-                </>
-            )}
-            {toggleable && (
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            onChange={e => setIsActivePayment(e.target.checked ? false : true)}
-                            checked={isActivePayment ? false : true}
-                        />
+                )}
+                {(!selectBoxPrice || customPrice) && (
+                    <PriceField
+                        label={priceLable}
+                        onChange={e => setPrice(e.target.value)}
+                        value={price}
+                        helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
+                        onClick={clickPriceFiled}
+                        onFocus={() => setPriceFieldError(false)}
+                        error={priceFieldError}
+                        autoFocus
+                    />
+                )}
+                <BankNumberField
+                    onChange={e => setCartNumber(e.target.value)}
+                    value={cartNumber}
+                    fullWidth
+                    onClick={clickCartNumberFiled}
+                    onFocus={() => setCartNumberFieldError(false)}
+                    error={cartNumberFieldError}
+                    helperText={
+                        cartNumberFieldError
+                            ? 'لطفا شماره کارت معتبر وارد کنید.'
+                            : 'جهت واریز مبالغ بیعانه به حساب شما'
                     }
-                    label="تمایل به فعالسازی بیعانه ندارم."
                 />
-            )}
+            </>
         </FormControl>
     );
 });

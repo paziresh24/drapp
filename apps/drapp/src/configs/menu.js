@@ -44,7 +44,7 @@ export const MainMenuData = () => {
             icon: <ConsultIcon color="#000" />
         },
         {
-            title: 'تنظیمات پرداخت',
+            title: info.center.id === '5532' ? 'تنظیمات پرداخت' : 'تنظیمات بیعانه',
             path: '/setting/payment',
             icon: <CardIcon color="#000" />
         },
