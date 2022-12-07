@@ -10,6 +10,8 @@ variables:
   RULES_CHANGES_PATH: "**/*"
   DOCKER_IMAGE_TAG_LOCAL: dockerhub.paziresh24.com/drapp-local
   DOCKER_IMAGE_TAG_COM: dockerhub.paziresh24.com/drapp
+  KUBERNETES_DOCKER_TAG: ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}-${CI_PIPELINE_ID}
+  
   FF_USE_FASTZIP: "true"
   # These can be specified per job or per pipeline
   ARTIFACT_COMPRESSION_LEVEL: "fast"
@@ -101,8 +103,9 @@ drApp-build-local-push-docker-image:
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
-    - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -f Dockerfile.localCenter .
+    - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -t $DOCKER_IMAGE_TAG_LOCAL:$KUBERNETES_DOCKER_TAG -f Dockerfile.localCenter .
     - docker push $DOCKER_IMAGE_TAG_LOCAL:latest
+    - docker push $DOCKER_IMAGE_TAG_LOCAL:$KUBERNETES_DOCKER_TAG
   tags:
     - france-loc
 
@@ -119,8 +122,9 @@ drApp-build-cloud-push-docker-image:
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
     - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
-    - docker build -t $DOCKER_IMAGE_TAG_COM:latest -f Dockerfile.drApp .
+    - docker build -t $DOCKER_IMAGE_TAG_COM:latest -t $DOCKER_IMAGE_TAG_COM:$KUBERNETES_DOCKER_TAG -f Dockerfile.drApp .
     - docker push $DOCKER_IMAGE_TAG_COM:latest
+    - docker push $DOCKER_IMAGE_TAG_COM:$KUBERNETES_DOCKER_TAG
   tags:
     - france-loc
 
@@ -133,6 +137,7 @@ drApp-deploy-production:
   script:
     - apk add --update bash openssh sshpass
     - ansible-playbook ./ansible/drapp/playbook-com.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+    - curl -X POST -F DOCKER_TAG_CLOUD=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN}  https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
 
 drApp-deploy-locals:
@@ -143,6 +148,7 @@ drApp-deploy-locals:
   script:
     - apk add --update bash openssh sshpass
     - ansible-playbook ./ansible/drapp/playbook-locals.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+    - curl -X POST -F DOCKER_TAG_LOCAL=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN} https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
 
 drApp-deploy-qc:
