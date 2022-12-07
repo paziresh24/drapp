@@ -140,6 +140,15 @@ drApp-deploy-production:
     - curl -X POST -F variables[DOCKER_TAG_CLOUD]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN}  https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
 
+drApp-deploy-locals-kubernetes:
+  image: dockerhub.paziresh24.com/docker-ansible:latest
+  stage: deploy
+  when: manual
+#  needs: ["drApp-test"]
+  script:
+    - curl -X POST -F variables[DOCKER_TAG_LOCAL]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN} https://api.kubit.ir/api/core/packs/pai33lfy/vars/
+
+
 drApp-deploy-locals:
   image: dockerhub.paziresh24.com/docker-ansible:latest
   stage: deploy
@@ -148,7 +157,7 @@ drApp-deploy-locals:
   script:
     - apk add --update bash openssh sshpass
     - ansible-playbook ./ansible/drapp/playbook-locals.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
-    - curl -X POST -F variables[DOCKER_TAG_LOCAL]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN} https://api.kubit.ir/api/core/packs/pai33lfy/vars/
+#    - curl -X POST -F variables[DOCKER_TAG_LOCAL]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN} https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
 
 drApp-deploy-qc:
