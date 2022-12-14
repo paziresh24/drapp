@@ -102,6 +102,13 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                             error: error.response?.data
                         }
                     });
+                    if (
+                        error.response?.data?.message ===
+                        'مالکیت شماره موبایل وارد شده با کدملی شما تطابق ندارد.'
+                    ) {
+                        location.assign('https://survey.porsline.ir/s/vQfgbSF');
+                        return;
+                    }
                     toast.error(error.response?.data.message);
                 }
             }
