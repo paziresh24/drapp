@@ -2,7 +2,7 @@ import styles from './textField.module.scss';
 import classNames from 'classnames';
 import { forwardRef, useState } from 'react';
 
-const TextField = forwardRef(({ autoComplete = 'off', ...props }, ref) => {
+const TextField = forwardRef(({ autoComplete = 'off', type, ...props }, ref) => {
     const [isShowPassword, setIsShowPassword] = useState(false);
     return (
         <label
@@ -16,10 +16,10 @@ const TextField = forwardRef(({ autoComplete = 'off', ...props }, ref) => {
                 className={classNames({
                     [styles['input']]: true,
                     [styles['error']]: props.error,
-                    [styles.password]: props.type === 'password'
+                    [styles.password]: type === 'password'
                 })}
                 disabled={props.disabled}
-                type={isShowPassword ? 'text' : props.type}
+                type={isShowPassword ? 'text' : type}
                 value={props.value}
                 defaultValue={props.defaultValue}
                 name={props.name}
@@ -39,7 +39,7 @@ const TextField = forwardRef(({ autoComplete = 'off', ...props }, ref) => {
                 {...props}
             />
             <span className={styles['label']}>{props.label}</span>
-            {props.type === 'password' && (
+            {type === 'password' && (
                 <span
                     className={styles['show-password']}
                     onClick={() => setIsShowPassword(prev => !prev)}
