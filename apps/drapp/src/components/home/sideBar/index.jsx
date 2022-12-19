@@ -24,7 +24,8 @@ import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useTour } from '@reactour/tour';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
-import { useGetPaymentSetting } from '../../../apis/payment/useGetPaymentSetting';
+import { useGetPaymentSetting } from '../../../apis/payment/getPaymentSetting';
+import { isZibalUser } from 'apps/drapp/src/constants/zipaUsers';
 
 const SideBar = memo(() => {
     const [open, setOpen] = useMenu();
@@ -99,7 +100,8 @@ const SideBar = memo(() => {
                     name: 'پرداخت',
                     shouldShow:
                         (info.center.id === '5532' || info.center.type_id === 1) &&
-                        paymentSetting.active,
+                        paymentSetting.active &&
+                        !isZibalUser({ doctorId: info.doctor.id, centerId: info.center.id }),
                     icon: <CardIcon color="#000" />,
                     subMenu: [
                         { name: 'تسویه حساب', link: '/financial' },
@@ -108,6 +110,16 @@ const SideBar = memo(() => {
                             link: '/setting/payment'
                         }
                     ]
+                },
+                {
+                    id: 6,
+                    name: 'پرداخت',
+                    shouldShow:
+                        (info.center.id === '5532' || info.center.type_id === 1) &&
+                        paymentSetting.active &&
+                        isZibalUser({ doctorId: info.doctor.id, centerId: info.center.id }),
+                    icon: <CardIcon color="#000" />,
+                    link: '/setting/payment'
                 },
                 {
                     id: 65,

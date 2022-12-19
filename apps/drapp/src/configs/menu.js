@@ -10,6 +10,7 @@ import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
 import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useSupport } from '@paziresh24/context/core/supportChat';
+import { isZibalUser } from '../constants/zipaUsers';
 
 export const MainMenuData = () => {
     const [info] = useDrApp();
@@ -26,40 +27,47 @@ export const MainMenuData = () => {
         {
             title: 'نسخه های ثبت شده',
             path: '/prescription',
-            icon: <PrescriptionMenuIcon color="#000" />
+            icon: <PrescriptionMenuIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'بیمه های من',
             path: '/providers',
-            icon: <PrescriptionIcon color="#000" />
+            icon: <PrescriptionIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'پراستفاده ها',
             path: '/favorite/templates',
-            icon: <StarIcon color="#000" />
+            icon: <StarIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'مشاوره',
             path: '/consult',
-            icon: <ConsultIcon color="#000" />
+            icon: <ConsultIcon color="#000" />,
+            shouldShow: true
         },
         {
-            title: info.center.id === '5532' ? 'تنظیمات پرداخت' : 'تنظیمات بیعانه',
+            title: 'پرداخت',
             path: '/setting/payment',
-            icon: <CardIcon color="#000" />
+            icon: <CardIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'تسویه حساب',
             path: '/financial',
-            icon: <CardIcon color="#000" />
+            icon: <CardIcon color="#000" />,
+            shouldShow: !isZibalUser({ doctorId: info.doctor.id, centerId: info.center.id })
         },
         {
             title: 'نظرات بیماران',
             path: '/feedbacks',
             icon: <MessageIcon color="#000" />,
-            badge: getFeedbacks.isSuccess && calculateNoReplyComments()
+            badge: getFeedbacks.isSuccess && calculateNoReplyComments(),
+            shouldShow: true
         }
-    ];
+    ].filter(item => item.shouldShow);
 };
 
 export const SubMenuData = () => {
