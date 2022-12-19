@@ -34,15 +34,13 @@ const PaymentPage = () => {
     });
     const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
     const [tab, setTab] = useState(
-        !getSetting.active || !isZibalUser({ doctorId: doctor.id, centerId: center.id }) ? 1 : 0
+        !getSetting.active || !isZibalUser({ userCenterId: center.user_center_id }) ? 1 : 0
     );
 
     useEffect(() => {
         getPaymentSetting.remove();
         getPaymentSetting.refetch();
-        setTab(
-            !getSetting.active || !isZibalUser({ doctorId: doctor.id, centerId: center.id }) ? 1 : 0
-        );
+        setTab(!getSetting.active || !isZibalUser({ userCenterId: center.user_center_id }) ? 1 : 0);
     }, [center]);
 
     useEffect(() => {
@@ -120,7 +118,7 @@ const PaymentPage = () => {
             maxWidth="sm"
             className="flex flex-col h-full !px-4 pt-2 md:pt-1 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
-            {isZibalUser({ doctorId: doctor.id, centerId: center.id }) && (
+            {isZibalUser({ userCenterId: center.user_center_id }) && (
                 <Tabs
                     variant="fullWidth"
                     className="border-b border-solid border-slate-200"
@@ -133,9 +131,7 @@ const PaymentPage = () => {
             )}
 
             <div className="px-0 pt-4">
-                {isZibalUser({ doctorId: doctor.id, centerId: center.id }) && tab === 0 && (
-                    <Financial />
-                )}
+                {isZibalUser({ userCenterId: center.user_center_id }) && tab === 0 && <Financial />}
                 {tab === 1 && (
                     <div className="flex flex-col space-y-5">
                         {center.id !== CONSULT_CENTER_ID && (

@@ -101,7 +101,7 @@ const SideBar = memo(() => {
                     shouldShow:
                         (info.center.id === '5532' || info.center.type_id === 1) &&
                         paymentSetting.active &&
-                        !isZibalUser({ doctorId: info.doctor.id, centerId: info.center.id }),
+                        !isZibalUser({ userCenterId: info.center.user_center_id }),
                     icon: <CardIcon color="#000" />,
                     subMenu: [
                         { name: 'تسویه حساب', link: '/financial' },
@@ -117,7 +117,7 @@ const SideBar = memo(() => {
                     shouldShow:
                         (info.center.id === '5532' || info.center.type_id === 1) &&
                         paymentSetting.active &&
-                        isZibalUser({ doctorId: info.doctor.id, centerId: info.center.id }),
+                        isZibalUser({ userCenterId: info.center.user_center_id }),
                     icon: <CardIcon color="#000" />,
                     link: '/setting/payment'
                 },

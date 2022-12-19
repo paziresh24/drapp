@@ -43,12 +43,6 @@ export const MainMenuData = () => {
             shouldShow: true
         },
         {
-            title: 'مشاوره',
-            path: '/consult',
-            icon: <ConsultIcon color="#000" />,
-            shouldShow: true
-        },
-        {
             title: 'پرداخت',
             path: '/setting/payment',
             icon: <CardIcon color="#000" />,
@@ -58,7 +52,7 @@ export const MainMenuData = () => {
             title: 'تسویه حساب',
             path: '/financial',
             icon: <CardIcon color="#000" />,
-            shouldShow: !isZibalUser({ doctorId: info.doctor.id, centerId: info.center.id })
+            shouldShow: !isZibalUser({ userCenterId: info.center.user_center_id })
         },
         {
             title: 'نظرات بیماران',
