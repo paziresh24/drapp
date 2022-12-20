@@ -1,5 +1,5 @@
 # => Build container
-FROM dockerhub.paziresh24.com/node:14.18.2-alpine as build
+FROM docker.paziresh24.info/node:14.18.2-alpine as build
 WORKDIR /app
 ENV DOCKER_BUILDKIT 1
 COPY package.json package-lock.json ./
@@ -9,7 +9,7 @@ WORKDIR /app/apps/drapp
 RUN node ../../node_modules/@craco/craco/bin/craco.js build
 
 # => Run container
-FROM dockerhub.paziresh24.com/nginx:alpine
+FROM docker.paziresh24.info/nginx:alpine
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
