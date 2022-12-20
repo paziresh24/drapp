@@ -1,4 +1,4 @@
-image: dockerhub.paziresh24.com/node:14.18.2-alpine
+image: docker.paziresh24.info/node:14.18.2-alpine
 
 stages:
   - test
@@ -8,8 +8,8 @@ stages:
 
 variables:
   RULES_CHANGES_PATH: "**/*"
-  DOCKER_IMAGE_TAG_LOCAL: dockerhub.paziresh24.com/drapp-local
-  DOCKER_IMAGE_TAG_COM: dockerhub.paziresh24.com/drapp
+  DOCKER_IMAGE_TAG_LOCAL: docker.paziresh24.info/drapp-local
+  DOCKER_IMAGE_TAG_COM: docker.paziresh24.info/drapp
   KUBERNETES_DOCKER_TAG: ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}-${CI_PIPELINE_ID}
   
   FF_USE_FASTZIP: "true"
@@ -46,7 +46,7 @@ before_script:
   - export DOCKER_BUILD=1
 
 services:
-  - name: dockerhub.paziresh24.com/docker:dind
+  - name: docker.paziresh24.info/docker:dind
     alias: docker
 
 .base-rules:
@@ -94,7 +94,7 @@ services:
 drApp-build-local-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
-  image: dockerhub.paziresh24.com/docker:stable
+  image: docker.paziresh24.info/docker:stable
   extends: .drApp
   before_script:
     - docker info
@@ -102,7 +102,7 @@ drApp-build-local-push-docker-image:
   script:
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
-    - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
+    - docker login $DOCKER_REGISTRY_URL -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
     - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -t $DOCKER_IMAGE_TAG_LOCAL:$KUBERNETES_DOCKER_TAG -f Dockerfile.localCenter .
     - docker push $DOCKER_IMAGE_TAG_LOCAL:latest
     - docker push $DOCKER_IMAGE_TAG_LOCAL:$KUBERNETES_DOCKER_TAG
@@ -113,7 +113,7 @@ drApp-build-local-push-docker-image:
 drApp-build-cloud-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
-  image: dockerhub.paziresh24.com/docker:stable
+  image: docker.paziresh24.info/docker:stable
   extends: .drApp
   before_script:
     - docker info
@@ -121,7 +121,7 @@ drApp-build-cloud-push-docker-image:
   script:
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
-    - docker login $DOCKER_AUTH_URL -u $DOCKER_AUTH_USERNAME -p $DOCKER_AUTH_PASSWORD
+    - docker login $DOCKER_REGISTRY_URL -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
     - docker build -t $DOCKER_IMAGE_TAG_COM:latest -t $DOCKER_IMAGE_TAG_COM:$KUBERNETES_DOCKER_TAG -f Dockerfile.drApp .
     - docker push $DOCKER_IMAGE_TAG_COM:latest
     - docker push $DOCKER_IMAGE_TAG_COM:$KUBERNETES_DOCKER_TAG
@@ -130,7 +130,7 @@ drApp-build-cloud-push-docker-image:
 
 
 drApp-deploy-production:
-  image: dockerhub.paziresh24.com/docker-ansible:latest
+  image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
   when: manual
 #  needs: ["drApp-test"]
@@ -141,7 +141,7 @@ drApp-deploy-production:
 
 
 drApp-deploy-locals-kubernetes:
-  image: dockerhub.paziresh24.com/docker-ansible:latest
+  image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
   when: manual
 #  needs: ["drApp-test"]
@@ -150,7 +150,7 @@ drApp-deploy-locals-kubernetes:
 
 
 drApp-deploy-locals:
-  image: dockerhub.paziresh24.com/docker-ansible:latest
+  image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
   when: manual
 #  needs: ["drApp-test"]
@@ -159,19 +159,8 @@ drApp-deploy-locals:
     - ansible-playbook ./ansible/drapp/playbook-locals.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 #    - curl -X POST -F variables[DOCKER_TAG_LOCAL]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN} https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
-
-drApp-deploy-qc:
-  image: dockerhub.paziresh24.com/docker-ansible:latest
-  stage: deploy
-  when: manual
-#  needs: ["drApp-test"]
-  script:
-    - apk add --update bash openssh sshpass
-    - ansible-playbook ./ansible/drapp/playbook-qc.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
-
-
 drApp-rollback-production:
-  image: dockerhub.paziresh24.com/docker-ansible:latest
+  image: docker.paziresh24.info/docker-ansible:latest
   stage: rollback
   when: manual
   #needs: ["drApp-deploy-production"]
