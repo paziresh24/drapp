@@ -15,8 +15,8 @@
     - debug: msg="{{ is_docker_compose_install.rc }}" # it returns rc 1
     - debug: var=is_docker_compose_install
 
-    - name: rename old image tag
-      shell: docker tag dockerhub.paziresh24.com/drapp-local:latest dockerhub.paziresh24.com/drapp-local:prev-latest
+    #- name: rename old image tag
+    #  shell: docker tag docker.paziresh24.info/drapp-local:latest docker.paziresh24.info/drapp-local:prev-latest
 
     - name: pull
       docker_compose:
