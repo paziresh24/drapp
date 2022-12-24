@@ -88,77 +88,61 @@ const History = ({ isOpen, onClose }) => {
                     <div className={styles['itemsWrapper']}>
                         {getPrescriptions.data.map(
                             item =>
-                                item.insuranceType === prescriptionInfo.insuranceType &&
-                                (!isMe
-                                    ? getItemServices.data.map(
-                                          prescriptions =>
-                                              prescriptions.find(
-                                                  service => service.prescription_id === item.id
-                                              ) && (
-                                                  <div key={item.id} className={styles.item}>
-                                                      <span className={styles.itemInfo}>
-                                                          تجویز شده در{' '}
-                                                          {new Date(
-                                                              item.created_at
-                                                          ).toLocaleDateString('fa')}{' '}
-                                                          توسط دکتر{' '}
-                                                          {item.doctor_additional_data?.fullName}
-                                                      </span>
-                                                      {prescriptions.map(
-                                                          service =>
-                                                              service.prescription_id ===
-                                                                  item.id && (
-                                                                  <Item
-                                                                      itemsSelect={itemsSelect}
-                                                                      key={service.id}
-                                                                      id={service.id}
-                                                                      setItemsSelect={
-                                                                          setItemsSelect
-                                                                      }
-                                                                      service={service}
-                                                                      prescription={item}
-                                                                  />
-                                                              )
-                                                      )}
-                                                  </div>
-                                              )
-                                      )
-                                    : item.doctor_additional_data?.fullName ===
-                                          prescriptionInfo.doctor?.doctor_additional_data
-                                              ?.fullName &&
-                                      getItemServices.data.map(
-                                          prescriptions =>
-                                              prescriptions.find(
-                                                  service => service.prescription_id === item.id
-                                              ) && (
-                                                  <div key={item.id} className={styles.item}>
-                                                      <div className={styles.itemInfo}>
-                                                          <span>
-                                                              تجویز شده در{' '}
-                                                              {new Date(
-                                                                  item.created_at
-                                                              ).toLocaleDateString('fa')}
-                                                          </span>
-                                                      </div>
-                                                      {prescriptions.map(
-                                                          service =>
-                                                              service.prescription_id ===
-                                                                  item.id && (
-                                                                  <Item
-                                                                      key={service.id}
-                                                                      id={service.id}
-                                                                      itemsSelect={itemsSelect}
-                                                                      setItemsSelect={
-                                                                          setItemsSelect
-                                                                      }
-                                                                      service={service}
-                                                                      prescription={item}
-                                                                  />
-                                                              )
-                                                      )}
-                                                  </div>
-                                              )
-                                      ))
+                                item.finalized &&
+                                (!isMe ? (
+                                    <div key={item.id} className={styles.item}>
+                                        <span className={styles.itemInfo}>
+                                            تجویز شده در{' '}
+                                            {new Date(item.created_at).toLocaleDateString('fa')}{' '}
+                                            توسط دکتر {item.doctor_additional_data?.fullName}
+                                        </span>
+                                        {getItemServices.data.map(prescriptions =>
+                                            prescriptions.map(
+                                                service =>
+                                                    service.prescription_id === item.id && (
+                                                        <Item
+                                                            itemsSelect={itemsSelect}
+                                                            key={service.id}
+                                                            id={service.id}
+                                                            setItemsSelect={setItemsSelect}
+                                                            service={service}
+                                                            prescription={item}
+                                                        />
+                                                    )
+                                            )
+                                        )}
+                                    </div>
+                                ) : (
+                                    item.doctor_additional_data?.fullName ===
+                                        prescriptionInfo.doctor?.doctor_additional_data
+                                            ?.fullName && (
+                                        <div key={item.id} className={styles.item}>
+                                            <div className={styles.itemInfo}>
+                                                <span>
+                                                    تجویز شده در{' '}
+                                                    {new Date(item.created_at).toLocaleDateString(
+                                                        'fa'
+                                                    )}
+                                                </span>
+                                            </div>
+                                            {getItemServices.data.map(prescriptions =>
+                                                prescriptions.map(
+                                                    service =>
+                                                        service.prescription_id === item.id && (
+                                                            <Item
+                                                                key={service.id}
+                                                                id={service.id}
+                                                                itemsSelect={itemsSelect}
+                                                                setItemsSelect={setItemsSelect}
+                                                                service={service}
+                                                                prescription={item}
+                                                            />
+                                                        )
+                                                )
+                                            )}
+                                        </div>
+                                    )
+                                ))
                         )}
 
                         {isEmpty(getItemServices.data) && (
