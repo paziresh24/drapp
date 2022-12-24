@@ -10,13 +10,17 @@ import serviceTypeList from '@paziresh24/constants/serviceTypeList.json';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
-const Item = ({ service, setItemsSelect, itemsSelect }) => {
+const Item = ({ service, setItemsSelect, itemsSelect, prescription }) => {
     const [services, setServices] = useServices();
     const [, setIsOpenToolBox] = useToolBox();
     const [type, setType] = useSelectType();
     const [prescriptionInfo] = useSelectPrescription();
 
     const addItemService = () => {
+        if (prescription.insuranceType !== prescriptionInfo.insuranceType) {
+            toast.error('امکان افزودن اقلام نیست، زیرا این نسخه با بیمه دیگری ثبت شده است.');
+            return;
+        }
         setType(
             Object.entries(serviceTypeList).filter(item =>
                 item[1][prescriptionInfo.insuranceType].includes(service?.service_type?.id)
@@ -46,6 +50,10 @@ const Item = ({ service, setItemsSelect, itemsSelect }) => {
     };
 
     const addItemTolist = e => {
+        if (prescription.insuranceType === prescriptionInfo.insuranceType) {
+            toast.error('امکان افزودن اقلام نیست، زیرا این نسخه با بیمه دیگری ثبت شده است.');
+            return;
+        }
         const id =
             itemsSelect.length > 0
                 ? itemsSelect[itemsSelect.length - 1].id
