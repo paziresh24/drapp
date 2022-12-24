@@ -50,7 +50,7 @@ const Item = ({ service, setItemsSelect, itemsSelect, prescription }) => {
     };
 
     const addItemTolist = e => {
-        if (prescription.insuranceType === prescriptionInfo.insuranceType) {
+        if (prescription.insuranceType !== prescriptionInfo.insuranceType) {
             toast.error('امکان افزودن اقلام نیست، زیرا این نسخه با بیمه دیگری ثبت شده است.');
             return;
         }
