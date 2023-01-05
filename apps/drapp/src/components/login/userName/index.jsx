@@ -238,9 +238,13 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                 onClose={setIntelligenceCreateCenterModal}
                 noHeader
             >
-                <span className="text-sm font-bold">
-                    برای ادامه احراز هویت، کارت ملی خود را بارگذاری کنید.
-                </span>
+                <div className="flex flex-col space-y-3">
+                    <span className="text-sm font-bold">پزشک گرامی</span>
+                    <span className="text-sm font-bold leading-7">
+                        باتوجه به اینکه شماره موبایل متعلق به این کد ملی نمی باشد، برای احراز هویت
+                        لطفا عکس کارت ملی خود را بارگذاری کنید.
+                    </span>
+                </div>
                 <label
                     htmlFor="nationalCard"
                     className="flex flex-col items-center justify-center w-full h-48 border border-dashed rounded-lg cursor-pointer border-slate-300"
@@ -249,10 +253,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                         <LoadingIcon color="#000" width="2rem" height="2rem" />
                     ) : (
                         <>
-                            <span className="hidden w-3/4 text-sm font-medium leading-7 text-center text-slate-500 md:block">
-                                برای بارگذاری اینجا کلیک کنید یا تصویر کارت ملی را به اینجا بکشانید.
-                            </span>
-                            <span className="block w-3/4 text-sm font-medium leading-7 text-center text-slate-500 md:hidden">
+                            <span className="w-3/4 text-sm font-medium text-center text-slate-500">
                                 برای بارگذاری کارت ملی خود اینجا کلیک کنید.
                             </span>
                         </>
