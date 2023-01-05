@@ -9,12 +9,17 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import { InfoIcon } from '@paziresh24/shared/icon';
+import { InfoIcon, LoadingIcon } from '@paziresh24/shared/icon';
+import Modal from '@paziresh24/shared/ui/modal';
+import { useCreateCenterIntelligence } from 'apps/drapp/src/apis/center/createCenterIntelligence';
+import { Loading } from '@paziresh24/shared/ui/loading';
 
 const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, setFocus }) => {
     const resendCode = useResendCode({ mobile: userName, justDoctor: true });
     const createCenter = useCreateCenter();
     const [error, setError] = useState(false);
+    const [intelligenceCreateCenterModal, setIntelligenceCreateCenterModal] = useState(false);
+    const createCenterIntelligence = useCreateCenterIntelligence();
 
     // form
     const {
@@ -106,13 +111,48 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
                         error.response?.data?.message ===
                         'مالکیت شماره موبایل وارد شده با کدملی شما تطابق ندارد.'
                     ) {
-                        location.assign('https://survey.porsline.ir/s/vQfgbSF');
+                        setIntelligenceCreateCenterModal(true);
                         return;
                     }
                     toast.error(error.response?.data.message);
                 }
             }
         );
+    };
+
+    const createCenterWhiteNationalCard = async file => {
+        try {
+            await createCenterIntelligence.mutateAsync({
+                nationalCard: file,
+                mobile: digitsFaToEn(userName),
+                nationalCode: digitsFaToEn(nationalCodeField.current.value)
+            });
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'successful',
+                event: {
+                    action: 'with-national-card',
+                    cellPhone: digitsFaToEn(userName),
+                    nationalCode: digitsFaToEn(nationalCodeField.current.value),
+                    medicalCode: digitsFaToEn(medicalCodeField.current.value)
+                }
+            });
+            setIntelligenceCreateCenterModal(false);
+            resendCode.refetch();
+        } catch (e) {
+            getSplunkInstance().sendEvent({
+                group: 'register',
+                type: 'unsuccessful',
+                event: {
+                    action: 'with-national-card',
+                    cellPhone: digitsFaToEn(userName),
+                    nationalCode: digitsFaToEn(nationalCodeField.current.value),
+                    medicalCode: digitsFaToEn(medicalCodeField.current.value),
+                    error: e.response?.data
+                }
+            });
+            toast.error(e.response?.data.message);
+        }
     };
 
     useEffect(() => {
@@ -131,63 +171,102 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
     }, [resendCode.status]);
 
     return (
-        <form
-            onSubmit={handleSubmit(step === 'REGISTER' ? createCenterAction : resendCodeAction)}
-            className={styles.wrapper}
-        >
-            <TextField
-                type="tel"
-                label="شماره موبایل"
-                errorText="شماره موبایل اشتباه است."
-                defaultValue={userName}
-                disabled={step === 'REGISTER'}
-                onFocus={() => {
-                    setError(false);
-                    setFocus && setFocus(true);
-                }}
-                error={error || errors.cellPhone}
-                {...cellPhoneRegister}
-                ref={e => {
-                    cellPhoneRegister.ref(e);
-                    cellPhoneField.current = e;
-                }}
-            />
-            {step === 'REGISTER' && (
-                <>
-                    <TextField
-                        type="tel"
-                        label="کدنظام پزشکی"
-                        error={errors.medicalCode}
-                        {...medicalCodeRegister}
-                        ref={e => {
-                            medicalCodeRegister.ref(e);
-                            medicalCodeField.current = e;
-                        }}
-                    />
-                    <TextField
-                        type="tel"
-                        label="کدملی"
-                        error={errors.nationalCode}
-                        {...nationalCodeRegister}
-                        ref={e => {
-                            nationalCodeRegister.ref(e);
-                            nationalCodeField.current = e;
-                        }}
-                    />
-                    <div className="bg-[#eaf0f4] rounded-lg p-3">
-                        <span className="text-[#586a79] font-medium text-sm leading-6">
-                            <InfoIcon color="#586a79" className="inline-block ml-2" />
-                            لازم به ذکر است که مالکیت شماره موبایل وارد شده باید با کد ملی شما تطابق
-                            داشته باشد.
-                        </span>
-                    </div>
-                </>
-            )}
+        <>
+            <form
+                onSubmit={handleSubmit(step === 'REGISTER' ? createCenterAction : resendCodeAction)}
+                className={styles.wrapper}
+            >
+                <TextField
+                    type="tel"
+                    label="شماره موبایل"
+                    errorText="شماره موبایل اشتباه است."
+                    defaultValue={userName}
+                    disabled={step === 'REGISTER'}
+                    onFocus={() => {
+                        setError(false);
+                        setFocus && setFocus(true);
+                    }}
+                    error={error || errors.cellPhone}
+                    {...cellPhoneRegister}
+                    ref={e => {
+                        cellPhoneRegister.ref(e);
+                        cellPhoneField.current = e;
+                    }}
+                />
+                {step === 'REGISTER' && (
+                    <>
+                        <TextField
+                            type="tel"
+                            label="کدنظام پزشکی"
+                            error={errors.medicalCode}
+                            {...medicalCodeRegister}
+                            ref={e => {
+                                medicalCodeRegister.ref(e);
+                                medicalCodeField.current = e;
+                            }}
+                        />
+                        <TextField
+                            type="tel"
+                            label="کدملی"
+                            error={errors.nationalCode}
+                            {...nationalCodeRegister}
+                            ref={e => {
+                                nationalCodeRegister.ref(e);
+                                nationalCodeField.current = e;
+                            }}
+                        />
+                        <div className="bg-[#eaf0f4] rounded-lg p-3">
+                            <span className="text-[#586a79] font-medium text-sm leading-6">
+                                <InfoIcon color="#586a79" className="inline-block ml-2" />
+                                لازم به ذکر است که مالکیت شماره موبایل وارد شده باید با کد ملی شما
+                                تطابق داشته باشد.
+                            </span>
+                        </div>
+                    </>
+                )}
 
-            <Button block type="submit" loading={resendCode.isLoading || createCenter.isLoading}>
-                {step === 'REGISTER' ? 'ثبت نام' : 'ورود/ثبت نام'}
-            </Button>
-        </form>
+                <Button
+                    block
+                    type="submit"
+                    loading={resendCode.isLoading || createCenter.isLoading}
+                >
+                    {step === 'REGISTER' ? 'ثبت نام' : 'ورود/ثبت نام'}
+                </Button>
+            </form>
+            <Modal
+                isOpen={intelligenceCreateCenterModal}
+                onClose={setIntelligenceCreateCenterModal}
+                noHeader
+            >
+                <span className="text-sm font-bold">
+                    برای ادامه احراز هویت، کارت ملی خود را بارگذاری کنید.
+                </span>
+                <label
+                    htmlFor="nationalCard"
+                    className="flex flex-col items-center justify-center w-full h-48 border border-dashed rounded-lg cursor-pointer border-slate-300"
+                >
+                    {createCenterIntelligence.isLoading || resendCode.isLoading ? (
+                        <LoadingIcon color="#000" width="2rem" height="2rem" />
+                    ) : (
+                        <>
+                            <span className="hidden w-3/4 text-sm font-medium leading-7 text-center text-slate-500 md:block">
+                                برای بارگذاری اینجا کلیک کنید یا تصویر کارت ملی را به اینجا بکشانید.
+                            </span>
+                            <span className="block w-3/4 text-sm font-medium leading-7 text-center text-slate-500 md:hidden">
+                                برای بارگذاری کارت ملی خود اینجا کلیک کنید.
+                            </span>
+                        </>
+                    )}
+                </label>
+                <input
+                    id="nationalCard"
+                    type="file"
+                    className="hidden"
+                    accept="image/jpeg, image/png"
+                    onChange={e => createCenterWhiteNationalCard(e.target.files[0])}
+                />
+            </Modal>
+        </>
     );
 };
 
