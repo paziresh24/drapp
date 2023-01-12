@@ -85,6 +85,24 @@ const SideBar = memo(() => {
                     ]
                 },
                 {
+                    id: 7,
+                    name: 'رتبه من در پذیرش24',
+                    shouldShow: info.center.type_id === 1 || info.center.id === '5532',
+                    icon: (
+                        <div className="relative">
+                            <Statistics color="#000" />
+                            <div className="absolute p-1 text-xs text-white bg-red-600 rounded-full -top-1 -left-2" />
+                        </div>
+                    ),
+                    onClick: () => {
+                        history.push('/forough');
+                        getSplunkInstance().sendEvent({
+                            group: 'forough',
+                            type: 'click'
+                        });
+                    }
+                },
+                {
                     id: 8,
                     name: 'تنظیمات نوبت دهی',
                     shouldShow:

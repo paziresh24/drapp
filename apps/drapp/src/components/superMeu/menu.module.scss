@@ -45,12 +45,12 @@
 
         .badge {
             .red {
-                background: $color-primary;
-                font-size: 1rem;
+                background: rgb(235, 56, 56);
+                font-size: 0.85rem;
                 font-weight: 500;
                 color: #fff;
                 border-radius: 100px;
-                padding: 0 1rem;
+                padding: 0 0.5rem;
                 max-height: 2.4rem;
             }
         }
