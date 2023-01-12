@@ -38,9 +38,7 @@ export const Forough = () => {
                         <div className="flex items-center space-s-2">
                             <div className="h-8 border border-solid border-slate-200" />
                             <div className="h-12 min-w-[3rem] font-bold flex items-center justify-center bg-teal-50 rounded-lg shadow-lg text-primary">
-                                {data?.page_view_statistics?.unique_count_by_terminal_id ??
-                                    data?.page_view_statistics?.count ??
-                                    '-'}
+                                {data?.page_view_statistics?.count ?? '-'}
                             </div>
                         </div>
                     </div>
