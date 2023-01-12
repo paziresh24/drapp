@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 export const Forough = () => {
     const searchViewInfo = useSearchViewInfo();
     const [isLoading, setIsLoading] = useState(true);
-    const pullingRequest = useRef<any>(null);
     const [data, setData] = useState<any>({});
     const router = useHistory();
 
@@ -16,15 +15,11 @@ export const Forough = () => {
         if (searchViewInfo.data?.data) {
             setIsLoading(false);
             setData(searchViewInfo.data?.data);
-            clearTimeout(pullingRequest.current);
-            return;
+        } else {
+            setTimeout(() => {
+                searchViewInfo.refetch();
+            }, 5000);
         }
-        pullingRequest.current = setTimeout(() => {
-            searchViewInfo.refetch();
-        }, 10000);
-        return () => {
-            clearTimeout(pullingRequest.current);
-        };
     }, [searchViewInfo.data]);
 
     return (
