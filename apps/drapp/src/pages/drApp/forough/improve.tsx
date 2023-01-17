@@ -1,16 +1,19 @@
 import { Button } from '@mui/material';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import isEmpty from 'lodash/isEmpty';
 import { useHistory } from 'react-router-dom';
 
 export const Forough = () => {
     const [{ centerConsult, centers }, setInfo] = useDrApp();
+    const [info] = useDrApp();
+    console.log(info);
     const router = useHistory();
 
     return (
         <div className="flex flex-col max-w-screen-sm p-5 mx-auto space-y-5">
             <div className="flex flex-col space-y-4">
-                {!centerConsult ? (
+                {isEmpty(centerConsult) ? (
                     <div className="flex flex-col space-y-2">
                         <span className="text-sm font-bold text-primary">مشاوره آنلاین</span>
                         <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
