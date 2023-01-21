@@ -136,7 +136,9 @@ const PrivateRoute = props => {
     }, [getLatestVersion.status]);
 
     if (isEmpty(getToken()))
-        history.replace(`/auth?url=${encodeURIComponent(window.location.href)}`);
+        history.replace(
+            `/auth${location.pathname !== '/' ? `?url=${location.pathname + location.search}` : ''}`
+        );
 
     if (
         props.path !== '/create-center' &&
