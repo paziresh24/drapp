@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 export const Forough = () => {
     const [{ centerConsult, centers }, setInfo] = useDrApp();
     const [info] = useDrApp();
-    console.log(info);
     const router = useHistory();
 
     return (
