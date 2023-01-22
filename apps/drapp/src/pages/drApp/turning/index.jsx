@@ -19,6 +19,7 @@ import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { Button } from '@mui/material';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 import paymentVector from '@assets/image/payment.svg';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Turning = () => {
     const history = useHistory();
@@ -263,11 +264,26 @@ const Turning = () => {
                     </span>
                     <Button
                         variant="contained"
-                        onClick={() => history.push('/setting/payment?active-payment-popup')}
+                        onClick={() => {
+                            getSplunkInstance().sendEvent({
+                                group: 'payment-popup',
+                                type: 'active-payment-now'
+                            });
+                            history.push('/setting/payment?active-payment-popup');
+                        }}
                     >
                         فعال سازی پرداخت بیعانه
                     </Button>
-                    <Button className="!text-slate-400" onClick={() => setPaymentModal(false)}>
+                    <Button
+                        className="!text-slate-400"
+                        onClick={() => {
+                            setPaymentModal(false);
+                            getSplunkInstance().sendEvent({
+                                group: 'payment-popup',
+                                type: 'active-payment-later'
+                            });
+                        }}
+                    >
                         فعلا نه، بعدا فعال می کنم
                     </Button>
                 </div>
