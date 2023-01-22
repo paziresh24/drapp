@@ -16,11 +16,12 @@ import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.stor
 import CartInfo from 'apps/drapp/src/components/payment/cartInfo';
 import { useIbanInquiry } from 'apps/drapp/src/apis/payment/ibanInquiry';
 import { useGetPaymentSetting } from 'apps/drapp/src/apis/payment/useGetPaymentSetting';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const PaymentPage = () => {
     const [{ center }] = useDrApp();
     const router = useHistory();
+    const location = useLocation();
     const { validate, submit, isLoading, ...formProps } = usePaymentForm();
     const [shouldShowTipCostModal, setShouldShowTipCostModal] = useState(false);
     const centerType = center.id === CONSULT_CENTER_ID ? 'consult' : 'office';
@@ -75,6 +76,14 @@ const PaymentPage = () => {
                         type: 'enter-cardnum',
                         event: { action: 'done' }
                     });
+                    if (location.search.includes('active-payment-popup'))
+                        getSplunkInstance().sendEvent({
+                            group: 'payment-popup',
+                            type: 'active-payment-now',
+                            event: {
+                                action: 'payment-activation-done'
+                            }
+                        });
                 }
                 getSplunkInstance().sendEvent({
                     group: `setting-payment-${centerType}`,

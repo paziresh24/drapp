@@ -50,7 +50,9 @@ const Form = ({ focus, setFocus }) => {
                             }
                         });
 
-                        return history.replace(params?.url ?? '/');
+                        return history.replace(params?.url ?? '/', {
+                            afterLogin: true
+                        });
                     } else {
                         getSplunkInstance().sendEvent({
                             group: 'login',

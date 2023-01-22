@@ -16,6 +16,10 @@ import ReferenceModal from '@paziresh24/apps/prescription/components/molecules/r
 import NewTurn from '@components/turning/newTurn/newTurn';
 import Statistics from '@components/turning/statistics';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
+import { Button } from '@mui/material';
+import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
+import paymentVector from '@assets/image/payment.svg';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Turning = () => {
     const history = useHistory();
@@ -47,6 +51,18 @@ const Turning = () => {
     const nationalCodeRef = useRef();
     const [prescriptionPendingModal, setPrescriptionPendingModal] = useState(false);
     const [referenceModal, setReferenceModal] = useState(false);
+    const [paymentModal, setPaymentModal] = useState(false);
+    const paymentInfo = usePaymentSettingStore(state => state.setting);
+
+    useEffect(() => {
+        if (
+            !paymentInfo.active &&
+            info.center.type_id === 1 &&
+            location.state?.afterLogin === true
+        ) {
+            setPaymentModal(true);
+        }
+    }, [paymentInfo.active]);
 
     useEffect(() => {
         if (location.state?.prescriptionInfo?.finalized) {
@@ -228,6 +244,49 @@ const Turning = () => {
                         شما و بیمار اطلاع داده خواهد شد.
                     </span>
                 )}
+            </Modal>
+
+            <Modal isOpen={paymentModal} onClose={setPaymentModal}>
+                <div className="flex flex-col space-y-2">
+                    <img src={paymentVector} alt="" className="self-center w-56" />
+
+                    <div className="flex flex-col">
+                        <span>پزشک گرامی</span>
+                        <span>
+                            طبق بررسی های انجام شده، تعداد مراجعین پزشکانی که در هنگام ثبت نوبت،{' '}
+                            <span className="text-primary">بیعانه</span> دریافت می کنند{' '}
+                            <span className="text-primary">2 برابر</span> پزشکانی است که بیعانه
+                            دریافت نمی کنند.
+                        </span>
+                    </div>
+                    <span className="self-center text-sm text-slate-500">
+                        شما می توانید از طریق دکمه زیر پرداخت بیعانه خود را فعال کنید.
+                    </span>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            getSplunkInstance().sendEvent({
+                                group: 'payment-popup',
+                                type: 'active-payment-now'
+                            });
+                            history.push('/setting/payment?active-payment-popup');
+                        }}
+                    >
+                        فعال سازی پرداخت بیعانه
+                    </Button>
+                    <Button
+                        className="!text-slate-400"
+                        onClick={() => {
+                            setPaymentModal(false);
+                            getSplunkInstance().sendEvent({
+                                group: 'payment-popup',
+                                type: 'active-payment-later'
+                            });
+                        }}
+                    >
+                        فعلا نه، بعدا فعال می کنم
+                    </Button>
+                </div>
             </Modal>
 
             <ReferenceModal
