@@ -57,6 +57,7 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useHistory } from 'react-router-dom';
 import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
+import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
 
 const Profile = () => {
     const router = useHistory();
@@ -195,24 +196,6 @@ const Profile = () => {
                 }
             }
         );
-    };
-
-    const checkAddress = address => {
-        if (address.includes('بیمارستان')) {
-            toast.warning(
-                'چنانچه نوبت دهی برای بیمارستان می باشد، حتما پذیرش بیمارستان را در جریان بگذارید.'
-            );
-        }
-        if (address.includes('درمانگاه')) {
-            toast.warning(
-                'چنانچه نوبت دهی برای درمانگاه می باشد، حتما پذیرش درمانگاه را در جریان بگذارید.'
-            );
-        }
-        if (address.includes('مرکز')) {
-            toast.warning(
-                'چنانچه نوبت دهی برای مرکز می باشد، حتما پذیرش مرکز را در جریان بگذارید.'
-            );
-        }
     };
 
     const updateCenter = data => {
