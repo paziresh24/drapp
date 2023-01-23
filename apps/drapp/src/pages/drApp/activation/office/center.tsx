@@ -18,6 +18,7 @@ import { useActivationStore } from '../activation.store';
 import { useGetReverseGeocoding } from '@paziresh24/hooks/drapp/geocoding';
 import { iranCityWithPrefixPhoneNumber } from 'apps/drapp/src/constants/iranCityWithPrefixPhoneNumber';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
 
 const CenterOfficeActivation = () => {
     const [{ doctor, center, centers }] = useDrApp();
@@ -127,21 +128,8 @@ const CenterOfficeActivation = () => {
     };
 
     const handleSubmitLocation = () => {
-        if (address.includes('بیمارستان')) {
-            toast.warning(
-                'چنانچه نوبت دهی برای بیمارستان می باشد، حتما پذیرش بیمارستان را در جریان بگذارید.'
-            );
-        }
-        if (address.includes('درمانگاه')) {
-            toast.warning(
-                'چنانچه نوبت دهی برای درمانگاه می باشد، حتما پذیرش درمانگاه را در جریان بگذارید.'
-            );
-        }
-        if (address.includes('مرکز')) {
-            toast.warning(
-                'چنانچه نوبت دهی برای مرکز می باشد، حتما پذیرش مرکز را در جریان بگذارید.'
-            );
-        }
+        checkAddress(address);
+
         getSplunkInstance().sendEvent({
             group: 'activation-office-center',
             type: `done`
