@@ -137,7 +137,11 @@ const PrivateRoute = props => {
 
     if (isEmpty(getToken()))
         history.replace(
-            `/auth${location.pathname !== '/' ? `?url=${location.pathname + location.search}` : ''}`
+            `/auth${
+                location.pathname !== '/' || location.search
+                    ? `?url=${location.pathname + location.search}`
+                    : ''
+            }`
         );
 
     if (
