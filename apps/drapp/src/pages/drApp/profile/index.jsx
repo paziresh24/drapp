@@ -158,8 +158,8 @@ const Profile = () => {
                 family: data.family,
                 national_code: data.national_code,
                 medical_code: data.medical_code,
-                biography: biographyRef?.current ?? null,
-                service_desk: serviceRef?.current ?? null,
+                biography: biographyRef?.current ?? info.doctor?.biography ?? '',
+                service_desk: serviceRef?.current ?? info.doctor?.desk ?? '',
                 secretary_phone: data.secretary_phone,
                 center_id: info.center.id
             },
@@ -189,7 +189,8 @@ const Profile = () => {
                             family: data.family,
                             national_code: data.national_code,
                             medical_code: data.medical_code,
-                            biography: biographyRef?.current ?? null,
+                            biography: biographyRef?.current ?? info.doctor?.biography ?? '',
+                            service_desk: serviceRef?.current ?? info.doctor?.desk ?? '',
                             secretary_phone: data.secretary_phone
                         }
                     }));
@@ -545,7 +546,7 @@ const Profile = () => {
                                     contentsLangDirection: 'rtl',
                                     language: 'fa'
                                 }}
-                                data={info.doctor?.desk}
+                                data={info.doctor?.service_desk}
                                 onBlur={(event, editor) => {
                                     const data = editor.getData();
                                     serviceRef.current = data;
