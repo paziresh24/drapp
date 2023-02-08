@@ -160,7 +160,7 @@ const PaymentPage = () => {
                     size="large"
                     loading={isLoading || ibanInquiry.isLoading}
                     onClick={() => {
-                        if (validate()) {
+                        if (validate({})) {
                             getSplunkInstance().sendEvent({
                                 group: `setting-payment-${centerType}`,
                                 type: 'continue '

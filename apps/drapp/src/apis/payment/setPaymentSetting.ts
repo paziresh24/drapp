@@ -5,9 +5,9 @@ interface Params {
     deposit_amount?: number;
     card_number?: string;
     center_id: string;
-    bank_name: string;
-    IBAN: string;
-    deposit_owners: string;
+    bank_name?: string;
+    IBAN?: string;
+    deposit_owners?: string;
 }
 
 export const setPaymentSetting = async (params: Params) => {

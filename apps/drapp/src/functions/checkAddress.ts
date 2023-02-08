@@ -2,7 +2,7 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { toast } from 'react-toastify';
 
 export const checkAddress = (address: string) => {
-    const checker = ['بیمارستان', 'درمانگاه', 'مرکز'];
+    const checker = ['بیمارستان', 'درمانگاه', 'مرکز', 'کلینیک'];
     if (!checker.some(check => address.includes(check))) return;
     checker.forEach(check => {
         if (!address.includes(check)) return;
