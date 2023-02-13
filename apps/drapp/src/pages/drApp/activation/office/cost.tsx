@@ -108,7 +108,7 @@ const CostConsultActivation = () => {
                 </div>
 
                 <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
-                    <div className="flex space-s-3">
+                    <div className="flex w-full space-s-3">
                         <Button
                             fullWidth
                             variant="contained"
