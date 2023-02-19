@@ -58,6 +58,7 @@ const Turning = () => {
         if (
             !paymentInfo.active &&
             info.center.type_id === 1 &&
+            info.center.is_active_booking &&
             location.state?.afterLogin === true
         ) {
             setPaymentModal(true);
