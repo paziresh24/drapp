@@ -179,7 +179,6 @@ const Profile = () => {
                             type: 'loading-/profile-dont-entered-num-secretary'
                         });
                     toast.success(res.message);
-                    setUserInfoAccordion(false);
 
                     setInfo(prev => ({
                         ...prev,

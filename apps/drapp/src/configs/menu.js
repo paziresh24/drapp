@@ -4,7 +4,8 @@ import {
     MessageIcon,
     PrescriptionMenuIcon,
     PrescriptionIcon,
-    Statistics
+    Statistics,
+    UserIcon
 } from '@paziresh24/shared/icon';
 
 import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
@@ -28,7 +29,12 @@ export const MainMenuData = () => {
     };
     return [
         {
-            title: 'رتبه من در پذیرش24  ',
+            title: 'ویرایش پروفایل',
+            path: '/profile',
+            icon: <UserIcon color="#000" width={24} height={24} />
+        },
+        {
+            title: 'رتبه من در پذیرش24',
             onClick: () => {
                 router.push('/forough');
                 getSplunkInstance().sendEvent({
