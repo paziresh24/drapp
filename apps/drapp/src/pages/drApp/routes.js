@@ -297,6 +297,14 @@ export const routes = [
         exact: true
     },
     {
+        path: '/complaints/',
+        name: 'Complaints',
+        title: 'شکایات',
+        component: lazy(() => import('./complaints')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/logout',
         name: 'logout',
         component: lazy(() => import('./logout')),
