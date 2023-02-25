@@ -10,7 +10,6 @@ import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
 import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useSupport } from '@paziresh24/context/core/supportChat';
-import { isZibalUser } from '../constants/zipaUsers';
 
 export const MainMenuData = () => {
     const [info] = useDrApp();
@@ -52,7 +51,7 @@ export const MainMenuData = () => {
             title: 'تسویه حساب',
             path: '/financial',
             icon: <CardIcon color="#000" />,
-            shouldShow: !isZibalUser({ userCenterId: info.center.user_center_id })
+            shouldShow: true
         },
         {
             title: 'نظرات بیماران',

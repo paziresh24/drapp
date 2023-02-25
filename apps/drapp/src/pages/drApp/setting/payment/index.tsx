@@ -19,7 +19,6 @@ import { useGetPaymentSetting } from 'apps/drapp/src/apis/payment/getPaymentSett
 import { useHistory } from 'react-router-dom';
 import { Tab, Tabs } from '@mui/material';
 import Financial from 'apps/drapp/src/components/payment/finacial';
-import { isZibalUser } from 'apps/drapp/src/constants/zipaUsers';
 
 const PaymentPage = () => {
     const [{ doctor, center }] = useDrApp();
@@ -33,15 +32,13 @@ const PaymentPage = () => {
         card_number: formProps.cartNumber ?? ''
     });
     const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
-    const [tab, setTab] = useState(
-        !getSetting.active || !isZibalUser({ userCenterId: center.user_center_id }) ? 1 : 0
-    );
+    const [tab, setTab] = useState(getSetting.active ? 0 : 1);
 
     useEffect(() => {
         getPaymentSetting.remove();
         getPaymentSetting.refetch();
-        setTab(!getSetting.active || !isZibalUser({ userCenterId: center.user_center_id }) ? 1 : 0);
-    }, [center]);
+        setTab(getSetting.active ? 0 : 1);
+    }, [center, getSetting.active]);
 
     useEffect(() => {
         if (ibanInquiry.isSuccess) {
@@ -118,20 +115,18 @@ const PaymentPage = () => {
             maxWidth="sm"
             className="flex flex-col h-full !px-4 pt-2 md:pt-1 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
-            {isZibalUser({ userCenterId: center.user_center_id }) && (
-                <Tabs
-                    variant="fullWidth"
-                    className="border-b border-solid border-slate-200"
-                    onChange={handleTabChange}
-                    value={tab}
-                >
-                    <Tab label="گزارش مالی" disabled={!getSetting.active} />
-                    <Tab label="تنظیمات" />
-                </Tabs>
-            )}
+            <Tabs
+                variant="fullWidth"
+                className="border-b border-solid border-slate-200"
+                onChange={handleTabChange}
+                value={tab}
+            >
+                <Tab label="گزارش مالی" disabled={!getSetting.active} />
+                <Tab label="تنظیمات" />
+            </Tabs>
 
             <div className="px-0 pt-4">
-                {isZibalUser({ userCenterId: center.user_center_id }) && tab === 0 && <Financial />}
+                {tab === 0 && <Financial />}
                 {tab === 1 && (
                     <div className="flex flex-col space-y-5">
                         {center.id !== CONSULT_CENTER_ID && (
