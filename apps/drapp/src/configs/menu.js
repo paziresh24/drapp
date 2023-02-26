@@ -48,12 +48,14 @@ export const MainMenuData = () => {
         {
             title: info.center.id === '5532' ? 'تنظیمات پرداخت' : 'تنظیمات بیعانه',
             path: '/setting/payment',
-            icon: <CardIcon color="#000" />
+            icon: <CardIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'تسویه حساب',
             path: '/financial',
-            icon: <CardIcon color="#000" />
+            icon: <CardIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'نظرات بیماران',
@@ -76,7 +78,7 @@ export const MainMenuData = () => {
             path: '/favorite/templates',
             icon: <StarIcon color="#000" />
         }
-    ];
+    ].filter(item => item.shouldShow);
 };
 
 export const SubMenuData = () => {

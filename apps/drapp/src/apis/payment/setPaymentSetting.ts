@@ -1,4 +1,5 @@
 import { client } from '@paziresh24/apis/client';
+import { useMutation } from 'react-query';
 
 interface Params {
     active: 0 | 1;
@@ -12,4 +13,8 @@ interface Params {
 
 export const setPaymentSetting = async (params: Params) => {
     return await client.patch(`/doctor/payments/settings/`, params);
+};
+
+export const useSetPaymentSetting = () => {
+    return useMutation(setPaymentSetting);
 };

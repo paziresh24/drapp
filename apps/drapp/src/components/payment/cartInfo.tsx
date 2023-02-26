@@ -9,28 +9,36 @@ export const CartInfo = ({ info }: CartInfoProps) => {
     return (
         <div className="flex flex-col space-y-3 font-medium border border-dashed border-disabled p-4 rounded-lg">
             <span>صاحب کارت: {info?.deposit_owners?.join('-')}</span>
-            <span>
-                شماره کارت:{' '}
-                {info?.card_number
-                    .match(/.{1,4}/g)
-                    .reverse()
-                    .join(' ')}
-            </span>
+            {info?.amount_payable && <span>مبلغ قابل پرداخت : {info.amount_payable}</span>}
+            {info?.card_number && (
+                <span>
+                    شماره کارت:{' '}
+                    {info?.card_number
+                        .match(/.{1,4}/g)
+                        .reverse()
+                        .join(' ')}
+                </span>
+            )}
+            {info?.shaba && <span>شماره شبا: {info?.shaba}</span>}
+            {info?.account_number && <span>شماره حساب: {info.account_number}</span>}
             <div>
                 <span>نام بانک: </span>
                 <span>
-                    <i
-                        className={`align-middle ibl32 ibl-${
-                            bankIcon.find(bank =>
-                                getBankNameFromCardNumber(info?.card_number as string)?.includes(
-                                    bank.name
-                                )
-                            )?.icon
-                        }`}
-                    />
+                    {info?.card_number && (
+                        <i
+                            className={`align-middle ibl32 ibl-${
+                                bankIcon.find(bank =>
+                                    getBankNameFromCardNumber(
+                                        info?.card_number as string
+                                    )?.includes(bank.name)
+                                )?.icon
+                            }`}
+                        />
+                    )}
                     {info?.bank_name}{' '}
                 </span>
             </div>
+            {info?.account_status && <span>وضعیت حساب: {info.account_status}</span>}
         </div>
     );
 };

@@ -1,9 +1,8 @@
-import { useSetPaymentSetting } from '../../apis/payment/useSetPaymentSetting';
+import { useSetPaymentSetting } from '../../apis/payment/setPaymentSetting';
 import axios from 'axios';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { verifyCardNumber } from '@persian-tools/persian-tools';
-import { useSetPaymentConsult } from 'apps/drapp/src/apis/payment/useSetPaymentConsult';
 
 export const usePaymentForm = () => {
     const [cartNumber, setCartNumber] = useState('');

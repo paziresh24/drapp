@@ -235,7 +235,7 @@ export const routes = [
     {
         path: '/setting/payment',
         name: 'Payment',
-        title: 'تنظیمات پرداخت',
+        title: 'پرداخت',
         component: lazy(() => import('./setting/payment')),
         isPrivate: true,
         exact: false

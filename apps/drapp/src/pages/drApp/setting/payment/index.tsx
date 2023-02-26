@@ -15,11 +15,13 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 import CartInfo from 'apps/drapp/src/components/payment/cartInfo';
 import { useIbanInquiry } from 'apps/drapp/src/apis/payment/ibanInquiry';
-import { useGetPaymentSetting } from 'apps/drapp/src/apis/payment/useGetPaymentSetting';
+import { useGetPaymentSetting } from 'apps/drapp/src/apis/payment/getPaymentSetting';
+import { Tab, Tabs } from '@mui/material';
+import Financial from 'apps/drapp/src/components/payment/finacial';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const PaymentPage = () => {
-    const [{ center }] = useDrApp();
+    const [{ doctor, center }] = useDrApp();
     const router = useHistory();
     const location = useLocation();
     const { validate, submit, isLoading, ...formProps } = usePaymentForm();
@@ -31,11 +33,13 @@ const PaymentPage = () => {
         card_number: formProps.cartNumber ?? ''
     });
     const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
+    const [tab, setTab] = useState(getSetting.active ? 0 : 1);
 
     useEffect(() => {
         getPaymentSetting.remove();
         getPaymentSetting.refetch();
-    }, [center]);
+        setTab(getSetting.active ? 0 : 1);
+    }, [center, getSetting.active]);
 
     useEffect(() => {
         if (ibanInquiry.isSuccess) {
@@ -111,146 +115,170 @@ const PaymentPage = () => {
             });
     };
 
+    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+        setTab(newValue);
+    };
+
     return (
         <Container
             maxWidth="sm"
-            className="flex flex-col h-full pt-4 space-y-5 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
+            className="flex flex-col h-full !px-4 pt-2 md:pt-1 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
-            {center.id !== CONSULT_CENTER_ID && (
-                <>
-                    <Alert icon={false} className="!bg-[#F3F6F9]">
-                        <Typography fontSize="0.9rem" fontWeight="medium">
-                            دریافت بیعانه به هنگام ثبت نوبت اینترنتی باعث می شود کسانی که نوبت گرفته
-                            اند، مقید به حضور حتمی و به موقع در مطب شوند.
-                        </Typography>
-                    </Alert>
+            <Tabs
+                variant="fullWidth"
+                className="border-b border-solid border-slate-200"
+                onChange={handleTabChange}
+                value={tab}
+            >
+                <Tab label="گزارش مالی" disabled={!getSetting.active} />
+                <Tab label="تنظیمات" />
+            </Tabs>
 
-                    <Typography className="!leading-8">
-                        همکاران شما بصورت میانگین مبلغ{' '}
-                        <span className="font-medium">{addCommas(10000)}</span> تومان را در نظر
-                        گرفته اند.
-                    </Typography>
-                </>
-            )}
+            <div className="px-0 pt-4">
+                {tab === 0 && <Financial />}
+                {tab === 1 && (
+                    <div className="flex flex-col space-y-5">
+                        {center.id !== CONSULT_CENTER_ID && (
+                            <>
+                                <Alert icon={false} className="!bg-[#F3F6F9]">
+                                    <Typography fontSize="0.9rem" fontWeight="medium">
+                                        دریافت بیعانه به هنگام ثبت نوبت اینترنتی باعث می شود کسانی
+                                        که نوبت گرفته اند، مقید به حضور حتمی و به موقع در مطب شوند.
+                                    </Typography>
+                                </Alert>
 
-            <PaymentForm
-                {...formProps}
-                selectBoxPrice={center.id !== CONSULT_CENTER_ID}
-                priceLable={center.id !== CONSULT_CENTER_ID ? 'قیمت بیعانه' : 'مبلغ ویزیت'}
-                clickPriceFiled={() =>
-                    getSplunkInstance().sendEvent({
-                        group: `setting-payment-${centerType}`,
-                        type: 'price-value',
-                        event: { action: 'click' }
-                    })
-                }
-                clickCartNumberFiled={() =>
-                    getSplunkInstance().sendEvent({
-                        group: `setting-payment-${centerType}`,
-                        type: 'enter-cardnum',
-                        event: { action: 'click' }
-                    })
-                }
-            />
+                                <Typography className="!leading-8">
+                                    همکاران شما بصورت میانگین مبلغ{' '}
+                                    <span className="font-medium">{addCommas(10000)}</span> تومان را
+                                    در نظر گرفته اند.
+                                </Typography>
+                            </>
+                        )}
+                        <PaymentForm
+                            {...formProps}
+                            selectBoxPrice={center.id !== CONSULT_CENTER_ID}
+                            priceLable={
+                                center.id !== CONSULT_CENTER_ID ? 'قیمت بیعانه' : 'مبلغ ویزیت'
+                            }
+                            clickPriceFiled={() =>
+                                getSplunkInstance().sendEvent({
+                                    group: `setting-payment-${centerType}`,
+                                    type: 'price-value',
+                                    event: { action: 'click' }
+                                })
+                            }
+                            clickCartNumberFiled={() =>
+                                getSplunkInstance().sendEvent({
+                                    group: `setting-payment-${centerType}`,
+                                    type: 'enter-cardnum',
+                                    event: { action: 'click' }
+                                })
+                            }
+                        />
+                        <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                size="large"
+                                loading={isLoading || ibanInquiry.isLoading}
+                                onClick={() => {
+                                    if (validate()) {
+                                        getSplunkInstance().sendEvent({
+                                            group: `setting-payment-${centerType}`,
+                                            type: 'continue '
+                                        });
+                                        if (center.id !== CONSULT_CENTER_ID)
+                                            return setShouldShowTipCostModal(true);
 
-            <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
-                <Button
-                    fullWidth
-                    variant="contained"
-                    size="large"
-                    loading={isLoading || ibanInquiry.isLoading}
-                    onClick={() => {
-                        if (validate({})) {
-                            getSplunkInstance().sendEvent({
-                                group: `setting-payment-${centerType}`,
-                                type: 'continue '
-                            });
-                            if (center.id !== CONSULT_CENTER_ID)
-                                return setShouldShowTipCostModal(true);
-
-                            ibanInquiry.remove();
-                            ibanInquiry.refetch();
-                        }
-                    }}
-                >
-                    {center.id !== CONSULT_CENTER_ID ? 'فعالسازی' : 'ذخیره'}
-                </Button>
-                {center.id !== CONSULT_CENTER_ID && (
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        className="grayscale opacity-90"
-                        size="large"
-                        loading={isLoading || ibanInquiry.isLoading}
-                        onClick={() => {
-                            handleSubmit({
-                                isActivePayment: false
-                            });
-                        }}
-                    >
-                        انصراف
-                    </Button>
+                                        ibanInquiry.remove();
+                                        ibanInquiry.refetch();
+                                    }
+                                }}
+                            >
+                                {center.id !== CONSULT_CENTER_ID ? 'فعالسازی' : 'ذخیره'}
+                            </Button>
+                            {center.id !== CONSULT_CENTER_ID && (
+                                <Button
+                                    fullWidth
+                                    variant="outlined"
+                                    className="grayscale opacity-90"
+                                    size="large"
+                                    loading={isLoading || ibanInquiry.isLoading}
+                                    onClick={() => {
+                                        handleSubmit({
+                                            isActivePayment: false
+                                        });
+                                    }}
+                                >
+                                    انصراف
+                                </Button>
+                            )}
+                        </FixedWrapBottom>
+                        <Modal
+                            title="نکات بیعانه"
+                            noHeader
+                            onClose={setShouldShowTipCostModal}
+                            isOpen={shouldShowTipCostModal}
+                        >
+                            <ul className="pr-4 space-y-2 list-disc">
+                                <li>
+                                    بیمار در صورتی موفق به اخذ نوبت می شود که بیعانه را پرداخت
+                                    نماید.
+                                </li>
+                                <li>
+                                    اسامی بیمارانی که در لیست بیماران مشاهده می کنید تماما پرداخت
+                                    بیعانه را انجام داده اند.
+                                </li>
+                                <li>
+                                    در صورتی که بیمار نوبت خود را تا 5 ساعت پیش از ساعت نوبت لغو
+                                    نماید، وجه پرداختی بیمار استرداد می گردد.
+                                </li>
+                            </ul>
+                            <Button
+                                variant="outlined"
+                                onClick={() => {
+                                    ibanInquiry.remove();
+                                    ibanInquiry.refetch();
+                                }}
+                                loading={ibanInquiry.isLoading}
+                            >
+                                تایید
+                            </Button>
+                        </Modal>
+                        <Modal
+                            title="تایید اطلاعات"
+                            onClose={() => {
+                                setInquiryModal(false);
+                                ibanInquiry.remove();
+                            }}
+                            isOpen={inquiryModal}
+                        >
+                            <span>آیا اطلاعات حساب مورد تایید می باشد؟ </span>
+                            <CartInfo info={ibanInquiry.data} />
+                            <div className="flex mt-1 space-s-3">
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    onClick={() => handleSubmit({})}
+                                    loading={isLoading}
+                                >
+                                    تایید
+                                </Button>
+                                <Button
+                                    fullWidth
+                                    variant="outlined"
+                                    onClick={() => {
+                                        ibanInquiry.remove();
+                                        setInquiryModal(false);
+                                    }}
+                                >
+                                    ویرایش
+                                </Button>
+                            </div>
+                        </Modal>
+                    </div>
                 )}
-            </FixedWrapBottom>
-            <Modal
-                title="نکات بیعانه"
-                noHeader
-                onClose={setShouldShowTipCostModal}
-                isOpen={shouldShowTipCostModal}
-            >
-                <ul className="pr-4 space-y-2 list-disc">
-                    <li>بیمار در صورتی موفق به اخذ نوبت می شود که بیعانه را پرداخت نماید.</li>
-                    <li>
-                        اسامی بیمارانی که در لیست بیماران مشاهده می کنید تماما پرداخت بیعانه را
-                        انجام داده اند.
-                    </li>
-                    <li>
-                        در صورتی که بیمار نوبت خود را تا 5 ساعت پیش از ساعت نوبت لغو نماید، وجه
-                        پرداختی بیمار استرداد می گردد.
-                    </li>
-                </ul>
-                <Button
-                    variant="outlined"
-                    onClick={() => {
-                        ibanInquiry.remove();
-                        ibanInquiry.refetch();
-                    }}
-                    loading={ibanInquiry.isLoading}
-                >
-                    تایید
-                </Button>
-            </Modal>
-            <Modal
-                title="تایید اطلاعات"
-                onClose={() => {
-                    setInquiryModal(false);
-                    ibanInquiry.remove();
-                }}
-                isOpen={inquiryModal}
-            >
-                <span>آیا اطلاعات حساب مورد تایید می باشد؟ </span>
-                <CartInfo info={ibanInquiry.data} />
-                <div className="flex mt-1 space-s-3">
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        onClick={() => handleSubmit({})}
-                        loading={isLoading}
-                    >
-                        تایید
-                    </Button>
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        onClick={() => {
-                            ibanInquiry.remove();
-                            setInquiryModal(false);
-                        }}
-                    >
-                        ویرایش
-                    </Button>
-                </div>
-            </Modal>
+            </div>
         </Container>
     );
 };

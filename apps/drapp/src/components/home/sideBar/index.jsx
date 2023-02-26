@@ -24,7 +24,7 @@ import { useLevel } from '@paziresh24/context/core/level';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useTour } from '@reactour/tour';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
-import { useGetPaymentSetting } from '../../../apis/payment/useGetPaymentSetting';
+import { useGetPaymentSetting } from '../../../apis/payment/getPaymentSetting';
 
 const SideBar = memo(() => {
     const [open, setOpen] = useMenu();
@@ -114,25 +114,8 @@ const SideBar = memo(() => {
                 },
                 {
                     id: 6,
-                    name: 'پرداخت',
-                    shouldShow:
-                        (info.center.id === '5532' || info.center.type_id === 1) &&
-                        paymentSetting.active,
-                    icon: <CardIcon color="#000" />,
-                    subMenu: [
-                        { name: 'تسویه حساب', link: '/financial' },
-                        {
-                            name: info.center.id === '5532' ? 'تنظیمات پرداخت' : 'تنظیمات بیعانه',
-                            link: '/setting/payment'
-                        }
-                    ]
-                },
-                {
-                    id: 65,
-                    name: 'فعالسازی پرداخت',
-                    shouldShow:
-                        (info.center.id === '5532' || info.center.type_id === 1) &&
-                        !paymentSetting.active,
+                    name: paymentSetting.active ? 'پرداخت' : 'فعالسازی پرداخت',
+                    shouldShow: info.center.id === '5532' || info.center.type_id === 1,
                     icon: <CardIcon color="#000" />,
                     link: '/setting/payment'
                 },
