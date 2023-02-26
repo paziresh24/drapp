@@ -26,24 +26,10 @@ const CostConsultActivation = () => {
     const officeCenter = doctorInfo?.centers.find(center => center.type_id === 1);
     const [shouldShowTipCostModal, setShouldShowTipCostModal] = useState(false);
     const { validate, submit, isLoading, ...formProps } = usePaymentForm();
-    const [inquiryModal, setInquiryModal] = useState(false);
-    const ibanInquiry = useIbanInquiry({
-        card_number: formProps.cartNumber ?? ''
-    });
-
-    useEffect(() => {
-        if (ibanInquiry.isSuccess) {
-            setInquiryModal(true);
-            setShouldShowTipCostModal(false);
-        }
-    }, [ibanInquiry.status]);
 
     const handleSubmit = async ({ isActivePayment = true }: { isActivePayment?: boolean }) => {
         submit({
             centerId: officeCenter.id,
-            bankName: (ibanInquiry.data as any)?.bank_name,
-            IBAN: (ibanInquiry.data as any)?.IBAN,
-            depositOwners: (ibanInquiry.data as any)?.deposit_owners?.join(','),
             isActivePayment
         })
             .then(() => {
@@ -74,7 +60,7 @@ const CostConsultActivation = () => {
                         error: error.response?.data?.message
                     }
                 });
-                setInquiryModal(false);
+                setShouldShowTipCostModal(false);
             });
     };
 
@@ -100,6 +86,7 @@ const CostConsultActivation = () => {
                 <PaymentForm
                     {...formProps}
                     priceLable="قیمت بیعانه"
+                    showBankNumberField={false}
                     clickPriceFiled={() =>
                         getSplunkInstance().sendEvent({
                             group: 'activation-office-center',
@@ -115,39 +102,45 @@ const CostConsultActivation = () => {
                         })
                     }
                 />
+                <div className="bg-[#FFFCF5] border-2 border-solid border-[#FFECC7] rounded-lg leading-6 p-3 text-sm font-medium">
+                    جهت دریافت مبالغ پرداختی بیعانه بیماران، لطفا پس از تکمیل ثبت نام، در قسمت
+                    تنظیمات پرداخت، شماره کارت خود را وارد نمایید.
+                </div>
 
                 <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        size="large"
-                        loading={isLoading}
-                        onClick={() => {
-                            if (validate()) {
-                                getSplunkInstance().sendEvent({
-                                    group: 'activation-office-center',
-                                    type: 'continue '
+                    <div className="flex w-full space-s-3">
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            size="large"
+                            loading={isLoading}
+                            onClick={() => {
+                                if (validate({ cardNumberValidate: false })) {
+                                    getSplunkInstance().sendEvent({
+                                        group: 'activation-office-center',
+                                        type: 'continue '
+                                    });
+                                    setShouldShowTipCostModal(true);
+                                }
+                            }}
+                        >
+                            ادامه
+                        </Button>
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            className="grayscale opacity-90"
+                            size="large"
+                            loading={isLoading}
+                            onClick={() => {
+                                handleSubmit({
+                                    isActivePayment: false
                                 });
-                                setShouldShowTipCostModal(true);
-                            }
-                        }}
-                    >
-                        ادامه
-                    </Button>
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        className="grayscale opacity-90"
-                        size="large"
-                        loading={isLoading || ibanInquiry.isLoading}
-                        onClick={() => {
-                            handleSubmit({
-                                isActivePayment: false
-                            });
-                        }}
-                    >
-                        انصراف
-                    </Button>
+                            }}
+                        >
+                            انصراف
+                        </Button>
+                    </div>
                 </FixedWrapBottom>
             </Container>
             <Modal
@@ -167,33 +160,9 @@ const CostConsultActivation = () => {
                         پرداختی بیمار استرداد می گردد.
                     </li>
                 </ul>
-                <Button
-                    variant="outlined"
-                    onClick={() => {
-                        ibanInquiry.remove();
-                        ibanInquiry.refetch();
-                    }}
-                    loading={ibanInquiry.isLoading}
-                >
+                <Button variant="outlined" onClick={() => handleSubmit({})} loading={isLoading}>
                     ذخیره
                 </Button>
-            </Modal>
-            <Modal title="تایید اطلاعات" onClose={setInquiryModal} isOpen={inquiryModal}>
-                <span>آیا اطلاعات حساب مورد تایید می باشد؟ </span>
-                <CartInfo info={ibanInquiry.data} />
-                <div className="flex mt-1 space-s-3">
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        onClick={() => handleSubmit({})}
-                        loading={isLoading}
-                    >
-                        تایید
-                    </Button>
-                    <Button fullWidth variant="outlined" onClick={() => setInquiryModal(false)}>
-                        ویرایش
-                    </Button>
-                </div>
             </Modal>
         </>
     );

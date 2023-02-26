@@ -57,6 +57,7 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useHistory } from 'react-router-dom';
 import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
+import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
 
 const Profile = () => {
     const router = useHistory();
@@ -157,8 +158,8 @@ const Profile = () => {
                 family: data.family,
                 national_code: data.national_code,
                 medical_code: data.medical_code,
-                biography: biographyRef?.current ?? null,
-                service_desk: serviceRef?.current ?? null,
+                biography: biographyRef?.current ?? info.doctor?.biography ?? '',
+                service_desk: serviceRef?.current ?? info.doctor?.desk ?? '',
                 secretary_phone: data.secretary_phone,
                 center_id: info.center.id
             },
@@ -178,7 +179,6 @@ const Profile = () => {
                             type: 'loading-/profile-dont-entered-num-secretary'
                         });
                     toast.success(res.message);
-                    setUserInfoAccordion(false);
 
                     setInfo(prev => ({
                         ...prev,
@@ -188,7 +188,8 @@ const Profile = () => {
                             family: data.family,
                             national_code: data.national_code,
                             medical_code: data.medical_code,
-                            biography: biographyRef?.current ?? null,
+                            biography: biographyRef?.current ?? info.doctor?.biography ?? '',
+                            service_desk: serviceRef?.current ?? info.doctor?.desk ?? '',
                             secretary_phone: data.secretary_phone
                         }
                     }));
@@ -199,6 +200,7 @@ const Profile = () => {
 
     const updateCenter = data => {
         centerPromises.push(updateCenterAccess.mutateAsync({ accessIds: centerAccess }));
+
         centerPromises.push(
             centerInfoUpdate.mutateAsync({
                 data: {
@@ -543,7 +545,7 @@ const Profile = () => {
                                     contentsLangDirection: 'rtl',
                                     language: 'fa'
                                 }}
-                                data={info.doctor?.desk}
+                                data={info.doctor?.service_desk}
                                 onBlur={(event, editor) => {
                                     const data = editor.getData();
                                     serviceRef.current = data;
@@ -563,36 +565,6 @@ const Profile = () => {
                 setOpen={setExpertiseAccordion}
             >
                 <ExpertisesWrapper setExpertiseAccordion={setExpertiseAccordion} />
-            </Accordion>
-            <Accordion
-                title="رمزعبور ثابت"
-                icon={
-                    <svg
-                        width="22"
-                        height="22"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M18 10.75C17.59 10.75 17.25 10.41 17.25 10V8C17.25 4.85 16.36 2.75 12 2.75C7.64 2.75 6.75 4.85 6.75 8V10C6.75 10.41 6.41 10.75 6 10.75C5.59 10.75 5.25 10.41 5.25 10V8C5.25 5.1 5.95 1.25 12 1.25C18.05 1.25 18.75 5.1 18.75 8V10C18.75 10.41 18.41 10.75 18 10.75Z"
-                            fill="#3F3F79"
-                        />
-                        <path
-                            d="M12 19.25C10.21 19.25 8.75 17.79 8.75 16C8.75 14.21 10.21 12.75 12 12.75C13.79 12.75 15.25 14.21 15.25 16C15.25 17.79 13.79 19.25 12 19.25ZM12 14.25C11.04 14.25 10.25 15.04 10.25 16C10.25 16.96 11.04 17.75 12 17.75C12.96 17.75 13.75 16.96 13.75 16C13.75 15.04 12.96 14.25 12 14.25Z"
-                            fill="#3F3F79"
-                        />
-                        <path
-                            d="M17 22.75H7C2.59 22.75 1.25 21.41 1.25 17V15C1.25 10.59 2.59 9.25 7 9.25H17C21.41 9.25 22.75 10.59 22.75 15V17C22.75 21.41 21.41 22.75 17 22.75ZM7 10.75C3.42 10.75 2.75 11.43 2.75 15V17C2.75 20.57 3.42 21.25 7 21.25H17C20.58 21.25 21.25 20.57 21.25 17V15C21.25 11.43 20.58 10.75 17 10.75H7Z"
-                            fill="#3F3F79"
-                        />
-                    </svg>
-                }
-            >
-                <Password />
-            </Accordion>
-            <Accordion title="تنظیمات نسخه نویسی" icon={<SettingIcon color="#3F3F79" />}>
-                <Settings />
             </Accordion>
             {info.center.type_id === OFFICE_CENTER && (
                 <Accordion
@@ -651,6 +623,7 @@ const Profile = () => {
                             error={centerInfoErrors.address}
                             defaultValue={info.center.address}
                             {...updateCenterInfo('address', { required: true })}
+                            onBlur={e => checkAddress(e.target.value)}
                         />
                         <TextField
                             label="شماره تلفن مطب"
@@ -772,6 +745,37 @@ const Profile = () => {
                     </form>
                 </Accordion>
             )}
+            <Accordion
+                title="رمزعبور ثابت"
+                icon={
+                    <svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M18 10.75C17.59 10.75 17.25 10.41 17.25 10V8C17.25 4.85 16.36 2.75 12 2.75C7.64 2.75 6.75 4.85 6.75 8V10C6.75 10.41 6.41 10.75 6 10.75C5.59 10.75 5.25 10.41 5.25 10V8C5.25 5.1 5.95 1.25 12 1.25C18.05 1.25 18.75 5.1 18.75 8V10C18.75 10.41 18.41 10.75 18 10.75Z"
+                            fill="#3F3F79"
+                        />
+                        <path
+                            d="M12 19.25C10.21 19.25 8.75 17.79 8.75 16C8.75 14.21 10.21 12.75 12 12.75C13.79 12.75 15.25 14.21 15.25 16C15.25 17.79 13.79 19.25 12 19.25ZM12 14.25C11.04 14.25 10.25 15.04 10.25 16C10.25 16.96 11.04 17.75 12 17.75C12.96 17.75 13.75 16.96 13.75 16C13.75 15.04 12.96 14.25 12 14.25Z"
+                            fill="#3F3F79"
+                        />
+                        <path
+                            d="M17 22.75H7C2.59 22.75 1.25 21.41 1.25 17V15C1.25 10.59 2.59 9.25 7 9.25H17C21.41 9.25 22.75 10.59 22.75 15V17C22.75 21.41 21.41 22.75 17 22.75ZM7 10.75C3.42 10.75 2.75 11.43 2.75 15V17C2.75 20.57 3.42 21.25 7 21.25H17C20.58 21.25 21.25 20.57 21.25 17V15C21.25 11.43 20.58 10.75 17 10.75H7Z"
+                            fill="#3F3F79"
+                        />
+                    </svg>
+                }
+            >
+                <Password />
+            </Accordion>
+            <Accordion title="تنظیمات نسخه نویسی" icon={<SettingIcon color="#3F3F79" />}>
+                <Settings />
+            </Accordion>
+
             {info.center.id === CONSULT_CENTER_ID && (
                 <Accordion
                     title="شماره whatsapp business"

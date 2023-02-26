@@ -3,8 +3,8 @@ import { EditIcon } from '@paziresh24/shared/icon';
 import Button from '@paziresh24/shared/ui/button';
 import Modal from '@paziresh24/shared/ui/modal';
 import TextField from '@paziresh24/shared/ui/textField';
-import { useChangePhoneNumber } from 'apps/drapp/src/apis/changePhoneNumber/otp';
-import { useUpdatePhoneNumber } from 'apps/drapp/src/apis/changePhoneNumber/update';
+import { useChangePhoneNumber } from '@apis/profile/changePhoneNumber/otp';
+import { useUpdatePhoneNumber } from '@apis/profile/changePhoneNumber/update';
 import { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 

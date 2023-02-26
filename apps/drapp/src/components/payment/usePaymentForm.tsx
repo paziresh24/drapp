@@ -11,12 +11,12 @@ export const usePaymentForm = () => {
     const [priceFieldError, setPriceFieldError] = useState(false);
     const [cartNumberFieldError, setCartNumberFieldError] = useState(false);
 
-    const validate = () => {
+    const validate = ({ cardNumberValidate = true }: { cardNumberValidate?: boolean }) => {
         if (!+price) {
             setPriceFieldError(true);
             return false;
         }
-        if (!cartNumber || !verifyCardNumber(+cartNumber)) {
+        if (cardNumberValidate && (!cartNumber || !verifyCardNumber(+cartNumber))) {
             setCartNumberFieldError(true);
             return false;
         }
@@ -31,19 +31,22 @@ export const usePaymentForm = () => {
         isActivePayment = true
     }: {
         centerId: string;
-        bankName: string;
-        IBAN: string;
-        depositOwners: string;
+        bankName?: string;
+        IBAN?: string;
+        depositOwners?: string;
         isActivePayment?: boolean;
     }) => {
         try {
             const data = await setPaymentSetting.mutateAsync({
                 active: isActivePayment ? 1 : 0,
-                ...(isActivePayment && { deposit_amount: +price * 10, card_number: cartNumber }),
+                ...(isActivePayment && {
+                    deposit_amount: +price * 10,
+                    ...(cartNumber && { card_number: cartNumber })
+                }),
                 center_id: centerId,
-                bank_name: bankName,
-                IBAN: IBAN,
-                deposit_owners: depositOwners
+                ...(bankName && { bank_name: bankName }),
+                ...(IBAN && { IBAN: IBAN }),
+                ...(depositOwners && { deposit_owners: depositOwners })
             });
             return Promise.resolve(data);
         } catch (error) {

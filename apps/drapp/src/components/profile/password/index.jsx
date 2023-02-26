@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Overlay } from '@paziresh24/shared/ui/overlay';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const Password = () => {
     const [info] = useDrApp();
@@ -64,6 +65,10 @@ const Password = () => {
                     {
                         onSuccess: () => {
                             toast.success('رمزعبور ثابت شما فعال شد.');
+                            getSplunkInstance().sendEvent({
+                                group: 'secretary-login',
+                                type: 'const-password'
+                            });
                         }
                     }
                 );
@@ -79,6 +84,10 @@ const Password = () => {
                         {
                             onSuccess: () => {
                                 toast.success('رمزعبور ثابت شما فعال شد.');
+                                getSplunkInstance().sendEvent({
+                                    group: 'secretary-login',
+                                    type: 'const-password'
+                                });
                             },
                             onError: error => {
                                 if (error.response.status === 400) {

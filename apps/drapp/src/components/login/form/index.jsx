@@ -50,15 +50,8 @@ const Form = ({ focus, setFocus }) => {
                             }
                         });
 
-                        if (params?.url && new URL(params?.url).origin === location.origin) {
-                            return location.replace(decodeURIComponent(params.url));
-                        }
-
-                        return history.replace({
-                            pathname: '/',
-                            state: {
-                                afterLogin: true
-                            }
+                        return history.replace(params?.url ?? '/', {
+                            afterLogin: true
                         });
                     } else {
                         getSplunkInstance().sendEvent({
@@ -122,7 +115,7 @@ const Form = ({ focus, setFocus }) => {
 
     return (
         <div className="flex flex-col h-full w-full lg:w-[28rem] lg:min-w-[28rem] items-center lg:justify-center relative space-y-6 p-8 lg:p-12">
-            <div className="justify-between hidden lg:flex w-full absolute top-4 px-10 items-center">
+            <div className="absolute items-center justify-between hidden w-full px-10 lg:flex top-4">
                 {!centersConfig[window.location.hostname]?.hidePaziresh24 && (
                     <svg
                         width="126"
@@ -156,13 +149,13 @@ const Form = ({ focus, setFocus }) => {
                 {centersConfig[window.location.hostname]?.logo && (
                     <img
                         src={centersConfig[window.location.hostname].logo}
-                        className="w-28 mx-auto"
+                        className="mx-auto w-28"
                         alt=""
                     />
                 )}
             </div>
 
-            <div className="flex w-full justify-between items-center">
+            <div className="flex items-center justify-between w-full">
                 {step === 'USERNAME' && (
                     <span className="text-lg font-black">ورود/ثبت نام پزشکان</span>
                 )}
@@ -189,7 +182,7 @@ const Form = ({ focus, setFocus }) => {
                     </button>
                 )}
             </div>
-            <div className="flex flex-col w-full relative">
+            <div className="relative flex flex-col w-full">
                 {(step === 'USERNAME' || step === 'REGISTER') && (
                     <UserName
                         setStep={setStep}
@@ -271,10 +264,10 @@ const Form = ({ focus, setFocus }) => {
 
             {step === 'USERNAME' && (
                 <div className="w-full">
-                    <div className="flex justify-center items-center">
-                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                    <div className="flex items-center justify-center">
+                        <div className="w-3/6 border border-gray-200 border-solid"></div>
                         <span className="p-5">یا</span>
-                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                        <div className="w-3/6 border border-gray-200 border-solid"></div>
                     </div>
                     <Button
                         onClick={() => {
@@ -291,10 +284,10 @@ const Form = ({ focus, setFocus }) => {
             )}
             {step === 'SALAMATAUTH' && (
                 <div className="w-full">
-                    <div className="flex justify-center items-center">
-                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                    <div className="flex items-center justify-center">
+                        <div className="w-3/6 border border-gray-200 border-solid"></div>
                         <span className="p-5">یا</span>
-                        <div className="border border-solid border-gray-200 w-3/6"></div>
+                        <div className="w-3/6 border border-gray-200 border-solid"></div>
                     </div>
                     <Button onClick={() => setStep('USERNAME')} block variant="secondary">
                         ورود با شماره موبایل
@@ -303,7 +296,7 @@ const Form = ({ focus, setFocus }) => {
             )}
             {!focus &&
                 (!centersConfig[window.location.hostname]?.hideSupportCell ? (
-                    <a className="flex items-center absolute bottom-5" href="tel:02125015555">
+                    <a className="absolute flex items-center bottom-5" href="tel:02125015555">
                         <svg
                             width="21"
                             height="21"
@@ -321,7 +314,7 @@ const Form = ({ focus, setFocus }) => {
                         </svg>
                         <div className="flex flex-col mr-4">
                             <span className="text-base font-bold">پشتیبانی: 02125015555</span>
-                            <span className="text-sm font-normal mt-1">همه روزه 8 الی 24</span>
+                            <span className="mt-1 text-sm font-normal">همه روزه 8 الی 24</span>
                         </div>
                     </a>
                 ) : (

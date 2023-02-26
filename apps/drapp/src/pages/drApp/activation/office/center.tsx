@@ -18,6 +18,7 @@ import { useActivationStore } from '../activation.store';
 import { useGetReverseGeocoding } from '@paziresh24/hooks/drapp/geocoding';
 import { iranCityWithPrefixPhoneNumber } from 'apps/drapp/src/constants/iranCityWithPrefixPhoneNumber';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
 
 const CenterOfficeActivation = () => {
     const [{ doctor, center, centers }] = useDrApp();
@@ -127,6 +128,8 @@ const CenterOfficeActivation = () => {
     };
 
     const handleSubmitLocation = () => {
+        checkAddress(address);
+
         getSplunkInstance().sendEvent({
             group: 'activation-office-center',
             type: `done`
@@ -167,17 +170,17 @@ const CenterOfficeActivation = () => {
                 )}
             </div>
             <Map lat={lat} lng={lng} zoom={1} sendPosition={setPosition} />
-            <div className="bg-white flex flex-col space-y-3 p-4 w-full">
+            <div className="flex flex-col w-full p-4 space-y-3 bg-white">
                 <span className="font-medium">محل مطب خود را از روی نقشه انتخاب کنید.</span>
                 {(getReverseGeocoding.isLoading || getReverseGeocoding.isIdle) && (
                     <div
-                        className="h-16 bg-disabled animate-pulse rounded-md flex items-center px-3 space-s-3"
+                        className="flex items-center h-16 px-3 rounded-md bg-disabled animate-pulse space-s-3"
                         onClick={() => setAddressEditModal(true)}
                     />
                 )}
                 {getReverseGeocoding.isSuccess && (
                     <div
-                        className="h-16 bg-disabled bg-opacity-50 rounded-md flex items-center px-3 space-s-3"
+                        className="flex items-center h-16 px-3 bg-opacity-50 rounded-md bg-disabled space-s-3"
                         onClick={() => setAddressEditModal(true)}
                     >
                         <svg
@@ -196,7 +199,7 @@ const CenterOfficeActivation = () => {
                             />
                         </svg>
 
-                        <span className="text-sm text-gray-600 font-medium line-clamp-2">
+                        <span className="text-sm font-medium text-gray-600 line-clamp-2">
                             {address}
                         </span>
                     </div>

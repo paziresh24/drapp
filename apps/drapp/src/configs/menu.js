@@ -3,16 +3,21 @@ import {
     CardIcon,
     MessageIcon,
     PrescriptionMenuIcon,
-    PrescriptionIcon
+    PrescriptionIcon,
+    Statistics,
+    UserIcon
 } from '@paziresh24/shared/icon';
 
 import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
 import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useSupport } from '@paziresh24/context/core/supportChat';
+import { Router, useHistory } from 'react-router-dom';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 export const MainMenuData = () => {
     const [info] = useDrApp();
+    const router = useHistory();
     const getFeedbacks = useGetFeedbacks({ center_id: info.center.id });
 
     const calculateNoReplyComments = () => {
@@ -24,25 +29,24 @@ export const MainMenuData = () => {
     };
     return [
         {
-            title: 'نسخه های ثبت شده',
-            path: '/prescription',
-            icon: <PrescriptionMenuIcon color="#000" />,
-            shouldShow: true
+            title: 'ویرایش پروفایل',
+            path: '/profile',
+            icon: <UserIcon color="#000" width={24} height={24} />
         },
         {
-            title: 'بیمه های من',
-            path: '/providers',
-            icon: <PrescriptionIcon color="#000" />,
-            shouldShow: true
+            title: 'رتبه من در پذیرش24',
+            onClick: () => {
+                router.push('/forough');
+                getSplunkInstance().sendEvent({
+                    group: 'forough',
+                    type: 'click'
+                });
+            },
+            icon: <Statistics color="#000" />,
+            badge: 'جدید'
         },
         {
-            title: 'پراستفاده ها',
-            path: '/favorite/templates',
-            icon: <StarIcon color="#000" />,
-            shouldShow: true
-        },
-        {
-            title: 'پرداخت',
+            title: info.center.id === '5532' ? 'تنظیمات پرداخت' : 'تنظیمات بیعانه',
             path: '/setting/payment',
             icon: <CardIcon color="#000" />,
             shouldShow: true
@@ -57,8 +61,22 @@ export const MainMenuData = () => {
             title: 'نظرات بیماران',
             path: '/feedbacks',
             icon: <MessageIcon color="#000" />,
-            badge: getFeedbacks.isSuccess && calculateNoReplyComments(),
-            shouldShow: true
+            badge: getFeedbacks.isSuccess && calculateNoReplyComments()
+        },
+        {
+            title: 'نسخه های ثبت شده',
+            path: '/prescription',
+            icon: <PrescriptionMenuIcon color="#000" />
+        },
+        {
+            title: 'بیمه های من',
+            path: '/providers',
+            icon: <PrescriptionIcon color="#000" />
+        },
+        {
+            title: 'پراستفاده ها',
+            path: '/favorite/templates',
+            icon: <StarIcon color="#000" />
         }
     ].filter(item => item.shouldShow);
 };

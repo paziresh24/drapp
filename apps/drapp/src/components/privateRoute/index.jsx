@@ -22,6 +22,7 @@ import { useLevel } from '@paziresh24/context/core/level';
 import OtpCodePresciprion from '../otpCodePrescription/otpCodePrescription';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
+import { useGetPaymentSetting } from '../../apis/payment/useGetPaymentSetting';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -40,6 +41,7 @@ const PrivateRoute = props => {
     const getLatestVersion = useGetLatestVersion();
     const [isError, setIsError] = useState(false);
     const setPrescriptionSetting = usePrescriptionSettingStore(state => state.setSetting);
+    const getPaymentSetting = useGetPaymentSetting({ center_id: info?.center?.id });
 
     useEffect(() => {
         setPage(props);
@@ -83,6 +85,7 @@ const PrivateRoute = props => {
                 ...prev,
                 doctor
             }));
+            getPaymentSetting.refetch();
 
             window.user_information = {
                 doctor: doctor,
@@ -136,7 +139,13 @@ const PrivateRoute = props => {
     }, [getLatestVersion.status]);
 
     if (isEmpty(getToken()))
-        history.replace(`/auth?url=${encodeURIComponent(window.location.href)}`);
+        history.replace(
+            `/auth${
+                location.pathname !== '/' || location.search
+                    ? `?url=${location.pathname + location.search}`
+                    : ''
+            }`
+        );
 
     if (
         props.path !== '/create-center' &&

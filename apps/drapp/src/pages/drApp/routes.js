@@ -281,6 +281,30 @@ export const routes = [
         exact: true
     },
     {
+        path: '/forough',
+        name: 'forough',
+        title: 'آمار مهم من',
+        component: lazy(() => import('./forough')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/forough/improve',
+        name: 'forough-improve',
+        title: 'بهبود رتبه در نتایج',
+        component: lazy(() => import('./forough/improve')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/complaints/',
+        name: 'Complaints',
+        title: 'شکایات',
+        component: lazy(() => import('./complaints')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/logout',
         name: 'logout',
         component: lazy(() => import('./logout')),

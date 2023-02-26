@@ -17,6 +17,7 @@ export interface PaymentFormProps {
     clickPriceFiled?: () => void;
     clickCartNumberFiled?: () => void;
     priceLable: string;
+    showBankNumberField?: boolean;
 }
 
 const costsOffice = [
@@ -63,6 +64,7 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
         selectBoxPrice = true,
         clickPriceFiled,
         clickCartNumberFiled,
+        showBankNumberField = true,
         priceLable
     } = props;
     const [customPrice, setCustomPrice] = useState(false);
@@ -122,19 +124,21 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                         autoFocus
                     />
                 )}
-                <BankNumberField
-                    onChange={e => setCartNumber(e.target.value)}
-                    value={cartNumber}
-                    fullWidth
-                    onClick={clickCartNumberFiled}
-                    onFocus={() => setCartNumberFieldError(false)}
-                    error={cartNumberFieldError}
-                    helperText={
-                        cartNumberFieldError
-                            ? 'لطفا شماره کارت معتبر وارد کنید.'
-                            : 'جهت واریز مبالغ بیعانه به حساب شما'
-                    }
-                />
+                {showBankNumberField && (
+                    <BankNumberField
+                        onChange={e => setCartNumber(e.target.value)}
+                        value={cartNumber}
+                        fullWidth
+                        onClick={clickCartNumberFiled}
+                        onFocus={() => setCartNumberFieldError(false)}
+                        error={cartNumberFieldError}
+                        helperText={
+                            cartNumberFieldError
+                                ? 'لطفا شماره کارت معتبر وارد کنید.'
+                                : 'جهت واریز مبالغ بیعانه به حساب شما'
+                        }
+                    />
+                )}
             </>
         </FormControl>
     );

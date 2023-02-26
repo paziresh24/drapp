@@ -41,8 +41,8 @@ const ConsultOfficeActivation = () => {
     const addWorkHours = useConsultActivationStore(state => state.addWorkHours);
     const workHours = useConsultActivationStore(state => state.workHours);
     const removeWorkHours = useConsultActivationStore(state => state.removeWorkHours);
-    const duration = useConsultActivationStore(state => state.duration);
-    const setDuration = useConsultActivationStore(state => state.setDuration);
+    // const duration = useConsultActivationStore(state => state.duration);
+    // const setDuration = useConsultActivationStore(state => state.setDuration);
     const whatsapp = useConsultActivationStore(state => state.whatsapp);
     const price = useConsultActivationStore(state => state.price);
     const [questionActivation, setQuestionActivation] = useState(false);
@@ -72,7 +72,7 @@ const ConsultOfficeActivation = () => {
         try {
             await activeConsult.mutateAsync({
                 workHours,
-                service_length: duration,
+                service_length: 3,
                 whatsapp: digitsFaToEn(whatsapp.replace(/^0+/, '')),
                 price: price * 10
             });
@@ -80,7 +80,7 @@ const ConsultOfficeActivation = () => {
                 group: 'activation-consult-workhours',
                 type: 'visit-days',
                 event: {
-                    action: duration
+                    action: 3
                 }
             });
             uniq(workHours.map(({ day }) => weekDays.find(({ id }) => day === id)?.nameEn)).forEach(
@@ -150,14 +150,14 @@ const ConsultOfficeActivation = () => {
                 </Button>
             )}
             <Stack className="pb-32 space-y-5 md:pb-0">
-                <SelectTime
+                {/* <SelectTime
                     items={durationList}
                     label="مدت پاسخگویی پزشک"
                     value={duration}
                     onChange={setDuration}
                     isLoading={getWorkHoursRequest.isLoading}
                     prefix="روز"
-                />
+                /> */}
 
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
