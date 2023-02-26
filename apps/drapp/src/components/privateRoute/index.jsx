@@ -22,7 +22,7 @@ import { useLevel } from '@paziresh24/context/core/level';
 import OtpCodePresciprion from '../otpCodePrescription/otpCodePrescription';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
-import { useGetPaymentSetting } from '../../apis/payment/useGetPaymentSetting';
+import { useGetPaymentSetting } from '../../apis/payment/getPaymentSetting';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
