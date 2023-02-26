@@ -35,8 +35,7 @@ export const Transaction = (props: TransactionProps) => {
         reject: 'درخواست رد شده',
         in_progress: 'در صف پرداخت',
         paid: 'پرداخت شده',
-        doctor_confirmation:
-            'زمانی که درخواست اول رو میزنی ی رکورد با این استاتوس داریم (در انتظار تایید درخواست توسط پزشک)',
+        doctor_confirmation: 'در انتظار تایید درخواست توسط پزشک',
         doctor_confirmation_reject: 'رد شده توسط پزشک',
         failed_request: 'درخواست با خطا مواجه شده است',
         unknown: 'نا مشخص',
@@ -60,7 +59,9 @@ export const Transaction = (props: TransactionProps) => {
             <div className="flex justify-between">
                 <div className="flex items-center space-s-3">
                     <span className="text-sm opacity-70">{rowNumber}</span>
-                    <div className="font-medium text-sm">{addCommas(+amount / 10)} هزار تومان</div>
+                    <div className="font-medium text-sm">
+                        {addCommas((+amount ?? 0) / 10)} تومان
+                    </div>
                     <Chips theme={getTagStatusColor()} className="!p-0 !px-2">
                         {paymentStatus[status]}
                     </Chips>
@@ -77,7 +78,7 @@ export const Transaction = (props: TransactionProps) => {
                     <div className="flex flex-col gap-2">
                         <span>توضیحات:</span>
                         <span>شماره شبا (کارت): {detailes.shaba}</span>
-                        <span>کد پیگیری: {detailes.trackerId}</span>
+                        {detailes.trackerId && <span>کد پیگیری: {detailes.trackerId}</span>}
                         <span>
                             تسویه شده تا تاریخ:{' '}
                             {convertTimeStampToPersianDate(+detailes.settlementDate)}

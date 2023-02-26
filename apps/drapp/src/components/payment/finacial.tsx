@@ -60,14 +60,11 @@ const Financial = () => {
     return (
         <>
             <div className="flex flex-col space-y-4">
-                <div className="p-3 bg-slate-100 text-slate-500 font-medium text-xs rounded-lg">
-                    مبالغ به صورت اتوماتیک؛ روزانه به شماره کارت درج شده واریز میگردد.
-                </div>
                 <div className="p-5 space-s-4 bg-gradient-to-br from-[#4f4f8f] to-[#1A1D4E] h-32 flex justify-evenly items-stretch rounded-xl shadow-lg">
                     <div className="space-y-2 h-full flex flex-col justify-center items-center">
                         <span className="text-sm text-white opacity-80">کل درآمد</span>
                         <span className="text-lg font-bold text-white">
-                            {addCommas(getfinancial.data?.data?.doctor_share ?? 0 / 10)}
+                            {addCommas((getfinancial.data?.data?.doctor_share ?? 0) / 10)}
                         </span>
                         <span className="text-xs text-white">تومان</span>
                     </div>
@@ -75,7 +72,7 @@ const Financial = () => {
                     <div className="space-y-2 h-full flex flex-col justify-center items-center">
                         <span className="text-sm text-white opacity-80">پرداخت شده</span>
                         <span className="text-lg font-bold text-white">
-                            {addCommas(getfinancial.data?.data?.paid_cost ?? 0 / 10)}
+                            {addCommas((getfinancial.data?.data?.paid_cost ?? 0) / 10)}
                         </span>
                         <span className="text-xs text-white">تومان</span>
                     </div>
@@ -93,7 +90,9 @@ const Financial = () => {
                 >
                     درخواست تسویه حساب
                 </Button>
-                <span className="text-sm font-bold">گزارش مالی</span>
+                {getfinancial.data?.data?.doctor_payments?.length && (
+                    <span className="text-sm font-bold">گزارش مالی</span>
+                )}
                 <div className="rounded-lg bg-slate-200 px-4">
                     {getfinancial.data?.data?.doctor_payments?.map(
                         (transaction: any, index: number, array: any[]) => (
@@ -119,6 +118,7 @@ const Financial = () => {
                 title="تایید اطلاعات"
                 onClose={() => {
                     setInquiryModal(false);
+                    handleConfirm(false);
                 }}
                 isOpen={inquiryModal}
             >
