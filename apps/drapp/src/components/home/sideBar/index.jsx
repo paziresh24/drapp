@@ -62,6 +62,13 @@ const SideBar = memo(() => {
                     }
                 },
                 {
+                    id: 2,
+                    name: 'ویرایش پروفایل',
+                    shouldShow: true,
+                    icon: <UserIcon color="#000" />,
+                    link: '/profile'
+                },
+                {
                     id: '52',
                     name: 'نسخه نویسی',
                     icon: <PrescriptionMenuIcon color="#000" />,

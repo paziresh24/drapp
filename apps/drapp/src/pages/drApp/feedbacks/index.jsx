@@ -53,7 +53,9 @@ const Feedbacks = () => {
                                 </span>
                                 <Button
                                     size="small"
-                                    onClick={() => window.open('https://www.goftino.com/c/Zg7Y7J')}
+                                    onClick={() =>
+                                        window.open('https://www.paziresh24.com/support/login')
+                                    }
                                 >
                                     ارتباط با پشتیبانی
                                 </Button>
