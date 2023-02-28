@@ -75,9 +75,6 @@ const Profile = () => {
     const getGallery = useGetGallery({ center_id: info.center.id });
     const deleteGallery = useDeleteGallery();
 
-    const bankInfo = useBankInfo();
-    const getBankInfo = useGetBankInfo({ center_id: info.center.id });
-
     const getWhatsapp = useGetWhatsApp();
     const updateWhatsapp = useUpdateWhatsapp();
 
@@ -87,13 +84,10 @@ const Profile = () => {
     const [city, setCity] = useState(info.center.city);
 
     const [expertiseAccordion, setExpertiseAccordion] = useState(false);
-    const [bankAccordion, setBankAccordion] = useState(false);
     const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
-    const [cartNumber, setCartNumber] = useState('');
     const biographyRef = useRef();
-    const serviceRef = useRef();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [mapZoom, setMapZoom] = useState();
@@ -159,7 +153,6 @@ const Profile = () => {
                 national_code: data.national_code,
                 medical_code: data.medical_code,
                 biography: biographyRef?.current ?? info.doctor?.biography ?? '',
-                service_desk: serviceRef?.current ?? info.doctor?.desk ?? '',
                 secretary_phone: data.secretary_phone,
                 center_id: info.center.id
             },
@@ -189,7 +182,6 @@ const Profile = () => {
                             national_code: data.national_code,
                             medical_code: data.medical_code,
                             biography: biographyRef?.current ?? info.doctor?.biography ?? '',
-                            service_desk: serviceRef?.current ?? info.doctor?.desk ?? '',
                             secretary_phone: data.secretary_phone
                         }
                     }));
@@ -464,7 +456,7 @@ const Profile = () => {
                         />
                     )}
                     <div className={styles['col']}>
-                        <span style={{ marginBottom: '1rem' }}>بیوگرافی</span>
+                        <span style={{ marginBottom: '1rem' }}>بیوگرافی و توضیحات</span>
                         <CKEditor
                             editor={ClassicEditor}
                             config={{
@@ -507,52 +499,6 @@ const Profile = () => {
                             }}
                         />
                     </div>
-                    {info.center.id === CONSULT_CENTER_ID && (
-                        <div className={styles['col']}>
-                            <span style={{ marginBottom: '1rem' }}>توضیحات خدمات مشاوره</span>
-                            <CKEditor
-                                editor={ClassicEditor}
-                                config={{
-                                    toolbar: [
-                                        'heading',
-                                        '|',
-                                        'bold',
-                                        'italic',
-                                        'bulletedList',
-                                        'numberedList'
-                                    ],
-                                    heading: {
-                                        options: [
-                                            {
-                                                model: 'paragraph',
-                                                title: 'Paragraph',
-                                                class: 'ck-heading_paragraph'
-                                            },
-                                            {
-                                                model: 'heading1',
-                                                view: 'h1',
-                                                title: 'Heading 1',
-                                                class: 'ck-heading_heading1'
-                                            },
-                                            {
-                                                model: 'heading2',
-                                                view: 'h2',
-                                                title: 'Heading 2',
-                                                class: 'ck-heading_heading2'
-                                            }
-                                        ]
-                                    },
-                                    contentsLangDirection: 'rtl',
-                                    language: 'fa'
-                                }}
-                                data={info.doctor?.service_desk}
-                                onBlur={(event, editor) => {
-                                    const data = editor.getData();
-                                    serviceRef.current = data;
-                                }}
-                            />
-                        </div>
-                    )}
                     <Button variant="primary" type="submit" loading={doctorInfoUpdate.isLoading}>
                         ذخیره تغییرات
                     </Button>
