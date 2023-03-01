@@ -2,6 +2,8 @@ import Chip from '@mui/material/Chip';
 import Button from '@mui/lab/LoadingButton';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useAddPrescription, useDeletePrescription } from '@paziresh24/hooks/prescription';
+import { useUpdateDescription } from 'apps/drapp/src/apis/prescription/updateDescription';
+import { toast } from 'react-toastify';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, digitsFaToEn } from '@persian-tools/persian-tools';
 import axios from 'axios';
@@ -9,7 +11,6 @@ import moment from 'jalali-moment';
 import { useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import Visit from '../visit';
 import { ChevronIcon, DotsIcon, TrashIcon } from '@paziresh24/shared/icon';
@@ -21,6 +22,7 @@ import { Default, Mobile } from '@paziresh24/hooks/device';
 import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
+import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
 
 type Prescription = {
     id: string;
@@ -71,14 +73,18 @@ const TurnRow = (props: TurnRowProps) => {
     const queryClient = useQueryClient();
     const [visitModal, setVisitModal] = useState(false);
     const addPrescription = useAddPrescription();
+    const updateDescription = useUpdateDescription();
     const deletePrescription = useDeletePrescription();
     const turns = useTurnsStore(state => state.turns);
     const [visitLoading, setVisitLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
+    const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
+    const [descriptionTreatment, setDescriptionTreatment] = useState('');
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
         false
     );
+    const paziresh = usePaziresh();
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -116,6 +122,29 @@ const TurnRow = (props: TurnRowProps) => {
         } catch (error) {
             errorCatch(error);
             setPrescriptionLoading(false);
+        }
+    };
+
+    const handleUpdateDescription = async () => {
+        try {
+            await updateDescription.mutateAsync({
+                bookId: id,
+                centerId: info.center.id,
+                params: {
+                    description: descriptionTreatment
+                }
+            });
+            await paziresh.mutateAsync({
+                book_id: id,
+                status: true
+            });
+            queryClient.refetchQueries('turns');
+            toast.success('درخواست شما با موفقیت ثبت شد!');
+            setDescriptionTreatmentModal(false);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message);
+            }
         }
     };
 
@@ -208,12 +237,16 @@ const TurnRow = (props: TurnRowProps) => {
         return insuranceProvider;
     };
 
+    console.log(info);
+
     const VisitButton = () => (
         <Button
             variant="outlined"
             size="small"
             disabled={prescription.finalized}
             onClick={() => {
+                if (info.center.id === CONSULT_CENTER_ID && !info.isEnablePrescription)
+                    setDescriptionTreatmentModal(true);
                 if (!nationalCode) return setNationalCodeModal('visit');
                 handleVisit();
             }}
@@ -543,6 +576,34 @@ const TurnRow = (props: TurnRowProps) => {
                     }}
                 >
                     تایید
+                </Button>
+            </Modal>
+            <Modal
+                title="توضیحات درمان"
+                isOpen={descriptionTreatmentModal}
+                onClose={setDescriptionTreatmentModal}
+            >
+                <span className="text-sm leading-6">
+                    پزشک گرامی لطفا در صورتی که برای بیمار نسخه الکترونیک ثبت کرده اید “کد پیگیری
+                    نسخه” و در صورت نیاز “توضیحات درمان” خود را یادداشت نمایید.
+                    <br /> (این متن برای بیمار پیامک خواهد شد و به منظور اتمام ویزیت می باشد.)
+                </span>
+                <TextField
+                    multiline
+                    minRows={7}
+                    margin="normal"
+                    placeholder="توضیحات خود را وارد کنید"
+                    onChange={e => setDescriptionTreatment(e.target.value)}
+                    className="[&>div>textarea]:!p-0 [&>div>textarea]:!text-sm [&>div>textarea]:placeholder:!text-sm [&>div>textarea]:placeholder:!text-black"
+                />
+                <Button
+                    disabled={!descriptionTreatment.length}
+                    fullWidth
+                    variant="contained"
+                    onClick={handleUpdateDescription}
+                    loading={updateDescription.isLoading}
+                >
+                    ثبت
                 </Button>
             </Modal>
         </>

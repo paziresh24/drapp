@@ -23,6 +23,7 @@ import OtpCodePresciprion from '../otpCodePrescription/otpCodePrescription';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
 import { useGetPaymentSetting } from '../../apis/payment/getPaymentSetting';
+import { useInsurances } from '@paziresh24/hooks/prescription/insurances';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -42,6 +43,7 @@ const PrivateRoute = props => {
     const [isError, setIsError] = useState(false);
     const setPrescriptionSetting = usePrescriptionSettingStore(state => state.setSetting);
     const getPaymentSetting = useGetPaymentSetting({ center_id: info?.center?.id });
+    const insurancesRequest = useInsurances();
 
     useEffect(() => {
         setPage(props);
@@ -75,6 +77,7 @@ const PrivateRoute = props => {
     useEffect(() => {
         if (getCentersDoctor.status.success && centersDoctor.length !== 0) {
             doctorInfo.refetch();
+            insurancesRequest.refetch();
         }
     }, [getCentersDoctor.status, centersDoctor]);
 
@@ -116,6 +119,18 @@ const PrivateRoute = props => {
             }
         }
     }, [doctorInfo.status]);
+
+    useEffect(() => {
+        if (insurancesRequest.isSuccess) {
+            const insurances = insurancesRequest?.data ?? {};
+            setInfo(prev => ({
+                ...prev,
+                isEnablePrescription:
+                    !isEmpty(insurances?.tamin) || insurances?.salamat?.length > 0,
+                insurances
+            }));
+        }
+    }, [insurancesRequest.status]);
 
     if (urlParams.token) setToken(urlParams.token);
 
