@@ -4,7 +4,6 @@ import { WorkDaysProvider } from '@paziresh24/context/drapp/workDays';
 import { DurationProvider } from '@paziresh24/context/drapp/duration';
 import { MenuProvider } from '@paziresh24/context/core/menu';
 import { SubMenuProvider } from '@paziresh24/context/core/subMenu';
-import { SupportProvider } from '@paziresh24/context/core/supportChat';
 import { PageProvider } from '@paziresh24/context/core/page';
 import { IsActiveLearnProvider } from '@paziresh24/context/core/isActiveLearn';
 
@@ -31,31 +30,29 @@ const Provider = ({ children }) => {
                             <SubMenuProvider>
                                 <PageProvider>
                                     <IsActiveLearnProvider>
-                                        <SupportProvider>
-                                            <MeProvider>
-                                                <SelectPrescriptionProvider>
-                                                    <SelectTypeProvider>
-                                                        <ServicesProvider>
-                                                            <DiagnosisProvider>
-                                                                <BackPageProvider>
-                                                                    <FavoriteItemProvider>
-                                                                        <ToolBoxProvider>
-                                                                            <TemplateItemProvider>
-                                                                                <SettingTurnsProvider>
-                                                                                    <LevelProvider>
-                                                                                        {children}
-                                                                                    </LevelProvider>
-                                                                                </SettingTurnsProvider>
-                                                                            </TemplateItemProvider>
-                                                                        </ToolBoxProvider>
-                                                                    </FavoriteItemProvider>
-                                                                </BackPageProvider>
-                                                            </DiagnosisProvider>
-                                                        </ServicesProvider>
-                                                    </SelectTypeProvider>
-                                                </SelectPrescriptionProvider>
-                                            </MeProvider>
-                                        </SupportProvider>
+                                        <MeProvider>
+                                            <SelectPrescriptionProvider>
+                                                <SelectTypeProvider>
+                                                    <ServicesProvider>
+                                                        <DiagnosisProvider>
+                                                            <BackPageProvider>
+                                                                <FavoriteItemProvider>
+                                                                    <ToolBoxProvider>
+                                                                        <TemplateItemProvider>
+                                                                            <SettingTurnsProvider>
+                                                                                <LevelProvider>
+                                                                                    {children}
+                                                                                </LevelProvider>
+                                                                            </SettingTurnsProvider>
+                                                                        </TemplateItemProvider>
+                                                                    </ToolBoxProvider>
+                                                                </FavoriteItemProvider>
+                                                            </BackPageProvider>
+                                                        </DiagnosisProvider>
+                                                    </ServicesProvider>
+                                                </SelectTypeProvider>
+                                            </SelectPrescriptionProvider>
+                                        </MeProvider>
                                     </IsActiveLearnProvider>
                                 </PageProvider>
                             </SubMenuProvider>
