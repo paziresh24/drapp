@@ -11,8 +11,7 @@ import {
 import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
 import { useGetFeedbacks } from '@paziresh24/hooks/drapp/profile';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { useSupport } from '@paziresh24/context/core/supportChat';
-import { Router, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 export const MainMenuData = () => {
@@ -48,14 +47,7 @@ export const MainMenuData = () => {
         {
             title: info.center.id === '5532' ? 'تنظیمات پرداخت' : 'تنظیمات بیعانه',
             path: '/setting/payment',
-            icon: <CardIcon color="#000" />,
-            shouldShow: true
-        },
-        {
-            title: 'تسویه حساب',
-            path: '/financial',
-            icon: <CardIcon color="#000" />,
-            shouldShow: true
+            icon: <CardIcon color="#000" />
         },
         {
             title: 'نظرات بیماران',
@@ -78,16 +70,16 @@ export const MainMenuData = () => {
             path: '/favorite/templates',
             icon: <StarIcon color="#000" />
         }
-    ].filter(item => item.shouldShow);
+    ];
 };
 
 export const SubMenuData = () => {
-    const [, setSupportModal] = useSupport();
-
     return [
         {
             title: 'پشتیبانی',
-            onClick: () => setSupportModal(true)
+            onClick: () => {
+                window.open('https://www.paziresh24.com/support/login');
+            }
         },
         {
             title: 'خروج',

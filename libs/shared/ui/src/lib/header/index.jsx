@@ -5,7 +5,6 @@ import { ChevronIcon, HelpIcon } from '@paziresh24/shared/icon';
 import { useMenu } from '@paziresh24/context/core/menu';
 import classNames from 'classnames';
 import { useDrApp } from '@paziresh24/context/drapp';
-import { useSupport } from '@paziresh24/context/core/supportChat';
 import ReactTooltip from 'react-tooltip';
 import { usePage } from '@paziresh24/context/core/page';
 import Modal from '@paziresh24/shared/ui/modal';
@@ -29,7 +28,6 @@ const Header = memo(() => {
     const [isCenterSelectOpen, setIsCenterSelectOpen] = useState(false);
     const [centerActiveModal, setCenterActiveModal] = useState(false);
     const createCenter = useCreateCenter();
-    const [supportModal, setSupportModal] = useSupport();
     const shouldShowActionBars = useShouldShowActionBars();
 
     const location = useLocation();
@@ -404,13 +402,6 @@ const Header = memo(() => {
                     </div>
                 </div>
             </header>
-
-            <Modal title="پشتیبانی" isOpen={supportModal} onClose={setSupportModal}>
-                <span>
-                    برای ارتباط با پشتیبانی همه روزه از ساعت 8 الی 24 با شماره 02125015555 تماس
-                    بگیرید.
-                </span>
-            </Modal>
         </>
     );
 });
