@@ -141,6 +141,17 @@ const TurnRow = (props: TurnRowProps) => {
             queryClient.refetchQueries('turns');
             toast.success('درخواست شما با موفقیت ثبت شد!');
             setDescriptionTreatmentModal(false);
+            getSplunkInstance().sendEvent({
+                group: 'drapp-visit-online',
+                type: 'description',
+                event: {
+                    action: descriptionTreatment,
+                    doctor_name: info.doctor.name,
+                    doctor_family: info.doctor.family,
+                    medical_code: info.doctor.medical_code,
+                    expertises: info.doctor.expertises[0].alias_title
+                }
+            });
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
