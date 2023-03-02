@@ -248,8 +248,6 @@ const TurnRow = (props: TurnRowProps) => {
         return insuranceProvider;
     };
 
-    console.log(info);
-
     const VisitButton = () => (
         <Button
             variant="outlined"
