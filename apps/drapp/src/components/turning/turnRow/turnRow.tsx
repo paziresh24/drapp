@@ -246,7 +246,7 @@ const TurnRow = (props: TurnRowProps) => {
             disabled={prescription.finalized}
             onClick={() => {
                 if (info.center.id === CONSULT_CENTER_ID && !info.isEnablePrescription)
-                    setDescriptionTreatmentModal(true);
+                    return setDescriptionTreatmentModal(true);
                 if (!nationalCode) return setNationalCodeModal('visit');
                 handleVisit();
             }}
