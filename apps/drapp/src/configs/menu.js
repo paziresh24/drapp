@@ -78,7 +78,9 @@ export const SubMenuData = () => {
         {
             title: 'پشتیبانی',
             onClick: () => {
-                window.open('https://www.paziresh24.com/support/login');
+                window.open(
+                    'https://support.paziresh24.com/?utm_source=drpanel&utm_medium=p24&utm_campaign=telblock'
+                );
             }
         },
         {
