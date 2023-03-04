@@ -65,7 +65,7 @@ const CreateCenter = () => {
             </div>
             <a
                 className={styles['support-wrapper']}
-                href="https://www.paziresh24.com/support/login"
+                href="https://support.paziresh24.com/?utm_source=drpanel&utm_medium=p24&utm_campaign=telblock"
                 target="_blank"
                 rel="noreferrer"
             >

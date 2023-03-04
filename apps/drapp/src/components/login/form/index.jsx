@@ -299,7 +299,7 @@ const Form = ({ focus, setFocus }) => {
                     <a
                         className="absolute flex items-center bottom-5 space-s-2"
                         target="_blank"
-                        href="https://www.paziresh24.com/support/login"
+                        href="https://support.paziresh24.com/?utm_source=drauth&utm_medium=p24&utm_campaign=telblock"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

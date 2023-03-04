@@ -356,7 +356,7 @@ const SideBar = memo(() => {
 
                 <div className="flex flex-col items-start w-full">
                     <a
-                        href="https://www.paziresh24.com/support/login"
+                        href="https://support.paziresh24.com/?utm_source=drpanel&utm_medium=p24&utm_campaign=telblock"
                         target="_blank"
                         style={{
                             right: open ? '1rem' : '-100%',
