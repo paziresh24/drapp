@@ -134,10 +134,6 @@ const TurnRow = (props: TurnRowProps) => {
                     description: descriptionTreatment
                 }
             });
-            await paziresh.mutateAsync({
-                book_id: id,
-                status: true
-            });
             queryClient.refetchQueries('turns');
             toast.success('درخواست شما با موفقیت ثبت شد!');
             setDescriptionTreatmentModal(false);
