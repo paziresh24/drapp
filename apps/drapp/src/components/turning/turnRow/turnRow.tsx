@@ -250,8 +250,7 @@ const TurnRow = (props: TurnRowProps) => {
             size="small"
             disabled={prescription.finalized}
             onClick={() => {
-                if (info.center.id === CONSULT_CENTER_ID && !info.isEnablePrescription)
-                    return setDescriptionTreatmentModal(true);
+                if (info.center.id === CONSULT_CENTER_ID) return setDescriptionTreatmentModal(true);
                 if (!nationalCode) return setNationalCodeModal('visit');
                 handleVisit();
             }}
