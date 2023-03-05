@@ -58,6 +58,7 @@ import { useHistory } from 'react-router-dom';
 import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
 import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
+import EditMassager from 'apps/drapp/src/components/onlineVisit/editMassager';
 
 const Profile = () => {
     const router = useHistory();
@@ -84,6 +85,7 @@ const Profile = () => {
     const [city, setCity] = useState(info.center.city);
 
     const [expertiseAccordion, setExpertiseAccordion] = useState(false);
+    const [massagerAccordion, setMassagerAccordion] = useState(false);
     const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
@@ -511,6 +513,17 @@ const Profile = () => {
                 setOpen={setExpertiseAccordion}
             >
                 <ExpertisesWrapper setExpertiseAccordion={setExpertiseAccordion} />
+            </Accordion>
+            <Accordion
+                title="پیام رسان ها"
+                icon={<ChatIcon color="#3F3F79" />}
+                open={massagerAccordion}
+                setOpen={setMassagerAccordion}
+            >
+                <EditMassager
+                    title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
+                    description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
+                />
             </Accordion>
             {info.center.type_id === OFFICE_CENTER && (
                 <Accordion

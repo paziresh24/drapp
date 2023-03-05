@@ -311,6 +311,12 @@ export const routes = [
         exact: true
     },
     {
+        path: '/onlineVisitRules',
+        name: 'onlineVisitRules',
+        component: lazy(() => import('./onlineVisitRules')),
+        exact: true
+    },
+    {
         path: '*',
         name: '404',
         component: lazy(() => import('../../pages/404')),
