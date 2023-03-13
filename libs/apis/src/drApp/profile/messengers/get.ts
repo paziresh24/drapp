@@ -1,5 +1,5 @@
 import { client } from '../../../client';
 
-export const getMessagerInfo = async () => {
+export const getMessenger Info = async () => {
     return await client.get(`/doctor/visit-channels`);
 };

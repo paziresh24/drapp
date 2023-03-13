@@ -32,7 +32,7 @@ export const ConsultRuels = () => {
                 className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col lg:space-y-5 !px-0"
             >
                 <Rules
-                    onSubmit={() => handleButtonAction('accept', '/activation/consult/messagers')}
+                    onSubmit={() => handleButtonAction('accept', '/activation/consult/messengers')}
                     title=" بدلیل عدم پذیرش قوانین ویزیت آنلاین پذیرش۲۴ امکان فعالسازی ویزیت آنلاین را
                         ندارید."
                     modalCancelButtonAction={() => handleButtonAction('decline', '/')}

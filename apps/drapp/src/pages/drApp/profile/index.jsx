@@ -39,7 +39,7 @@ import {
     useGetWhatsApp,
     useUpdateWhatsapp,
     useUpdateMessengers,
-    useGetMessagerInfo
+    useGetMessengerInfo
 } from '@paziresh24/hooks/drapp/profile';
 
 import { Overlay } from '@paziresh24/shared/ui/overlay';
@@ -60,12 +60,12 @@ import { useHistory } from 'react-router-dom';
 import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
 import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
-import EditMassager from 'apps/drapp/src/components/onlineVisit/editMassager';
+import EditMessenger from 'apps/drapp/src/components/onlineVisit/editMessenger';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
 
 const Profile = () => {
     const router = useHistory();
-    const massagerRef = useRef('');
+    const messengerRef = useRef('');
     const [info, setInfo] = useDrApp();
     const [position, setPosition] = useState({ lat: 35.68818464807401, lng: 51.393077373504646 });
     const doctorInfoUpdate = useDoctorInfoUpdate();
@@ -81,7 +81,7 @@ const Profile = () => {
     const deleteGallery = useDeleteGallery();
 
     const getWhatsapp = useGetWhatsApp();
-    const getMessagerInfo = useGetMessagerInfo();
+    const getMessengerInfo = useGetMessengerInfo();
     const updateWhatsapp = useUpdateWhatsapp();
     const updateMessengers = useUpdateMessengers();
     const [visitChanel, setVisitchanel] = useState({});
@@ -92,7 +92,7 @@ const Profile = () => {
     const [city, setCity] = useState(info.center.city);
 
     const [expertiseAccordion, setExpertiseAccordion] = useState(false);
-    const [massagerAccordion, setMassagerAccordion] = useState(false);
+    const [messengerAccordion, setmessengerAccordion] = useState(false);
     const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
@@ -131,16 +131,16 @@ const Profile = () => {
     }, [getCenterAccess.status]);
 
     useEffect(() => {
-        if (getMessagerInfo.isSuccess) {
+        if (getMessengerInfo.isSuccess) {
             setVisitchanel(
-                getMessagerInfo.data.data.reduce((b, a) => {
+                getMessengerInfo.data.data.reduce((b, a) => {
                     b[a.type] = a.channel;
                     return b;
                 }, {})
             );
             return;
         }
-    }, [getMessagerInfo.status]);
+    }, [getMessengerInfo.status]);
 
     const {
         register: updateDoctorInfo,
@@ -262,7 +262,7 @@ const Profile = () => {
     };
 
     const changeOnlieVisitChanelInfo = async () => {
-        const { igapNumber, whatsappNumber, igapId } = massagerRef.current;
+        const { igapNumber, whatsappNumber, igapId } = messengerRef.current;
         if (!phoneNumberValidator(igapNumber) || !phoneNumberValidator(whatsappNumber) || !igapId) {
             toast.error('لطفا اطلاعات پیام رسان ها را وارد کنید');
             return;
@@ -571,24 +571,24 @@ const Profile = () => {
                 <Accordion
                     title="پیام رسان ها"
                     icon={<ChatIcon color="#3F3F79" />}
-                    open={massagerAccordion}
-                    setOpen={setMassagerAccordion}
+                    open={messengerAccordion}
+                    setOpen={setmessengerAccordion}
                 >
-                    <EditMassager
+                    <EditMessenger
                         title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
                         description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
                         submitButtonText="ثبت تغییرات"
                         showSubmitButton
-                        igapIdDefaultValue={getMessagerInfo.isSuccess && visitChanel.igap}
+                        igapIdDefaultValue={getMessengerInfo.isSuccess && visitChanel.igap}
                         igapNumberDefaultValue={
-                            getMessagerInfo.isSuccess && visitChanel.igap_number
+                            getMessengerInfo.isSuccess && visitChanel.igap_number
                         }
                         whatsappNUmberDefaultValue={
-                            getMessagerInfo.isSuccess && visitChanel.whatsapp
+                            getMessengerInfo.isSuccess && visitChanel.whatsapp
                         }
                         onsubmit={changeOnlieVisitChanelInfo}
                         submitButtonLoading={updateMessengers.isLoading}
-                        ref={massagerRef}
+                        ref={messengerRef}
                     />
                 </Accordion>
             )}

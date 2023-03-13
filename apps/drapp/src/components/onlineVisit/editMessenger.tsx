@@ -1,9 +1,9 @@
 import { TextField } from '@mui/material';
 import Button from '@mui/lab/LoadingButton';
-import { ForwardedRef, forwardRef, useRef, useImperativeHandle, useState } from 'react';
-import { MessagersListData } from './messengers';
+import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react';
+import { MessengersListData } from './messengers';
 
-interface EditMassagerProps {
+interface EditMessengerProps {
     title?: string;
     description?: string;
     onsubmit?: () => void;
@@ -15,7 +15,7 @@ interface EditMassagerProps {
     showSubmitButton?: boolean;
 }
 
-export const EditMassager = forwardRef((props: EditMassagerProps, ref: ForwardedRef<any>) => {
+export const EditMessenger = forwardRef((props: EditMessengerProps, ref: ForwardedRef<any>) => {
     const {
         title,
         description,
@@ -49,7 +49,7 @@ export const EditMassager = forwardRef((props: EditMassagerProps, ref: Forwarded
                     {!!description && <span className="text-sm text-[#747C90]">{description}</span>}
                 </div>
             )}
-            {MessagersListData({
+            {MessengersListData({
                 igapNumber: {
                     value: igapNumber,
                     setState: setIgapeNumber
@@ -62,18 +62,20 @@ export const EditMassager = forwardRef((props: EditMassagerProps, ref: Forwarded
                     value: whatsappNumber,
                     setState: setWhatsappNumber
                 }
-            }).map(massager => (
-                <div key={massager.id}>
+            }).map(messenger => (
+                <div key={messenger.id}>
                     <span className="text-sm flex items-center gap-1 font-semibold text-[#49536E]">
-                        <em className="text-red-500">*</em> {massager.lable}
+                        <em className="text-red-500">*</em> {messenger.lable}
                     </span>
                     <div className="flex items-center gap-2 mt-4">
                         <div className="flex justify-center gap-1 items-center w-[30%] md:w-[20%] h-12 border border-solid border-[#e1e4e6] rounded-md">
-                            <img src={massager.logo} alt="" />
-                            <span className="text-sm text-[#49536E]">{massager.massagerName}</span>
+                            <img src={messenger.logo} alt="" />
+                            <span className="text-sm text-[#49536E]">
+                                {messenger.messengerName}
+                            </span>
                         </div>
                         <div className="flex flex-col gap-2 w-[70%] md:w-[80%]">
-                            {massager.inputes.map(input => (
+                            {messenger.inputes.map(input => (
                                 <TextField
                                     key={input.id}
                                     title="لطفا اطلاعات خود را وارد کنید"
@@ -103,4 +105,4 @@ export const EditMassager = forwardRef((props: EditMassagerProps, ref: Forwarded
         </>
     );
 });
-export default EditMassager;
+export default EditMessenger;

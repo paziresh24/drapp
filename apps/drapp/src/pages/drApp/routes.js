@@ -75,17 +75,17 @@ export const routes = [
     },
     {
         path: '/activation/consult/rules/',
-        name: 'OfficeMessagerRulesActivation',
+        name: 'OfficeMessengerRulesActivation',
         title: 'قوانین و مقررات',
         component: lazy(() => import('./activation/consult/rules')),
         isPrivate: true,
         exact: true
     },
     {
-        path: '/activation/consult/messagers/',
-        name: 'OfficeMessagerRulesActivation',
+        path: '/activation/consult/messengers/',
+        name: 'OfficeMessengerRulesActivation',
         title: 'پیام رسان',
-        component: lazy(() => import('./activation/consult/messagers')),
+        component: lazy(() => import('./activation/consult/messengers')),
         isPrivate: true,
         exact: true
     },

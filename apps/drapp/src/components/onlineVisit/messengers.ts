@@ -3,25 +3,25 @@ import WhatsappLogo from '@assets/image/whatsApp.png';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
 import { Dispatch, SetStateAction } from 'react';
 
-type MessagerInfo = {
+type MessengerInfo = {
     setState: Dispatch<SetStateAction<string>>;
     value: string;
 };
 
-interface MwssagerDataParams {
-    igapNumber: MessagerInfo;
-    whatsappNumber: MessagerInfo;
-    igapId: MessagerInfo;
+interface MwssengerDataParams {
+    igapNumber: MessengerInfo;
+    whatsappNumber: MessengerInfo;
+    igapId: MessengerInfo;
 }
 
-export const MessagersListData = (props: MwssagerDataParams) => {
+export const MessengersListData = (props: MwssengerDataParams) => {
     const { igapId, igapNumber, whatsappNumber } = props;
 
     return [
         {
             id: 1,
             lable: 'پیام رسان داخلی',
-            massagerName: 'آی گپ',
+            messengerName: 'آی گپ',
             logo: IgapLogo,
             inputes: [
                 {
@@ -45,7 +45,7 @@ export const MessagersListData = (props: MwssagerDataParams) => {
         {
             id: 2,
             lable: 'پیام رسان خارجی',
-            massagerName: 'واتساپ',
+            messengerName: 'واتساپ',
             logo: WhatsappLogo,
             inputes: [
                 {

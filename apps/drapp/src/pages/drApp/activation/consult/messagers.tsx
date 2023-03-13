@@ -2,16 +2,16 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import EditMassager from 'apps/drapp/src/components/onlineVisit/editMassager';
+import EditMessenger from 'apps/drapp/src/components/onlineVisit/editMessenger';
 import { useConsultActivationStore } from 'apps/drapp/src/store/consultActivation.store';
 import { useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useActivationStore } from '../activation.store';
 
-const ConsultMessager = () => {
-    const massagerRef = useRef<any>('');
+const ConsultMessenger = () => {
+    const messengerRef = useRef<any>('');
     const router = useHistory();
-    const setMessager = useConsultActivationStore(state => state.setMessager);
+    const setMessenger = useConsultActivationStore(state => state.setMessenger);
     const setSelectedService = useActivationStore(state => state.setSelectedService);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const ConsultMessager = () => {
     }, []);
 
     const handleSubmit = () => {
-        const { igapNumber, whatsappNumber, igapId } = massagerRef.current;
+        const { igapNumber, whatsappNumber, igapId } = messengerRef.current;
         getSplunkInstance().sendEvent({
             group: 'activation-consult-whatsapp',
             type: 'click-whatsapp-num',
@@ -27,7 +27,7 @@ const ConsultMessager = () => {
                 action: 'done'
             }
         });
-        setMessager([
+        setMessenger([
             {
                 type: 'igap_number',
                 channel: igapNumber
@@ -50,10 +50,10 @@ const ConsultMessager = () => {
             maxWidth="sm"
             className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col space-y-5"
         >
-            <EditMassager
+            <EditMessenger
                 title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
                 description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
-                ref={massagerRef}
+                ref={messengerRef}
             />
             <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                 <Button fullWidth variant="contained" size="large" onClick={handleSubmit}>
@@ -64,4 +64,4 @@ const ConsultMessager = () => {
     );
 };
 
-export default ConsultMessager;
+export default ConsultMessenger;
