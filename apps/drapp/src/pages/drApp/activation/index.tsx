@@ -16,7 +16,7 @@ import { useActivationStore } from './activation.store';
 
 enum ActivationPaths {
     office = '/activation/office/center',
-    consult = '/activation/consult/whatsapp'
+    consult = '/activation/consult/rules'
 }
 
 const Activation = () => {

@@ -1,0 +1,62 @@
+import IgapLogo from '@assets/image/Igap.png';
+import WhatsappLogo from '@assets/image/whatsApp.png';
+import { phoneNumberValidator } from '@persian-tools/persian-tools';
+import { Dispatch, SetStateAction } from 'react';
+
+type MessagerInfo = {
+    setState: Dispatch<SetStateAction<string>>;
+    value: string;
+};
+
+interface MwssagerDataParams {
+    igapNumber: MessagerInfo;
+    whatsappNumber: MessagerInfo;
+    igapId: MessagerInfo;
+}
+
+export const MessagersListData = (props: MwssagerDataParams) => {
+    const { igapId, igapNumber, whatsappNumber } = props;
+
+    return [
+        {
+            id: 1,
+            lable: 'پیام رسان داخلی',
+            massagerName: 'آی گپ',
+            logo: IgapLogo,
+            inputes: [
+                {
+                    id: 1,
+                    placeholder: 'شماره موبایل',
+                    setState: igapNumber.setState,
+                    value: igapNumber.value,
+                    name: 'شماره آی گپ',
+                    showError: !!igapNumber.value && !phoneNumberValidator(igapNumber.value)
+                },
+                {
+                    id: 2,
+                    placeholder: 'آیدی پیام رسان',
+                    name: 'آیدی آی گپ',
+                    setState: igapId.setState,
+                    value: igapId.value,
+                    showError: false
+                }
+            ]
+        },
+        {
+            id: 2,
+            lable: 'پیام رسان خارجی',
+            massagerName: 'واتساپ',
+            logo: WhatsappLogo,
+            inputes: [
+                {
+                    id: 1,
+                    placeholder: 'شماره موبایل',
+                    setState: whatsappNumber.setState,
+                    value: whatsappNumber.value,
+                    name: 'شماره واتساپ',
+                    showError: !!whatsappNumber.value && !phoneNumberValidator(whatsappNumber.value)
+                }
+            ]
+        }
+    ];
+};

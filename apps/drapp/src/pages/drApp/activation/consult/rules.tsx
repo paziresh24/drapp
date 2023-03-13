@@ -1,9 +1,10 @@
 import { Container } from '@mui/material';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import Rules from 'apps/drapp/src/components/onlineVisit/rules';
+import { isDesktop, isMobile } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
 
-export const OnlineVisitRules = () => {
+export const ConsultRuels = () => {
     const router = useHistory();
     const rules = [
         'ویزیت آنلاین در پیام رسان اعلامی شما و انتخابی بیمار انجام می شود.',
@@ -15,7 +16,7 @@ export const OnlineVisitRules = () => {
 
     const handleButtonAction = (action: string, address: string) => {
         getSplunkInstance().sendEvent({
-            group: 'drapp-visit-online-profile',
+            group: 'drapp-visit-online ',
             type: 'rules',
             event: {
                 action: action
@@ -31,11 +32,11 @@ export const OnlineVisitRules = () => {
                 className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col lg:space-y-5 !px-0"
             >
                 <Rules
-                    terms={rules}
-                    onSubmit={() => handleButtonAction('accept', '/profile')}
+                    onSubmit={() => handleButtonAction('accept', '/activation/consult/messagers')}
                     title=" بدلیل عدم پذیرش قوانین ویزیت آنلاین پذیرش۲۴ امکان فعالسازی ویزیت آنلاین را
                         ندارید."
                     modalCancelButtonAction={() => handleButtonAction('decline', '/')}
+                    terms={rules}
                     cancelText="انصراف"
                     submitText="موافقم"
                     modalDescription="  بدلیل عدم پذیرش قوانین ویزیت آنلاین پذیرش۲۴ امکان فعالسازی ویزیت آنلاین را
@@ -47,4 +48,4 @@ export const OnlineVisitRules = () => {
     );
 };
 
-export default OnlineVisitRules;
+export default ConsultRuels;

@@ -37,7 +37,9 @@ import {
     useDoctorInfoUpdate,
     useCenterInfoUpdate,
     useGetWhatsApp,
-    useUpdateWhatsapp
+    useUpdateWhatsapp,
+    useUpdateMessengers,
+    useGetMessagerInfo
 } from '@paziresh24/hooks/drapp/profile';
 
 import { Overlay } from '@paziresh24/shared/ui/overlay';
@@ -59,9 +61,11 @@ import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
 import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
 import EditMassager from 'apps/drapp/src/components/onlineVisit/editMassager';
+import { phoneNumberValidator } from '@persian-tools/persian-tools';
 
 const Profile = () => {
     const router = useHistory();
+    const massagerRef = useRef('');
     const [info, setInfo] = useDrApp();
     const [position, setPosition] = useState({ lat: 35.68818464807401, lng: 51.393077373504646 });
     const doctorInfoUpdate = useDoctorInfoUpdate();
@@ -77,7 +81,10 @@ const Profile = () => {
     const deleteGallery = useDeleteGallery();
 
     const getWhatsapp = useGetWhatsApp();
+    const getMessagerInfo = useGetMessagerInfo();
     const updateWhatsapp = useUpdateWhatsapp();
+    const updateMessengers = useUpdateMessengers();
+    const [visitChanel, setVisitchanel] = useState({});
 
     const centerPromises = [];
 
@@ -122,6 +129,18 @@ const Profile = () => {
             setCenterAccess(getCenterAccess.data.data.map(item => item.id));
         }
     }, [getCenterAccess.status]);
+
+    useEffect(() => {
+        if (getMessagerInfo.isSuccess) {
+            setVisitchanel(
+                getMessagerInfo.data.data.reduce((b, a) => {
+                    b[a.type] = a.channel;
+                    return b;
+                }, {})
+            );
+            return;
+        }
+    }, [getMessagerInfo.status]);
 
     const {
         register: updateDoctorInfo,
@@ -240,6 +259,40 @@ const Profile = () => {
                 toast.error(err.response.data.message);
             }
         });
+    };
+
+    const changeOnlieVisitChanelInfo = async () => {
+        const { igapNumber, whatsappNumber, igapId } = massagerRef.current;
+        if (!phoneNumberValidator(igapNumber) || !phoneNumberValidator(whatsappNumber) || !igapId) {
+            toast.error('لطفا اطلاعات پیام رسان ها را وارد کنید');
+            return;
+        }
+        updateMessengers.mutate(
+            {
+                online_channels: [
+                    {
+                        type: 'igap_number',
+                        channel: igapNumber
+                    },
+                    {
+                        type: 'igap',
+                        channel: igapId
+                    },
+                    {
+                        type: 'whatsapp',
+                        channel: whatsappNumber
+                    }
+                ]
+            },
+            {
+                onSuccess: () => {
+                    toast.success('تغییرات شما با موفقیت انجام شد');
+                },
+                onError: err => {
+                    toast.error(err.response.data.message);
+                }
+            }
+        );
     };
 
     document.querySelector('body').addEventListener('click', e => {
@@ -514,17 +567,31 @@ const Profile = () => {
             >
                 <ExpertisesWrapper setExpertiseAccordion={setExpertiseAccordion} />
             </Accordion>
-            <Accordion
-                title="پیام رسان ها"
-                icon={<ChatIcon color="#3F3F79" />}
-                open={massagerAccordion}
-                setOpen={setMassagerAccordion}
-            >
-                <EditMassager
-                    title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
-                    description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
-                />
-            </Accordion>
+            {info.center.id === CONSULT_CENTER_ID && (
+                <Accordion
+                    title="پیام رسان ها"
+                    icon={<ChatIcon color="#3F3F79" />}
+                    open={massagerAccordion}
+                    setOpen={setMassagerAccordion}
+                >
+                    <EditMassager
+                        title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
+                        description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
+                        submitButtonText="ثبت تغییرات"
+                        showSubmitButton
+                        igapIdDefaultValue={getMessagerInfo.isSuccess && visitChanel.igap}
+                        igapNumberDefaultValue={
+                            getMessagerInfo.isSuccess && visitChanel.igap_number
+                        }
+                        whatsappNUmberDefaultValue={
+                            getMessagerInfo.isSuccess && visitChanel.whatsapp
+                        }
+                        onsubmit={changeOnlieVisitChanelInfo}
+                        submitButtonLoading={updateMessengers.isLoading}
+                        ref={massagerRef}
+                    />
+                </Accordion>
+            )}
             {info.center.type_id === OFFICE_CENTER && (
                 <Accordion
                     title="اطلاعات مطب"

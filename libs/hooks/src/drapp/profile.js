@@ -23,6 +23,8 @@ import { bankInfo } from '@paziresh24/apis/drApp/profile/bank/update';
 import { getBankInfo } from '@paziresh24/apis/drApp/profile/bank/get';
 import { getWhatsapp } from '@paziresh24/apis/drApp/profile/whatsapp/get';
 import { updateWhatsapp } from '@paziresh24/apis/drApp/profile/whatsapp/update';
+import { getMessagerInfo } from '@paziresh24/apis/drApp/profile/messengers/get';
+import { updateMessengers } from '@paziresh24/apis/drApp/profile/messengers/update';
 
 const useGetFeedbacks = param => {
     return useQuery(['feedbacks', param], () => feedbacks(param));
@@ -130,6 +132,14 @@ const useUpdateWhatsapp = params => {
     return useMutation(updateWhatsapp);
 };
 
+const useGetMessagerInfo = () => {
+    return useQuery('getMessagerInfo', getMessagerInfo);
+};
+
+const useUpdateMessengers = () => {
+    return useMutation(updateMessengers);
+};
+
 export {
     useGetFeedbacks,
     useGetCenterInfo,
@@ -154,5 +164,7 @@ export {
     useComplaintsSummary,
     useComplaintsDetail,
     useGetWhatsApp,
-    useUpdateWhatsapp
+    useUpdateWhatsapp,
+    useGetMessagerInfo,
+    useUpdateMessengers
 };

@@ -74,10 +74,18 @@ export const routes = [
         exact: true
     },
     {
-        path: '/activation/consult/whatsapp/',
-        name: 'OfficeWhatsappActivation',
-        title: 'شماره واتس اپ',
-        component: lazy(() => import('./activation/consult/whatsapp')),
+        path: '/activation/consult/rules/',
+        name: 'OfficeMessagerRulesActivation',
+        title: 'قوانین و مقررات',
+        component: lazy(() => import('./activation/consult/rules')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/activation/consult/messagers/',
+        name: 'OfficeMessagerRulesActivation',
+        title: 'پیام رسان',
+        component: lazy(() => import('./activation/consult/messagers')),
         isPrivate: true,
         exact: true
     },
@@ -313,6 +321,7 @@ export const routes = [
     {
         path: '/onlineVisitRules',
         name: 'onlineVisitRules',
+        title: 'قوانین و مقررات',
         component: lazy(() => import('./onlineVisitRules')),
         exact: true
     },
