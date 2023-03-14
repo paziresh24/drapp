@@ -36,8 +36,6 @@ import {
     useUploadPorfile,
     useDoctorInfoUpdate,
     useCenterInfoUpdate,
-    useGetWhatsApp,
-    useUpdateWhatsapp,
     useUpdateMessengers,
     useGetMessengerInfo
 } from '@paziresh24/hooks/drapp/profile';
@@ -57,7 +55,6 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useHistory } from 'react-router-dom';
-import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
 import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
 import EditMessenger from 'apps/drapp/src/components/onlineVisit/editMessenger';
@@ -80,9 +77,7 @@ const Profile = () => {
     const getGallery = useGetGallery({ center_id: info.center.id });
     const deleteGallery = useDeleteGallery();
 
-    const getWhatsapp = useGetWhatsApp();
     const getMessengerInfo = useGetMessengerInfo();
-    const updateWhatsapp = useUpdateWhatsapp();
     const updateMessengers = useUpdateMessengers();
     const [visitChanel, setVisitchanel] = useState({});
 
@@ -93,7 +88,6 @@ const Profile = () => {
 
     const [expertiseAccordion, setExpertiseAccordion] = useState(false);
     const [messengerAccordion, setmessengerAccordion] = useState(false);
-    const [whatsappAccordion, setWhatsappAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
     const biographyRef = useRef();
@@ -158,12 +152,6 @@ const Profile = () => {
         register: bankInfoRegister,
         handleSubmit: bankSubmit,
         formState: { errors: bankInfoErrors }
-    } = useForm();
-
-    const {
-        register: whatsappRegister,
-        handleSubmit: whatsappSubmit,
-        formState: { errors: whatsappErrors }
     } = useForm();
 
     const updateDoctor = async data => {
@@ -246,18 +234,6 @@ const Profile = () => {
                 return toast.success('اطلاعات مطب با موفقیت ذخیره شد.');
             }
             toast.error('خطا در ارسال اطلاعات.');
-        });
-    };
-
-    const whatsappAction = data => {
-        updateWhatsapp.mutate(data, {
-            onSuccess: () => {
-                setWhatsappAccordion(false);
-                toast.success('شماره whatsapp business با موفقیت ذخیره شد.');
-            },
-            onError: err => {
-                toast.error(err.response.data.message);
-            }
         });
     };
 
@@ -801,34 +777,6 @@ const Profile = () => {
             <Accordion title="تنظیمات نسخه نویسی" icon={<SettingIcon color="#3F3F79" />}>
                 <Settings />
             </Accordion>
-
-            {info.center.id === CONSULT_CENTER_ID && (
-                <Accordion
-                    title="شماره whatsapp business"
-                    icon={<ChatIcon color="#3F3F79" />}
-                    open={whatsappAccordion}
-                    setOpen={setWhatsappAccordion}
-                >
-                    <form className={styles['form']} onSubmit={whatsappSubmit(whatsappAction)}>
-                        <div className={styles['bank_row']}>
-                            <TextField
-                                label="شماره whatsapp business"
-                                type="tel"
-                                error={whatsappErrors.whatsapp}
-                                defaultValue={
-                                    getWhatsapp.isSuccess && getWhatsapp.data.data.whatsapp
-                                }
-                                {...whatsappRegister('whatsapp', {
-                                    required: true
-                                })}
-                            />
-                        </div>
-                        <Button block type="submit" loading={updateWhatsapp.isLoading}>
-                            ذخیره تغییرات
-                        </Button>
-                    </form>
-                </Accordion>
-            )}
         </div>
     );
 };

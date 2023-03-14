@@ -23,7 +23,7 @@ import { bankInfo } from '@paziresh24/apis/drApp/profile/bank/update';
 import { getBankInfo } from '@paziresh24/apis/drApp/profile/bank/get';
 import { getWhatsapp } from '@paziresh24/apis/drApp/profile/whatsapp/get';
 import { updateWhatsapp } from '@paziresh24/apis/drApp/profile/whatsapp/update';
-import { getMessenger Info } from '@paziresh24/apis/drApp/profile/messengers/get';
+import { getMessengerInfo } from '@paziresh24/apis/drApp/profile/messengers/get';
 import { updateMessengers } from '@paziresh24/apis/drApp/profile/messengers/update';
 
 const useGetFeedbacks = param => {
@@ -133,7 +133,7 @@ const useUpdateWhatsapp = params => {
 };
 
 const useGetMessengerInfo = () => {
-    return useQuery('getMessenger Info', getMessenger Info);
+    return useQuery('getMessengerInfo', getMessengerInfo);
 };
 
 const useUpdateMessengers = () => {
