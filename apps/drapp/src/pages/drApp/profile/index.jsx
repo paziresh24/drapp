@@ -238,8 +238,12 @@ const Profile = () => {
     };
 
     const changeOnlieVisitChanelInfo = async () => {
-        const { igapNumber, whatsappNumber, igapId } = messengerRef.current;
-        if (!phoneNumberValidator(igapNumber) || !phoneNumberValidator(whatsappNumber) || !igapId) {
+        const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
+        if (
+            !phoneNumberValidator(eitaaNumber) ||
+            !phoneNumberValidator(whatsappNumber) ||
+            !eitaaId
+        ) {
             toast.error('لطفا اطلاعات پیام رسان ها را وارد کنید');
             return;
         }
@@ -247,12 +251,12 @@ const Profile = () => {
             {
                 online_channels: [
                     {
-                        type: 'igap_number',
-                        channel: igapNumber
+                        type: 'eitaa_number',
+                        channel: eitaaNumber
                     },
                     {
-                        type: 'igap',
-                        channel: igapId
+                        type: 'eitaa',
+                        channel: eitaaId
                     },
                     {
                         type: 'whatsapp',
@@ -555,9 +559,9 @@ const Profile = () => {
                         description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
                         submitButtonText="ثبت تغییرات"
                         showSubmitButton
-                        igapIdDefaultValue={getMessengerInfo.isSuccess && visitChanel.igap}
-                        igapNumberDefaultValue={
-                            getMessengerInfo.isSuccess && visitChanel.igap_number
+                        eitaaIdDefaultValue={getMessengerInfo.isSuccess && visitChanel.eitaa}
+                        eitaaNumberDefaultValue={
+                            getMessengerInfo.isSuccess && visitChanel.eitaa_number
                         }
                         whatsappNUmberDefaultValue={
                             getMessengerInfo.isSuccess && visitChanel.whatsapp

@@ -1,7 +1,7 @@
 import { client } from '../../../client';
 
 interface Params {
-    online_channels: { type: 'igap' | 'whatsapp'; channel: string }[];
+    online_channels: { type: 'eitaa' | 'whatsapp' | 'eitaa_number'; channel: string }[];
 }
 
 export const updateMessengers = async (params: Params) => {

@@ -28,7 +28,7 @@ export const Forough = () => {
                                     className="whitespace-nowrap"
                                     color="success"
                                     onClick={() => {
-                                        router.push('/activation/consult/whatsapp');
+                                        router.push('/activation/consult/rules');
                                         getSplunkInstance().sendEvent({
                                             group: 'forough',
                                             type: 'onlinevisit'

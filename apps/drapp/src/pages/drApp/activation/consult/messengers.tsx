@@ -19,7 +19,7 @@ const ConsultMessenger = () => {
     }, []);
 
     const handleSubmit = () => {
-        const { igapNumber, whatsappNumber, igapId } = messengerRef.current;
+        const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
         getSplunkInstance().sendEvent({
             group: 'activation-consult-whatsapp',
             type: 'click-whatsapp-num',
@@ -29,12 +29,12 @@ const ConsultMessenger = () => {
         });
         setMessenger([
             {
-                type: 'igap_number',
-                channel: igapNumber
+                type: 'eitaa_number',
+                channel: eitaaNumber
             },
             {
-                type: 'igap',
-                channel: igapId
+                type: 'eitaa',
+                channel: eitaaId
             },
             {
                 type: 'whatsapp',

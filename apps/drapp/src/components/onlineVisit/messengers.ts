@@ -1,4 +1,4 @@
-import IgapLogo from '@assets/image/Igap.png';
+import eitaaLogo from '@assets/image/eitaa.png';
 import WhatsappLogo from '@assets/image/whatsApp.png';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
 import { Dispatch, SetStateAction } from 'react';
@@ -9,35 +9,35 @@ type MessengerInfo = {
 };
 
 interface MwssengerDataParams {
-    igapNumber: MessengerInfo;
+    eitaaNumber: MessengerInfo;
     whatsappNumber: MessengerInfo;
-    igapId: MessengerInfo;
+    eitaaId: MessengerInfo;
 }
 
 export const MessengersListData = (props: MwssengerDataParams) => {
-    const { igapId, igapNumber, whatsappNumber } = props;
+    const { eitaaId, eitaaNumber, whatsappNumber } = props;
 
     return [
         {
             id: 1,
             lable: 'پیام رسان داخلی',
-            messengerName: 'آی گپ',
-            logo: IgapLogo,
+            messengerName: 'ایتا',
+            logo: eitaaLogo,
             inputes: [
                 {
                     id: 1,
                     placeholder: 'شماره موبایل',
-                    setState: igapNumber.setState,
-                    value: igapNumber.value,
-                    name: 'شماره آی گپ',
-                    showError: !!igapNumber.value && !phoneNumberValidator(igapNumber.value)
+                    setState: eitaaNumber.setState,
+                    value: eitaaNumber.value,
+                    name: 'شماره ایتا',
+                    showError: !!eitaaNumber.value && !phoneNumberValidator(eitaaNumber.value)
                 },
                 {
                     id: 2,
                     placeholder: 'آیدی پیام رسان',
-                    name: 'آیدی آی گپ',
-                    setState: igapId.setState,
-                    value: igapId.value,
+                    name: 'آیدی ایتا',
+                    setState: eitaaId.setState,
+                    value: eitaaId.value,
                     showError: false
                 }
             ]

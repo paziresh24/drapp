@@ -9,9 +9,9 @@ interface EditMessengerProps {
     onsubmit?: () => void;
     submitButtonLoading?: boolean;
     submitButtonText?: string;
-    igapNumberDefaultValue?: string;
+    eitaaNumberDefaultValue?: string;
     whatsappNUmberDefaultValue?: string;
-    igapIdDefaultValue?: string;
+    eitaaIdDefaultValue?: string;
     showSubmitButton?: boolean;
 }
 
@@ -21,24 +21,24 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
         description,
         onsubmit,
         submitButtonText,
-        igapIdDefaultValue,
-        igapNumberDefaultValue,
+        eitaaIdDefaultValue,
+        eitaaNumberDefaultValue,
         whatsappNUmberDefaultValue,
         showSubmitButton = false,
         submitButtonLoading
     } = props;
-    const [igapNumber, setIgapeNumber] = useState(igapNumberDefaultValue ?? '');
-    const [igapId, setIgapeId] = useState(igapIdDefaultValue ?? '');
+    const [eitaaNumber, setEitaaNumber] = useState(eitaaNumberDefaultValue ?? '');
+    const [eitaaId, setEitaaeId] = useState(eitaaIdDefaultValue ?? '');
     const [whatsappNumber, setWhatsappNumber] = useState(whatsappNUmberDefaultValue ?? '');
 
     useImperativeHandle(
         ref,
         () => ({
-            igapNumber: igapNumber,
-            igapId: igapId,
+            eitaaNumber: eitaaNumber,
+            eitaaId: eitaaId,
             whatsappNumber: whatsappNumber
         }),
-        [igapNumber, igapId, whatsappNumber]
+        [eitaaNumber, eitaaId, whatsappNumber]
     );
 
     return (
@@ -50,13 +50,13 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                 </div>
             )}
             {MessengersListData({
-                igapNumber: {
-                    value: igapNumber,
-                    setState: setIgapeNumber
+                eitaaNumber: {
+                    value: eitaaNumber,
+                    setState: setEitaaNumber
                 },
-                igapId: {
-                    value: igapId,
-                    setState: setIgapeId
+                eitaaId: {
+                    value: eitaaId,
+                    setState: setEitaaeId
                 },
                 whatsappNumber: {
                     value: whatsappNumber,
