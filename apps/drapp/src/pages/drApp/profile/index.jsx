@@ -90,6 +90,11 @@ const Profile = () => {
     const [messengerAccordion, setmessengerAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
+    const [messengerError, setMessengerError] = useState({
+        eitaaNumberError: false,
+        eitaaIdError: false,
+        whatsappNumberError: false
+    });
     const biographyRef = useRef();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -239,40 +244,44 @@ const Profile = () => {
 
     const changeOnlieVisitChanelInfo = async () => {
         const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
+        setMessengerError({
+            eitaaNumberError: !phoneNumberValidator(eitaaNumber),
+            eitaaIdError: !eitaaId.length,
+            whatsappNumberError: !phoneNumberValidator(whatsappNumber)
+        });
         if (
-            !phoneNumberValidator(eitaaNumber) ||
-            !phoneNumberValidator(whatsappNumber) ||
-            !eitaaId
+            phoneNumberValidator(eitaaNumber) &&
+            phoneNumberValidator(whatsappNumber) &&
+            !!eitaaId.length
         ) {
-            toast.error('لطفا اطلاعات پیام رسان ها را وارد کنید');
+            updateMessengers.mutate(
+                {
+                    online_channels: [
+                        {
+                            type: 'eitaa_number',
+                            channel: eitaaNumber
+                        },
+                        {
+                            type: 'eitaa',
+                            channel: eitaaId
+                        },
+                        {
+                            type: 'whatsapp',
+                            channel: whatsappNumber
+                        }
+                    ]
+                },
+                {
+                    onSuccess: () => {
+                        toast.success('تغییرات شما با موفقیت انجام شد');
+                    },
+                    onError: err => {
+                        toast.error(err.response.data.message);
+                    }
+                }
+            );
             return;
         }
-        updateMessengers.mutate(
-            {
-                online_channels: [
-                    {
-                        type: 'eitaa_number',
-                        channel: eitaaNumber
-                    },
-                    {
-                        type: 'eitaa',
-                        channel: eitaaId
-                    },
-                    {
-                        type: 'whatsapp',
-                        channel: whatsappNumber
-                    }
-                ]
-            },
-            {
-                onSuccess: () => {
-                    toast.success('تغییرات شما با موفقیت انجام شد');
-                },
-                onError: err => {
-                    toast.error(err.response.data.message);
-                }
-            }
-        );
     };
 
     document.querySelector('body').addEventListener('click', e => {
@@ -557,19 +566,24 @@ const Profile = () => {
                     <EditMessenger
                         title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
                         description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
-                        submitButtonText="ثبت تغییرات"
-                        showSubmitButton
-                        eitaaIdDefaultValue={getMessengerInfo.isSuccess && visitChanel.eitaa}
-                        eitaaNumberDefaultValue={
-                            getMessengerInfo.isSuccess && visitChanel.eitaa_number
-                        }
-                        whatsappNUmberDefaultValue={
-                            getMessengerInfo.isSuccess && visitChanel.whatsapp
-                        }
-                        onsubmit={changeOnlieVisitChanelInfo}
-                        submitButtonLoading={updateMessengers.isLoading}
+                        eitaaIdDefaultValue={visitChanel.eitaa}
+                        eitaaNumberDefaultValue={visitChanel.eitaa_number}
+                        whatsappNUmberDefaultValue={visitChanel.whatsapp}
+                        eitaaIdError={messengerError.eitaaIdError}
+                        eitaaNumberError={messengerError.eitaaNumberError}
+                        whtasappNumberError={messengerError.whatsappNumberError}
                         ref={messengerRef}
                     />
+                    <Button
+                        onClick={changeOnlieVisitChanelInfo}
+                        className="mt-4"
+                        fullWidth
+                        variant="primary"
+                        size="large"
+                        loading={updateMessengers.isLoading}
+                    >
+                        ثبت تغییرات
+                    </Button>
                 </Accordion>
             )}
             {info.center.type_id === OFFICE_CENTER && (

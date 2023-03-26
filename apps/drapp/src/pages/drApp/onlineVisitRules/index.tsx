@@ -33,8 +33,7 @@ export const OnlineVisitRules = () => {
                 <Rules
                     terms={rules}
                     onSubmit={() => handleButtonAction('accept', '/profile')}
-                    title=" بدلیل عدم پذیرش قوانین ویزیت آنلاین پذیرش۲۴ امکان فعالسازی ویزیت آنلاین را
-                        ندارید."
+                    title="قوانين و مقررات گفتگو با بیمار ویزیت آنلاین"
                     modalCancelButtonAction={() => handleButtonAction('decline', '/')}
                     cancelText="انصراف"
                     submitText="موافقم"
