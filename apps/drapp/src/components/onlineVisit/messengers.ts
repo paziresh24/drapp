@@ -37,7 +37,7 @@ export const MessengersListData = (props: MwssengerDataParams) => {
                 },
                 {
                     id: 2,
-                    placeholder: 'آیدی پیام رسان',
+                    placeholder: 'نام کاربری ایتا',
                     messengerName: 'آیدی ایتا',
                     name: 'eitaaId',
                     value: eitaaId,
