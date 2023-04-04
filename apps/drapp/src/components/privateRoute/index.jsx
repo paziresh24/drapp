@@ -168,7 +168,7 @@ const PrivateRoute = props => {
         !isError &&
         !getCentersDoctor.status.error
     )
-        return <Loading show={true} />;
+        return <Loading show={true} simple={urlParams.isWebView} />;
     return (
         <>
             <Helmet>

@@ -122,6 +122,14 @@ export const routes = [
         exact: true
     },
     {
+        path: '/profile/info',
+        name: 'ProfileInfo',
+        title: 'پروفایل کاربری',
+        component: lazy(() => import('./profile/info')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/feedbacks/',
         name: 'Feedbacks',
         title: 'نظرات بیماران',
