@@ -43,7 +43,7 @@ interface TurnRowProps {
     family: string;
     nationalCode: string;
     mobileNumber: string;
-    date: number;
+    date: string;
     refId?: string;
     paymentStatus?: string;
     paymentPrice?: string;
@@ -343,20 +343,16 @@ const TurnRow = (props: TurnRowProps) => {
             name: 'تاریخ نوبت',
             component: (
                 <span>
-                    {moment(date * 1000)
-                        .locale('fa')
-                        .calendar(undefined, {
-                            sameDay: '[امروز]',
-                            nextDay: '[فردا]',
-                            nextWeek: 'D MMMM',
-                            lastDay: '[دیروز]',
-                            lastWeek: 'D MMMM',
-                            sameElse: 'D MMMM'
-                        })}
+                    {moment.from(date, 'en').locale('fa').calendar(undefined, {
+                        sameDay: '[امروز]',
+                        nextDay: '[فردا]',
+                        nextWeek: 'D MMMM',
+                        lastDay: '[دیروز]',
+                        lastWeek: 'D MMMM',
+                        sameElse: 'D MMMM'
+                    })}
                     {' ساعت '}
-                    {moment(date * 1000)
-                        .locale('fa')
-                        .format('HH:mm')}
+                    {moment.from(date, 'en').locale('fa').format('HH:mm')}
                 </span>
             )
         }
