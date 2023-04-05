@@ -142,9 +142,9 @@ const TurnRow = (props: TurnRowProps) => {
                 type: 'description',
                 event: {
                     action: descriptionTreatment,
-                    user_name: name,
-                    user_family: family,
-                    user_cell: mobileNumber
+                    patient_name: name,
+                    patient_family: family,
+                    patient_cell: mobileNumber
                 }
             });
         } catch (error) {
