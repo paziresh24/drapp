@@ -142,10 +142,6 @@ const TurnRow = (props: TurnRowProps) => {
                 type: 'description',
                 event: {
                     action: descriptionTreatment,
-                    doctor_name: info.doctor.name,
-                    doctor_family: info.doctor.family,
-                    medical_code: info.doctor.medical_code,
-                    expertises: info.doctor.expertises[0].alias_title,
                     user_name: name,
                     user_family: family,
                     user_cell: mobileNumber
