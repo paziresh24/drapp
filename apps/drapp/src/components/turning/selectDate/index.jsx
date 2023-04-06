@@ -12,8 +12,8 @@ const returnDate = selectedDay => {
     return `${selectedDay?.year}/${selectedDay?.month}/${selectedDay?.day}`;
 };
 
-const unixToDate = unix => {
-    const date = moment(unix * 1000).locale('fa');
+const dateToJson = value => {
+    const date = moment(value).locale('fa');
     return {
         year: date.year(),
         month: date.month() + 1,
@@ -22,7 +22,7 @@ const unixToDate = unix => {
 };
 
 const dateToUnix = date => {
-    return +moment.from(returnDate(date), 'fa', 'YYYY/MM/DD').format('X');
+    return +moment.from(returnDate(date), 'fa', 'YYYY-MM-DD').format('X');
 };
 
 const SelectDate = props => {
@@ -33,7 +33,7 @@ const SelectDate = props => {
     useEffect(() => {
         setSelectedDay(
             props.defaultValue
-                ? unixToDate(props.defaultValue)
+                ? dateToJson(props.defaultValue)
                 : props.today
                 ? utils('fa').getToday()
                 : ''
@@ -48,7 +48,10 @@ const SelectDate = props => {
                     props.value(dateToUnix(selectedDay));
                 }
             } else {
-                props.value && props.value(selectedDay);
+                props.value &&
+                    props.value(
+                        moment.from(returnDate(selectedDay), 'fa').locale('en').format('YYYY-MM-DD')
+                    );
             }
         }
     }, [selectedDay]);

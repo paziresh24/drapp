@@ -43,7 +43,7 @@ interface TurnRowProps {
     family: string;
     nationalCode: string;
     mobileNumber: string;
-    date: number;
+    date: string;
     refId?: string;
     paymentStatus?: string;
     paymentPrice?: string;
@@ -142,10 +142,9 @@ const TurnRow = (props: TurnRowProps) => {
                 type: 'description',
                 event: {
                     action: descriptionTreatment,
-                    doctor_name: info.doctor.name,
-                    doctor_family: info.doctor.family,
-                    medical_code: info.doctor.medical_code,
-                    expertises: info.doctor.expertises[0].alias_title
+                    patient_name: name,
+                    patient_family: family,
+                    patient_cell: mobileNumber
                 }
             });
         } catch (error) {
@@ -250,8 +249,7 @@ const TurnRow = (props: TurnRowProps) => {
             size="small"
             disabled={prescription.finalized}
             onClick={() => {
-                if (info.center.id === CONSULT_CENTER_ID && !info.isEnablePrescription)
-                    return setDescriptionTreatmentModal(true);
+                if (info.center.id === CONSULT_CENTER_ID) return setDescriptionTreatmentModal(true);
                 if (!nationalCode) return setNationalCodeModal('visit');
                 handleVisit();
             }}
@@ -344,20 +342,16 @@ const TurnRow = (props: TurnRowProps) => {
             name: 'تاریخ نوبت',
             component: (
                 <span>
-                    {moment(date * 1000)
-                        .locale('fa')
-                        .calendar(undefined, {
-                            sameDay: '[امروز]',
-                            nextDay: '[فردا]',
-                            nextWeek: 'D MMMM',
-                            lastDay: '[دیروز]',
-                            lastWeek: 'D MMMM',
-                            sameElse: 'D MMMM'
-                        })}
+                    {moment.from(date, 'en').locale('fa').calendar(undefined, {
+                        sameDay: '[امروز]',
+                        nextDay: '[فردا]',
+                        nextWeek: 'D MMMM',
+                        lastDay: '[دیروز]',
+                        lastWeek: 'D MMMM',
+                        sameElse: 'D MMMM'
+                    })}
                     {' ساعت '}
-                    {moment(date * 1000)
-                        .locale('fa')
-                        .format('HH:mm')}
+                    {moment.from(date, 'en').locale('fa').format('HH:mm')}
                 </span>
             )
         }

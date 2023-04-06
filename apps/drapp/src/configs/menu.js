@@ -5,7 +5,8 @@ import {
     PrescriptionMenuIcon,
     PrescriptionIcon,
     Statistics,
-    UserIcon
+    UserIcon,
+    InfoIcon
 } from '@paziresh24/shared/icon';
 
 import { StarIcon } from '@paziresh24/shared/icon/public/duotone';
@@ -26,11 +27,12 @@ export const MainMenuData = () => {
         });
         return noReplyComment.length;
     };
-    return [
+    const list = [
         {
             title: 'ویرایش پروفایل',
             path: '/profile',
-            icon: <UserIcon color="#000" width={24} height={24} />
+            icon: <UserIcon color="#000" width={24} height={24} />,
+            shouldShow: true
         },
         {
             title: 'رتبه من در پذیرش24',
@@ -42,35 +44,49 @@ export const MainMenuData = () => {
                 });
             },
             icon: <Statistics color="#000" />,
-            badge: 'جدید'
+            badge: 'جدید',
+            shouldShow: true
         },
         {
             title: info.center.id === '5532' ? 'تنظیمات پرداخت' : 'تنظیمات بیعانه',
             path: '/setting/payment',
-            icon: <CardIcon color="#000" />
+            icon: <CardIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'نظرات بیماران',
             path: '/feedbacks',
             icon: <MessageIcon color="#000" />,
-            badge: getFeedbacks.isSuccess && calculateNoReplyComments()
+            badge: getFeedbacks.isSuccess && calculateNoReplyComments(),
+            shouldShow: true
+        },
+        {
+            title: 'قوانین مشاوره',
+            path: '/consult-term',
+            icon: <InfoIcon color="#000" />,
+            shouldShow: info.center.id === '5532'
         },
         {
             title: 'نسخه های ثبت شده',
             path: '/prescription',
-            icon: <PrescriptionMenuIcon color="#000" />
+            icon: <PrescriptionMenuIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'بیمه های من',
             path: '/providers',
-            icon: <PrescriptionIcon color="#000" />
+            icon: <PrescriptionIcon color="#000" />,
+            shouldShow: true
         },
         {
             title: 'پراستفاده ها',
             path: '/favorite/templates',
-            icon: <StarIcon color="#000" />
+            icon: <StarIcon color="#000" />,
+            shouldShow: true
         }
     ];
+
+    return list.filter(item => item.shouldShow);
 };
 
 export const SubMenuData = () => {
@@ -78,7 +94,9 @@ export const SubMenuData = () => {
         {
             title: 'پشتیبانی',
             onClick: () => {
-                window.open('https://www.paziresh24.com/support/login');
+                window.open(
+                    'https://support.paziresh24.com/?utm_source=drpanel&utm_medium=p24&utm_campaign=telblock'
+                );
             }
         },
         {
