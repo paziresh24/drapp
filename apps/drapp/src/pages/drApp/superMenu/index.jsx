@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from '../../../assets/styles/pages/drApp/superMenu.module.scss';
+import styles from '@assets/styles/pages/drApp/superMenu.module.scss';
 import { useHistory, Link } from 'react-router-dom';
 import { useDrApp } from '@paziresh24/context/drapp/index';
 import NoImage from '@assets/image/noimage.png';
@@ -16,6 +16,7 @@ import isEmpty from 'lodash/isEmpty';
 import { MainMenuData, SubMenuData } from '@configs/menu';
 import { StatusBar } from '@components/turning/statusBar';
 import { getCookie } from '@paziresh24/utils/cookie';
+import { CenterList } from 'apps/drapp/src/components/centerList';
 
 const SuperMenu = () => {
     const history = useHistory();
@@ -118,7 +119,8 @@ const SuperMenu = () => {
                     </div>
                 </div>
 
-                <div className={styles.selectCenter}>
+                <CenterList />
+                {/* <div className={styles.selectCenter}>
                     <div
                         className={styles.centerSelectInput}
                         onClick={e => {
@@ -400,7 +402,7 @@ const SuperMenu = () => {
                             </Button>
                         </div>
                     </Modal>
-                </div>
+                </div> */}
             </div>
             <Menu items={MainMenuData()} />
             <Menu items={SubMenuData()} />

@@ -45,18 +45,20 @@ client.interceptors.response.use(
     },
     async err => {
         const originalRequest = err.config;
-        if (
-            localStorage.getItem('token') &&
-            err.response?.status === 401 &&
-            window.location.pathname !== '/auth'
-        ) {
+        if (err.response?.status === 401 && window.location.pathname !== '/auth') {
             try {
                 const { access_token } = await refreshToken();
                 setToken(access_token);
                 return client(originalRequest);
             } catch (error) {
                 clearToken();
-                return window.location.reload();
+                return window.location.replace(
+                    `/auth${
+                        location.pathname !== '/' || location.search
+                            ? `?url=${location.pathname + location.search}`
+                            : ''
+                    }`
+                );
             }
         }
         return Promise.reject(err);

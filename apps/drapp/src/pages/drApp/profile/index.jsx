@@ -420,7 +420,7 @@ const Profile = () => {
                 setOpen={setUserInfoAccordion}
                 className="!p-0"
             >
-                <Info />
+                <Info avatar={false} />
             </Accordion>
             <Accordion
                 title="تخصص"

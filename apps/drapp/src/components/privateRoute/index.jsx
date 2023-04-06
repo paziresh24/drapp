@@ -47,7 +47,7 @@ const PrivateRoute = props => {
 
     useEffect(() => {
         setPage(props);
-        if (isEmpty(info) && !isEmpty(getToken())) {
+        if (isEmpty(info)) {
             if (location.hostname.includes('sum'))
                 setPrescriptionSetting({
                     editProviders: false
@@ -153,14 +153,14 @@ const PrivateRoute = props => {
         }
     }, [getLatestVersion.status]);
 
-    if (isEmpty(getToken()))
-        history.replace(
-            `/auth${
-                location.pathname !== '/' || location.search
-                    ? `?url=${location.pathname + location.search}`
-                    : ''
-            }`
-        );
+    // if (isEmpty(getToken()))
+    //     history.replace(
+    //         `/auth${
+    //             location.pathname !== '/' || location.search
+    //                 ? `?url=${location.pathname + location.search}`
+    //                 : ''
+    //         }`
+    //     );
 
     if (
         props.path !== '/create-center' &&

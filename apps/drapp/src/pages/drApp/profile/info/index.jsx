@@ -2,7 +2,7 @@ import TextField from '@paziresh24/shared/ui/textField';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useForm } from 'react-hook-form';
-import { useDoctorInfoUpdate } from '@paziresh24/hooks/drapp/profile';
+import { useDoctorInfoUpdate, useUploadPorfile } from '@paziresh24/hooks/drapp/profile';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { toast } from 'react-toastify';
 import { useRef } from 'react';
@@ -13,12 +13,18 @@ import Button from '@paziresh24/shared/ui/button';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import classNames from 'classnames';
+import { ImagePlaceIcon } from '@paziresh24/shared/icon';
+import { formData } from '@paziresh24/shared/utils';
+import { baseURL } from '@paziresh24/utils/baseUrl';
+import NoImage from '@assets/image/noimage.png';
+import { Overlay } from '@paziresh24/shared/ui/overlay';
 
-export const Info = () => {
+export const Info = ({ avatar = true }) => {
     const [info, setInfo] = useDrApp();
     const doctorInfoUpdate = useDoctorInfoUpdate();
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
+    const uploadPorfile = useUploadPorfile();
 
     const {
         register: updateDoctorInfo,
@@ -73,7 +79,58 @@ export const Info = () => {
     };
 
     return (
-        <div className="h-full p-4 bg-white">
+        <div className="h-full p-4 flex gap-5 items-center flex-col bg-white">
+            {avatar && (
+                <div className="relative h-24 w-24 rounded-full">
+                    {!uploadPorfile.isLoading ? (
+                        <>
+                            <div className="relative">
+                                <input
+                                    type="file"
+                                    id="selectImage"
+                                    accept="image/png, image/jpg, image/jpeg, image/bmp"
+                                    className="absolute hidden invisible"
+                                    onChange={e =>
+                                        uploadPorfile.mutate(
+                                            formData({
+                                                file: e.target.files[0],
+                                                center_id: info.center.id
+                                            }),
+                                            {
+                                                onSuccess: data => {
+                                                    setInfo(prev => ({
+                                                        ...prev,
+                                                        doctor: {
+                                                            ...prev.doctor,
+                                                            image: data.data.url
+                                                        }
+                                                    }));
+                                                }
+                                            }
+                                        )
+                                    }
+                                />
+                                <label htmlFor="selectImage">
+                                    <ImagePlaceIcon className="cursor-pointer absolute top-0 w-7 h-7 z-10 bg-white rounded-full p-1" />
+                                </label>
+                            </div>
+                            <img
+                                className="w-24 h-24 object-cover rounded-full relative bg-slate-100"
+                                src={
+                                    uploadPorfile?.data?.data?.url
+                                        ? baseURL('UPLOADER') + uploadPorfile?.data?.data?.url
+                                        : null ?? info.doctor.image
+                                        ? baseURL('UPLOADER') + info.doctor.image
+                                        : null ?? NoImage
+                                }
+                                alt="avatar"
+                            />
+                        </>
+                    ) : (
+                        <Overlay />
+                    )}
+                </div>
+            )}
             <form
                 className="flex flex-col w-full h-full space-y-4"
                 onSubmit={doctorInfoSubmit(updateDoctor)}

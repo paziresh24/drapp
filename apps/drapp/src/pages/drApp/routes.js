@@ -124,8 +124,32 @@ export const routes = [
     {
         path: '/profile/info',
         name: 'ProfileInfo',
-        title: 'پروفایل کاربری',
+        title: 'اطلاعات فردی',
         component: lazy(() => import('./profile/info')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/profile/biography',
+        name: 'Biography',
+        title: 'بیوگرافی',
+        component: lazy(() => import('./profile/biography')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/profile/expertises',
+        name: 'Expertises',
+        title: 'ویرایش تخصص',
+        component: lazy(() => import('./profile/expertises')),
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/profile/gallery',
+        name: 'Gallery',
+        title: 'گالری',
+        component: lazy(() => import('./profile/gallery')),
         isPrivate: true,
         exact: true
     },
