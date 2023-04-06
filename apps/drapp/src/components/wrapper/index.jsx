@@ -10,6 +10,8 @@ import classNames from 'classnames';
 import { toast } from 'react-toastify';
 import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '../../hooks/useShouldShowActionBars';
+import queryString from 'query-string';
+import { useLocation } from 'react-router-dom';
 
 const Wrapper = ({ children }) => {
     const [info] = useDrApp();
@@ -17,6 +19,8 @@ const Wrapper = ({ children }) => {
     const [isOffline, setIsOffline] = useState(false);
     const isLogined = info.doctor ? true : false;
     const shouldShowActionBars = useShouldShowActionBars();
+    const { search } = useLocation();
+    const urlParams = queryString.parse(search);
 
     useEffect(() => {
         window.addEventListener('offline', () => {
@@ -45,11 +49,13 @@ const Wrapper = ({ children }) => {
                 })}
                 id="wrapper"
             >
-                {isLogined && !isMobile && shouldShowActionBars && <SideBar />}
+                {isLogined && !isMobile && !urlParams.isWebView && shouldShowActionBars && (
+                    <SideBar />
+                )}
                 <div className={styles['article']}>
-                    {isLogined && <Header />}
+                    {isLogined && !urlParams.isWebView && <Header />}
                     {children}
-                    {isLogined && shouldShowActionBars && <BottomBar />}
+                    {isLogined && !urlParams.isWebView && shouldShowActionBars && <BottomBar />}
                 </div>
             </div>
         </ErrorBoundary>

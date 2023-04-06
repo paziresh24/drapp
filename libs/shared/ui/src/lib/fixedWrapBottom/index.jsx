@@ -26,7 +26,7 @@ const FixedWrapBottom = ({ children, className = '' }) => {
             </CSSTransition>
         );
 
-    return children;
+    return <div className={className}>{children}</div>;
 };
 
 export default FixedWrapBottom;

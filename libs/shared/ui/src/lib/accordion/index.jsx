@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './accordion.module.scss';
-import className from 'classnames';
+import classNames from 'classnames';
 import { ChevronIcon } from '@paziresh24/shared/icon';
-const Accordion = ({ title, icon, children, open, setOpen }) => {
+const Accordion = ({ title, icon, children, open, setOpen, className }) => {
     const [isOpen, setIsOpen] = useState(open);
     const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
     const myRef = useRef(null);
@@ -21,7 +21,7 @@ const Accordion = ({ title, icon, children, open, setOpen }) => {
     return (
         <div className={styles['accordion']} ref={myRef}>
             <div
-                className={className(styles['inner'], { [styles['open']]: isOpen })}
+                className={classNames(styles['inner'], { [styles['open']]: isOpen })}
                 onClick={toggleAccordion}
                 aria-hidden
             >
@@ -31,7 +31,7 @@ const Accordion = ({ title, icon, children, open, setOpen }) => {
                 </div>
                 <ChevronIcon dir={isOpen ? 'top' : 'bottom'} />
             </div>
-            {isOpen && <div className={styles['content']}>{children}</div>}
+            {isOpen && <div className={classNames(styles['content'], className)}>{children}</div>}
         </div>
     );
 };

@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 export const useShouldShowActionBars = () => {
     const router = useLocation();
+
     const [shouldShowActionBars, setShouldShowActionBars] = useState(false);
     const excloudShowActionBars = useRef(['/activation/*']);
     const excloudShowActionBarsRegex = excloudShowActionBars.current.map(item => new RegExp(item));
