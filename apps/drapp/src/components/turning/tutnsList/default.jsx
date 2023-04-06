@@ -30,7 +30,7 @@ const TurnRow = {
         <TurnRowc
             key={turn.id}
             id={turn.id}
-            date={turn?.from}
+            date={turn?.from_date}
             name={turn.name ?? ''}
             family={turn.family ?? ''}
             mobileNumber={turn?.cell}
@@ -64,7 +64,7 @@ const TurnRow = {
         <TurnRowc
             key={turn.id}
             id={turn.id}
-            date={new Date(turn.created_at).getTime() / 1000}
+            date={new Date(turn.created_at)}
             name={turn.patientAdditionalData?.name}
             family={turn.patientAdditionalData?.lastName}
             mobileNumber={turn.patientCell ?? turn?.patientAdditionalData?.cellPhoneNumber}

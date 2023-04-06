@@ -75,6 +75,9 @@ const Activation = () => {
                         {docotorInfo.expertises[0].expertise?.name ?? ''}`}
                     </Typography>
                 )}
+                <Button variant="outlined" size="small" onClick={() => router.push('/profile')}>
+                    ویرایش پروفایل
+                </Button>
             </Stack>
             <Stack className="p-5">
                 <Typography fontSize={14} fontWeight="500">

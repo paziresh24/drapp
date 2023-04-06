@@ -26,7 +26,7 @@ const Turning = () => {
     const location = useLocation();
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const [info] = useDrApp();
-    const [date, setDate] = useState(moment().startOf('day').unix());
+    const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
     const [searchValue, setSearchValue] = useState('');
     const getTurn = useGetTurns({
         baseURL: info.center.local_base_url,
@@ -118,7 +118,6 @@ const Turning = () => {
                     <div className={styles.selectDate}>
                         <SelectDate
                             today
-                            unix
                             value={setDate}
                             nagivateDate={isMobile}
                             defaultValue={date}

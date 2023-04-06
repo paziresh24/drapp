@@ -38,10 +38,7 @@ const Wrapper = ({ children }) => {
     }, [isOffline]);
 
     return (
-        <ErrorBoundary
-            FallbackComponent={props => <ErrorByRefresh {...props} show={true} />}
-            onError={error => console.log(error)}
-        >
+        <ErrorBoundary FallbackComponent={props => <></>} onError={error => console.log(error)}>
             <div
                 className={classNames(styles['wrapper'], 'transition-all duration-700', {
                     'blur-sm grayscale pointer-events-none': isOffline
