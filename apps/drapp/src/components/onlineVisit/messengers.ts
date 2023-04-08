@@ -10,7 +10,7 @@ interface MwssengerDataParams {
     whtasappNumberError: boolean;
 }
 
-export const MessengersListData = (props: MwssengerDataParams) => {
+export const messengersListData = (props: MwssengerDataParams) => {
     const {
         eitaaId,
         eitaaIdError,
@@ -19,7 +19,6 @@ export const MessengersListData = (props: MwssengerDataParams) => {
         whatsappNumber,
         whtasappNumberError
     } = props;
-
     return [
         {
             id: 1,
@@ -33,7 +32,8 @@ export const MessengersListData = (props: MwssengerDataParams) => {
                     messengerName: 'شماره ایتا',
                     value: eitaaNumber,
                     name: 'eitaaNumber',
-                    error: eitaaNumberError
+                    error: eitaaNumberError,
+                    helper: null
                 },
                 {
                     id: 2,
@@ -41,7 +41,8 @@ export const MessengersListData = (props: MwssengerDataParams) => {
                     messengerName: 'آیدی ایتا',
                     name: 'eitaaId',
                     value: eitaaId,
-                    error: eitaaIdError
+                    error: eitaaIdError,
+                    helper: 'نام کاربری ایتا را در قسمت تنظیمات اپلیکیشن ایتا درج کنید و سپس در اینجا کپی کنید.'
                 }
             ]
         },
@@ -57,7 +58,8 @@ export const MessengersListData = (props: MwssengerDataParams) => {
                     messengerName: 'شماره واتساپ',
                     value: whatsappNumber,
                     name: 'whatsappNumber',
-                    error: whtasappNumberError
+                    error: whtasappNumberError,
+                    helper: null
                 }
             ]
         }

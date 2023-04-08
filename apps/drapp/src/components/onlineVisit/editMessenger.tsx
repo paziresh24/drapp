@@ -1,6 +1,8 @@
-import { TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react';
-import { MessengersListData } from './messengers';
+import { messengersListData } from './messengers';
+import { InfoIcon } from '@paziresh24/shared/icon';
+import { toast } from 'react-toastify';
 interface EditMessengerProps {
     title?: string;
     description?: string;
@@ -47,6 +49,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
             [name]: value
         }));
     };
+
     return (
         <>
             <div className="mb-8">
@@ -58,7 +61,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                         )}
                     </div>
                 )}
-                {MessengersListData({
+                {messengersListData({
                     eitaaId: messengersInfo.eitaaId,
                     eitaaIdError: eitaaIdError,
                     eitaaNumber: messengersInfo.eitaaNumber,
@@ -79,21 +82,30 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                             </div>
                             <div className="flex flex-col gap-2 w-[70%] md:w-[80%]">
                                 {messenger.inputes.map(input => (
-                                    <TextField
-                                        key={input.id}
-                                        title="لطفا اطلاعات خود را وارد کنید"
-                                        type="text"
-                                        name={input.name}
-                                        defaultValue={input.value}
-                                        placeholder={input.placeholder}
-                                        error={input.error}
-                                        helperText={
-                                            input.error &&
-                                            `${input.messengerName} را صحیح وارد کنید`
-                                        }
-                                        onChange={e => handleInputChange(e)}
-                                        className="[&>div>input]:!py-4 [&>div>input]:!h-4 [&>div]:!rounded-md [&>div>input]:placeholder:!text-[#3e4148] flex-grow"
-                                    />
+                                    <Box className="flex items-center rounded-lg pl-3">
+                                        <TextField
+                                            key={input.id}
+                                            title="لطفا اطلاعات خود را وارد کنید"
+                                            type="text"
+                                            name={input.name}
+                                            defaultValue={input.value}
+                                            placeholder={input.placeholder}
+                                            error={input.error}
+                                            helperText={
+                                                input.error &&
+                                                `${input.messengerName} را صحیح وارد کنید`
+                                            }
+                                            onChange={e => handleInputChange(e)}
+                                            className="[&>div>input]:!py-4 [&>div>input]:!h-4 [&>div>input]:placeholder:!text-[#3e4148] flex-grow relative"
+                                        />
+                                        {!!input.helper && (
+                                            <InfoIcon
+                                                color="#616161"
+                                                className="absolute left-10 cursor-pointer"
+                                                onClick={() => toast.warn(input.helper)}
+                                            />
+                                        )}
+                                    </Box>
                                 ))}
                             </div>
                         </div>
