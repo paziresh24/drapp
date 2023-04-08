@@ -5,7 +5,8 @@ import { refreshToken } from './drApp/auth/refreshToken';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const client = axios.create({
-    baseURL: baseURL('DRAPP_API')
+    baseURL: baseURL('DRAPP_API'),
+    withCredentials: true
     // validateStatus: status => status >= 200 && status !== 204 && status < 300
 });
 
