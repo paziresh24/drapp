@@ -82,7 +82,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                             </div>
                             <div className="flex flex-col gap-2 w-[70%] md:w-[80%]">
                                 {messenger.inputes.map(input => (
-                                    <Box className="flex items-center rounded-lg pl-3">
+                                    <Box className="flex items-center rounded-lg pl-3 relative">
                                         <TextField
                                             key={input.id}
                                             title="لطفا اطلاعات خود را وارد کنید"
@@ -96,13 +96,13 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                                                 `${input.messengerName} را صحیح وارد کنید`
                                             }
                                             onChange={e => handleInputChange(e)}
-                                            className="[&>div>input]:!py-4 [&>div>input]:!h-4 [&>div>input]:placeholder:!text-[#3e4148] flex-grow relative"
+                                            className="[&>div>input]:!py-4 [&>div>input]:!h-4 [&>div>input]:placeholder:!text-[#3e4148] flex-grow"
                                         />
                                         {!!input.helper && (
                                             <InfoIcon
                                                 color="#616161"
-                                                className="absolute left-10 cursor-pointer"
-                                                onClick={() => toast.warn(input.helper)}
+                                                className="absolute left-6 cursor-pointer bg-white rounded-full"
+                                                onClick={() => toast.info(input.helper)}
                                             />
                                         )}
                                     </Box>
