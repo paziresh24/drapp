@@ -113,7 +113,6 @@ drApp-build-develop-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
   image: docker.paziresh24.info/docker:stable
-  extends: .drApp
   only:
     - develop
   before_script:
