@@ -82,9 +82,11 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                             </div>
                             <div className="flex flex-col gap-2 w-[70%] md:w-[80%]">
                                 {messenger.inputes.map(input => (
-                                    <Box className="flex items-center rounded-lg pl-3 relative">
+                                    <Box
+                                        key={input.id}
+                                        className="flex items-center rounded-lg pl-3 relative"
+                                    >
                                         <TextField
-                                            key={input.id}
                                             title="لطفا اطلاعات خود را وارد کنید"
                                             type="text"
                                             name={input.name}
@@ -99,11 +101,14 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                                             className="[&>div>input]:!py-4 [&>div>input]:!h-4 [&>div>input]:placeholder:!text-[#3e4148] flex-grow"
                                         />
                                         {!!input.helper && (
-                                            <InfoIcon
-                                                color="#616161"
-                                                className="absolute left-6 cursor-pointer bg-white rounded-full"
-                                                onClick={() => toast.info(input.helper)}
-                                            />
+                                            <>
+                                                <a
+                                                    className="absolute left-6 text-sm text-primary"
+                                                    href={input.helper.link}
+                                                >
+                                                    {input.helper.name}
+                                                </a>
+                                            </>
                                         )}
                                     </Box>
                                 ))}

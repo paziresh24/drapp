@@ -82,6 +82,14 @@ export const routes = [
         exact: true
     },
     {
+        path: '/activation/consult/onboarding/',
+        name: 'doctorOnboarding',
+        title: 'آنبوردینگ پزشک ویزیت آنلاین',
+        component: lazy(() => import('./activation/consult/onboarding')),
+        isPrivate: true,
+        exact: true
+    },
+    {
         path: '/activation/consult/messengers/',
         name: 'OfficeMessengerRulesActivation',
         title: 'پیام رسان',

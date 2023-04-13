@@ -42,7 +42,10 @@ export const messengersListData = (props: MwssengerDataParams) => {
                     name: 'eitaaId',
                     value: eitaaId,
                     error: eitaaIdError,
-                    helper: 'نام کاربری ایتا را در قسمت تنظیمات اپلیکیشن ایتا درج کنید و سپس در اینجا کپی کنید.'
+                    helper: {
+                        name: 'راهنما',
+                        link: 'https://community.paziresh24.com/t/topic/1055'
+                    }
                 }
             ]
         },

@@ -59,6 +59,7 @@ import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumb
 import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
 import EditMessenger from 'apps/drapp/src/components/onlineVisit/editMessenger';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
+import { isMessengerIdHasValid } from 'apps/drapp/src/functions/isMessengerIdHasValid';
 
 const Profile = () => {
     const router = useHistory();
@@ -246,13 +247,13 @@ const Profile = () => {
         const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
         setMessengerError({
             eitaaNumberError: !phoneNumberValidator(eitaaNumber),
-            eitaaIdError: !eitaaId.length,
+            eitaaIdError: !isMessengerIdHasValid(eitaaId),
             whatsappNumberError: !phoneNumberValidator(whatsappNumber)
         });
         if (
             phoneNumberValidator(eitaaNumber) &&
             phoneNumberValidator(whatsappNumber) &&
-            !!eitaaId.length
+            isMessengerIdHasValid(eitaaId)
         ) {
             updateMessengers.mutate(
                 {

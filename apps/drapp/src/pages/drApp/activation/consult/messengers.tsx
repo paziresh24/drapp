@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useActivationStore } from '../activation.store';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
+import { isMessengerIdHasValid } from 'apps/drapp/src/functions/isMessengerIdHasValid';
 
 const ConsultMessenger = () => {
     const [messengerError, setMessengerError] = useState({
@@ -28,13 +29,13 @@ const ConsultMessenger = () => {
         const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
         setMessengerError({
             eitaaNumberError: !phoneNumberValidator(eitaaNumber),
-            eitaaIdError: !eitaaId.length,
+            eitaaIdError: !isMessengerIdHasValid(eitaaId),
             whatsappNumberError: !phoneNumberValidator(whatsappNumber)
         });
         if (
             phoneNumberValidator(eitaaNumber) &&
             phoneNumberValidator(whatsappNumber) &&
-            !!eitaaId.length
+            isMessengerIdHasValid(eitaaId)
         ) {
             getSplunkInstance().sendEvent({
                 group: 'drapp-visit-online',
