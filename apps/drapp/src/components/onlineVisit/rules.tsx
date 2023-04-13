@@ -7,7 +7,6 @@ interface RulesProps {
     onSubmit: () => void;
     title?: string;
     modalCancelButtonAction: () => void;
-    terms: string[];
     submitText: string;
     cancelText: string;
     modalTitle: string;
@@ -19,7 +18,6 @@ export const Rules = (props: RulesProps) => {
         onSubmit,
         title,
         modalCancelButtonAction,
-        terms,
         cancelText,
         submitText,
         modalDescription,
@@ -29,8 +27,17 @@ export const Rules = (props: RulesProps) => {
     const [cancelModal, setCancelModal] = useState(false);
     const [isEnableButton, setIsEnableButton] = useState(false);
 
+    const rules = [
+        'ویزیت آنلاین در پیام رسان اعلامی شما و انتخابی بیمار انجام می شود.',
+        'ویزیت آنلاین می بایست از راس زمان نوبت بیمار شروع شود و پزشک به مدت ۳ روز پاسخگوی سوالات بعدی بیمار باشد.',
+        'در زمان شروع ویزیت بیمار، دکمه پذیرش بیمار را در پنل انتخاب نمایید.در صورت عدم انتخاب، بیمار قادر به حذف نوبت خود می باشد.',
+        'توضيحات درمان و در صورت نیاز ثبت نسخه الکترونیک می بايست تا حداکثر ۱۵ دقيقه بعد از زمان نوبت برای بیمار ارسال شود.',
+        'هزینه هر ویزیت پس از اعلام مراجعه و ارسال توضيحات درمان و در صورت نیاز ثبت نسخه الکترونیک، برای پزشک محاسبه می شود.',
+        'در صورت نارضایتی بیمار، ۱۰۰ درصد مبلغ پرداختی بیمار استرداد خواهد شد.'
+    ];
+
     useEffect(() => {
-        if (checkedCount === terms.length) return setIsEnableButton(true);
+        if (checkedCount === rules.length) return setIsEnableButton(true);
         setIsEnableButton(false);
     }, [checkedCount]);
 
@@ -56,7 +63,7 @@ export const Rules = (props: RulesProps) => {
                                 )}
                             </div>
                             <div className="h-full lg:h-[20rem] overflow-auto">
-                                {terms.map((rule, index) => (
+                                {rules.map((rule, index) => (
                                     <div className="flex items-start cursor-pointer" key={index}>
                                         <Checkbox
                                             name={`question_${index + 1}`}
