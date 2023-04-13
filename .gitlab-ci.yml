@@ -91,7 +91,7 @@ services:
       - 'apps/*/node_modules'
 
 
-drApp-build-local-push-docker-image:
+.drApp-build-local-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
   image: docker.paziresh24.info/docker:stable
@@ -140,7 +140,7 @@ drApp-deploy-production:
     - curl -X POST -F variables[DOCKER_TAG_CLOUD]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN}  https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
 
-drApp-deploy-locals-kubernetes:
+.drApp-deploy-locals-kubernetes:
   image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
   when: manual
@@ -149,7 +149,7 @@ drApp-deploy-locals-kubernetes:
     - curl -X POST -F variables[DOCKER_TAG_LOCAL]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN} https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
 
-drApp-deploy-locals:
+.drApp-deploy-locals:
   image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
   when: manual
