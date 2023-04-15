@@ -74,7 +74,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                             <em className="text-red-500">*</em> {messenger.lable}
                         </span>
                         <div className="flex items-center gap-2 mt-4">
-                            <div className="flex justify-center gap-1 items-center w-[30%] md:w-[20%] h-12 border border-solid border-[#e1e4e6] rounded-md">
+                            <div className="flex justify-center gap-1 items-center w-[30%] md:w-[20%] h-12 border border-solid border-[#e1e4e6] rounded-lg">
                                 <img src={messenger.logo} alt="" />
                                 <span className="text-sm text-[#49536E]">
                                     {messenger.messengerName}
@@ -98,7 +98,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                                                 `${input.messengerName} را صحیح وارد کنید`
                                             }
                                             onChange={e => handleInputChange(e)}
-                                            className="[&>div>input]:!py-4 [&>div>input]:!h-4 [&>div>input]:placeholder:!text-[#3e4148] flex-grow"
+                                            className="[&>div>input]:!py-4 [&>div>input]:!h-4 [&>div>input]:placeholder:!text-[#3e4148] [&>div>fieldset]:!rounded-lg flex-grow"
                                         />
                                         {!!input.helper && (
                                             <span

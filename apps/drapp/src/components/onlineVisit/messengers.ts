@@ -46,7 +46,7 @@ export const messengersListData = (props: MwssengerDataParams) => {
                         name: 'راهنما',
                         type: 'text',
                         action: () =>
-                            (location.href = 'https://community.paziresh24.com/t/topic/1055')
+                            window.open('https://community.paziresh24.com/t/topic/1055', '_blank')
                     }
                 }
             ]

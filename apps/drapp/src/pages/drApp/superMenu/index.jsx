@@ -312,9 +312,7 @@ const SuperMenu = () => {
                                     </div>
 
                                     {getCookie('CONSULT_ACTIVATION_PENDING') ? (
-                                        <Button size="small" variant="contained">
-                                            در حال بررسی
-                                        </Button>
+                                        <span className="text-sm text-primary">در حال بررسی</span>
                                     ) : (
                                         <Button
                                             size="small"

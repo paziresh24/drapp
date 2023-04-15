@@ -25,7 +25,7 @@ export const Onboarding = () => {
                 className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col space-y-5"
             >
                 <span className="w-full block text-center p-2 font-medium">
-                    ویدیو آنبوردینگ پزشک ویزیت آنلاین پذیرش۲۴
+                    ویدیو آموزشی پزشک ویزیت آنلاین پذیرش۲۴
                 </span>
                 <div
                     className="overflow-scroll md:rounded-lg h-[83%] max-[390px]:[&>div]:!h-[90%] [&>div]:!h-[98%]"
