@@ -19,7 +19,7 @@
     - debug: var=is_docker_compose_install
 
     - name: pull
-      shell: docker.paziresh24.info/drapp:develop
+      shell: docker pull docker.paziresh24.info/drapp:develop
 
 
 
