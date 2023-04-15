@@ -44,7 +44,9 @@ export const messengersListData = (props: MwssengerDataParams) => {
                     error: eitaaIdError,
                     helper: {
                         name: 'راهنما',
-                        link: 'https://community.paziresh24.com/t/topic/1055'
+                        type: 'text',
+                        action: () =>
+                            (location.href = 'https://community.paziresh24.com/t/topic/1055')
                     }
                 }
             ]

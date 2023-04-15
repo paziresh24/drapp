@@ -101,14 +101,12 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                                             className="[&>div>input]:!py-4 [&>div>input]:!h-4 [&>div>input]:placeholder:!text-[#3e4148] flex-grow"
                                         />
                                         {!!input.helper && (
-                                            <>
-                                                <a
-                                                    className="absolute left-6 text-sm text-primary"
-                                                    href={input.helper.link}
-                                                >
-                                                    {input.helper.name}
-                                                </a>
-                                            </>
+                                            <span
+                                                className="absolute left-6 text-sm text-primary cursor-pointer"
+                                                onClick={input.helper.action}
+                                            >
+                                                {input.helper.name}
+                                            </span>
                                         )}
                                     </Box>
                                 ))}

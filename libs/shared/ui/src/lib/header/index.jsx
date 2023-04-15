@@ -328,7 +328,7 @@ const Header = memo(() => {
                                             size="small"
                                             variant="contained"
                                             onClick={() => {
-                                                history.push('/activation/consult/whatsapp');
+                                                history.push('/activation/consult/rules');
                                             }}
                                         >
                                             فعال سازی
