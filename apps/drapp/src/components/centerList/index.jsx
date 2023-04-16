@@ -10,6 +10,7 @@ import { ChevronIcon } from '@paziresh24/shared/icon';
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import { getCookie } from '@paziresh24/utils/cookie';
+import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 
 export const CenterList = ({ enabled = false }) => {
     const history = useHistory();
@@ -83,7 +84,7 @@ export const CenterList = ({ enabled = false }) => {
                     {info.centers
                         .filter(item =>
                             enabled
-                                ? (item.type_id === 1 || item.center_id === '5532') &&
+                                ? (item.type_id === 1 || item.id === CONSULT_CENTER_ID) &&
                                   item.is_active_booking
                                 : true
                         )
