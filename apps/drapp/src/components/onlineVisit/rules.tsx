@@ -50,8 +50,8 @@ export const Rules = (props: RulesProps) => {
 
     return (
         <>
-            <div className="w-full min-h-full flex justify-center">
-                <div className="!bg-white overflow-auto w-full px-6">
+            <div className="!bg-white w-full min-h-full flex flex-col items-center justify-between">
+                <div className="overflow-auto w-full px-6">
                     <div className="relative h-full">
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-col justify-center items-center">
@@ -78,45 +78,41 @@ export const Rules = (props: RulesProps) => {
                                 ))}
                             </div>
                         </div>
-                        <div className="flex w-full py-4 justify-between absolute lg:static min-[400px]:bottom-0">
-                            <Button
-                                variant="contained"
-                                disabled={!isEnableButton}
-                                className="block w-[45%]"
-                                onClick={onSubmit}
-                            >
-                                {submitText}
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                className="block w-[45%]"
-                                onClick={() => setCancelModal(true)}
-                            >
-                                {cancelText}
-                            </Button>
-                        </div>
                     </div>
                 </div>
-                <Modal isOpen={cancelModal} onClose={setCancelModal} title={modalTitle}>
-                    <span className="text-sm leading-6">{modalDescription}</span>
-                    <div className="w-full flex justify-between gap-4">
-                        <Button
-                            onClick={() => setCancelModal(false)}
-                            variant="contained"
-                            className="w-1/2"
-                        >
-                            مشاهده قوانین
-                        </Button>
-                        <Button
-                            onClick={modalCancelButtonAction}
-                            variant="outlined"
-                            className="w-1/2"
-                        >
-                            تایید
-                        </Button>
-                    </div>
-                </Modal>
+                <div className="flex w-full py-4 px-6 justify-between relative bottom-0">
+                    <Button
+                        variant="contained"
+                        disabled={!isEnableButton}
+                        className="block w-[45%]"
+                        onClick={onSubmit}
+                    >
+                        {submitText}
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        className="block w-[45%]"
+                        onClick={() => setCancelModal(true)}
+                    >
+                        {cancelText}
+                    </Button>
+                </div>
             </div>
+            <Modal isOpen={cancelModal} onClose={setCancelModal} title={modalTitle}>
+                <span className="text-sm leading-6">{modalDescription}</span>
+                <div className="w-full flex justify-between gap-4">
+                    <Button
+                        onClick={() => setCancelModal(false)}
+                        variant="contained"
+                        className="w-1/2"
+                    >
+                        مشاهده قوانین
+                    </Button>
+                    <Button onClick={modalCancelButtonAction} variant="outlined" className="w-1/2">
+                        تایید
+                    </Button>
+                </div>
+            </Modal>
         </>
     );
 };
