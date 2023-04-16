@@ -91,7 +91,7 @@ services:
       - 'apps/*/node_modules'
 
 
-drApp-build-local-push-docker-image:
+.drApp-build-local-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
   image: docker.paziresh24.info/docker:stable
@@ -109,7 +109,23 @@ drApp-build-local-push-docker-image:
   tags:
     - france-loc
 
-
+drApp-build-develop-push-docker-image:
+  stage: build-image
+#  needs: ["drApp-test"]
+  image: docker.paziresh24.info/docker:stable
+  only:
+    - develop
+  before_script:
+    - docker info
+  script:
+    - export DOCKER_BUILD=1
+    - export DOCKER_BUILDKIT=1
+    - docker login $DOCKER_REGISTRY_URL -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
+    - docker build -t $DOCKER_IMAGE_TAG_COM:develop -f Dockerfile.drApp .
+    - docker push $DOCKER_IMAGE_TAG_COM:develop
+  tags:
+    - france-loc
+    
 drApp-build-cloud-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
@@ -140,16 +156,19 @@ drApp-deploy-production:
     - curl -X POST -F variables[DOCKER_TAG_CLOUD]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN}  https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
 
-drApp-deploy-locals-kubernetes:
+drApp-deploy-develop:
   image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
   when: manual
+  only:
+    - develop
 #  needs: ["drApp-test"]
   script:
-    - curl -X POST -F variables[DOCKER_TAG_LOCAL]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN} https://api.kubit.ir/api/core/packs/pai33lfy/vars/
+    - apk add --update bash openssh sshpass
+    - ansible-playbook ./ansible/drapp/playbook-develop.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 
 
-drApp-deploy-locals:
+.drApp-deploy-locals:
   image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
   when: manual
