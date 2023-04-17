@@ -1,13 +1,11 @@
 import { Box, TextField } from '@mui/material';
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { messengersListData } from './messengers';
-import { InfoIcon } from '@paziresh24/shared/icon';
-import { toast } from 'react-toastify';
 interface EditMessengerProps {
     title?: string;
     description?: string;
     eitaaNumberDefaultValue?: string;
-    whatsappNUmberDefaultValue?: string;
+    whatsappNumberDefaultValue?: string;
     eitaaIdDefaultValue?: string;
     eitaaNumberError: boolean;
     whtasappNumberError: boolean;
@@ -20,7 +18,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
         description,
         eitaaIdDefaultValue,
         eitaaNumberDefaultValue,
-        whatsappNUmberDefaultValue,
+        whatsappNumberDefaultValue,
         eitaaIdError,
         eitaaNumberError,
         whtasappNumberError
@@ -29,7 +27,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
     const [messengersInfo, setMessengerInfo] = useState({
         eitaaNumber: eitaaNumberDefaultValue ?? '',
         eitaaId: eitaaIdDefaultValue ?? '',
-        whatsappNumber: whatsappNUmberDefaultValue ?? ''
+        whatsappNumber: whatsappNumberDefaultValue ?? ''
     });
 
     useImperativeHandle(

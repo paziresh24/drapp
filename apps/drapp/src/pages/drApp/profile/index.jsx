@@ -569,7 +569,7 @@ const Profile = () => {
                         description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
                         eitaaIdDefaultValue={visitChanel.eitaa}
                         eitaaNumberDefaultValue={visitChanel.eitaa_number}
-                        whatsappNUmberDefaultValue={visitChanel.whatsapp}
+                        whatsappNumberDefaultValue={visitChanel.whatsapp}
                         eitaaIdError={messengerError.eitaaIdError}
                         eitaaNumberError={messengerError.eitaaNumberError}
                         whtasappNumberError={messengerError.whatsappNumberError}
