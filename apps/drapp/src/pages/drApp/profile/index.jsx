@@ -55,11 +55,11 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useHistory } from 'react-router-dom';
-import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
 import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
 import EditMessenger from 'apps/drapp/src/components/onlineVisit/editMessenger';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
 import { isMessengerIdHasValid } from 'apps/drapp/src/functions/isMessengerIdHasValid';
+import Info from './info';
 
 const Profile = () => {
     const router = useHistory();
@@ -462,92 +462,9 @@ const Profile = () => {
                 icon={<UserIcon color="#3F3F79" />}
                 open={userInfoAccordion}
                 setOpen={setUserInfoAccordion}
+                className="!p-0"
             >
-                <form className={styles['form']} onSubmit={doctorInfoSubmit(updateDoctor)}>
-                    <TextField
-                        label="نام"
-                        error={doctorInfoErrors.name}
-                        defaultValue={info.doctor.name}
-                        {...updateDoctorInfo('name', { required: false })}
-                    />
-                    <TextField
-                        label="نام خانوادگی"
-                        error={doctorInfoErrors.family}
-                        defaultValue={info.doctor.family}
-                        {...updateDoctorInfo('family', { required: false })}
-                    />
-                    <TextField
-                        label="کد ملی"
-                        type="tel"
-                        error={doctorInfoErrors.national_code}
-                        defaultValue={info.doctor.national_code}
-                        {...updateDoctorInfo('national_code', { required: false })}
-                    />
-                    <TextField
-                        label="شماره نظام پزشکی"
-                        type="tel"
-                        error={doctorInfoErrors.medical_code}
-                        defaultValue={info.doctor.medical_code}
-                        {...updateDoctorInfo('medical_code', { required: false })}
-                    />
-                    <ChangePhoneNumber />
-                    {info.center.type_id === OFFICE_CENTER && (
-                        <TextField
-                            label="شماره موبایل منشی"
-                            type="tel"
-                            error={doctorInfoErrors.secretary_phone}
-                            defaultValue={info.doctor.secretary_phone}
-                            {...updateDoctorInfo('secretary_phone', { required: false })}
-                        />
-                    )}
-                    <div className={styles['col']}>
-                        <span style={{ marginBottom: '1rem' }}>بیوگرافی و توضیحات</span>
-                        <CKEditor
-                            editor={ClassicEditor}
-                            config={{
-                                toolbar: [
-                                    'heading',
-                                    '|',
-                                    'bold',
-                                    'italic',
-                                    'bulletedList',
-                                    'numberedList'
-                                ],
-                                heading: {
-                                    options: [
-                                        {
-                                            model: 'paragraph',
-                                            title: 'Paragraph',
-                                            class: 'ck-heading_paragraph'
-                                        },
-                                        {
-                                            model: 'heading1',
-                                            view: 'h1',
-                                            title: 'Heading 1',
-                                            class: 'ck-heading_heading1'
-                                        },
-                                        {
-                                            model: 'heading2',
-                                            view: 'h2',
-                                            title: 'Heading 2',
-                                            class: 'ck-heading_heading2'
-                                        }
-                                    ]
-                                },
-                                contentsLangDirection: 'rtl',
-                                language: 'fa'
-                            }}
-                            data={info.doctor.biography}
-                            onBlur={(event, editor) => {
-                                const data = editor.getData();
-                                biographyRef.current = data;
-                            }}
-                        />
-                    </div>
-                    <Button variant="primary" type="submit" loading={doctorInfoUpdate.isLoading}>
-                        ذخیره تغییرات
-                    </Button>
-                </form>
+                <Info avatar={false} />
             </Accordion>
             <Accordion
                 title="تخصص"

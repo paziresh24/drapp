@@ -14,7 +14,7 @@ import { useGetWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { ChevronIcon } from '@paziresh24/shared/icon';
 import { isDesktop } from 'react-device-detect';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useWorkHoursValidation } from 'apps/drapp/src/hooks/useWorkHoursValidation';
 import { useSubmitWorkHour } from 'apps/drapp/src/hooks/useSubmitWorkHour';
@@ -22,6 +22,9 @@ import axios from 'axios';
 import SelectTime from 'apps/drapp/src/components/setting/duration/selectTime';
 import { range } from 'lodash';
 import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
+import queryString from 'query-string';
+import classNames from 'classnames';
+import { CenterList } from 'apps/drapp/src/components/centerList';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
@@ -37,6 +40,8 @@ const WorkHours = () => {
     const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
     const duration = useWorkHoursStore(state => state.duration);
     const setDuration = useWorkHoursStore(state => state.setDuration);
+    const { search } = useLocation();
+    const urlParams = queryString.parse(search);
 
     useEffect(() => {
         getWorkHoursRequest.remove();
@@ -93,16 +98,8 @@ const WorkHours = () => {
             maxWidth="sm"
             className="h-full pt-4 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-md"
         >
-            {isDesktop && (
-                <Button
-                    className="!mb-3"
-                    startIcon={<ChevronIcon style={{}} dir="right" color="#0070f3" />}
-                    onClick={() => router.goBack()}
-                >
-                    بازگشت
-                </Button>
-            )}
             <Stack className="pb-32 space-y-5 md:pb-0">
+                {urlParams.isWebView && <CenterList enabled />}
                 {getCenterType(doctorInfo.center) !== 'consult' && (
                     <SelectTime
                         items={durationList}
@@ -124,7 +121,11 @@ const WorkHours = () => {
                     values={workHours}
                     removeAction={removeWorkHours}
                 />
-                <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
+                <FixedWrapBottom
+                    className={classNames('border-t border-solid border-[#e8ecf0]', {
+                        '!fixed !bottom-0 w-full p-4 right-0 bg-white': urlParams.sticky
+                    })}
+                >
                     <Button
                         fullWidth
                         variant="outlined"
