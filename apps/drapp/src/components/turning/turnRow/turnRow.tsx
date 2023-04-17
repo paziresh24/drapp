@@ -249,14 +249,15 @@ const TurnRow = (props: TurnRowProps) => {
             size="small"
             disabled={prescription.finalized}
             onClick={() => {
-                if (info.center.id === CONSULT_CENTER_ID) return setDescriptionTreatmentModal(true);
+                if (info.center.id === CONSULT_CENTER_ID && type === 'book')
+                    return setDescriptionTreatmentModal(true);
                 if (!nationalCode) return setNationalCodeModal('visit');
                 handleVisit();
             }}
             loading={visitLoading}
             fullWidth
         >
-            {info.center.id === CONSULT_CENTER_ID
+            {info.center.id === CONSULT_CENTER_ID && type === 'book'
                 ? bookStatus === 'visited'
                     ? 'مراجعه شده'
                     : 'اعلام مراجعه'
