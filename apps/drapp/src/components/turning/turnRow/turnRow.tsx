@@ -84,7 +84,7 @@ const TurnRow = (props: TurnRowProps) => {
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
         false
     );
-    const cam = useCame();
+    const came = useCame();
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -106,11 +106,11 @@ const TurnRow = (props: TurnRowProps) => {
 
     const handleAdmitTurn = async () => {
         try {
-            await cam.mutateAsync({
+            await came.mutateAsync({
                 book_id: id
             });
             queryClient.refetchQueries('turns');
-            toast.success('درخواست شما با موفقیت ثبت شد!');
+            toast.success('پذیرش بیمار با موفقیت انجام شد!');
             getSplunkInstance().sendEvent({
                 group: 'drapp-visit-online',
                 type: 'accept',
