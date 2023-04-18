@@ -137,7 +137,7 @@ const Profile = () => {
     useEffect(() => {
         if (getMessengerInfo.isSuccess) {
             setVisitchanel(
-                getMessengerInfo.data.data.reduce((b, a) => {
+                getMessengerInfo?.data?.data?.reduce((b, a) => {
                     b[a.type] = a.channel;
                     return b;
                 }, {})

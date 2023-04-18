@@ -240,9 +240,9 @@ export const CenterList = ({ enabled = false }) => {
                             </div>
 
                             {getCookie('CONSULT_ACTIVATION_PENDING') ? (
-                                <Button size="small" variant="contained">
+                                <span className="text-sm text-primary whitespace-nowrap">
                                     در حال بررسی
-                                </Button>
+                                </span>
                             ) : (
                                 <Button
                                     size="small"
