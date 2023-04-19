@@ -22,7 +22,6 @@ import { Default, Mobile } from '@paziresh24/hooks/device';
 import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
-import { useCame } from '@paziresh24/hooks/drapp/turning';
 
 type Prescription = {
     id: string;
@@ -47,7 +46,7 @@ interface TurnRowProps {
     refId?: string;
     paymentStatus?: string;
     paymentPrice?: string;
-    bookStatus?: 'not_came' | 'not_visited' | 'visited';
+    bookStatus?: string;
     type: 'book' | 'prescription';
     prescription: Prescription;
 }
@@ -84,7 +83,6 @@ const TurnRow = (props: TurnRowProps) => {
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
         false
     );
-    const came = useCame();
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -98,34 +96,6 @@ const TurnRow = (props: TurnRowProps) => {
         }/pdfs/` + prescription.pdfName
     );
     const turn = useRef(turns.find(turn => turn.id === id));
-    const buttonStatusTurnText = {
-        not_came: 'پذیرش',
-        not_visited: 'اعلام مراجعه',
-        visited: 'مراجعه شده'
-    };
-
-    const handleAdmitTurn = async () => {
-        try {
-            await came.mutateAsync({
-                book_id: id
-            });
-            queryClient.refetchQueries('turns');
-            toast.success('پذیرش بیمار با موفقیت انجام شد!');
-            getSplunkInstance().sendEvent({
-                group: 'drapp-visit-online',
-                type: 'accept',
-                event: {
-                    patient_name: name,
-                    patient_family: family,
-                    patient_cell: mobileNumber
-                }
-            });
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data?.message);
-            }
-        }
-    };
 
     const handleOpenPrescription = async () => {
         getSplunkInstance().sendEvent({
@@ -260,24 +230,6 @@ const TurnRow = (props: TurnRowProps) => {
         }
     };
 
-    const handleVisitButtonAction = () => {
-        switch (true) {
-            case info.center.id === CONSULT_CENTER_ID &&
-                type === 'book' &&
-                bookStatus === 'not_came':
-                handleAdmitTurn();
-                break;
-            case info.center.id === CONSULT_CENTER_ID && type === 'book':
-                setDescriptionTreatmentModal(true);
-                break;
-            case !nationalCode:
-                setNationalCodeModal('visit');
-                break;
-            default:
-                handleVisit();
-                break;
-        }
-    };
     const visitProvider = (): 'paziresh24' | 'salamat' | 'tamin' => {
         const insuranceProvider =
             prescription?.provider ??
@@ -294,12 +246,18 @@ const TurnRow = (props: TurnRowProps) => {
             variant="outlined"
             size="small"
             disabled={prescription.finalized}
-            onClick={handleVisitButtonAction}
+            onClick={() => {
+                if (info.center.id === CONSULT_CENTER_ID) return setDescriptionTreatmentModal(true);
+                if (!nationalCode) return setNationalCodeModal('visit');
+                handleVisit();
+            }}
             loading={visitLoading}
             fullWidth
         >
             {info.center.id === CONSULT_CENTER_ID && type === 'book'
-                ? buttonStatusTurnText[bookStatus!]
+                ? bookStatus === 'visited'
+                    ? 'مراجعه شده'
+                    : 'اعلام مراجعه'
                 : prescription.finalized
                 ? 'ویزیت شده'
                 : 'ویزیت '}

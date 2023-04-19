@@ -103,8 +103,6 @@ const Profile = () => {
 
     const specialExpertise = [25, 26, 27, 38, 40, 78, 86, 172, 35, 37, 106, 109, 195];
 
-    console.log(specialExpertise.includes(info.doctor.expertises[0].expertise.id));
-
     useEffect(() => {
         if (info.center.type_id === OFFICE_CENTER) {
             getCenterAccess.remove();
@@ -137,7 +135,7 @@ const Profile = () => {
     useEffect(() => {
         if (getMessengerInfo.isSuccess) {
             setVisitchanel(
-                getMessengerInfo?.data?.data?.reduce((b, a) => {
+                getMessengerInfo?.data?.data?.reduce?.((b, a) => {
                     b[a.type] = a.channel;
                     return b;
                 }, {})
