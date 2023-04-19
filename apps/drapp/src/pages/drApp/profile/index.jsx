@@ -36,8 +36,8 @@ import {
     useUploadPorfile,
     useDoctorInfoUpdate,
     useCenterInfoUpdate,
-    useGetWhatsApp,
-    useUpdateWhatsapp
+    useUpdateMessengers,
+    useGetMessengerInfo
 } from '@paziresh24/hooks/drapp/profile';
 
 import { Overlay } from '@paziresh24/shared/ui/overlay';
@@ -55,13 +55,15 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useHistory } from 'react-router-dom';
-import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
-import ChangePhoneNumber from 'apps/drapp/src/components/profile/changePhoneNumber';
 import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
+import EditMessenger from 'apps/drapp/src/components/onlineVisit/editMessenger';
+import { phoneNumberValidator } from '@persian-tools/persian-tools';
+import { isMessengerIdHasValid } from 'apps/drapp/src/functions/isMessengerIdHasValid';
 import Info from './info';
 
 const Profile = () => {
     const router = useHistory();
+    const messengerRef = useRef('');
     const [info, setInfo] = useDrApp();
     const [position, setPosition] = useState({ lat: 35.68818464807401, lng: 51.393077373504646 });
     const doctorInfoUpdate = useDoctorInfoUpdate();
@@ -76,8 +78,9 @@ const Profile = () => {
     const getGallery = useGetGallery({ center_id: info.center.id });
     const deleteGallery = useDeleteGallery();
 
-    const getWhatsapp = useGetWhatsApp();
-    const updateWhatsapp = useUpdateWhatsapp();
+    const getMessengerInfo = useGetMessengerInfo();
+    const updateMessengers = useUpdateMessengers();
+    const [visitChanel, setVisitchanel] = useState({});
 
     const centerPromises = [];
 
@@ -85,13 +88,20 @@ const Profile = () => {
     const [city, setCity] = useState(info.center.city);
 
     const [expertiseAccordion, setExpertiseAccordion] = useState(false);
-    const [whatsappAccordion, setWhatsappAccordion] = useState(false);
+    const [messengerAccordion, setmessengerAccordion] = useState(false);
     const [centerInfoAccordion, setCenterInfoAccordion] = useState(false);
     const [userInfoAccordion, setUserInfoAccordion] = useState(true);
+    const [messengerError, setMessengerError] = useState({
+        eitaaNumberError: false,
+        eitaaIdError: false,
+        whatsappNumberError: false
+    });
     const biographyRef = useRef();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [mapZoom, setMapZoom] = useState();
+
+    const specialExpertise = [25, 26, 27, 38, 40, 78, 86, 172, 35, 37, 106, 109, 195];
 
     useEffect(() => {
         if (info.center.type_id === OFFICE_CENTER) {
@@ -122,6 +132,18 @@ const Profile = () => {
         }
     }, [getCenterAccess.status]);
 
+    useEffect(() => {
+        if (getMessengerInfo.isSuccess) {
+            setVisitchanel(
+                getMessengerInfo?.data?.data?.reduce?.((b, a) => {
+                    b[a.type] = a.channel;
+                    return b;
+                }, {})
+            );
+            return;
+        }
+    }, [getMessengerInfo.status]);
+
     const {
         register: updateDoctorInfo,
         handleSubmit: doctorInfoSubmit,
@@ -138,12 +160,6 @@ const Profile = () => {
         register: bankInfoRegister,
         handleSubmit: bankSubmit,
         formState: { errors: bankInfoErrors }
-    } = useForm();
-
-    const {
-        register: whatsappRegister,
-        handleSubmit: whatsappSubmit,
-        formState: { errors: whatsappErrors }
     } = useForm();
 
     const updateDoctor = async data => {
@@ -229,16 +245,46 @@ const Profile = () => {
         });
     };
 
-    const whatsappAction = data => {
-        updateWhatsapp.mutate(data, {
-            onSuccess: () => {
-                setWhatsappAccordion(false);
-                toast.success('شماره whatsapp business با موفقیت ذخیره شد.');
-            },
-            onError: err => {
-                toast.error(err.response.data.message);
-            }
+    const changeOnlieVisitChanelInfo = async () => {
+        const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
+        setMessengerError({
+            eitaaNumberError: !phoneNumberValidator(eitaaNumber),
+            eitaaIdError: !isMessengerIdHasValid(eitaaId),
+            whatsappNumberError: !phoneNumberValidator(whatsappNumber)
         });
+        if (
+            phoneNumberValidator(eitaaNumber) &&
+            phoneNumberValidator(whatsappNumber) &&
+            isMessengerIdHasValid(eitaaId)
+        ) {
+            updateMessengers.mutate(
+                {
+                    online_channels: [
+                        {
+                            type: 'eitaa_number',
+                            channel: eitaaNumber
+                        },
+                        {
+                            type: 'eitaa',
+                            channel: eitaaId
+                        },
+                        {
+                            type: 'whatsapp',
+                            channel: whatsappNumber
+                        }
+                    ]
+                },
+                {
+                    onSuccess: () => {
+                        toast.success('تغییرات شما با موفقیت انجام شد');
+                    },
+                    onError: err => {
+                        toast.error(err.response.data.message);
+                    }
+                }
+            );
+            return;
+        }
     };
 
     document.querySelector('body').addEventListener('click', e => {
@@ -430,6 +476,37 @@ const Profile = () => {
             >
                 <ExpertisesWrapper setExpertiseAccordion={setExpertiseAccordion} />
             </Accordion>
+            {info.center.id === CONSULT_CENTER_ID &&
+                !specialExpertise.includes(info.doctor.expertises[0].expertise.id) && (
+                    <Accordion
+                        title="پیام رسان ها"
+                        icon={<ChatIcon color="#3F3F79" />}
+                        open={messengerAccordion}
+                        setOpen={setmessengerAccordion}
+                    >
+                        <EditMessenger
+                            title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
+                            description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
+                            eitaaIdDefaultValue={visitChanel.eitaa}
+                            eitaaNumberDefaultValue={visitChanel.eitaa_number}
+                            whatsappNumberDefaultValue={visitChanel.whatsapp}
+                            eitaaIdError={messengerError.eitaaIdError}
+                            eitaaNumberError={messengerError.eitaaNumberError}
+                            whtasappNumberError={messengerError.whatsappNumberError}
+                            ref={messengerRef}
+                        />
+                        <Button
+                            onClick={changeOnlieVisitChanelInfo}
+                            className="mt-4"
+                            fullWidth
+                            variant="primary"
+                            size="large"
+                            loading={updateMessengers.isLoading}
+                        >
+                            ثبت تغییرات
+                        </Button>
+                    </Accordion>
+                )}
             {info.center.type_id === OFFICE_CENTER && (
                 <Accordion
                     title="اطلاعات مطب"
@@ -639,34 +716,6 @@ const Profile = () => {
             <Accordion title="تنظیمات نسخه نویسی" icon={<SettingIcon color="#3F3F79" />}>
                 <Settings />
             </Accordion>
-
-            {info.center.id === CONSULT_CENTER_ID && (
-                <Accordion
-                    title="شماره whatsapp business"
-                    icon={<ChatIcon color="#3F3F79" />}
-                    open={whatsappAccordion}
-                    setOpen={setWhatsappAccordion}
-                >
-                    <form className={styles['form']} onSubmit={whatsappSubmit(whatsappAction)}>
-                        <div className={styles['bank_row']}>
-                            <TextField
-                                label="شماره whatsapp business"
-                                type="tel"
-                                error={whatsappErrors.whatsapp}
-                                defaultValue={
-                                    getWhatsapp.isSuccess && getWhatsapp.data.data.whatsapp
-                                }
-                                {...whatsappRegister('whatsapp', {
-                                    required: true
-                                })}
-                            />
-                        </div>
-                        <Button block type="submit" loading={updateWhatsapp.isLoading}>
-                            ذخیره تغییرات
-                        </Button>
-                    </form>
-                </Accordion>
-            )}
         </div>
     );
 };

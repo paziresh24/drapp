@@ -16,7 +16,7 @@ import { useActivationStore } from './activation.store';
 
 enum ActivationPaths {
     office = '/activation/office/center',
-    consult = '/activation/consult/whatsapp'
+    consult = '/activation/consult/rules'
 }
 
 const Activation = () => {
@@ -92,7 +92,7 @@ const Activation = () => {
                         onSelect={handleSelectService}
                     />
                     <Service
-                        title="مشاوره آنلاین"
+                        title="ویزیت آنلاین"
                         description="ویزیت آنلاین بیماران از سراسر دنیا"
                         type="consult"
                         selected={selectedService.includes('consult')}

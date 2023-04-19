@@ -299,15 +299,13 @@ const Header = memo(() => {
                                         </div>
                                     </div>
                                     {getCookie('CONSULT_ACTIVATION_PENDING') ? (
-                                        <Button size="small" variant="contained">
-                                            در حال بررسی
-                                        </Button>
+                                        <span className="text-sm text-primary">در حال بررسی</span>
                                     ) : (
                                         <Button
                                             size="small"
                                             variant="contained"
                                             onClick={() => {
-                                                history.push('/activation/consult/whatsapp');
+                                                history.push('/activation/consult/rules');
                                             }}
                                         >
                                             فعال سازی

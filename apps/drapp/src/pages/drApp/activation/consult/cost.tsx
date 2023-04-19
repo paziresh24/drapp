@@ -56,11 +56,6 @@ const CostConsultActivation = () => {
             maxWidth="sm"
             className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col space-y-5"
         >
-            <Alert icon={false} className="!bg-[#F3F6F9]">
-                <Typography fontSize="0.9rem" fontWeight="medium">
-                    لازم به ذکر است 30 درصد از مبلغ تعیین شده به پذیرش24 اختصاص می یابد.
-                </Typography>
-            </Alert>
             {priceAvarage ? (
                 <Typography>
                     همکاران شما بصورت میانگین مبلغ{' '}
@@ -82,6 +77,10 @@ const CostConsultActivation = () => {
                     shrink: true
                 }}
             />
+            <div className="bg-[#FFFCF5] border-2 border-solid border-[#FFECC7] rounded-lg leading-6 p-3 text-sm font-medium">
+                جهت دریافت مبالغ پرداختی بیماران، لطفا پس از تکمیل ثبت نام در قسمت تنظیمات پرداخت
+                شماره کارت خود را وارد نمایید.
+            </div>
             <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                 <Button fullWidth variant="contained" size="large" onClick={handleSubmit}>
                     ادامه

@@ -22,7 +22,6 @@ import { Default, Mobile } from '@paziresh24/hooks/device';
 import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
-import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
 
 type Prescription = {
     id: string;
@@ -84,7 +83,6 @@ const TurnRow = (props: TurnRowProps) => {
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
         false
     );
-    const paziresh = usePaziresh();
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -256,7 +254,7 @@ const TurnRow = (props: TurnRowProps) => {
             loading={visitLoading}
             fullWidth
         >
-            {info.center.id === CONSULT_CENTER_ID
+            {info.center.id === CONSULT_CENTER_ID && type === 'book'
                 ? bookStatus === 'visited'
                     ? 'مراجعه شده'
                     : 'اعلام مراجعه'
