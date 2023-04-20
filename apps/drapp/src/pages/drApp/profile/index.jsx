@@ -487,9 +487,9 @@ const Profile = () => {
                         <EditMessenger
                             title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
                             description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
-                            eitaaIdDefaultValue={visitChanel.eitaa}
-                            eitaaNumberDefaultValue={visitChanel.eitaa_number}
-                            whatsappNumberDefaultValue={visitChanel.whatsapp}
+                            eitaaIdDefaultValue={visitChanel?.eitaa ?? ''}
+                            eitaaNumberDefaultValue={visitChanel?.eitaa_number ?? ''}
+                            whatsappNumberDefaultValue={visitChanel?.whatsapp ?? ''}
                             eitaaIdError={messengerError.eitaaIdError}
                             eitaaNumberError={messengerError.eitaaNumberError}
                             whtasappNumberError={messengerError.whatsappNumberError}
