@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useDrApp } from '@paziresh24/context/drapp';
@@ -8,10 +7,8 @@ import PriceField from '@paziresh24/shared/ui/priceField';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, removeCommas } from '@persian-tools/persian-tools';
 import { useConsultActivationStore } from 'apps/drapp/src/store/consultActivation.store';
-import { round } from 'lodash';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { costs } from './costAvg';
 
 const CostConsultActivation = () => {
     const [{ doctor }] = useDrApp();
@@ -19,11 +16,6 @@ const CostConsultActivation = () => {
     const setPrice = useConsultActivationStore(state => state.setPrice);
     const price = useConsultActivationStore(state => state.price);
     const [fieldError, setFieldError] = useState(false);
-
-    const priceExpertise = costs.find(
-        cost => +cost.expertiseId === +doctor.expertises[0].expertise.id
-    )?.avg;
-    const priceAvarage = priceExpertise ? round(Math.floor(+priceExpertise), -3) / 10 : 0;
 
     const handleSubmit = () => {
         if (!+price) {
@@ -44,7 +36,7 @@ const CostConsultActivation = () => {
             event: {
                 action: 'avg-teammate',
                 value: price * 10,
-                avgPrice: priceAvarage
+                avgPrice: 200000
             }
         });
 
@@ -56,18 +48,15 @@ const CostConsultActivation = () => {
             maxWidth="sm"
             className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col space-y-5"
         >
-            {priceAvarage ? (
-                <Typography>
-                    همکاران شما بصورت میانگین مبلغ{' '}
-                    <span className="font-medium">{addCommas(priceAvarage)}</span> تومان را در نظر
-                    گرفته اند.
-                </Typography>
-            ) : null}
+            <Typography>
+                همکاران شما بصورت میانگین مبلغ{' '}
+                <span className="font-medium">{addCommas(200000)}</span> تومان را در نظر گرفته اند.
+            </Typography>
             <PriceField
                 label="مبلغ هر ویزیت (تومان)"
                 onChange={e => setPrice(+e.target.value)}
                 value={price ? price.toString() : ''}
-                placeholder={priceAvarage ? addCommas(priceAvarage) : addCommas(50000)}
+                placeholder={addCommas(200000)}
                 limit={7}
                 error={fieldError}
                 helperText={fieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
