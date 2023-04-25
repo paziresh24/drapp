@@ -47,20 +47,22 @@ const ConsultMessenger = () => {
                     action: 'done'
                 }
             });
-            setMessenger([
-                {
-                    type: 'eitaa_number',
-                    channel: eitaaNumber
-                },
-                {
-                    type: 'eitaa',
-                    channel: eitaaId
-                },
-                {
-                    type: 'whatsapp',
-                    channel: whatsappNumber
-                }
-            ]);
+            setMessenger(
+                [
+                    {
+                        type: 'eitaa_number',
+                        channel: eitaaNumber
+                    },
+                    {
+                        type: 'eitaa',
+                        channel: eitaaId
+                    },
+                    {
+                        type: 'whatsapp',
+                        channel: whatsappNumber
+                    }
+                ].filter(messenger => !!messenger.channel.length)
+            );
             router.push(`/activation/consult/cost/`);
             return;
         }

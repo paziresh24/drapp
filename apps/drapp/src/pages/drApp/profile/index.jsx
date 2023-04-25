@@ -282,7 +282,7 @@ const Profile = () => {
                             type: 'whatsapp',
                             channel: whatsappNumber
                         }
-                    ]
+                    ].filter(messenger => !!messenger.channel.length)
                 },
                 {
                     onSuccess: () => {
