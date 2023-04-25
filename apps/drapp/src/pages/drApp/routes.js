@@ -363,6 +363,7 @@ export const routes = [
         name: 'onlineVisitRules',
         title: 'قوانین و مقررات',
         component: lazy(() => import('./onlineVisitRules')),
+        isPrivate: true,
         exact: true
     },
     {

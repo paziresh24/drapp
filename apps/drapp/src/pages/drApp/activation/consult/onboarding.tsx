@@ -19,8 +19,8 @@ export const Onboarding = () => {
             }
         });
         router.push(
-            router.location.hash === '#active_doctor'
-                ? '/profile/#active_doctor'
+            router.location.search === '?active_doctor'
+                ? '/profile/?active_doctor'
                 : `/activation/consult/messengers`
         );
     };

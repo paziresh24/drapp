@@ -48,11 +48,18 @@ export const useGetCentersDoctor = () => {
                 )
             )
         ) {
-            center = centers[0];
+            center =
+                router.location.pathname === '/onlineVisitRules'
+                    ? centers.find((center: { id: string }) => center.id === '5532')
+                    : centers[0];
             localStorage.setItem('center_id', center.id);
         } else {
             center = centers.find(
-                (item: { id: string | null }) => item.id === localStorage.getItem('center_id')
+                (item: { id: string | null }) =>
+                    item.id ===
+                    (router.location.pathname === '/onlineVisitRules'
+                        ? '5532'
+                        : localStorage.getItem('center_id'))
             );
         }
         const centerConsult = centers.find((center: { id: string }) => center.id === '5532') ?? {};

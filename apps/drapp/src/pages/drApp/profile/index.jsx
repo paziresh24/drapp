@@ -146,7 +146,7 @@ const Profile = () => {
     }, [getMessengerInfo.status]);
 
     useEffect(() => {
-        if (getMessengerInfo.isSuccess && router.location.hash === '#active_doctor') {
+        if (getMessengerInfo.isSuccess && router.location.search === '?active_doctor') {
             setmessengerAccordion(true);
             messengerSectionRef?.current?.scrollIntoView({ behavior: 'smooth' });
         }
