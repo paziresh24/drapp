@@ -12,7 +12,7 @@ interface ActivationModalProps {
 }
 const servicesList = [
     { text: 'نوبت دهی مطب', type: 'office', url: '/activation/office/center' },
-    { text: 'مشاوره آنلاین', type: 'consult', url: '/activation/consult/whatsapp' }
+    { text: 'مشاوره آنلاین', type: 'consult', url: '/activation/consult/rules' }
 ];
 
 export const ActivationModal = ({ isOpen, onClose, currentType }: ActivationModalProps) => {

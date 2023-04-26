@@ -1,11 +1,16 @@
 import create from 'zustand';
 
+type Messenger = {
+    type: string;
+    channel: string;
+};
+
 interface ConsultActivationStore {
-    whatsapp: string;
+    visitChannel: Messenger[];
     price: number;
     duration: number;
     workHours: Day[];
-    setWhatsapp: (whatsapp: string) => void;
+    setMessenger: (visitChannel: Messenger[]) => void;
     setPrice: (price: number) => void;
     setDuration: (service_length: number) => void;
     addWorkHours: (workHour: Day[]) => void;
@@ -14,11 +19,11 @@ interface ConsultActivationStore {
 }
 
 export const useConsultActivationStore = create<ConsultActivationStore>(set => ({
-    whatsapp: '',
+    visitChannel: [],
     price: 0,
     duration: 2,
     workHours: [],
-    setWhatsapp: whatsapp => set(state => ({ ...state, whatsapp })),
+    setMessenger: visitChannel => set(state => ({ ...state, visitChannel })),
     setPrice: price => set(state => ({ ...state, price })),
     setDuration: duration => set(state => ({ ...state, duration })),
     setWorkHours: workHours => set(state => ({ ...state, workHours })),

@@ -43,7 +43,7 @@ const ConsultOfficeActivation = () => {
     const removeWorkHours = useConsultActivationStore(state => state.removeWorkHours);
     // const duration = useConsultActivationStore(state => state.duration);
     // const setDuration = useConsultActivationStore(state => state.setDuration);
-    const whatsapp = useConsultActivationStore(state => state.whatsapp);
+    const visitChannel = useConsultActivationStore(state => state.visitChannel);
     const price = useConsultActivationStore(state => state.price);
     const [questionActivation, setQuestionActivation] = useState(false);
     const selectedService = useActivationStore(state => state.selectedService);
@@ -73,7 +73,7 @@ const ConsultOfficeActivation = () => {
             await activeConsult.mutateAsync({
                 workHours,
                 service_length: 3,
-                whatsapp: digitsFaToEn(whatsapp.replace(/^0+/, '')),
+                online_channels: visitChannel,
                 price: price * 10
             });
             getSplunkInstance().sendEvent({
