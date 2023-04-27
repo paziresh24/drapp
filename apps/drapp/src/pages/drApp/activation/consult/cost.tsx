@@ -16,12 +16,18 @@ const CostConsultActivation = () => {
     const setPrice = useConsultActivationStore(state => state.setPrice);
     const price = useConsultActivationStore(state => state.price);
     const [fieldError, setFieldError] = useState(false);
+    const [priceLimitError, setPriceLimitError] = useState(false);
 
     const handleSubmit = () => {
         if (!+price) {
             setFieldError(true);
             return;
         }
+        if (+price < 10000) {
+            setPriceLimitError(true);
+            return;
+        }
+
         getSplunkInstance().sendEvent({
             group: 'activation-consult-cost',
             type: 'pricing',
@@ -58,8 +64,14 @@ const CostConsultActivation = () => {
                 value={price ? price.toString() : ''}
                 placeholder={addCommas(200000)}
                 limit={7}
-                error={fieldError}
-                helperText={fieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
+                error={fieldError || priceLimitError}
+                helperText={
+                    fieldError
+                        ? 'لطفا مبلغ را وارد کنید.'
+                        : priceLimitError
+                        ? 'مقدار ورودی باید بیشتر از 10 هزارتومان باشد'
+                        : ''
+                }
                 onFocus={() => setFieldError(false)}
                 fullWidth
                 InputLabelProps={{

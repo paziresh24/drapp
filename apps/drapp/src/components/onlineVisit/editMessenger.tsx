@@ -34,7 +34,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
         ref,
         () => ({
             eitaaNumber: messengersInfo.eitaaNumber,
-            eitaaId: messengersInfo.eitaaId,
+            eitaaId: messengersInfo.eitaaId.replace(/@/, ''),
             whatsappNumber: messengersInfo.whatsappNumber
         }),
         [messengersInfo.eitaaNumber, messengersInfo.eitaaId, messengersInfo.whatsappNumber]
