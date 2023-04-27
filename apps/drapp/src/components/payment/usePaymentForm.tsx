@@ -12,9 +12,10 @@ export const usePaymentForm = () => {
     const [cartNumberFieldError, setCartNumberFieldError] = useState(false);
 
     const validate = ({ cardNumberValidate = true }: { cardNumberValidate?: boolean }) => {
-        if (!+price) {
+        if (!+price || +price < 10000) {
             setPriceFieldError(true);
-            return false;
+            +price < 10000 && toast.error('مقدار مبلغ مورد نظر باید بیشتر از 10 هزارتومان باشد');
+            return;
         }
         if (cardNumberValidate && (!cartNumber || !verifyCardNumber(+cartNumber))) {
             setCartNumberFieldError(true);

@@ -9,6 +9,7 @@ import { addCommas, removeCommas } from '@persian-tools/persian-tools';
 import { useConsultActivationStore } from 'apps/drapp/src/store/consultActivation.store';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const CostConsultActivation = () => {
     const [{ doctor }] = useDrApp();
@@ -16,18 +17,13 @@ const CostConsultActivation = () => {
     const setPrice = useConsultActivationStore(state => state.setPrice);
     const price = useConsultActivationStore(state => state.price);
     const [fieldError, setFieldError] = useState(false);
-    const [priceLimitError, setPriceLimitError] = useState(false);
 
     const handleSubmit = () => {
-        if (!+price) {
+        if (!+price || +price < 10000) {
             setFieldError(true);
+            +price < 10000 && toast.error('مقدار مبلغ مورد نظر باید بیشتر از 10 هزارتومان باشد');
             return;
         }
-        if (+price < 10000) {
-            setPriceLimitError(true);
-            return;
-        }
-
         getSplunkInstance().sendEvent({
             group: 'activation-consult-cost',
             type: 'pricing',
@@ -64,14 +60,8 @@ const CostConsultActivation = () => {
                 value={price ? price.toString() : ''}
                 placeholder={addCommas(200000)}
                 limit={7}
-                error={fieldError || priceLimitError}
-                helperText={
-                    fieldError
-                        ? 'لطفا مبلغ را وارد کنید.'
-                        : priceLimitError
-                        ? 'مقدار ورودی باید بیشتر از 10 هزارتومان باشد'
-                        : ''
-                }
+                error={fieldError}
+                helperText={fieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
                 onFocus={() => setFieldError(false)}
                 fullWidth
                 InputLabelProps={{
