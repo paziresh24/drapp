@@ -49,7 +49,7 @@ export const useGetCentersDoctor = () => {
             )
         ) {
             center =
-                router.location.pathname === '/onlineVisitRules'
+                router.location.search === '?default_center=visit_online'
                     ? centers.find((center: { id: string }) => center.id === '5532')
                     : centers[0];
             localStorage.setItem('center_id', center.id);
@@ -57,7 +57,7 @@ export const useGetCentersDoctor = () => {
             center = centers.find(
                 (item: { id: string | null }) =>
                     item.id ===
-                    (router.location.pathname === '/onlineVisitRules'
+                    (router.location.search === '?default_center=visit_online'
                         ? '5532'
                         : localStorage.getItem('center_id'))
             );

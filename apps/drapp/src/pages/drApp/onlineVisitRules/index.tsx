@@ -1,13 +1,10 @@
 import { Container } from '@mui/material';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import Rules from 'apps/drapp/src/components/onlineVisit/rules';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export const OnlineVisitRules = () => {
     const router = useHistory();
-
-    useEffect(() => localStorage.setItem('center_id', '5532'), []);
 
     const handleButtonAction = (action: string, address: string) => {
         getSplunkInstance().sendEvent({

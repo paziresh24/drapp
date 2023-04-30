@@ -21,7 +21,10 @@ const CostConsultActivation = () => {
     const handleSubmit = () => {
         if (!+price || +price < 10000) {
             setFieldError(true);
-            +price < 10000 && toast.error('مقدار مبلغ مورد نظر باید بیشتر از 10 هزارتومان باشد');
+            if (+price < 10000) {
+                toast.error('مقدار مبلغ مورد نظر باید بیشتر از 10 هزارتومان باشد');
+                return;
+            }
             return;
         }
         getSplunkInstance().sendEvent({
