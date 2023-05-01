@@ -23,7 +23,7 @@ WORKDIR /usr/share/nginx/html
 COPY ./apps/drapp/env.sh .
 COPY ./apps/drapp/.env .
 
-RUN apk add --no-cache bash
+RUN apk update && apk upgrade &&apk add --no-cache bash
 
 # Make our shell script executable
 RUN chmod +x env.sh
