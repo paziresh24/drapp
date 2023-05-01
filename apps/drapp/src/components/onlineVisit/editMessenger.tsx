@@ -69,7 +69,7 @@ export const EditMessenger = forwardRef((props: EditMessengerProps, ref: Forward
                 }).map(messenger => (
                     <div key={messenger.id}>
                         <span className="text-sm flex items-center gap-1 font-semibold text-[#49536E]">
-                            <em className="text-red-500">*</em> {messenger.lable}
+                            {messenger.lable}
                         </span>
                         <div className="flex items-center gap-2 mt-4">
                             <div className="flex justify-center gap-1 items-center w-[30%] md:w-[20%] h-12 border border-solid border-[#e1e4e6] rounded-lg">
