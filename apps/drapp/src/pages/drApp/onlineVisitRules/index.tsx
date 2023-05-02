@@ -24,7 +24,12 @@ export const OnlineVisitRules = () => {
                 className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col lg:space-y-5 !px-0"
             >
                 <Rules
-                    onSubmit={() => handleButtonAction('accept', '/profile')}
+                    onSubmit={() =>
+                        handleButtonAction(
+                            'accept',
+                            '/activation/consult/onboarding/?active_doctor'
+                        )
+                    }
                     title="قوانین و مقررات ویزیت آنلاین با بیمار پذیرش۲۴"
                     modalCancelButtonAction={() => handleButtonAction('decline', '/')}
                     cancelText="انصراف"

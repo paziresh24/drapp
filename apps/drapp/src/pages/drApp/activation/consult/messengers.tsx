@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { useActivationStore } from '../activation.store';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
 import { isMessengerIdHasValid } from 'apps/drapp/src/functions/isMessengerIdHasValid';
+import { toast } from 'react-toastify';
 
 const ConsultMessenger = () => {
     const [messengerError, setMessengerError] = useState({
@@ -28,14 +29,16 @@ const ConsultMessenger = () => {
     const handleSubmit = () => {
         const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
         setMessengerError({
-            eitaaNumberError: !phoneNumberValidator(eitaaNumber),
-            eitaaIdError: !isMessengerIdHasValid(eitaaId),
-            whatsappNumberError: !phoneNumberValidator(whatsappNumber)
+            ...(!!eitaaId.length && {
+                eitaaNumberError: !phoneNumberValidator(eitaaNumber)
+            }),
+            ...(!!eitaaNumber.length && { eitaaIdError: !isMessengerIdHasValid(eitaaId) }),
+            ...(whatsappNumber && { whatsappNumberError: !phoneNumberValidator(whatsappNumber) })
         });
+
         if (
-            phoneNumberValidator(eitaaNumber) &&
-            phoneNumberValidator(whatsappNumber) &&
-            isMessengerIdHasValid(eitaaId)
+            (phoneNumberValidator(eitaaNumber) && isMessengerIdHasValid(eitaaId)) ||
+            phoneNumberValidator(whatsappNumber)
         ) {
             getSplunkInstance().sendEvent({
                 group: 'drapp-visit-online',
@@ -44,23 +47,27 @@ const ConsultMessenger = () => {
                     action: 'done'
                 }
             });
-            setMessenger([
-                {
-                    type: 'eitaa_number',
-                    channel: eitaaNumber
-                },
-                {
-                    type: 'eitaa',
-                    channel: eitaaId
-                },
-                {
-                    type: 'whatsapp',
-                    channel: whatsappNumber
-                }
-            ]);
+            setMessenger(
+                [
+                    {
+                        type: 'eitaa_number',
+                        channel: eitaaNumber
+                    },
+                    {
+                        type: 'eitaa',
+                        channel: eitaaId
+                    },
+                    {
+                        type: 'whatsapp',
+                        channel: whatsappNumber
+                    }
+                ].filter(messenger => !!messenger.channel.length)
+            );
             router.push(`/activation/consult/cost/`);
             return;
         }
+        if (!whatsappNumber.length && !eitaaNumber.length && !eitaaId.length)
+            return toast.error('لطفا اطلاعات یکی از پیام رسان ها را صحیح وارد کنید.');
     };
 
     return (
@@ -69,7 +76,7 @@ const ConsultMessenger = () => {
             className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col space-y-5"
         >
             <EditMessenger
-                title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
+                title="لطفا شماره و نام کاربری پیام رسان ایتا یا شماره واتساپ خود را وارد."
                 description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
                 eitaaIdError={messengerError.eitaaIdError}
                 eitaaNumberError={messengerError.eitaaNumberError}

@@ -64,6 +64,7 @@ import Info from './info';
 const Profile = () => {
     const router = useHistory();
     const messengerRef = useRef('');
+    const messengerSectionRef = useRef(null);
     const [info, setInfo] = useDrApp();
     const [position, setPosition] = useState({ lat: 35.68818464807401, lng: 51.393077373504646 });
     const doctorInfoUpdate = useDoctorInfoUpdate();
@@ -143,6 +144,13 @@ const Profile = () => {
             return;
         }
     }, [getMessengerInfo.status]);
+
+    useEffect(() => {
+        if (getMessengerInfo.isSuccess && router.location.search === '?active_doctor') {
+            setmessengerAccordion(true);
+            messengerSectionRef?.current?.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [visitChanel]);
 
     const {
         register: updateDoctorInfo,
@@ -247,15 +255,17 @@ const Profile = () => {
 
     const changeOnlieVisitChanelInfo = async () => {
         const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
+        console.log(!eitaaNumber);
         setMessengerError({
-            eitaaNumberError: !phoneNumberValidator(eitaaNumber),
-            eitaaIdError: !isMessengerIdHasValid(eitaaId),
-            whatsappNumberError: !phoneNumberValidator(whatsappNumber)
+            ...(!!eitaaId.length && {
+                eitaaNumberError: !phoneNumberValidator(eitaaNumber)
+            }),
+            ...(!!eitaaNumber.length && { eitaaIdError: !isMessengerIdHasValid(eitaaId) }),
+            ...(whatsappNumber && { whatsappNumberError: !phoneNumberValidator(whatsappNumber) })
         });
         if (
-            phoneNumberValidator(eitaaNumber) &&
-            phoneNumberValidator(whatsappNumber) &&
-            isMessengerIdHasValid(eitaaId)
+            (phoneNumberValidator(eitaaNumber) && isMessengerIdHasValid(eitaaId)) ||
+            phoneNumberValidator(whatsappNumber)
         ) {
             updateMessengers.mutate(
                 {
@@ -272,7 +282,7 @@ const Profile = () => {
                             type: 'whatsapp',
                             channel: whatsappNumber
                         }
-                    ]
+                    ].filter(messenger => !!messenger.channel.length)
                 },
                 {
                     onSuccess: () => {
@@ -285,6 +295,8 @@ const Profile = () => {
             );
             return;
         }
+        if (!whatsappNumber.length && !eitaaNumber.length && !eitaaId.length)
+            return toast.error('لطفا اطلاعات یکی از پیام رسان ها را صحیح وارد کنید.');
     };
 
     document.querySelector('body').addEventListener('click', e => {
@@ -478,34 +490,36 @@ const Profile = () => {
             </Accordion>
             {info.center.id === CONSULT_CENTER_ID &&
                 !specialExpertise.includes(info.doctor.expertises[0].expertise.id) && (
-                    <Accordion
-                        title="پیام رسان ها"
-                        icon={<ChatIcon color="#3F3F79" />}
-                        open={messengerAccordion}
-                        setOpen={setmessengerAccordion}
-                    >
-                        <EditMessenger
-                            title="لطفا شماره پیام رسان داخلی و خارجی خود را وارد کنید."
-                            description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
-                            eitaaIdDefaultValue={visitChanel?.eitaa ?? ''}
-                            eitaaNumberDefaultValue={visitChanel?.eitaa_number ?? ''}
-                            whatsappNumberDefaultValue={visitChanel?.whatsapp ?? ''}
-                            eitaaIdError={messengerError.eitaaIdError}
-                            eitaaNumberError={messengerError.eitaaNumberError}
-                            whtasappNumberError={messengerError.whatsappNumberError}
-                            ref={messengerRef}
-                        />
-                        <Button
-                            onClick={changeOnlieVisitChanelInfo}
-                            className="mt-4"
-                            fullWidth
-                            variant="primary"
-                            size="large"
-                            loading={updateMessengers.isLoading}
+                    <div ref={messengerSectionRef}>
+                        <Accordion
+                            title="پیام رسان ها"
+                            icon={<ChatIcon color="#3F3F79" />}
+                            open={messengerAccordion}
+                            setOpen={setmessengerAccordion}
                         >
-                            ثبت تغییرات
-                        </Button>
-                    </Accordion>
+                            <EditMessenger
+                                title="لطفا شماره و نام کاربری پیام رسان ایتا یا شماره واتساپ خود را وارد."
+                                description="شماره موبایل این پیام رسان ها در دسترس بیمار قرار میگیرد."
+                                eitaaIdDefaultValue={visitChanel?.eitaa ?? ''}
+                                eitaaNumberDefaultValue={visitChanel?.eitaa_number ?? ''}
+                                whatsappNumberDefaultValue={visitChanel?.whatsapp ?? ''}
+                                eitaaIdError={messengerError.eitaaIdError}
+                                eitaaNumberError={messengerError.eitaaNumberError}
+                                whtasappNumberError={messengerError.whatsappNumberError}
+                                ref={messengerRef}
+                            />
+                            <Button
+                                onClick={changeOnlieVisitChanelInfo}
+                                className="mt-4"
+                                fullWidth
+                                variant="primary"
+                                size="large"
+                                loading={updateMessengers.isLoading}
+                            >
+                                ثبت تغییرات
+                            </Button>
+                        </Accordion>
+                    </div>
                 )}
             {info.center.type_id === OFFICE_CENTER && (
                 <Accordion
