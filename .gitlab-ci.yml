@@ -106,6 +106,19 @@ drApp-build-cloud-push-docker-image:
     - france-loc
 
 
+drApp-deploy-stage:
+  image: docker.paziresh24.info/docker-ansible:latest
+  stage: deploy
+  only:
+    - main
+#  needs: ["drApp-test"]
+  script:
+    - apk add --update bash openssh sshpass
+    - ansible-playbook ./ansible/drapp/playbook-stage.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+
+
+
+
 drApp-deploy-production:
   image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
