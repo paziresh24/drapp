@@ -1,6 +1,6 @@
 ---
 - name: Staging DRApp Frontend
-  hosts: develop_server
+  hosts: stage_server
   
   tasks:
     - name: ensure required pip-packages are installed
