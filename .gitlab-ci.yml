@@ -69,46 +69,6 @@ services:
     RULES_CHANGES_PATH: "apps/drapp/**/*"
 
 
-.drApp-test:
-  stage: test
-  extends: .drApp
-  script:
-#    - npm config set registry http://192.168.216.74:8081/repository/npm-proxy/
-    - apk update && apk add xvfb x11vnc fluxbox xdpyinfo st vim terminus-font \
-      && sed -r -i "s/\[exec\] \(xterm\) \{xterm\}/\[exec\] \(st\) \{st -f 'xos4 Terminus-14'\}/" /usr/share/fluxbox/menu \
-      && [[ ! -d /opt ]] && mkdir /opt \
-      && rm -vrf /var/cache/apk/*
-    - npm config get registry
-    - npm install --prefer-offline --no-audit --force
-    - npm run e2e-ci drapp-e2e
-  cache:
-    key: $CI_PROJECT_ID
-    policy: pull-push
-    paths:
-      - yarn.lock
-      - .yarn
-      - node_modules
-      - 'apps/*/node_modules'
-
-
-.drApp-build-local-push-docker-image:
-  stage: build-image
-#  needs: ["drApp-test"]
-  image: docker.paziresh24.info/docker:stable
-  extends: .drApp
-  before_script:
-    - docker info
-    - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
-  script:
-    - export DOCKER_BUILD=1
-    - export DOCKER_BUILDKIT=1
-    - docker login $DOCKER_REGISTRY_URL -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
-    - docker build -t $DOCKER_IMAGE_TAG_LOCAL:latest -t $DOCKER_IMAGE_TAG_LOCAL:$KUBERNETES_DOCKER_TAG -f Dockerfile.localCenter .
-    - docker push $DOCKER_IMAGE_TAG_LOCAL:latest
-    - docker push $DOCKER_IMAGE_TAG_LOCAL:$KUBERNETES_DOCKER_TAG
-  tags:
-    - france-loc
-
 drApp-build-develop-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
@@ -130,10 +90,11 @@ drApp-build-cloud-push-docker-image:
   stage: build-image
 #  needs: ["drApp-test"]
   image: docker.paziresh24.info/docker:stable
-  extends: .drApp
+#  extends: .drApp
+  only:
+    - main
   before_script:
     - docker info
-    - echo '192.168.216.16 dockerhub.paziresh24.com' >> /etc/hosts
   script:
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
@@ -167,16 +128,6 @@ drApp-deploy-develop:
     - apk add --update bash openssh sshpass
     - ansible-playbook ./ansible/drapp/playbook-develop.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 
-
-.drApp-deploy-locals:
-  image: docker.paziresh24.info/docker-ansible:latest
-  stage: deploy
-  when: manual
-#  needs: ["drApp-test"]
-  script:
-    - apk add --update bash openssh sshpass
-    - ansible-playbook ./ansible/drapp/playbook-locals.yml -i ./ansible/drapp/inventory.yml -e 'ansible_python_interpreter=/usr/bin/python3'
-#    - curl -X POST -F variables[DOCKER_TAG_LOCAL]=${KUBERNETES_DOCKER_TAG} -F token=${KUBIT_WEBHOOK_TOKEN} https://api.kubit.ir/api/core/packs/pai33lfy/vars/
 
 drApp-rollback-production:
   image: docker.paziresh24.info/docker-ansible:latest
