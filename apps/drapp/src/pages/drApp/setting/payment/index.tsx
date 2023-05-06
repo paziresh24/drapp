@@ -149,7 +149,7 @@ const PaymentPage = () => {
 
                                 <Typography className="!leading-8">
                                     همکاران شما بصورت میانگین مبلغ{' '}
-                                    <span className="font-medium">{addCommas(10000)}</span> تومان را
+                                    <span className="font-medium">{addCommas(50000)}</span> تومان را
                                     در نظر گرفته اند.
                                 </Typography>
                             </>
