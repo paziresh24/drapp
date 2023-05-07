@@ -32,6 +32,8 @@ const Activation = () => {
     };
 
     const handleSubmit = () => {
+        if (selectedService[0] === 'consult') return false;
+
         const url = ActivationPaths[selectedService[0]];
         if (selectedService.length > 1)
             getSplunkInstance().sendEvent({
@@ -93,10 +95,11 @@ const Activation = () => {
                     />
                     <Service
                         title="ویزیت آنلاین"
-                        description="ویزیت آنلاین بیماران از سراسر دنیا"
+                        description="ظرفیت پزشکان ویزیت آنلاین تکمیل شده است."
                         type="consult"
                         selected={selectedService.includes('consult')}
                         onSelect={handleSelectService}
+                        disable
                     />
                 </List>
             </Stack>

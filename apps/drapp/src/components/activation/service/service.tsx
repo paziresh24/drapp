@@ -9,6 +9,7 @@ interface Props {
     description: string;
     type: ServicesType;
     selected: boolean;
+    disable?: boolean;
     onSelect: (type: ServicesType) => void;
 }
 
@@ -19,7 +20,7 @@ const icons = {
 };
 
 export const Service = (props: Props) => {
-    const { title, description, type, onSelect, selected } = props;
+    const { title, description, type, onSelect, selected, disable = false } = props;
 
     return (
         <ListItemButton
@@ -27,7 +28,8 @@ export const Service = (props: Props) => {
                 '!bg-white !rounded-md !p-3 !items-stretch !shadow-sm !border !border-solid',
                 {
                     '!border-primary': selected,
-                    '!border-transparent': !selected
+                    '!border-transparent': !selected,
+                    '!bg-red-50 !border-transparent pointer-events-none': disable
                 }
             )}
             onClick={() => onSelect(type)}
