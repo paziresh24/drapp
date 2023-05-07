@@ -82,9 +82,9 @@ const Activation = () => {
                 </Button>
             </Stack>
             <Stack className="p-5">
-                <Typography fontSize={14} fontWeight="500">
+                {/* <Typography fontSize={14} fontWeight="500">
                     خدماتی که تمایل به فعالسازی آن دارید انتخاب نمایید.
-                </Typography>
+                </Typography> */}
                 <List className="space-y-3 !mt-3">
                     <Service
                         title="نوبت دهی مطب"

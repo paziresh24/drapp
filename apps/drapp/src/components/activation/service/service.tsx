@@ -29,7 +29,7 @@ export const Service = (props: Props) => {
                 {
                     '!border-primary': selected,
                     '!border-transparent': !selected,
-                    '!bg-red-50 !border-transparent pointer-events-none': disable
+                    '!bg-gray-100 !border-transparent pointer-events-none': disable
                 }
             )}
             onClick={() => onSelect(type)}
@@ -37,7 +37,11 @@ export const Service = (props: Props) => {
             <ListItemAvatar className="bg-gray-500 bg-opacity-10 flex justify-center items-center rounded-md ml-3">
                 {icons[type]}
             </ListItemAvatar>
-            <ListItemText primary={title} secondary={description} />
+            <ListItemText
+                primary={title}
+                secondary={description}
+                className={clsx({ '[&>p]:!text-gray-500 [&>span]:!text-gray-500': disable })}
+            />
         </ListItemButton>
     );
 };
