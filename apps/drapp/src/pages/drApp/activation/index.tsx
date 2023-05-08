@@ -25,16 +25,8 @@ const Activation = () => {
     const selectedService = useActivationStore(state => state.selectedService);
     const setSelectedService = useActivationStore(state => state.setSelectedService);
 
-    const handleSelectService = (service: ServicesType) => {
-        if (selectedService.includes(service))
-            return setSelectedService(() => selectedService.filter(s => s !== service));
-        setSelectedService(prev => [...prev, service]);
-    };
-
-    const handleSubmit = () => {
-        if (selectedService[0] === 'consult') return false;
-
-        const url = ActivationPaths[selectedService[0]];
+    const handleSubmit = (service: string) => {
+        const url = ActivationPaths[selectedService[0] ?? service];
         if (selectedService.length > 1)
             getSplunkInstance().sendEvent({
                 group: 'activation',
@@ -43,10 +35,17 @@ const Activation = () => {
         else
             getSplunkInstance().sendEvent({
                 group: 'activation',
-                type: `click-${selectedService[0]}`
+                type: `click-${selectedService[0] ?? service}`
             });
 
         router.push(url);
+    };
+
+    const handleSelectService = (service: ServicesType) => {
+        if (selectedService.includes(service))
+            return setSelectedService(() => selectedService.filter(s => s !== service));
+        setSelectedService(prev => [...prev, service]);
+        handleSubmit(service);
     };
 
     return (
@@ -103,7 +102,7 @@ const Activation = () => {
                     />
                 </List>
             </Stack>
-            <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
+            {/* <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                 <Button
                     fullWidth
                     variant="contained"
@@ -113,7 +112,7 @@ const Activation = () => {
                 >
                     مرحله بعدی
                 </Button>
-            </FixedWrapBottom>
+            </FixedWrapBottom> */}
         </Container>
     );
 };
