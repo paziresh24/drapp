@@ -99,7 +99,7 @@ const Activation = () => {
                         type="consult"
                         selected={selectedService.includes('consult')}
                         onSelect={handleSelectService}
-                        disable
+                        status="disable"
                     />
                 </List>
             </Stack>

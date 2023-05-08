@@ -9,7 +9,7 @@ interface Props {
     description: string;
     type: ServicesType;
     selected: boolean;
-    disable?: boolean;
+    status?: 'active' | 'disable';
     onSelect: (type: ServicesType) => void;
 }
 
@@ -20,18 +20,19 @@ const icons = {
 };
 
 export const Service = (props: Props) => {
-    const { title, description, type, onSelect, selected, disable = false } = props;
+    const { title, description, type, onSelect, selected, status = 'active' } = props;
+    const cardStatusstyles = {
+        active: '!bg-white !rounded-md !p-3 !items-stretch !shadow-sm !border !border-solid',
+        disable:
+            '!bg-gray-200 !rounded-md !p-3 !items-stretch !border-transparent pointer-events-none'
+    };
 
     return (
         <ListItemButton
-            className={clsx(
-                '!bg-white !rounded-md !p-3 !items-stretch !shadow-sm !border !border-solid',
-                {
-                    '!border-primary': selected,
-                    '!border-transparent': !selected,
-                    '!bg-gray-100 !border-transparent pointer-events-none': disable
-                }
-            )}
+            className={clsx(cardStatusstyles[status], {
+                '!border-primary': selected,
+                '!border-transparent': !selected
+            })}
             onClick={() => onSelect(type)}
         >
             <ListItemAvatar className="bg-gray-500 bg-opacity-10 flex justify-center items-center rounded-md ml-3">
@@ -40,7 +41,9 @@ export const Service = (props: Props) => {
             <ListItemText
                 primary={title}
                 secondary={description}
-                className={clsx({ '[&>p]:!text-gray-500 [&>span]:!text-gray-500': disable })}
+                className={clsx({
+                    '[&>p]:!text-gray-500 [&>span]:!text-gray-500': status === 'disable'
+                })}
             />
         </ListItemButton>
     );
