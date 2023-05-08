@@ -202,7 +202,8 @@ export const CenterList = ({ enabled = false }) => {
                     {isEmpty(info.centerConsult) && !enabled && (
                         <div
                             className={classNames({
-                                [styles.centerItem]: true
+                                [styles.centerItem]: true,
+                                [styles.disabled]: true
                             })}
                             aria-hidden
                         >
@@ -234,25 +235,15 @@ export const CenterList = ({ enabled = false }) => {
                                 <div className={styles.centerDetails}>
                                     <span className={styles.centerName}>ویزیت آنلاین</span>
                                     <span className={styles.centerAddress}>
-                                        ‌همین الان به پزشکان ویزیت آنلاین بپیوندید.
+                                        ظرفیت پزشکان ویزیت آنلاین تکمیل شده است.
                                     </span>
                                 </div>
                             </div>
 
-                            {getCookie('CONSULT_ACTIVATION_PENDING') ? (
+                            {getCookie('CONSULT_ACTIVATION_PENDING') && (
                                 <span className="text-sm text-primary whitespace-nowrap">
                                     در حال بررسی
                                 </span>
-                            ) : (
-                                <Button
-                                    size="small"
-                                    variant="contained"
-                                    onClick={() => {
-                                        history.push('/activation/consult/whatsapp');
-                                    }}
-                                >
-                                    فعال سازی
-                                </Button>
                             )}
                         </div>
                     )}
