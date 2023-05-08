@@ -299,9 +299,6 @@ const Header = memo(() => {
                                             </span>
                                         </div>
                                     </div>
-                                    {getCookie('CONSULT_ACTIVATION_PENDING') && (
-                                        <span className="text-sm text-primary">در حال بررسی</span>
-                                    )}
                                 </div>
                             )}
                             {isEmpty(info.centers.find(center => center.type_id === 1)) && (

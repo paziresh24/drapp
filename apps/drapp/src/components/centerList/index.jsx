@@ -239,12 +239,6 @@ export const CenterList = ({ enabled = false }) => {
                                     </span>
                                 </div>
                             </div>
-
-                            {getCookie('CONSULT_ACTIVATION_PENDING') && (
-                                <span className="text-sm text-primary whitespace-nowrap">
-                                    در حال بررسی
-                                </span>
-                            )}
                         </div>
                     )}
                     {!enabled && isEmpty(info.centers.find(center => center.type_id === 1)) && (
