@@ -5,7 +5,6 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 
 import { useDrApp } from '@paziresh24/context/drapp';
 import { baseURL } from '@paziresh24/utils/baseUrl';
@@ -25,27 +24,17 @@ const Activation = () => {
     const selectedService = useActivationStore(state => state.selectedService);
     const setSelectedService = useActivationStore(state => state.setSelectedService);
 
-    const handleSubmit = (service: string) => {
-        const url = ActivationPaths[selectedService[0] ?? service];
-        if (selectedService.length > 1)
-            getSplunkInstance().sendEvent({
-                group: 'activation',
-                type: `click-${selectedService.sort().reverse().join('&')}`
-            });
-        else
-            getSplunkInstance().sendEvent({
-                group: 'activation',
-                type: `click-${selectedService[0] ?? service}`
-            });
-
-        router.push(url);
-    };
-
     const handleSelectService = (service: ServicesType) => {
         if (selectedService.includes(service))
             return setSelectedService(() => selectedService.filter(s => s !== service));
         setSelectedService(prev => [...prev, service]);
-        handleSubmit(service);
+
+        getSplunkInstance().sendEvent({
+            group: 'activation',
+            type: `click-${service}`
+        });
+
+        router.push(ActivationPaths[selectedService[0] ?? service]);
     };
 
     return (
@@ -81,9 +70,6 @@ const Activation = () => {
                 </Button>
             </Stack>
             <Stack className="p-5">
-                {/* <Typography fontSize={14} fontWeight="500">
-                    خدماتی که تمایل به فعالسازی آن دارید انتخاب نمایید.
-                </Typography> */}
                 <List className="space-y-3 !mt-3">
                     <Service
                         title="نوبت دهی مطب"
@@ -102,17 +88,6 @@ const Activation = () => {
                     />
                 </List>
             </Stack>
-            {/* <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
-                <Button
-                    fullWidth
-                    variant="contained"
-                    size="large"
-                    onClick={handleSubmit}
-                    disabled={!selectedService}
-                >
-                    مرحله بعدی
-                </Button>
-            </FixedWrapBottom> */}
         </Container>
     );
 };
