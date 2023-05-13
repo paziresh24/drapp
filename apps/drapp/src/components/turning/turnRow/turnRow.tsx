@@ -22,7 +22,7 @@ import { Default, Mobile } from '@paziresh24/hooks/device';
 import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
-import { useCame } from '@paziresh24/hooks/drapp/turning';
+import { useCame, useRemoveTurn } from '@paziresh24/hooks/drapp/turning';
 
 type Prescription = {
     id: string;
@@ -80,11 +80,13 @@ const TurnRow = (props: TurnRowProps) => {
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
     const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
+    const [deleteTurnModal, setDeletTurnModal] = useState(false);
     const [descriptionTreatment, setDescriptionTreatment] = useState('');
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
         false
     );
     const came = useCame();
+    const deleteTurn = useRemoveTurn();
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -175,6 +177,18 @@ const TurnRow = (props: TurnRowProps) => {
                     patient_cell: mobileNumber
                 }
             });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message);
+            }
+        }
+    };
+
+    const handleDeleteTurn = async () => {
+        try {
+            await deleteTurn.mutateAsync({ book_id: id });
+            toast.success('درخواست شما با موفقیت ثبت شد!');
+            setDescriptionTreatmentModal(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
@@ -300,6 +314,18 @@ const TurnRow = (props: TurnRowProps) => {
                 : prescription.finalized
                 ? 'ویزیت شده'
                 : 'ویزیت '}
+        </Button>
+    );
+
+    const DeleteButton = () => (
+        <Button
+            variant="outlined"
+            size="small"
+            onClick={() => setDeletTurnModal(true)}
+            color="error"
+            fullWidth
+        >
+            لغو نوبت
         </Button>
     );
 
@@ -490,6 +516,9 @@ const TurnRow = (props: TurnRowProps) => {
                             alignItems="center"
                             spacing={1}
                         >
+                            {info.center.id !== CONSULT_CENTER_ID && bookStatus !== 'visited' && (
+                                <DeleteButton />
+                            )}
                             <VisitButton />
                             <PrescriptionButton />
                             <TurnDropDown />
@@ -556,6 +585,9 @@ const TurnRow = (props: TurnRowProps) => {
                     <div className="flex space-s-2">
                         <VisitButton />
                         <PrescriptionButton />
+                        {info.center.id !== CONSULT_CENTER_ID && bookStatus !== 'visited' && (
+                            <DeleteButton />
+                        )}
                     </div>
                 </div>
             </Mobile>
@@ -641,6 +673,32 @@ const TurnRow = (props: TurnRowProps) => {
                 >
                     ثبت
                 </Button>
+            </Modal>
+            <Modal title="لغو نوبت" isOpen={deleteTurnModal} onClose={setDeletTurnModal}>
+                <span className="text-sm leading-6 text">
+                    {paymentStatus === 'paid'
+                        ? 'در صورت لغو نوبت، هزینه به بیمار استرداد می شود. آیا از لغو نوبت اطمینان دارید؟'
+                        : 'آیا از لغو نوبت اطمینان دارید؟'}
+                </span>
+                <div className="flex justify-between gap-3">
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={handleDeleteTurn}
+                        loading={deleteTurn.isLoading}
+                        color="error"
+                    >
+                        لغو نوبت
+                    </Button>
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        onClick={() => setDeletTurnModal(false)}
+                        color="error"
+                    >
+                        انصراف
+                    </Button>
+                </div>
             </Modal>
         </>
     );
