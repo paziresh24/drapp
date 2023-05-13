@@ -8,7 +8,7 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, digitsFaToEn } from '@persian-tools/persian-tools';
 import axios from 'axios';
 import moment from 'jalali-moment';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
@@ -23,6 +23,7 @@ import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
+import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
 
 type Prescription = {
     id: string;
@@ -75,6 +76,7 @@ const TurnRow = (props: TurnRowProps) => {
     const addPrescription = useAddPrescription();
     const updateDescription = useUpdateDescription();
     const deletePrescription = useDeletePrescription();
+    const getMessengerInfo = useGetMessengerInfo();
     const turns = useTurnsStore(state => state.turns);
     const [visitLoading, setVisitLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
@@ -86,6 +88,7 @@ const TurnRow = (props: TurnRowProps) => {
     );
     const came = useCame();
     const [nationalCodeValue, setNationalCode] = useState('');
+    const [doctorMessenger, setDoctorMessenger] = useState(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
         `${
@@ -98,6 +101,16 @@ const TurnRow = (props: TurnRowProps) => {
         }/pdfs/` + prescription.pdfName
     );
     const turn = useRef(turns.find(turn => turn.id === id));
+
+    useEffect(() => {
+        if (getMessengerInfo.isSuccess) {
+            setDoctorMessenger(
+                getMessengerInfo?.data?.data.map((messenger: any) => messenger.type)
+            );
+            return;
+        }
+    }, [getMessengerInfo.status]);
+
     const buttonStatusTurnText = {
         not_came: 'پذیرش',
         not_visited: 'اعلام مراجعه',
@@ -117,7 +130,9 @@ const TurnRow = (props: TurnRowProps) => {
                 event: {
                     patient_name: name,
                     patient_family: family,
-                    patient_cell: mobileNumber
+                    patient_cell: mobileNumber,
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${id}/`,
+                    doctor_messenger: doctorMessenger
                 }
             });
         } catch (error) {
