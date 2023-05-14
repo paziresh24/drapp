@@ -60,7 +60,7 @@ import EditMessenger from 'apps/drapp/src/components/onlineVisit/editMessenger';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
 import { isMessengerIdHasValid } from 'apps/drapp/src/functions/isMessengerIdHasValid';
 import Info from './info';
-import CenterPhoneNumbers from 'apps/drapp/src/components/profile/centerPhoneNumbers/centerPhoneNumbers';
+import CenterPhoneNumbers from '@components/profile/centerPhoneNumbers';
 
 const Profile = () => {
     const router = useHistory();
