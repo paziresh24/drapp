@@ -516,9 +516,7 @@ const TurnRow = (props: TurnRowProps) => {
                             alignItems="center"
                             spacing={1}
                         >
-                            {info.center.id !== CONSULT_CENTER_ID && bookStatus !== 'visited' && (
-                                <DeleteButton />
-                            )}
+                            {bookStatus !== 'visited' && <DeleteButton />}
                             <VisitButton />
                             <PrescriptionButton />
                             <TurnDropDown />
@@ -585,9 +583,7 @@ const TurnRow = (props: TurnRowProps) => {
                     <div className="flex space-s-2">
                         <VisitButton />
                         <PrescriptionButton />
-                        {info.center.id !== CONSULT_CENTER_ID && bookStatus !== 'visited' && (
-                            <DeleteButton />
-                        )}
+                        {bookStatus !== 'visited' && <DeleteButton />}
                     </div>
                 </div>
             </Mobile>
