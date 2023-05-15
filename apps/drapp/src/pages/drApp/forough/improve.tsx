@@ -16,7 +16,7 @@ export const Forough = () => {
                     <div className="flex flex-col space-y-2">
                         <span className="text-sm font-bold text-primary">مشاوره آنلاین</span>
                         <div className="flex items-center justify-between p-3 bg-gray-200 pointer-events-none border border-solid rounded-lg border-slate-200 space-s-2">
-                            <span className="text-xs font-medium leading-6">
+                            <span className="text-xs font-medium leading-6 text-gray-500">
                                 ظرفیت پزشکان ویزیت آنلاین تکمیل شده است
                             </span>
                         </div>
