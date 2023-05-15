@@ -88,7 +88,6 @@ const TurnRow = (props: TurnRowProps) => {
     );
     const came = useCame();
     const [nationalCodeValue, setNationalCode] = useState('');
-    const [doctorMessenger, setDoctorMessenger] = useState(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
         `${
@@ -101,19 +100,6 @@ const TurnRow = (props: TurnRowProps) => {
         }/pdfs/` + prescription.pdfName
     );
     const turn = useRef(turns.find(turn => turn.id === id));
-
-    useEffect(() => {
-        if (
-            info.center.id === CONSULT_CENTER_ID &&
-            getMessengerInfo.isSuccess &&
-            !!getMessengerInfo?.data?.data
-        ) {
-            setDoctorMessenger(
-                getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type)
-            );
-            return;
-        }
-    }, [getMessengerInfo.status]);
 
     const buttonStatusTurnText = {
         not_came: 'پذیرش',
@@ -135,8 +121,9 @@ const TurnRow = (props: TurnRowProps) => {
                     patient_name: name,
                     patient_family: family,
                     patient_cell: mobileNumber,
-                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${id}/`,
-                    doctor_messenger: doctorMessenger
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`,
+                    doctor_messenger:
+                        getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
         } catch (error) {
