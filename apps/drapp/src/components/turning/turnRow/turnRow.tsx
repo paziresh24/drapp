@@ -103,9 +103,13 @@ const TurnRow = (props: TurnRowProps) => {
     const turn = useRef(turns.find(turn => turn.id === id));
 
     useEffect(() => {
-        if (getMessengerInfo.isSuccess) {
+        if (
+            info.center.id === CONSULT_CENTER_ID &&
+            getMessengerInfo.isSuccess &&
+            !!getMessengerInfo?.data?.data
+        ) {
             setDoctorMessenger(
-                getMessengerInfo?.data?.data.map((messenger: any) => messenger.type)
+                getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type)
             );
             return;
         }
