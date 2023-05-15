@@ -97,8 +97,9 @@ export const Forough = () => {
                                 label={item.title}
                                 onClick={() => handleButtonClick(item.id)}
                                 className={classNames(
-                                    '!rounded-t-md !rounded-b-none !bg-transparent [&>span]:!text-gray-500 [&>span]:!text-sm [&>span]:!font-medium !cursor-pointer',
+                                    '!rounded-t-md !rounded-b-none  [&>span]:!text-gray-500 [&>span]:!text-sm [&>span]:!font-medium !cursor-pointer',
                                     {
+                                        '!bg-transparent': !item.selected,
                                         '!bg-primary [&>span]:!text-white': item.selected
                                     }
                                 )}
