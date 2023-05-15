@@ -8,38 +8,51 @@ import GaugeChart from 'react-gauge-chart';
 import { InfoIcon } from '@paziresh24/shared/icon';
 import classNames from 'classnames';
 
+type InfoOption = {
+    id: number;
+    title: string;
+    active_select: boolean;
+    watiing_time: number;
+};
+
 export const Forough = () => {
     const searchViewInfo = useSearchViewInfo();
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState<any>({});
-    const [selectedCenter, SetSelectedCenter] = useState<any>(null);
     const router = useHistory();
-    const centerDetails = [
-        {
-            id: 1,
-            title: 'انتظار در مطب',
-            active_select: true,
-            watiing_time: data?.waiting_time_info?.waiting_time ?? 0
-        },
-        {
-            id: 2,
-            title: 'انتظار برای مشاوره',
-            active_select: false,
-            watiing_time: data?.online_visit_waiting_time_info?.waiting_time ?? 0
-        },
-        {
-            id: 1,
-            title: 'زمان برای نسخه',
-            active_select: false,
-            watiing_time: data?.prescription_waiting_time_info?.average_waiting_time ?? 0
-        }
-    ];
+    const [infoOptionDetails, SetInfoOptionDetails] = useState<InfoOption[]>([]);
+    const selectedOption = infoOptionDetails.find((center: InfoOption) => center.active_select);
 
     useEffect(() => {
         if (searchViewInfo.isSuccess) {
             if (searchViewInfo.data?.data) {
                 setIsLoading(false);
                 setData(searchViewInfo.data?.data);
+                SetInfoOptionDetails([
+                    searchViewInfo.data?.data?.waiting_time_info && {
+                        id: 1,
+                        title: 'انتظار در مطب',
+                        active_select: true,
+                        watiing_time:
+                            searchViewInfo.data?.data?.waiting_time_info?.waiting_time ?? 0
+                    },
+                    searchViewInfo.data?.data?.online_visit_waiting_time_info && {
+                        id: 2,
+                        title: 'انتظار برای مشاوره',
+                        active_select: false,
+                        watiing_time:
+                            searchViewInfo.data?.data?.online_visit_waiting_time_info
+                                ?.waiting_time ?? 0
+                    },
+                    searchViewInfo.data?.data?.prescription_waiting_time_info && {
+                        id: 3,
+                        title: 'زمان برای نسخه',
+                        active_select: false,
+                        watiing_time:
+                            searchViewInfo.data?.data?.prescription_waiting_time_info
+                                ?.average_waiting_time ?? 0
+                    }
+                ]);
             } else {
                 setTimeout(() => {
                     searchViewInfo.refetch();
@@ -48,25 +61,22 @@ export const Forough = () => {
         }
     }, [searchViewInfo.status, searchViewInfo.data]);
 
-    useEffect(() => {
-        SetSelectedCenter(centerDetails.find((center: any) => center.active_select));
-    }, []);
-
-    useMemo(() => {
-        const watingTimeAvarageTime = selectedCenter?.watiing_time ?? 0;
-        if (watingTimeAvarageTime < 0.5) return 'حداکثر نیم ساعت';
-        if (watingTimeAvarageTime >= 0.5 && watingTimeAvarageTime < 1) return 'نیم تا 1 ساعت';
-        if (watingTimeAvarageTime >= 1 && watingTimeAvarageTime < 2) return '1 تا 2 ساعت';
-        if (watingTimeAvarageTime >= 2) return 'بیشتر از 2 ساعت';
-    }, [selectedCenter]);
-
     const waitingTimeText = useMemo(() => {
-        const watingTimeAvarageTime = selectedCenter?.watiing_time ?? 0;
+        const watingTimeAvarageTime = selectedOption?.watiing_time ?? 0;
         if (watingTimeAvarageTime < 0.5) return 'حداکثر نیم ساعت';
         if (watingTimeAvarageTime >= 0.5 && watingTimeAvarageTime < 1) return 'نیم تا 1 ساعت';
         if (watingTimeAvarageTime >= 1 && watingTimeAvarageTime < 2) return '1 تا 2 ساعت';
         if (watingTimeAvarageTime >= 2) return 'بیشتر از 2 ساعت';
-    }, [selectedCenter]);
+    }, [infoOptionDetails]);
+
+    const handleButtonClick = (id: number) => {
+        SetInfoOptionDetails(prev =>
+            prev.map(item => ({
+                ...item,
+                active_select: item.id === id
+            }))
+        );
+    };
 
     return (
         <div className="flex flex-col max-w-screen-sm p-5 mx-auto space-y-5">
@@ -77,21 +87,30 @@ export const Forough = () => {
                 <Skeleton width="100%" height="16rem" className="!scale-100" />
             ) : (
                 <div className="flex flex-col space-y-2">
-                    <div className="flex gap-x-2 -mb-2">
-                        {centerDetails.map((center: any) => (
+                    <div className="flex -mb-2 justify-between md:justify-start">
+                        {infoOptionDetails.map((item: any) => (
                             <Chip
-                                key={center.id}
-                                label={center.title}
+                                key={item.id}
+                                label={item.title}
+                                onClick={() => handleButtonClick(item.id)}
                                 className={classNames(
-                                    '!rounded-t-md !rounded-b-none !bg-transparent [&>span]:!text-gray-500 [&>span]:!text-sm [&>span]:!font-medium',
+                                    '!rounded-t-md !rounded-b-none !bg-transparent [&>span]:!text-gray-500 [&>span]:!text-sm [&>span]:!font-medium !cursor-pointer',
                                     {
-                                        '!bg-primary [&>span]:!text-white': center.active_select
+                                        '!bg-primary [&>span]:!text-white': item.active_select
                                     }
                                 )}
                             />
                         ))}
                     </div>
-                    <div className="flex flex-col p-3 space-y-3 bg-white border border-solid rounded-b-lg border-primary">
+                    <div
+                        className={classNames(
+                            'flex flex-col p-3 space-y-3 bg-white border border-solid rounded-lg border-stone-200',
+                            {
+                                '!rounded-b-lg !rounded-t-none !border-primary':
+                                    !!infoOptionDetails.length
+                            }
+                        )}
+                    >
                         <span className="text-sm font-medium leading-6">
                             میانگین زمان انتظار بیماران در مرکز درمانی شما
                         </span>
@@ -118,7 +137,7 @@ export const Forough = () => {
                                     nrOfLevels={4}
                                     cornerRadius={3}
                                     arcPadding={0.03}
-                                    percent={((selectedCenter.watiing_time ?? 0) * 2) / 4}
+                                    percent={((selectedOption?.watiing_time ?? 0) * 2) / 4}
                                     hideText={true}
                                     colors={['#8FBB13', '#F1DB18', '#FF8E01', '#E82929']}
                                 />
@@ -130,7 +149,7 @@ export const Forough = () => {
                         <div className="flex items-center p-2 rounded-md space-s-2 bg-slate-100">
                             <InfoIcon color="#0070f3" width={18} />
                             <span className="text-xs font-medium">
-                                {(selectedCenter.watiing_time ?? 0) < 0.5 ? (
+                                {(selectedOption?.watiing_time ?? 0) < 0.5 ? (
                                     <>
                                         <span className="font-semibold text-secondary">
                                             زمان انتظار بیمار در مطب شما، در بازه خیلی خوب قرار
