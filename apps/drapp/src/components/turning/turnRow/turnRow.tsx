@@ -8,7 +8,7 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, digitsFaToEn } from '@persian-tools/persian-tools';
 import axios from 'axios';
 import moment from 'jalali-moment';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
@@ -100,7 +100,6 @@ const TurnRow = (props: TurnRowProps) => {
         }/pdfs/` + prescription.pdfName
     );
     const turn = useRef(turns.find(turn => turn.id === id));
-
     const buttonStatusTurnText = {
         not_came: 'پذیرش',
         not_visited: 'اعلام مراجعه',
