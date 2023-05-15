@@ -46,7 +46,7 @@ export const Forough = () => {
                     },
                     searchViewInfo.data?.data?.prescription_waiting_time_info && {
                         id: 3,
-                        title: 'زمان برای نسخه',
+                        title: 'انتظار برای نسخه',
                         active_select: false,
                         watiing_time:
                             searchViewInfo.data?.data?.prescription_waiting_time_info
