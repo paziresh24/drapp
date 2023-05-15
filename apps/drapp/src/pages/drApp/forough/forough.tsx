@@ -11,8 +11,8 @@ import classNames from 'classnames';
 type InfoOption = {
     id: number;
     title: string;
-    active_select: boolean;
-    watiing_time: number;
+    selected: boolean;
+    wating_time: number;
 };
 
 export const Forough = () => {
@@ -21,38 +21,41 @@ export const Forough = () => {
     const [data, setData] = useState<any>({});
     const router = useHistory();
     const [infoOptionDetails, SetInfoOptionDetails] = useState<InfoOption[]>([]);
-    const selectedOption = infoOptionDetails.find((center: InfoOption) => center.active_select);
+    const activeOptionSelectedDetails =
+        infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
 
     useEffect(() => {
         if (searchViewInfo.isSuccess) {
             if (searchViewInfo.data?.data) {
                 setIsLoading(false);
                 setData(searchViewInfo.data?.data);
-                SetInfoOptionDetails([
-                    searchViewInfo.data?.data?.waiting_time_info && {
-                        id: 1,
-                        title: 'انتظار در مطب',
-                        active_select: true,
-                        watiing_time:
-                            searchViewInfo.data?.data?.waiting_time_info?.waiting_time ?? 0
-                    },
-                    searchViewInfo.data?.data?.online_visit_waiting_time_info && {
-                        id: 2,
-                        title: 'انتظار برای مشاوره',
-                        active_select: false,
-                        watiing_time:
-                            searchViewInfo.data?.data?.online_visit_waiting_time_info
-                                ?.waiting_time ?? 0
-                    },
-                    searchViewInfo.data?.data?.prescription_waiting_time_info && {
-                        id: 3,
-                        title: 'انتظار برای نسخه',
-                        active_select: false,
-                        watiing_time:
-                            searchViewInfo.data?.data?.prescription_waiting_time_info
-                                ?.average_waiting_time ?? 0
-                    }
-                ]);
+                SetInfoOptionDetails(
+                    [
+                        searchViewInfo.data?.data?.waiting_time_info && {
+                            id: 1,
+                            title: 'انتظار در مطب',
+                            selected: true,
+                            wating_time:
+                                searchViewInfo.data?.data?.waiting_time_info?.waiting_time ?? 0
+                        },
+                        searchViewInfo.data?.data?.online_visit_waiting_time_info && {
+                            id: 2,
+                            title: 'انتظار برای مشاوره',
+                            selected: false,
+                            wating_time:
+                                searchViewInfo.data?.data?.online_visit_waiting_time_info
+                                    ?.waiting_time ?? 0
+                        },
+                        searchViewInfo.data?.data?.prescription_waiting_time_info && {
+                            id: 3,
+                            title: 'انتظار برای نسخه',
+                            selected: false,
+                            wating_time:
+                                searchViewInfo.data?.data?.prescription_waiting_time_info
+                                    ?.average_waiting_time ?? 0
+                        }
+                    ].filter((details: any) => !!details)
+                );
             } else {
                 setTimeout(() => {
                     searchViewInfo.refetch();
@@ -62,7 +65,7 @@ export const Forough = () => {
     }, [searchViewInfo.status, searchViewInfo.data]);
 
     const waitingTimeText = useMemo(() => {
-        const watingTimeAvarageTime = selectedOption?.watiing_time ?? 0;
+        const watingTimeAvarageTime = activeOptionSelectedDetails?.wating_time ?? 0;
         if (watingTimeAvarageTime < 0.5) return 'حداکثر نیم ساعت';
         if (watingTimeAvarageTime >= 0.5 && watingTimeAvarageTime < 1) return 'نیم تا 1 ساعت';
         if (watingTimeAvarageTime >= 1 && watingTimeAvarageTime < 2) return '1 تا 2 ساعت';
@@ -73,7 +76,7 @@ export const Forough = () => {
         SetInfoOptionDetails(prev =>
             prev.map(item => ({
                 ...item,
-                active_select: item.id === id
+                selected: item.id === id
             }))
         );
     };
@@ -96,7 +99,7 @@ export const Forough = () => {
                                 className={classNames(
                                     '!rounded-t-md !rounded-b-none !bg-transparent [&>span]:!text-gray-500 [&>span]:!text-sm [&>span]:!font-medium !cursor-pointer',
                                     {
-                                        '!bg-primary [&>span]:!text-white': item.active_select
+                                        '!bg-primary [&>span]:!text-white': item.selected
                                     }
                                 )}
                             />
@@ -137,7 +140,9 @@ export const Forough = () => {
                                     nrOfLevels={4}
                                     cornerRadius={3}
                                     arcPadding={0.03}
-                                    percent={((selectedOption?.watiing_time ?? 0) * 2) / 4}
+                                    percent={
+                                        ((activeOptionSelectedDetails?.wating_time ?? 0) * 2) / 4
+                                    }
                                     hideText={true}
                                     colors={['#8FBB13', '#F1DB18', '#FF8E01', '#E82929']}
                                 />
@@ -149,7 +154,7 @@ export const Forough = () => {
                         <div className="flex items-center p-2 rounded-md space-s-2 bg-slate-100">
                             <InfoIcon color="#0070f3" width={18} />
                             <span className="text-xs font-medium">
-                                {(selectedOption?.watiing_time ?? 0) < 0.5 ? (
+                                {(activeOptionSelectedDetails?.wating_time ?? 0) < 0.5 ? (
                                     <>
                                         <span className="font-semibold text-secondary">
                                             زمان انتظار بیمار در مطب شما، در بازه خیلی خوب قرار
