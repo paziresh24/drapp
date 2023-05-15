@@ -188,7 +188,8 @@ const TurnRow = (props: TurnRowProps) => {
         try {
             await deleteTurn.mutateAsync({ book_id: id });
             toast.success('درخواست شما با موفقیت ثبت شد!');
-            setDescriptionTreatmentModal(false);
+            queryClient.refetchQueries('turns');
+            setDeletTurnModal(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
