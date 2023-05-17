@@ -78,8 +78,6 @@ drApp-build-develop-push-docker-image:
   before_script:
     - docker info
   script:
-    - git config --global http.version HTTP/1.1
-    - git config --global http.postBuffer 157286400
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
     - docker login $DOCKER_REGISTRY_URL -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
@@ -98,8 +96,6 @@ drApp-build-cloud-push-docker-image:
   before_script:
     - docker info
   script:
-    - git config --global http.version HTTP/1.1
-    - git config --global http.postBuffer 157286400
     - export DOCKER_BUILD=1
     - export DOCKER_BUILDKIT=1
     - docker login $DOCKER_REGISTRY_URL -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD
