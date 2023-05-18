@@ -23,6 +23,7 @@ import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
+import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
 
 type Prescription = {
     id: string;
@@ -75,6 +76,7 @@ const TurnRow = (props: TurnRowProps) => {
     const addPrescription = useAddPrescription();
     const updateDescription = useUpdateDescription();
     const deletePrescription = useDeletePrescription();
+    const getMessengerInfo = useGetMessengerInfo();
     const turns = useTurnsStore(state => state.turns);
     const [visitLoading, setVisitLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
@@ -117,7 +119,10 @@ const TurnRow = (props: TurnRowProps) => {
                 event: {
                     patient_name: name,
                     patient_family: family,
-                    patient_cell: mobileNumber
+                    patient_cell: mobileNumber,
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`,
+                    doctor_messenger:
+                        getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
         } catch (error) {
