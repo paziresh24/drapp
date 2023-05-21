@@ -7,6 +7,17 @@ import TurnRowc from '../turnRow';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { useMediaQuery } from 'react-responsive';
 
+const checkPaymentStatus = turn => {
+    switch (true) {
+        case turn.payment_status === 'refunded' ||
+            turn.payment_status === 'refund_request' ||
+            !!turn.book_delete:
+            return 'refunded';
+        case turn.payment_status === 'paid':
+            return 'paid';
+    }
+};
+
 const ListHeader = ({ title, count, onToggle, isOpen }) => {
     return (
         <div className="flex justify-between items-center bg-[#f6f8fb] w-full py-2 px-4 text-sm font-bold">
@@ -39,10 +50,11 @@ const TurnRow = {
             }
             type={turn.type}
             number={lineNumber}
-            paymentStatus={turn.payment_status}
+            paymentStatus={checkPaymentStatus(turn)}
             paymentPrice={turn.user_payment}
             refId={turn.ref_id}
             bookStatus={turn.book_status}
+            isDeletedTurn={turn.book_delete}
             prescription={{
                 id: turn.prescription?.id,
                 finalized: turn.book_status === 'visited' || turn.prescription?.finalized,
@@ -132,7 +144,7 @@ const TurnsWrapper = () => {
 
                 {isOpenActiveTurns &&
                     turns
-                        .filter(turn => !isTurnActive(turn))
+                        .filter(turn => !isTurnActive(turn) && !turn.book_delete)
                         .map((turn, index) =>
                             turn.type === 'book' ? (
                                 <TurnRow.Turn turn={turn} key={turn.id} lineNumber={index + 1} />
@@ -167,7 +179,7 @@ const TurnsWrapper = () => {
 
                 {isOpenFinalizedTurns &&
                     turns
-                        .filter(turn => isTurnActive(turn))
+                        .filter(turn => isTurnActive(turn) || !!turn.book_delete)
                         .map((turn, index) =>
                             turn.type === 'book' ? (
                                 <TurnRow.Turn turn={turn} key={turn.id} lineNumber={index + 1} />
