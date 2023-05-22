@@ -7,6 +7,8 @@ import { useHistory } from 'react-router-dom';
 import GaugeChart from 'react-gauge-chart';
 import { InfoIcon } from '@paziresh24/shared/icon';
 import classNames from 'classnames';
+import { useDrApp } from '@paziresh24/context/drapp';
+import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 
 type InfoOption = {
     id: number;
@@ -18,6 +20,7 @@ type InfoOption = {
 export const Forough = () => {
     const searchViewInfo = useSearchViewInfo();
     const [isLoading, setIsLoading] = useState(true);
+    const [info] = useDrApp();
     const [data, setData] = useState<any>({});
     const router = useHistory();
     const [infoOptionDetails, SetInfoOptionDetails] = useState<InfoOption[]>([]);
@@ -40,7 +43,7 @@ export const Forough = () => {
                         },
                         searchViewInfo.data?.data?.online_visit_waiting_time_info && {
                             id: 2,
-                            title: 'انتظار برای مشاوره',
+                            title: 'انتظار برای ویزیت آنلاین',
                             selected: false,
                             wating_time:
                                 searchViewInfo.data?.data?.online_visit_waiting_time_info
@@ -158,8 +161,11 @@ export const Forough = () => {
                                 {(activeOptionSelectedDetails?.wating_time ?? 0) < 0.5 ? (
                                     <>
                                         <span className="font-semibold text-secondary">
-                                            زمان انتظار بیمار در مطب شما، در بازه خیلی خوب قرار
-                                            دارد.
+                                            زمان انتظار بیمار در{' '}
+                                            {activeOptionSelectedDetails?.id === 2
+                                                ? 'ویزیت آنلاین'
+                                                : 'مطب شما،'}{' '}
+                                            در بازه خیلی خوب قرار دارد.
                                         </span>
                                     </>
                                 ) : (
