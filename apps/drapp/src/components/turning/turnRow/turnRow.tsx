@@ -112,14 +112,14 @@ const TurnRow = (props: TurnRowProps) => {
         paid: {
             text: 'پرداخت شد',
             className: '',
-            icon: <DolorIcon className="!text-[#0BB07B] !w-7" />,
-            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 !flex gap-[0.15rem]'
+            icon: <DolorIcon className="!text-[#0BB07B] !w-5 scale-105" />,
+            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none'
         },
         refunded: {
             text: 'استرداد شد',
             className: '',
-            icon: <DolorIcon className="!text-[#F03D3D] !w-5" />,
-            style: '!rounded-lg !text-[#F03D3D] !bg-[#FFEDED] text-[0.7rem] !w-full !py-2 !flex gap-[0.15rem]'
+            icon: <DolorIcon className="!text-gray-500 !w-5 scale-105 mb-[0.1rem]" />,
+            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-2 gap-[0.15rem] pointer-events-none'
         }
     };
 
@@ -345,7 +345,7 @@ const TurnRow = (props: TurnRowProps) => {
             loading={prescriptionLoading}
             fullWidth
         >
-            {prescription.finalized ? 'مشاهده نسخه' : 'تجویز '}
+            {prescription.finalized || isDeletedTurn ? 'مشاهده نسخه' : 'تجویز '}
         </Button>
     );
 
@@ -527,7 +527,7 @@ const TurnRow = (props: TurnRowProps) => {
                             {!!(paymentStatus && (bookStatus === 'visited' || isDeletedTurn)) && (
                                 <TurnStatusButton />
                             )}
-                            {(prescription.finalized || !isDeletedTurn) && <PrescriptionButton />}
+                            <PrescriptionButton />
                             <TurnDropDown />
                         </Stack>
                         <ReactTooltip />
@@ -596,7 +596,7 @@ const TurnRow = (props: TurnRowProps) => {
                         {!!(paymentStatus && (bookStatus === 'visited' || isDeletedTurn)) && (
                             <TurnStatusButton />
                         )}
-                        {(prescription.finalized || !isDeletedTurn) && <PrescriptionButton />}
+                        <PrescriptionButton />
                     </div>
                 </div>
             </Mobile>

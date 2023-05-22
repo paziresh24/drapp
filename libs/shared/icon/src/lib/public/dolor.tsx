@@ -2,7 +2,7 @@ import { memo, SVGAttributes } from 'react';
 
 const DolorIcon = memo(({ ...rest }: SVGAttributes<SVGElement>) => (
     <svg
-        width="16"
+        width="34"
         height="17"
         viewBox="0 0 16 17"
         fill="none"
