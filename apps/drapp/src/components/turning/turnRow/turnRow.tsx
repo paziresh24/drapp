@@ -79,6 +79,7 @@ const TurnRow = (props: TurnRowProps) => {
     const getMessengerInfo = useGetMessengerInfo();
     const turns = useTurnsStore(state => state.turns);
     const [visitLoading, setVisitLoading] = useState(false);
+    const [admitLoading, setAdmitLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
     const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
@@ -108,11 +109,14 @@ const TurnRow = (props: TurnRowProps) => {
 
     const handleAdmitTurn = async () => {
         try {
+            setAdmitLoading(true);
             await came.mutateAsync({
                 book_id: id
             });
             queryClient.refetchQueries('turns');
             toast.success('پذیرش بیمار با موفقیت انجام شد!');
+            console.log(queryClient.isFetching('turn'));
+
             getSplunkInstance().sendEvent({
                 group: 'drapp-visit-online',
                 type: 'accept',
@@ -125,10 +129,14 @@ const TurnRow = (props: TurnRowProps) => {
                         getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
+            setTimeout(() => {
+                setAdmitLoading(false);
+            }, 4000);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
             }
+            setAdmitLoading(false);
         }
     };
 
@@ -297,7 +305,7 @@ const TurnRow = (props: TurnRowProps) => {
             size="small"
             disabled={prescription.finalized}
             onClick={handleVisitButtonAction}
-            loading={visitLoading}
+            loading={visitLoading || admitLoading}
             fullWidth
         >
             {info.center.id === CONSULT_CENTER_ID && type === 'book'
