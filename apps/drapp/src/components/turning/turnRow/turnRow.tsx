@@ -113,10 +113,8 @@ const TurnRow = (props: TurnRowProps) => {
             await came.mutateAsync({
                 book_id: id
             });
-            queryClient.refetchQueries('turns');
             toast.success('پذیرش بیمار با موفقیت انجام شد!');
-            console.log(queryClient.isFetching('turn'));
-
+            await queryClient.refetchQueries('turns');
             getSplunkInstance().sendEvent({
                 group: 'drapp-visit-online',
                 type: 'accept',
@@ -129,9 +127,7 @@ const TurnRow = (props: TurnRowProps) => {
                         getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
-            setTimeout(() => {
-                setAdmitLoading(false);
-            }, 4000);
+            setAdmitLoading(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
