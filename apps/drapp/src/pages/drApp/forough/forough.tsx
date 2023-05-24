@@ -15,6 +15,7 @@ type InfoOption = {
     title: string;
     selected: boolean;
     wating_time: number;
+    type: string;
 };
 
 export const Forough = () => {
@@ -38,6 +39,7 @@ export const Forough = () => {
                             id: 1,
                             title: 'انتظار در مطب',
                             selected: true,
+                            type: 'مطب',
                             wating_time:
                                 searchViewInfo.data?.data?.waiting_time_info?.waiting_time ?? 0
                         },
@@ -45,6 +47,7 @@ export const Forough = () => {
                             id: 2,
                             title: 'انتظار برای ویزیت آنلاین',
                             selected: false,
+                            type: 'ویزیت آنلاین',
                             wating_time:
                                 searchViewInfo.data?.data?.online_visit_waiting_time_info
                                     ?.waiting_time ?? 0
@@ -53,6 +56,7 @@ export const Forough = () => {
                             id: 3,
                             title: 'انتظار برای نسخه',
                             selected: false,
+                            type: 'مسخه نویسی',
                             wating_time:
                                 searchViewInfo.data?.data?.prescription_waiting_time_info
                                     ?.average_waiting_time ?? 0
@@ -86,9 +90,7 @@ export const Forough = () => {
 
     return (
         <div className="flex flex-col max-w-screen-sm p-5 mx-auto space-y-5">
-            <span className="text-sm font-bold">
-                آمار مهم شما در 30 روز گذشته به شرح زیر می باشد:
-            </span>
+            <span className="text-sm font-bold">امار مهم شما به شرح زیر می باشد:‌</span>
             {isLoading ? (
                 <Skeleton width="100%" height="16rem" className="!scale-100" />
             ) : (
@@ -119,7 +121,7 @@ export const Forough = () => {
                         )}
                     >
                         <span className="text-sm font-medium leading-6">
-                            میانگین زمان انتظار بیماران در مرکز درمانی شما
+                            زمان انتظار بیمار در{activeOptionSelectedDetails?.type}
                         </span>
                         <div className="flex items-center justify-between space-s-2">
                             <ul className="space-y-2 text-xs text-slate-500">
@@ -161,10 +163,7 @@ export const Forough = () => {
                                 {(activeOptionSelectedDetails?.wating_time ?? 0) < 0.5 ? (
                                     <>
                                         <span className="font-semibold text-secondary">
-                                            زمان انتظار بیمار در{' '}
-                                            {activeOptionSelectedDetails?.id === 2
-                                                ? 'ویزیت آنلاین'
-                                                : 'مطب شما،'}{' '}
+                                            زمان انتظار بیمار در {activeOptionSelectedDetails?.type}{' '}
                                             در بازه خیلی خوب قرار دارد.
                                         </span>
                                     </>
