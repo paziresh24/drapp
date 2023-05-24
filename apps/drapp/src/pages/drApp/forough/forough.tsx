@@ -111,74 +111,78 @@ export const Forough = () => {
                             />
                         ))}
                     </div>
-                    <div
-                        className={classNames(
-                            'flex flex-col p-3 space-y-3 bg-white border border-solid rounded-lg border-stone-200',
-                            {
-                                '!rounded-b-lg !rounded-t-none !border-primary':
-                                    !!infoOptionDetails.length
-                            }
-                        )}
-                    >
-                        <span className="text-sm font-medium leading-6">
-                            زمان انتظار بیمار در{activeOptionSelectedDetails?.type}
-                        </span>
-                        <div className="flex items-center justify-between space-s-2">
-                            <ul className="space-y-2 text-xs text-slate-500">
-                                <li className="before:content-['\2022'] before:text-[#8FBB13] before:font-bold before:text-4xl before:absolute relative before:-top-[0.5rem] before:right-0 pr-4">
-                                    حداکثر نیم ساعت
-                                </li>
-                                <li className="before:content-['\2022'] before:text-[#F1DB18] before:font-bold before:text-4xl before:absolute relative before:-top-[0.5rem] before:right-0 pr-4">
-                                    نیم تا 1 ساعت
-                                </li>
-                                <li className="before:content-['\2022'] before:text-[#FF8E01] before:font-bold before:text-4xl before:absolute relative before:-top-[0.5rem] before:right-0 pr-4">
-                                    1 تا 2 ساعت
-                                </li>
-                                <li className="before:content-['\2022'] before:text-[#E82929] before:font-bold before:text-4xl before:absolute relative before:-top-[0.5rem] before:right-0 pr-4">
-                                    بیشتر از 2 ساعت
-                                </li>
-                            </ul>
-                            <div className="flex flex-col">
-                                <GaugeChart
-                                    animate={false}
-                                    arcWidth={0.2}
-                                    className="!w-56 !-ml-5"
-                                    nrOfLevels={4}
-                                    cornerRadius={3}
-                                    arcPadding={0.03}
-                                    percent={
-                                        ((activeOptionSelectedDetails?.wating_time ?? 0) * 2) / 4
-                                    }
-                                    hideText={true}
-                                    colors={['#8FBB13', '#F1DB18', '#FF8E01', '#E82929']}
-                                />
-                                <div className="py-2 mr-4 text-xs text-center rounded-md bg-slate-100">
-                                    {waitingTimeText}
+                    {!!activeOptionSelectedDetails && (
+                        <div
+                            className={classNames(
+                                'flex flex-col p-3 space-y-3 bg-white border border-solid rounded-lg border-stone-200',
+                                {
+                                    '!rounded-b-lg !rounded-t-none !border-primary':
+                                        !!infoOptionDetails.length
+                                }
+                            )}
+                        >
+                            <span className="text-sm font-medium leading-6">
+                                زمان انتظار بیمار در{activeOptionSelectedDetails?.type}
+                            </span>
+                            <div className="flex items-center justify-between space-s-2">
+                                <ul className="space-y-2 text-xs text-slate-500">
+                                    <li className="before:content-['\2022'] before:text-[#8FBB13] before:font-bold before:text-4xl before:absolute relative before:-top-[0.5rem] before:right-0 pr-4">
+                                        حداکثر نیم ساعت
+                                    </li>
+                                    <li className="before:content-['\2022'] before:text-[#F1DB18] before:font-bold before:text-4xl before:absolute relative before:-top-[0.5rem] before:right-0 pr-4">
+                                        نیم تا 1 ساعت
+                                    </li>
+                                    <li className="before:content-['\2022'] before:text-[#FF8E01] before:font-bold before:text-4xl before:absolute relative before:-top-[0.5rem] before:right-0 pr-4">
+                                        1 تا 2 ساعت
+                                    </li>
+                                    <li className="before:content-['\2022'] before:text-[#E82929] before:font-bold before:text-4xl before:absolute relative before:-top-[0.5rem] before:right-0 pr-4">
+                                        بیشتر از 2 ساعت
+                                    </li>
+                                </ul>
+                                <div className="flex flex-col">
+                                    <GaugeChart
+                                        animate={false}
+                                        arcWidth={0.2}
+                                        className="!w-56 !-ml-5"
+                                        nrOfLevels={4}
+                                        cornerRadius={3}
+                                        arcPadding={0.03}
+                                        percent={
+                                            ((activeOptionSelectedDetails?.wating_time ?? 0) * 2) /
+                                            4
+                                        }
+                                        hideText={true}
+                                        colors={['#8FBB13', '#F1DB18', '#FF8E01', '#E82929']}
+                                    />
+                                    <div className="py-2 mr-4 text-xs text-center rounded-md bg-slate-100">
+                                        {waitingTimeText}
+                                    </div>
                                 </div>
                             </div>
+                            <div className="flex items-center p-2 rounded-md space-s-2 bg-slate-100">
+                                <InfoIcon color="#0070f3" width={18} />
+                                <span className="text-xs font-medium">
+                                    {(activeOptionSelectedDetails?.wating_time ?? 0) < 0.5 ? (
+                                        <>
+                                            <span className="font-semibold text-secondary">
+                                                زمان انتظار بیمار در{' '}
+                                                {activeOptionSelectedDetails?.type} در بازه خیلی خوب
+                                                قرار دارد.
+                                            </span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            شما برای بهبود رتبه خود، نیاز به{' '}
+                                            <span className="font-semibold text-secondary">
+                                                کاهش زمان انتظار
+                                            </span>{' '}
+                                            دارید.
+                                        </>
+                                    )}
+                                </span>
+                            </div>
                         </div>
-                        <div className="flex items-center p-2 rounded-md space-s-2 bg-slate-100">
-                            <InfoIcon color="#0070f3" width={18} />
-                            <span className="text-xs font-medium">
-                                {(activeOptionSelectedDetails?.wating_time ?? 0) < 0.5 ? (
-                                    <>
-                                        <span className="font-semibold text-secondary">
-                                            زمان انتظار بیمار در {activeOptionSelectedDetails?.type}{' '}
-                                            در بازه خیلی خوب قرار دارد.
-                                        </span>
-                                    </>
-                                ) : (
-                                    <>
-                                        شما برای بهبود رتبه خود، نیاز به{' '}
-                                        <span className="font-semibold text-secondary">
-                                            کاهش زمان انتظار
-                                        </span>{' '}
-                                        دارید.
-                                    </>
-                                )}
-                            </span>
-                        </div>
-                    </div>
+                    )}
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
                             تعداد بیمارانی که از پروفایل شما در پذیرش24 بازدید کردند.
