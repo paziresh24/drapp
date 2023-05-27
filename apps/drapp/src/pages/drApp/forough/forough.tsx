@@ -16,6 +16,7 @@ type InfoOption = {
     selected: boolean;
     wating_time: number;
     type: string;
+    service: string;
 };
 
 export const Forough = () => {
@@ -39,7 +40,8 @@ export const Forough = () => {
                             id: 1,
                             title: 'انتظار در مطب',
                             selected: true,
-                            type: 'مطب',
+                            service: 'مطب',
+                            type: 'presence',
                             wating_time:
                                 searchViewInfo.data?.data?.waiting_time_info?.waiting_time ?? 0
                         },
@@ -47,7 +49,8 @@ export const Forough = () => {
                             id: 2,
                             title: 'انتظار برای ویزیت آنلاین',
                             selected: false,
-                            type: 'ویزیت آنلاین',
+                            service: 'ویزیت آنلاین',
+                            type: 'online-visit',
                             wating_time:
                                 searchViewInfo.data?.data?.online_visit_waiting_time_info
                                     ?.waiting_time ?? 0
@@ -56,7 +59,8 @@ export const Forough = () => {
                             id: 3,
                             title: 'انتظار برای نسخه',
                             selected: false,
-                            type: 'مسخه نویسی',
+                            service: 'مسخه نویسی',
+                            type: 'prescription',
                             wating_time:
                                 searchViewInfo.data?.data?.prescription_waiting_time_info
                                     ?.average_waiting_time ?? 0
@@ -86,6 +90,13 @@ export const Forough = () => {
                 selected: item.id === id
             }))
         );
+        getSplunkInstance().sendEvent({
+            group: 'forogh',
+            type: `waiting-time-${infoOptionDetails.find((item: any) => item.id === id)?.type}`,
+            event: {
+                event_action: 'click'
+            }
+        });
     };
 
     return (
@@ -102,7 +113,7 @@ export const Forough = () => {
                                 label={item.title}
                                 onClick={() => handleButtonClick(item.id)}
                                 className={classNames(
-                                    '!rounded-t-md !rounded-b-none  [&>span]:!text-gray-500 [&>span]:!text-sm [&>span]:!font-medium !cursor-pointer',
+                                    '!rounded-t-md !rounded-b-none [&>span]:!whitespace-normal [&>span]:!text-center [&>span]:!text-gray-500 [&>span]:!m-1 [&>span]:!p-0 [&>span]:md:!p-4 [&>span]:!text-[0.8rem] [&>span]:!font-medium !cursor-pointer',
                                     {
                                         '!bg-transparent': !item.selected,
                                         '!bg-primary [&>span]:!text-white': item.selected
@@ -122,7 +133,7 @@ export const Forough = () => {
                             )}
                         >
                             <span className="text-sm font-medium leading-6">
-                                زمان انتظار بیمار در{activeOptionSelectedDetails?.type}
+                                زمان انتظار بیمار در{activeOptionSelectedDetails?.service}
                             </span>
                             <div className="flex items-center justify-between space-s-2">
                                 <ul className="space-y-2 text-xs text-slate-500">
@@ -166,8 +177,8 @@ export const Forough = () => {
                                         <>
                                             <span className="font-semibold text-secondary">
                                                 زمان انتظار بیمار در{' '}
-                                                {activeOptionSelectedDetails?.type} در بازه خیلی خوب
-                                                قرار دارد.
+                                                {activeOptionSelectedDetails?.service} در بازه خیلی
+                                                خوب قرار دارد.
                                             </span>
                                         </>
                                     ) : (
