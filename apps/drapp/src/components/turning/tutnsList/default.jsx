@@ -8,14 +8,14 @@ import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { useMediaQuery } from 'react-responsive';
 
 const checkPaymentStatus = turn => {
-    switch (true) {
-        case turn.payment_status === 'refunded' ||
-            turn.payment_status === 'refund_request' ||
-            !!turn.book_delete:
-            return 'refunded';
-        case turn.payment_status === 'paid':
-            return 'paid';
-    }
+    if (
+        turn.payment_status === 'refunded' ||
+        turn.payment_status === 'refund_request' ||
+        !!turn.book_delete
+    )
+        return 'refunded';
+
+    return 'paid';
 };
 
 const ListHeader = ({ title, count, onToggle, isOpen }) => {

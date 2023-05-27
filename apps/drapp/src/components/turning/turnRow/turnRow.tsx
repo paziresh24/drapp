@@ -111,13 +111,11 @@ const TurnRow = (props: TurnRowProps) => {
     const paidStatusInfo = {
         paid: {
             text: 'پرداخت شد',
-            className: '',
             icon: <DolorIcon className="!text-[#0BB07B] !w-5 scale-105" />,
             style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none'
         },
         refunded: {
             text: 'استرداد شد',
-            className: '',
             icon: <DolorIcon className="!text-gray-500 !w-5 scale-105 mb-[0.1rem]" />,
             style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-2 gap-[0.15rem] pointer-events-none'
         }
