@@ -24,6 +24,8 @@ import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { usePrescriptionSettingStore } from 'apps/drapp/src/store/prescriptionSetting.store';
 import { useGetPaymentSetting } from '../../apis/payment/getPaymentSetting';
 import { useInsurances } from '@paziresh24/hooks/prescription/insurances';
+import { toast } from 'react-toastify';
+import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -154,14 +156,16 @@ const PrivateRoute = props => {
         }
     }, [getLatestVersion.status]);
 
-    // if (isEmpty(getToken()))
-    //     history.replace(
-    //         `/auth${
-    //             location.pathname !== '/' || location.search
-    //                 ? `?url=${location.pathname + location.search}`
-    //                 : ''
-    //         }`
-    //     );
+    useEffect(() => {
+        if (
+            info?.center?.type_id === 3 &&
+            info.center.id !== CONSULT_CENTER_ID &&
+            props.dontShowForHospital
+        ) {
+            toast.error('دسترسی مرکز به این قسمت وجود ندارد.');
+            history.replace('/');
+        }
+    }, [info.center]);
 
     if (
         props.path !== '/create-center' &&
