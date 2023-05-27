@@ -26,6 +26,7 @@ import { useGetPaymentSetting } from '../../apis/payment/getPaymentSetting';
 import { useInsurances } from '@paziresh24/hooks/prescription/insurances';
 import { toast } from 'react-toastify';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -158,14 +159,16 @@ const PrivateRoute = props => {
 
     useEffect(() => {
         if (
-            info?.center?.type_id === 3 &&
-            info.center.id !== CONSULT_CENTER_ID &&
+            info?.doctor &&
+            info?.center &&
+            info?.center?.type_id !== OFFICE_CENTER &&
+            info.center?.id !== CONSULT_CENTER_ID &&
             props.dontShowForHospital
         ) {
             toast.error('دسترسی مرکز به این قسمت وجود ندارد.');
             history.replace('/');
         }
-    }, [info.center]);
+    }, [info?.center, info.doctor]);
 
     if (
         props.path !== '/create-center' &&
