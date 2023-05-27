@@ -78,8 +78,7 @@ const TurnRow = (props: TurnRowProps) => {
     const deletePrescription = useDeletePrescription();
     const getMessengerInfo = useGetMessengerInfo();
     const turns = useTurnsStore(state => state.turns);
-    const [visitLoading, setVisitLoading] = useState(false);
-    const [admitLoading, setAdmitLoading] = useState(false);
+    const [actionLoading, setActionLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
     const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
@@ -109,7 +108,7 @@ const TurnRow = (props: TurnRowProps) => {
 
     const handleAdmitTurn = async () => {
         try {
-            setAdmitLoading(true);
+            setActionLoading(true);
             await came.mutateAsync({
                 book_id: id
             });
@@ -127,12 +126,12 @@ const TurnRow = (props: TurnRowProps) => {
                         getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
-            setAdmitLoading(false);
+            setActionLoading(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
             }
-            setAdmitLoading(false);
+            setActionLoading(false);
         }
     };
 
@@ -195,17 +194,17 @@ const TurnRow = (props: TurnRowProps) => {
         if (info.center.id === CONSULT_CENTER_ID && type === 'book') return setVisitModal(true);
         if (prescription.id) return setVisitModal(true);
         try {
-            setVisitLoading(true);
+            setActionLoading(true);
             (await createPrescription({
                 mobileNumber,
                 nationalCode: nationalCode ?? nationalCodeValue,
                 id
             })) as any;
             setVisitModal(true);
-            setVisitLoading(false);
+            setActionLoading(false);
         } catch (error) {
             errorCatch(error);
-            setVisitLoading(false);
+            setActionLoading(false);
         }
     };
 
@@ -301,7 +300,7 @@ const TurnRow = (props: TurnRowProps) => {
             size="small"
             disabled={prescription.finalized}
             onClick={handleVisitButtonAction}
-            loading={visitLoading || admitLoading}
+            loading={actionLoading}
             fullWidth
         >
             {info.center.id === CONSULT_CENTER_ID && type === 'book'
