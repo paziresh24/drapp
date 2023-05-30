@@ -23,6 +23,7 @@ import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
+import DolorIcon from '@paziresh24/shared/icon/public/dolor';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
 
 type Prescription = {
@@ -46,11 +47,12 @@ interface TurnRowProps {
     mobileNumber: string;
     date: string;
     refId?: string;
-    paymentStatus?: string;
+    paymentStatus?: 'paid' | 'refunded';
     paymentPrice?: string;
     bookStatus?: 'not_came' | 'not_visited' | 'visited';
     type: 'book' | 'prescription';
     prescription: Prescription;
+    isDeletedTurn?: boolean;
 }
 
 const TurnRow = (props: TurnRowProps) => {
@@ -68,7 +70,8 @@ const TurnRow = (props: TurnRowProps) => {
         paymentStatus,
         paymentPrice,
         refId,
-        bookStatus
+        bookStatus,
+        isDeletedTurn
     } = props;
     const router = useHistory();
     const queryClient = useQueryClient();
@@ -104,6 +107,18 @@ const TurnRow = (props: TurnRowProps) => {
         not_came: 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
+    };
+    const paidStatusInfo = {
+        paid: {
+            text: 'پرداخت شد',
+            icon: <DolorIcon className="!text-[#0BB07B] !w-5 scale-105" />,
+            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none'
+        },
+        refunded: {
+            text: 'استرداد شد',
+            icon: <DolorIcon className="!text-gray-500 !w-5 scale-105 mb-[0.1rem]" />,
+            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-2 gap-[0.15rem] pointer-events-none'
+        }
     };
 
     const handleAdmitTurn = async () => {
@@ -307,7 +322,16 @@ const TurnRow = (props: TurnRowProps) => {
                 : 'ویزیت '}
         </Button>
     );
-
+    const TurnStatusButton = () => (
+        <Button
+            size="small"
+            className={paymentStatus && paidStatusInfo[paymentStatus].style}
+            fullWidth
+        >
+            {paymentStatus && paidStatusInfo[paymentStatus].icon}
+            {paymentStatus && paidStatusInfo[paymentStatus].text}
+        </Button>
+    );
     const PrescriptionButton = () => (
         <Button
             size="small"
@@ -319,7 +343,7 @@ const TurnRow = (props: TurnRowProps) => {
             loading={prescriptionLoading}
             fullWidth
         >
-            {prescription.finalized ? 'مشاهده نسخه' : 'تجویز '}
+            {prescription.finalized || isDeletedTurn ? 'مشاهده نسخه' : 'تجویز '}
         </Button>
     );
 
@@ -495,7 +519,12 @@ const TurnRow = (props: TurnRowProps) => {
                             alignItems="center"
                             spacing={1}
                         >
-                            <VisitButton />
+                            {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
+                                <VisitButton />
+                            )}
+                            {!!(paymentStatus && (bookStatus === 'visited' || isDeletedTurn)) && (
+                                <TurnStatusButton />
+                            )}
                             <PrescriptionButton />
                             <TurnDropDown />
                         </Stack>
@@ -559,7 +588,12 @@ const TurnRow = (props: TurnRowProps) => {
                         ))}
 
                     <div className="flex space-s-2">
-                        <VisitButton />
+                        {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
+                            <VisitButton />
+                        )}
+                        {!!(paymentStatus && (bookStatus === 'visited' || isDeletedTurn)) && (
+                            <TurnStatusButton />
+                        )}
                         <PrescriptionButton />
                     </div>
                 </div>
