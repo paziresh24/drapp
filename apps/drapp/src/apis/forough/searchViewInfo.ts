@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 
 export const searchViewInfo = async () => {
     return await client.get(
-        `https://api.paziresh24.dev/doctor/v1/searchview-info?earliest_time=-30d&latest_time=now`
+        `https://api.paziresh24.com/doctor/v1/searchview-info?earliest_time=-30d&latest_time=now`
     );
 };
 
