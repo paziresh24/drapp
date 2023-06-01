@@ -1,38 +1,89 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/lab/LoadingButton';
-import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import TimeInput from '@paziresh24/shared/ui/timeInput';
 import DateInput from '@paziresh24/shared/ui/dateInput';
 import { useState } from 'react';
-import { useDeleteTurns, useMoveTurns, useVacation } from '@paziresh24/hooks/drapp/turning';
+import {
+    useDeleteTurns,
+    useMoveTurns,
+    useVacation,
+    useGetVacation,
+    useDeleteVacation,
+    useChangeVacation
+} from '@paziresh24/hooks/drapp/turning';
 import moment from 'jalali-moment';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Modal from '@paziresh24/shared/ui/modal';
-import { useHistory } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { Calendar, DayValue, utils } from '@hassanmojab/react-modern-calendar-datepicker';
+import { formattedDateToDateObject } from '@paziresh24/shared/ui/dateInput/dateInput';
+import { dateObjectToFormattedDate } from '@paziresh24/shared/ui/dateInput/dateInput';
+import VacationCard from 'apps/drapp/src/components/vacationCard/vacationCard';
+import { EditIcon, TrashIcon } from '@paziresh24/shared/icon';
+import { isMobile } from 'react-device-detect';
+import { convertTimestamoToDate } from '@paziresh24/shared/utils/convertTimestamoToDate';
+import { convertTimeStampToFormattedTime } from '@paziresh24/shared/utils';
+import { Skeleton } from '@mui/material';
+import { isEmpty } from 'lodash';
+
+type VacationDate = {
+    from: DayValue | any;
+    to: DayValue | any;
+};
 
 export const Vacation = () => {
     const [{ center }] = useDrApp();
-    const router = useHistory();
-    const [fromDate, setFromDate] = useState<string>();
-    const [toDate, setToDate] = useState<string>();
-    const [targetMoveDate, setTargetMoveDate] = useState<string>();
     const [fromTime, setFromTime] = useState<string>();
     const [toTime, setToTime] = useState<string>();
+    const [targetMoveDate, setTargetMoveDate] = useState<string>();
+    const [selectedDay, setSelectedDay] = useState<VacationDate>({
+        from: null,
+        to: null
+    });
     const [targetMoveTime, setTargetMoveTime] = useState<string>();
-
+    const [vacationModal, setVacationModal] = useState<boolean>(false);
     const [shouldShowconfilitModal, setShouldShowconfilitModal] = useState<boolean>(false);
+    const [shouldShowDeleteVacationModal, setShouldShowDeleteVacationModal] =
+        useState<boolean>(false);
+    const [vacationInfoForDelete, setVacationInfoForDelete] = useState<VacationDate>({
+        from: null,
+        to: null
+    });
     const [shouldShowGetTargetMoveModal, setShouldShowGetTargetMoveModal] =
         useState<boolean>(false);
-
+    const [currentVacationDate, setCurrentVacationData] = useState<any>({});
     const vacationRequest = useVacation();
     const deleteTurnsRequest = useDeleteTurns();
     const moveTurnsRequest = useMoveTurns();
+    const getVacation = useGetVacation({ center_id: center.id });
+    const deleteVacation = useDeleteVacation();
+    const changeVacationDate = useChangeVacation();
+    const isDisableSubmitButton =
+        (!selectedDay.from || !selectedDay.to || !fromTime || !toTime) &&
+        isEmpty(currentVacationDate);
+
+    const closeVacationModal = () => {
+        setVacationModal(false);
+        setSelectedDay({
+            from: null,
+            to: null
+        });
+        setFromTime('');
+        setToTime('');
+        setCurrentVacationData(null);
+    };
+
+    const convertDateAndTimeToTimeStamp = (date: DayValue, time: string) => {
+        return moment
+            .from(`${dateObjectToFormattedDate(date)} ${time}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
+            .unix();
+    };
 
     const handleSubmit = () => {
         getSplunkInstance().sendEvent({
@@ -43,10 +94,8 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    from: moment
-                        .from(`${fromDate} ${fromTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
-                        .unix(),
-                    to: moment.from(`${toDate} ${toTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm').unix()
+                    from: convertDateAndTimeToTimeStamp(selectedDay.from, fromTime!),
+                    to: convertDateAndTimeToTimeStamp(selectedDay.to, toTime!)
                 }
             },
             {
@@ -60,7 +109,8 @@ export const Vacation = () => {
                 },
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
-                    router.push('/setting');
+                    getVacation.refetch();
+                    closeVacationModal();
                 }
             }
         );
@@ -71,17 +121,14 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    from: moment
-                        .from(`${fromDate} ${fromTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
-                        .unix(),
-                    to: moment.from(`${toDate} ${toTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm').unix()
+                    from: convertDateAndTimeToTimeStamp(selectedDay.from, fromTime!),
+                    to: convertDateAndTimeToTimeStamp(selectedDay.to, toTime!)
                 }
             },
             {
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
-                    router.push('/setting');
                 },
                 onError: err => {
                     if (axios.isAxiosError(err)) {
@@ -97,10 +144,8 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    book_from: moment
-                        .from(`${fromDate} ${fromTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
-                        .unix(),
-                    book_to: moment.from(`${toDate} ${toTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm').unix(),
+                    book_from: convertDateAndTimeToTimeStamp(selectedDay.from, fromTime!),
+                    book_to: convertDateAndTimeToTimeStamp(selectedDay.to, toTime!),
                     target_from: moment
                         .from(`${targetMoveDate} ${targetMoveTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
                         .unix(),
@@ -111,8 +156,7 @@ export const Vacation = () => {
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
-                    setShouldShowGetTargetMoveModal(false);
-                    router.push('/setting');
+                    closeVacationModal();
                 },
                 onError: err => {
                     if (axios.isAxiosError(err)) {
@@ -123,45 +167,172 @@ export const Vacation = () => {
         );
     };
 
+    const deleteVacationHandler = (from: number, to: number) => {
+        deleteVacation.mutate(
+            {
+                center_id: center.id,
+                from,
+                to
+            },
+            {
+                onSuccess: () => {
+                    toast.success('مرخصی شما حذف شد.');
+                    setShouldShowDeleteVacationModal(false);
+                    getVacation.refetch();
+                },
+                onError: err => {
+                    if (axios.isAxiosError(err)) {
+                        toast.error(err?.response?.data?.message);
+                    }
+                }
+            }
+        );
+    };
+
+    const changeVacationDateHandler = () => {
+        changeVacationDate.mutate(
+            {
+                center_id: center.id,
+                from: convertDateAndTimeToTimeStamp(selectedDay.from, fromTime!),
+                to: convertDateAndTimeToTimeStamp(selectedDay.to, toTime!),
+                old_from: convertDateAndTimeToTimeStamp(
+                    currentVacationDate.date.from,
+                    currentVacationDate.time.from!
+                ),
+                old_to: convertDateAndTimeToTimeStamp(
+                    currentVacationDate.date.to,
+                    currentVacationDate.time.to!
+                )
+            },
+            {
+                onSuccess: () => {
+                    toast.success('تغییرات شما اعمال با موفقیت اعمال شد.');
+                    getVacation.refetch();
+                    closeVacationModal();
+                },
+                onError: err => {
+                    if (axios.isAxiosError(err)) {
+                        toast.error(err?.response?.data?.message);
+                    }
+                }
+            }
+        );
+    };
+
+    const openEditVacationModal = (from: string, to: string) => {
+        const currentVacationInfo = {
+            time: {
+                from: convertTimeStampToFormattedTime(+from),
+                to: convertTimeStampToFormattedTime(+to)
+            },
+            date: {
+                from: formattedDateToDateObject(
+                    moment
+                        .from(convertTimestamoToDate(+from), 'YYYY/MM/DD')
+                        .locale('fa')
+                        .format('YYYY/MM/DD')
+                ),
+                to: formattedDateToDateObject(
+                    moment
+                        .from(convertTimestamoToDate(+to), 'YYYY/MM/DD')
+                        .locale('fa')
+                        .format('YYYY/MM/DD')
+                )
+            }
+        };
+        setCurrentVacationData(currentVacationInfo);
+        setSelectedDay(currentVacationInfo.date);
+        setFromTime(currentVacationInfo.time.from);
+        setToTime(currentVacationInfo.time.to);
+        setVacationModal(true);
+    };
+
     return (
         <>
             <Container
                 maxWidth="sm"
-                className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md space-y-5"
+                className="min-h-full md:min-h-max md:h-auto md:p-5 rounded-md pb-4 bg-white md:mt-8 md:shadow-md space-y-5"
             >
-                <Stack>
-                    <p className="mb-5 font-bold">ﺑﺎ اﻧﺘﺨﺎب بازه مدنظر، مرخصی اعمال می شود.</p>
-                    <span className="text-sm font-medium">از</span>
-                    <Stack mt={2} mb={2} direction="row" spacing={2}>
-                        <DateInput label="تاریخ" onCahnge={value => setFromDate(value)} />
-                        <TimeInput label="ساعت" onCahnge={value => setFromTime(value)} />
-                    </Stack>
-                    <span className="text-sm font-medium">تا</span>
-                    <Stack mt={2} mb={2} direction="row" spacing={2}>
-                        <DateInput label="تاریخ" onCahnge={value => setToDate(value)} />
-                        <TimeInput label="ساعت" onCahnge={value => setToTime(value)} />
-                    </Stack>
-                    <span className="text-sm font-medium">مرخصی اعمال شود.</span>
-                </Stack>
-                <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
-                    <Stack spacing={1} width="100%">
-                        <Alert icon={false} className="!bg-[#F3F6F9]">
-                            <Typography fontSize="0.9rem" fontWeight="medium">
-                                درصورتی که در این بازه نوبتی وجود داشته باشد، می توانید آن را حذف یا
-                                جابجا کنید.
-                            </Typography>
-                        </Alert>
+                <Stack spacing={1} width="100%">
+                    <Alert
+                        icon={false}
+                        className="!bg-white [&>div]:flex [&>div]:flex-col [&>div]:gap-2 [&>div]:!p-0 !p-0 mt-4 md:mt-0"
+                    >
+                        <Typography fontSize="0.9rem" fontWeight="bold">
+                            ثبت مرخصی
+                        </Typography>
+                        <Typography fontSize="0.8rem" lineHeight={2} fontWeight="small">
+                            در این قسمت سایت، شما میتوانید به راحتی تاریخ و زمان مرخصی خودتان را ثبت
+                            کنید تا بیماران به آنها آگاه شوند.
+                        </Typography>
                         <Button
                             loading={vacationRequest.isLoading}
-                            onClick={handleSubmit}
+                            onClick={() => setVacationModal(true)}
                             fullWidth
-                            variant="contained"
-                            disabled={!fromDate || !fromTime || !toDate || !toTime}
+                            variant="outlined"
+                            className="w-2/4 !text-[0.8rem]"
                         >
-                            ثبت
+                            اضاقه کردن مرخصی
                         </Button>
-                    </Stack>
-                </FixedWrapBottom>
+                    </Alert>
+                </Stack>
+                <Stack
+                    alignItems={isMobile ? 'center' : 'start'}
+                    flexDirection={{ sm: 'column', md: 'row', lg: 'row' }}
+                >
+                    <div className="w-full flex flex-col gap-2">
+                        <span className="text-[0.9rem] font-medium">لیست مرخصی های ثبت شده:</span>
+                        {!getVacation.isRefetching && getVacation.isSuccess && (
+                            <div className="h-auto md:h-[21rem] overflow-auto flex flex-col gap-2">
+                                {getVacation?.data?.data.map((vacationInfo: any, index: number) => (
+                                    <>
+                                        <VacationCard
+                                            key={index}
+                                            title={`${vacationInfo.formatted_from} الی ${vacationInfo.formatted_to}`}
+                                            detailes={{
+                                                'مدت زمان': vacationInfo.formatted_duration
+                                            }}
+                                            icon={
+                                                <div className="flex flex-col gap-4 items-center">
+                                                    <EditIcon
+                                                        className="cursor-pointer w-5 h-[1.1rem] text-[#000000]"
+                                                        onClick={() =>
+                                                            openEditVacationModal(
+                                                                vacationInfo.from,
+                                                                vacationInfo.to
+                                                            )
+                                                        }
+                                                    />
+                                                    <TrashIcon
+                                                        color="#000"
+                                                        className="cursor-pointer w-5 hover:!text-red-500"
+                                                        onClick={() => {
+                                                            setVacationInfoForDelete({
+                                                                from: vacationInfo.from,
+                                                                to: vacationInfo.to
+                                                            });
+                                                            setShouldShowDeleteVacationModal(true);
+                                                        }}
+                                                    />
+                                                </div>
+                                            }
+                                        />
+                                    </>
+                                ))}
+                                {!getVacation.data?.data.length && (
+                                    <div className="w-full h-[25rem] md:min-h-[20rem] lg:h-80 flex justify-center items-center rounded-md border border-solid border-[#aeaeae]">
+                                        <span className="text-[0.8rem] font-medium">
+                                            مرخصی وجود ندارد
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        {(getVacation.isLoading || getVacation.isRefetching) && (
+                            <Skeleton width="100%" height="20rem" className="!scale-100" />
+                        )}
+                    </div>
+                </Stack>
             </Container>
             <Modal
                 title="مرخصی"
@@ -169,9 +340,9 @@ export const Vacation = () => {
                 onClose={setShouldShowconfilitModal}
             >
                 <span>
-                    در این بازه{' '}
+                    در این بازه
                     {vacationRequest.isError &&
-                        (vacationRequest.error as any)?.response?.data?.data?.books_count}{' '}
+                        (vacationRequest.error as any)?.response?.data?.data?.books_count}
                     نوبت وجود دارد، چگونه آنها را مدیریت می کنید؟
                 </span>
                 <Alert icon={false} className="!bg-[#F3F6F9]">
@@ -218,6 +389,75 @@ export const Vacation = () => {
                 >
                     تایید
                 </Button>
+            </Modal>
+            <Modal
+                title="حذف مرخصی"
+                isOpen={shouldShowDeleteVacationModal}
+                onClose={setShouldShowDeleteVacationModal}
+            >
+                <span className="text-sm">آیا از حذف مرخصی خود اطمینان دارید؟</span>
+                <div className="mt-4 flex justify-between gap-2">
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        loading={deleteVacation.isLoading}
+                        color="error"
+                        onClick={() =>
+                            deleteVacationHandler(
+                                vacationInfoForDelete.from,
+                                vacationInfoForDelete.to
+                            )
+                        }
+                    >
+                        حذف مرخصی
+                    </Button>
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        onClick={() => setShouldShowGetTargetMoveModal(true)}
+                    >
+                        انصراف
+                    </Button>
+                </div>
+            </Modal>
+            <Modal title="ثبت مرخصی" isOpen={vacationModal} onClose={closeVacationModal}>
+                <div className="w-full flex flex-col items-center">
+                    <Calendar
+                        value={selectedDay}
+                        onChange={setSelectedDay}
+                        shouldHighlightWeekends
+                        minimumDate={utils('fa').getToday()}
+                        colorPrimary="#0070f3"
+                        locale="fa"
+                        calendarClassName="!shadow-none !py-0 !bg-transparent"
+                    />
+                    {((!!selectedDay.from && !!selectedDay.to) ||
+                        !isEmpty(currentVacationDate)) && (
+                        <div className="flex -translate-y-3 gap-2">
+                            <TimeInput
+                                label="از ساعت"
+                                defaultValue={fromTime}
+                                onCahnge={value => setFromTime(value)}
+                            />
+                            <TimeInput
+                                label="تا ساعت"
+                                defaultValue={toTime}
+                                onCahnge={value => setToTime(value)}
+                            />
+                        </div>
+                    )}
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={
+                            !isEmpty(currentVacationDate) ? changeVacationDateHandler : handleSubmit
+                        }
+                        loading={vacationRequest.isLoading || changeVacationDate.isLoading}
+                        disabled={isDisableSubmitButton}
+                    >
+                        ثبت مرخصی
+                    </Button>
+                </div>
             </Modal>
         </>
     );
