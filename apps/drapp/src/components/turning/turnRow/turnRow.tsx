@@ -117,7 +117,8 @@ const TurnRow = (props: TurnRowProps) => {
         [key: string]: string;
     } = {
         '404': 'نوبت مورد نظر یافت نشد',
-        '200': 'در خواست شما با موفقیت ثبت شد و تماس برای شما برقرار میشود'
+        '200': 'در خواست شما با موفقیت ثبت شد و تماس برای شما برقرار میشود',
+        '500': 'مشکلی پیش آمده است'
     };
     const paidStatusInfo = {
         paid: {
@@ -164,6 +165,16 @@ const TurnRow = (props: TurnRowProps) => {
                 bookId: id
             });
             toast.success(secureCallCodeStatusText[connectSecureCall?.data?.status ?? '']);
+            getSplunkInstance().sendEvent({
+                group: 'doctor',
+                type: 'safe-call',
+                event: {
+                    patient_name: name,
+                    patient_family: family,
+                    patient_cell: mobileNumber,
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`
+                }
+            });
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(secureCallCodeStatusText[error?.response?.status ?? '']);
