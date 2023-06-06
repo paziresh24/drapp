@@ -9,7 +9,7 @@ import { addCommas, digitsFaToEn } from '@persian-tools/persian-tools';
 import axios from 'axios';
 import moment from 'jalali-moment';
 import { useRef, useState } from 'react';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import Visit from '../visit';
@@ -25,6 +25,7 @@ import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
 import DolorIcon from '@paziresh24/shared/icon/public/dolor';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
+import { useSecureCall } from 'apps/drapp/src/apis/onlineVisit/secureCall';
 
 type Prescription = {
     id: string;
@@ -53,6 +54,7 @@ interface TurnRowProps {
     type: 'book' | 'prescription';
     prescription: Prescription;
     isDeletedTurn?: boolean;
+    possibilityBeingSecureCallButton?: boolean;
 }
 
 const TurnRow = (props: TurnRowProps) => {
@@ -71,7 +73,8 @@ const TurnRow = (props: TurnRowProps) => {
         paymentPrice,
         refId,
         bookStatus,
-        isDeletedTurn
+        isDeletedTurn,
+        possibilityBeingSecureCallButton
     } = props;
     const router = useHistory();
     const queryClient = useQueryClient();
@@ -102,11 +105,19 @@ const TurnRow = (props: TurnRowProps) => {
                 : window._env_.P24_BASE_URL_PRESCRIPTION_API
         }/pdfs/` + prescription.pdfName
     );
+    const connectSecureCall = useSecureCall();
+
     const turn = useRef(turns.find(turn => turn.id === id));
     const buttonStatusTurnText = {
         not_came: 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
+    };
+    const secureCallCodeStatusText: {
+        [key: string]: string;
+    } = {
+        '404': 'نوبت مورد نظر یافت نشد',
+        '200': 'در خواست شما با موفقیت ثبت شد و تماس برای شما برقرار میشود'
     };
     const paidStatusInfo = {
         paid: {
@@ -143,6 +154,19 @@ const TurnRow = (props: TurnRowProps) => {
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
+            }
+        }
+    };
+
+    const handleConnectSecureCall = async () => {
+        try {
+            await connectSecureCall.mutateAsync({
+                bookId: id
+            });
+            toast.success(secureCallCodeStatusText[connectSecureCall?.data?.status ?? '']);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(secureCallCodeStatusText[error?.response?.status ?? '']);
             }
         }
     };
@@ -305,6 +329,18 @@ const TurnRow = (props: TurnRowProps) => {
 
         return insuranceProvider;
     };
+
+    const SecureCallButton = () => (
+        <Button
+            variant="outlined"
+            size="small"
+            onClick={handleConnectSecureCall}
+            loading={connectSecureCall.isLoading}
+            fullWidth
+        >
+            نماس با بیمار
+        </Button>
+    );
 
     const VisitButton = () => (
         <Button
@@ -519,6 +555,9 @@ const TurnRow = (props: TurnRowProps) => {
                             alignItems="center"
                             spacing={1}
                         >
+                            {possibilityBeingSecureCallButton && !isDeletedTurn && (
+                                <SecureCallButton />
+                            )}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -588,6 +627,7 @@ const TurnRow = (props: TurnRowProps) => {
                         ))}
 
                     <div className="flex space-s-2">
+                        {possibilityBeingSecureCallButton && !isDeletedTurn && <SecureCallButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
