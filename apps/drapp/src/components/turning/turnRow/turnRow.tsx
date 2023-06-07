@@ -25,7 +25,7 @@ import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
 import DolorIcon from '@paziresh24/shared/icon/public/dolor';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
-import { useSecureCall } from 'apps/drapp/src/apis/onlineVisit/secureCall';
+import { useEstablishingSecureCall } from 'apps/drapp/src/apis/onlineVisit/establishingSecureCall';
 
 type Prescription = {
     id: string;
@@ -105,20 +105,13 @@ const TurnRow = (props: TurnRowProps) => {
                 : window._env_.P24_BASE_URL_PRESCRIPTION_API
         }/pdfs/` + prescription.pdfName
     );
-    const connectSecureCall = useSecureCall();
+    const establishingSecureCall = useEstablishingSecureCall();
 
     const turn = useRef(turns.find(turn => turn.id === id));
     const buttonStatusTurnText = {
         not_came: 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
-    };
-    const secureCallCodeStatusText: {
-        [key: string]: string;
-    } = {
-        '404': 'نوبت مورد نظر یافت نشد',
-        '200': 'در خواست شما با موفقیت ثبت شد و تماس برای شما برقرار میشود',
-        '500': 'مشکلی پیش آمده است'
     };
     const paidStatusInfo = {
         paid: {
@@ -161,7 +154,7 @@ const TurnRow = (props: TurnRowProps) => {
 
     const handleConnectSecureCall = async () => {
         try {
-            await connectSecureCall.mutate({
+            await establishingSecureCall.mutate({
                 bookId: id
             });
             getSplunkInstance().sendEvent({
@@ -174,13 +167,10 @@ const TurnRow = (props: TurnRowProps) => {
                     patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`
                 }
             });
-
-            console.log(connectSecureCall);
-
-            toast.success(secureCallCodeStatusText[connectSecureCall.isSuccess ? '200' : '']);
+            toast.success('درخواست شما با موفقیت ثبت شد');
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                toast.error(secureCallCodeStatusText[error?.response?.status ?? '']);
+                toast.error(error.response?.data.message);
             }
         }
     };
@@ -349,7 +339,7 @@ const TurnRow = (props: TurnRowProps) => {
             variant="outlined"
             size="small"
             onClick={handleConnectSecureCall}
-            loading={connectSecureCall.isLoading}
+            loading={establishingSecureCall.isLoading}
             fullWidth
         >
             نماس با بیمار
