@@ -6,7 +6,7 @@ import { useUpdateDescription } from 'apps/drapp/src/apis/prescription/updateDes
 import { toast } from 'react-toastify';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, digitsFaToEn } from '@persian-tools/persian-tools';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import moment from 'jalali-moment';
 import { useRef, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
@@ -161,10 +161,9 @@ const TurnRow = (props: TurnRowProps) => {
 
     const handleConnectSecureCall = async () => {
         try {
-            await connectSecureCall.mutateAsync({
+            await connectSecureCall.mutate({
                 bookId: id
             });
-            toast.success(secureCallCodeStatusText[connectSecureCall?.data?.status ?? '']);
             getSplunkInstance().sendEvent({
                 group: 'doctor',
                 type: 'safe-call',
@@ -175,6 +174,10 @@ const TurnRow = (props: TurnRowProps) => {
                     patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`
                 }
             });
+
+            console.log(connectSecureCall);
+
+            toast.success(secureCallCodeStatusText[connectSecureCall.isSuccess ? '200' : '']);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(secureCallCodeStatusText[error?.response?.status ?? '']);
