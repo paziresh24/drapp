@@ -631,7 +631,8 @@ const TurnRow = (props: TurnRowProps) => {
                         ))}
 
                     <div className="flex space-s-2">
-                        {possibilityBeingSecureCallButton && <SecureCallButton />}
+                        {info.center.id === CONSULT_CENTER_ID &&
+                            possibilityBeingSecureCallButton && <SecureCallButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
