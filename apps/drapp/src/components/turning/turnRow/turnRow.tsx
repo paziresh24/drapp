@@ -340,6 +340,7 @@ const TurnRow = (props: TurnRowProps) => {
             size="small"
             onClick={handleConnectSecureCall}
             loading={establishingSecureCall.isLoading}
+            disabled={isDeletedTurn}
             fullWidth
         >
             نماس با بیمار
@@ -559,9 +560,8 @@ const TurnRow = (props: TurnRowProps) => {
                             alignItems="center"
                             spacing={1}
                         >
-                            {possibilityBeingSecureCallButton && !isDeletedTurn && (
-                                <SecureCallButton />
-                            )}
+                            {info.center.id === CONSULT_CENTER_ID &&
+                                possibilityBeingSecureCallButton && <SecureCallButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -631,7 +631,7 @@ const TurnRow = (props: TurnRowProps) => {
                         ))}
 
                     <div className="flex space-s-2">
-                        {possibilityBeingSecureCallButton && !isDeletedTurn && <SecureCallButton />}
+                        {possibilityBeingSecureCallButton && <SecureCallButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
