@@ -29,8 +29,8 @@ import { EditIcon, TrashIcon } from '@paziresh24/shared/icon';
 import { isMobile } from 'react-device-detect';
 import { convertTimestamoToDate } from '@paziresh24/shared/utils/convertTimestamoToDate';
 import { convertTimeStampToFormattedTime } from '@paziresh24/shared/utils';
-import { Skeleton } from '@mui/material';
-import { isEmpty } from 'lodash';
+import { Checkbox, Skeleton } from '@mui/material';
+import isEmpty from 'lodash/isEmpty';
 
 type VacationDate = {
     from: DayValue | any;
@@ -39,6 +39,7 @@ type VacationDate = {
 
 export const Vacation = () => {
     const [{ center }] = useDrApp();
+    const [isFullDayVacation, setIsFullDayVacation] = useState<boolean>(false);
     const [fromTime, setFromTime] = useState<string>();
     const [toTime, setToTime] = useState<string>();
     const [targetMoveDate, setTargetMoveDate] = useState<string>();
@@ -65,7 +66,8 @@ export const Vacation = () => {
     const deleteVacation = useDeleteVacation();
     const changeVacationDate = useChangeVacation();
     const isDisableSubmitButton =
-        (!selectedDay.from || !selectedDay.to || !fromTime || !toTime) &&
+        !isFullDayVacation &&
+        (!selectedDay.from || !fromTime || !toTime) &&
         isEmpty(currentVacationDate);
 
     const closeVacationModal = () => {
@@ -77,6 +79,7 @@ export const Vacation = () => {
         setFromTime('');
         setToTime('');
         setCurrentVacationData(null);
+        setIsFullDayVacation(false);
     };
 
     const convertDateAndTimeToTimeStamp = (date: DayValue, time: string) => {
@@ -94,8 +97,14 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    from: convertDateAndTimeToTimeStamp(selectedDay.from, fromTime!),
-                    to: convertDateAndTimeToTimeStamp(selectedDay.to, toTime!)
+                    from: convertDateAndTimeToTimeStamp(
+                        selectedDay.from,
+                        isFullDayVacation ? '00:00' : fromTime!
+                    ),
+                    to: convertDateAndTimeToTimeStamp(
+                        selectedDay.to ?? selectedDay.from,
+                        isFullDayVacation ? '23:59' : toTime!
+                    )
                 }
             },
             {
@@ -193,8 +202,14 @@ export const Vacation = () => {
         changeVacationDate.mutate(
             {
                 center_id: center.id,
-                from: convertDateAndTimeToTimeStamp(selectedDay.from, fromTime!),
-                to: convertDateAndTimeToTimeStamp(selectedDay.to, toTime!),
+                from: convertDateAndTimeToTimeStamp(
+                    selectedDay.from,
+                    isFullDayVacation ? '00:00' : fromTime!
+                ),
+                to: convertDateAndTimeToTimeStamp(
+                    selectedDay.to ?? selectedDay.from,
+                    isFullDayVacation ? '23:59' : toTime!
+                ),
                 old_from: convertDateAndTimeToTimeStamp(
                     currentVacationDate.date.from,
                     currentVacationDate.time.from!
@@ -206,7 +221,7 @@ export const Vacation = () => {
             },
             {
                 onSuccess: () => {
-                    toast.success('تغییرات شما اعمال با موفقیت اعمال شد.');
+                    toast.success('تغییرات شما با موفقیت اعمال شد.');
                     getVacation.refetch();
                     closeVacationModal();
                 },
@@ -247,6 +262,10 @@ export const Vacation = () => {
         setVacationModal(true);
     };
 
+    const isExpireVacation = (vacationTime: string) => {
+        return +vacationTime < Math.floor(Date.now() / 1000);
+    };
+
     return (
         <>
             <Container
@@ -256,14 +275,14 @@ export const Vacation = () => {
                 <Stack spacing={1} width="100%">
                     <Alert
                         icon={false}
-                        className="!bg-white [&>div]:flex [&>div]:flex-col [&>div]:gap-2 [&>div]:!p-0 !p-0 mt-4 md:mt-0"
+                        className="!bg-white [&>div]:flex [&>div]:flex-col [&>div]:gap-2 [&>div]:!p-0 !p-0 mt-4 md:mt-0 [&>div]:!w-full"
                     >
                         <Typography fontSize="0.9rem" fontWeight="bold">
                             ثبت مرخصی
                         </Typography>
                         <Typography fontSize="0.8rem" lineHeight={2} fontWeight="small">
-                            در این قسمت سایت، شما میتوانید به راحتی تاریخ و زمان مرخصی خودتان را ثبت
-                            کنید تا بیماران به آنها آگاه شوند.
+                            شما می توانید برای ساعاتی که طبق ساعت کاری خود حضور ندارید، مرخصی اعمال
+                            کنید.
                         </Typography>
                         <Button
                             loading={vacationRequest.isLoading}
@@ -272,7 +291,7 @@ export const Vacation = () => {
                             variant="outlined"
                             className="w-2/4 !text-[0.8rem]"
                         >
-                            اضاقه کردن مرخصی
+                            اضافه کردن مرخصی
                         </Button>
                     </Alert>
                 </Stack>
@@ -293,28 +312,32 @@ export const Vacation = () => {
                                                 'مدت زمان': vacationInfo.formatted_duration
                                             }}
                                             icon={
-                                                <div className="flex flex-col gap-4 items-center">
-                                                    <EditIcon
-                                                        className="cursor-pointer w-5 h-[1.1rem] text-[#000000]"
-                                                        onClick={() =>
-                                                            openEditVacationModal(
-                                                                vacationInfo.from,
-                                                                vacationInfo.to
-                                                            )
-                                                        }
-                                                    />
-                                                    <TrashIcon
-                                                        color="#000"
-                                                        className="cursor-pointer w-5 hover:!text-red-500"
-                                                        onClick={() => {
-                                                            setVacationInfoForDelete({
-                                                                from: vacationInfo.from,
-                                                                to: vacationInfo.to
-                                                            });
-                                                            setShouldShowDeleteVacationModal(true);
-                                                        }}
-                                                    />
-                                                </div>
+                                                !isExpireVacation(vacationInfo.to) && (
+                                                    <div className="flex flex-col gap-4 items-center">
+                                                        <EditIcon
+                                                            className="cursor-pointer w-5 h-[1.1rem] text-[#000000]"
+                                                            onClick={() =>
+                                                                openEditVacationModal(
+                                                                    vacationInfo.from,
+                                                                    vacationInfo.to
+                                                                )
+                                                            }
+                                                        />
+                                                        <TrashIcon
+                                                            color="#000"
+                                                            className="cursor-pointer w-5 hover:!text-red-500"
+                                                            onClick={() => {
+                                                                setVacationInfoForDelete({
+                                                                    from: vacationInfo.from,
+                                                                    to: vacationInfo.to
+                                                                });
+                                                                setShouldShowDeleteVacationModal(
+                                                                    true
+                                                                );
+                                                            }}
+                                                        />
+                                                    </div>
+                                                )
                                             }
                                         />
                                     </>
@@ -429,22 +452,35 @@ export const Vacation = () => {
                         minimumDate={utils('fa').getToday()}
                         colorPrimary="#0070f3"
                         locale="fa"
+                        calendarRangeStartClassName="!rounded-md"
+                        calendarRangeEndClassName="!rounded-md"
+                        calendarRangeBetweenClassName="!rounded-md"
                         calendarClassName="!shadow-none !py-0 !bg-transparent"
                     />
-                    {((!!selectedDay.from && !!selectedDay.to) ||
-                        !isEmpty(currentVacationDate)) && (
-                        <div className="flex -translate-y-3 gap-2">
-                            <TimeInput
-                                label="از ساعت"
-                                defaultValue={fromTime}
-                                onCahnge={value => setFromTime(value)}
-                            />
-                            <TimeInput
-                                label="تا ساعت"
-                                defaultValue={toTime}
-                                onCahnge={value => setToTime(value)}
-                            />
-                        </div>
+                    {(!!selectedDay.from || !isEmpty(currentVacationDate)) && (
+                        <>
+                            {!isFullDayVacation && (
+                                <div className="flex -translate-y-3 gap-2">
+                                    <TimeInput
+                                        label="از ساعت"
+                                        defaultValue={fromTime}
+                                        onCahnge={value => setFromTime(value)}
+                                    />
+                                    <TimeInput
+                                        label="تا ساعت"
+                                        defaultValue={toTime}
+                                        onCahnge={value => setToTime(value)}
+                                    />
+                                </div>
+                            )}
+                            <div className="flex justify-start items-center w-full">
+                                <Checkbox
+                                    size="small"
+                                    onChange={e => setIsFullDayVacation(e.target.checked)}
+                                />
+                                <span className="text-[0.8rem]">ثبت مرخصی برای تمام روز</span>
+                            </div>
+                        </>
                     )}
                     <Button
                         fullWidth
