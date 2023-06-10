@@ -82,6 +82,7 @@ const TurnRow = (props: TurnRowProps) => {
     const updateDescription = useUpdateDescription();
     const deletePrescription = useDeletePrescription();
     const getMessengerInfo = useGetMessengerInfo();
+    const statistics = useTurnsStore(state => state.statistics);
     const turns = useTurnsStore(state => state.turns);
     const [visitLoading, setVisitLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
@@ -487,7 +488,12 @@ const TurnRow = (props: TurnRowProps) => {
         <Tooltip
             title="شما میتوانید نوبت بیمار را از این قسمت لغو کنید"
             placement="top-end"
-            open={number === 1 && bookStatus === 'not_came'}
+            open={
+                number === 1 &&
+                (statistics.activePatients
+                    ? bookStatus === 'not_came' || bookStatus === 'not_visited'
+                    : bookStatus === 'visited' || !!prescription.finalized || isDeletedTurn)
+            }
             disableHoverListener={number !== 1}
             arrow
             classes={{ arrow: '!translate-x-2', tooltip: '!-translate-y-2 !-translate-x-3' }}
@@ -530,7 +536,7 @@ const TurnRow = (props: TurnRowProps) => {
                             icon: <TrashIcon />,
                             name: 'لغو نوبت',
                             action: () => setDeletTurnModal(true),
-                            diabled: false
+                            diabled: isDeletedTurn!
                         }
                     ]}
                 />
