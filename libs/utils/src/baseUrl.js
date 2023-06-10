@@ -11,6 +11,13 @@ export const baseURL = key => {
         return window._env_.P24_BASE_URL;
     }
 
+    if (key === 'WORKFLOW_API') {
+        if (isProduction && !isMainDomain) {
+            return window.location.origin + process.env.REACT_APP_BASE_ROUTE;
+        }
+        return window._env_.P24_WORKFLOW_API;
+    }
+
     if (key === 'AUTH_API') {
         if (isProduction && !isMainDomain) {
             return window.location.origin + process.env.REACT_APP_AUTH_ROUTE;

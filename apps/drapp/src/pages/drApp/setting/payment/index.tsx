@@ -18,6 +18,7 @@ import { useIbanInquiry } from 'apps/drapp/src/apis/payment/ibanInquiry';
 import { useGetPaymentSetting } from 'apps/drapp/src/apis/payment/getPaymentSetting';
 import { Tab, Tabs } from '@mui/material';
 import Financial from 'apps/drapp/src/components/payment/finacial';
+import Transaction from 'apps/drapp/src/components/payment/transaction';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const PaymentPage = () => {
@@ -33,12 +34,12 @@ const PaymentPage = () => {
         card_number: formProps.cartNumber ?? ''
     });
     const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
-    const [tab, setTab] = useState(getSetting.active ? 0 : 1);
+    const [tab, setTab] = useState(getSetting.active ? 0 : 2);
 
     useEffect(() => {
         getPaymentSetting.remove();
         getPaymentSetting.refetch();
-        setTab(getSetting.active ? 0 : 1);
+        setTab(getSetting.active ? 0 : 2);
     }, [center, getSetting.active]);
 
     useEffect(() => {
@@ -130,13 +131,15 @@ const PaymentPage = () => {
                 onChange={handleTabChange}
                 value={tab}
             >
-                <Tab label="گزارش مالی" disabled={!getSetting.active} />
-                <Tab label="تنظیمات" />
+                <Tab label="گزارش مالی" disabled={!getSetting.active} className="!text-xs" />
+                <Tab label="لیست تراکنش‌ها" disabled={!getSetting.active} className="!text-xs" />
+                <Tab label="تنظیمات" className="!text-xs" />
             </Tabs>
 
-            <div className="px-0 pt-4">
+            <div className="h-full px-0 pt-4">
                 {tab === 0 && <Financial />}
-                {tab === 1 && (
+                {tab === 1 && <Transaction />}
+                {tab === 2 && (
                     <div className="flex flex-col space-y-5">
                         {center.id !== CONSULT_CENTER_ID && (
                             <>
