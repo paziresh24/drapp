@@ -50,6 +50,7 @@ interface TurnRowProps {
     paymentStatus?: 'paid' | 'refunded';
     paymentPrice?: string;
     bookStatus?: 'not_came' | 'not_visited' | 'visited';
+    deleteReason?: string;
     type: 'book' | 'prescription';
     prescription: Prescription;
     isDeletedTurn?: boolean;
@@ -71,7 +72,8 @@ const TurnRow = (props: TurnRowProps) => {
         paymentPrice,
         refId,
         bookStatus,
-        isDeletedTurn
+        isDeletedTurn,
+        deleteReason
     } = props;
     const router = useHistory();
     const queryClient = useQueryClient();
@@ -84,6 +86,7 @@ const TurnRow = (props: TurnRowProps) => {
     const [visitLoading, setVisitLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
+    const [deleteReasonModal, setDeleteReasonModal] = useState(false);
     const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
     const [descriptionTreatment, setDescriptionTreatment] = useState('');
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
@@ -112,12 +115,14 @@ const TurnRow = (props: TurnRowProps) => {
         paid: {
             text: 'پرداخت شد',
             icon: <DolorIcon className="!text-[#0BB07B] !w-5 scale-105" />,
-            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none'
+            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none',
+            action: undefined
         },
         refunded: {
             text: 'استرداد شد',
             icon: <DolorIcon className="!text-gray-500 !w-5 scale-105 mb-[0.1rem]" />,
-            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-2 gap-[0.15rem] pointer-events-none'
+            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-2 gap-[0.15rem]  pointer-events-auto cursor-pointer',
+            action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
 
@@ -326,6 +331,7 @@ const TurnRow = (props: TurnRowProps) => {
         <Button
             size="small"
             className={paymentStatus && paidStatusInfo[paymentStatus].style}
+            onClick={paymentStatus && paidStatusInfo[paymentStatus].action}
             fullWidth
         >
             {paymentStatus && paidStatusInfo[paymentStatus].icon}
@@ -680,6 +686,9 @@ const TurnRow = (props: TurnRowProps) => {
                 >
                     ثبت
                 </Button>
+            </Modal>
+            <Modal title="علت لغو نوبت" isOpen={deleteReasonModal} onClose={setDeleteReasonModal}>
+                <span className="text-sm leading-6">{deleteReason}</span>
             </Modal>
         </>
     );
