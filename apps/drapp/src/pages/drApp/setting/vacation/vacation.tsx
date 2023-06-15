@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/lab/LoadingButton';
 import TimeInput from '@paziresh24/shared/ui/timeInput';
 import DateInput from '@paziresh24/shared/ui/dateInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     useDeleteTurns,
     useMoveTurns,
@@ -24,13 +24,15 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { Calendar, DayValue, utils } from '@hassanmojab/react-modern-calendar-datepicker';
 import { formattedDateToDateObject } from '@paziresh24/shared/ui/dateInput/dateInput';
 import { dateObjectToFormattedDate } from '@paziresh24/shared/ui/dateInput/dateInput';
+import monthData from '@paziresh24/constants/month.json';
 import VacationCard from 'apps/drapp/src/components/vacationCard/vacationCard';
 import { EditIcon, TrashIcon } from '@paziresh24/shared/icon';
 import { isMobile } from 'react-device-detect';
 import { convertTimestamoToDate } from '@paziresh24/shared/utils/convertTimestamoToDate';
 import { convertTimeStampToFormattedTime } from '@paziresh24/shared/utils';
-import { Checkbox, Skeleton } from '@mui/material';
+import { Checkbox, MenuItem, Select, Skeleton } from '@mui/material';
 import isEmpty from 'lodash/isEmpty';
+import getFirstAndLastMonthDay from 'apps/drapp/src/functions/getFirstAndLastMonthDay';
 
 type VacationDate = {
     from: DayValue | any;
@@ -43,26 +45,48 @@ export const Vacation = () => {
     const [fromTime, setFromTime] = useState<string>();
     const [toTime, setToTime] = useState<string>();
     const [targetMoveDate, setTargetMoveDate] = useState<string>();
-    const [selectedDay, setSelectedDay] = useState<VacationDate>({
-        from: null,
-        to: null
-    });
     const [targetMoveTime, setTargetMoveTime] = useState<string>();
     const [vacationModal, setVacationModal] = useState<boolean>(false);
     const [shouldShowconfilitModal, setShouldShowconfilitModal] = useState<boolean>(false);
     const [shouldShowDeleteVacationModal, setShouldShowDeleteVacationModal] =
         useState<boolean>(false);
+    const [selectedDay, setSelectedDay] = useState<VacationDate>({
+        from: null,
+        to: null
+    });
     const [vacationInfoForDelete, setVacationInfoForDelete] = useState<VacationDate>({
+        from: null,
+        to: null
+    });
+    const [monthInfo, setMonthInfo] = useState<VacationDate>({
         from: null,
         to: null
     });
     const [shouldShowGetTargetMoveModal, setShouldShowGetTargetMoveModal] =
         useState<boolean>(false);
     const [currentVacationDate, setCurrentVacationData] = useState<any>({});
+    const [selectedMonth, setSelectedMonth] = useState<any>(
+        monthData.find((month: any) => month.monthNum === moment().jMonth() + 1)?.persian_name
+    );
+
+    useEffect(() => {
+        const currentMonthInfo = getFirstAndLastMonthDay(moment().jYear(), moment().jMonth() + 1);
+        setMonthInfo({
+            from: currentMonthInfo.firstDayOfMonth,
+            to: currentMonthInfo.lastDayOfMonth
+        });
+    }, []);
+
     const vacationRequest = useVacation();
     const deleteTurnsRequest = useDeleteTurns();
     const moveTurnsRequest = useMoveTurns();
-    const getVacation = useGetVacation({ center_id: center.id });
+    const getVacation = useGetVacation({
+        center_id: center.id,
+        filter: {
+            from: monthInfo.from,
+            to: monthInfo.to
+        }
+    });
     const deleteVacation = useDeleteVacation();
     const changeVacationDate = useChangeVacation();
     const isDisableSubmitButton =
@@ -234,6 +258,18 @@ export const Vacation = () => {
         );
     };
 
+    const filterVacationAccordingToMonth = (monthName: string) => {
+        setSelectedMonth(monthName);
+        const monthNumber = monthData.find(
+            (month: any) => month.persian_name === monthName
+        )?.monthNum;
+        const getMonthTimestamp = getFirstAndLastMonthDay(moment().jYear(), monthNumber!);
+        setMonthInfo({
+            from: getMonthTimestamp.firstDayOfMonth,
+            to: getMonthTimestamp.lastDayOfMonth
+        });
+    };
+
     const openEditVacationModal = (from: string, to: string) => {
         const currentVacationInfo = {
             time: {
@@ -300,7 +336,27 @@ export const Vacation = () => {
                     flexDirection={{ sm: 'column', md: 'row', lg: 'row' }}
                 >
                     <div className="w-full flex flex-col gap-2">
-                        <span className="text-[0.9rem] font-medium">لیست مرخصی های ثبت شده:</span>
+                        <div className="flex justify-between items-center">
+                            <span className="text-[0.9rem] font-medium">
+                                لیست مرخصی های ثبت شده:
+                            </span>
+                            <Select
+                                className="!w-1/4"
+                                variant="standard"
+                                label="جستجچو"
+                                value={selectedMonth}
+                                onChange={(e: any) =>
+                                    filterVacationAccordingToMonth(e.target.value)
+                                }
+                                inputProps={{ placeholder: 'فیلتر بر حسب تاریخ' }}
+                            >
+                                {monthData.map((month: any) => (
+                                    <MenuItem key={month.monthNum} value={month.persian_name}>
+                                        {month.persian_name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </div>
                         {!getVacation.isRefetching && getVacation.isSuccess && (
                             <div className="h-auto md:h-[21rem] overflow-auto flex flex-col gap-2">
                                 {getVacation?.data?.data.map((vacationInfo: any, index: number) => (
