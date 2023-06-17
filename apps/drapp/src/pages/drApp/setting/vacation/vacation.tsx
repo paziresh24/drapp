@@ -154,8 +154,14 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    from: convertDateAndTimeToTimeStamp(selectedDay.from, fromTime!),
-                    to: convertDateAndTimeToTimeStamp(selectedDay.to, toTime!)
+                    from: convertDateAndTimeToTimeStamp(
+                        selectedDay.from,
+                        isFullDayVacation ? '00:00' : fromTime!
+                    ),
+                    to: convertDateAndTimeToTimeStamp(
+                        selectedDay.to ?? selectedDay.from,
+                        isFullDayVacation ? '23:59' : toTime!
+                    )
                 }
             },
             {
@@ -177,8 +183,14 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    book_from: convertDateAndTimeToTimeStamp(selectedDay.from, fromTime!),
-                    book_to: convertDateAndTimeToTimeStamp(selectedDay.to, toTime!),
+                    book_from: convertDateAndTimeToTimeStamp(
+                        selectedDay.from,
+                        isFullDayVacation ? '00:00' : fromTime!
+                    ),
+                    book_to: convertDateAndTimeToTimeStamp(
+                        selectedDay.to ?? selectedDay.from,
+                        isFullDayVacation ? '23:59' : toTime!
+                    ),
                     target_from: moment
                         .from(`${targetMoveDate} ${targetMoveTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
                         .unix(),
