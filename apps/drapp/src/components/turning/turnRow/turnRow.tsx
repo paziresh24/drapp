@@ -491,7 +491,9 @@ const TurnRow = (props: TurnRowProps) => {
             open={
                 number === 1 &&
                 (statistics.activePatients
-                    ? bookStatus === 'not_came' || bookStatus === 'not_visited'
+                    ? bookStatus === 'not_came' ||
+                      bookStatus === 'not_visited' ||
+                      !prescription.finalized
                     : bookStatus === 'visited' || !!prescription.finalized || isDeletedTurn)
             }
             disableHoverListener={number !== 1}
