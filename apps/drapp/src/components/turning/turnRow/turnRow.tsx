@@ -343,7 +343,7 @@ const TurnRow = (props: TurnRowProps) => {
             disabled={isDeletedTurn}
             fullWidth
         >
-            نماس با بیمار
+            تماس با بیمار
         </Button>
     );
 
