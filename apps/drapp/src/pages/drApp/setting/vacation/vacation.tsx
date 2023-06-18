@@ -432,8 +432,10 @@ export const Vacation = () => {
             >
                 <span>
                     در این بازه
-                    {vacationRequest.isError &&
-                        (vacationRequest.error as any)?.response?.data?.data?.books_count}
+                    <b className="mr-1">
+                        {vacationRequest.isError &&
+                            (vacationRequest.error as any)?.response?.data?.data?.books_count}{' '}
+                    </b>
                     نوبت وجود دارد، چگونه آنها را مدیریت می کنید؟
                 </span>
                 <Alert icon={false} className="!bg-[#F3F6F9]">
