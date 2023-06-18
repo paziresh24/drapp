@@ -13,7 +13,14 @@ import { useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import Visit from '../visit';
-import { ChevronIcon, DotsIcon, TrashIcon } from '@paziresh24/shared/icon';
+import {
+    ArrowheadIcon,
+    CheckIcon,
+    ChevronIcon,
+    DotsIcon,
+    TrashIcon,
+    UndoIcon
+} from '@paziresh24/shared/icon';
 import Stack from '@mui/material/Stack';
 import DropDown from '@paziresh24/shared/ui/dropDown';
 import Modal from '@paziresh24/shared/ui/modal';
@@ -23,8 +30,8 @@ import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
-import DolorIcon from '@paziresh24/shared/icon/public/dolor';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
+import classNames from 'classnames';
 
 type Prescription = {
     id: string;
@@ -114,14 +121,23 @@ const TurnRow = (props: TurnRowProps) => {
     const paidStatusInfo = {
         paid: {
             text: 'پرداخت شد',
-            icon: <DolorIcon className="!text-[#0BB07B] !w-5 scale-105" />,
+            icon: <CheckIcon className="!fill-[#0BB07B] !w-5 scale-105" />,
             style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none',
-            action: undefined
+            action: undefined,
+            additionalIcons: null
         },
         refunded: {
             text: 'استرداد شد',
-            icon: <DolorIcon className="!text-gray-500 !w-5 scale-105 mb-[0.1rem]" />,
-            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-2 gap-[0.15rem]  pointer-events-auto cursor-pointer',
+            icon: (
+                <UndoIcon
+                    className={classNames('!text-gray-500 ml-1', {
+                        'w-[0.9rem]': !deleteReason,
+                        '!min-w-4': !!deleteReason
+                    })}
+                />
+            ),
+            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-[0.4rem] gap-[0.15rem]  pointer-events-auto cursor-pointer',
+            additionalIcons: !!deleteReason && <ArrowheadIcon />,
             action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
@@ -336,6 +352,7 @@ const TurnRow = (props: TurnRowProps) => {
         >
             {paymentStatus && paidStatusInfo[paymentStatus].icon}
             {paymentStatus && paidStatusInfo[paymentStatus].text}
+            {paymentStatus && paidStatusInfo[paymentStatus].additionalIcons}
         </Button>
     );
     const PrescriptionButton = () => (
