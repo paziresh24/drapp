@@ -63,7 +63,7 @@ export const Forough = () => {
                                     !data?.online_visit_waiting_time_info &&
                                     !data?.waiting_time_info &&
                                     !!data.prescription_waiting_time_info,
-                                service: 'مسخه نویسی',
+                                service: 'نسخه نویسی',
                                 type: 'prescription',
                                 wating_time:
                                     data?.prescription_waiting_time_info?.average_waiting_time ?? 0
