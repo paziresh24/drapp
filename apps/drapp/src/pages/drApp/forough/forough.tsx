@@ -59,7 +59,7 @@ export const Forough = () => {
                             id: 3,
                             title: 'انتظار برای نسخه',
                             selected: false,
-                            service: 'مسخه نویسی',
+                            service: 'نسخه نویسی',
                             type: 'prescription',
                             wating_time:
                                 searchViewInfo.data?.data?.prescription_waiting_time_info
