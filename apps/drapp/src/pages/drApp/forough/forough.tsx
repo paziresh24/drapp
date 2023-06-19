@@ -25,7 +25,7 @@ export const Forough = () => {
     const [info] = useDrApp();
     const [data, setData] = useState<any>({});
     const router = useHistory();
-    const [infoOptionDetails, SetInfoOptionDetails] = useState<InfoOption[]>([]);
+    const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
 
@@ -34,46 +34,49 @@ export const Forough = () => {
             if (searchViewInfo.data?.data) {
                 setIsLoading(false);
                 setData(searchViewInfo.data?.data);
-                SetInfoOptionDetails(
-                    [
-                        searchViewInfo.data?.data?.waiting_time_info && {
-                            id: 1,
-                            title: 'انتظار در مطب',
-                            selected: true,
-                            service: 'مطب',
-                            type: 'presence',
-                            wating_time:
-                                searchViewInfo.data?.data?.waiting_time_info?.waiting_time ?? 0
-                        },
-                        searchViewInfo.data?.data?.online_visit_waiting_time_info && {
-                            id: 2,
-                            title: 'انتظار برای ویزیت آنلاین',
-                            selected: false,
-                            service: 'ویزیت آنلاین',
-                            type: 'online-visit',
-                            wating_time:
-                                searchViewInfo.data?.data?.online_visit_waiting_time_info
-                                    ?.waiting_time ?? 0
-                        },
-                        searchViewInfo.data?.data?.prescription_waiting_time_info && {
-                            id: 3,
-                            title: 'انتظار برای نسخه',
-                            selected: false,
-                            service: 'مسخه نویسی',
-                            type: 'prescription',
-                            wating_time:
-                                searchViewInfo.data?.data?.prescription_waiting_time_info
-                                    ?.average_waiting_time ?? 0
-                        }
-                    ].filter((details: any) => !!details)
-                );
+
+                !!data &&
+                    setInfoOptionDetails(
+                        [
+                            data?.waiting_time_info && {
+                                id: 1,
+                                title: 'انتظار در مطب',
+                                selected: !!data?.waiting_time_info,
+                                service: 'مطب',
+                                type: 'presence',
+                                wating_time: data?.waiting_time_info?.waiting_time ?? 0
+                            },
+                            data?.online_visit_waiting_time_info && {
+                                id: 2,
+                                title: 'انتظار برای ویزیت آنلاین',
+                                selected:
+                                    !data?.waiting_time_info &&
+                                    !!data?.online_visit_waiting_time_info,
+                                service: 'ویزیت آنلاین',
+                                type: 'online-visit',
+                                wating_time: data?.online_visit_waiting_time_info?.waiting_time ?? 0
+                            },
+                            data?.prescription_waiting_time_info && {
+                                id: 3,
+                                title: 'انتظار برای نسخه',
+                                selected:
+                                    !data?.online_visit_waiting_time_info &&
+                                    !data?.waiting_time_info &&
+                                    !!data.prescription_waiting_time_info,
+                                service: 'مسخه نویسی',
+                                type: 'prescription',
+                                wating_time:
+                                    data?.prescription_waiting_time_info?.average_waiting_time ?? 0
+                            }
+                        ].filter((details: any) => !!details)
+                    );
             } else {
                 setTimeout(() => {
                     searchViewInfo.refetch();
                 }, 5000);
             }
         }
-    }, [searchViewInfo.status, searchViewInfo.data]);
+    }, [searchViewInfo.status, data]);
 
     const waitingTimeText = useMemo(() => {
         const watingTimeAvarageTime = activeOptionSelectedDetails?.wating_time ?? 0;
@@ -84,7 +87,7 @@ export const Forough = () => {
     }, [infoOptionDetails]);
 
     const handleButtonClick = (id: number) => {
-        SetInfoOptionDetails(prev =>
+        setInfoOptionDetails(prev =>
             prev.map(item => ({
                 ...item,
                 selected: item.id === id
