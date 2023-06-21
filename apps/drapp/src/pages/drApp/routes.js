@@ -6,6 +6,7 @@ export const routes = [
         name: 'Auth',
         component: lazy(() => import('./auth')),
         isPrivate: false,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -13,6 +14,7 @@ export const routes = [
         name: 'Auth',
         component: lazy(() => import('./auth')),
         isPrivate: false,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -21,6 +23,7 @@ export const routes = [
         isPrivate: true,
         title: 'لیست بیماران',
         component: lazy(() => import('./turning')),
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -31,6 +34,7 @@ export const routes = [
         component: lazy(() =>
             import('@paziresh24/apps/prescription/pages/prescription/statistics')
         ),
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -39,6 +43,7 @@ export const routes = [
         title: 'راه اندازی',
         component: lazy(() => import('./activation')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -47,6 +52,7 @@ export const routes = [
         title: 'محل مطب من',
         component: lazy(() => import('./activation/office/center')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -55,6 +61,7 @@ export const routes = [
         title: 'مبلغ بیعانه',
         component: lazy(() => import('./activation/office/cost')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -63,6 +70,7 @@ export const routes = [
         title: 'مدت زمان ویزیت',
         component: lazy(() => import('./activation/office/workhours')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -71,6 +79,7 @@ export const routes = [
         title: 'ساعت کاری',
         component: lazy(() => import('./activation/office/duration')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -79,6 +88,7 @@ export const routes = [
         title: 'قوانین و مقررات',
         component: lazy(() => import('./activation/consult/rules')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -87,6 +97,7 @@ export const routes = [
         title: 'آنبوردینگ پزشک ویزیت آنلاین',
         component: lazy(() => import('./activation/consult/onboarding')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -95,6 +106,7 @@ export const routes = [
         title: 'پیام رسان',
         component: lazy(() => import('./activation/consult/messengers')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -103,6 +115,7 @@ export const routes = [
         title: 'مبلغ ویزیت آنلاین',
         component: lazy(() => import('./activation/consult/cost')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -111,6 +124,7 @@ export const routes = [
         title: 'ساعت کاری',
         component: lazy(() => import('./activation/consult/workhours')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -119,6 +133,7 @@ export const routes = [
         title: 'پذیرش24',
         component: lazy(() => import('./superMenu')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -127,6 +142,7 @@ export const routes = [
         title: 'تقویم کاری',
         component: lazy(() => import('./setting/cosnult')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: false
     },
     {
@@ -135,6 +151,7 @@ export const routes = [
         title: 'پروفایل کاربری',
         component: lazy(() => import('./profile')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -143,6 +160,7 @@ export const routes = [
         title: 'اطلاعات فردی',
         component: lazy(() => import('./profile/info')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -151,6 +169,7 @@ export const routes = [
         title: 'بیوگرافی',
         component: lazy(() => import('./profile/biography')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -159,6 +178,7 @@ export const routes = [
         title: 'ویرایش تخصص',
         component: lazy(() => import('./profile/expertises')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -167,6 +187,7 @@ export const routes = [
         title: 'گالری',
         component: lazy(() => import('./profile/gallery')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -175,6 +196,7 @@ export const routes = [
         title: 'نظرات بیماران',
         component: lazy(() => import('./feedbacks')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -183,6 +205,7 @@ export const routes = [
         component: lazy(() => import('./createCenter')),
         title: 'ایجاد مطب',
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -191,6 +214,7 @@ export const routes = [
         title: 'قوانین و مقررات',
         component: lazy(() => import('./consult/term')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -199,6 +223,7 @@ export const routes = [
         title: 'نسخه های ثبت شده',
         component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/home')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -207,6 +232,7 @@ export const routes = [
         title: 'نسخه نویسی',
         component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/types')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -215,6 +241,7 @@ export const routes = [
         title: 'بیمه های من',
         component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/providers')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -223,6 +250,7 @@ export const routes = [
         title: 'صدور نسخه',
         component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/create')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -231,6 +259,7 @@ export const routes = [
         title: 'نسخه پراستفاده های من',
         component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/templates')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -241,6 +270,7 @@ export const routes = [
             import('@paziresh24/apps/prescription/pages/prescription/templates/addTemplates')
         ),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -251,6 +281,7 @@ export const routes = [
             import('@paziresh24/apps/prescription/pages/prescription/templates/editTemplates')
         ),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -261,6 +292,7 @@ export const routes = [
             import('@paziresh24/apps/prescription/pages/prescription/serviceFavorite')
         ),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -269,6 +301,7 @@ export const routes = [
         title: 'اطلاعات منشی',
         component: lazy(() => import('./fillInfo/secretary')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: false
     },
 
@@ -278,6 +311,7 @@ export const routes = [
         title: 'مدیریت مالی',
         component: lazy(() => import('./financial')),
         isPrivate: true,
+        dontShowForHospital: true,
         exact: false
     },
     {
@@ -286,6 +320,7 @@ export const routes = [
         title: 'پرداخت',
         component: lazy(() => import('./setting/payment')),
         isPrivate: true,
+        dontShowForHospital: true,
         exact: false
     },
     {
@@ -294,6 +329,7 @@ export const routes = [
         title: 'تنظیمات نوبت های من',
         component: lazy(() => import('./setting')),
         isPrivate: true,
+        dontShowForHospital: true,
         exact: true
     },
     {
@@ -302,6 +338,7 @@ export const routes = [
         title: 'ساعت کاری من',
         component: lazy(() => import('./setting/workHours')),
         isPrivate: true,
+        dontShowForHospital: true,
         exact: false
     },
     {
@@ -310,6 +347,7 @@ export const routes = [
         title: 'اعلام تاخیر به بیماران',
         component: lazy(() => import('./setting/delay')),
         isPrivate: true,
+        dontShowForHospital: true,
         exact: false
     },
     {
@@ -318,6 +356,7 @@ export const routes = [
         title: 'اعلام مرخصی',
         component: lazy(() => import('./setting/vacation')),
         isPrivate: true,
+        dontShowForHospital: true,
         exact: false
     },
     {
@@ -326,6 +365,7 @@ export const routes = [
         title: 'ویزیت آنلاین',
         component: lazy(() => import('./landing/igap')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -334,6 +374,7 @@ export const routes = [
         title: 'آمار مهم من',
         component: lazy(() => import('./forough')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -342,6 +383,7 @@ export const routes = [
         title: 'بهبود رتبه در نتایج',
         component: lazy(() => import('./forough/improve')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -350,6 +392,7 @@ export const routes = [
         title: 'شکایات',
         component: lazy(() => import('./complaints')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
@@ -364,6 +407,7 @@ export const routes = [
         title: 'قوانین و مقررات',
         component: lazy(() => import('./onlineVisitRules')),
         isPrivate: true,
+        dontShowForHospital: false,
         exact: true
     },
     {
