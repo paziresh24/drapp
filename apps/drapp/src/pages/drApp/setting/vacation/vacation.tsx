@@ -28,7 +28,7 @@ import monthData from '@paziresh24/constants/month.json';
 import VacationCard from 'apps/drapp/src/components/vacationCard/vacationCard';
 import { EditIcon, TrashIcon } from '@paziresh24/shared/icon';
 import { isMobile } from 'react-device-detect';
-import { convertTimestamoToDate } from '@paziresh24/shared/utils/convertTimestamoToDate';
+import { convertTimestampToDate } from '@paziresh24/shared/utils/convertTimestampToDate';
 import { convertTimeStampToFormattedTime } from '@paziresh24/shared/utils';
 import { Checkbox, MenuItem, Select, Skeleton } from '@mui/material';
 import isEmpty from 'lodash/isEmpty';
@@ -291,13 +291,13 @@ export const Vacation = () => {
             date: {
                 from: formattedDateToDateObject(
                     moment
-                        .from(convertTimestamoToDate(+from), 'YYYY/MM/DD')
+                        .from(convertTimestampToDate(+from), 'YYYY/MM/DD')
                         .locale('fa')
                         .format('YYYY/MM/DD')
                 ),
                 to: formattedDateToDateObject(
                     moment
-                        .from(convertTimestamoToDate(+to), 'YYYY/MM/DD')
+                        .from(convertTimestampToDate(+to), 'YYYY/MM/DD')
                         .locale('fa')
                         .format('YYYY/MM/DD')
                 )
