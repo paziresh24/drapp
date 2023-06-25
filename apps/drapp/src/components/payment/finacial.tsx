@@ -6,10 +6,23 @@ import { useGetFinancial } from '../../apis/payment/getFinancial';
 import { useSubmitSettlement } from '../../apis/payment/submitSettlement';
 import { useConfirmSettlement } from '../../apis/payment/confirmSettlement';
 import { toast } from 'react-toastify';
-import Transaction from './transaction';
+import TransactionCard from './transactionCard';
 import axios from 'axios';
 import CartInfo from './cartInfo';
 import Modal from '@paziresh24/shared/ui/modal';
+import { convertTimeStampToPersianDate } from '@paziresh24/shared/utils';
+import Chips from '@paziresh24/shared/ui/chips';
+
+type Status =
+    | 'system_reject'
+    | 'request'
+    | 'reject'
+    | 'in_progress'
+    | 'paid'
+    | 'doctor_confirmation'
+    | 'doctor_confirmation_reject'
+    | 'failed_request'
+    | 'unknown';
 
 const Financial = () => {
     const [{ center }] = useDrApp();
@@ -52,16 +65,40 @@ const Financial = () => {
         return (
             <div className="flex flex-col space-y-4">
                 <div className="h-32 rounded-xl bg-slate-300 animate-pulse" />
-                <div className="h-5 w-36 rounded-full bg-slate-300 animate-pulse" />
-                <div className="h-96 rounded-lg bg-slate-300 animate-pulse" />
+                <div className="h-5 rounded-full w-36 bg-slate-300 animate-pulse" />
+                <div className="rounded-lg h-96 bg-slate-300 animate-pulse" />
             </div>
         );
+
+    const paymentStatus = {
+        request: 'در انتظار پرداخت',
+        reject: 'درخواست رد شده',
+        in_progress: 'در صف پرداخت',
+        paid: 'پرداخت شده',
+        doctor_confirmation: 'در انتظار تایید درخواست توسط پزشک',
+        doctor_confirmation_reject: 'رد شده توسط پزشک',
+        failed_request: 'درخواست با خطا مواجه شده است',
+        unknown: 'نا مشخص',
+        system_reject: 'رد شده توسط سیستم'
+    };
+
+    const getTagStatusColor = (status: Status) => {
+        switch (status) {
+            case 'paid':
+                return 'sucsess';
+            case 'request':
+            case 'in_progress':
+                return 'gray';
+            default:
+                return 'error';
+        }
+    };
 
     return (
         <>
             <div className="flex flex-col space-y-4">
                 <div className="p-5 space-s-4 bg-gradient-to-br from-[#4f4f8f] to-[#1A1D4E] h-32 flex justify-evenly items-stretch rounded-xl shadow-lg">
-                    <div className="space-y-2 h-full flex flex-col justify-center items-center">
+                    <div className="flex flex-col items-center justify-center h-full space-y-2">
                         <span className="text-sm text-white opacity-80">کل درآمد</span>
                         <span className="text-lg font-bold text-white">
                             {addCommas((getfinancial.data?.data?.doctor_share ?? 0) / 10)}
@@ -69,7 +106,7 @@ const Financial = () => {
                         <span className="text-xs text-white">تومان</span>
                     </div>
                     <div className="bg-white w-[0.15rem] rounded-full opacity-20 h-30" />
-                    <div className="space-y-2 h-full flex flex-col justify-center items-center">
+                    <div className="flex flex-col items-center justify-center h-full space-y-2">
                         <span className="text-sm text-white opacity-80">پرداخت شده</span>
                         <span className="text-lg font-bold text-white">
                             {addCommas((getfinancial.data?.data?.paid_cost ?? 0) / 10)}
@@ -77,7 +114,7 @@ const Financial = () => {
                         <span className="text-xs text-white">تومان</span>
                     </div>
                     <div className="bg-white w-[0.15rem] rounded-full opacity-20 h-30" />
-                    <div className="space-y-2 h-full flex flex-col justify-center items-center">
+                    <div className="flex flex-col items-center justify-center h-full space-y-2">
                         <span className="text-sm text-white opacity-80">موجودی</span>
                         <span className="text-lg font-bold text-white">{addCommas(inventory)}</span>
                         <span className="text-xs text-white"> تومان</span>
@@ -93,19 +130,34 @@ const Financial = () => {
                 {getfinancial.data?.data?.doctor_payments?.length && (
                     <span className="text-sm font-bold">گزارش مالی</span>
                 )}
-                <div className="rounded-lg bg-slate-200 px-4">
+                <div className="px-4 rounded-lg bg-slate-100">
                     {getfinancial.data?.data?.doctor_payments?.map(
                         (transaction: any, index: number, array: any[]) => (
                             <Fragment key={index}>
-                                <Transaction
-                                    amount={transaction.cost}
-                                    date={transaction.jalali_date_time}
+                                <TransactionCard
+                                    amount={
+                                        <>
+                                            <div className="text-sm font-medium">
+                                                {addCommas((+transaction.cost ?? 0) / 10)} تومان
+                                            </div>
+                                            <Chips
+                                                theme={getTagStatusColor(
+                                                    transaction.status as Status
+                                                )}
+                                                className="!p-0 !px-2"
+                                            >
+                                                {paymentStatus[transaction.status as Status]}
+                                            </Chips>
+                                        </>
+                                    }
+                                    date={convertTimeStampToPersianDate(
+                                        transaction.send_request_at
+                                    )}
                                     rowNumber={index + 1}
-                                    status={transaction.status}
                                     detailes={{
-                                        shaba: transaction.shaba,
-                                        settlementDate: transaction.send_request_at,
-                                        trackerId: transaction.tracker_id
+                                        'وضعیت': paymentStatus[transaction.status as Status],
+                                        'شماره شبا (کارت)': transaction.shaba,
+                                        'کدپیگیری': transaction.tracker_id
                                     }}
                                 />
                                 {array.length !== index + 1 && <hr className="border-slate-300" />}

@@ -123,6 +123,8 @@ drApp-deploy-production:
   image: docker.paziresh24.info/docker-ansible:latest
   stage: deploy
   when: manual
+  only:
+    - main
 #  needs: ["drApp-test"]
   script:
     - apk add --update bash openssh sshpass

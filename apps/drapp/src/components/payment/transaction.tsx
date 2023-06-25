@@ -1,89 +1,105 @@
-import { ChevronIcon } from '@paziresh24/shared/icon';
-import Chips from '@paziresh24/shared/ui/chips';
-import { convertTimeStampToPersianDate } from '@paziresh24/shared/utils/convertTimeStampToPersianDate';
+import { Fragment, useEffect, useState } from 'react';
+import TransactionCard from './transactionCard';
 import { addCommas } from '@persian-tools/persian-tools';
-import { useState } from 'react';
+import { convertTimeStampToPersianDate } from '@paziresh24/shared/utils';
+import { useGetTransactions } from '../../apis/payment/getTransactions';
+import { useDrApp } from '@paziresh24/context/drapp';
+import classNames from 'classnames';
+import Button from '@mui/lab/LoadingButton';
 
-type Detailes = {
-    shaba: string;
-    trackerId: string;
-    settlementDate: string;
-};
+export const Transaction = () => {
+    const [info] = useDrApp();
+    const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const getTransaction = useGetTransactions({
+        user_center_id: info.center.user_center_id,
+        page
+    });
+    const [transactionData, setTransactionData] = useState<any>([]);
 
-interface TransactionProps {
-    rowNumber: number;
-    amount: string;
-    status:
-        | 'system_reject'
-        | 'request'
-        | 'reject'
-        | 'in_progress'
-        | 'paid'
-        | 'doctor_confirmation'
-        | 'doctor_confirmation_reject'
-        | 'failed_request'
-        | 'unknown';
-    date: string;
-    detailes: Detailes;
-}
-
-export const Transaction = (props: TransactionProps) => {
-    const { amount, date, rowNumber, status, detailes } = props;
-    const [isOpen, setIsOpen] = useState(false);
-    const paymentStatus = {
-        request: 'در انتظار پرداخت',
-        reject: 'درخواست رد شده',
-        in_progress: 'در صف پرداخت',
-        paid: 'پرداخت شده',
-        doctor_confirmation: 'در انتظار تایید درخواست توسط پزشک',
-        doctor_confirmation_reject: 'رد شده توسط پزشک',
-        failed_request: 'درخواست با خطا مواجه شده است',
-        unknown: 'نا مشخص',
-        system_reject: 'رد شده توسط سیستم'
-    };
-
-    const getTagStatusColor = () => {
-        switch (status) {
-            case 'paid':
-                return 'sucsess';
-            case 'request':
-            case 'in_progress':
-                return 'gray';
-            default:
-                return 'error';
+    useEffect(() => {
+        if (getTransaction.data) {
+            setTransactionData((prev: any) => [
+                ...prev,
+                ...(getTransaction.data as unknown as any[])
+            ]);
+            setIsLoading(false);
         }
-    };
+    }, [getTransaction.data]);
 
     return (
-        <div className="py-3 flex flex-col w-full" onClick={() => setIsOpen(prev => !prev)}>
-            <div className="flex justify-between">
-                <div className="flex items-center space-s-3">
-                    <span className="text-sm opacity-70">{rowNumber}</span>
-                    <div className="font-medium text-sm">
-                        {addCommas((+amount ?? 0) / 10)} تومان
-                    </div>
-                    <Chips theme={getTagStatusColor()} className="!p-0 !px-2">
-                        {paymentStatus[status]}
-                    </Chips>
-                </div>
-                <div className="flex space-s-4 items-center">
-                    <div className="text-sm">{date}</div>
-                    <ChevronIcon dir={isOpen ? 'top' : 'bottom'} />
-                </div>
+        <div className="flex flex-col h-full md:pb-0">
+            <div className="z-50 flex pb-3 text-xs font-medium bg-white px-9">
+                <span className="w-full opacity-50">مبلغ</span>
+                <span className="w-full text-center opacity-50">تاریخ</span>
+                <span className="w-full text-left opacity-50">موجودی (تومان)</span>
             </div>
-
-            {isOpen && (
-                <div className="text-sm flex flex-col space-y-2 pt-3">
-                    <span>وضعیت: {paymentStatus[status]}</span>
-                    <div className="flex flex-col gap-2">
-                        <span>توضیحات:</span>
-                        <span>شماره شبا (کارت): {detailes.shaba}</span>
-                        {detailes.trackerId && <span>کد پیگیری: {detailes.trackerId}</span>}
-                        <span>
-                            تسویه شده تا تاریخ:{' '}
-                            {convertTimeStampToPersianDate(+detailes.settlementDate)}
-                        </span>
+            {getTransaction.isLoading && (
+                <div className="rounded-lg h-96 bg-slate-300 animate-pulse" />
+            )}
+            {getTransaction.isSuccess && (
+                <div className="flex flex-col w-full h-full overflow-auto">
+                    <div className="px-4 mb-4 h-[80%] overflow-auto rounded-lg bg-slate-100">
+                        {transactionData.map?.((transaction: any, index: number, array: any[]) => (
+                            <Fragment key={index}>
+                                <TransactionCard
+                                    amount={
+                                        <>
+                                            <div
+                                                className={classNames(
+                                                    'text-sm font-medium text-red-500',
+                                                    {
+                                                        'text-green-600': transaction.amount > 0
+                                                    }
+                                                )}
+                                            >
+                                                {addCommas(Math.abs(+transaction.amount ?? 0) / 10)}
+                                                {transaction.amount > 0 ? '+' : '-'}
+                                            </div>
+                                        </>
+                                    }
+                                    date={convertTimeStampToPersianDate(transaction.insert_at)}
+                                    balance={
+                                        <>
+                                            <div
+                                                className={classNames(
+                                                    'text-sm font-medium text-red-500',
+                                                    {
+                                                        'text-green-600': transaction.balance >= 0
+                                                    }
+                                                )}
+                                            >
+                                                {addCommas(
+                                                    Math.abs(+transaction.balance ?? 0) / 10
+                                                )}
+                                                {transaction.balance >= 0 ? '' : '-'}
+                                            </div>
+                                        </>
+                                    }
+                                    rowNumber={index + 1}
+                                    detailes={{
+                                        '': transaction.description,
+                                        'تاریخ نوبت': convertTimeStampToPersianDate(
+                                            transaction.insert_at
+                                        )
+                                    }}
+                                />
+                                {array.length !== index + 1 && <hr className="border-slate-300" />}
+                            </Fragment>
+                        ))}
                     </div>
+                    {(getTransaction.data as unknown as any[]).length > 0 && (
+                        <Button
+                            variant="outlined"
+                            loading={isLoading}
+                            onClick={() => {
+                                setPage(prev => prev + 1);
+                                setIsLoading(true);
+                            }}
+                        >
+                            نمایش بیشتر
+                        </Button>
+                    )}
                 </div>
             )}
         </div>
