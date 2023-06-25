@@ -241,6 +241,7 @@ const Profile = () => {
                         ...prev.center,
                         address: data.address,
                         tell: phoneNumber,
+                        tell_array: phoneNumber.split('|'),
                         city: city,
                         province: province,
                         lat: position.lat,
@@ -580,7 +581,7 @@ const Profile = () => {
                             onBlur={e => checkAddress(e.target.value)}
                         />
                         <CenterPhoneNumbers
-                            phoneNumber={info.center.tell}
+                            phoneNumbers={info.center.tell_array}
                             onChange={setPhoneNumber}
                         />
                         <TextField

@@ -6,16 +6,8 @@ import isNaN from 'lodash/isNaN';
 import { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
-function splitMulti(str, tokens) {
-    var tempChar = tokens[0]; // We can use the first token as a temporary join character
-    for (var i = 1; i < tokens.length; i++) {
-        str = str.split(tokens[i]).join(tempChar);
-    }
-    str = str.split(tempChar);
-    return str;
-}
 export const CenterPhoneNumbers = props => {
-    const { phoneNumber = '', onChange } = props;
+    const { phoneNumbers = '', onChange } = props;
     const [list, setList] = useState([]);
 
     const handleOnChangeInput = (id, value) => {
@@ -32,7 +24,6 @@ export const CenterPhoneNumbers = props => {
     };
 
     useEffect(() => {
-        const phoneNumbers = splitMulti(phoneNumber ?? '', ['-', '|', ',', '،', ' ']);
         setList(
             phoneNumbers.map(item => ({
                 id: uuid(),
