@@ -84,7 +84,7 @@ const TurnRow = (props: TurnRowProps) => {
     const deletePrescription = useDeletePrescription();
     const getMessengerInfo = useGetMessengerInfo();
     const turns = useTurnsStore(state => state.turns);
-    const [visitLoading, setVisitLoading] = useState(false);
+    const [actionLoading, setActionLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
     const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
@@ -131,9 +131,12 @@ const TurnRow = (props: TurnRowProps) => {
             const { data } = await came.mutateAsync({
                 book_id: id
             });
-
-            queryClient.refetchQueries('turns');
+            setActionLoading(true);
+            await came.mutateAsync({
+                book_id: id
+            });
             toast.success('پذیرش بیمار با موفقیت انجام شد!');
+            await queryClient.refetchQueries('turns');
             getSplunkInstance().sendEvent({
                 group: 'drapp-visit-online',
                 type: 'accept',
@@ -147,10 +150,12 @@ const TurnRow = (props: TurnRowProps) => {
                 }
             });
             if (data.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
+            setActionLoading(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
             }
+            setActionLoading(false);
         }
     };
 
@@ -239,17 +244,17 @@ const TurnRow = (props: TurnRowProps) => {
         if (info.center.id === CONSULT_CENTER_ID && type === 'book') return setVisitModal(true);
         if (prescription.id) return setVisitModal(true);
         try {
-            setVisitLoading(true);
+            setActionLoading(true);
             (await createPrescription({
                 mobileNumber,
                 nationalCode: nationalCode ?? nationalCodeValue,
                 id
             })) as any;
             setVisitModal(true);
-            setVisitLoading(false);
+            setActionLoading(false);
         } catch (error) {
             errorCatch(error);
-            setVisitLoading(false);
+            setActionLoading(false);
         }
     };
 
@@ -358,7 +363,7 @@ const TurnRow = (props: TurnRowProps) => {
             size="small"
             disabled={prescription.finalized}
             onClick={handleVisitButtonAction}
-            loading={visitLoading}
+            loading={actionLoading}
             fullWidth
         >
             {info.center.id === CONSULT_CENTER_ID && type === 'book'
