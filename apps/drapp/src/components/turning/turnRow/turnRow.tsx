@@ -128,9 +128,10 @@ const TurnRow = (props: TurnRowProps) => {
 
     const handleAdmitTurn = async () => {
         try {
-            await came.mutateAsync({
+            const { data } = await came.mutateAsync({
                 book_id: id
             });
+
             queryClient.refetchQueries('turns');
             toast.success('پذیرش بیمار با موفقیت انجام شد!');
             getSplunkInstance().sendEvent({
@@ -145,32 +146,10 @@ const TurnRow = (props: TurnRowProps) => {
                         getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
+            if (data.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
-            }
-        }
-    };
-
-    const handleConnectSecureCall = async () => {
-        try {
-            await establishingSecureCall.mutate({
-                bookId: id
-            });
-            getSplunkInstance().sendEvent({
-                group: 'doctor',
-                type: 'safe-call',
-                event: {
-                    patient_name: name,
-                    patient_family: family,
-                    patient_cell: mobileNumber,
-                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`
-                }
-            });
-            toast.success('درخواست شما با موفقیت ثبت شد');
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data.message);
             }
         }
     };
@@ -223,6 +202,32 @@ const TurnRow = (props: TurnRowProps) => {
                     patient_cell: mobileNumber
                 }
             });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message);
+            }
+        }
+    };
+
+    const handleChatButton = async () => {
+        try {
+            const { data } = await came.mutateAsync({
+                book_id: id
+            });
+
+            getSplunkInstance().sendEvent({
+                group: 'drapp-visit-online',
+                type: 'chat',
+                event: {
+                    patient_name: name,
+                    patient_family: family,
+                    patient_cell: mobileNumber,
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`,
+                    doctor_messenger:
+                        getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
+                }
+            });
+            if (data.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
@@ -334,16 +339,16 @@ const TurnRow = (props: TurnRowProps) => {
         return insuranceProvider;
     };
 
-    const SecureCallButton = () => (
+    const ChatButton = () => (
         <Button
             variant="outlined"
+            onClick={handleChatButton}
+            loading={came.isLoading}
             size="small"
-            onClick={handleConnectSecureCall}
-            loading={establishingSecureCall.isLoading}
             disabled={isDeletedTurn}
             fullWidth
         >
-            تماس با بیمار
+            چت پذیرش24
         </Button>
     );
 
@@ -561,7 +566,8 @@ const TurnRow = (props: TurnRowProps) => {
                             spacing={1}
                         >
                             {info.center.id === CONSULT_CENTER_ID &&
-                                possibilityBeingSecureCallButton && <SecureCallButton />}
+                                possibilityBeingSecureCallButton &&
+                                bookStatus !== 'not_came' && <ChatButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -632,7 +638,7 @@ const TurnRow = (props: TurnRowProps) => {
 
                     <div className="flex space-s-2">
                         {info.center.id === CONSULT_CENTER_ID &&
-                            possibilityBeingSecureCallButton && <SecureCallButton />}
+                            possibilityBeingSecureCallButton && <ChatButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
