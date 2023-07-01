@@ -151,7 +151,8 @@ const TurnRow = (props: TurnRowProps) => {
                         getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
-            if (data.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
+            if (data.patinet_chat_deep_link)
+                return window.open(data.patinet_chat_deep_link, '_blank');
             setActionLoading(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -234,7 +235,8 @@ const TurnRow = (props: TurnRowProps) => {
                         getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
-            if (data.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
+            if (data.patinet_chat_deep_link)
+                return window.open(data.patinet_chat_deep_link, '_blank');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
