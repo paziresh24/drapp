@@ -55,6 +55,7 @@ interface TurnRowProps {
     prescription: Prescription;
     isDeletedTurn?: boolean;
     possibilityBeingSecureCallButton?: boolean;
+    messengerName?: string;
 }
 
 const TurnRow = (props: TurnRowProps) => {
@@ -74,7 +75,8 @@ const TurnRow = (props: TurnRowProps) => {
         refId,
         bookStatus,
         isDeletedTurn,
-        possibilityBeingSecureCallButton
+        possibilityBeingSecureCallButton,
+        messengerName
     } = props;
     const router = useHistory();
     const queryClient = useQueryClient();
@@ -572,7 +574,8 @@ const TurnRow = (props: TurnRowProps) => {
                         >
                             {info.center.id === CONSULT_CENTER_ID &&
                                 possibilityBeingSecureCallButton &&
-                                bookStatus !== 'not_came' && <ChatButton />}
+                                bookStatus !== 'not_came' &&
+                                messengerName === 'rocketchat' && <ChatButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -643,7 +646,8 @@ const TurnRow = (props: TurnRowProps) => {
 
                     <div className="flex space-s-2">
                         {info.center.id === CONSULT_CENTER_ID &&
-                            possibilityBeingSecureCallButton && <ChatButton />}
+                            possibilityBeingSecureCallButton &&
+                            messengerName === 'rocketchat' && <ChatButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}

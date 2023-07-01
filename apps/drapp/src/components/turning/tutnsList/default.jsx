@@ -63,6 +63,7 @@ const TurnRow = {
                     currentTime: Date.now() / 1000
                 })
             }
+            messengerName={turn?.online_channel}
             prescription={{
                 id: turn.prescription?.id,
                 finalized: turn.book_status === 'visited' || turn.prescription?.finalized,
@@ -91,6 +92,7 @@ const TurnRow = {
             nationalCode={turn?.patientNationalCode}
             type={turn.type}
             number={lineNumber}
+            messengerName={turn?.online_channel}
             prescription={{
                 id: turn.id,
                 finalized: turn?.finalized,
