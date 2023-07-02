@@ -13,7 +13,14 @@ import { useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import Visit from '../visit';
-import { ChevronIcon, DotsIcon, TrashIcon } from '@paziresh24/shared/icon';
+import {
+    ArrowheadIcon,
+    CheckIcon,
+    ChevronIcon,
+    DotsIcon,
+    TrashIcon,
+    UndoIcon
+} from '@paziresh24/shared/icon';
 import Stack from '@mui/material/Stack';
 import DropDown from '@paziresh24/shared/ui/dropDown';
 import Modal from '@paziresh24/shared/ui/modal';
@@ -23,9 +30,12 @@ import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
-import DolorIcon from '@paziresh24/shared/icon/public/dolor';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
+<<<<<<< HEAD
 import { useEstablishingSecureCall } from 'apps/drapp/src/apis/onlineVisit/establishingSecureCall';
+=======
+import classNames from 'classnames';
+>>>>>>> origin/main
 
 type Prescription = {
     id: string;
@@ -51,6 +61,7 @@ interface TurnRowProps {
     paymentStatus?: 'paid' | 'refunded';
     paymentPrice?: string;
     bookStatus?: 'not_came' | 'not_visited' | 'visited';
+    deleteReason?: string;
     type: 'book' | 'prescription';
     prescription: Prescription;
     isDeletedTurn?: boolean;
@@ -75,8 +86,12 @@ const TurnRow = (props: TurnRowProps) => {
         refId,
         bookStatus,
         isDeletedTurn,
+<<<<<<< HEAD
         possibilityBeingSecureCallButton,
         messengerName
+=======
+        deleteReason
+>>>>>>> origin/main
     } = props;
     const router = useHistory();
     const queryClient = useQueryClient();
@@ -89,6 +104,7 @@ const TurnRow = (props: TurnRowProps) => {
     const [actionLoading, setActionLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
+    const [deleteReasonModal, setDeleteReasonModal] = useState(false);
     const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
     const [descriptionTreatment, setDescriptionTreatment] = useState('');
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
@@ -118,13 +134,24 @@ const TurnRow = (props: TurnRowProps) => {
     const paidStatusInfo = {
         paid: {
             text: 'پرداخت شد',
-            icon: <DolorIcon className="!text-[#0BB07B] !w-5 scale-105" />,
-            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none'
+            icon: <CheckIcon className="!fill-[#0BB07B] !w-5 scale-105" />,
+            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none',
+            action: undefined,
+            additionalIcons: null
         },
         refunded: {
             text: 'استرداد شد',
-            icon: <DolorIcon className="!text-gray-500 !w-5 scale-105 mb-[0.1rem]" />,
-            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-2 gap-[0.15rem] pointer-events-none'
+            icon: (
+                <UndoIcon
+                    className={classNames('!text-gray-500 ml-1', {
+                        'w-[0.9rem]': !deleteReason,
+                        '!min-w-4': !!deleteReason
+                    })}
+                />
+            ),
+            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-[0.4rem] gap-[0.15rem]  pointer-events-auto cursor-pointer',
+            additionalIcons: !!deleteReason && <ArrowheadIcon />,
+            action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
 
@@ -381,10 +408,12 @@ const TurnRow = (props: TurnRowProps) => {
         <Button
             size="small"
             className={paymentStatus && paidStatusInfo[paymentStatus].style}
+            onClick={paymentStatus && paidStatusInfo[paymentStatus].action}
             fullWidth
         >
             {paymentStatus && paidStatusInfo[paymentStatus].icon}
             {paymentStatus && paidStatusInfo[paymentStatus].text}
+            {paymentStatus && paidStatusInfo[paymentStatus].additionalIcons}
         </Button>
     );
     const PrescriptionButton = () => (
@@ -742,6 +771,9 @@ const TurnRow = (props: TurnRowProps) => {
                 >
                     ثبت
                 </Button>
+            </Modal>
+            <Modal title="علت لغو نوبت" isOpen={deleteReasonModal} onClose={setDeleteReasonModal}>
+                <span className="text-sm leading-6">{deleteReason}</span>
             </Modal>
         </>
     );

@@ -51,6 +51,7 @@ const TurnRow = {
             }
             type={turn.type}
             number={lineNumber}
+            deleteReason={turn.delete_reason}
             paymentStatus={checkPaymentStatus(turn)}
             paymentPrice={turn.user_payment}
             refId={turn.ref_id}
@@ -90,6 +91,7 @@ const TurnRow = {
             family={turn.patientAdditionalData?.lastName}
             mobileNumber={turn.patientCell ?? turn?.patientAdditionalData?.cellPhoneNumber}
             nationalCode={turn?.patientNationalCode}
+            deleteReason={turn.delete_reason}
             type={turn.type}
             number={lineNumber}
             messengerName={turn?.online_channel}
