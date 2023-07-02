@@ -31,11 +31,8 @@ import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
-<<<<<<< HEAD
 import { useEstablishingSecureCall } from 'apps/drapp/src/apis/onlineVisit/establishingSecureCall';
-=======
 import classNames from 'classnames';
->>>>>>> origin/main
 
 type Prescription = {
     id: string;
@@ -86,12 +83,9 @@ const TurnRow = (props: TurnRowProps) => {
         refId,
         bookStatus,
         isDeletedTurn,
-<<<<<<< HEAD
         possibilityBeingSecureCallButton,
+        deleteReason,
         messengerName
-=======
-        deleteReason
->>>>>>> origin/main
     } = props;
     const router = useHistory();
     const queryClient = useQueryClient();
@@ -157,11 +151,8 @@ const TurnRow = (props: TurnRowProps) => {
 
     const handleAdmitTurn = async () => {
         try {
-            const { data } = await came.mutateAsync({
-                book_id: id
-            });
             setActionLoading(true);
-            await came.mutateAsync({
+            const { data } = await came.mutateAsync({
                 book_id: id
             });
             toast.success('پذیرش بیمار با موفقیت انجام شد!');
@@ -178,9 +169,9 @@ const TurnRow = (props: TurnRowProps) => {
                         getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
                 }
             });
-            if (data.patinet_chat_deep_link)
-                return window.open(data.patinet_chat_deep_link, '_blank');
             setActionLoading(false);
+            if (data?.patinet_chat_deep_link)
+                return window.open(data.patinet_chat_deep_link, '_blank');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
@@ -381,7 +372,7 @@ const TurnRow = (props: TurnRowProps) => {
             onClick={handleChatButton}
             loading={came.isLoading}
             size="small"
-            disabled={isDeletedTurn}
+            disabled={isDeletedTurn || !possibilityBeingSecureCallButton}
             fullWidth
         >
             چت پذیرش24
