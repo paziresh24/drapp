@@ -31,7 +31,6 @@ import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
-import { useEstablishingSecureCall } from 'apps/drapp/src/apis/onlineVisit/establishingSecureCall';
 import classNames from 'classnames';
 
 type Prescription = {
@@ -117,7 +116,6 @@ const TurnRow = (props: TurnRowProps) => {
                 : window._env_.P24_BASE_URL_PRESCRIPTION_API
         }/pdfs/` + prescription.pdfName
     );
-    const establishingSecureCall = useEstablishingSecureCall();
 
     const turn = useRef(turns.find(turn => turn.id === id));
     const buttonStatusTurnText = {
