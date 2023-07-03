@@ -119,7 +119,7 @@ const TurnRow = (props: TurnRowProps) => {
 
     const turn = useRef(turns.find(turn => turn.id === id));
     const buttonStatusTurnText = {
-        not_came: 'پذیرش',
+        not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
     };
