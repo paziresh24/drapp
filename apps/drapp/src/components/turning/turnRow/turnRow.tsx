@@ -6,10 +6,10 @@ import { useUpdateDescription } from 'apps/drapp/src/apis/prescription/updateDes
 import { toast } from 'react-toastify';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, digitsFaToEn } from '@persian-tools/persian-tools';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import moment from 'jalali-moment';
 import { useRef, useState } from 'react';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import Visit from '../visit';
@@ -61,6 +61,8 @@ interface TurnRowProps {
     type: 'book' | 'prescription';
     prescription: Prescription;
     isDeletedTurn?: boolean;
+    possibilityBeingSecureCallButton?: boolean;
+    messengerName?: string;
 }
 
 const TurnRow = (props: TurnRowProps) => {
@@ -80,7 +82,9 @@ const TurnRow = (props: TurnRowProps) => {
         refId,
         bookStatus,
         isDeletedTurn,
-        deleteReason
+        possibilityBeingSecureCallButton,
+        deleteReason,
+        messengerName
     } = props;
     const router = useHistory();
     const queryClient = useQueryClient();
@@ -112,9 +116,10 @@ const TurnRow = (props: TurnRowProps) => {
                 : window._env_.P24_BASE_URL_PRESCRIPTION_API
         }/pdfs/` + prescription.pdfName
     );
+
     const turn = useRef(turns.find(turn => turn.id === id));
     const buttonStatusTurnText = {
-        not_came: 'پذیرش',
+        not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
     };
@@ -145,7 +150,7 @@ const TurnRow = (props: TurnRowProps) => {
     const handleAdmitTurn = async () => {
         try {
             setActionLoading(true);
-            await came.mutateAsync({
+            const { data } = await came.mutateAsync({
                 book_id: id
             });
             toast.success('پذیرش بیمار با موفقیت انجام شد!');
@@ -163,6 +168,7 @@ const TurnRow = (props: TurnRowProps) => {
                 }
             });
             setActionLoading(false);
+            if (data?.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
@@ -219,6 +225,32 @@ const TurnRow = (props: TurnRowProps) => {
                     patient_cell: mobileNumber
                 }
             });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message);
+            }
+        }
+    };
+
+    const handleChatButton = async () => {
+        try {
+            const { data } = await came.mutateAsync({
+                book_id: id
+            });
+
+            getSplunkInstance().sendEvent({
+                group: 'drapp-visit-online',
+                type: 'chat',
+                event: {
+                    patient_name: name,
+                    patient_family: family,
+                    patient_cell: mobileNumber,
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`,
+                    doctor_messenger:
+                        getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
+                }
+            });
+            if (data.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
@@ -329,6 +361,19 @@ const TurnRow = (props: TurnRowProps) => {
 
         return insuranceProvider;
     };
+
+    const ChatButton = () => (
+        <Button
+            variant="outlined"
+            onClick={handleChatButton}
+            loading={came.isLoading}
+            size="small"
+            disabled={isDeletedTurn || !possibilityBeingSecureCallButton}
+            fullWidth
+        >
+            چت پذیرش24
+        </Button>
+    );
 
     const VisitButton = () => (
         <Button
@@ -545,6 +590,10 @@ const TurnRow = (props: TurnRowProps) => {
                             alignItems="center"
                             spacing={1}
                         >
+                            {info.center.id === CONSULT_CENTER_ID &&
+                                possibilityBeingSecureCallButton &&
+                                bookStatus !== 'not_came' &&
+                                messengerName === 'rocketchat' && <ChatButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -614,6 +663,9 @@ const TurnRow = (props: TurnRowProps) => {
                         ))}
 
                     <div className="flex space-s-2">
+                        {info.center.id === CONSULT_CENTER_ID &&
+                            possibilityBeingSecureCallButton &&
+                            messengerName === 'rocketchat' && <ChatButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
