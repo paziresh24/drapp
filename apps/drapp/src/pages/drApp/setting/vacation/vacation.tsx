@@ -1,38 +1,116 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/lab/LoadingButton';
-import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import TimeInput from '@paziresh24/shared/ui/timeInput';
 import DateInput from '@paziresh24/shared/ui/dateInput';
-import { useState } from 'react';
-import { useDeleteTurns, useMoveTurns, useVacation } from '@paziresh24/hooks/drapp/turning';
+import { useEffect, useState } from 'react';
+import {
+    useDeleteTurns,
+    useMoveTurns,
+    useVacation,
+    useGetVacation,
+    useDeleteVacation,
+    useChangeVacation
+} from '@paziresh24/hooks/drapp/turning';
 import moment from 'jalali-moment';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Modal from '@paziresh24/shared/ui/modal';
-import { useHistory } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { Calendar, DayValue, utils } from '@hassanmojab/react-modern-calendar-datepicker';
+import { formattedDateToDateObject } from '@paziresh24/shared/ui/dateInput/dateInput';
+import { dateObjectToFormattedDate } from '@paziresh24/shared/ui/dateInput/dateInput';
+import monthData from '@paziresh24/constants/month.json';
+import VacationCard from 'apps/drapp/src/components/vacationCard/vacationCard';
+import { EditIcon, TrashIcon } from '@paziresh24/shared/icon';
+import { isMobile } from 'react-device-detect';
+import { convertTimestampToDate } from '@paziresh24/shared/utils/convertTimestampToDate';
+import { convertTimeStampToFormattedTime } from '@paziresh24/shared/utils';
+import { Checkbox, MenuItem, Select, Skeleton } from '@mui/material';
+import isEmpty from 'lodash/isEmpty';
+import getFirstAndLastMonthDay from 'apps/drapp/src/functions/getFirstAndLastMonthDay';
+
+type VacationDate = {
+    from: DayValue | any;
+    to: DayValue | any;
+};
 
 export const Vacation = () => {
     const [{ center }] = useDrApp();
-    const router = useHistory();
-    const [fromDate, setFromDate] = useState<string>();
-    const [toDate, setToDate] = useState<string>();
-    const [targetMoveDate, setTargetMoveDate] = useState<string>();
+    const [isFullDayVacation, setIsFullDayVacation] = useState<boolean>(false);
     const [fromTime, setFromTime] = useState<string>();
     const [toTime, setToTime] = useState<string>();
+    const [targetMoveDate, setTargetMoveDate] = useState<string>();
     const [targetMoveTime, setTargetMoveTime] = useState<string>();
-
+    const [vacationModal, setVacationModal] = useState<boolean>(false);
     const [shouldShowconfilitModal, setShouldShowconfilitModal] = useState<boolean>(false);
+    const [shouldShowDeleteVacationModal, setShouldShowDeleteVacationModal] =
+        useState<boolean>(false);
+    const [selectedDay, setSelectedDay] = useState<VacationDate>({
+        from: null,
+        to: null
+    });
+    const [vacationInfoForDelete, setVacationInfoForDelete] = useState<VacationDate>({
+        from: null,
+        to: null
+    });
+    const [monthInfo, setMonthInfo] = useState<VacationDate>({
+        from: null,
+        to: null
+    });
     const [shouldShowGetTargetMoveModal, setShouldShowGetTargetMoveModal] =
         useState<boolean>(false);
+    const [currentVacationDate, setCurrentVacationData] = useState<any>({});
+    const [selectedMonth, setSelectedMonth] = useState<any>(
+        monthData.find((month: any) => month.monthNum === moment().jMonth() + 1)?.persian_name
+    );
+
+    useEffect(() => {
+        const currentMonthInfo = getFirstAndLastMonthDay(moment().jYear(), moment().jMonth() + 1);
+        setMonthInfo({
+            from: currentMonthInfo.firstDayOfMonth,
+            to: currentMonthInfo.lastDayOfMonth
+        });
+    }, []);
 
     const vacationRequest = useVacation();
     const deleteTurnsRequest = useDeleteTurns();
     const moveTurnsRequest = useMoveTurns();
+    const getVacation = useGetVacation({
+        center_id: center.id,
+        filter: {
+            from: monthInfo.from,
+            to: monthInfo.to
+        }
+    });
+    const deleteVacation = useDeleteVacation();
+    const changeVacationDate = useChangeVacation();
+    const isDisableSubmitButton =
+        !isFullDayVacation &&
+        (!selectedDay.from || !fromTime || !toTime) &&
+        isEmpty(currentVacationDate);
+
+    const closeVacationModal = () => {
+        setVacationModal(false);
+        setSelectedDay({
+            from: null,
+            to: null
+        });
+        setFromTime('');
+        setToTime('');
+        setCurrentVacationData(null);
+        setIsFullDayVacation(false);
+    };
+
+    const convertDateAndTimeToTimeStamp = (date: DayValue, time: string) => {
+        return moment
+            .from(`${dateObjectToFormattedDate(date)} ${time}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
+            .unix();
+    };
 
     const handleSubmit = () => {
         getSplunkInstance().sendEvent({
@@ -43,10 +121,14 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    from: moment
-                        .from(`${fromDate} ${fromTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
-                        .unix(),
-                    to: moment.from(`${toDate} ${toTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm').unix()
+                    from: convertDateAndTimeToTimeStamp(
+                        selectedDay.from,
+                        isFullDayVacation ? '00:00' : fromTime!
+                    ),
+                    to: convertDateAndTimeToTimeStamp(
+                        selectedDay.to ?? selectedDay.from,
+                        isFullDayVacation ? '23:59' : toTime!
+                    )
                 }
             },
             {
@@ -60,7 +142,8 @@ export const Vacation = () => {
                 },
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
-                    router.push('/setting');
+                    getVacation.refetch();
+                    closeVacationModal();
                 }
             }
         );
@@ -71,17 +154,20 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    from: moment
-                        .from(`${fromDate} ${fromTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
-                        .unix(),
-                    to: moment.from(`${toDate} ${toTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm').unix()
+                    from: convertDateAndTimeToTimeStamp(
+                        selectedDay.from,
+                        isFullDayVacation ? '00:00' : fromTime!
+                    ),
+                    to: convertDateAndTimeToTimeStamp(
+                        selectedDay.to ?? selectedDay.from,
+                        isFullDayVacation ? '23:59' : toTime!
+                    )
                 }
             },
             {
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
-                    router.push('/setting');
                 },
                 onError: err => {
                     if (axios.isAxiosError(err)) {
@@ -97,10 +183,14 @@ export const Vacation = () => {
             {
                 centerId: center.id,
                 data: {
-                    book_from: moment
-                        .from(`${fromDate} ${fromTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
-                        .unix(),
-                    book_to: moment.from(`${toDate} ${toTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm').unix(),
+                    book_from: convertDateAndTimeToTimeStamp(
+                        selectedDay.from,
+                        isFullDayVacation ? '00:00' : fromTime!
+                    ),
+                    book_to: convertDateAndTimeToTimeStamp(
+                        selectedDay.to ?? selectedDay.from,
+                        isFullDayVacation ? '23:59' : toTime!
+                    ),
                     target_from: moment
                         .from(`${targetMoveDate} ${targetMoveTime}`, 'fa', 'JYYYY/JMM/JDD HH:mm')
                         .unix(),
@@ -111,8 +201,7 @@ export const Vacation = () => {
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
-                    setShouldShowGetTargetMoveModal(false);
-                    router.push('/setting');
+                    closeVacationModal();
                 },
                 onError: err => {
                     if (axios.isAxiosError(err)) {
@@ -123,45 +212,218 @@ export const Vacation = () => {
         );
     };
 
+    const deleteVacationHandler = (from: number, to: number) => {
+        deleteVacation.mutate(
+            {
+                center_id: center.id,
+                from,
+                to
+            },
+            {
+                onSuccess: () => {
+                    toast.success('مرخصی شما حذف شد.');
+                    setShouldShowDeleteVacationModal(false);
+                    getVacation.refetch();
+                },
+                onError: err => {
+                    if (axios.isAxiosError(err)) {
+                        toast.error(err?.response?.data?.message);
+                    }
+                }
+            }
+        );
+    };
+
+    const changeVacationDateHandler = () => {
+        changeVacationDate.mutate(
+            {
+                center_id: center.id,
+                from: convertDateAndTimeToTimeStamp(
+                    selectedDay.from,
+                    isFullDayVacation ? '00:00' : fromTime!
+                ),
+                to: convertDateAndTimeToTimeStamp(
+                    selectedDay.to ?? selectedDay.from,
+                    isFullDayVacation ? '23:59' : toTime!
+                ),
+                old_from: convertDateAndTimeToTimeStamp(
+                    currentVacationDate.date.from,
+                    currentVacationDate.time.from!
+                ),
+                old_to: convertDateAndTimeToTimeStamp(
+                    currentVacationDate.date.to,
+                    currentVacationDate.time.to!
+                )
+            },
+            {
+                onSuccess: () => {
+                    toast.success('تغییرات شما با موفقیت اعمال شد.');
+                    getVacation.refetch();
+                    closeVacationModal();
+                },
+                onError: err => {
+                    if (axios.isAxiosError(err)) {
+                        toast.error(err?.response?.data?.message);
+                    }
+                }
+            }
+        );
+    };
+
+    const filterVacationAccordingToMonth = (monthName: string) => {
+        setSelectedMonth(monthName);
+        const monthNumber = monthData.find(
+            (month: any) => month.persian_name === monthName
+        )?.monthNum;
+        const getMonthTimestamp = getFirstAndLastMonthDay(moment().jYear(), monthNumber!);
+        setMonthInfo({
+            from: getMonthTimestamp.firstDayOfMonth,
+            to: getMonthTimestamp.lastDayOfMonth
+        });
+    };
+
+    const openEditVacationModal = (from: string, to: string) => {
+        const currentVacationInfo = {
+            time: {
+                from: convertTimeStampToFormattedTime(+from),
+                to: convertTimeStampToFormattedTime(+to)
+            },
+            date: {
+                from: formattedDateToDateObject(
+                    moment
+                        .from(convertTimestampToDate(+from), 'YYYY/MM/DD')
+                        .locale('fa')
+                        .format('YYYY/MM/DD')
+                ),
+                to: formattedDateToDateObject(
+                    moment
+                        .from(convertTimestampToDate(+to), 'YYYY/MM/DD')
+                        .locale('fa')
+                        .format('YYYY/MM/DD')
+                )
+            }
+        };
+        setCurrentVacationData(currentVacationInfo);
+        setSelectedDay(currentVacationInfo.date);
+        setFromTime(currentVacationInfo.time.from);
+        setToTime(currentVacationInfo.time.to);
+        setVacationModal(true);
+    };
+
+    const isExpireVacation = (vacationTime: string) => {
+        return +vacationTime < Math.floor(Date.now() / 1000);
+    };
+
     return (
         <>
             <Container
                 maxWidth="sm"
-                className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-md space-y-5"
+                className="min-h-full md:min-h-max md:h-auto md:p-5 rounded-md pb-4 bg-white md:mt-8 md:shadow-md space-y-5"
             >
-                <Stack>
-                    <p className="mb-5 font-bold">ﺑﺎ اﻧﺘﺨﺎب بازه مدنظر، مرخصی اعمال می شود.</p>
-                    <span className="text-sm font-medium">از</span>
-                    <Stack mt={2} mb={2} direction="row" spacing={2}>
-                        <DateInput label="تاریخ" onCahnge={value => setFromDate(value)} />
-                        <TimeInput label="ساعت" onCahnge={value => setFromTime(value)} />
-                    </Stack>
-                    <span className="text-sm font-medium">تا</span>
-                    <Stack mt={2} mb={2} direction="row" spacing={2}>
-                        <DateInput label="تاریخ" onCahnge={value => setToDate(value)} />
-                        <TimeInput label="ساعت" onCahnge={value => setToTime(value)} />
-                    </Stack>
-                    <span className="text-sm font-medium">مرخصی اعمال شود.</span>
-                </Stack>
-                <FixedWrapBottom className="border-t border-solid border-[#e8ecf0]">
-                    <Stack spacing={1} width="100%">
-                        <Alert icon={false} className="!bg-[#F3F6F9]">
-                            <Typography fontSize="0.9rem" fontWeight="medium">
-                                درصورتی که در این بازه نوبتی وجود داشته باشد، می توانید آن را حذف یا
-                                جابجا کنید.
-                            </Typography>
-                        </Alert>
+                <Stack spacing={1} width="100%">
+                    <Alert
+                        icon={false}
+                        className="!bg-white [&>div]:flex [&>div]:flex-col [&>div]:gap-2 [&>div]:!p-0 !p-0 mt-4 md:mt-0 [&>div]:!w-full"
+                    >
+                        <Typography fontSize="0.9rem" fontWeight="bold">
+                            ثبت مرخصی
+                        </Typography>
+                        <Typography fontSize="0.8rem" lineHeight={2} fontWeight="small">
+                            شما می توانید برای ساعاتی که طبق ساعت کاری خود حضور ندارید، مرخصی اعمال
+                            کنید.
+                        </Typography>
                         <Button
                             loading={vacationRequest.isLoading}
-                            onClick={handleSubmit}
+                            onClick={() => setVacationModal(true)}
                             fullWidth
-                            variant="contained"
-                            disabled={!fromDate || !fromTime || !toDate || !toTime}
+                            variant="outlined"
+                            className="w-2/4 !text-[0.8rem]"
                         >
-                            ثبت
+                            اضافه کردن مرخصی
                         </Button>
-                    </Stack>
-                </FixedWrapBottom>
+                    </Alert>
+                </Stack>
+                <Stack
+                    alignItems={isMobile ? 'center' : 'start'}
+                    flexDirection={{ sm: 'column', md: 'row', lg: 'row' }}
+                >
+                    <div className="w-full flex flex-col gap-2">
+                        <div className="flex justify-between items-center">
+                            <span className="text-[0.9rem] font-medium">
+                                لیست مرخصی های ثبت شده:
+                            </span>
+                            <Select
+                                className="!w-1/4"
+                                variant="standard"
+                                label="جستجچو"
+                                value={selectedMonth}
+                                onChange={(e: any) =>
+                                    filterVacationAccordingToMonth(e.target.value)
+                                }
+                                inputProps={{ placeholder: 'فیلتر بر حسب تاریخ' }}
+                            >
+                                {monthData.map((month: any) => (
+                                    <MenuItem key={month.monthNum} value={month.persian_name}>
+                                        {month.persian_name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </div>
+                        {!getVacation.isRefetching && getVacation.isSuccess && (
+                            <div className="h-auto md:h-[21rem] overflow-auto flex flex-col gap-2">
+                                {getVacation?.data?.data.map((vacationInfo: any, index: number) => (
+                                    <>
+                                        <VacationCard
+                                            key={index}
+                                            title={`${vacationInfo.formatted_from} الی ${vacationInfo.formatted_to}`}
+                                            detailes={{
+                                                'مدت زمان': vacationInfo.formatted_duration
+                                            }}
+                                            icon={
+                                                !isExpireVacation(vacationInfo.to) && (
+                                                    <div className="flex flex-col gap-4 items-center">
+                                                        <EditIcon
+                                                            className="cursor-pointer w-5 h-[1.1rem] text-[#000000]"
+                                                            onClick={() =>
+                                                                openEditVacationModal(
+                                                                    vacationInfo.from,
+                                                                    vacationInfo.to
+                                                                )
+                                                            }
+                                                        />
+                                                        <TrashIcon
+                                                            color="#000"
+                                                            className="cursor-pointer w-5 hover:!text-red-500"
+                                                            onClick={() => {
+                                                                setVacationInfoForDelete({
+                                                                    from: vacationInfo.from,
+                                                                    to: vacationInfo.to
+                                                                });
+                                                                setShouldShowDeleteVacationModal(
+                                                                    true
+                                                                );
+                                                            }}
+                                                        />
+                                                    </div>
+                                                )
+                                            }
+                                        />
+                                    </>
+                                ))}
+                                {!getVacation.data?.data.length && (
+                                    <div className="w-full h-[25rem] md:min-h-[20rem] lg:h-80 flex justify-center items-center rounded-md border border-solid border-[#aeaeae]">
+                                        <span className="text-[0.8rem] font-medium">
+                                            مرخصی وجود ندارد
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        {(getVacation.isLoading || getVacation.isRefetching) && (
+                            <Skeleton width="100%" height="20rem" className="!scale-100" />
+                        )}
+                    </div>
+                </Stack>
             </Container>
             <Modal
                 title="مرخصی"
@@ -169,9 +431,11 @@ export const Vacation = () => {
                 onClose={setShouldShowconfilitModal}
             >
                 <span>
-                    در این بازه{' '}
-                    {vacationRequest.isError &&
-                        (vacationRequest.error as any)?.response?.data?.data?.books_count}{' '}
+                    در این بازه
+                    <b className="mr-1">
+                        {vacationRequest.isError &&
+                            (vacationRequest.error as any)?.response?.data?.data?.books_count}{' '}
+                    </b>
                     نوبت وجود دارد، چگونه آنها را مدیریت می کنید؟
                 </span>
                 <Alert icon={false} className="!bg-[#F3F6F9]">
@@ -218,6 +482,88 @@ export const Vacation = () => {
                 >
                     تایید
                 </Button>
+            </Modal>
+            <Modal
+                title="حذف مرخصی"
+                isOpen={shouldShowDeleteVacationModal}
+                onClose={setShouldShowDeleteVacationModal}
+            >
+                <span className="text-sm">آیا از حذف مرخصی خود اطمینان دارید؟</span>
+                <div className="mt-4 flex justify-between gap-2">
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        loading={deleteVacation.isLoading}
+                        color="error"
+                        onClick={() =>
+                            deleteVacationHandler(
+                                vacationInfoForDelete.from,
+                                vacationInfoForDelete.to
+                            )
+                        }
+                    >
+                        حذف مرخصی
+                    </Button>
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        onClick={() => setShouldShowGetTargetMoveModal(true)}
+                    >
+                        انصراف
+                    </Button>
+                </div>
+            </Modal>
+            <Modal title="ثبت مرخصی" isOpen={vacationModal} onClose={closeVacationModal}>
+                <div className="w-full flex flex-col items-center">
+                    <Calendar
+                        value={selectedDay}
+                        onChange={setSelectedDay}
+                        shouldHighlightWeekends
+                        minimumDate={utils('fa').getToday()}
+                        colorPrimary="#0070f3"
+                        locale="fa"
+                        calendarRangeStartClassName="!rounded-md"
+                        calendarRangeEndClassName="!rounded-md"
+                        calendarRangeBetweenClassName="!rounded-md"
+                        calendarClassName="!shadow-none !py-0 !bg-transparent"
+                    />
+                    {(!!selectedDay.from || !isEmpty(currentVacationDate)) && (
+                        <>
+                            {!isFullDayVacation && (
+                                <div className="flex -translate-y-3 gap-2">
+                                    <TimeInput
+                                        label="از ساعت"
+                                        defaultValue={fromTime}
+                                        onCahnge={value => setFromTime(value)}
+                                    />
+                                    <TimeInput
+                                        label="تا ساعت"
+                                        defaultValue={toTime}
+                                        onCahnge={value => setToTime(value)}
+                                    />
+                                </div>
+                            )}
+                            <div className="flex justify-start items-center w-full">
+                                <Checkbox
+                                    size="small"
+                                    onChange={e => setIsFullDayVacation(e.target.checked)}
+                                />
+                                <span className="text-[0.8rem]">ثبت مرخصی برای تمام روز</span>
+                            </div>
+                        </>
+                    )}
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={
+                            !isEmpty(currentVacationDate) ? changeVacationDateHandler : handleSubmit
+                        }
+                        loading={vacationRequest.isLoading || changeVacationDate.isLoading}
+                        disabled={isDisableSubmitButton}
+                    >
+                        ثبت مرخصی
+                    </Button>
+                </div>
             </Modal>
         </>
     );

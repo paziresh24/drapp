@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Farvardin",
+        "days": 31,
+        "extra_days": 0,
+        "persian_name": "فروردین",
+        "monthNum": 1
+    },
+    {
+        "name": "Ordibehesht",
+        "days": 31,
+        "extra_days": 0,
+        "persian_name": "اردیبهشت",
+        "monthNum": 2
+    },
+    {
+        "name": "Khordad",
+        "days": 31,
+        "extra_days": 0,
+        "persian_name": "خرداد",
+        "monthNum": 3
+    },
+    {
+        "name": "Tir",
+        "days": 31,
+        "extra_days": 0,
+        "persian_name": "تیر",
+        "monthNum": 4
+    },
+    {
+        "name": "Mordad",
+        "days": 31,
+        "extra_days": 0,
+        "persian_name": "مرداد",
+        "monthNum": 5
+    },
+    {
+        "name": "Shahrivar",
+        "days": 31,
+        "extra_days": 0,
+        "persian_name": "شهریور",
+        "monthNum": 6
+    },
+    {
+        "name": "Mehr",
+        "days": 30,
+        "extra_days": 0,
+        "persian_name": "مهر",
+        "monthNum": 7
+    },
+    {
+        "name": "Aban",
+        "days": 30,
+        "extra_days": 0,
+        "persian_name": "آبان",
+        "monthNum": 8
+    },
+    {
+        "name": "Azar",
+        "days": 30,
+        "extra_days": 0,
+        "persian_name": "آذر",
+        "monthNum": 9
+    },
+    {
+        "name": "Dey",
+        "days": 30,
+        "extra_days": 0,
+        "persian_name": "دی",
+        "monthNum": 10
+    },
+    {
+        "name": "Bahman",
+        "days": 30,
+        "extra_days": 0,
+        "persian_name": "بهمن",
+        "monthNum": 11
+    },
+    {
+        "name": "Esfand",
+        "days": 29,
+        "extra_days": 0,
+        "persian_name": "اسفند",
+        "monthNum": 12
+    }
+]

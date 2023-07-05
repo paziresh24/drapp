@@ -542,7 +542,7 @@ const TurnRow = (props: TurnRowProps) => {
             items={[
                 {
                     id: 1,
-                    icon: <TrashIcon />,
+                    icon: <TrashIcon color={'transparent'} />,
                     name: 'حذف نسخه',
                     action: () => setDeletePrescriptionModal(true),
                     diabled: prescription.finalized

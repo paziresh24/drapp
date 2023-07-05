@@ -7,7 +7,10 @@ import { deleteTurns } from '@paziresh24/apis/drApp/turning/deleteTurns';
 import { moveTurns } from '@paziresh24/apis/drApp/turning/moveTurns';
 import { came } from '@paziresh24/apis/drApp/turning/status/came';
 import { paziresh } from '@paziresh24/apis/drApp/turning/status/paziresh';
-import { vacation } from '@paziresh24/apis/drApp/turning/vacation';
+import { vacation } from '@paziresh24/apis/drApp/turning/vacation/index';
+import { getVacation } from '@paziresh24/apis/drApp/turning/vacation/get';
+import { deleteVacation } from '@paziresh24/apis/drApp/turning/vacation/delete';
+import { changeVacation } from '@paziresh24/apis/drApp/turning/vacation/change';
 
 const useGetTurns = param => {
     return useQuery(['turns', param], () => turns(param), {
@@ -49,6 +52,18 @@ const useVacation = () => {
     return useMutation(vacation);
 };
 
+const useGetVacation = params => {
+    return useQuery(['getVacation', params], () => getVacation(params));
+};
+
+const useDeleteVacation = () => {
+    return useMutation(deleteVacation);
+};
+
+const useChangeVacation = () => {
+    return useMutation(changeVacation);
+};
+
 export {
     useGetTurns,
     useGetPagingStatistics,
@@ -58,5 +73,8 @@ export {
     useMoveTurns,
     useCame,
     usePaziresh,
-    useVacation
+    useVacation,
+    useGetVacation,
+    useDeleteVacation,
+    useChangeVacation
 };
