@@ -463,7 +463,8 @@ const Profile = () => {
                         >
                             <StarIcon />
                             <span>
-                                {info.doctor.rate.rate} از {info.doctor.rate.count} نظر
+                                {info.doctor.rate.rate} از{' '}
+                                {info.doctor?.rate_info?.rates_count ?? 0} نظر
                             </span>
                         </div>
                     )}
