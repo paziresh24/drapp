@@ -1,4 +1,4 @@
-const TrashIcon = ({ color, className = '' }) => {
+const TrashIcon = ({ color, ...rest }) => {
     return (
         <svg
             width="23"
@@ -6,7 +6,7 @@ const TrashIcon = ({ color, className = '' }) => {
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={className}
+            {...rest}
         >
             <path
                 fillRule="evenodd"
