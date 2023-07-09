@@ -33,13 +33,7 @@ export const CenterPhoneNumbers = props => {
     }, []);
 
     useEffect(() => {
-        if (onChange)
-            onChange(
-                list
-                    .filter(item => item.value)
-                    .map(item => item.value)
-                    .join('|')
-            );
+        if (onChange) onChange(list.filter(item => item.value).map(item => item.value));
     }, [list]);
 
     return (

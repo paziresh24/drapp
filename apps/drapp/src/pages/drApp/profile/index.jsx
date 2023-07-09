@@ -70,7 +70,7 @@ const Profile = () => {
     const [position, setPosition] = useState({ lat: 35.68818464807401, lng: 51.393077373504646 });
     const doctorInfoUpdate = useDoctorInfoUpdate();
     const centerInfoUpdate = useCenterInfoUpdate();
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState([]);
     const updateCenterAccess = useUpdateCenterAccess();
     const getCenterAccess = useGetCenterAccess({ center_id: info.center.id });
     const [centerAccess, setCenterAccess] = useState([]);
@@ -221,7 +221,7 @@ const Profile = () => {
             centerInfoUpdate.mutateAsync({
                 data: {
                     ...data,
-                    tell: phoneNumber,
+                    tells: phoneNumber,
                     city: city,
                     province: province,
                     lat: position.lat,
@@ -240,7 +240,7 @@ const Profile = () => {
                     center: {
                         ...prev.center,
                         address: data.address,
-                        tells: phoneNumber.split('|'),
+                        tells: phoneNumber,
                         city: city,
                         province: province,
                         lat: position.lat,
