@@ -60,6 +60,7 @@ import EditMessenger from 'apps/drapp/src/components/onlineVisit/editMessenger';
 import { phoneNumberValidator } from '@persian-tools/persian-tools';
 import { isMessengerIdHasValid } from 'apps/drapp/src/functions/isMessengerIdHasValid';
 import Info from './info';
+import CenterPhoneNumbers from '@components/profile/centerPhoneNumbers';
 
 const Profile = () => {
     const router = useHistory();
@@ -69,7 +70,7 @@ const Profile = () => {
     const [position, setPosition] = useState({ lat: 35.68818464807401, lng: 51.393077373504646 });
     const doctorInfoUpdate = useDoctorInfoUpdate();
     const centerInfoUpdate = useCenterInfoUpdate();
-
+    const [phoneNumber, setPhoneNumber] = useState([]);
     const updateCenterAccess = useUpdateCenterAccess();
     const getCenterAccess = useGetCenterAccess({ center_id: info.center.id });
     const [centerAccess, setCenterAccess] = useState([]);
@@ -220,6 +221,7 @@ const Profile = () => {
             centerInfoUpdate.mutateAsync({
                 data: {
                     ...data,
+                    tells: phoneNumber,
                     city: city,
                     province: province,
                     lat: position.lat,
@@ -238,7 +240,7 @@ const Profile = () => {
                     center: {
                         ...prev.center,
                         address: data.address,
-                        tell: data.tell,
+                        tells: phoneNumber,
                         city: city,
                         province: province,
                         lat: position.lat,
@@ -577,16 +579,9 @@ const Profile = () => {
                             {...updateCenterInfo('address', { required: true })}
                             onBlur={e => checkAddress(e.target.value)}
                         />
-                        <TextField
-                            label="شماره تلفن مطب"
-                            type="tel"
-                            defaultValue={info.center.tell}
-                            error={centerInfoErrors.tell}
-                            errorText="شماره تلفن را با فرمت درست وارد نمایید."
-                            {...updateCenterInfo('tell', {
-                                required: true,
-                                pattern: /^\d+$/
-                            })}
+                        <CenterPhoneNumbers
+                            phoneNumbers={info.center.tells}
+                            onChange={setPhoneNumber}
                         />
                         <TextField
                             label="خدمات مطب"
