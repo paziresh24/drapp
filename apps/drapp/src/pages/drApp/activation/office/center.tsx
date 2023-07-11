@@ -83,7 +83,7 @@ const CenterOfficeActivation = () => {
                 centerId: officeCenter.id,
                 data: {
                     address,
-                    ...(officePhoneNumber && { tell: officePhoneNumber }),
+                    ...(officePhoneNumber && { tells: [officePhoneNumber] }),
                     lat: lat,
                     lon: lng
                 }
