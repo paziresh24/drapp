@@ -19,6 +19,7 @@ import { useGetReverseGeocoding } from '@paziresh24/hooks/drapp/geocoding';
 import { iranCityWithPrefixPhoneNumber } from 'apps/drapp/src/constants/iranCityWithPrefixPhoneNumber';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { checkAddress } from 'apps/drapp/src/functions/checkAddress';
+import CenterPhoneNumbers from 'apps/drapp/src/components/profile/centerPhoneNumbers/centerPhoneNumbers';
 
 const CenterOfficeActivation = () => {
     const [{ doctor, center, centers }] = useDrApp();
@@ -34,7 +35,7 @@ const CenterOfficeActivation = () => {
         lat,
         long: lng
     });
-    const [officePhoneNumber, setOfficePhoneNumber] = useState('');
+    const [officePhoneNumber, setOfficePhoneNumber] = useState(['']);
     const [secretaryPhoneNumber, setSecretaryPhoneNumber] = useState('');
     const [centerInfoModal, setCenterInfoModal] = useState(false);
     const [addressEditModal, setAddressEditModal] = useState(false);
@@ -64,16 +65,16 @@ const CenterOfficeActivation = () => {
             .filter((_: any, i: number) => i !== 0)
             .join(' ');
         setCity(cityFormatted);
-        if (officePhoneNumber.length <= 3) {
-            setOfficePhoneNumber(
+        if (officePhoneNumber.length === 1 && officePhoneNumber[0].length <= 3) {
+            setOfficePhoneNumber([
                 iranCityWithPrefixPhoneNumber.find(city => city.name === cityFormatted)?.code ?? ''
-            );
+            ]);
         }
     }, [getReverseGeocoding.data]);
 
     const handleSubmit = async () => {
         try {
-            if (officePhoneNumber) {
+            if (officePhoneNumber.length) {
                 getSplunkInstance().sendEvent({
                     group: 'activation-office-center-data-phone',
                     type: `office-num`
@@ -83,7 +84,7 @@ const CenterOfficeActivation = () => {
                 centerId: officeCenter.id,
                 data: {
                     address,
-                    ...(officePhoneNumber && { tell: officePhoneNumber }),
+                    ...(officePhoneNumber.length && { tells: officePhoneNumber }),
                     lat: lat,
                     lon: lng
                 }
@@ -210,40 +211,9 @@ const CenterOfficeActivation = () => {
             </div>
 
             <Modal title="اطلاعات تماس مطب" isOpen={centerInfoModal} onClose={setCenterInfoModal}>
-                <TextField
-                    label="شماره تلفن مطب"
-                    variant="outlined"
-                    inputProps={{
-                        inputMode: 'tel',
-                        style: { textAlign: 'left', direction: 'ltr' }
-                    }}
-                    inputRef={officePhoneNumberField}
-                    placeholder="02123456789"
-                    onChange={e => setOfficePhoneNumber(e.target.value)}
-                    value={officePhoneNumber}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="start">
-                                <svg
-                                    width="21"
-                                    height="21"
-                                    viewBox="0 0 21 21"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        clipRule="evenodd"
-                                        d="M6.97266 10.0735L5.86662 10.9982C6.92182 12.8712 8.40715 14.3566 10.2802 15.4118L11.2049 14.3057L11.2246 14.2821L11.2246 14.2821C11.5317 13.9147 11.7924 13.6028 12.0319 13.3623C12.286 13.107 12.5527 12.8933 12.8882 12.7477C13.0474 12.6787 13.2127 12.6249 13.382 12.587C13.739 12.5071 14.0803 12.5228 14.436 12.5796C14.7712 12.6331 15.1656 12.7317 15.6301 12.8478L15.66 12.8553L16.8388 13.15L16.8506 13.1529L16.8507 13.153L16.8509 13.153L16.8509 13.153C16.9154 13.1691 16.9656 13.1817 17.0121 13.1951C18.1561 13.5241 18.9586 14.5518 19.0003 15.7415C19.002 15.79 19.002 15.8417 19.002 15.9083V15.9085V15.9205C19.002 15.9603 19.0019 15.9893 18.9993 16.0486C18.9661 16.8017 18.5858 17.4717 18.0742 17.9358C17.5813 18.3829 16.9104 18.6901 16.1889 18.6764L16.1733 18.6773L16.1552 18.6774L16.1394 18.6772L16.1236 18.6767L16.1084 18.6759L16.0968 18.675L16.0893 18.6744L16.0864 18.6741L16.0813 18.6736L16.0763 18.6732C13.8633 18.4572 11.8684 17.9041 10.1285 17.0299C7.5427 15.7306 5.54776 13.7357 4.24851 11.1499C3.37432 9.41002 2.82113 7.41506 2.60521 5.20205L2.60473 5.19706L2.60424 5.19195L2.60397 5.18903L2.60333 5.18154L2.60249 5.16994L2.60167 5.1548L2.60113 5.13896C2.60101 5.13235 2.60095 5.11542 2.60111 5.1051L2.60202 5.08947C2.58825 4.36801 2.89544 3.69705 3.34253 3.20421C3.80672 2.69253 4.47664 2.3123 5.22981 2.27905C5.2891 2.27643 5.31806 2.27637 5.35783 2.27637L5.36992 2.27637C5.43659 2.27636 5.48837 2.27636 5.53689 2.27806C6.72655 2.3198 7.75428 3.12224 8.08331 4.26625C8.09674 4.31291 8.10929 4.36315 8.12546 4.42783L8.12838 4.43955L8.4231 5.61841L8.43056 5.64825L8.43056 5.64826C8.54672 6.11282 8.64531 6.50717 8.6988 6.84238C8.75556 7.19807 8.77129 7.53941 8.6914 7.89637C8.65351 8.06566 8.59968 8.23098 8.53065 8.39013C8.38507 8.72571 8.17139 8.99237 7.91611 9.24647C7.67553 9.48593 7.36366 9.74665 6.99627 10.0538L6.99626 10.0538L6.97266 10.0735ZM16.3462 18.6429L16.3287 18.6479C16.4609 18.5649 16.6987 18.2354 16.7442 17.8513C16.7871 17.8387 16.8296 17.8245 16.8716 17.8089C16.8769 17.8501 16.8814 17.9001 16.8821 17.9302C16.8804 17.9743 16.8694 18.0614 16.8601 18.1042C16.8489 18.1448 16.8205 18.2218 16.8037 18.2579C16.7866 18.2904 16.7494 18.35 16.7298 18.3772C16.7112 18.4007 16.6733 18.4433 16.6543 18.4624C16.6369 18.4788 16.6025 18.5082 16.5857 18.5214C16.5705 18.5326 16.541 18.5528 16.5268 18.5619C16.5139 18.5697 16.4891 18.5837 16.4771 18.59C16.4476 18.6053 16.4213 18.6165 16.4007 18.6244C16.3798 18.6324 16.3612 18.6384 16.3462 18.6429ZM3.42706 4.5341C3.04299 4.57961 2.71344 4.81749 2.6305 4.9497L2.63546 4.93226C2.63994 4.91719 2.64597 4.89866 2.65399 4.87775C2.66189 4.85714 2.673 4.83087 2.68829 4.80135C2.6946 4.78942 2.70866 4.76458 2.71643 4.75172C2.72547 4.73747 2.74568 4.70795 2.75692 4.69276C2.77004 4.67597 2.79944 4.64163 2.81579 4.62421C2.83488 4.60522 2.87745 4.56736 2.90101 4.54873C2.92815 4.52909 2.9877 4.49196 3.02015 4.47481C3.0563 4.45801 3.13321 4.4296 3.17382 4.41832C3.21664 4.40902 3.30376 4.39799 3.34777 4.39632C3.37802 4.39694 3.42817 4.40147 3.4695 4.4068C3.45389 4.4488 3.43972 4.49126 3.42706 4.5341ZM11.6687 6.35988C11.6687 5.94567 12.0045 5.60988 12.4187 5.60988C13.3248 5.60988 14.1119 6.17144 14.6329 6.72811C14.9267 7.04199 15.1761 7.39544 15.3557 7.74482C15.5277 8.07946 15.6687 8.47473 15.6687 8.85988C15.6687 9.27409 15.3329 9.60988 14.9187 9.60988C14.5045 9.60988 14.1687 9.27409 14.1687 8.85988C14.1687 8.81312 14.1419 8.66455 14.0215 8.43043C13.9088 8.21105 13.7416 7.97084 13.5378 7.75315C13.134 7.32178 12.7168 7.10988 12.4187 7.10988C12.0045 7.10988 11.6687 6.77409 11.6687 6.35988ZM12.4187 3.10988C12.0045 3.10988 11.6687 3.44567 11.6687 3.85988C11.6687 4.27409 12.0045 4.60988 12.4187 4.60988C14.7659 4.60988 16.6687 6.51267 16.6687 8.85988C16.6687 9.27409 17.0045 9.60988 17.4187 9.60988C17.8329 9.60988 18.1687 9.27409 18.1687 8.85988C18.1687 5.68424 15.5943 3.10988 12.4187 3.10988Z"
-                                        fill="#3C3C3D"
-                                    />
-                                </svg>
-                            </InputAdornment>
-                        )
-                    }}
-                    InputLabelProps={{
-                        shrink: true
-                    }}
+                <CenterPhoneNumbers
+                    phoneNumbers={officePhoneNumber}
+                    onChange={setOfficePhoneNumber}
                 />
                 <TextField
                     label="شماره موبایل منشی"
