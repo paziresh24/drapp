@@ -205,7 +205,9 @@ export const Forough = () => {
                             </div>
                         </div>
                     )}
-                    <span className="text-sm font-medium">آمار شما در یک ماه گذشته</span>
+                    <span className="text-sm font-medium !mt-3 block">
+                        آمار شما در یک ماه گذشته:
+                    </span>
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
                             تعداد بیمارانی که از پروفایل شما در پذیرش24 بازدید کردند.
