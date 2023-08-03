@@ -76,10 +76,19 @@ const Header = memo(() => {
                 <span className="pr-3 font-bold">{page.title}</span>
             </div>
             <div className="flex items-center">
-                <div className="items-center hidden lg:flex space-s-3">
+                <div
+                    className={`items-center space-s-3 ${
+                        page?.showCenterListForMobile ? 'flex' : 'hidden lg:flex'
+                    }`}
+                >
                     {shouldShowActionBars && (
                         <>
-                            <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
+                            <HelpIcon
+                                className="hidden lg:block"
+                                color="#3f4079"
+                                data-tip
+                                data-for="centerSelect"
+                            />
                             <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
                                 از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب کنید
                             </ReactTooltip>
@@ -93,7 +102,7 @@ const Header = memo(() => {
                                 aria-hidden
                             >
                                 <div>
-                                    <span className="flex">
+                                    <span className="flex pl-2">
                                         {info.centers.find(
                                             item => item.id == localStorage.getItem('center_id')
                                         )

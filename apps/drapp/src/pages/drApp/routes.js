@@ -24,7 +24,8 @@ export const routes = [
         title: 'لیست بیماران',
         component: lazy(() => import('./turning')),
         dontShowForHospital: false,
-        exact: true
+        exact: true,
+        showCenterListForMobile: true
     },
     {
         path: '/dashboard',
