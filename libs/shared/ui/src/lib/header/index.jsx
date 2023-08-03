@@ -66,7 +66,7 @@ const Header = memo(() => {
     });
 
     return (
-        <header className="flex justify-between items-center h-16 bg-white px-3 pl-1 border-b border-solid border-[#e5e9f0] z-[8]">
+        <header className="flex justify-between items-center h-16 bg-white px-4 border-b border-solid border-[#e5e9f0] z-[8]">
             <div>
                 {!isMobile && shouldShowActionBars && (
                     <IconButton onClick={() => setIsOpen(prev => !prev)}>
@@ -88,7 +88,7 @@ const Header = memo(() => {
                                 className={styles.centerSelectInput}
                                 onClick={e => {
                                     e.stopPropagation();
-                                    setIsCenterSelectOpen(true);
+                                    setIsCenterSelectOpen(prevValue => !prevValue);
                                 }}
                                 aria-hidden
                             >
