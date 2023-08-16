@@ -151,12 +151,13 @@ const TurnRow = (props: TurnRowProps) => {
             action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
+    
     const isShowRemoveButtonTooltip = number === 1 &&
-    (statistics.activePatients
-        ? !isDeletedTurn && (bookStatus === 'not_came' ||
-          bookStatus === 'not_visited' ||
-          !prescription.finalized)
-        : bookStatus === 'visited' || !!prescription.finalized || isDeletedTurn)
+        (statistics.activePatients
+            ? !isDeletedTurn && (bookStatus === 'not_came' ||
+              bookStatus === 'not_visited' ||
+              !prescription.finalized)
+            : bookStatus === 'visited' || !!prescription.finalized || isDeletedTurn)
 
     const handleAdmitTurn = async () => {
         try {
@@ -616,7 +617,6 @@ const TurnRow = (props: TurnRowProps) => {
             </div>
         </Tooltip>
     );
-    console.log(paymentStatus === 'paid');
     
     return (
         <>
