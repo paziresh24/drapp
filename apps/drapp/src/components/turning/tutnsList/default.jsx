@@ -6,6 +6,7 @@ import { ChevronIcon } from '@paziresh24/shared/icon';
 import TurnRowc from '../turnRow';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { useMediaQuery } from 'react-responsive';
+import { isAfterPastDaysFromTimestamp } from '@paziresh24/shared/utils/isAfterPastDaysFromTimestamp';
 
 const checkPaymentStatus = turn => {
     if (
@@ -50,11 +51,20 @@ const TurnRow = {
             }
             type={turn.type}
             number={lineNumber}
+            deleteReason={turn.delete_reason}
             paymentStatus={checkPaymentStatus(turn)}
             paymentPrice={turn.user_payment}
             refId={turn.ref_id}
             bookStatus={turn.book_status}
             isDeletedTurn={turn.book_delete}
+            possibilityBeingSecureCallButton={
+                !isAfterPastDaysFromTimestamp({
+                    numberDay: 3,
+                    timestamp: turn?.from,
+                    currentTime: Date.now() / 1000
+                })
+            }
+            messengerName={turn?.online_channel}
             prescription={{
                 id: turn.prescription?.id,
                 finalized: turn.book_status === 'visited' || turn.prescription?.finalized,
@@ -81,8 +91,10 @@ const TurnRow = {
             family={turn.patientAdditionalData?.lastName}
             mobileNumber={turn.patientCell ?? turn?.patientAdditionalData?.cellPhoneNumber}
             nationalCode={turn?.patientNationalCode}
+            deleteReason={turn.delete_reason}
             type={turn.type}
             number={lineNumber}
+            messengerName={turn?.online_channel}
             prescription={{
                 id: turn.id,
                 finalized: turn?.finalized,
@@ -97,6 +109,13 @@ const TurnRow = {
                         : [turn.salamat_prescription?.trackingCode],
                 sequenceNumber: turn.salamat_prescription?.sequenceNumber
             }}
+            possibilityBeingSecureCallButton={
+                !isAfterPastDaysFromTimestamp({
+                    numberDay: 3,
+                    timestamp: Date.parse(turn.created_at) / 1000,
+                    currentTime: Date.now() / 1000
+                })
+            }
         />
     )
 };
