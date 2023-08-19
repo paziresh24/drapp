@@ -66,14 +66,14 @@ const Header = memo(() => {
     });
 
     return (
-        <header className="flex justify-between items-center h-16 bg-white px-4 border-b border-solid border-[#e5e9f0] z-[8]">
+        <header className="flex justify-between items-center h-14 min-h-[3.5rem] bg-white px-3 pl-2 border-b border-solid border-[#e5e9f0] z-[8]">
             <div>
                 {!isMobile && shouldShowActionBars && (
                     <IconButton onClick={() => setIsOpen(prev => !prev)}>
                         <MenuIcon sx={{ fontSize: '20px', color: '#000' }}></MenuIcon>
                     </IconButton>
                 )}
-                <span className="pr-3 font-bold">{page.title}</span>
+                <span className="font-bold md:pr-3">{page.title}</span>
             </div>
             <div className="flex items-center">
                 <div

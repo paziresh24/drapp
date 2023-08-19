@@ -322,16 +322,18 @@ export const routes = [
         component: lazy(() => import('./setting/payment')),
         isPrivate: true,
         dontShowForHospital: true,
-        exact: false
+        exact: false,
+        showCenterListForMobile: true
     },
     {
         path: '/setting',
         name: 'setting',
-        title: 'تنظیمات نوبت های من',
+        title: 'تنظیمات نوبتدهی',
         component: lazy(() => import('./setting')),
         isPrivate: true,
         dontShowForHospital: true,
-        exact: true
+        exact: true,
+        showCenterListForMobile: true
     },
     {
         path: '/setting/workhours',
@@ -340,16 +342,18 @@ export const routes = [
         component: lazy(() => import('./setting/workHours')),
         isPrivate: true,
         dontShowForHospital: true,
-        exact: false
+        exact: false,
+        showCenterListForMobile: true
     },
     {
         path: '/setting/delay',
         name: 'delay',
-        title: 'اعلام تاخیر به بیماران',
+        title: 'اعلام تاخیر',
         component: lazy(() => import('./setting/delay')),
         isPrivate: true,
         dontShowForHospital: true,
-        exact: false
+        exact: false,
+        showCenterListForMobile: true
     },
     {
         path: '/setting/vacation',
@@ -358,7 +362,8 @@ export const routes = [
         component: lazy(() => import('./setting/vacation')),
         isPrivate: true,
         dontShowForHospital: true,
-        exact: false
+        exact: false,
+        showCenterListForMobile: true
     },
     {
         path: '/landing/igap',
