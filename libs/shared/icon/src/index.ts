@@ -27,6 +27,8 @@ import ThreeDots from './lib/public/threeDots';
 import CalendarIcon from './lib/public/calendar';
 import TrashIcon from './lib/public/trash';
 import ImagePlaceIcon from './lib/public/image';
+import ArrowheadIcon from './lib/public/arrowhead';
+import UndoIcon from './lib/public/undo';
 import StarIcon from './lib/public/star';
 import LocationIcon from './lib/public/location';
 import { CalendarPlus } from './lib/public/calendarPlus';
@@ -54,6 +56,7 @@ export { CheckIcon } from './lib/public/check';
 export { DotsIcon } from './lib/public/dots';
 
 export {
+    ArrowheadIcon,
     LearnIcon,
     ArrowIcon,
     HouseIcon,
@@ -86,5 +89,6 @@ export {
     ImagePlaceIcon,
     StarIcon,
     LocationIcon,
-    CalendarPlus
+    CalendarPlus,
+    UndoIcon
 };

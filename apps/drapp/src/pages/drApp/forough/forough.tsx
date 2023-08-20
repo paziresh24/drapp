@@ -28,6 +28,14 @@ export const Forough = () => {
     const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
+    const promptSentences: Record<string, string> = {
+        presence:
+            "شما برای بهبود رتبه خود، نیاز به <span class='font-semibold text-secondary'>کاهش زمان انتظار</span> دارید.",
+        online_visit:
+            "شما برای بهبود رتبه خود، نیاز به <span class='font-semibold text-secondary'>کاهش زمان انتظار</span> دارید.",
+        prescription:
+            "بهبود رتبه شما، وابسته به کاهش زمان انتظار بیمار در <span class='font-semibold text-secondary'>دریافت نسخه</span> می باشد."
+    };
 
     useEffect(() => {
         if (searchViewInfo.isSuccess) {
@@ -53,7 +61,7 @@ export const Forough = () => {
                                     !data?.waiting_time_info &&
                                     !!data?.online_visit_waiting_time_info,
                                 service: 'ویزیت آنلاین',
-                                type: 'online-visit',
+                                type: 'online_visit',
                                 wating_time: data?.online_visit_waiting_time_info?.waiting_time ?? 0
                             },
                             data?.prescription_waiting_time_info && {
@@ -185,18 +193,21 @@ export const Forough = () => {
                                             </span>
                                         </>
                                     ) : (
-                                        <>
-                                            شما برای بهبود رتبه خود، نیاز به{' '}
-                                            <span className="font-semibold text-secondary">
-                                                کاهش زمان انتظار
-                                            </span>{' '}
-                                            دارید.
-                                        </>
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: promptSentences[
+                                                    activeOptionSelectedDetails?.type
+                                                ]
+                                            }}
+                                        />
                                     )}
                                 </span>
                             </div>
                         </div>
                     )}
+                    <span className="text-sm font-medium !mt-3 block">
+                        آمار شما در یک ماه گذشته:
+                    </span>
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
                             تعداد بیمارانی که از پروفایل شما در پذیرش24 بازدید کردند.

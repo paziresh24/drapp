@@ -12,11 +12,11 @@ interface Props {
     onCahnge?: (value: string) => void;
 }
 
-const dateObjectToFormattedDate = (dateObject: DayValue): string => {
+export const dateObjectToFormattedDate = (dateObject: DayValue): string => {
     return `${dateObject?.year}/${dateObject?.month}/${dateObject?.day}`;
 };
 
-const formattedDateToDateObject = (formattedDate: string): DayValue => {
+export const formattedDateToDateObject = (formattedDate: string): DayValue => {
     if (!formattedDate) return null;
     const dateObject = moment(formattedDate);
     return {
@@ -67,6 +67,7 @@ const DateInput = (props: Props) => {
                         value={formattedDateToDateObject(dateLabel)}
                         onChange={date => setDateLabel(dateObjectToFormattedDate(date))}
                         shouldHighlightWeekends
+                        minimumDate={utils('fa').getToday()}
                         colorPrimary="#0070f3"
                         locale="fa"
                         calendarClassName="!shadow-none"

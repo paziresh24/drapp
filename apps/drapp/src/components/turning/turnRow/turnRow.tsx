@@ -6,14 +6,21 @@ import { useUpdateDescription } from 'apps/drapp/src/apis/prescription/updateDes
 import { toast } from 'react-toastify';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { addCommas, digitsFaToEn } from '@persian-tools/persian-tools';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import moment from 'jalali-moment';
 import { useRef, useState } from 'react';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import Visit from '../visit';
-import { ChevronIcon, DotsIcon, TrashIcon } from '@paziresh24/shared/icon';
+import {
+    ArrowheadIcon,
+    CheckIcon,
+    ChevronIcon,
+    DotsIcon,
+    TrashIcon,
+    UndoIcon
+} from '@paziresh24/shared/icon';
 import Stack from '@mui/material/Stack';
 import DropDown from '@paziresh24/shared/ui/dropDown';
 import Modal from '@paziresh24/shared/ui/modal';
@@ -23,8 +30,8 @@ import { chunk } from 'lodash';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame } from '@paziresh24/hooks/drapp/turning';
-import DolorIcon from '@paziresh24/shared/icon/public/dolor';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
+import classNames from 'classnames';
 
 type Prescription = {
     id: string;
@@ -50,9 +57,12 @@ interface TurnRowProps {
     paymentStatus?: 'paid' | 'refunded';
     paymentPrice?: string;
     bookStatus?: 'not_came' | 'not_visited' | 'visited';
+    deleteReason?: string;
     type: 'book' | 'prescription';
     prescription: Prescription;
     isDeletedTurn?: boolean;
+    possibilityBeingSecureCallButton?: boolean;
+    messengerName?: string;
 }
 
 const TurnRow = (props: TurnRowProps) => {
@@ -71,7 +81,10 @@ const TurnRow = (props: TurnRowProps) => {
         paymentPrice,
         refId,
         bookStatus,
-        isDeletedTurn
+        isDeletedTurn,
+        possibilityBeingSecureCallButton,
+        deleteReason,
+        messengerName
     } = props;
     const router = useHistory();
     const queryClient = useQueryClient();
@@ -84,6 +97,7 @@ const TurnRow = (props: TurnRowProps) => {
     const [actionLoading, setActionLoading] = useState(false);
     const [prescriptionLoading, setPrescriptionLoading] = useState(false);
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
+    const [deleteReasonModal, setDeleteReasonModal] = useState(false);
     const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
     const [descriptionTreatment, setDescriptionTreatment] = useState('');
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
@@ -102,29 +116,41 @@ const TurnRow = (props: TurnRowProps) => {
                 : window._env_.P24_BASE_URL_PRESCRIPTION_API
         }/pdfs/` + prescription.pdfName
     );
+
     const turn = useRef(turns.find(turn => turn.id === id));
     const buttonStatusTurnText = {
-        not_came: 'پذیرش',
+        not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
     };
     const paidStatusInfo = {
         paid: {
             text: 'پرداخت شد',
-            icon: <DolorIcon className="!text-[#0BB07B] !w-5 scale-105" />,
-            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none'
+            icon: <CheckIcon className="!fill-[#0BB07B] !w-5 scale-105" />,
+            style: '!rounded-lg !text-[#0BB07B] !bg-[#F1FFFB]  text-[0.7rem] !w-full !py-2 gap-[0.15rem] pointer-events-none',
+            action: undefined,
+            additionalIcons: null
         },
         refunded: {
             text: 'استرداد شد',
-            icon: <DolorIcon className="!text-gray-500 !w-5 scale-105 mb-[0.1rem]" />,
-            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-2 gap-[0.15rem] pointer-events-none'
+            icon: (
+                <UndoIcon
+                    className={classNames('!text-gray-500 ml-1', {
+                        'w-[0.9rem]': !deleteReason,
+                        '!min-w-4': !!deleteReason
+                    })}
+                />
+            ),
+            style: '!rounded-lg !text-gray-500 !bg-gray-100 text-[0.7rem] !w-full !flex !items-center !py-[0.4rem] gap-[0.15rem]  pointer-events-auto cursor-pointer',
+            additionalIcons: !!deleteReason && <ArrowheadIcon />,
+            action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
 
     const handleAdmitTurn = async () => {
         try {
             setActionLoading(true);
-            await came.mutateAsync({
+            const { data } = await came.mutateAsync({
                 book_id: id
             });
             toast.success('پذیرش بیمار با موفقیت انجام شد!');
@@ -142,6 +168,7 @@ const TurnRow = (props: TurnRowProps) => {
                 }
             });
             setActionLoading(false);
+            if (data?.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
@@ -198,6 +225,32 @@ const TurnRow = (props: TurnRowProps) => {
                     patient_cell: mobileNumber
                 }
             });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message);
+            }
+        }
+    };
+
+    const handleChatButton = async () => {
+        try {
+            const { data } = await came.mutateAsync({
+                book_id: id
+            });
+
+            getSplunkInstance().sendEvent({
+                group: 'drapp-visit-online',
+                type: 'chat',
+                event: {
+                    patient_name: name,
+                    patient_family: family,
+                    patient_cell: mobileNumber,
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`,
+                    doctor_messenger:
+                        getMessengerInfo?.data?.data?.map((messenger: any) => messenger.type) ?? []
+                }
+            });
+            if (data.patinet_chat_deep_link) return (location.href = data.patinet_chat_deep_link);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
@@ -309,6 +362,19 @@ const TurnRow = (props: TurnRowProps) => {
         return insuranceProvider;
     };
 
+    const ChatButton = () => (
+        <Button
+            variant="outlined"
+            onClick={handleChatButton}
+            loading={came.isLoading}
+            size="small"
+            disabled={isDeletedTurn || !possibilityBeingSecureCallButton}
+            fullWidth
+        >
+            چت پذیرش24
+        </Button>
+    );
+
     const VisitButton = () => (
         <Button
             variant="outlined"
@@ -329,10 +395,12 @@ const TurnRow = (props: TurnRowProps) => {
         <Button
             size="small"
             className={paymentStatus && paidStatusInfo[paymentStatus].style}
+            onClick={paymentStatus && paidStatusInfo[paymentStatus].action}
             fullWidth
         >
             {paymentStatus && paidStatusInfo[paymentStatus].icon}
             {paymentStatus && paidStatusInfo[paymentStatus].text}
+            {paymentStatus && paidStatusInfo[paymentStatus].additionalIcons}
         </Button>
     );
     const PrescriptionButton = () => (
@@ -474,7 +542,7 @@ const TurnRow = (props: TurnRowProps) => {
             items={[
                 {
                     id: 1,
-                    icon: <TrashIcon />,
+                    icon: <TrashIcon color={'transparent'} />,
                     name: 'حذف نسخه',
                     action: () => setDeletePrescriptionModal(true),
                     diabled: prescription.finalized
@@ -522,6 +590,10 @@ const TurnRow = (props: TurnRowProps) => {
                             alignItems="center"
                             spacing={1}
                         >
+                            {info.center.id === CONSULT_CENTER_ID &&
+                                possibilityBeingSecureCallButton &&
+                                bookStatus !== 'not_came' &&
+                                messengerName === 'rocketchat' && <ChatButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -591,6 +663,9 @@ const TurnRow = (props: TurnRowProps) => {
                         ))}
 
                     <div className="flex space-s-2">
+                        {info.center.id === CONSULT_CENTER_ID &&
+                            possibilityBeingSecureCallButton &&
+                            messengerName === 'rocketchat' && <ChatButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
@@ -683,6 +758,9 @@ const TurnRow = (props: TurnRowProps) => {
                 >
                     ثبت
                 </Button>
+            </Modal>
+            <Modal title="علت لغو نوبت" isOpen={deleteReasonModal} onClose={setDeleteReasonModal}>
+                <span className="text-sm leading-6">{deleteReason}</span>
             </Modal>
         </>
     );
