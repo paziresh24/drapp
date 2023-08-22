@@ -17,19 +17,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '@hooks/useShouldShowActionBars';
-import { getCookie } from '@paziresh24/utils/cookie';
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
 const Header = memo(() => {
+    const showCenterSwitcherGradualRollout = useFeatureIsOn('header.show-center-switcher');
     const history = useHistory();
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const [page] = usePage();
-    const [isOpen, setIsOpen] = useMenu();
+    const [, setIsOpen] = useMenu();
     const [info, setInfo] = useDrApp();
     const [isCenterSelectOpen, setIsCenterSelectOpen] = useState(false);
     const [centerActiveModal, setCenterActiveModal] = useState(false);
     const createCenter = useCreateCenter();
     const shouldShowActionBars = useShouldShowActionBars();
-
     const location = useLocation();
     const [hideToolTip, setHideToolTip] = useState(
         location.state?.afterLogin === true ? false : true
@@ -78,7 +78,9 @@ const Header = memo(() => {
             <div className="flex items-center">
                 <div
                     className={`items-center space-s-3 ${
-                        page?.showCenterListForMobile ? 'flex' : 'hidden lg:flex'
+                        page?.showCenterListForMobile && showCenterSwitcherGradualRollout
+                            ? 'flex'
+                            : 'hidden lg:flex'
                     }`}
                 >
                     {shouldShowActionBars && (
