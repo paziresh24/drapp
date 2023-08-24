@@ -24,6 +24,7 @@
         "@craco/craco": "6.4.3",
         "@emotion/react": "11.9.3",
         "@emotion/styled": "11.9.3",
+        "@growthbook/growthbook-react": "0.17.0",
         "@hassanmojab/react-modern-calendar-datepicker": "3.1.7",
         "@mui/icons-material": "5.8.0",
         "@mui/lab": "5.0.0-alpha.83",

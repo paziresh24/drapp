@@ -17,19 +17,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '@hooks/useShouldShowActionBars';
-import { getCookie } from '@paziresh24/utils/cookie';
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
 const Header = memo(() => {
+    const showCenterSwitcherGradualRollout = useFeatureIsOn('header.show-center-switcher');
     const history = useHistory();
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const [page] = usePage();
-    const [isOpen, setIsOpen] = useMenu();
+    const [, setIsOpen] = useMenu();
     const [info, setInfo] = useDrApp();
     const [isCenterSelectOpen, setIsCenterSelectOpen] = useState(false);
     const [centerActiveModal, setCenterActiveModal] = useState(false);
     const createCenter = useCreateCenter();
     const shouldShowActionBars = useShouldShowActionBars();
-
     const location = useLocation();
     const [hideToolTip, setHideToolTip] = useState(
         location.state?.afterLogin === true ? false : true
@@ -66,20 +66,31 @@ const Header = memo(() => {
     });
 
     return (
-        <header className="flex justify-between items-center h-16 bg-white px-3 pl-1 border-b border-solid border-[#e5e9f0] z-[8]">
+        <header className="flex justify-between items-center h-14 min-h-[3.5rem] bg-white px-3 pl-2 border-b border-solid border-[#e5e9f0] z-[8]">
             <div>
                 {!isMobile && shouldShowActionBars && (
                     <IconButton onClick={() => setIsOpen(prev => !prev)}>
                         <MenuIcon sx={{ fontSize: '20px', color: '#000' }}></MenuIcon>
                     </IconButton>
                 )}
-                <span className="pr-3 font-bold">{page.title}</span>
+                <span className="font-bold md:pr-3">{page.title}</span>
             </div>
             <div className="flex items-center">
-                <div className="items-center hidden lg:flex space-s-3">
+                <div
+                    className={`items-center space-s-3 ${
+                        page?.showCenterListForMobile && showCenterSwitcherGradualRollout
+                            ? 'flex'
+                            : 'hidden lg:flex'
+                    }`}
+                >
                     {shouldShowActionBars && (
                         <>
-                            <HelpIcon color="#3f4079" data-tip data-for="centerSelect" />
+                            <HelpIcon
+                                className="hidden lg:block"
+                                color="#3f4079"
+                                data-tip
+                                data-for="centerSelect"
+                            />
                             <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
                                 از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب کنید
                             </ReactTooltip>
@@ -88,12 +99,12 @@ const Header = memo(() => {
                                 className={styles.centerSelectInput}
                                 onClick={e => {
                                     e.stopPropagation();
-                                    setIsCenterSelectOpen(true);
+                                    setIsCenterSelectOpen(prevValue => !prevValue);
                                 }}
                                 aria-hidden
                             >
                                 <div>
-                                    <span className="flex">
+                                    <span className="flex pl-2">
                                         {info.centers.find(
                                             item => item.id == localStorage.getItem('center_id')
                                         )
