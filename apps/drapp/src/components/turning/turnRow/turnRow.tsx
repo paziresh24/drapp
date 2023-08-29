@@ -31,6 +31,7 @@ import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame, useRemoveTurn } from '@paziresh24/hooks/drapp/turning';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
+import {useFeatureValue} from '@growthbook/growthbook-react'
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
 
@@ -107,8 +108,9 @@ const TurnRow = (props: TurnRowProps) => {
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
         false
     );
+    const listOfDoctorForShowRemoveTurnButton = useFeatureValue<any>('turning.show-remove-turn-button' , [])
     const came = useCame();
-    const deleteTurn = useRemoveTurn();
+    const deleteTurn = useRemoveTurn();    
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -151,11 +153,8 @@ const TurnRow = (props: TurnRowProps) => {
             action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
-
-    console.log(info);
     
-    
-    const isShowRemoveButtonTooltip = number === 1 &&
+    const isShowRemoveButtonTooltip = number === 1 && listOfDoctorForShowRemoveTurnButton.includes(info?.doctor?.id) &&
         (statistics.activePatients
             ? !isDeletedTurn && (bookStatus === 'not_came' ||
               bookStatus === 'not_visited' ||
