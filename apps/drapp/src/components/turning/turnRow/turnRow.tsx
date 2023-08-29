@@ -563,7 +563,6 @@ const TurnRow = (props: TurnRowProps) => {
             component: <span>{prescription.sequenceNumber ?? '-'}</span>
         }
     ];
-    
 
     const TurnDropDown = () => (
         <Tooltip
@@ -607,14 +606,14 @@ const TurnRow = (props: TurnRowProps) => {
                             action: () => window.open(pdfLink.current),
                             diabled: !prescription.finalized
                         },
-                        {
+                        listOfDoctorForShowRemoveTurnButton.includes(info?.doctor?.id)  && {
                             id: 2,
                             icon: <TrashIcon color='#000' />,
                             name: 'لغو نوبت',
                             action: () => setDeletTurnModal(true),
                             diabled: isDeletedTurn!
                         }
-                    ]}
+                    ].filter((option:any) => !!option)}
                 />
             </div>
         </Tooltip>
