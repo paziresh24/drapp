@@ -34,12 +34,12 @@ const PaymentPage = () => {
         card_number: formProps.cartNumber ?? ''
     });
     const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
-    const [tab, setTab] = useState(getSetting.active ? 0 : 2);
+    const [tab, setTab] = useState(getSetting.active ? 0 : 1);
 
     useEffect(() => {
         getPaymentSetting.remove();
         getPaymentSetting.refetch();
-        setTab(getSetting.active ? 0 : 2);
+        setTab(getSetting.active ? 0 : 1);
     }, [center, getSetting.active]);
 
     useEffect(() => {
@@ -132,14 +132,14 @@ const PaymentPage = () => {
                 value={tab}
             >
                 <Tab label="گزارش مالی" disabled={!getSetting.active} className="!text-xs" />
-                <Tab label="لیست تراکنش‌ها" disabled={!getSetting.active} className="!text-xs" />
+                {/* <Tab label="لیست تراکنش‌ها" disabled={!getSetting.active} className="!text-xs" /> */}
                 <Tab label="تنظیمات" className="!text-xs" />
             </Tabs>
 
             <div className="h-full px-0 pt-4">
                 {tab === 0 && <Financial />}
-                {tab === 1 && <Transaction />}
-                {tab === 2 && (
+                {/* {tab === 1 && <Transaction />} */}
+                {tab === 1 && (
                     <div className="flex flex-col space-y-5">
                         {center.id !== CONSULT_CENTER_ID && (
                             <>

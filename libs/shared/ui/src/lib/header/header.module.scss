@@ -64,7 +64,7 @@
 
 .centerSelectInput {
     background: #ebeff8;
-    height: 3rem;
+    height: 2.5rem;
     width: 20rem;
     min-width: 20rem;
     border-radius: 0.4rem;
@@ -76,6 +76,11 @@
     font-weight: 500;
     cursor: pointer;
     justify-content: space-between;
+
+    @media screen and (max-width: 992px) {
+        width: 13.5rem;
+        min-width: 13.5rem;
+    }
 
     span {
         width: 100%;
@@ -96,9 +101,10 @@
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    top: 3rem;
+    top: 3.25rem;
     left: 1rem;
     width: 25rem;
+    max-width: 100%;
     border: 1px solid rgba(226, 226, 226, 0.685);
     box-shadow: 0px 4px 25px rgba(65, 65, 65, 0.123);
     border-radius: 0.4rem;
@@ -108,6 +114,11 @@
     transition: all 0.3s;
     transform: translateY(2rem);
     z-index: 999;
+
+    @media screen and (max-width: 576px) {
+        left: 0;
+        width: 100%;
+    }
 
     &.dropdown_enter {
         opacity: 0;
