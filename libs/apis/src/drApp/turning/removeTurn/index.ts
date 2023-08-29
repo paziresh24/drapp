@@ -5,5 +5,5 @@ interface Params {
 }
 
 export const removeTurn = ({ book_id }: Params) => {
-    return client.delete(`/doctor/books/${book_id}/delete`);
+    return client.delete(`/doctor/books/${book_id}`);
 };

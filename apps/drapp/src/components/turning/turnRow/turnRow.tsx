@@ -151,6 +151,9 @@ const TurnRow = (props: TurnRowProps) => {
             action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
+
+    console.log(info);
+    
     
     const isShowRemoveButtonTooltip = number === 1 &&
         (statistics.activePatients
