@@ -154,7 +154,7 @@ const TurnRow = (props: TurnRowProps) => {
         }
     };
     
-    const isShowRemoveButtonTooltip = number === 1 && listOfDoctorForShowRemoveTurnButton.includes(info?.doctor?.id) &&
+    const isShowRemoveButtonTooltip = number === 1 && listOfDoctorForShowRemoveTurnButton?.includes(info?.doctor?.id) &&
         (statistics.activePatients
             ? !isDeletedTurn && (bookStatus === 'not_came' ||
               bookStatus === 'not_visited' ||
