@@ -103,14 +103,14 @@ const TurnRow = (props: TurnRowProps) => {
     const [deletePrescriptionModal, setDeletePrescriptionModal] = useState(false);
     const [deleteReasonModal, setDeleteReasonModal] = useState(false);
     const [descriptionTreatmentModal, setDescriptionTreatmentModal] = useState(false);
-    const [deleteTurnModal, setDeletTurnModal] = useState(false);
+    const [deleteTurnModal, setDeleteTurnModal] = useState(false);
     const [descriptionTreatment, setDescriptionTreatment] = useState('');
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
         false
     );
     const listOfDoctorForShowRemoveTurnButton = useFeatureValue<any>('turning.show-remove-turn-button' , [])
     const came = useCame();
-    const deleteTurn = useRemoveTurn();    
+    const removeTurn = useRemoveTurn();    
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -246,12 +246,12 @@ const TurnRow = (props: TurnRowProps) => {
         }
     };
 
-    const handleDeleteTurn = async () => {
+    const handleRemoveTurn = async () => {
         try {
-            await deleteTurn.mutateAsync({ book_id: id });
+            await removeTurn.mutateAsync({ book_id: id });
             toast.success('درخواست شما با موفقیت ثبت شد!');
             queryClient.refetchQueries('turns');
-            setDeletTurnModal(false);
+            setDeleteTurnModal(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.error(error.response?.data?.message);
@@ -610,7 +610,7 @@ const TurnRow = (props: TurnRowProps) => {
                             id: 2,
                             icon: <TrashIcon color='#000' />,
                             name: 'لغو نوبت',
-                            action: () => setDeletTurnModal(true),
+                            action: () => setDeleteTurnModal(true),
                             diabled: isDeletedTurn!
                         }
                     ].filter((option:any) => !!option)}
@@ -806,7 +806,7 @@ const TurnRow = (props: TurnRowProps) => {
                     ثبت
                 </Button>
             </Modal>
-            <Modal title="لغو نوبت" isOpen={deleteTurnModal} onClose={setDeletTurnModal}>
+            <Modal title="لغو نوبت" isOpen={deleteTurnModal} onClose={setDeleteTurnModal}>
                 <span className="text-sm leading-6 text">
                     {paymentStatus === 'paid'
                         ? 'در صورت لغو نوبت، هزینه به بیمار استرداد می شود. آیا از لغو نوبت اطمینان دارید؟'
@@ -816,8 +816,8 @@ const TurnRow = (props: TurnRowProps) => {
                     <Button
                         fullWidth
                         variant="contained"
-                        onClick={handleDeleteTurn}
-                        loading={deleteTurn.isLoading}
+                        onClick={handleRemoveTurn}
+                        loading={removeTurn.isLoading}
                         color="error"
                     >
                         لغو نوبت
@@ -825,7 +825,7 @@ const TurnRow = (props: TurnRowProps) => {
                     <Button
                         fullWidth
                         variant="outlined"
-                        onClick={() => setDeletTurnModal(false)}
+                        onClick={() => setDeleteTurnModal(false)}
                         color="error"
                     >
                         انصراف
