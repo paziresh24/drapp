@@ -27,6 +27,10 @@ import { useInsurances } from '@paziresh24/hooks/prescription/insurances';
 import { toast } from 'react-toastify';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
+import { useGetInfo } from '@paziresh24/hooks/drapp/home';
+import { useGetUser } from '../../apis/user/getUser';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useGetProvider } from '../../apis/provider/getProvider';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -47,6 +51,17 @@ const PrivateRoute = props => {
     const setPrescriptionSetting = usePrescriptionSettingStore(state => state.setSetting);
     const getPaymentSetting = useGetPaymentSetting({ center_id: info?.center?.id });
     const insurancesRequest = useInsurances();
+    const getMe = useGetInfo();
+
+    const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
+        ids: ['*']
+    });
+    const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
+        ids: ['*']
+    });
+
+    const getUser = useGetUser({ user_id: getMe.data?.data?.id });
+    const getProvider = useGetProvider({ user_id: getMe.data?.data?.id });
 
     useEffect(() => {
         setPage(props);
@@ -57,6 +72,7 @@ const PrivateRoute = props => {
                 });
             if (props.path !== '/create-center') {
                 handleGetCenters();
+                getMe.refetch();
             }
             window._env_.P24_STATISTICS_API && getLevels.refetch();
         }
@@ -85,12 +101,58 @@ const PrivateRoute = props => {
     }, [getCentersDoctor.status, centersDoctor]);
 
     useEffect(() => {
+        if (getUser.isSuccess) {
+            setInfo(prev => ({
+                ...prev
+            }));
+        }
+    }, [getUser.status]);
+
+    useEffect(() => {
+        if (getMe.isSuccess) {
+            setInfo(prev => ({
+                ...prev,
+                user: getMe.data.data
+            }));
+
+            const shouldUseUser =
+                usersApiDoctorList.ids?.includes(getMe.data.data.id) ||
+                usersApiDoctorList.ids?.includes('*');
+
+            const shouldUseProvider =
+                providersApiDoctorList.ids?.includes(getMe.data.data.id) ||
+                providersApiDoctorList.ids?.includes('*');
+
+            if (shouldUseUser) getUser.refetch();
+            if (shouldUseProvider) getProvider.refetch();
+        }
+    }, [getMe.status]);
+
+    useEffect(() => {
         if (doctorInfo.isSuccess) {
-            const doctor = doctorInfo.data.data ?? {};
+            let doctor = doctorInfo.data.data ?? {};
+
+            if (getUser.isSuccess) {
+                doctor = {
+                    ...doctor,
+                    name: getUser.data.data.users[0].name,
+                    family: getUser.data.data.users[0].family,
+                    national_code: getUser.data.data.users[0].national_code
+                };
+            }
+
+            if (getProvider.isSuccess) {
+                doctor = {
+                    ...doctor,
+                    biography: getProvider.data.data.providers[0].biography
+                };
+            }
+
             setInfo(prev => ({
                 ...prev,
                 doctor
             }));
+
             getPaymentSetting.refetch();
 
             window.user_information = {
@@ -121,7 +183,7 @@ const PrivateRoute = props => {
                 setIsError(true);
             }
         }
-    }, [doctorInfo.status]);
+    }, [doctorInfo.status, getUser.status, getProvider.status]);
 
     useEffect(() => {
         if (insurancesRequest.isSuccess) {
