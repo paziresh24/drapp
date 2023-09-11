@@ -255,7 +255,6 @@ const Profile = () => {
 
     const changeOnlieVisitChanelInfo = async () => {
         const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
-        console.log(!eitaaNumber);
         setMessengerError({
             ...(!!eitaaId.length && {
                 eitaaNumberError: !phoneNumberValidator(eitaaNumber)

@@ -18,13 +18,35 @@ import { formData } from '@paziresh24/shared/utils';
 import { baseURL } from '@paziresh24/utils/baseUrl';
 import NoImage from '@assets/image/noimage.png';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useUpdateProvider } from 'apps/drapp/src/apis/provider/patchProvider';
+import { useGetProvider } from 'apps/drapp/src/apis/provider/getProvider';
+import { useGetUser } from 'apps/drapp/src/apis/user/getUser';
+import { useUpdateUser } from 'apps/drapp/src/apis/user/patchUser';
 
 export const Info = ({ avatar = true }) => {
     const [info, setInfo] = useDrApp();
     const doctorInfoUpdate = useDoctorInfoUpdate();
+    const updateProvider = useUpdateProvider();
+    const updateUser = useUpdateUser();
+    const getProviders = useGetProvider({ user_id: info.user.id });
+    useGetUser({ user_id: info.user.id });
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const uploadPorfile = useUploadPorfile();
+    const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
+        ids: ['*']
+    });
+    const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
+        ids: ['*']
+    });
+
+    const shouldUseProvider =
+        providersApiDoctorList.ids?.includes(info.user.id) ||
+        providersApiDoctorList.ids?.includes('*');
+
+    const shouldUseUser =
+        usersApiDoctorList.ids?.includes(info.user.id) || usersApiDoctorList.ids?.includes('*');
 
     const {
         register: updateDoctorInfo,
@@ -34,13 +56,28 @@ export const Info = ({ avatar = true }) => {
     const biographyRef = useRef();
 
     const updateDoctor = async data => {
+        const biography = biographyRef?.current ?? info.doctor?.biography ?? '';
+
+        if (shouldUseProvider) {
+            updateProvider.mutate({ biography, user_id: info.user.id });
+        }
+
+        if (shouldUseUser) {
+            updateUser.mutate({
+                name: data.name,
+                family: data.family,
+                national_code: data.national_code,
+                user_id: info.user.id
+            });
+        }
+
         doctorInfoUpdate.mutate(
             {
                 name: data.name,
                 family: data.family,
                 national_code: data.national_code,
                 medical_code: data.medical_code,
-                biography: biographyRef?.current ?? info.doctor?.biography ?? '',
+                biography: biography,
                 secretary_phone: data.secretary_phone,
                 center_id: info.center.id
             },
@@ -69,10 +106,13 @@ export const Info = ({ avatar = true }) => {
                             family: data.family,
                             national_code: data.national_code,
                             medical_code: data.medical_code,
-                            biography: biographyRef?.current ?? info.doctor?.biography ?? '',
+                            biography: biography,
                             secretary_phone: data.secretary_phone
                         }
                     }));
+                },
+                onError: error => {
+                    toast.error(error.response.data.message);
                 }
             }
         );
@@ -227,7 +267,11 @@ export const Info = ({ avatar = true }) => {
                         variant="primary"
                         block
                         type="submit"
-                        loading={doctorInfoUpdate.isLoading}
+                        loading={
+                            doctorInfoUpdate.isLoading ||
+                            updateProvider.isLoading ||
+                            updateUser.isLoading
+                        }
                     >
                         ذخیره تغییرات
                     </Button>
