@@ -91,7 +91,9 @@ const Turning = () => {
             activePatients: getTurn?.data?.data?.filter(item =>
                 item.type === 'prescription'
                     ? !item.finalized
-                    : !item.prescription?.finalized && item.book_status !== 'visited'
+                    : !item.prescription?.finalized &&
+                      item.book_status !== 'visited' &&
+                      !item.book_delete
             )?.length,
             visitedPatients: getTurn?.data?.data?.filter(turn =>
                 turn.type === 'prescription'

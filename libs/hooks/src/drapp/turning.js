@@ -4,6 +4,7 @@ import { pagingStatistics } from '@paziresh24/apis/drApp/turning/paging';
 import { pagingNext } from '@paziresh24/apis/drApp/turning/paging/next';
 import { addNewBook } from '@paziresh24/apis/drApp/turning/addNewBook';
 import { deleteTurns } from '@paziresh24/apis/drApp/turning/deleteTurns';
+import { removeTurn } from '@paziresh24/apis/drApp/turning/removeTurn';
 import { moveTurns } from '@paziresh24/apis/drApp/turning/moveTurns';
 import { came } from '@paziresh24/apis/drApp/turning/status/came';
 import { paziresh } from '@paziresh24/apis/drApp/turning/status/paziresh';
@@ -34,6 +35,10 @@ const useAddNewBook = () => {
 
 const useDeleteTurns = () => {
     return useMutation(deleteTurns);
+};
+
+const useRemoveTurn = () => {
+    return useMutation(removeTurn);
 };
 
 const useMoveTurns = () => {
@@ -67,6 +72,7 @@ const useChangeVacation = () => {
 export {
     useGetTurns,
     useGetPagingStatistics,
+    useRemoveTurn,
     useGetPagingNext,
     useAddNewBook,
     useDeleteTurns,
