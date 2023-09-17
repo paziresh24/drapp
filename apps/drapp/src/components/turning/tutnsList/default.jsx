@@ -9,6 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 import { isAfterPastDaysFromTimestamp } from '@paziresh24/shared/utils/isAfterPastDaysFromTimestamp';
 
 const checkPaymentStatus = turn => {
+    if(!turn?.payment_status) return 'not_paid'
     if (
         turn.payment_status === 'refunded' ||
         turn.payment_status === 'refund_request' ||
