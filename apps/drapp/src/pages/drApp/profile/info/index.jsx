@@ -29,24 +29,37 @@ export const Info = ({ avatar = true }) => {
     const doctorInfoUpdate = useDoctorInfoUpdate();
     const updateProvider = useUpdateProvider();
     const updateUser = useUpdateUser();
-    const getProviders = useGetProvider({ user_id: info.user.id });
-    useGetUser({ user_id: info.user.id });
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const uploadPorfile = useUploadPorfile();
     const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
-        ids: ['*']
+        ids: ['']
     });
     const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
-        ids: ['*']
+        ids: ['']
+    });
+    const providersApiDoctorCitiesList = useFeatureValue('profile:patch-providers-api|cities', {
+        cities: ['']
+    });
+    const usersApiDoctorCitiesList = useFeatureValue('profile:patch-users-api|cities', {
+        cities: ['']
     });
 
     const shouldUseProvider =
         providersApiDoctorList.ids?.includes(info.user.id) ||
-        providersApiDoctorList.ids?.includes('*');
+        providersApiDoctorList.ids?.includes('*') ||
+        providersApiDoctorCitiesList.cities?.includes(
+            info.centers.find(center => center.type_id === OFFICE_CENTER).city
+        ) ||
+        providersApiDoctorCitiesList.cities?.includes('*');
 
     const shouldUseUser =
-        usersApiDoctorList.ids?.includes(info.user.id) || usersApiDoctorList.ids?.includes('*');
+        usersApiDoctorList.ids?.includes(info.user.id) ||
+        usersApiDoctorList.ids?.includes('*') ||
+        usersApiDoctorCitiesList.cities?.includes(
+            info.centers.find(center => center.type_id === OFFICE_CENTER).city
+        ) ||
+        usersApiDoctorCitiesList.cities?.includes('*');
 
     const {
         register: updateDoctorInfo,
@@ -59,7 +72,11 @@ export const Info = ({ avatar = true }) => {
         const biography = biographyRef?.current ?? info.doctor?.biography ?? '';
 
         if (shouldUseProvider) {
-            updateProvider.mutate({ biography, user_id: info.user.id });
+            updateProvider.mutate({
+                biography,
+                employee_id: data.medical_code,
+                user_id: info.user.id
+            });
         }
 
         if (shouldUseUser) {
