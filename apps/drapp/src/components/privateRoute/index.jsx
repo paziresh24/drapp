@@ -54,13 +54,19 @@ const PrivateRoute = props => {
     const getMe = useGetInfo();
 
     const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
-        ids: ['*']
+        ids: ['']
     });
     const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
-        ids: ['*']
+        ids: ['']
+    });
+    const providersApiDoctorCitiesList = useFeatureValue('profile:patch-providers-api|cities', {
+        cities: ['']
+    });
+    const usersApiDoctorCitiesList = useFeatureValue('profile:patch-users-api|cities', {
+        cities: ['']
     });
 
-    const getUser = useGetUser({ user_id: getMe.data?.data?.id });
+    const getUser = useGetUser();
     const getProvider = useGetProvider({ user_id: getMe.data?.data?.id });
 
     useEffect(() => {
@@ -94,11 +100,35 @@ const PrivateRoute = props => {
     }, [getLevels.status, doctorInfo.status, getCentersDoctor.status.success]);
 
     useEffect(() => {
-        if (getCentersDoctor.status.success && centersDoctor.length !== 0) {
+        if (getCentersDoctor.status.success && centersDoctor.length !== 0 && getMe.isSuccess) {
             doctorInfo.refetch();
             insurancesRequest.refetch();
+
+            setInfo(prev => ({
+                ...prev,
+                user: getMe.data.data
+            }));
+
+            const shouldUseUser =
+                usersApiDoctorList.ids?.includes(getMe.data.data.id) ||
+                usersApiDoctorList.ids?.includes('*') ||
+                usersApiDoctorCitiesList.cities?.includes(
+                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER).city
+                ) ||
+                usersApiDoctorCitiesList.cities?.includes('*');
+
+            const shouldUseProvider =
+                providersApiDoctorList.ids?.includes(getMe.data.data.id) ||
+                providersApiDoctorList.ids?.includes('*') ||
+                providersApiDoctorCitiesList.cities?.includes(
+                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER).city
+                ) ||
+                providersApiDoctorCitiesList.cities?.includes('*');
+
+            if (shouldUseUser) getUser.refetch();
+            if (shouldUseProvider) getProvider.refetch();
         }
-    }, [getCentersDoctor.status, centersDoctor]);
+    }, [getCentersDoctor.status, centersDoctor, getMe.status]);
 
     useEffect(() => {
         if (getUser.isSuccess) {
@@ -109,42 +139,23 @@ const PrivateRoute = props => {
     }, [getUser.status]);
 
     useEffect(() => {
-        if (getMe.isSuccess) {
-            setInfo(prev => ({
-                ...prev,
-                user: getMe.data.data
-            }));
-
-            const shouldUseUser =
-                usersApiDoctorList.ids?.includes(getMe.data.data.id) ||
-                usersApiDoctorList.ids?.includes('*');
-
-            const shouldUseProvider =
-                providersApiDoctorList.ids?.includes(getMe.data.data.id) ||
-                providersApiDoctorList.ids?.includes('*');
-
-            if (shouldUseUser) getUser.refetch();
-            if (shouldUseProvider) getProvider.refetch();
-        }
-    }, [getMe.status]);
-
-    useEffect(() => {
         if (doctorInfo.isSuccess) {
             let doctor = doctorInfo.data.data ?? {};
 
             if (getUser.isSuccess) {
                 doctor = {
                     ...doctor,
-                    name: getUser.data.data.users[0].name,
-                    family: getUser.data.data.users[0].family,
-                    national_code: getUser.data.data.users[0].national_code
+                    name: getUser.data.data?.users?.[0]?.name,
+                    family: getUser.data.data?.users?.[0]?.family,
+                    national_code: getUser.data?.data?.users?.[0]?.national_code
                 };
             }
 
             if (getProvider.isSuccess) {
                 doctor = {
                     ...doctor,
-                    biography: getProvider.data.data.providers[0].biography
+                    medical_code: getProvider.data?.data?.providers?.[0]?.employee_id,
+                    biography: getProvider.data?.data?.providers?.[0]?.biography
                 };
             }
 
