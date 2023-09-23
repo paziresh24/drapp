@@ -29,24 +29,37 @@ export const Info = ({ avatar = true }) => {
     const doctorInfoUpdate = useDoctorInfoUpdate();
     const updateProvider = useUpdateProvider();
     const updateUser = useUpdateUser();
-    const getProviders = useGetProvider({ user_id: info.user.id });
-    useGetUser({ user_id: info.user.id });
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const uploadPorfile = useUploadPorfile();
     const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
-        ids: ['*']
+        ids: ['']
     });
     const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
-        ids: ['*']
+        ids: ['']
+    });
+    const providersApiDoctorCitiesList = useFeatureValue('profile:patch-providers-api|cities', {
+        cities: ['']
+    });
+    const usersApiDoctorCitiesList = useFeatureValue('profile:patch-users-api|cities', {
+        cities: ['']
     });
 
     const shouldUseProvider =
         providersApiDoctorList.ids?.includes(info.user.id) ||
-        providersApiDoctorList.ids?.includes('*');
+        providersApiDoctorList.ids?.includes('*') ||
+        providersApiDoctorCitiesList.cities?.includes(
+            info.centers.find(center => center.type_id === OFFICE_CENTER)?.city
+        ) ||
+        providersApiDoctorCitiesList.cities?.includes('*');
 
     const shouldUseUser =
-        usersApiDoctorList.ids?.includes(info.user.id) || usersApiDoctorList.ids?.includes('*');
+        usersApiDoctorList.ids?.includes(info.user.id) ||
+        usersApiDoctorList.ids?.includes('*') ||
+        usersApiDoctorCitiesList.cities?.includes(
+            info.centers.find(center => center.type_id === OFFICE_CENTER)?.city
+        ) ||
+        usersApiDoctorCitiesList.cities?.includes('*');
 
     const {
         register: updateDoctorInfo,
@@ -58,21 +71,25 @@ export const Info = ({ avatar = true }) => {
     const updateDoctor = async data => {
         const biography = biographyRef?.current ?? info.doctor?.biography ?? '';
 
-        if (shouldUseProvider) {
-            updateProvider.mutate({ biography, user_id: info.user.id });
-        }
+        try {
+            if (shouldUseProvider) {
+                await updateProvider.mutateAsync({
+                    biography,
+                    ...(data.medical_code && { employee_id: data.medical_code }),
+                    user_id: info.user.id
+                });
+            }
 
-        if (shouldUseUser) {
-            updateUser.mutate({
-                name: data.name,
-                family: data.family,
-                national_code: data.national_code,
-                user_id: info.user.id
-            });
-        }
+            if (shouldUseUser) {
+                await updateUser.mutateAsync({
+                    name: data.name,
+                    family: data.family,
+                    ...(data.national_code && { national_code: data.national_code }),
+                    user_id: info.user.id
+                });
+            }
 
-        doctorInfoUpdate.mutate(
-            {
+            const { data: res } = await doctorInfoUpdate.mutateAsync({
                 name: data.name,
                 family: data.family,
                 national_code: data.national_code,
@@ -80,42 +97,38 @@ export const Info = ({ avatar = true }) => {
                 biography: biography,
                 secretary_phone: data.secretary_phone,
                 center_id: info.center.id
-            },
-            {
-                onSuccess: res => {
-                    if (data.secretary_phone)
-                        getSplunkInstance().sendEvent({
-                            group: 'register',
-                            type: 'loading-/profile-entered-num-secretary',
-                            event: {
-                                secretary_number: data.secretary_phone
-                            }
-                        });
-                    if (!data.secretary_phone)
-                        getSplunkInstance().sendEvent({
-                            group: 'register',
-                            type: 'loading-/profile-dont-entered-num-secretary'
-                        });
-                    toast.success(res.message);
+            });
 
-                    setInfo(prev => ({
-                        ...prev,
-                        doctor: {
-                            ...prev.doctor,
-                            name: data.name,
-                            family: data.family,
-                            national_code: data.national_code,
-                            medical_code: data.medical_code,
-                            biography: biography,
-                            secretary_phone: data.secretary_phone
-                        }
-                    }));
-                },
-                onError: error => {
-                    toast.error(error.response.data.message);
+            if (data.secretary_phone)
+                getSplunkInstance().sendEvent({
+                    group: 'register',
+                    type: 'loading-/profile-entered-num-secretary',
+                    event: {
+                        secretary_number: data.secretary_phone
+                    }
+                });
+            if (!data.secretary_phone)
+                getSplunkInstance().sendEvent({
+                    group: 'register',
+                    type: 'loading-/profile-dont-entered-num-secretary'
+                });
+            toast.success(res.message);
+
+            setInfo(prev => ({
+                ...prev,
+                doctor: {
+                    ...prev.doctor,
+                    name: data.name,
+                    family: data.family,
+                    national_code: data.national_code,
+                    medical_code: data.medical_code,
+                    biography: biography,
+                    secretary_phone: data.secretary_phone
                 }
-            }
-        );
+            }));
+        } catch (error) {
+            toast.error(error.response?.data?.error ?? error.response.data.message);
+        }
     };
 
     return (
