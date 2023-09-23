@@ -3,7 +3,7 @@ import { apiGatewayClient } from '../apiGatewayClient';
 
 export interface Payload {
     biography: string;
-    employee_id: string;
+    employee_id?: string;
     user_id: string;
 }
 
