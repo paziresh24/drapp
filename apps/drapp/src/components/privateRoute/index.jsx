@@ -113,7 +113,7 @@ const PrivateRoute = props => {
                 usersApiDoctorList.ids?.includes(getMe.data.data.id) ||
                 usersApiDoctorList.ids?.includes('*') ||
                 usersApiDoctorCitiesList.cities?.includes(
-                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER).city
+                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER)?.city
                 ) ||
                 usersApiDoctorCitiesList.cities?.includes('*');
 
@@ -121,7 +121,7 @@ const PrivateRoute = props => {
                 providersApiDoctorList.ids?.includes(getMe.data.data.id) ||
                 providersApiDoctorList.ids?.includes('*') ||
                 providersApiDoctorCitiesList.cities?.includes(
-                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER).city
+                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER)?.city
                 ) ||
                 providersApiDoctorCitiesList.cities?.includes('*');
 
