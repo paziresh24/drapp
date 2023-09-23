@@ -7,11 +7,31 @@ import { useChangePhoneNumber } from '@apis/profile/changePhoneNumber/otp';
 import { useUpdatePhoneNumber } from '@apis/profile/changePhoneNumber/update';
 import { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useSendNewCellOtpCode } from 'apps/drapp/src/apis/user/sendNewCellOtpCode';
+import { useUpdateUser } from 'apps/drapp/src/apis/user/patchUser';
+import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 
 export const ChangePhoneNumber = () => {
     const [isOpen, setIsOpen] = useState(false);
     const changePhoneNumberOtp = useChangePhoneNumber();
     const updatePhoneNumber = useUpdatePhoneNumber();
+    const updateUser = useUpdateUser();
+    const [info] = useDrApp();
+    const changeCellUserApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
+        ids: ['']
+    });
+    const changeCellUserApiDoctorCitiesList = useFeatureValue('profile:patch-users-api|cities', {
+        cities: ['']
+    });
+
+    const shouldUseChangeCellUser =
+        changeCellUserApiDoctorList.ids?.includes(info.user.id) ||
+        changeCellUserApiDoctorList.ids?.includes('*') ||
+        changeCellUserApiDoctorCitiesList.cities?.includes(
+            info.centers.find(center => center.type_id === OFFICE_CENTER)?.city
+        ) ||
+        changeCellUserApiDoctorCitiesList.cities?.includes('*');
 
     const [
         {
@@ -24,7 +44,7 @@ export const ChangePhoneNumber = () => {
 
     const handleOtp = useCallback(async () => {
         try {
-            const data = await changePhoneNumberOtp.mutateAsync({
+            await changePhoneNumberOtp.mutateAsync({
                 username: newPhoneNumber
             });
             setIsGetCode(true);
@@ -35,21 +55,33 @@ export const ChangePhoneNumber = () => {
 
     const handleUpdate = useCallback(async () => {
         try {
+            if (shouldUseChangeCellUser) {
+                await updateUser.mutateAsync({
+                    user_id: info.user.id,
+                    cell: Number(newPhoneNumber).toString(),
+                    otp: code
+                });
+            }
             const data = await updatePhoneNumber.mutateAsync({
                 username: newPhoneNumber,
                 password: code
             });
             localStorage.setItem('token', data.access_token);
             window.location.reload();
-        } catch (e) {
-            toast.error(e.response.data.message);
+        } catch (error) {
+            toast.error(error.response?.data?.error ?? error.response.data.message);
         }
     }, [newPhoneNumber, code]);
 
     return (
         <>
             <div className="flex space-s-2">
-                <TextField label="شماره موبایل" type="tel" readOnly defaultValue={`0${cell}`} />
+                <TextField
+                    label="شماره موبایل"
+                    type="tel"
+                    readOnly
+                    defaultValue={cell?.startsWith?.('0') ? cell : `0${cell}`}
+                />
                 <Button
                     variant="secondary"
                     onClick={e => {
@@ -94,7 +126,11 @@ export const ChangePhoneNumber = () => {
                         </Button>
                     )}
                     {isGetCode && (
-                        <Button block onClick={handleUpdate} loading={updatePhoneNumber.isLoading}>
+                        <Button
+                            block
+                            onClick={handleUpdate}
+                            loading={updatePhoneNumber.isLoading || updateUser.isLoading}
+                        >
                             ویرایش شماره موبایل
                         </Button>
                     )}

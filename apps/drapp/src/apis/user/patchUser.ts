@@ -5,6 +5,8 @@ export interface Payload {
     name?: string;
     family?: string;
     national_code?: string;
+    cell?: string;
+    otp?: string;
     user_id: string;
 }
 
