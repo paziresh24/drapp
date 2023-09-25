@@ -6,14 +6,17 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 
 interface DropDownProps {
-    items: Array<{
-        id: number;
-        name: string;
-        icon?: React.ReactNode;
-        action: () => void;
-        testId?: string;
-        diabled: boolean;
-    }>;
+    items: Array<
+        | {
+              id: number;
+              name: string;
+              icon?: React.ReactNode;
+              action: () => void;
+              testId?: string;
+              diabled: boolean;
+          }
+        | boolean
+    >;
     element?: React.ReactNode;
 }
 
@@ -52,7 +55,7 @@ export const DropDown: React.FC<DropDownProps> = props => {
                     'aria-labelledby': 'basic-button'
                 }}
             >
-                {items.map(({ id, action, name, icon, testId, diabled }: any) => (
+                {items?.map(({ id, action, name, icon, testId, diabled }: any) => (
                     <MenuItem
                         key={id}
                         data-testid={testId}
