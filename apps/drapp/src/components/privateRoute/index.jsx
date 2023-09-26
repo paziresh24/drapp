@@ -147,7 +147,8 @@ const PrivateRoute = props => {
                     ...doctor,
                     name: getUser.data.data?.users?.[0]?.name,
                     family: getUser.data.data?.users?.[0]?.family,
-                    national_code: getUser.data?.data?.users?.[0]?.national_code
+                    national_code: getUser.data?.data?.users?.[0]?.national_code,
+                    cell: getUser.data?.data?.users?.[0]?.cell
                 };
             }
 

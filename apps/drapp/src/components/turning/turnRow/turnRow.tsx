@@ -31,7 +31,7 @@ import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame, useRemoveTurn } from '@paziresh24/hooks/drapp/turning';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
-import {useFeatureValue} from '@growthbook/growthbook-react'
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
 
@@ -108,9 +108,9 @@ const TurnRow = (props: TurnRowProps) => {
     const [nationalCodeModal, setNationalCodeModal] = useState<'prescription' | 'visit' | false>(
         false
     );
-    const listOfDoctorForShowRemoveTurnButton = useFeatureValue<any>('turning.show-remove-turn-button' , [])
+    const shouldShowRemoveTurnButton = useFeatureIsOn('turning.should-show-remove-turn-button');
     const came = useCame();
-    const removeTurn = useRemoveTurn();    
+    const removeTurn = useRemoveTurn();
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -153,13 +153,14 @@ const TurnRow = (props: TurnRowProps) => {
             action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
-    
-    const isShowRemoveButtonTooltip = number === 1 && listOfDoctorForShowRemoveTurnButton?.includes(info?.doctor?.id) &&
+
+    const isShowRemoveButtonTooltip =
+        number === 1 &&
+        shouldShowRemoveTurnButton &&
         (statistics.activePatients
-            ? !isDeletedTurn && (bookStatus === 'not_came' ||
-              bookStatus === 'not_visited' ||
-              !prescription.finalized)
-            : bookStatus === 'visited' || !!prescription.finalized || isDeletedTurn)
+            ? !isDeletedTurn &&
+              (bookStatus === 'not_came' || bookStatus === 'not_visited' || !prescription.finalized)
+            : bookStatus === 'visited' || !!prescription.finalized || isDeletedTurn);
 
     const handleAdmitTurn = async () => {
         try {
@@ -579,7 +580,7 @@ const TurnRow = (props: TurnRowProps) => {
                     items={[
                         {
                             id: 1,
-                            icon: <TrashIcon color='#000' />,
+                            icon: <TrashIcon color="#000" />,
                             name: 'حذف نسخه',
                             action: () => setDeletePrescriptionModal(true),
                             diabled: prescription.finalized
@@ -606,19 +607,19 @@ const TurnRow = (props: TurnRowProps) => {
                             action: () => window.open(pdfLink.current),
                             diabled: !prescription.finalized
                         },
-                        listOfDoctorForShowRemoveTurnButton.includes(info?.doctor?.id)  && {
+                        shouldShowRemoveTurnButton && {
                             id: 2,
-                            icon: <TrashIcon color='#000' />,
+                            icon: <TrashIcon color="#000" />,
                             name: 'لغو نوبت',
                             action: () => setDeleteTurnModal(true),
-                            diabled: isDeletedTurn!
+                            diabled: !!isDeletedTurn
                         }
-                    ].filter((option:any) => !!option)}
+                    ].filter((option: any) => !!option)}
                 />
             </div>
         </Tooltip>
     );
-    
+
     return (
         <>
             <Default>
@@ -831,7 +832,7 @@ const TurnRow = (props: TurnRowProps) => {
                         انصراف
                     </Button>
                 </div>
-                </Modal>
+            </Modal>
             <Modal title="علت لغو نوبت" isOpen={deleteReasonModal} onClose={setDeleteReasonModal}>
                 <span className="text-sm leading-6">{deleteReason}</span>
             </Modal>
