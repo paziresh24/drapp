@@ -31,7 +31,7 @@ import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame, useRemoveTurn } from '@paziresh24/hooks/drapp/turning';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
-import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
 
@@ -109,6 +109,7 @@ const TurnRow = (props: TurnRowProps) => {
         false
     );
     const shouldShowRemoveTurnButton = useFeatureIsOn('turning.should-show-remove-turn-button');
+
     const came = useCame();
     const removeTurn = useRemoveTurn();
     const [nationalCodeValue, setNationalCode] = useState('');
@@ -251,10 +252,45 @@ const TurnRow = (props: TurnRowProps) => {
         try {
             await removeTurn.mutateAsync({ book_id: id });
             toast.success('درخواست شما با موفقیت ثبت شد!');
+            getSplunkInstance().sendEvent({
+                group: 'delete-book-drapp',
+                type: 'click-delete-book',
+                event: {
+                    event_action: 'delete-successful',
+                    data: {
+                        book_id: id,
+                        book_date: date,
+                        doctor_name: info.doctor.name,
+                        doctor_family: info.doctor.family,
+                        doctor_cell: info.doctor.cell,
+                        patient_name: name,
+                        patient_family: family,
+                        patient_cell: mobileNumber
+                    }
+                }
+            });
             queryClient.refetchQueries('turns');
             setDeleteTurnModal(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
+                getSplunkInstance().sendEvent({
+                    group: 'delete-book-drapp',
+                    type: 'click-delete-book',
+                    event: {
+                        event_action: 'delete-unsuccessful',
+                        error_message: error.response?.data?.message,
+                        data: {
+                            book_id: id,
+                            book_date: date,
+                            doctor_name: info.doctor.name,
+                            doctor_family: info.doctor.family,
+                            doctor_cell: info.doctor.cell,
+                            patient_name: name,
+                            patient_family: family,
+                            patient_cell: mobileNumber
+                        }
+                    }
+                });
                 toast.error(error.response?.data?.message);
             }
         }

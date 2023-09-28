@@ -89,7 +89,7 @@ export const Info = ({ avatar = true }) => {
                 });
             }
 
-            const { data: res } = await doctorInfoUpdate.mutateAsync({
+            const response = await doctorInfoUpdate.mutateAsync({
                 name: data.name,
                 family: data.family,
                 national_code: data.national_code,
@@ -112,7 +112,8 @@ export const Info = ({ avatar = true }) => {
                     group: 'register',
                     type: 'loading-/profile-dont-entered-num-secretary'
                 });
-            toast.success(res.message);
+
+            toast.success(response.message);
 
             setInfo(prev => ({
                 ...prev,
