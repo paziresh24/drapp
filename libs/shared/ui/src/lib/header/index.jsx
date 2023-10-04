@@ -43,7 +43,7 @@ const Header = memo(() => {
         createCenter.mutate(
             {
                 ignore_shahkar: true,
-                mobile: info.doctor.cell,
+                mobile: (+info.doctor.cell).toString(),
                 nationalCode: info.doctor.national_code,
                 medical_code: info.doctor.medical_code
             },

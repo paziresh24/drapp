@@ -12,7 +12,7 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { InfoIcon, LoadingIcon } from '@paziresh24/shared/icon';
 import Modal from '@paziresh24/shared/ui/modal';
 import { useCreateCenterIntelligence } from 'apps/drapp/src/apis/center/createCenterIntelligence';
-import { Loading } from '@paziresh24/shared/ui/loading';
+import { removeZeroStartNumber } from 'apps/drapp/src/functions/removeZeroStartNumber';
 
 const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, setFocus }) => {
     const resendCode = useResendCode({ mobile: userName, justDoctor: true });
@@ -76,7 +76,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
         createCenter.mutate(
             {
                 ignore_shahkar: window.location.pathname === '/p24auth',
-                mobile: digitsFaToEn(userName),
+                mobile: removeZeroStartNumber(digitsFaToEn(userName)),
                 nationalCode: digitsFaToEn(nationalCode),
                 medical_code: digitsFaToEn(medicalCode)
             },
@@ -124,7 +124,7 @@ const UserName = ({ setStep, step, userName, setUserName, setUserIsPassword, set
         try {
             await createCenterIntelligence.mutateAsync({
                 nationalCard: file,
-                mobile: digitsFaToEn(userName),
+                mobile: removeZeroStartNumber(digitsFaToEn(userName)),
                 nationalCode: digitsFaToEn(nationalCodeField.current.value)
             });
             getSplunkInstance().sendEvent({

@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import { getCookie } from '@paziresh24/utils/cookie';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { removeZeroStartNumber } from '../../functions/removeZeroStartNumber';
 
 export const CenterList = ({ enabled = false }) => {
     const history = useHistory();
@@ -30,7 +31,7 @@ export const CenterList = ({ enabled = false }) => {
         createCenter.mutate(
             {
                 ignore_shahkar: true,
-                mobile: info.doctor.cell,
+                mobile: removeZeroStartNumber(info.doctor.cell),
                 nationalCode: info.doctor.national_code,
                 medical_code: info.doctor.medical_code
             },
