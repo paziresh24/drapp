@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { digitsFaToEn } from '@paziresh24/shared/utils/digitsFaToEn';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { removeZeroStartNumber } from 'apps/drapp/src/functions/removeZeroStartNumber';
 
 const CreateCenter = () => {
     const getinfo = useGetInfo();
@@ -21,7 +22,7 @@ const CreateCenter = () => {
         createCenter.mutate(
             {
                 ignore_shahkar: true,
-                mobile: `0${getinfo.data.data.cell}`,
+                mobile: removeZeroStartNumber(getinfo.data.data.cell),
                 nationalCode: digitsFaToEn(nationalCode)
             },
             {

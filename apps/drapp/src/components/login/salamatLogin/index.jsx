@@ -10,6 +10,7 @@ import { setToken } from '@paziresh24/utils/localstorage';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
+import { removeZeroStartNumber } from 'apps/drapp/src/functions/removeZeroStartNumber';
 
 const SalamatLogin = ({ step }) => {
     const history = useHistory();
@@ -87,7 +88,7 @@ const SalamatLogin = ({ step }) => {
     const createCenter = async ({ cellPhone, nationalCode }) => {
         return createCenterReq.mutateAsync({
             ignore_shahkar: true,
-            mobile: digitsFaToEn(cellPhone),
+            mobile: removeZeroStartNumber(digitsFaToEn(cellPhone)),
             nationalCode: digitsFaToEn(nationalCode)
         });
     };

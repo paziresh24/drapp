@@ -17,6 +17,7 @@ import { MainMenuData, SubMenuData } from '@configs/menu';
 import { StatusBar } from '@components/turning/statusBar';
 import { getCookie } from '@paziresh24/utils/cookie';
 import { CenterList } from 'apps/drapp/src/components/centerList';
+import { removeZeroStartNumber } from 'apps/drapp/src/functions/removeZeroStartNumber';
 
 const SuperMenu = () => {
     const history = useHistory();
@@ -40,7 +41,7 @@ const SuperMenu = () => {
         createCenter.mutate(
             {
                 ignore_shahkar: true,
-                mobile: info.doctor.cell,
+                mobile: removeZeroStartNumber(info.doctor.cell),
                 nationalCode: info.doctor.national_code,
                 medical_code: info.doctor.medical_code
             },
