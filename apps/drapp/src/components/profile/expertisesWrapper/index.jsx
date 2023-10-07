@@ -158,7 +158,8 @@ export const ExpertisesWrapper = props => {
                                 setExpertise={setSpecializations}
                                 expertises={specializations}
                                 index={index}
-                                expertisesId={specialitiesListId}
+                                isShouldUseProvider={shouldUseProvider}
+                                specialitiesListId={specialitiesListId}
                             />
                         )
                 )}

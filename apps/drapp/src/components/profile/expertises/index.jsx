@@ -69,8 +69,17 @@ export const Expertises = props => {
 
     const deleteAction = () => {
         if (props.id) {
+            props.isShouldUseProvider && removeSpecialities.mutate({
+                id:props.id
+            },
+            {
+                onError:err =>{
+                    console.log(err.response.data.message)
+                }
+            }
+            )
             return deleteExpertises.mutate(
-                { id:props.listId.find(item => item.specialties_id ===props.id )?.expertise_id  },
+                { id:props.specialitiesListId.find(item => item.specialties_id ===props.id )?.expertise_id  },
                 {
                     onSuccess: () => {
                         setDeleteExpertisesModal(false);
