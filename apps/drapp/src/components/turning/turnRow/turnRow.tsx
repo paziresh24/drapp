@@ -462,15 +462,15 @@ const TurnRow = (props: TurnRowProps) => {
 
     const TurnStatusButton = () => (
         <Button
-            size="small"
-            className={showTurnStatusButton && paidStatusInfo[paymentStatus].style}
-            onClick={showTurnStatusButton && paidStatusInfo[paymentStatus].action}
-            fullWidth
-        >
-            {showTurnStatusButton && paidStatusInfo[paymentStatus].icon}
-            {showTurnStatusButton && paidStatusInfo[paymentStatus].text}
-            {showTurnStatusButton && paidStatusInfo[paymentStatus].additionalIcons}
-        </Button>
+        size="small"
+        className={showTurnStatusButton ? paidStatusInfo[paymentStatus].style : ''}
+        onClick={showTurnStatusButton ? paidStatusInfo[paymentStatus].action : undefined}
+        fullWidth
+      >
+        {showTurnStatusButton ? paidStatusInfo[paymentStatus].icon : null}
+        {showTurnStatusButton ? paidStatusInfo[paymentStatus].text : null}
+        {showTurnStatusButton ? paidStatusInfo[paymentStatus].additionalIcons : null}
+      </Button>
     );
     const PrescriptionButton = () => (
         <Button
