@@ -1,5 +1,5 @@
 import { useDrApp } from '@paziresh24/context/drapp';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
     useCreateExpertise,
@@ -12,23 +12,55 @@ import { PlusLineIcon } from '@paziresh24/shared/icon';
 import { Expertises } from '../expertises';
 import styles from './expertisesWrapper.module.scss';
 import isEmpty from 'lodash/isEmpty';
+import { useGetSpecialities } from 'apps/drapp/src/apis/specialities/getSpecialities';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
+import { useCreateSpecialities } from 'apps/drapp/src/apis/specialities/createSpecialities';
+import { useUpdateSpecialities } from 'apps/drapp/src/apis/specialities/updateSpecialities';
 
 export const ExpertisesWrapper = props => {
     const [info] = useDrApp();
-    const [expertises, setExpertises] = useState([]);
+    const [specializations, setSpecializations] = useState([])
+    const [specialitiesListId, setspecialitiesListId] = useState([])
     const getExpertises = useGetExpertises({ center_id: info.center.id });
+    const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
+        ids: ['']
+    });
+    const providersApiDoctorCitiesList = useFeatureValue('profile:patch-providers-api|cities', {
+        cities: ['']
+    });
+    const getSpecialities = useGetSpecialities({provider_id:info?.doctor?.provider_id})
+    const createSpecialities = useCreateSpecialities();
+    const updateSpecialities = useUpdateSpecialities();
     const createExpertise = useCreateExpertise();
     const updateExpertise = useUpdateExpertise();
     const expertisesPromises = [];
+    const shouldUseProvider =
+    providersApiDoctorList.ids?.includes(info.doctor?.user_id) ||
+    providersApiDoctorList.ids?.includes('*') ||
+    providersApiDoctorCitiesList.cities?.includes(
+        info.center?.type_id === OFFICE_CENTER && info?.center?.city
+    ) ||
+    providersApiDoctorCitiesList.cities?.includes('*');
 
     useEffect(() => {
+        shouldUseProvider &&  getSpecialities.refetch();
         getExpertises.refetch();
     }, [info.center]);
 
     useEffect(() => {
+        if(shouldUseProvider && getSpecialities.isSuccess && !isEmpty(getSpecialities.data.data)){
+            shouldUseProvider && setSpecializations(getSpecialities.data.data?.providers_specialities?.map((items) => ({
+                alias_title: items?.alias,
+                degree: items?.academic_degree,
+                expertise: items?.speciality,
+                id:items?.id,
+              })))
+        }
+
         if (getExpertises.isSuccess) {
             if (isEmpty(getExpertises.data.data)) {
-                return setExpertises([
+                return setSpecializations([
                     {
                         alias_title: '',
                         degree: { id: 0, name: '' },
@@ -37,12 +69,14 @@ export const ExpertisesWrapper = props => {
                     }
                 ]);
             }
-            setExpertises(getExpertises.data.data);
-        }
-    }, [getExpertises.status]);
+            !shouldUseProvider && setSpecializations(getExpertises.data.data)
+        }        
+        shouldUseProvider && setspecialitiesListId(getExpertises?.data?.data.map((item, index) => ({expertise_id: item.id, specialties_id: getSpecialities?.data?.data?.providers_specialities[index]?.id ?? ''})))
+
+    }, [getExpertises.status,getSpecialities.status]);
 
     const saveExpertises = () => {
-        expertises.forEach(expertise => {
+        specializations.forEach(expertise => {
             if (!expertise.id) {
                 return expertisesPromises.push(
                     createExpertise.mutateAsync(
@@ -56,13 +90,25 @@ export const ExpertisesWrapper = props => {
                                 toast.error(err.response.data.message);
                             }
                         }
+                    ),
+                    shouldUseProvider && createSpecialities.mutateAsync({
+                        academic_degree_id:expertise.degree.id,
+                        speciality_id: expertise.expertise.id,
+                        alias:expertise.alias_title
+                    },
+                    {
+                        onError: err => {
+                            toast.error(err.response.data.message);
+                        }
+                    }
                     )
                 );
             }
+            
             return expertisesPromises.push(
                 updateExpertise.mutateAsync(
                     {
-                        id: expertise.id,
+                        id:shouldUseProvider ? specialitiesListId.find(item => item?.specialties_id === expertise.id)?.expertise_id : expertise.id,
                         expertise_id: expertise.expertise.id,
                         degree_id: expertise.degree.id,
                         alias_title: expertise.alias_title
@@ -72,13 +118,26 @@ export const ExpertisesWrapper = props => {
                             toast.error(err.response.data.message);
                         }
                     }
+                ),
+                shouldUseProvider && updateSpecialities.mutateAsync({
+                    id: expertise.id,
+                    academic_degree_id:expertise.degree.id,
+                    speciality_id: expertise.expertise.id,
+                    alias:expertise.alias_title,
+                },
+                {
+                    onError: err => {
+                        toast.error(err.response.data.message);
+                    }
+                }
                 )
             );
         });
 
         Promise.allSettled(expertisesPromises).then(() => {
             getExpertises.remove();
-            setTimeout(() => getExpertises.refetch());
+            shouldUseProvider && getSpecialities.remove();
+            setTimeout(() => {getExpertises.refetch(); shouldUseProvider && getSpecialities.refetch()});
             props.setExpertiseAccordion(false);
             return toast.success('تخصص با موفقیت ذخیره شد.');
         });
@@ -86,8 +145,8 @@ export const ExpertisesWrapper = props => {
 
     return (
         <>
-            {expertises.length > 0 &&
-                expertises.map(
+            {
+                specializations.map(
                     (expertise, index) =>
                         !isEmpty(expertise.degree) && (
                             <Expertises
@@ -95,10 +154,11 @@ export const ExpertisesWrapper = props => {
                                 id={expertise.id}
                                 degree={expertise?.degree?.id}
                                 expertise={expertise?.expertise?.id}
-                                aliasTitle={expertise.alias_title}
-                                setExpertise={setExpertises}
-                                expertises={expertises}
+                                aliasTitle={expertise?.alias_title}
+                                setExpertise={setSpecializations}
+                                expertises={specializations}
                                 index={index}
+                                expertisesId={specialitiesListId}
                             />
                         )
                 )}
@@ -114,15 +174,15 @@ export const ExpertisesWrapper = props => {
                 </Button>
                 <Button
                     onClick={() =>
-                        setExpertises(prev => [
-                            ...prev,
-                            {
-                                alias_title: '',
-                                degree: { id: 0, name: '' },
-                                expertise: { id: 0, name: '' },
-                                id: ''
-                            }
-                        ])
+                        setSpecializations(prev => [
+                                ...prev,
+                                {
+                                    alias_title: '',
+                                    degree: { id: 0, name: '' },
+                                    expertise: { id: 0, name: '' },
+                                    id: '',
+                                }
+                            ])
                     }
                     variant="secondary"
                     square

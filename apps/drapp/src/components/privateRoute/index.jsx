@@ -156,7 +156,9 @@ const PrivateRoute = props => {
                 doctor = {
                     ...doctor,
                     medical_code: getProvider.data?.data?.providers?.[0]?.employee_id,
-                    biography: getProvider.data?.data?.providers?.[0]?.biography
+                    biography: getProvider.data?.data?.providers?.[0]?.biography,
+                    provider_id: getProvider.data.data?.providers?.[0]?.id,
+                    user_id:getProvider.data.data?.providers?.[0]?.user_id
                 };
             }
 
