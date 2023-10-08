@@ -9,12 +9,14 @@ import Modal from '@paziresh24/shared/ui/modal';
 import Button from '@paziresh24/shared/ui/button';
 import { PlusLineIcon, CloseIcon } from '@paziresh24/shared/icon';
 import isEmpty from 'lodash/isEmpty';
+import { useRemoveSpecialities } from 'apps/drapp/src/apis/specialities/removeSpecialities';
 
 export const Expertises = props => {
     const [degree, setDegree] = useState(props.degree);
     const [expertise, setExpertise] = useState(props.expertise);
     const [aliasTitle, setAliasTitle] = useState(props.aliasTitle);
     const deleteExpertises = useDeleteExpertises();
+    const removeSpecialities = useRemoveSpecialities()
     const [deleteExpertisesModal, setDeleteExpertisesModal] = useState(false);
 
     useEffect(() => {
@@ -67,8 +69,17 @@ export const Expertises = props => {
 
     const deleteAction = () => {
         if (props.id) {
+            props.isShouldUseProvider && removeSpecialities.mutate({
+                id:props.id
+            },
+            {
+                onError:err =>{
+                    console.log(err.response.data.message)
+                }
+            }
+            )
             return deleteExpertises.mutate(
-                { id: props.id },
+                { id:props.specialitiesListId.find(item => item.specialties_id ===props.id )?.expertise_id  },
                 {
                     onSuccess: () => {
                         setDeleteExpertisesModal(false);
