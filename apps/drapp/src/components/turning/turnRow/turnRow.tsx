@@ -34,7 +34,6 @@ import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
-import { type } from 'os';
 
 type Prescription = {
     id: string;
