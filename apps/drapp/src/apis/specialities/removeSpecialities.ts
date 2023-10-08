@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import { apiGatewayClient } from '../apiGatewayClient';
 
-export interface Params {
+interface Params {
     id:number
 }
 

@@ -1,7 +1,7 @@
-import { useMutation, useQuery } from 'react-query';
+import {  useQuery } from 'react-query';
 import { apiGatewayClient } from '../apiGatewayClient';
 
-export interface Params {
+interface Params {
     provider_id: string;
 }
 

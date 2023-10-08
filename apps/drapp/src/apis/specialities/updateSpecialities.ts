@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import { apiGatewayClient } from '../apiGatewayClient';
 
-export interface Params {
+interface Params {
     alias: string;
     academic_degree_id:number
     speciality_id:number,

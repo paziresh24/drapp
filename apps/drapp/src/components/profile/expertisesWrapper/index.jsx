@@ -70,8 +70,13 @@ export const ExpertisesWrapper = props => {
                 ]);
             }
             !shouldUseProvider && setSpecializations(getExpertises.data.data)
+
+            console.log(getExpertises?.data?.data);
         }        
-        shouldUseProvider && setspecialitiesListId(getExpertises?.data?.data.map((item, index) => ({expertise_id: item.id, specialties_id: getSpecialities?.data?.data?.providers_specialities[index]?.id ?? ''})))
+        shouldUseProvider && setspecialitiesListId(getExpertises?.data?.data.map((item) => ({
+            expertise_id: item.id,
+            specialties_id: getSpecialities?.data?.data.providers_specialities.find(spec => spec.speciality.title === item.expertise.name)?.id
+          })))
 
     }, [getExpertises.status,getSpecialities.status]);
 
