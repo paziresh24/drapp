@@ -683,7 +683,7 @@ const TurnRow = (props: TurnRowProps) => {
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
-                            {!!(paymentStatus && (bookStatus === 'visited' || isDeletedTurn)) && (
+                            {!!(showTurnStatusButton && (bookStatus === 'visited' || isDeletedTurn)) && (
                                 <TurnStatusButton />
                             )}
                             <PrescriptionButton />
