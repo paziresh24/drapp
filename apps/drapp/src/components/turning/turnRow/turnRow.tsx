@@ -56,7 +56,7 @@ interface TurnRowProps {
     mobileNumber: string;
     date: string;
     refId?: string;
-    paymentStatus?: 'paid' | 'refunded';
+    paymentStatus?: 'paid' | 'refunded' | 'not_paid';
     paymentPrice?: string;
     bookStatus?: 'not_came' | 'not_visited' | 'visited';
     deleteReason?: string;
@@ -66,6 +66,7 @@ interface TurnRowProps {
     possibilityBeingSecureCallButton?: boolean;
     messengerName?: string;
 }
+
 
 const TurnRow = (props: TurnRowProps) => {
     const [info] = useDrApp();
@@ -109,6 +110,7 @@ const TurnRow = (props: TurnRowProps) => {
         false
     );
     const shouldShowRemoveTurnButton = useFeatureIsOn('turning.should-show-remove-turn-button');
+    
 
     const came = useCame();
     const removeTurn = useRemoveTurn();
@@ -126,12 +128,13 @@ const TurnRow = (props: TurnRowProps) => {
     );
 
     const turn = useRef(turns.find(turn => turn.id === id));
+    const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid'
     const buttonStatusTurnText = {
         not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
     };
-    const paidStatusInfo = {
+    const paidStatusInfo= {
         paid: {
             text: 'پرداخت شد',
             icon: <CheckIcon className="!fill-[#0BB07B] !w-5 scale-105" />,
@@ -458,15 +461,15 @@ const TurnRow = (props: TurnRowProps) => {
 
     const TurnStatusButton = () => (
         <Button
-            size="small"
-            className={paymentStatus && paidStatusInfo[paymentStatus].style}
-            onClick={paymentStatus && paidStatusInfo[paymentStatus].action}
-            fullWidth
-        >
-            {paymentStatus && paidStatusInfo[paymentStatus].icon}
-            {paymentStatus && paidStatusInfo[paymentStatus].text}
-            {paymentStatus && paidStatusInfo[paymentStatus].additionalIcons}
-        </Button>
+        size="small"
+        className={showTurnStatusButton ? paidStatusInfo[paymentStatus].style : ''}
+        onClick={showTurnStatusButton ? paidStatusInfo[paymentStatus].action : undefined}
+        fullWidth
+      >
+        {showTurnStatusButton ? paidStatusInfo[paymentStatus].icon : null}
+        {showTurnStatusButton ? paidStatusInfo[paymentStatus].text : null}
+        {showTurnStatusButton ? paidStatusInfo[paymentStatus].additionalIcons : null}
+      </Button>
     );
     const PrescriptionButton = () => (
         <Button
@@ -680,7 +683,7 @@ const TurnRow = (props: TurnRowProps) => {
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
-                            {!!(paymentStatus && (bookStatus === 'visited' || isDeletedTurn)) && (
+                            {!!(showTurnStatusButton && (bookStatus === 'visited' || isDeletedTurn)) && (
                                 <TurnStatusButton />
                             )}
                             <PrescriptionButton />
