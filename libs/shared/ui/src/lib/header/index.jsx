@@ -18,6 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '@hooks/useShouldShowActionBars';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { isEmbed } from '@paziresh24/shared/utils';
 
 const Header = memo(() => {
     const showCenterSwitcherGradualRollout = useFeatureIsOn('header.show-center-switcher');
@@ -66,37 +67,64 @@ const Header = memo(() => {
     });
 
     return (
-        <header className="flex justify-between items-center h-14 min-h-[3.5rem] bg-white px-3 pl-2 border-b border-solid border-[#e5e9f0] z-[8]">
-            <div>
-                {!isMobile && shouldShowActionBars && (
-                    <IconButton onClick={() => setIsOpen(prev => !prev)}>
-                        <MenuIcon sx={{ fontSize: '20px', color: '#000' }}></MenuIcon>
-                    </IconButton>
-                )}
-                <span className="font-bold md:pr-3">{page.title}</span>
-            </div>
-            <div className="flex items-center">
+        <header
+            className={classNames(
+                'flex justify-between items-center h-14 min-h-[3.5rem] bg-white px-3 pl-2 border-b border-solid border-[#e5e9f0] z-[8]',
+                {
+                    '!bg-slate-100 !p-1 !px-2 z-10 !w-full pr-5 flex justify-between items-center border-b border-solid border-slate-200/50  shadow-sm':
+                        isEmbed()
+                }
+            )}
+        >
+            {(isEmbed() ? !isMobile : true) && (
+                <div>
+                    {!isMobile && !isEmbed() && shouldShowActionBars && (
+                        <IconButton onClick={() => setIsOpen(prev => !prev)}>
+                            <MenuIcon sx={{ fontSize: '20px', color: '#000' }}></MenuIcon>
+                        </IconButton>
+                    )}
+                    {!isEmbed() && <span className="font-bold md:pr-3">{page.title}</span>}
+                </div>
+            )}
+            <div className={classNames('flex items-center', { 'w-full md:w-auto': isEmbed() })}>
                 <div
-                    className={`items-center space-s-3 ${
-                        page?.showCenterListForMobile && showCenterSwitcherGradualRollout
-                            ? 'flex'
-                            : 'hidden lg:flex'
-                    }`}
+                    className={classNames(
+                        `items-center space-s-3 ${
+                            page?.showCenterListForMobile ||
+                            showCenterSwitcherGradualRollout ||
+                            isEmbed()
+                                ? 'flex'
+                                : 'hidden lg:flex'
+                        }`,
+                        { 'w-full md:w-auto': isEmbed() }
+                    )}
                 >
                     {shouldShowActionBars && (
                         <>
-                            <HelpIcon
-                                className="hidden lg:block"
-                                color="#3f4079"
-                                data-tip
-                                data-for="centerSelect"
-                            />
-                            <ReactTooltip id="centerSelect" place="top" type="dark" effect="solid">
-                                از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را انتخاب کنید
-                            </ReactTooltip>
-
+                            {!isMobile && (
+                                <>
+                                    <HelpIcon
+                                        className="hidden lg:block"
+                                        color="#3f4079"
+                                        data-tip
+                                        data-for="centerSelect"
+                                    />
+                                    <ReactTooltip
+                                        id="centerSelect"
+                                        place="top"
+                                        type="dark"
+                                        effect="solid"
+                                    >
+                                        از این قسمت، مرکزی که در آن مشغول تجویز و طبابت هستید را
+                                        انتخاب کنید
+                                    </ReactTooltip>
+                                </>
+                            )}
                             <div
-                                className={styles.centerSelectInput}
+                                className={classNames(styles.centerSelectInput, {
+                                    '!bg-white !border !border-solid !border-slate-100  !m-0 md:!mr-2 !w-full !min-w-full md:!w-[20rem] md:!min-w-[20rem]':
+                                        isEmbed()
+                                })}
                                 onClick={e => {
                                     e.stopPropagation();
                                     setIsCenterSelectOpen(prevValue => !prevValue);

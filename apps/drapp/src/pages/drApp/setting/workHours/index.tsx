@@ -25,6 +25,7 @@ import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
 import queryString from 'query-string';
 import classNames from 'classnames';
 import { CenterList } from 'apps/drapp/src/components/centerList';
+import { isEmbed } from '@paziresh24/shared/utils';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
@@ -99,7 +100,6 @@ const WorkHours = () => {
             className="h-full pt-4 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-md"
         >
             <Stack className="pb-32 space-y-5 md:pb-0">
-                {urlParams.isWebView && <CenterList enabled />}
                 {getCenterType(doctorInfo.center) !== 'consult' && (
                     <SelectTime
                         items={durationList}
