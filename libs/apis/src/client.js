@@ -7,7 +7,6 @@ import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 const client = axios.create({
     baseURL: baseURL('DRAPP_API'),
     withCredentials: true
-    // validateStatus: status => status >= 200 && status !== 204 && status < 300
 });
 
 // onRequest
@@ -55,8 +54,8 @@ client.interceptors.response.use(
                 clearToken();
                 return window.location.replace(
                     `/auth${
-                        location.pathname !== '/' || location.search
-                            ? `?url=${location.pathname + location.search}`
+                        window.location.pathname !== '/' || window.location.search
+                            ? `?url=${window.location.pathname + window.location.search}`
                             : ''
                     }`
                 );
