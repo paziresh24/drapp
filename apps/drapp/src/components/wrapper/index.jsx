@@ -11,7 +11,11 @@ import { toast } from 'react-toastify';
 import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '../../hooks/useShouldShowActionBars';
 import queryString from 'query-string';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { isEmbed } from '@paziresh24/shared/utils';
+import { CenterList } from '../centerList';
+import { ChevronIcon } from '@paziresh24/shared/icon';
+import { usePage } from '@paziresh24/context/core/page';
 
 const Wrapper = ({ children }) => {
     const [info] = useDrApp();
@@ -19,8 +23,9 @@ const Wrapper = ({ children }) => {
     const [isOffline, setIsOffline] = useState(false);
     const isLogined = info.doctor ? true : false;
     const shouldShowActionBars = useShouldShowActionBars();
-    const { search } = useLocation();
-    const urlParams = queryString.parse(search);
+    const [page] = usePage();
+
+    const router = useHistory();
 
     useEffect(() => {
         window.addEventListener('offline', () => {
@@ -49,13 +54,26 @@ const Wrapper = ({ children }) => {
                 })}
                 id="wrapper"
             >
-                {isLogined && !isMobile && !urlParams.isWebView && shouldShowActionBars && (
-                    <SideBar />
-                )}
+                {isLogined && !isMobile && !isEmbed() && shouldShowActionBars && <SideBar />}
                 <div className={styles['article']}>
-                    {isLogined && !urlParams.isWebView && <Header />}
+                    {/* {isEmbed() && (
+                        <div className="bg-slate-100 p-1 z-10 w-full pr-5 flex justify-between items-center border-b border-solid border-slate-200/50  shadow-sm">
+                            <div className="flex space-s-3 items-center">
+                                <ChevronIcon
+                                    dir="right"
+                                    onClick={() => router.goBack()}
+                                    className="cursor-pointer"
+                                />
+                                <span className="font-medium text-sm">{page.title}</span>
+                            </div>
+                            <div className="w-56 md:w-96">
+                                <CenterList />
+                            </div>
+                        </div>
+                    )} */}
+                    {isLogined && <Header />}
                     {children}
-                    {isLogined && !urlParams.isWebView && shouldShowActionBars && <BottomBar />}
+                    {isLogined && !isEmbed() && shouldShowActionBars && <BottomBar />}
                 </div>
             </div>
         </ErrorBoundary>

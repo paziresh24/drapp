@@ -31,6 +31,7 @@ import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 import { useGetUser } from '../../apis/user/getUser';
 import { useFeatureValue } from '@growthbook/growthbook-react';
 import { useGetProvider } from '../../apis/provider/getProvider';
+import { isEmbed } from '@paziresh24/shared/utils';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -158,7 +159,7 @@ const PrivateRoute = props => {
                     medical_code: getProvider.data?.data?.providers?.[0]?.employee_id,
                     biography: getProvider.data?.data?.providers?.[0]?.biography,
                     provider_id: getProvider.data.data?.providers?.[0]?.id,
-                    user_id:getProvider.data.data?.providers?.[0]?.user_id
+                    user_id: getProvider.data.data?.providers?.[0]?.user_id
                 };
             }
 
@@ -252,7 +253,7 @@ const PrivateRoute = props => {
         !isError &&
         !getCentersDoctor.status.error
     )
-        return <Loading show={true} simple={urlParams.isWebView} />;
+        return <Loading show={true} simple={isEmbed()} />;
     return (
         <>
             <Helmet>
