@@ -4,7 +4,8 @@ import { getToken, setToken, clearToken } from '@paziresh24/utils/localstorage';
 import { refreshToken } from './refreshToken';
 
 const client = axios.create({
-    baseURL: baseURL('AUTH_API')
+    baseURL: baseURL('AUTH_API'),
+    withCredentials: true
 });
 
 // onRequest
@@ -27,11 +28,7 @@ client.interceptors.response.use(
     res => res.data,
     async err => {
         const originalRequest = err.config;
-        if (
-            localStorage.getItem('token') &&
-            err.response?.status === 401 &&
-            window.location.pathname !== '/auth'
-        ) {
+        if (err.response?.status === 401 && window.location.pathname !== '/auth') {
             try {
                 const { access_token } = await refreshToken();
                 setToken(access_token);
@@ -39,13 +36,11 @@ client.interceptors.response.use(
             } catch (error) {
                 clearToken();
                 return window.location.replace(
-                    `${
-                        window._env_.NODE_ENV === 'production'
-                            ? location.host === 'dr.paziresh24.com'
-                                ? ''
-                                : window._env_.PUBLIC_URL
+                    `/auth${
+                        window.location.pathname !== '/' || window.location.search
+                            ? `?url=${window.location.pathname + window.location.search}`
                             : ''
-                    }/auth`
+                    }`
                 );
             }
         }
