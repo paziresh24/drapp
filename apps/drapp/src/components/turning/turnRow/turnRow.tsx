@@ -67,7 +67,6 @@ interface TurnRowProps {
     messengerName?: string;
 }
 
-
 const TurnRow = (props: TurnRowProps) => {
     const [info] = useDrApp();
     const {
@@ -110,7 +109,6 @@ const TurnRow = (props: TurnRowProps) => {
         false
     );
     const shouldShowRemoveTurnButton = useFeatureIsOn('turning.should-show-remove-turn-button');
-    
 
     const came = useCame();
     const removeTurn = useRemoveTurn();
@@ -128,13 +126,13 @@ const TurnRow = (props: TurnRowProps) => {
     );
 
     const turn = useRef(turns.find(turn => turn.id === id));
-    const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid'
+    const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid';
     const buttonStatusTurnText = {
         not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
     };
-    const paidStatusInfo= {
+    const paidStatusInfo = {
         paid: {
             text: 'پرداخت شد',
             icon: <CheckIcon className="!fill-[#0BB07B] !w-5 scale-105" />,
@@ -446,7 +444,6 @@ const TurnRow = (props: TurnRowProps) => {
         <Button
             variant="outlined"
             size="small"
-            disabled={prescription.finalized}
             onClick={handleVisitButtonAction}
             loading={actionLoading}
             fullWidth
@@ -461,15 +458,15 @@ const TurnRow = (props: TurnRowProps) => {
 
     const TurnStatusButton = () => (
         <Button
-        size="small"
-        className={showTurnStatusButton ? paidStatusInfo[paymentStatus].style : ''}
-        onClick={showTurnStatusButton ? paidStatusInfo[paymentStatus].action : undefined}
-        fullWidth
-      >
-        {showTurnStatusButton ? paidStatusInfo[paymentStatus].icon : null}
-        {showTurnStatusButton ? paidStatusInfo[paymentStatus].text : null}
-        {showTurnStatusButton ? paidStatusInfo[paymentStatus].additionalIcons : null}
-      </Button>
+            size="small"
+            className={showTurnStatusButton ? paidStatusInfo[paymentStatus].style : ''}
+            onClick={showTurnStatusButton ? paidStatusInfo[paymentStatus].action : undefined}
+            fullWidth
+        >
+            {showTurnStatusButton ? paidStatusInfo[paymentStatus].icon : null}
+            {showTurnStatusButton ? paidStatusInfo[paymentStatus].text : null}
+            {showTurnStatusButton ? paidStatusInfo[paymentStatus].additionalIcons : null}
+        </Button>
     );
     const PrescriptionButton = () => (
         <Button
@@ -683,9 +680,10 @@ const TurnRow = (props: TurnRowProps) => {
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
-                            {!!(showTurnStatusButton && (bookStatus === 'visited' || isDeletedTurn)) && (
-                                <TurnStatusButton />
-                            )}
+                            {!!(
+                                showTurnStatusButton &&
+                                (bookStatus === 'visited' || isDeletedTurn)
+                            ) && <TurnStatusButton />}
                             <PrescriptionButton />
 
                             <TurnDropDown />
