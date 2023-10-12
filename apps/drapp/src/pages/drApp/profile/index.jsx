@@ -308,11 +308,7 @@ const Profile = () => {
     return (
         <div className={styles['wrapper']}>
             <div className={styles['header']}>
-                <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`https://paziresh24.com/dr/${info.doctor.slug}`}
-                >
+                <a target="_blank" href={`https://paziresh24.com/dr/${info.doctor.slug}`}>
                     <div className={styles['show-profile']}>
                         <svg
                             width="24"
