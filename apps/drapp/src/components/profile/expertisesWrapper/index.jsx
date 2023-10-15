@@ -96,7 +96,7 @@ export const ExpertisesWrapper = props => {
                             }
                         }
                     ),
-                    shouldUseProvider && createSpecialities.mutateAsync({
+                    shouldUseProvider && createExpertise.isSuccess && createSpecialities.mutateAsync({
                         academic_degree_id:expertise.degree.id,
                         speciality_id: expertise.expertise.id,
                         alias:expertise.alias_title
@@ -124,7 +124,7 @@ export const ExpertisesWrapper = props => {
                         }
                     }
                 ),
-                shouldUseProvider && updateSpecialities.mutateAsync({
+                shouldUseProvider && updateExpertise.isSuccess && updateSpecialities.mutateAsync({
                     id: expertise.id,
                     academic_degree_id:expertise.degree.id,
                     speciality_id: expertise.expertise.id,

@@ -55,17 +55,17 @@ export const ChangePhoneNumber = () => {
 
     const handleUpdate = useCallback(async () => {
         try {
-            if (shouldUseChangeCellUser) {
+            const data = await updatePhoneNumber.mutateAsync({
+                username: newPhoneNumber,
+                password: code
+            });
+            if (shouldUseChangeCellUser && !!data) {
                 await updateUser.mutateAsync({
                     user_id: info.user.id,
                     cell: Number(newPhoneNumber).toString(),
                     otp: code
                 });
             }
-            const data = await updatePhoneNumber.mutateAsync({
-                username: newPhoneNumber,
-                password: code
-            });
             localStorage.setItem('token', data.access_token);
             window.location.reload();
         } catch (error) {
