@@ -79,7 +79,9 @@ export const ExpertisesWrapper = props => {
     }, [getExpertises.status,getSpecialities.status]);
 
     const saveExpertises = () => {
-        specializations.map(item => item.alias_title.length > 40 ? {...item, alias_title:item.alias_title.slice(0, 40) } : item).slice(0,3).forEach(expertise => {
+        if(specializations.length > 3) return toast.error('حداکثر میتوانید 3 تخصص را انتخاب کنید.')
+        if (specializations.find(item => item.alias_title.length > 65)) return
+        specializations.forEach(expertise => {
             if (!expertise.id) {
                 return expertisesPromises.push(
                     createExpertise.mutateAsync(

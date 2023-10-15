@@ -194,12 +194,14 @@ export const Info = ({ avatar = true }) => {
                     error={doctorInfoErrors.name}
                     defaultValue={info.doctor.name}
                     {...updateDoctorInfo('name', { required: false })}
+                    readOnly
                 />
                 <TextField
                     label="نام خانوادگی"
                     error={doctorInfoErrors.family}
                     defaultValue={info.doctor.family}
                     {...updateDoctorInfo('family', { required: false })}
+                    readOnly
                 />
                 <TextField
                     label="کد ملی"
