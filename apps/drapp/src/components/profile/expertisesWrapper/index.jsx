@@ -70,8 +70,6 @@ export const ExpertisesWrapper = props => {
                 ]);
             }
             !shouldUseProvider && setSpecializations(getExpertises.data.data)
-
-            console.log(getExpertises?.data?.data);
         }        
         shouldUseProvider && setspecialitiesListId(getExpertises?.data?.data.map((item) => ({
             expertise_id: item.id,
@@ -81,7 +79,7 @@ export const ExpertisesWrapper = props => {
     }, [getExpertises.status,getSpecialities.status]);
 
     const saveExpertises = () => {
-        specializations.forEach(expertise => {
+        specializations.map(item => item.alias_title.length > 40 ? {...item, alias_title:item.alias_title.slice(0, 40) } : item).slice(0,3).forEach(expertise => {
             if (!expertise.id) {
                 return expertisesPromises.push(
                     createExpertise.mutateAsync(
