@@ -20,18 +20,18 @@
 
         .show-profile {
             position: absolute;
-            top: 1rem;
-            left: 1rem;
+            top: 0.7rem;
+            left: 0.7rem;
             cursor: pointer;
             border: 1px solid rgba(153, 149, 149, 0.253);
-            padding: 0.2rem 0.6rem;
+            padding: 0rem 0.3rem;
             border-radius: 100px;
             display: flex;
             align-items: center;
 
             span {
                 color: $color-text;
-                font-size: 0.8rem;
+                font-size: 0.7rem;
             }
 
             svg {
@@ -41,14 +41,8 @@
             }
 
             .show-profile-icon {
-                width: 1.2rem;
-                margin-left: 0.3rem;
-            }
-
-            @media screen and (max-width: 992px) {
-                position: fixed;
-                top: 0.7rem;
-                z-index: 10;
+                width: 0.9rem;
+                margin-left: 0.1rem;
             }
         }
 

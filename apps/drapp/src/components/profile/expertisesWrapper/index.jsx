@@ -73,8 +73,6 @@ export const ExpertisesWrapper = props => {
                 ]);
             }
             !shouldUseProvider && setSpecializations(getExpertises.data.data);
-
-            console.log(getExpertises?.data?.data);
         }
         shouldUseProvider &&
             setspecialitiesListId(
@@ -88,6 +86,9 @@ export const ExpertisesWrapper = props => {
     }, [getExpertises.status, getSpecialities.status]);
 
     const saveExpertises = () => {
+        if (specializations.length > 3)
+            return toast.error('حداکثر میتوانید 3 تخصص را انتخاب کنید.');
+        if (specializations.find(item => item.alias_title.length > 65)) return;
         specializations.forEach(expertise => {
             if (!expertise.id) {
                 return expertisesPromises.push(
