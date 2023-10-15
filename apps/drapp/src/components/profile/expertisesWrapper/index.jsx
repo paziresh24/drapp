@@ -21,7 +21,7 @@ import { useUpdateSpecialities } from 'apps/drapp/src/apis/specialities/updateSp
 export const ExpertisesWrapper = props => {
     const [info] = useDrApp();
     const [specializations, setSpecializations] = useState([])
-    const [specialitiesListId, setspecialitiesListId] = useState([])
+    const [specialitiesListId, setSpecialitiesListId] = useState([])
     const getExpertises = useGetExpertises({ center_id: info.center.id });
     const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
         ids: ['']
@@ -73,15 +73,16 @@ export const ExpertisesWrapper = props => {
 
             console.log(getExpertises?.data?.data);
         }        
-        shouldUseProvider && setspecialitiesListId(getExpertises?.data?.data.map((item) => ({
+        shouldUseProvider && setSpecialitiesListId(getExpertises?.data?.data.map((item) => ({
             expertise_id: item.id,
             specialties_id: getSpecialities?.data?.data.providers_specialities.find(spec => spec.speciality.title === item.expertise.name)?.id
           })))
 
     }, [getExpertises.status,getSpecialities.status]);
 
+
     const saveExpertises = () => {
-        specializations.forEach(expertise => {
+       specializations.forEach(expertise => {
             if (!expertise.id) {
                 return expertisesPromises.push(
                     createExpertise.mutateAsync(
@@ -91,21 +92,23 @@ export const ExpertisesWrapper = props => {
                             alias_title: expertise.alias_title
                         },
                         {
+                            onSuccess: () => {
+                                createSpecialities.mutateAsync({
+                                    academic_degree_id:expertise.degree.id,
+                                    speciality_id: expertise.expertise.id,
+                                    alias:expertise.alias_title
+                                },
+                                {
+                                    onError: err => {
+                                        toast.error(err.response.data.message);
+                                    }
+                                }
+                                )
+                            },
                             onError: err => {
                                 toast.error(err.response.data.message);
                             }
                         }
-                    ),
-                    shouldUseProvider && createExpertise.isSuccess && createSpecialities.mutateAsync({
-                        academic_degree_id:expertise.degree.id,
-                        speciality_id: expertise.expertise.id,
-                        alias:expertise.alias_title
-                    },
-                    {
-                        onError: err => {
-                            toast.error(err.response.data.message);
-                        }
-                    }
                     )
                 );
             }
@@ -119,22 +122,24 @@ export const ExpertisesWrapper = props => {
                         alias_title: expertise.alias_title
                     },
                     {
+                        onSuccess: () => {
+                            updateSpecialities.mutateAsync({
+                                id: expertise.id,
+                                academic_degree_id:expertise.degree.id,
+                                speciality_id: expertise.expertise.id,
+                                alias:expertise.alias_title,
+                            },
+                            {
+                                onError: err => {
+                                    toast.error(err.response.data.message);
+                                }
+                            }
+                            )
+                        },
                         onError: err => {
                             toast.error(err.response.data.message);
                         }
                     }
-                ),
-                shouldUseProvider && updateExpertise.isSuccess && updateSpecialities.mutateAsync({
-                    id: expertise.id,
-                    academic_degree_id:expertise.degree.id,
-                    speciality_id: expertise.expertise.id,
-                    alias:expertise.alias_title,
-                },
-                {
-                    onError: err => {
-                        toast.error(err.response.data.message);
-                    }
-                }
                 )
             );
         });
@@ -143,10 +148,13 @@ export const ExpertisesWrapper = props => {
             getExpertises.remove();
             shouldUseProvider && getSpecialities.remove();
             setTimeout(() => {getExpertises.refetch(); shouldUseProvider && getSpecialities.refetch()});
-            props.setExpertiseAccordion(false);
-            return toast.success('تخصص با موفقیت ذخیره شد.');
+          
+                props.setExpertiseAccordion(false);
+                return toast.success('تخصص با موفقیت ذخیره شد.');
+
         });
     };
+
 
     return (
         <>
