@@ -21,7 +21,6 @@ import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { isEmbed } from '@paziresh24/shared/utils';
 
 const Header = memo(() => {
-    const showCenterSwitcherGradualRollout = useFeatureIsOn('header.show-center-switcher');
     const history = useHistory();
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const [page] = usePage();
@@ -71,8 +70,9 @@ const Header = memo(() => {
             className={classNames(
                 'flex justify-between items-center h-14 min-h-[3.5rem] bg-white px-3 pl-2 border-b border-solid border-[#e5e9f0] z-[8]',
                 {
-                    '!bg-slate-100 !p-1 !px-2 z-10 !w-full pr-5 flex justify-between items-center border-b border-solid border-slate-200/50  shadow-sm':
-                        isEmbed()
+                    '!p-1 !px-2 z-10 !w-full pr-5 flex justify-between items-center border-b border-solid border-slate-200/50  shadow-sm':
+                        isEmbed(),
+                    '!hidden': !page?.showCenterListForMobile && isEmbed()
                 }
             )}
         >
@@ -90,11 +90,7 @@ const Header = memo(() => {
                 <div
                     className={classNames(
                         `items-center space-s-3 ${
-                            page?.showCenterListForMobile ||
-                            showCenterSwitcherGradualRollout ||
-                            isEmbed()
-                                ? 'flex'
-                                : 'hidden lg:flex'
+                            page?.showCenterListForMobile ? 'flex ' : 'hidden lg:flex'
                         }`,
                         { 'w-full md:w-auto': isEmbed() }
                     )}

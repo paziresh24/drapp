@@ -28,6 +28,7 @@ import uniq from 'lodash/uniq';
 const WorkHoursOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
     const { submitWorkHour, isLoading } = useSubmitWorkHour();
+    const duration = useWorkHoursStore(state => state.duration);
     const router = useHistory();
     const [doctorInfo]: [
         {
@@ -78,7 +79,15 @@ const WorkHoursOfficeActivation = () => {
     const handleSubmit = async () => {
         try {
             await submitWorkHour({
-                centerId: officeCenter.id
+                centerId: officeCenter.id,
+                workHours: [
+                    ...workHours,
+                    ...days.map(day => ({
+                        day,
+                        ...hours
+                    }))
+                ],
+                duration
             });
             uniq(workHours.map(({ day }) => weekDays.find(({ id }) => day === id)?.nameEn)).forEach(
                 day => {

@@ -157,6 +157,8 @@ export const Expertises = props => {
                 onChange={e => setAliasTitle(e.target.value)}
                 label="عنوان تخصص"
                 defaultValue={aliasTitle}
+                error={aliasTitle.length> 65}
+                errorText={'به ازای هر تخصص، حداکثر میتوانید 65 حرف را برای عنوان تخصص ثبت کنید.'}
             />
 
             <Modal

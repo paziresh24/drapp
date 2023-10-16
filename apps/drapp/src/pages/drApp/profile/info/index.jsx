@@ -82,7 +82,11 @@ export const Info = ({ avatar = true }) => {
                 center_id: info.center.id
             });
 
+<<<<<<< HEAD
             if (shouldUseProvider && !!response.data) {
+=======
+            if (shouldUseProvider) {
+>>>>>>> origin/main
                 await updateProvider.mutateAsync({
                     biography,
                     ...(data.medical_code && { employee_id: data.medical_code }),
@@ -99,7 +103,10 @@ export const Info = ({ avatar = true }) => {
                 });
             }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
             if (data.secretary_phone)
                 getSplunkInstance().sendEvent({
                     group: 'register',
@@ -195,12 +202,14 @@ export const Info = ({ avatar = true }) => {
                     error={doctorInfoErrors.name}
                     defaultValue={info.doctor.name}
                     {...updateDoctorInfo('name', { required: false })}
+                    readOnly
                 />
                 <TextField
                     label="نام خانوادگی"
                     error={doctorInfoErrors.family}
                     defaultValue={info.doctor.family}
                     {...updateDoctorInfo('family', { required: false })}
+                    readOnly
                 />
                 <TextField
                     label="کد ملی"
