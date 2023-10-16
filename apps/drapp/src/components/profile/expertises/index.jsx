@@ -71,7 +71,7 @@ export const Expertises = props => {
         if (props.id) {
       
             return deleteExpertises.mutate(
-                { id:props.specialitiesListId.find(item => item.specialties_id ===props.id )?.expertise_id  },
+                { id:props.isShouldUseProvider ? props.specialitiesListId.find(item => item.specialties_id ===props.id )?.expertise_id:props.id  },
                 {
                     onSuccess: async() => {
                         props.isShouldUseProvider && await removeSpecialities.mutate({
