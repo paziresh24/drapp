@@ -82,7 +82,7 @@ export const Info = ({ avatar = true }) => {
                 center_id: info.center.id
             });
 
-            if (shouldUseProvider) {
+            if (shouldUseProvider && !!response.data) {
                 await updateProvider.mutateAsync({
                     biography,
                     ...(data.medical_code && { employee_id: data.medical_code }),
