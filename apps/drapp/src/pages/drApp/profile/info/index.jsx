@@ -82,11 +82,7 @@ export const Info = ({ avatar = true }) => {
                 center_id: info.center.id
             });
 
-<<<<<<< HEAD
             if (shouldUseProvider && !!response.data) {
-=======
-            if (shouldUseProvider) {
->>>>>>> origin/main
                 await updateProvider.mutateAsync({
                     biography,
                     ...(data.medical_code && { employee_id: data.medical_code }),
@@ -103,10 +99,6 @@ export const Info = ({ avatar = true }) => {
                 });
             }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
             if (data.secretary_phone)
                 getSplunkInstance().sendEvent({
                     group: 'register',

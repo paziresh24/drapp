@@ -101,7 +101,7 @@ export const ExpertisesWrapper = props => {
                         },
                         {
                             onSuccess: () => {
-                                createSpecialities.mutateAsync({
+                                shouldUseProvider&&  createSpecialities.mutateAsync({
                                     academic_degree_id:expertise.degree.id,
                                     speciality_id: expertise.expertise.id,
                                     alias:expertise.alias_title
@@ -109,6 +109,7 @@ export const ExpertisesWrapper = props => {
                                 {
                                     onError: err => {
                                         toast.error(err.response.data.message);
+                                        return
                                     }
                                 }
                                 )
@@ -134,7 +135,7 @@ export const ExpertisesWrapper = props => {
                     },
                     {
                         onSuccess: () => {
-                            updateSpecialities.mutateAsync({
+                            shouldUseProvider &&  updateSpecialities.mutateAsync({
                                 id: expertise.id,
                                 academic_degree_id:expertise.degree.id,
                                 speciality_id: expertise.expertise.id,
@@ -143,6 +144,7 @@ export const ExpertisesWrapper = props => {
                             {
                                 onError: err => {
                                     toast.error(err.response.data.message);
+                                    return
                                 }
                             }
                             )
