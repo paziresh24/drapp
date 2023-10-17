@@ -22,10 +22,6 @@ import axios from 'axios';
 import SelectTime from 'apps/drapp/src/components/setting/duration/selectTime';
 import { range } from 'lodash';
 import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
-import queryString from 'query-string';
-import classNames from 'classnames';
-import { CenterList } from 'apps/drapp/src/components/centerList';
-import { isEmbed } from '@paziresh24/shared/utils';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
