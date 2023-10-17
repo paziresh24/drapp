@@ -24,6 +24,7 @@ import { useActivationStore } from '../activation.store';
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { weekDays } from 'apps/drapp/src/constants/weekDays';
 import uniq from 'lodash/uniq';
+import { toast } from 'react-toastify';
 
 const WorkHoursOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
@@ -57,7 +58,7 @@ const WorkHoursOfficeActivation = () => {
         }
     }, [getWorkHoursRequest.status]);
 
-    const handleAdd = () => {
+    const handleAdd = async () => {
         if (
             validationWorkHour({
                 currentWorkHours: workHours
@@ -67,26 +68,53 @@ const WorkHoursOfficeActivation = () => {
                 group: 'activation-office-workhours',
                 type: 'add'
             });
-            addWorkHours(
-                days.map(day => ({
-                    day,
-                    ...hours
-                }))
-            );
-        }
-    };
-
-    const handleSubmit = async () => {
-        try {
-            await submitWorkHour({
-                centerId: officeCenter.id,
-                workHours: [
+            try {
+                await handleSubmit({
+                    duration,
+                    workHours: [
+                        ...workHours,
+                        ...days.map(day => ({
+                            day,
+                            ...hours
+                        }))
+                    ]
+                });
+                setWorkHours([
                     ...workHours,
                     ...days.map(day => ({
                         day,
                         ...hours
                     }))
-                ],
+                ]);
+            } catch (error) {
+                return;
+            }
+        }
+    };
+
+    const handleRemoveWorkHours = ({ days, from, to }: DaysInSameTime) => {
+        const workHourClone = [...workHours];
+        days.forEach(day => {
+            const index = workHourClone.findIndex(
+                workHour => workHour.day === day && workHour.from === from && workHour.to === to
+            );
+            workHourClone.splice(index, 1);
+        });
+        setWorkHours(workHourClone);
+        handleSubmit({ workHours: workHourClone, duration });
+    };
+
+    const handleSubmit = async ({
+        workHours,
+        duration
+    }: {
+        workHours: Day[];
+        duration: number;
+    }) => {
+        try {
+            await submitWorkHour({
+                centerId: officeCenter.id,
+                workHours,
                 duration
             });
             uniq(workHours.map(({ day }) => weekDays.find(({ id }) => day === id)?.nameEn)).forEach(
@@ -100,23 +128,7 @@ const WorkHoursOfficeActivation = () => {
                     });
                 }
             );
-            getSplunkInstance().sendEvent({
-                group: 'activation-office-workhours',
-                type: 'done'
-            });
-            getSplunkInstance().sendEvent({
-                group: 'activation',
-                type: `click-office`,
-                event: {
-                    action: 'done'
-                }
-            });
-            await getCentersDoctor.refetch();
-            if (selectedService.length > 0) {
-                setQuestionActivation(true);
-                return;
-            }
-            router.push('/');
+            return Promise.resolve();
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 getSplunkInstance().sendEvent({
@@ -126,15 +138,33 @@ const WorkHoursOfficeActivation = () => {
                         error: error.response?.data
                     }
                 });
-                getSplunkInstance().sendEvent({
-                    group: 'activation-office',
-                    type: 'unsuccessful',
-                    event: {
-                        error: error.response?.data
-                    }
-                });
             }
+
+            return Promise.reject(error);
         }
+    };
+
+    const handleFinalButton = async () => {
+        if (workHours.length === 0) {
+            return toast.info('حداقل یک ساعت کاری اضافه کنید.');
+        }
+        getSplunkInstance().sendEvent({
+            group: 'activation-office-workhours',
+            type: 'done'
+        });
+        getSplunkInstance().sendEvent({
+            group: 'activation',
+            type: `click-office`,
+            event: {
+                action: 'done'
+            }
+        });
+        await getCentersDoctor.refetch();
+        if (selectedService.length > 0) {
+            setQuestionActivation(true);
+            return;
+        }
+        router.push('/');
     };
 
     return (
@@ -154,24 +184,29 @@ const WorkHoursOfficeActivation = () => {
             <Stack className="pb-32 space-y-5 md:pb-0">
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
-                <Button onClick={handleAdd} variant="contained" className="self-end">
+                <Button
+                    loading={isLoading}
+                    onClick={handleAdd}
+                    variant="contained"
+                    className="self-end"
+                >
                     افزودن
                 </Button>
                 <Divider />
                 <Result
                     isLoading={getWorkHoursRequest.isLoading}
                     values={workHours}
-                    removeAction={removeWorkHours}
+                    removeAction={handleRemoveWorkHours}
                 />
                 <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                     <Button
                         fullWidth
                         variant="outlined"
                         size="large"
-                        onClick={handleSubmit}
+                        onClick={handleFinalButton}
                         loading={isLoading || getCentersDoctor.status.loading}
                     >
-                        ذخیره
+                        شروع نوبت دهی
                     </Button>
                 </FixedWrapBottom>
             </Stack>
