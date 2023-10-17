@@ -72,7 +72,17 @@ export const Info = ({ avatar = true }) => {
         const biography = biographyRef?.current ?? info.doctor?.biography ?? '';
 
         try {
-            if (shouldUseProvider) {
+            const response = await doctorInfoUpdate.mutateAsync({
+                name: data.name,
+                family: data.family,
+                national_code: data.national_code,
+                medical_code: data.medical_code,
+                biography: biography,
+                secretary_phone: data.secretary_phone,
+                center_id: info.center.id
+            });
+
+            if (shouldUseProvider && !!response.data) {
                 await updateProvider.mutateAsync({
                     biography,
                     ...(data.medical_code && { employee_id: data.medical_code }),
@@ -88,16 +98,6 @@ export const Info = ({ avatar = true }) => {
                     user_id: info.user.id
                 });
             }
-
-            const response = await doctorInfoUpdate.mutateAsync({
-                name: data.name,
-                family: data.family,
-                national_code: data.national_code,
-                medical_code: data.medical_code,
-                biography: biography,
-                secretary_phone: data.secretary_phone,
-                center_id: info.center.id
-            });
 
             if (data.secretary_phone)
                 getSplunkInstance().sendEvent({
@@ -194,12 +194,14 @@ export const Info = ({ avatar = true }) => {
                     error={doctorInfoErrors.name}
                     defaultValue={info.doctor.name}
                     {...updateDoctorInfo('name', { required: false })}
+                    readOnly
                 />
                 <TextField
                     label="نام خانوادگی"
                     error={doctorInfoErrors.family}
                     defaultValue={info.doctor.family}
                     {...updateDoctorInfo('family', { required: false })}
+                    readOnly
                 />
                 <TextField
                     label="کد ملی"
