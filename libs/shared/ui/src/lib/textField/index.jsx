@@ -19,8 +19,7 @@ const TextField = forwardRef(
                     className={classNames({
                         [styles['input']]: true,
                         [styles['error']]: props.error,
-                        [styles.password]: type === 'password',
-                        [styles['readOnly']]: props.readOnly
+                        [styles.password]: type === 'password'
                     })}
                     type={isShowPassword ? 'text' : type}
                     ref={ref}
