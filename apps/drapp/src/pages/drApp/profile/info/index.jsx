@@ -133,9 +133,9 @@ export const Info = ({ avatar = true }) => {
     };
 
     return (
-        <div className="h-full p-4 flex gap-5 items-center flex-col bg-white">
+        <div className="flex flex-col items-center h-full gap-5 p-4 bg-white">
             {avatar && (
-                <div className="relative h-24 w-24 rounded-full">
+                <div className="relative w-24 h-24 rounded-full">
                     {!uploadPorfile.isLoading ? (
                         <>
                             <div className="relative">
@@ -143,7 +143,7 @@ export const Info = ({ avatar = true }) => {
                                     type="file"
                                     id="selectImage"
                                     accept="image/png, image/jpg, image/jpeg, image/bmp"
-                                    className="absolute hidden invisible"
+                                    className="absolute invisible hidden"
                                     onChange={e =>
                                         uploadPorfile.mutate(
                                             formData({
@@ -165,11 +165,11 @@ export const Info = ({ avatar = true }) => {
                                     }
                                 />
                                 <label htmlFor="selectImage">
-                                    <ImagePlaceIcon className="cursor-pointer absolute top-0 w-7 h-7 z-10 bg-white rounded-full p-1" />
+                                    <ImagePlaceIcon className="absolute top-0 z-10 p-1 bg-white rounded-full cursor-pointer w-7 h-7" />
                                 </label>
                             </div>
                             <img
-                                className="w-24 h-24 object-cover rounded-full relative bg-slate-100"
+                                className="relative object-cover w-24 h-24 rounded-full bg-slate-100"
                                 src={
                                     uploadPorfile?.data?.data?.url
                                         ? baseURL('UPLOADER') + uploadPorfile?.data?.data?.url
@@ -218,14 +218,17 @@ export const Info = ({ avatar = true }) => {
                     {...updateDoctorInfo('medical_code', { required: false })}
                 />
                 <ChangePhoneNumber />
+
                 {info.center.type_id === OFFICE_CENTER && urlParams.secretary_phone !== 'off' && (
-                    <TextField
-                        label="شماره موبایل منشی"
-                        type="tel"
-                        error={doctorInfoErrors.secretary_phone}
-                        defaultValue={info.doctor.secretary_phone}
-                        {...updateDoctorInfo('secretary_phone', { required: false })}
-                    />
+                    <div className="hidden">
+                        <TextField
+                            label="شماره موبایل منشی"
+                            type="tel"
+                            error={doctorInfoErrors.secretary_phone}
+                            defaultValue={info.doctor.secretary_phone}
+                            {...updateDoctorInfo('secretary_phone', { required: false })}
+                        />
+                    </div>
                 )}
                 {urlParams.biography !== 'off' && (
                     <div className="flex flex-col space-y-3">
