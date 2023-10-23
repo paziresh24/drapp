@@ -72,48 +72,20 @@ export const Info = ({ avatar = true }) => {
         const biography = biographyRef?.current ?? info.doctor?.biography ?? '';
 
         try {
-            const response = await doctorInfoUpdate.mutateAsync({
-                name: data.name,
-                family: data.family,
-                national_code: data.national_code,
-                medical_code: data.medical_code,
-                biography: biography,
-                secretary_phone: data.secretary_phone,
-                center_id: info.center.id
+            await updateProvider.mutateAsync({
+                biography,
+                ...(data.medical_code && { employee_id: data.medical_code }),
+                user_id: info.user.id
             });
 
-            if (shouldUseProvider && !!response.data) {
-                await updateProvider.mutateAsync({
-                    biography,
-                    ...(data.medical_code && { employee_id: data.medical_code }),
-                    user_id: info.user.id
-                });
-            }
+            await updateUser.mutateAsync({
+                name: data.name,
+                family: data.family,
+                ...(data.national_code && { national_code: data.national_code }),
+                user_id: info.user.id
+            });
 
-            if (shouldUseUser) {
-                await updateUser.mutateAsync({
-                    name: data.name,
-                    family: data.family,
-                    ...(data.national_code && { national_code: data.national_code }),
-                    user_id: info.user.id
-                });
-            }
-
-            if (data.secretary_phone)
-                getSplunkInstance().sendEvent({
-                    group: 'register',
-                    type: 'loading-/profile-entered-num-secretary',
-                    event: {
-                        secretary_number: data.secretary_phone
-                    }
-                });
-            if (!data.secretary_phone)
-                getSplunkInstance().sendEvent({
-                    group: 'register',
-                    type: 'loading-/profile-dont-entered-num-secretary'
-                });
-
-            toast.success(response.message);
+            toast.success('اطلاعات شما با موفقیت ویرایش شد.');
 
             setInfo(prev => ({
                 ...prev,
@@ -123,8 +95,7 @@ export const Info = ({ avatar = true }) => {
                     family: data.family,
                     national_code: data.national_code,
                     medical_code: data.medical_code,
-                    biography: biography,
-                    secretary_phone: data.secretary_phone
+                    biography: biography
                 }
             }));
         } catch (error) {

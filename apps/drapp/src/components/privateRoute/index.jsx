@@ -126,8 +126,8 @@ const PrivateRoute = props => {
                 ) ||
                 providersApiDoctorCitiesList.cities?.includes('*');
 
-            if (shouldUseUser) getUser.refetch();
-            if (shouldUseProvider) getProvider.refetch();
+            getUser.refetch();
+            getProvider.refetch();
         }
     }, [getCentersDoctor.status, centersDoctor, getMe.status]);
 
@@ -158,6 +158,7 @@ const PrivateRoute = props => {
                     ...doctor,
                     medical_code: getProvider.data?.data?.providers?.[0]?.employee_id,
                     biography: getProvider.data?.data?.providers?.[0]?.biography,
+                    slug: getProvider.data?.data?.providers?.[0]?.slug,
                     provider_id: getProvider.data.data?.providers?.[0]?.id,
                     user_id: getProvider.data.data?.providers?.[0]?.user_id
                 };
