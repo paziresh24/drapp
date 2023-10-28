@@ -54,19 +54,6 @@ const PrivateRoute = props => {
     const insurancesRequest = useInsurances();
     const getMe = useGetInfo();
 
-    const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
-        ids: ['']
-    });
-    const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
-        ids: ['']
-    });
-    const providersApiDoctorCitiesList = useFeatureValue('profile:patch-providers-api|cities', {
-        cities: ['']
-    });
-    const usersApiDoctorCitiesList = useFeatureValue('profile:patch-users-api|cities', {
-        cities: ['']
-    });
-
     const getUser = useGetUser();
     const getProvider = useGetProvider({ user_id: getMe.data?.data?.id });
 
@@ -110,22 +97,6 @@ const PrivateRoute = props => {
                 user: getMe.data.data
             }));
 
-            const shouldUseUser =
-                usersApiDoctorList.ids?.includes(getMe.data.data.id) ||
-                usersApiDoctorList.ids?.includes('*') ||
-                usersApiDoctorCitiesList.cities?.includes(
-                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER)?.city
-                ) ||
-                usersApiDoctorCitiesList.cities?.includes('*');
-
-            const shouldUseProvider =
-                providersApiDoctorList.ids?.includes(getMe.data.data.id) ||
-                providersApiDoctorList.ids?.includes('*') ||
-                providersApiDoctorCitiesList.cities?.includes(
-                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER)?.city
-                ) ||
-                providersApiDoctorCitiesList.cities?.includes('*');
-
             getUser.refetch();
             getProvider.refetch();
         }
@@ -160,7 +131,8 @@ const PrivateRoute = props => {
                     biography: getProvider.data?.data?.providers?.[0]?.biography,
                     slug: getProvider.data?.data?.providers?.[0]?.slug,
                     provider_id: getProvider.data.data?.providers?.[0]?.id,
-                    user_id: getProvider.data.data?.providers?.[0]?.user_id
+                    user_id: getProvider.data.data?.providers?.[0]?.user_id,
+                    notify_cell: getProvider.data.data?.providers?.[0]?.notify_cell
                 };
             }
 

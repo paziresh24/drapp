@@ -32,34 +32,13 @@ export const Info = ({ avatar = true }) => {
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const uploadPorfile = useUploadPorfile();
-    const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
+
+    const notifyCellDoctorList = useFeatureValue('profile:notify-cell-api|doctor-list', {
         ids: ['']
     });
-    const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
-        ids: ['']
-    });
-    const providersApiDoctorCitiesList = useFeatureValue('profile:patch-providers-api|cities', {
-        cities: ['']
-    });
-    const usersApiDoctorCitiesList = useFeatureValue('profile:patch-users-api|cities', {
-        cities: ['']
-    });
 
-    const shouldUseProvider =
-        providersApiDoctorList.ids?.includes(info.user.id) ||
-        providersApiDoctorList.ids?.includes('*') ||
-        providersApiDoctorCitiesList.cities?.includes(
-            info.centers.find(center => center.type_id === OFFICE_CENTER)?.city
-        ) ||
-        providersApiDoctorCitiesList.cities?.includes('*');
-
-    const shouldUseUser =
-        usersApiDoctorList.ids?.includes(info.user.id) ||
-        usersApiDoctorList.ids?.includes('*') ||
-        usersApiDoctorCitiesList.cities?.includes(
-            info.centers.find(center => center.type_id === OFFICE_CENTER)?.city
-        ) ||
-        usersApiDoctorCitiesList.cities?.includes('*');
+    const shouldUseNotifyCell =
+        notifyCellDoctorList.ids?.includes(info.user.id) || notifyCellDoctorList.ids?.includes('*');
 
     const {
         register: updateDoctorInfo,
@@ -75,6 +54,7 @@ export const Info = ({ avatar = true }) => {
             await updateProvider.mutateAsync({
                 biography,
                 ...(data.medical_code && { employee_id: data.medical_code }),
+                ...(shouldUseNotifyCell && { notify_cell: data.notify_cell }),
                 user_id: info.user.id
             });
 
@@ -191,13 +171,17 @@ export const Info = ({ avatar = true }) => {
                 <ChangePhoneNumber />
 
                 {info.center.type_id === OFFICE_CENTER && urlParams.secretary_phone !== 'off' && (
-                    <div className="hidden">
+                    <div
+                        className={classNames('hidden', {
+                            '!block': shouldUseNotifyCell
+                        })}
+                    >
                         <TextField
                             label="شماره موبایل منشی"
                             type="tel"
-                            error={doctorInfoErrors.secretary_phone}
-                            defaultValue={info.doctor.secretary_phone}
-                            {...updateDoctorInfo('secretary_phone', { required: false })}
+                            error={doctorInfoErrors.notify_cell}
+                            defaultValue={info.doctor.notify_cell}
+                            {...updateDoctorInfo('notify_cell', { required: false })}
                         />
                     </div>
                 )}
