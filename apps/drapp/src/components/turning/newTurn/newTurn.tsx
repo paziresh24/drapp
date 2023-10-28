@@ -19,6 +19,7 @@ import { useAddPrescription, useDeletePrescription } from '@paziresh24/hooks/pre
 import { useDrApp } from '@paziresh24/context/drapp';
 import { Default, Mobile } from '@paziresh24/hooks/device';
 import { useUpdatePrescription } from '@paziresh24/hooks/prescription/types';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const NewTurn = () => {
     const [info] = useDrApp();
@@ -43,6 +44,10 @@ const NewTurn = () => {
     const updatePrescription = useUpdatePrescription();
 
     const openNewTurnAction = useCallback(() => {
+        getSplunkInstance().sendEvent({
+            group: 'prescription',
+            type: 'prescription_open_add_patient_modal'
+        });
         setOpenNewTurn(true);
     }, [openNewTurn]);
 
@@ -61,6 +66,10 @@ const NewTurn = () => {
     }, [confirmCellPhone]);
 
     const checkPatient = useCallback(({ nationalCode }: { nationalCode: string }) => {
+        getSplunkInstance().sendEvent({
+            group: 'prescription',
+            type: 'prescription_add_patient'
+        });
         const identifier = uuid();
         const tags = [];
         tags.push({
