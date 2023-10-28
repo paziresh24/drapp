@@ -54,7 +54,7 @@ export const Info = ({ avatar = true }) => {
             await updateProvider.mutateAsync({
                 biography,
                 ...(data.medical_code && { employee_id: data.medical_code }),
-                ...(shouldUseNotifyCell && { notify_cell: data.notify_cell }),
+                ...(shouldUseNotifyCell && { notify_cell: Number(data.notify_cell).toString() }),
                 user_id: info.user.id
             });
 
