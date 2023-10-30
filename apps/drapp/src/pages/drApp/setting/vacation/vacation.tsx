@@ -33,6 +33,7 @@ import { convertTimeStampToFormattedTime } from '@paziresh24/shared/utils';
 import { Checkbox, MenuItem, Select, Skeleton } from '@mui/material';
 import isEmpty from 'lodash/isEmpty';
 import getFirstAndLastMonthDay from 'apps/drapp/src/functions/getFirstAndLastMonthDay';
+import { VacationToggle } from './toggle';
 
 type VacationDate = {
     from: DayValue | any;
@@ -316,6 +317,7 @@ export const Vacation = () => {
 
     return (
         <>
+            <VacationToggle />
             <Container
                 maxWidth="sm"
                 className="min-h-full md:min-h-max md:h-auto md:p-5 rounded-md pb-4 bg-white md:mt-8 md:shadow-md space-y-5"
