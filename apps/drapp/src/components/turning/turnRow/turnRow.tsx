@@ -156,14 +156,6 @@ const TurnRow = (props: TurnRowProps) => {
         }
     };
 
-    const isShowRemoveButtonTooltip =
-        number === 1 &&
-        shouldShowRemoveTurnButton &&
-        (statistics.activePatients
-            ? !isDeletedTurn &&
-              (bookStatus === 'not_came' || bookStatus === 'not_visited' || !prescription.finalized)
-            : bookStatus === 'visited' || !!prescription.finalized || isDeletedTurn);
-
     const handleAdmitTurn = async () => {
         try {
             setActionLoading(true);
@@ -602,14 +594,6 @@ const TurnRow = (props: TurnRowProps) => {
     ];
 
     const TurnDropDown = () => (
-        <Tooltip
-            title="شما میتوانید نوبت بیمار را از این قسمت لغو کنید"
-            placement="top-end"
-            open={isShowRemoveButtonTooltip}
-            disableHoverListener={number !== 1}
-            arrow
-            classes={{ arrow: '!translate-x-2', tooltip: '!-translate-y-2 !-translate-x-3' }}
-        >
             <div>
                 <DropDown
                     element={<DotsIcon color="#000" />}
@@ -653,7 +637,6 @@ const TurnRow = (props: TurnRowProps) => {
                     ].filter((option: any) => !!option)}
                 />
             </div>
-        </Tooltip>
     );
 
     return (
