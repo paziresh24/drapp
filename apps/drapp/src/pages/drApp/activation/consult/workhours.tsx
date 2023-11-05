@@ -30,8 +30,6 @@ import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { weekDays } from 'apps/drapp/src/constants/weekDays';
 import uniq from 'lodash/uniq';
 
-const durationList = range(1, 4);
-
 const ConsultOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
     const activeConsult = useActiveConsult();
@@ -41,8 +39,6 @@ const ConsultOfficeActivation = () => {
     const addWorkHours = useConsultActivationStore(state => state.addWorkHours);
     const workHours = useConsultActivationStore(state => state.workHours);
     const removeWorkHours = useConsultActivationStore(state => state.removeWorkHours);
-    // const duration = useConsultActivationStore(state => state.duration);
-    // const setDuration = useConsultActivationStore(state => state.setDuration);
     const visitChannel = useConsultActivationStore(state => state.visitChannel);
     const price = useConsultActivationStore(state => state.price);
     const [questionActivation, setQuestionActivation] = useState(false);
@@ -150,15 +146,6 @@ const ConsultOfficeActivation = () => {
                 </Button>
             )}
             <Stack className="pb-32 space-y-5 md:pb-0">
-                {/* <SelectTime
-                    items={durationList}
-                    label="مدت پاسخگویی پزشک"
-                    value={duration}
-                    onChange={setDuration}
-                    isLoading={getWorkHoursRequest.isLoading}
-                    prefix="روز"
-                /> */}
-
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
                 <Button onClick={handleAdd} variant="contained" className="self-end">

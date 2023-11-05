@@ -34,7 +34,6 @@ import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
-import { type } from 'os';
 
 type Prescription = {
     id: string;
@@ -67,7 +66,6 @@ interface TurnRowProps {
     possibilityBeingSecureCallButton?: boolean;
     messengerName?: string;
 }
-
 
 const TurnRow = (props: TurnRowProps) => {
     const [info] = useDrApp();
@@ -111,7 +109,6 @@ const TurnRow = (props: TurnRowProps) => {
         false
     );
     const shouldShowRemoveTurnButton = useFeatureIsOn('turning.should-show-remove-turn-button');
-    
 
     const came = useCame();
     const removeTurn = useRemoveTurn();
@@ -129,13 +126,13 @@ const TurnRow = (props: TurnRowProps) => {
     );
 
     const turn = useRef(turns.find(turn => turn.id === id));
-    const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid'
+    const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid';
     const buttonStatusTurnText = {
         not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
         visited: 'مراجعه شده'
     };
-    const paidStatusInfo= {
+    const paidStatusInfo = {
         paid: {
             text: 'پرداخت شد',
             icon: <CheckIcon className="!fill-[#0BB07B] !w-5 scale-105" />,
@@ -158,14 +155,6 @@ const TurnRow = (props: TurnRowProps) => {
             action: () => !!deleteReason && setDeleteReasonModal(true)
         }
     };
-
-    const isShowRemoveButtonTooltip =
-        number === 1 &&
-        shouldShowRemoveTurnButton &&
-        (statistics.activePatients
-            ? !isDeletedTurn &&
-              (bookStatus === 'not_came' || bookStatus === 'not_visited' || !prescription.finalized)
-            : bookStatus === 'visited' || !!prescription.finalized || isDeletedTurn);
 
     const handleAdmitTurn = async () => {
         try {
@@ -447,7 +436,6 @@ const TurnRow = (props: TurnRowProps) => {
         <Button
             variant="outlined"
             size="small"
-            disabled={prescription.finalized}
             onClick={handleVisitButtonAction}
             loading={actionLoading}
             fullWidth
@@ -462,15 +450,15 @@ const TurnRow = (props: TurnRowProps) => {
 
     const TurnStatusButton = () => (
         <Button
-        size="small"
-        className={showTurnStatusButton ? paidStatusInfo[paymentStatus].style : ''}
-        onClick={showTurnStatusButton ? paidStatusInfo[paymentStatus].action : undefined}
-        fullWidth
-      >
-        {showTurnStatusButton ? paidStatusInfo[paymentStatus].icon : null}
-        {showTurnStatusButton ? paidStatusInfo[paymentStatus].text : null}
-        {showTurnStatusButton ? paidStatusInfo[paymentStatus].additionalIcons : null}
-      </Button>
+            size="small"
+            className={showTurnStatusButton ? paidStatusInfo[paymentStatus].style : ''}
+            onClick={showTurnStatusButton ? paidStatusInfo[paymentStatus].action : undefined}
+            fullWidth
+        >
+            {showTurnStatusButton ? paidStatusInfo[paymentStatus].icon : null}
+            {showTurnStatusButton ? paidStatusInfo[paymentStatus].text : null}
+            {showTurnStatusButton ? paidStatusInfo[paymentStatus].additionalIcons : null}
+        </Button>
     );
     const PrescriptionButton = () => (
         <Button
@@ -606,14 +594,6 @@ const TurnRow = (props: TurnRowProps) => {
     ];
 
     const TurnDropDown = () => (
-        <Tooltip
-            title="شما میتوانید نوبت بیمار را از این قسمت لغو کنید"
-            placement="top-end"
-            open={isShowRemoveButtonTooltip}
-            disableHoverListener={number !== 1}
-            arrow
-            classes={{ arrow: '!translate-x-2', tooltip: '!-translate-y-2 !-translate-x-3' }}
-        >
             <div>
                 <DropDown
                     element={<DotsIcon color="#000" />}
@@ -657,7 +637,6 @@ const TurnRow = (props: TurnRowProps) => {
                     ].filter((option: any) => !!option)}
                 />
             </div>
-        </Tooltip>
     );
 
     return (
@@ -684,9 +663,10 @@ const TurnRow = (props: TurnRowProps) => {
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
-                            {!!(paymentStatus && (bookStatus === 'visited' || isDeletedTurn)) && (
-                                <TurnStatusButton />
-                            )}
+                            {!!(
+                                showTurnStatusButton &&
+                                (bookStatus === 'visited' || isDeletedTurn)
+                            ) && <TurnStatusButton />}
                             <PrescriptionButton />
 
                             <TurnDropDown />

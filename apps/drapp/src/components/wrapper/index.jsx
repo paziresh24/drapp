@@ -11,7 +11,11 @@ import { toast } from 'react-toastify';
 import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '../../hooks/useShouldShowActionBars';
 import queryString from 'query-string';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { isEmbed } from '@paziresh24/shared/utils';
+import { CenterList } from '../centerList';
+import { ChevronIcon } from '@paziresh24/shared/icon';
+import { usePage } from '@paziresh24/context/core/page';
 
 const Wrapper = ({ children }) => {
     const [info] = useDrApp();
@@ -19,8 +23,9 @@ const Wrapper = ({ children }) => {
     const [isOffline, setIsOffline] = useState(false);
     const isLogined = info.doctor ? true : false;
     const shouldShowActionBars = useShouldShowActionBars();
-    const { search } = useLocation();
-    const urlParams = queryString.parse(search);
+    const [page] = usePage();
+
+    const router = useHistory();
 
     useEffect(() => {
         window.addEventListener('offline', () => {
@@ -49,13 +54,11 @@ const Wrapper = ({ children }) => {
                 })}
                 id="wrapper"
             >
-                {isLogined && !isMobile && !urlParams.isWebView && shouldShowActionBars && (
-                    <SideBar />
-                )}
+                {isLogined && !isMobile && !isEmbed() && shouldShowActionBars && <SideBar />}
                 <div className={styles['article']}>
-                    {isLogined && !urlParams.isWebView && <Header />}
+                    {isLogined && <Header />}
                     {children}
-                    {isLogined && !urlParams.isWebView && shouldShowActionBars && <BottomBar />}
+                    {isLogined && !isEmbed() && shouldShowActionBars && <BottomBar />}
                 </div>
             </div>
         </ErrorBoundary>

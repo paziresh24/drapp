@@ -198,6 +198,7 @@ export const routes = [
         component: lazy(() => import('./feedbacks')),
         isPrivate: true,
         dontShowForHospital: false,
+        showCenterListForMobile: true,
         exact: true
     },
     {
@@ -243,6 +244,7 @@ export const routes = [
         component: lazy(() => import('@paziresh24/apps/prescription/pages/prescription/providers')),
         isPrivate: true,
         dontShowForHospital: false,
+        showCenterListForMobile: true,
         exact: true
     },
     {

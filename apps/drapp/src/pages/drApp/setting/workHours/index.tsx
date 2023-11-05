@@ -22,9 +22,6 @@ import axios from 'axios';
 import SelectTime from 'apps/drapp/src/components/setting/duration/selectTime';
 import { range } from 'lodash';
 import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
-import queryString from 'query-string';
-import classNames from 'classnames';
-import { CenterList } from 'apps/drapp/src/components/centerList';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
@@ -40,8 +37,6 @@ const WorkHours = () => {
     const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
     const duration = useWorkHoursStore(state => state.duration);
     const setDuration = useWorkHoursStore(state => state.setDuration);
-    const { search } = useLocation();
-    const urlParams = queryString.parse(search);
 
     useEffect(() => {
         getWorkHoursRequest.remove();
@@ -61,6 +56,16 @@ const WorkHours = () => {
                 currentWorkHours: workHours
             })
         ) {
+            handleSubmit({
+                duration,
+                workHours: [
+                    ...workHours,
+                    ...days.map(day => ({
+                        day,
+                        ...hours
+                    }))
+                ]
+            });
             addWorkHours(
                 days.map(day => ({
                     day,
@@ -70,16 +75,40 @@ const WorkHours = () => {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleRemoveWorkHours = ({ days, from, to }: DaysInSameTime) => {
+        const workHourClone = [...workHours];
+        days.forEach(day => {
+            const index = workHourClone.findIndex(
+                workHour => workHour.day === day && workHour.from === from && workHour.to === to
+            );
+            workHourClone.splice(index, 1);
+        });
+        removeWorkHours({ days, from, to });
+        handleSubmit({ workHours: workHourClone, duration });
+    };
+
+    const handleSetDuration = (duration: number) => {
+        setDuration(duration);
+        handleSubmit({ workHours, duration });
+    };
+
+    const handleSubmit = async ({
+        workHours,
+        duration
+    }: {
+        workHours: Day[];
+        duration: number;
+    }) => {
         try {
             await submitWorkHour({
-                centerId: doctorInfo.center.id
+                centerId: doctorInfo.center.id,
+                workHours,
+                duration
             });
             getSplunkInstance().sendEvent({
                 group: 'workdays_active_booking',
                 type: 'successful'
             });
-            router.push('/');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 getSplunkInstance().sendEvent({
@@ -99,12 +128,11 @@ const WorkHours = () => {
             className="h-full pt-4 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-md"
         >
             <Stack className="pb-32 space-y-5 md:pb-0">
-                {urlParams.isWebView && <CenterList enabled />}
                 {getCenterType(doctorInfo.center) !== 'consult' && (
                     <SelectTime
                         items={durationList}
                         value={duration}
-                        onChange={setDuration}
+                        onChange={handleSetDuration}
                         label="مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟"
                         isLoading={getWorkHoursRequest.isLoading}
                         prefix="دقیقه"
@@ -112,30 +140,20 @@ const WorkHours = () => {
                 )}
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
-                <Button onClick={handleAdd} variant="contained" className="self-end">
+                <Button
+                    loading={isLoading}
+                    onClick={handleAdd}
+                    variant="contained"
+                    className="self-end"
+                >
                     افزودن
                 </Button>
                 <Divider />
                 <Result
                     isLoading={getWorkHoursRequest.isLoading}
                     values={workHours}
-                    removeAction={removeWorkHours}
+                    removeAction={handleRemoveWorkHours}
                 />
-                <FixedWrapBottom
-                    className={classNames('border-t border-solid border-[#e8ecf0]', {
-                        '!fixed !bottom-0 w-full p-4 right-0 bg-white': urlParams.sticky
-                    })}
-                >
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        size="large"
-                        onClick={handleSubmit}
-                        loading={isLoading}
-                    >
-                        ذخیره
-                    </Button>
-                </FixedWrapBottom>
             </Stack>
         </Container>
     );

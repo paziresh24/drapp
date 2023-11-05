@@ -8,13 +8,15 @@ import { useWorkHoursStore } from '../store/workhours.store';
 
 export const useSubmitWorkHour = () => {
     const workHoursMutateRequest = useWorkHours();
-    const duration = useWorkHoursStore(state => state.duration);
-    const workHours = useWorkHoursStore(state => state.workHours);
 
     const submitWorkHour = async ({
-        centerId
+        centerId,
+        workHours,
+        duration
     }: {
         centerId: string;
+        workHours: Day[];
+        duration: number;
     }): Promise<AxiosResponse<any, any>> => {
         try {
             const data = await workHoursMutateRequest.mutateAsync({

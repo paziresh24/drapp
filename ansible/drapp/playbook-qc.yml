@@ -1,5 +1,0 @@
----
-- name: Update Dr App For QC Server
-  hosts: qc_server
-  roles:
-    - drapp

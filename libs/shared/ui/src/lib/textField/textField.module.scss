@@ -88,6 +88,10 @@
     border-color: #ffdad4 !important;
 }
 
+input:read-only{
+    background-color: #f8f8f8;
+}
+
 .error + .label {
     color: #ce7667 !important;
 }

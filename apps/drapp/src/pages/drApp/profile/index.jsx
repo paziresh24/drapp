@@ -308,11 +308,7 @@ const Profile = () => {
     return (
         <div className={styles['wrapper']}>
             <div className={styles['header']}>
-                <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`https://paziresh24.com/dr/${info.doctor.slug}`}
-                >
+                <a target="_blank" href={`https://paziresh24.com/dr/${info.doctor.slug}`}>
                     <div className={styles['show-profile']}>
                         <svg
                             width="24"
@@ -464,8 +460,7 @@ const Profile = () => {
                         >
                             <StarIcon />
                             <span>
-                                {info.doctor.rate.rate} از{' '}
-                                {info.doctor?.rate_info?.rates_count ?? 0} نظر
+                                {info.doctor.rate.rate} از {info.doctor?.rate?.count ?? 0} نظر
                             </span>
                         </div>
                     )}

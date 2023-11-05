@@ -9,12 +9,15 @@ import Modal from '@paziresh24/shared/ui/modal';
 import Button from '@paziresh24/shared/ui/button';
 import { PlusLineIcon, CloseIcon } from '@paziresh24/shared/icon';
 import isEmpty from 'lodash/isEmpty';
+import { useRemoveSpecialities } from 'apps/drapp/src/apis/specialities/removeSpecialities';
+import { toast } from 'react-toastify';
 
 export const Expertises = props => {
     const [degree, setDegree] = useState(props.degree);
     const [expertise, setExpertise] = useState(props.expertise);
     const [aliasTitle, setAliasTitle] = useState(props.aliasTitle);
     const deleteExpertises = useDeleteExpertises();
+    const removeSpecialities = useRemoveSpecialities()
     const [deleteExpertisesModal, setDeleteExpertisesModal] = useState(false);
 
     useEffect(() => {
@@ -67,10 +70,20 @@ export const Expertises = props => {
 
     const deleteAction = () => {
         if (props.id) {
+      
             return deleteExpertises.mutate(
-                { id: props.id },
+                { id:props.isShouldUseProvider ? props.specialitiesListId.find(item => item.specialties_id ===props.id )?.expertise_id:props.id },
                 {
-                    onSuccess: () => {
+                    onSuccess: async() => {
+                        props.isShouldUseProvider && await removeSpecialities.mutate({
+                            id:props.id
+                        },{
+                                onError: err => {
+                                    toast.error(err.response.data.message);
+                                    return
+                                }
+                        }
+                        )
                         setDeleteExpertisesModal(false);
                         let visitesList = [...props.expertises];
                         visitesList.splice(props.index, 1);
@@ -150,6 +163,8 @@ export const Expertises = props => {
                 onChange={e => setAliasTitle(e.target.value)}
                 label="عنوان تخصص"
                 defaultValue={aliasTitle}
+                error={aliasTitle && aliasTitle?.length> 65 }
+                errorText={'به ازای هر تخصص، حداکثر میتوانید 65 حرف را برای عنوان تخصص ثبت کنید.'}
             />
 
             <Modal

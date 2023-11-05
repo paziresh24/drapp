@@ -46,6 +46,7 @@ export const CenterList = ({ enabled = false }) => {
         );
     };
 
+    if (!info.centers) return null;
     return (
         <div className={styles.selectCenter}>
             <div

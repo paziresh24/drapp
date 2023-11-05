@@ -8,7 +8,6 @@ import { Loading } from '@paziresh24/shared/ui/loading';
 import { useGetDoctorInfo } from '@paziresh24/hooks/drapp/profile';
 import Modal from '@paziresh24/shared/ui/modal';
 import { Route, useHistory, useLocation } from 'react-router-dom';
-import { getToken } from '@paziresh24/utils/localstorage';
 import classNames from 'classnames';
 import Helmet from 'react-helmet';
 import * as Sentry from '@sentry/browser';
@@ -29,8 +28,9 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 import { useGetUser } from '../../apis/user/getUser';
-import { useFeatureValue } from '@growthbook/growthbook-react';
 import { useGetProvider } from '../../apis/provider/getProvider';
+import { isEmbed } from '@paziresh24/shared/utils';
+import { useGetNotifyCell } from '../../apis/provider/getNotifyCell';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -53,21 +53,11 @@ const PrivateRoute = props => {
     const insurancesRequest = useInsurances();
     const getMe = useGetInfo();
 
-    const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
-        ids: ['']
-    });
-    const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
-        ids: ['']
-    });
-    const providersApiDoctorCitiesList = useFeatureValue('profile:patch-providers-api|cities', {
-        cities: ['']
-    });
-    const usersApiDoctorCitiesList = useFeatureValue('profile:patch-users-api|cities', {
-        cities: ['']
-    });
-
     const getUser = useGetUser();
     const getProvider = useGetProvider({ user_id: getMe.data?.data?.id });
+    const getNotifyCell = useGetNotifyCell({
+        provider_id: getProvider.data?.data?.providers?.[0]?.id
+    });
 
     useEffect(() => {
         setPage(props);
@@ -109,24 +99,8 @@ const PrivateRoute = props => {
                 user: getMe.data.data
             }));
 
-            const shouldUseUser =
-                usersApiDoctorList.ids?.includes(getMe.data.data.id) ||
-                usersApiDoctorList.ids?.includes('*') ||
-                usersApiDoctorCitiesList.cities?.includes(
-                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER)?.city
-                ) ||
-                usersApiDoctorCitiesList.cities?.includes('*');
-
-            const shouldUseProvider =
-                providersApiDoctorList.ids?.includes(getMe.data.data.id) ||
-                providersApiDoctorList.ids?.includes('*') ||
-                providersApiDoctorCitiesList.cities?.includes(
-                    getCentersDoctor.data.find(center => center.type_id === OFFICE_CENTER)?.city
-                ) ||
-                providersApiDoctorCitiesList.cities?.includes('*');
-
-            if (shouldUseUser) getUser.refetch();
-            if (shouldUseProvider) getProvider.refetch();
+            getUser.refetch();
+            getProvider.refetch();
         }
     }, [getCentersDoctor.status, centersDoctor, getMe.status]);
 
@@ -153,10 +127,14 @@ const PrivateRoute = props => {
             }
 
             if (getProvider.isSuccess) {
+                getNotifyCell.refetch();
                 doctor = {
                     ...doctor,
                     medical_code: getProvider.data?.data?.providers?.[0]?.employee_id,
-                    biography: getProvider.data?.data?.providers?.[0]?.biography
+                    biography: getProvider.data?.data?.providers?.[0]?.biography,
+                    slug: getProvider.data?.data?.providers?.[0]?.slug,
+                    provider_id: getProvider.data.data?.providers?.[0]?.id,
+                    user_id: getProvider.data.data?.providers?.[0]?.user_id
                 };
             }
 
@@ -196,6 +174,18 @@ const PrivateRoute = props => {
             }
         }
     }, [doctorInfo.status, getUser.status, getProvider.status]);
+
+    useEffect(() => {
+        if (getNotifyCell.isSuccess) {
+            setInfo(prev => ({
+                ...prev,
+                doctor: {
+                    ...prev.doctor,
+                    notify_cell: `0${getNotifyCell.data.data?.providers?.[0]?.notify_cell}`
+                }
+            }));
+        }
+    }, [getNotifyCell.status]);
 
     useEffect(() => {
         if (insurancesRequest.isSuccess) {
@@ -250,7 +240,7 @@ const PrivateRoute = props => {
         !isError &&
         !getCentersDoctor.status.error
     )
-        return <Loading show={true} simple={urlParams.isWebView} />;
+        return <Loading show={true} simple={isEmbed()} />;
     return (
         <>
             <Helmet>

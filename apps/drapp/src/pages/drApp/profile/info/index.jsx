@@ -32,34 +32,13 @@ export const Info = ({ avatar = true }) => {
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const uploadPorfile = useUploadPorfile();
-    const providersApiDoctorList = useFeatureValue('profile:patch-providers-api|doctor-list', {
+
+    const notifyCellDoctorList = useFeatureValue('profile:notify-cell-api|doctor-list', {
         ids: ['']
     });
-    const usersApiDoctorList = useFeatureValue('profile:patch-users-api|doctor-list', {
-        ids: ['']
-    });
-    const providersApiDoctorCitiesList = useFeatureValue('profile:patch-providers-api|cities', {
-        cities: ['']
-    });
-    const usersApiDoctorCitiesList = useFeatureValue('profile:patch-users-api|cities', {
-        cities: ['']
-    });
 
-    const shouldUseProvider =
-        providersApiDoctorList.ids?.includes(info.user.id) ||
-        providersApiDoctorList.ids?.includes('*') ||
-        providersApiDoctorCitiesList.cities?.includes(
-            info.centers.find(center => center.type_id === OFFICE_CENTER)?.city
-        ) ||
-        providersApiDoctorCitiesList.cities?.includes('*');
-
-    const shouldUseUser =
-        usersApiDoctorList.ids?.includes(info.user.id) ||
-        usersApiDoctorList.ids?.includes('*') ||
-        usersApiDoctorCitiesList.cities?.includes(
-            info.centers.find(center => center.type_id === OFFICE_CENTER)?.city
-        ) ||
-        usersApiDoctorCitiesList.cities?.includes('*');
+    const shouldUseNotifyCell =
+        notifyCellDoctorList.ids?.includes(info.user.id) || notifyCellDoctorList.ids?.includes('*');
 
     const {
         register: updateDoctorInfo,
@@ -72,48 +51,21 @@ export const Info = ({ avatar = true }) => {
         const biography = biographyRef?.current ?? info.doctor?.biography ?? '';
 
         try {
-            if (shouldUseProvider) {
-                await updateProvider.mutateAsync({
-                    biography,
-                    ...(data.medical_code && { employee_id: data.medical_code }),
-                    user_id: info.user.id
-                });
-            }
-
-            if (shouldUseUser) {
-                await updateUser.mutateAsync({
-                    name: data.name,
-                    family: data.family,
-                    ...(data.national_code && { national_code: data.national_code }),
-                    user_id: info.user.id
-                });
-            }
-
-            const response = await doctorInfoUpdate.mutateAsync({
-                name: data.name,
-                family: data.family,
-                national_code: data.national_code,
-                medical_code: data.medical_code,
-                biography: biography,
-                secretary_phone: data.secretary_phone,
-                center_id: info.center.id
+            await updateProvider.mutateAsync({
+                biography,
+                ...(data.medical_code && { employee_id: data.medical_code }),
+                ...(shouldUseNotifyCell && { notify_cell: Number(data.notify_cell).toString() }),
+                user_id: info.user.id
             });
 
-            if (data.secretary_phone)
-                getSplunkInstance().sendEvent({
-                    group: 'register',
-                    type: 'loading-/profile-entered-num-secretary',
-                    event: {
-                        secretary_number: data.secretary_phone
-                    }
-                });
-            if (!data.secretary_phone)
-                getSplunkInstance().sendEvent({
-                    group: 'register',
-                    type: 'loading-/profile-dont-entered-num-secretary'
-                });
+            await updateUser.mutateAsync({
+                name: data.name,
+                family: data.family,
+                ...(data.national_code && { national_code: data.national_code }),
+                user_id: info.user.id
+            });
 
-            toast.success(response.message);
+            toast.success('اطلاعات شما با موفقیت ویرایش شد.');
 
             setInfo(prev => ({
                 ...prev,
@@ -123,8 +75,7 @@ export const Info = ({ avatar = true }) => {
                     family: data.family,
                     national_code: data.national_code,
                     medical_code: data.medical_code,
-                    biography: biography,
-                    secretary_phone: data.secretary_phone
+                    biography: biography
                 }
             }));
         } catch (error) {
@@ -133,9 +84,9 @@ export const Info = ({ avatar = true }) => {
     };
 
     return (
-        <div className="h-full p-4 flex gap-5 items-center flex-col bg-white">
+        <div className="flex flex-col items-center h-full gap-5 p-4 bg-white">
             {avatar && (
-                <div className="relative h-24 w-24 rounded-full">
+                <div className="relative w-24 h-24 rounded-full">
                     {!uploadPorfile.isLoading ? (
                         <>
                             <div className="relative">
@@ -143,7 +94,7 @@ export const Info = ({ avatar = true }) => {
                                     type="file"
                                     id="selectImage"
                                     accept="image/png, image/jpg, image/jpeg, image/bmp"
-                                    className="absolute hidden invisible"
+                                    className="absolute invisible hidden"
                                     onChange={e =>
                                         uploadPorfile.mutate(
                                             formData({
@@ -165,11 +116,11 @@ export const Info = ({ avatar = true }) => {
                                     }
                                 />
                                 <label htmlFor="selectImage">
-                                    <ImagePlaceIcon className="cursor-pointer absolute top-0 w-7 h-7 z-10 bg-white rounded-full p-1" />
+                                    <ImagePlaceIcon className="absolute top-0 z-10 p-1 bg-white rounded-full cursor-pointer w-7 h-7" />
                                 </label>
                             </div>
                             <img
-                                className="w-24 h-24 object-cover rounded-full relative bg-slate-100"
+                                className="relative object-cover w-24 h-24 rounded-full bg-slate-100"
                                 src={
                                     uploadPorfile?.data?.data?.url
                                         ? baseURL('UPLOADER') + uploadPorfile?.data?.data?.url
@@ -194,12 +145,14 @@ export const Info = ({ avatar = true }) => {
                     error={doctorInfoErrors.name}
                     defaultValue={info.doctor.name}
                     {...updateDoctorInfo('name', { required: false })}
+                    readOnly
                 />
                 <TextField
                     label="نام خانوادگی"
                     error={doctorInfoErrors.family}
                     defaultValue={info.doctor.family}
                     {...updateDoctorInfo('family', { required: false })}
+                    readOnly
                 />
                 <TextField
                     label="کد ملی"
@@ -216,14 +169,21 @@ export const Info = ({ avatar = true }) => {
                     {...updateDoctorInfo('medical_code', { required: false })}
                 />
                 <ChangePhoneNumber />
+
                 {info.center.type_id === OFFICE_CENTER && urlParams.secretary_phone !== 'off' && (
-                    <TextField
-                        label="شماره موبایل منشی"
-                        type="tel"
-                        error={doctorInfoErrors.secretary_phone}
-                        defaultValue={info.doctor.secretary_phone}
-                        {...updateDoctorInfo('secretary_phone', { required: false })}
-                    />
+                    <div
+                        className={classNames('hidden', {
+                            '!block': shouldUseNotifyCell
+                        })}
+                    >
+                        <TextField
+                            label="شماره موبایل منشی"
+                            type="tel"
+                            error={doctorInfoErrors.notify_cell}
+                            defaultValue={info.doctor.notify_cell}
+                            {...updateDoctorInfo('notify_cell', { required: false })}
+                        />
+                    </div>
                 )}
                 {urlParams.biography !== 'off' && (
                     <div className="flex flex-col space-y-3">

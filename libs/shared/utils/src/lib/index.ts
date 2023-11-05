@@ -4,3 +4,4 @@ export * from './addCommaPrice';
 export * from './sendEvent';
 export * from './convertTimeStampToFormattedTime';
 export * from './convertTimeStampToPersianDate';
+export * from './isEmbed';
