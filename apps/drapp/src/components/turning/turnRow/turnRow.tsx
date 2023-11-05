@@ -34,6 +34,7 @@ import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
+import { useSafeCall } from 'apps/drapp/src/apis/onlineVisit/safeCall';
 
 type Prescription = {
     id: string;
@@ -96,6 +97,7 @@ const TurnRow = (props: TurnRowProps) => {
     const updateDescription = useUpdateDescription();
     const deletePrescription = useDeletePrescription();
     const getMessengerInfo = useGetMessengerInfo();
+    const safeCall = useSafeCall()
     const statistics = useTurnsStore(state => state.statistics);
     const turns = useTurnsStore(state => state.turns);
     const [actionLoading, setActionLoading] = useState(false);
@@ -408,6 +410,29 @@ const TurnRow = (props: TurnRowProps) => {
         }
         handleVisit();
     };
+
+    const handleSafeCallAction = async () => {
+        try {
+            await safeCall.mutateAsync({
+                book_id: id
+            });
+            toast.success('درخواست شما با موفقیت ثبت شد!');
+            getSplunkInstance().sendEvent({
+                group: 'drapp-visit-online',
+                type: 'safeCall',
+                event: {
+                    patient_name: name,
+                    patient_family: family,
+                    patient_cell: mobileNumber,
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`,
+                }
+            });
+
+        } catch (error) {
+            if (axios.isAxiosError(error)) toast.error(error.response?.data?.message);
+        }
+    }
+
     const visitProvider = (): 'paziresh24' | 'salamat' | 'tamin' => {
         const insuranceProvider =
             prescription?.provider ??
@@ -472,6 +497,17 @@ const TurnRow = (props: TurnRowProps) => {
             fullWidth
         >
             {prescription.finalized || isDeletedTurn ? 'مشاهده نسخه' : 'تجویز '}
+        </Button>
+    );
+    const SafeCallButton = () => (
+        <Button
+            size="small"
+            variant="outlined"
+            onClick={handleSafeCallAction}
+            loading={safeCall.isLoading}
+            fullWidth
+        >
+            تماس امن
         </Button>
     );
 
@@ -660,6 +696,8 @@ const TurnRow = (props: TurnRowProps) => {
                                 possibilityBeingSecureCallButton &&
                                 bookStatus !== 'not_came' &&
                                 messengerName === 'rocketchat' && <ChatButton />}
+                                {info.center.id === CONSULT_CENTER_ID &&
+                            possibilityBeingSecureCallButton && <SafeCallButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -734,6 +772,8 @@ const TurnRow = (props: TurnRowProps) => {
                         {info.center.id === CONSULT_CENTER_ID &&
                             possibilityBeingSecureCallButton &&
                             messengerName === 'rocketchat' && <ChatButton />}
+                        {info.center.id === CONSULT_CENTER_ID &&
+                            possibilityBeingSecureCallButton && <SafeCallButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
