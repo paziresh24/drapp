@@ -7,7 +7,7 @@ export interface Params {
 
 export const safeCall = async ({ book_id }: Params) => {
     return await workflow.post(
-        `webhook-test/483835a3-d567-47e6-adfb-fe698f9eb2c6/safe-call/${book_id}`
+        `/webhook/483835a3-d567-47e6-adfb-fe698f9eb2c6/safe-call/${book_id}`
     );
 };
 

@@ -31,7 +31,7 @@ import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
 import { TextField } from '@mui/material';
 import { useCame, useRemoveTurn } from '@paziresh24/hooks/drapp/turning';
 import { useGetMessengerInfo } from '@paziresh24/hooks/drapp/profile';
-import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
 import { useSafeCall } from 'apps/drapp/src/apis/onlineVisit/safeCall';
@@ -111,6 +111,7 @@ const TurnRow = (props: TurnRowProps) => {
         false
     );
     const shouldShowRemoveTurnButton = useFeatureIsOn('turning.should-show-remove-turn-button');
+    const shouldShowSafeCallButton = useFeatureValue<any>('turning:show-safe-call-button', {ids:['']})
 
     const came = useCame();
     const removeTurn = useRemoveTurn();
@@ -129,6 +130,7 @@ const TurnRow = (props: TurnRowProps) => {
 
     const turn = useRef(turns.find(turn => turn.id === id));
     const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid';
+    const isShowSafeCall = shouldShowSafeCallButton?.ids?.includes('*') || shouldShowSafeCallButton?.ids?.includes(info?.doctor?.id)
     const buttonStatusTurnText = {
         not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
@@ -697,7 +699,7 @@ const TurnRow = (props: TurnRowProps) => {
                                 bookStatus !== 'not_came' &&
                                 messengerName === 'rocketchat' && <ChatButton />}
                                 {info.center.id === CONSULT_CENTER_ID &&
-                            possibilityBeingSecureCallButton && <SafeCallButton />}
+                            possibilityBeingSecureCallButton && isShowSafeCall && <SafeCallButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -773,7 +775,7 @@ const TurnRow = (props: TurnRowProps) => {
                             possibilityBeingSecureCallButton &&
                             messengerName === 'rocketchat' && <ChatButton />}
                         {info.center.id === CONSULT_CENTER_ID &&
-                            possibilityBeingSecureCallButton && <SafeCallButton />}
+                            possibilityBeingSecureCallButton &&isShowSafeCall && <SafeCallButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
