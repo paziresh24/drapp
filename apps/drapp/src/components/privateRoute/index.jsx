@@ -181,7 +181,9 @@ const PrivateRoute = props => {
                 ...prev,
                 doctor: {
                     ...prev.doctor,
-                    notify_cell: `0${getNotifyCell.data.data?.providers?.[0]?.notify_cell}`
+                    notify_cell: getNotifyCell.data.data?.providers?.[0]?.notify_cell
+                        ? `0${getNotifyCell.data.data?.providers?.[0]?.notify_cell}`
+                        : null
                 }
             }));
         }

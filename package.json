@@ -36,7 +36,7 @@
         "@nrwl/eslint-plugin-nx": "14.4.2",
         "@nrwl/react": "14.4.2",
         "@paziresh24/splunk-event": "1.2.1",
-        "@persian-tools/persian-tools": "3.3.0",
+        "@persian-tools/persian-tools": "3.5.0",
         "@reactour/tour": "latest",
         "@sentry/react": "6.11.0",
         "@sentry/tracing": "6.11.0",
