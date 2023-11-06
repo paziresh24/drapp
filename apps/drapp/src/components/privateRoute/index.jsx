@@ -122,7 +122,8 @@ const PrivateRoute = props => {
                     name: getUser.data.data?.users?.[0]?.name,
                     family: getUser.data.data?.users?.[0]?.family,
                     national_code: getUser.data?.data?.users?.[0]?.national_code,
-                    cell: getUser.data?.data?.users?.[0]?.cell
+                    cell: getUser.data?.data?.users?.[0]?.cell,
+                    user_id: getUser.data?.data?.users?.[0]?.id
                 };
             }
 
@@ -133,8 +134,7 @@ const PrivateRoute = props => {
                     medical_code: getProvider.data?.data?.providers?.[0]?.employee_id,
                     biography: getProvider.data?.data?.providers?.[0]?.biography,
                     slug: getProvider.data?.data?.providers?.[0]?.slug,
-                    provider_id: getProvider.data.data?.providers?.[0]?.id,
-                    user_id: getProvider.data.data?.providers?.[0]?.user_id
+                    provider_id: getProvider.data.data?.providers?.[0]?.id
                 };
             }
 
