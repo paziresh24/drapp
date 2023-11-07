@@ -9,7 +9,7 @@ import { InfoIcon } from '@paziresh24/shared/icon';
 import classNames from 'classnames';
 import { useDrApp } from '@paziresh24/context/drapp';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
-import { useGetDeletedTurns } from 'apps/drapp/src/apis/forough/deletedTurns';
+import { useGetDeletedTurnsCount } from 'apps/drapp/src/apis/forough/deletedTurnsCount';
 import { useFeatureValue } from '@growthbook/growthbook-react';
 
 type InfoOption = {
@@ -28,11 +28,11 @@ export const Forough = () => {
     const [data, setData] = useState<any>({});
     const router = useHistory();
     const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
-    const rouloutDoctorList = useFeatureValue<any>('forough:show-deleted-book|doctor-list', {ids:['']})
+    const rolloutDoctorList = useFeatureValue<any>('forough:show-deleted-book|doctor-list', {ids:['']})
     const itemTitleList = useFeatureValue<any>('forough:item-title-list', {})
-    const shouldShowDeletedTurnsCount = rouloutDoctorList?.ids?.includes?.(info?.doctor?.id)
+    const shouldShowDeletedTurnsCount = rolloutDoctorList?.ids?.includes?.(info?.doctor?.id)
     const isActiveOnlineVisitCenter = info?.center?.id ===CONSULT_CENTER_ID ?? false
-    const deletedTurn = useGetDeletedTurns({user_center_id:info?.center?.user_center_id},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount  })    
+    const deletedTurn = useGetDeletedTurnsCount({user_center_id:info?.center?.user_center_id},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount  })    
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
     const promptSentences: Record<string, string> = {
