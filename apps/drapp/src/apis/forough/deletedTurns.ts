@@ -11,6 +11,6 @@ const getDeletedTurns = async ({ user_center_id }: Params) => {
     );
 };
 
-export const useGetDeletedTurns = (params: Params) => {
-    return useQuery(['getDeletedTurns', params], () => getDeletedTurns(params));
+export const useGetDeletedTurns = (params: Params, option?: Record<string, any>) => {
+    return useQuery(['getDeletedTurns', params], () => getDeletedTurns(params), { ...option });
 };

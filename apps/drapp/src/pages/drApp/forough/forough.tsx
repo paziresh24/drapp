@@ -27,11 +27,12 @@ export const Forough = () => {
     const [info] = useDrApp();
     const [data, setData] = useState<any>({});
     const router = useHistory();
-    const deletedTurn = useGetDeletedTurns({user_center_id:info?.center?.user_center_id})    
     const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
     const rouloutDoctorList = useFeatureValue<any>('forough:show-deleted-book|doctor-list', {ids:['']})
+    const itemTitleList = useFeatureValue<any>('forough:item-title-list', {})
     const shouldShowDeletedTurnsCount = rouloutDoctorList?.ids?.includes?.(info?.doctor?.id)
     const isActiveOnlineVisitCenter = info?.center?.id ===CONSULT_CENTER_ID ?? false
+    const deletedTurn = useGetDeletedTurns({user_center_id:info?.center?.user_center_id},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount  })    
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
     const promptSentences: Record<string, string> = {
@@ -213,11 +214,11 @@ export const Forough = () => {
                         </div>
                     )}
                     <span className="text-sm font-medium !mt-3 block">
-                        آمار شما در یک ماه گذشته:
+                        {itemTitleList?.title ?? ''}
                     </span>
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
-                            تعداد بیمارانی که از پروفایل شما در پذیرش24 بازدید کردند.
+                            {itemTitleList?.profile_page_view ?? ''}
                         </span>
                         <div className="flex items-center space-s-2">
                             <div className="h-8 border border-solid border-slate-200" />
@@ -228,8 +229,7 @@ export const Forough = () => {
                     </div>
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
-                            میانگین جایگاه شما در لیست سرچ پذیرش24 نسبت به سایر پزشکان گروه تخصصی
-                            شما
+                        {itemTitleList?.search_position ?? ''}
                         </span>
                         <div className="flex items-center space-s-2">
                             <div className="h-8 border border-solid border-slate-200" />
@@ -242,7 +242,7 @@ export const Forough = () => {
                     </div>
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
-                            تعداد بیمارانی که از مسیر سرچ در پذیرش۲۴ روی نام شما کلیک کرده اند.
+                            {itemTitleList?.click_name_in_search ?? ''}
                         </span>
                         <div className="flex items-center space-s-2">
                             <div className="h-8 border border-solid border-slate-200" />
@@ -251,10 +251,10 @@ export const Forough = () => {
                             </div>
                         </div>
                     </div>
-                    {!!isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount (
+                    {!!isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount && (
                              <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                              <span className="text-sm font-medium leading-6">
-                                 تعداد نوبت های حذف شده در 30 روز اخیر
+                             {itemTitleList?.deleted_turn ?? ''}
                              </span>
                              <div className="flex items-center space-s-2">
                                  <div className="h-8 border border-solid border-slate-200" />
@@ -296,3 +296,4 @@ export const Forough = () => {
 };
 
 export default Forough;
+
