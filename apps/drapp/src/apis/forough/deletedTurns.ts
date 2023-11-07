@@ -7,7 +7,7 @@ interface Params {
 
 const getDeletedTurns = async ({ user_center_id }: Params) => {
     return await workflow.get(
-        `/webhook/426a4647-c176-4644-88ef-7191d50ff6a4/delete-book/${user_center_id}`
+        `/webhook/dcb1b961-a4f4-4e7b-ae09-9145c5644124/deleted-book-30days/${user_center_id}`
     );
 };
 
