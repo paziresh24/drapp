@@ -9,6 +9,8 @@ import { InfoIcon } from '@paziresh24/shared/icon';
 import classNames from 'classnames';
 import { useDrApp } from '@paziresh24/context/drapp';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { useGetDeletedTurns } from 'apps/drapp/src/apis/forough/deletedTurns';
+import { useFeatureValue } from '@growthbook/growthbook-react';
 
 type InfoOption = {
     id: number;
@@ -25,7 +27,11 @@ export const Forough = () => {
     const [info] = useDrApp();
     const [data, setData] = useState<any>({});
     const router = useHistory();
+    const deletedTurn = useGetDeletedTurns({user_center_id:info?.center?.user_center_id})    
     const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
+    const rouloutDoctorList = useFeatureValue<any>('forough:show-deleted-book|doctor-list', {ids:['']})
+    const shouldShowDeletedTurnsCount = rouloutDoctorList?.ids?.includes?.(info?.doctor?.id)
+    const isActiveOnlineVisitCenter = info?.center?.id ===CONSULT_CENTER_ID ?? false
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
     const promptSentences: Record<string, string> = {
@@ -85,6 +91,7 @@ export const Forough = () => {
             }
         }
     }, [searchViewInfo.status, data]);
+
 
     const waitingTimeText = useMemo(() => {
         const watingTimeAvarageTime = activeOptionSelectedDetails?.wating_time ?? 0;
@@ -244,6 +251,19 @@ export const Forough = () => {
                             </div>
                         </div>
                     </div>
+                    {!!isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount (
+                             <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
+                             <span className="text-sm font-medium leading-6">
+                                 تعداد نوبت های حذف شده در 30 روز اخیر
+                             </span>
+                             <div className="flex items-center space-s-2">
+                                 <div className="h-8 border border-solid border-slate-200" />
+                                 <div className="h-12 min-w-[3rem] font-bold flex items-center justify-center bg-teal-50 rounded-lg shadow-lg text-primary">
+                                     {deletedTurn.data?.data?.countBook ?? '-'}
+                                 </div>
+                             </div>
+                         </div>
+                    )}
                 </div>
             )}
 
