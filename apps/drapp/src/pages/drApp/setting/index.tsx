@@ -10,10 +10,20 @@ import { sendEventForSetting } from './sendEventForSetting';
 import moment from 'jalali-moment';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 
 const Setting = () => {
-    const [{ center }] = useDrApp();
+    const [{ center, doctor }] = useDrApp();
     const router = useHistory();
+    const vacationToggleDoctorList = useFeatureValue<{ ids: Array<string | number> }>(
+        'turning.should-show-vacation-toggle|doctor-list',
+        { ids: [] }
+    );
+    const shouldShowVactionToggle =
+        center.id === CONSULT_CENTER_ID &&
+        (vacationToggleDoctorList.ids.includes(doctor.user_id) ||
+            vacationToggleDoctorList.ids.includes('*'));
 
     useEffect(() => {
         sendEventForSetting({
@@ -113,7 +123,8 @@ const Setting = () => {
                 });
                 router.push('/setting/vacation');
             },
-            shouldShow: ['office', 'consult'].includes(getCenterType(center))
+            shouldShow:
+                ['office', 'consult'].includes(getCenterType(center)) && !shouldShowVactionToggle
         }
     ];
 

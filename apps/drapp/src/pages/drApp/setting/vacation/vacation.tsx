@@ -33,6 +33,7 @@ import { convertTimeStampToFormattedTime } from '@paziresh24/shared/utils';
 import { Checkbox, MenuItem, Select, Skeleton } from '@mui/material';
 import isEmpty from 'lodash/isEmpty';
 import getFirstAndLastMonthDay from 'apps/drapp/src/functions/getFirstAndLastMonthDay';
+import { VacationToggle } from './toggle';
 
 type VacationDate = {
     from: DayValue | any;
@@ -318,7 +319,7 @@ export const Vacation = () => {
         <>
             <Container
                 maxWidth="sm"
-                className="min-h-full md:min-h-max md:h-auto md:p-5 rounded-md pb-4 bg-white md:mt-8 md:shadow-md space-y-5"
+                className="min-h-full pb-4 space-y-5 bg-white rounded-md md:min-h-max md:h-auto md:p-5 md:mt-8 md:shadow-md"
             >
                 <Stack spacing={1} width="100%">
                     <Alert
@@ -347,8 +348,8 @@ export const Vacation = () => {
                     alignItems={isMobile ? 'center' : 'start'}
                     flexDirection={{ sm: 'column', md: 'row', lg: 'row' }}
                 >
-                    <div className="w-full flex flex-col gap-2">
-                        <div className="flex justify-between items-center">
+                    <div className="flex flex-col w-full gap-2">
+                        <div className="flex items-center justify-between">
                             <span className="text-[0.9rem] font-medium">
                                 لیست مرخصی های ثبت شده:
                             </span>
@@ -381,7 +382,7 @@ export const Vacation = () => {
                                             }}
                                             icon={
                                                 !isExpireVacation(vacationInfo.to) && (
-                                                    <div className="flex flex-col gap-4 items-center">
+                                                    <div className="flex flex-col items-center gap-4">
                                                         <EditIcon
                                                             className="cursor-pointer w-5 h-[1.1rem] text-[#000000]"
                                                             onClick={() =>
@@ -489,7 +490,7 @@ export const Vacation = () => {
                 onClose={setShouldShowDeleteVacationModal}
             >
                 <span className="text-sm">آیا از حذف مرخصی خود اطمینان دارید؟</span>
-                <div className="mt-4 flex justify-between gap-2">
+                <div className="flex justify-between gap-2 mt-4">
                     <Button
                         fullWidth
                         variant="outlined"
@@ -514,7 +515,7 @@ export const Vacation = () => {
                 </div>
             </Modal>
             <Modal title="ثبت مرخصی" isOpen={vacationModal} onClose={closeVacationModal}>
-                <div className="w-full flex flex-col items-center">
+                <div className="flex flex-col items-center w-full">
                     <Calendar
                         value={selectedDay}
                         onChange={setSelectedDay}
@@ -530,7 +531,7 @@ export const Vacation = () => {
                     {(!!selectedDay.from || !isEmpty(currentVacationDate)) && (
                         <>
                             {!isFullDayVacation && (
-                                <div className="flex -translate-y-3 gap-2">
+                                <div className="flex gap-2 -translate-y-3">
                                     <TimeInput
                                         label="از ساعت"
                                         defaultValue={fromTime}
@@ -543,7 +544,7 @@ export const Vacation = () => {
                                     />
                                 </div>
                             )}
-                            <div className="flex justify-start items-center w-full">
+                            <div className="flex items-center justify-start w-full">
                                 <Checkbox
                                     size="small"
                                     onChange={e => setIsFullDayVacation(e.target.checked)}

@@ -20,6 +20,9 @@ import { Button } from '@mui/material';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 import paymentVector from '@assets/image/payment.svg';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { VacationToggle } from '../setting/vacation/toggle';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 
 const Turning = () => {
     const history = useHistory();
@@ -53,6 +56,14 @@ const Turning = () => {
     const [referenceModal, setReferenceModal] = useState(false);
     const [paymentModal, setPaymentModal] = useState(false);
     const paymentInfo = usePaymentSettingStore(state => state.setting);
+    const vacationToggleDoctorList = useFeatureValue(
+        'turning.should-show-vacation-toggle|doctor-list',
+        { ids: [] }
+    );
+    const shouldShowVactionToggle =
+        info.center.id === CONSULT_CENTER_ID &&
+        (vacationToggleDoctorList.ids.includes(info.doctor.user_id) ||
+            vacationToggleDoctorList.ids.includes('*'));
 
     useEffect(() => {
         if (
@@ -151,6 +162,12 @@ const Turning = () => {
                     </div>
                     <NewTurn />
                 </div>
+
+                {shouldShowVactionToggle && (
+                    <div className="flex items-center justify-center w-full mb-2 overflow-hidden bg-white/90 md:rounded-lg">
+                        <VacationToggle />
+                    </div>
+                )}
 
                 <div
                     className={styles['turn-cards']}
