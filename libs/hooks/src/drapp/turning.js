@@ -57,8 +57,8 @@ const useVacation = () => {
     return useMutation(vacation);
 };
 
-const useGetVacation = params => {
-    return useQuery(['getVacation', params], () => getVacation(params));
+const useGetVacation = (params, options) => {
+    return useQuery(['getVacation', params], () => getVacation(params), { ...options });
 };
 
 const useDeleteVacation = () => {
