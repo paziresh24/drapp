@@ -1,99 +1,73 @@
-import { Alert, Stack, Switch, Typography } from '@mui/material';
+import { Alert, Stack, Typography } from '@mui/material';
 import { useDrApp } from '@paziresh24/context/drapp';
 import Button from '@mui/lab/LoadingButton';
-import {
-    useDeleteTurns,
-    useDeleteVacation,
-    useGetVacation,
-    useVacation
-} from '@paziresh24/hooks/drapp/turning';
 import Modal from '@paziresh24/shared/ui/modal';
 import axios from 'axios';
-import moment from 'jalali-moment';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styles from '@components/profile/password/password.module.scss';
 import classNames from 'classnames';
 import { LoadingIcon } from '@paziresh24/shared/icon';
+import { useChangeBookingStatus } from 'apps/drapp/src/apis/booking/changeBookingStatus';
+import { useBookingStatus } from 'apps/drapp/src/apis/booking/bookingStatus';
 
-const currentDate = moment().unix();
-const endDate = 1943728199;
 export const VacationToggle = () => {
     const [info] = useDrApp();
     const [isOn, setIsOn] = useState(false);
     const [shouldShowconfilitModal, setShouldShowconfilitModal] = useState<boolean>(false);
-    const deleteTurnsRequest = useDeleteTurns();
-
-    const getVacation = useGetVacation({
-        center_id: info.center.id,
-        filter: {
-            from: currentDate,
-            to: endDate
-        }
+    const changeStatus = useChangeBookingStatus();
+    const getBookingStatus = useBookingStatus({
+        user_center_id: info.center.user_center_id
     });
-    const vacationRequest = useVacation();
-    const deleteVacation = useDeleteVacation();
 
     useEffect(() => {
-        if (getVacation.isSuccess) {
-            setIsOn(getVacation.data?.data?.length === 0);
+        if (getBookingStatus.isSuccess) {
+            const status = !!getBookingStatus.data?.data?.data?.every?.(
+                (service: any) => !!service.can_booking
+            );
+            setIsOn(status);
         }
-    }, [getVacation.status]);
+    }, [getBookingStatus.status]);
 
-    const onChange = async (status: boolean) => {
+    const enableBooking = async () => {
         try {
-            if (!status) {
-                setIsOn(false);
-                await vacationRequest.mutateAsync({
-                    centerId: info.center.id,
-                    data: {
-                        from: moment().unix(),
-                        to: moment().add('jDay', 90).startOf('jDay').unix()
-                    }
-                });
-
-                return;
-            }
             setIsOn(true);
-            await deleteVacation.mutateAsync({
-                center_id: info.center.id,
-                from: moment().startOf('jDay').unix(),
-                to: endDate
+            await changeStatus.mutateAsync({
+                status: true,
+                user_center_id: info.center.user_center_id
             });
         } catch (error) {
             setIsOn(prev => !prev);
 
             if (axios.isAxiosError(error)) {
-                if (error?.response?.data?.status === 'BOOK_CONFLICT') {
-                    return setShouldShowconfilitModal(true);
-                }
                 toast.error(error.response?.data?.message);
             }
         }
     };
 
-    const deleteTurns = () => {
-        deleteTurnsRequest.mutate(
-            {
-                centerId: info.center.id,
-                data: {
-                    from: moment().unix(),
-                    to: moment().add('jDay', 90).startOf('jDay').unix()
-                }
-            },
-            {
-                onSuccess: () => {
-                    toast.success('مرخصی شما ثبت شد.');
-                    setIsOn(prev => !prev);
-                    setShouldShowconfilitModal(false);
-                },
-                onError: err => {
-                    if (axios.isAxiosError(err)) {
-                        toast.error(err?.response?.data?.message);
-                    }
-                }
+    const disableBooking = async () => {
+        try {
+            setIsOn(false);
+            await changeStatus.mutateAsync({
+                status: false,
+                user_center_id: info.center.user_center_id
+            });
+            setShouldShowconfilitModal(false);
+        } catch (error) {
+            setIsOn(prev => !prev);
+
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message);
             }
-        );
+        }
+    };
+
+    const onChange = async (status: boolean) => {
+        if (status) {
+            enableBooking();
+            return;
+        }
+        setShouldShowconfilitModal(true);
     };
 
     return (
@@ -118,11 +92,7 @@ export const VacationToggle = () => {
                 </span>
                 <div className={styles.toggle}>
                     <input
-                        disabled={
-                            getVacation.isLoading ||
-                            vacationRequest.isLoading ||
-                            deleteVacation.isLoading
-                        }
+                        disabled={changeStatus.isLoading}
                         type="checkbox"
                         id="switch"
                         checked={isOn}
@@ -130,27 +100,15 @@ export const VacationToggle = () => {
                     />
                     <label htmlFor="switch">Toggle</label>
                 </div>
-                {(getVacation.isLoading ||
-                    vacationRequest.isLoading ||
-                    deleteVacation.isLoading) && <LoadingIcon color="#000" />}
+                {changeStatus.isLoading && <LoadingIcon color="#000" />}
             </div>
 
-            <Modal
-                title="غیرفعال‌سازی ویزیت آنلاین"
-                isOpen={shouldShowconfilitModal}
-                onClose={setShouldShowconfilitModal}
-            >
+            <Modal title="" isOpen={shouldShowconfilitModal} onClose={setShouldShowconfilitModal}>
                 <span>
-                    برای شما{' '}
-                    {vacationRequest.isError &&
-                        (vacationRequest.error as any)?.response?.data?.data
-                            ?.not_paid_books_count}{' '}
-                    نوبت در حال پرداخت و{' '}
-                    {vacationRequest.isError &&
-                        (vacationRequest.error as any)?.response?.data?.data?.paid_books_count}{' '}
-                    نوبت پرداخت شده وجود دارد، با غیرفعالسازی ویزیت‌آنلاین این نوبت‌ها حذف می‌شوند.
+                    در صورتی که برای شما نوبت ثبت شده باشد، با غیرفعال‌سازی ویزیت‌آنلاین این نوبت‌ها
+                    حذف می‌شوند.
                 </span>
-                <span className="font-medium">آیا از حذف نوبت های خود مطمئن هستید؟</span>
+                <span className="font-medium">آیا از غیرفعال‌سازی ویزیت آنلاین مطمئن هستید؟</span>
                 <Alert icon={false} className="!bg-[#F3F6F9]">
                     <Typography fontSize="0.9rem" fontWeight="medium">
                         درﻧﻈﺮ داﺷﺘﻪ ﺑﺎﺷﯿﺪ ﮐﻪ ﭘﺲ از ﺣﺬف نوبت ﺑﺮای ﺑﯿﻤﺎران ﭘﯿﺎﻣﮏ ارﺳﺎل ﻣﯽ ﺷﻮد.
@@ -161,10 +119,10 @@ export const VacationToggle = () => {
                         color="error"
                         fullWidth
                         variant="outlined"
-                        loading={deleteTurnsRequest.isLoading}
-                        onClick={deleteTurns}
+                        loading={changeStatus.isLoading}
+                        onClick={disableBooking}
                     >
-                        حذف نوبت
+                        غیرفعال سازی
                     </Button>
                 </Stack>
             </Modal>
