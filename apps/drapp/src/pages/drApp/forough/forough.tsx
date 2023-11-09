@@ -1,7 +1,8 @@
 import { Button, Chip, Skeleton } from '@mui/material';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useSearchViewInfo } from 'apps/drapp/src/apis/forough/searchViewInfo';
-import { round } from 'lodash';
+import  round  from 'lodash/round';
+import mean from 'lodash/mean'
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import GaugeChart from 'react-gauge-chart';
@@ -35,7 +36,8 @@ export const Forough = () => {
     end_date: moment().format('YYYY-MM-DD')},{
         enabled: isRolloutDoctor
     })
-    const onlineVisitWaitingTime = averageWaitingTime?.data?.data?.result?.find?.((item:any) => item.center_id === '5532')
+    const onlineVisitWaitingTime = isRolloutDoctor ? averageWaitingTime?.data?.data?.result?.find?.((item:any) => item.center_id === '5532')?.waiting_time : data?.online_visit_waiting_time_info?.waiting_time;
+    const presenseWaitingTime =isRolloutDoctor? mean(averageWaitingTime?.data?.data?.result?.filter((item:any) => item.center_id !=='5532')?.map((item:any) => item?.waiting_time)) : data?.waiting_time_info?.waiting_time
     
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
@@ -63,7 +65,7 @@ export const Forough = () => {
                                 selected: !!data?.waiting_time_info,
                                 service: 'مطب',
                                 type: 'presence',
-                                wating_time: data?.waiting_time_info?.waiting_time ?? 0
+                                wating_time: presenseWaitingTime?? 0
                             },
                             data?.online_visit_waiting_time_info && {
                                 id: 2,
@@ -73,7 +75,7 @@ export const Forough = () => {
                                     !!data?.online_visit_waiting_time_info,
                                 service: 'ویزیت آنلاین',
                                 type: 'online_visit',
-                                wating_time:isRolloutDoctor ?onlineVisitWaitingTime?.waiting_time : data?.online_visit_waiting_time_info?.waiting_time ?? 0
+                                wating_time:onlineVisitWaitingTime ?? 0
                             },
                             data?.prescription_waiting_time_info && {
                                 id: 3,
