@@ -9,6 +9,9 @@ import { InfoIcon } from '@paziresh24/shared/icon';
 import classNames from 'classnames';
 import { useDrApp } from '@paziresh24/context/drapp';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useAverageWaitingTime } from 'apps/drapp/src/apis/forough/averageWaitingTime';
+import moment from 'jalali-moment';
 
 type InfoOption = {
     id: number;
@@ -26,8 +29,17 @@ export const Forough = () => {
     const [data, setData] = useState<any>({});
     const router = useHistory();
     const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
+    const rolloutDoctor = useFeatureValue<any>('forough:average-waiting-time-api|doctor-list', {ids:['']})
+    const isRolloutDoctor = rolloutDoctor?.ids?.includes?.(+info.doctor?.user_id)
+    const averageWaitingTime = useAverageWaitingTime({slug:info.doctor.slug,  start_date: moment().subtract(30, 'days').format('YYYY-MM-DD'),
+    end_date: moment().format('YYYY-MM-DD')},{
+        enabled: isRolloutDoctor
+    })
+    const onlineVisitWaitingTime = averageWaitingTime?.data?.data?.result?.find?.((item:any) => item.center_id === '5532')
+    
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
+   
     const promptSentences: Record<string, string> = {
         presence:
             "شما برای بهبود رتبه خود، نیاز به <span class='font-semibold text-secondary'>کاهش زمان انتظار</span> دارید.",
@@ -42,7 +54,6 @@ export const Forough = () => {
             if (searchViewInfo.data?.data) {
                 setIsLoading(false);
                 setData(searchViewInfo.data?.data);
-
                 !!data &&
                     setInfoOptionDetails(
                         [
@@ -62,7 +73,7 @@ export const Forough = () => {
                                     !!data?.online_visit_waiting_time_info,
                                 service: 'ویزیت آنلاین',
                                 type: 'online_visit',
-                                wating_time: data?.online_visit_waiting_time_info?.waiting_time ?? 0
+                                wating_time:isRolloutDoctor ?onlineVisitWaitingTime?.waiting_time : data?.online_visit_waiting_time_info?.waiting_time ?? 0
                             },
                             data?.prescription_waiting_time_info && {
                                 id: 3,
@@ -84,7 +95,7 @@ export const Forough = () => {
                 }, 5000);
             }
         }
-    }, [searchViewInfo.status, data]);
+    }, [searchViewInfo.status, data, averageWaitingTime.status,onlineVisitWaitingTime]);
 
     const waitingTimeText = useMemo(() => {
         const watingTimeAvarageTime = activeOptionSelectedDetails?.wating_time ?? 0;
