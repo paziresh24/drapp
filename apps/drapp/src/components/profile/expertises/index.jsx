@@ -70,13 +70,13 @@ export const Expertises = props => {
 
     const deleteAction = () => {
         if (props.id) {
-      
-            return deleteExpertises.mutate(
-                { id:props.isShouldUseProvider ? props.specialitiesListId.find(item => item.specialties_id ===props.id )?.expertise_id:props.id },
+
+            return removeSpecialities.mutate(
+                { id:props.id },
                 {
                     onSuccess: async() => {
-                        props.isShouldUseProvider && await removeSpecialities.mutate({
-                            id:props.id
+                         await deleteExpertises.mutate({
+                            id: props.specialitiesListId.find(item => item.specialties_id ===props.id )?.expertise_id
                         },{
                                 onError: err => {
                                     toast.error(err.response.data.message);
@@ -100,18 +100,6 @@ export const Expertises = props => {
                 }
             );
         }
-        setDeleteExpertisesModal(false);
-        let visitesList = [...props.expertises];
-        visitesList.splice(props.index, 1);
-        if (isEmpty(visitesList))
-            visitesList.push({
-                alias_title: '',
-                degree: { id: 0, name: '' },
-                expertise: { id: 0, name: '' },
-                id: ''
-            });
-
-        props.setExpertise(visitesList);
     };
 
     return (
