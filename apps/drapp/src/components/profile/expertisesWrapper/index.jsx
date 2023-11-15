@@ -93,19 +93,19 @@ export const ExpertisesWrapper = props => {
         specializations.forEach(expertise => {
             if (!expertise.id) {
                 return expertisesPromises.push(
-                    createExpertise.mutateAsync(
-                        {
-                            expertise_id: expertise.expertise.id,
-                            degree_id: expertise.degree.id,
-                            alias_title: expertise.alias_title
-                        },
+                    createSpecialities.mutateAsync({
+                        academic_degree_id:expertise.degree.id,
+                        speciality_id: expertise.expertise.id,
+                        alias:expertise.alias_title
+                    },
                         {
                             onSuccess: () => {
-                                shouldUseProvider&&  createSpecialities.mutateAsync({
-                                    academic_degree_id:expertise.degree.id,
-                                    speciality_id: expertise.expertise.id,
-                                    alias:expertise.alias_title
-                                },
+                                createExpertise.mutateAsync(
+                                    {
+                                        expertise_id: expertise.expertise.id,
+                                        degree_id: expertise.degree.id,
+                                        alias_title: expertise.alias_title
+                                    },
                                 {
                                     onError: err => {
                                         toast.error(err.response.data.message);
@@ -123,24 +123,21 @@ export const ExpertisesWrapper = props => {
             }
 
             return expertisesPromises.push(
-                updateExpertise.mutateAsync(
-                    {
-                        id: shouldUseProvider
-                            ? specialitiesListId.find(item => item?.specialties_id === expertise.id)
-                                  ?.expertise_id
-                            : expertise.id,
-                        expertise_id: expertise.expertise.id,
-                        degree_id: expertise.degree.id,
-                        alias_title: expertise.alias_title
-                    },
+                updateSpecialities.mutateAsync({
+                    id: expertise.id,
+                    academic_degree_id:expertise.degree.id,
+                    speciality_id: expertise.expertise.id,
+                    alias:expertise.alias_title,
+                },
                     {
                         onSuccess: () => {
-                            shouldUseProvider &&  updateSpecialities.mutateAsync({
-                                id: expertise.id,
-                                academic_degree_id:expertise.degree.id,
-                                speciality_id: expertise.expertise.id,
-                                alias:expertise.alias_title,
-                            },
+                            updateExpertise.mutateAsync(
+                                {
+                                    id: specialitiesListId.find(item => item?.specialties_id === expertise.id)?.expertise_id,
+                                    expertise_id: expertise.expertise.id,
+                                    degree_id: expertise.degree.id,
+                                    alias_title: expertise.alias_title
+                                },
                             {
                                 onError: err => {
                                     toast.error(err.response.data.message);
