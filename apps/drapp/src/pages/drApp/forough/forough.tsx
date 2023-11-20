@@ -10,6 +10,7 @@ import { InfoIcon } from '@paziresh24/shared/icon';
 import classNames from 'classnames';
 import { useDrApp } from '@paziresh24/context/drapp';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { useGetDeletedTurnsCount } from 'apps/drapp/src/apis/forough/deletedTurnsCount';
 import { useFeatureValue } from '@growthbook/growthbook-react';
 import { useAverageWaitingTime } from 'apps/drapp/src/apis/forough/averageWaitingTime';
 import moment from 'jalali-moment';
@@ -30,6 +31,11 @@ export const Forough = () => {
     const [data, setData] = useState<any>({});
     const router = useHistory();
     const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
+    const rolloutDoctorList = useFeatureValue<any>('forough:show-deleted-book|doctor-list', {ids:['']})
+    const itemTitleList = useFeatureValue<any>('forough:item-title-list', {})
+    const shouldShowDeletedTurnsCount = rolloutDoctorList?.ids?.includes?.(info?.doctor?.id)
+    const isActiveOnlineVisitCenter = info?.center?.id ===CONSULT_CENTER_ID ?? false
+    const deletedTurn = useGetDeletedTurnsCount({user_center_id:info?.center?.user_center_id},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount  })    
     const rolloutDoctor = useFeatureValue<any>('forough:average-waiting-time-api|doctor-list', {ids:['']})
     const isRolloutDoctor = rolloutDoctor?.ids?.includes?.(+info.doctor?.user_id)
     const averageWaitingTime = useAverageWaitingTime({slug:info.doctor.slug,  start_date: moment().subtract(30, 'days').format('YYYY-MM-DD'),
@@ -265,7 +271,7 @@ export const Forough = () => {
                              <div className="flex items-center space-s-2">
                                  <div className="h-8 border border-solid border-slate-200" />
                                  <div className="h-12 min-w-[3rem] font-bold flex items-center justify-center bg-teal-50 rounded-lg shadow-lg text-primary">
-                                     {deletedTurn.data?.data?.countBook ?? '-'}
+                                     {deletedTurn.data?.data?.count_delete_book ?? '-'}
                                  </div>
                              </div>
                          </div>
