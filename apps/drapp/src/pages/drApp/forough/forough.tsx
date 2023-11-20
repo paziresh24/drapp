@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import { useDrApp } from '@paziresh24/context/drapp';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useGetDeletedTurnsCount } from 'apps/drapp/src/apis/forough/deletedTurnsCount';
-import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { useAverageWaitingTime } from 'apps/drapp/src/apis/forough/averageWaitingTime';
 import moment from 'jalali-moment';
 
@@ -31,11 +31,10 @@ export const Forough = () => {
     const [data, setData] = useState<any>({});
     const router = useHistory();
     const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
-    const rolloutDoctorList = useFeatureValue<any>('forough:show-deleted-book|doctor-list', {ids:['']})
     const itemTitleList = useFeatureValue<any>('forough:item-title-list', {})
-    const shouldShowDeletedTurnsCount = rolloutDoctorList?.ids?.includes?.(info?.doctor?.id)
+    const shouldShowDeletedTurnsCount = useFeatureIsOn('forough:show-deleted-book|doctor-list')
     const isActiveOnlineVisitCenter = info?.center?.id ===CONSULT_CENTER_ID ?? false
-    const deletedTurn = useGetDeletedTurnsCount({user_center_id:info?.center?.user_center_id},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount  })    
+    const deletedTurn = useGetDeletedTurnsCount({user_center_id:info?.center?.user_center_id},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount})    
     const rolloutDoctor = useFeatureValue<any>('forough:average-waiting-time-api|doctor-list', {ids:['']})
     const isRolloutDoctor = rolloutDoctor?.ids?.includes?.(+info.doctor?.user_id)
     const averageWaitingTime = useAverageWaitingTime({slug:info.doctor.slug,  start_date: moment().subtract(30, 'days').format('YYYY-MM-DD'),
@@ -47,7 +46,7 @@ export const Forough = () => {
     
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
-   
+
     const promptSentences: Record<string, string> = {
         presence:
             "شما برای بهبود رتبه خود، نیاز به <span class='font-semibold text-secondary'>کاهش زمان انتظار</span> دارید.",
