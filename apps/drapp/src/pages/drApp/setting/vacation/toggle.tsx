@@ -22,9 +22,9 @@ export const VacationToggle = () => {
 
     useEffect(() => {
         if (getBookingStatus.isSuccess) {
-            const status = !!getBookingStatus.data?.data?.data?.every?.(
-                (service: any) => !!service.can_booking
-            );
+            const status = !!getBookingStatus.data?.data?.data
+                ?.filter((item: any) => item.service_type_id === 8)
+                ?.every?.((service: any) => !!service.can_booking);
             setIsOn(status);
         }
     }, [getBookingStatus.status]);
