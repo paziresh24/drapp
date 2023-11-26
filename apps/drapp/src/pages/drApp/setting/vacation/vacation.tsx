@@ -34,6 +34,7 @@ import { Checkbox, MenuItem, Select, Skeleton } from '@mui/material';
 import isEmpty from 'lodash/isEmpty';
 import getFirstAndLastMonthDay from 'apps/drapp/src/functions/getFirstAndLastMonthDay';
 import { VacationToggle } from './toggle';
+import { useFeatureValue } from '@growthbook/growthbook-react';
 
 type VacationDate = {
     from: DayValue | any;
@@ -90,6 +91,7 @@ export const Vacation = () => {
     });
     const deleteVacation = useDeleteVacation();
     const changeVacationDate = useChangeVacation();
+    const changeTurInfoBox = useFeatureValue<any>('vacation:change-turn-modal', {})
     const isDisableSubmitButton =
         !isFullDayVacation &&
         (!selectedDay.from || !fromTime || !toTime) &&
@@ -468,6 +470,13 @@ export const Vacation = () => {
                 isOpen={shouldShowGetTargetMoveModal}
                 onClose={setShouldShowGetTargetMoveModal}
             >
+                {changeTurInfoBox.isShowBox && (
+                 <Alert icon={false} className="!bg-amber-100">
+                    <Typography fontSize="0.8rem" fontWeight="medium">
+                        {changeTurInfoBox?.text ?? ''}
+                    </Typography>
+                </Alert>
+                )}
                 <span className="text-sm font-medium">نوبت ها به</span>
                 <Stack direction="row" spacing={2}>
                     <DateInput label="تاریخ" onCahnge={value => setTargetMoveDate(value)} />
