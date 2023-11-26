@@ -10,7 +10,8 @@ import { InfoIcon } from '@paziresh24/shared/icon';
 import classNames from 'classnames';
 import { useDrApp } from '@paziresh24/context/drapp';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
-import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useGetDeletedTurnsCount } from 'apps/drapp/src/apis/forough/deletedTurnsCount';
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { useAverageWaitingTime } from 'apps/drapp/src/apis/forough/averageWaitingTime';
 import moment from 'jalali-moment';
 
@@ -30,6 +31,10 @@ export const Forough = () => {
     const [data, setData] = useState<any>({});
     const router = useHistory();
     const [infoOptionDetails, setInfoOptionDetails] = useState<InfoOption[]>([]);
+    const itemTitleList = useFeatureValue<any>('forough:item-title-list', {})
+    const shouldShowDeletedTurnsCount = useFeatureIsOn('forough:show-deleted-book|doctor-list')
+    const isActiveOnlineVisitCenter = info?.center?.id ===CONSULT_CENTER_ID ?? false
+    const deletedTurn = useGetDeletedTurnsCount({user_center_id:info?.center?.user_center_id},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount})    
     const rolloutDoctor = useFeatureValue<any>('forough:average-waiting-time-api|doctor-list', {ids:['']})
     const isRolloutDoctor = rolloutDoctor?.ids?.includes?.(+info.doctor?.user_id)
     const averageWaitingTime = useAverageWaitingTime({slug:info.doctor.slug,  start_date: moment().subtract(30, 'days').format('YYYY-MM-DD'),
@@ -41,7 +46,7 @@ export const Forough = () => {
     
     const activeOptionSelectedDetails =
         infoOptionDetails.find((center: InfoOption) => center?.selected) ?? null;
-   
+
     const promptSentences: Record<string, string> = {
         presence:
             "شما برای بهبود رتبه خود، نیاز به <span class='font-semibold text-secondary'>کاهش زمان انتظار</span> دارید.",
@@ -98,6 +103,7 @@ export const Forough = () => {
             }
         }
     }, [searchViewInfo.status, data, averageWaitingTime.status,onlineVisitWaitingTime]);
+
 
     const waitingTimeText = useMemo(() => {
         const watingTimeAvarageTime = activeOptionSelectedDetails?.wating_time ?? 0;
@@ -219,11 +225,11 @@ export const Forough = () => {
                         </div>
                     )}
                     <span className="text-sm font-medium !mt-3 block">
-                        آمار شما در یک ماه گذشته:
+                        {itemTitleList?.title ?? ''}
                     </span>
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
-                            تعداد بیمارانی که از پروفایل شما در پذیرش24 بازدید کردند.
+                            {itemTitleList?.profile_page_view ?? ''}
                         </span>
                         <div className="flex items-center space-s-2">
                             <div className="h-8 border border-solid border-slate-200" />
@@ -234,8 +240,7 @@ export const Forough = () => {
                     </div>
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
-                            میانگین جایگاه شما در لیست سرچ پذیرش24 نسبت به سایر پزشکان گروه تخصصی
-                            شما
+                        {itemTitleList?.search_position ?? ''}
                         </span>
                         <div className="flex items-center space-s-2">
                             <div className="h-8 border border-solid border-slate-200" />
@@ -248,7 +253,7 @@ export const Forough = () => {
                     </div>
                     <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                         <span className="text-sm font-medium leading-6">
-                            تعداد بیمارانی که از مسیر سرچ در پذیرش۲۴ روی نام شما کلیک کرده اند.
+                            {itemTitleList?.click_name_in_search ?? ''}
                         </span>
                         <div className="flex items-center space-s-2">
                             <div className="h-8 border border-solid border-slate-200" />
@@ -257,6 +262,19 @@ export const Forough = () => {
                             </div>
                         </div>
                     </div>
+                    {!!isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount && (
+                             <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
+                             <span className="text-sm font-medium leading-6">
+                             {itemTitleList?.deleted_turn ?? ''}
+                             </span>
+                             <div className="flex items-center space-s-2">
+                                 <div className="h-8 border border-solid border-slate-200" />
+                                 <div className="h-12 min-w-[3rem] font-bold flex items-center justify-center bg-teal-50 rounded-lg shadow-lg text-primary">
+                                     {deletedTurn.data?.data?.count_delete_book ?? '-'}
+                                 </div>
+                             </div>
+                         </div>
+                    )}
                 </div>
             )}
 
@@ -289,3 +307,4 @@ export const Forough = () => {
 };
 
 export default Forough;
+
