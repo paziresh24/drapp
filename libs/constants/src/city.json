@@ -3574,5 +3574,13 @@
         "province_id": "31",
         "lat": null,
         "lon": null
+    },
+    {
+        "id": "467",
+        "name": "شاندیز",
+        "province": "خراسان رضوی",
+        "province_id": "11",
+        "lat": 36.2604623,
+        "lon": 59.6167549
     }
 ]
