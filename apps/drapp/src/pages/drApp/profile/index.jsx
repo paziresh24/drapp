@@ -256,15 +256,17 @@ const Profile = () => {
     const changeOnlieVisitChanelInfo = async () => {
         const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
         setMessengerError({
-            ...(!!eitaaId.length && {
-                eitaaNumberError: !phoneNumberValidator(eitaaNumber)
+            ...((eitaaNumber || eitaaId) && {
+                eitaaNumberError: !phoneNumberValidator(eitaaNumber),
+                eitaaIdError: !isMessengerIdHasValid(eitaaId)
             }),
-            ...(!!eitaaNumber.length && { eitaaIdError: !isMessengerIdHasValid(eitaaId) }),
             ...(whatsappNumber && { whatsappNumberError: !phoneNumberValidator(whatsappNumber) })
         });
         if (
-            (phoneNumberValidator(eitaaNumber) && isMessengerIdHasValid(eitaaId)) ||
-            phoneNumberValidator(whatsappNumber)
+            (eitaaNumber || eitaaId
+                ? phoneNumberValidator(eitaaNumber) && isMessengerIdHasValid(eitaaId)
+                : true) &&
+            (whatsappNumber ? phoneNumberValidator(whatsappNumber) : true)
         ) {
             updateMessengers.mutate(
                 {
