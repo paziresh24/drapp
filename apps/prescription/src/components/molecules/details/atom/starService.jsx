@@ -108,9 +108,15 @@ const StarService = ({ service, insuranceType }) => {
     };
 
     return (
-        <div style={{ cursor: 'pointer' }} onClick={starHandler} aria-hidden id="star_step">
+        <button
+            style={{ cursor: 'pointer' }}
+            disabled={addFavoriteServices.isLoading || deleteFavoriteServices.isLoading}
+            onClick={starHandler}
+            aria-hidden
+            id="star_step"
+        >
             <StarIcon color="#27bda0" fill={stared ? '#27bda0' : ''} />
-        </div>
+        </button>
     );
 };
 
