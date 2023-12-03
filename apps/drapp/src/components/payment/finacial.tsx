@@ -151,7 +151,7 @@ const Financial = () => {
                                         </>
                                     }
                                     date={convertTimeStampToPersianDate(
-                                        transaction.send_request_at
+                                        transaction.send_request_at ?? transaction?.insert_at
                                     )}
                                     rowNumber={index + 1}
                                     detailes={{
