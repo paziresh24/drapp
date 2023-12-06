@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import { LoadingIcon } from '@paziresh24/shared/icon';
 import { useChangeBookingStatus } from 'apps/drapp/src/apis/booking/changeBookingStatus';
 import { useBookingStatus } from 'apps/drapp/src/apis/booking/bookingStatus';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 export const VacationToggle = () => {
     const [info] = useDrApp();
@@ -22,6 +23,10 @@ export const VacationToggle = () => {
 
     useEffect(() => {
         if (getBookingStatus.isSuccess) {
+            getSplunkInstance().sendEvent({
+                group: 'vacation-toggle',
+                type: 'view'
+            });
             const status = !!getBookingStatus.data?.data?.data
                 ?.filter((item: any) => item.service_type_id === 8)
                 ?.every?.((service: any) => !!service.can_booking);
@@ -31,6 +36,10 @@ export const VacationToggle = () => {
 
     const enableBooking = async () => {
         try {
+            getSplunkInstance().sendEvent({
+                group: 'vacation-toggle',
+                type: 'enabled'
+            });
             setIsOn(true);
             await changeStatus.mutateAsync({
                 status: true,
@@ -46,6 +55,10 @@ export const VacationToggle = () => {
     };
 
     const disableBooking = async () => {
+        getSplunkInstance().sendEvent({
+            group: 'vacation-toggle',
+            type: 'disabled'
+        });
         try {
             setIsOn(false);
             await changeStatus.mutateAsync({
