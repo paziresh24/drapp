@@ -27,6 +27,11 @@ type InfoOption = {
 export const Forough = () => {
     const searchViewInfo = useSearchViewInfo();
     const [isLoading, setIsLoading] = useState(true);
+    const [dateInfo, setDateInfo] = useState({
+        today:moment(),
+        last_week: moment().subtract(7, 'days'),
+        last_month: moment().subtract(30, 'days')
+    });
     const [info] = useDrApp();
     const [data, setData] = useState<any>({});
     const router = useHistory();
@@ -34,7 +39,7 @@ export const Forough = () => {
     const itemTitleList = useFeatureValue<any>('forough:item-title-list', {})
     const shouldShowDeletedTurnsCount = useFeatureIsOn('forough:show-deleted-book|doctor-list')
     const isActiveOnlineVisitCenter = info?.center?.id ===CONSULT_CENTER_ID ?? false
-    const deletedTurn = useGetDeletedTurnsCount({user_center_id:info?.center?.user_center_id},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount})    
+    const deletedTurn = useGetDeletedTurnsCount({user_center_id:info?.center?.user_center_id, from_greather_than:dateInfo.last_month.unix(), from_less_than:dateInfo.today.unix(), payment_status_in:4},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount})    
     const rolloutDoctor = useFeatureValue<any>('forough:average-waiting-time-api|doctor-list', {ids:['']})
     const isRolloutDoctor = rolloutDoctor?.ids?.includes?.(+info.doctor?.user_id)
     const averageWaitingTime = useAverageWaitingTime({slug:info.doctor.slug,  start_date: moment().subtract(30, 'days').format('YYYY-MM-DD'),
@@ -58,7 +63,7 @@ export const Forough = () => {
 
     useEffect(() => {
         if (searchViewInfo.isSuccess) {
-            if (searchViewInfo.data?.data) {
+            if (shouldShowDeletedTurnsCount ? searchViewInfo.data?.data && deletedTurn.data?.data :searchViewInfo.data?.data ) {
                 setIsLoading(false);
                 setData(searchViewInfo.data?.data);
                 !!data &&
@@ -102,7 +107,7 @@ export const Forough = () => {
                 }, 5000);
             }
         }
-    }, [searchViewInfo.status, data, averageWaitingTime.status,onlineVisitWaitingTime]);
+    }, [searchViewInfo.status, data, averageWaitingTime.status,onlineVisitWaitingTime,deletedTurn.data?.data]);
 
 
     const waitingTimeText = useMemo(() => {
@@ -262,7 +267,7 @@ export const Forough = () => {
                             </div>
                         </div>
                     </div>
-                    {!!isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount && (
+                    {!!isActiveOnlineVisitCenter  && shouldShowDeletedTurnsCount &&(
                              <div className="flex items-center justify-between p-3 bg-white border border-solid rounded-lg border-slate-200 space-s-2">
                              <span className="text-sm font-medium leading-6">
                              {itemTitleList?.deleted_turn ?? ''}
@@ -270,7 +275,7 @@ export const Forough = () => {
                              <div className="flex items-center space-s-2">
                                  <div className="h-8 border border-solid border-slate-200" />
                                  <div className="h-12 min-w-[3rem] font-bold flex items-center justify-center bg-teal-50 rounded-lg shadow-lg text-primary">
-                                     {deletedTurn.data?.data?.count_delete_book ?? '-'}
+                                     {deletedTurn.data?.data?.count_book ?? '-'}
                                  </div>
                              </div>
                          </div>
