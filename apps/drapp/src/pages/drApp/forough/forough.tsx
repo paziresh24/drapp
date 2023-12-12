@@ -41,7 +41,7 @@ export const Forough = () => {
     const isActiveOnlineVisitCenter = info?.center?.id ===CONSULT_CENTER_ID ?? false
     const deletedTurn = useGetDeletedTurnsCount({user_center_id:info?.center?.user_center_id, from_greather_than:dateInfo.last_month.unix(), from_less_than:dateInfo.today.unix(), payment_status_in:4},  { enabled:isActiveOnlineVisitCenter && shouldShowDeletedTurnsCount})    
     const rolloutDoctor = useFeatureValue<any>('forough:average-waiting-time-api|doctor-list', {ids:['']})
-    const isRolloutDoctor = rolloutDoctor?.ids?.includes?.(+info.doctor?.user_id)
+    const isRolloutDoctor = rolloutDoctor?.ids?.includes?.(+info.doctor?.user_id) || rolloutDoctor?.ids?.includes?.("*")
     const averageWaitingTime = useAverageWaitingTime({slug:info.doctor.slug,  start_date: moment().subtract(30, 'days').format('YYYY-MM-DD'),
     end_date: moment().format('YYYY-MM-DD')},{
         enabled: isRolloutDoctor
