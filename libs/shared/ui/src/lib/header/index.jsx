@@ -371,8 +371,7 @@ const Header = memo(() => {
                                         onClick={e => {
                                             e.stopPropagation();
 
-                                            setIsCenterSelectOpen(false);
-                                            setCenterActiveModal(true);
+                                            window.location.assign('/create-center');
                                         }}
                                     >
                                         فعال سازی
