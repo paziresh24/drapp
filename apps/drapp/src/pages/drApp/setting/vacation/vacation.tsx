@@ -91,7 +91,7 @@ export const Vacation = () => {
     });
     const deleteVacation = useDeleteVacation();
     const changeVacationDate = useChangeVacation();
-    const changeTurInfoBox = useFeatureValue<any>('vacation:change-turn-modal', {})
+    const changeTurInfoBox = useFeatureValue<any>('vacation:change-turn-modal', {});
     const isDisableSubmitButton =
         !isFullDayVacation &&
         (!selectedDay.from || !fromTime || !toTime) &&
@@ -116,10 +116,6 @@ export const Vacation = () => {
     };
 
     const handleSubmit = () => {
-        getSplunkInstance().sendEvent({
-            group: 'setting',
-            type: 'vacation'
-        });
         vacationRequest.mutate(
             {
                 centerId: center.id,
@@ -147,6 +143,21 @@ export const Vacation = () => {
                     toast.success('مرخصی شما ثبت شد.');
                     getVacation.refetch();
                     closeVacationModal();
+                    getSplunkInstance().sendEvent({
+                        group: 'vacation',
+                        type: 'submit-vacation',
+                        event: {
+                            centerId: center.id,
+                            from: convertDateAndTimeToTimeStamp(
+                                selectedDay.from,
+                                isFullDayVacation ? '00:00' : fromTime!
+                            ),
+                            to: convertDateAndTimeToTimeStamp(
+                                selectedDay.to ?? selectedDay.from,
+                                isFullDayVacation ? '23:59' : toTime!
+                            )
+                        }
+                    });
                 }
             }
         );
@@ -171,6 +182,21 @@ export const Vacation = () => {
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
+                    getSplunkInstance().sendEvent({
+                        group: 'vacation',
+                        type: 'submit-vacation',
+                        event: {
+                            centerId: center.id,
+                            from: convertDateAndTimeToTimeStamp(
+                                selectedDay.from,
+                                isFullDayVacation ? '00:00' : fromTime!
+                            ),
+                            to: convertDateAndTimeToTimeStamp(
+                                selectedDay.to ?? selectedDay.from,
+                                isFullDayVacation ? '23:59' : toTime!
+                            )
+                        }
+                    });
                 },
                 onError: err => {
                     if (axios.isAxiosError(err)) {
@@ -205,6 +231,21 @@ export const Vacation = () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
                     closeVacationModal();
+                    getSplunkInstance().sendEvent({
+                        group: 'vacation',
+                        type: 'submit-vacation',
+                        event: {
+                            centerId: center.id,
+                            from: convertDateAndTimeToTimeStamp(
+                                selectedDay.from,
+                                isFullDayVacation ? '00:00' : fromTime!
+                            ),
+                            to: convertDateAndTimeToTimeStamp(
+                                selectedDay.to ?? selectedDay.from,
+                                isFullDayVacation ? '23:59' : toTime!
+                            )
+                        }
+                    });
                 },
                 onError: err => {
                     if (axios.isAxiosError(err)) {
@@ -226,6 +267,15 @@ export const Vacation = () => {
                 onSuccess: () => {
                     toast.success('مرخصی شما حذف شد.');
                     setShouldShowDeleteVacationModal(false);
+                    getSplunkInstance().sendEvent({
+                        group: 'vacation',
+                        type: 'remove-vacation',
+                        event: {
+                            centerId: center.id,
+                            from,
+                            to
+                        }
+                    });
                     getVacation.refetch();
                 },
                 onError: err => {
@@ -262,6 +312,29 @@ export const Vacation = () => {
                 onSuccess: () => {
                     toast.success('تغییرات شما با موفقیت اعمال شد.');
                     getVacation.refetch();
+                    getSplunkInstance().sendEvent({
+                        group: 'vacation',
+                        type: 'change-vacation',
+                        event: {
+                            centerId: center.id,
+                            from: convertDateAndTimeToTimeStamp(
+                                selectedDay.from,
+                                isFullDayVacation ? '00:00' : fromTime!
+                            ),
+                            to: convertDateAndTimeToTimeStamp(
+                                selectedDay.to ?? selectedDay.from,
+                                isFullDayVacation ? '23:59' : toTime!
+                            ),
+                            old_from: convertDateAndTimeToTimeStamp(
+                                currentVacationDate.date.from,
+                                currentVacationDate.time.from!
+                            ),
+                            old_to: convertDateAndTimeToTimeStamp(
+                                currentVacationDate.date.to,
+                                currentVacationDate.time.to!
+                            )
+                        }
+                    });
                     closeVacationModal();
                 },
                 onError: err => {
@@ -471,11 +544,11 @@ export const Vacation = () => {
                 onClose={setShouldShowGetTargetMoveModal}
             >
                 {changeTurInfoBox.isShowBox && (
-                 <Alert icon={false} className="!bg-amber-100">
-                    <Typography fontSize="0.8rem" fontWeight="medium">
-                        {changeTurInfoBox?.text ?? ''}
-                    </Typography>
-                </Alert>
+                    <Alert icon={false} className="!bg-amber-100">
+                        <Typography fontSize="0.8rem" fontWeight="medium">
+                            {changeTurInfoBox?.text ?? ''}
+                        </Typography>
+                    </Alert>
                 )}
                 <span className="text-sm font-medium">نوبت ها به</span>
                 <Stack direction="row" spacing={2}>
