@@ -254,7 +254,7 @@ const Profile = () => {
     };
 
     const changeOnlieVisitChanelInfo = async () => {
-        const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
+        const { eitaaNumber, whatsappNumber, eitaaId, isEnabledSecureCall } = messengerRef.current;
         setMessengerError({
             ...((eitaaNumber || eitaaId) && {
                 eitaaNumberError: !phoneNumberValidator(eitaaNumber),
@@ -282,11 +282,27 @@ const Profile = () => {
                         {
                             type: 'whatsapp',
                             channel: whatsappNumber
+                        },
+                        {
+                            type: 'secure_call',
+                            channel: isEnabledSecureCall ? '02125015000' : ''
                         }
                     ].filter(messenger => !!messenger.channel.length)
                 },
                 {
                     onSuccess: () => {
+                        if (isEnabledSecureCall) {
+                            getSplunkInstance().sendEvent({
+                                group: ' active-safe-call',
+                                type: 'active-successfully'
+                            });
+                        }
+                        if (!!visitChanel?.secure_call && !isEnabledSecureCall) {
+                            getSplunkInstance().sendEvent({
+                                group: ' active-safe-call',
+                                type: 'deactive-successfully'
+                            });
+                        }
                         toast.success('تغییرات شما با موفقیت انجام شد');
                     },
                     onError: err => {
@@ -499,6 +515,7 @@ const Profile = () => {
                             eitaaIdDefaultValue={visitChanel?.eitaa ?? ''}
                             eitaaNumberDefaultValue={visitChanel?.eitaa_number ?? ''}
                             whatsappNumberDefaultValue={visitChanel?.whatsapp ?? ''}
+                            isEnabledSecureCall={!!visitChanel?.secure_call ?? false}
                             eitaaIdError={messengerError.eitaaIdError}
                             eitaaNumberError={messengerError.eitaaNumberError}
                             whtasappNumberError={messengerError.whatsappNumberError}

@@ -97,7 +97,7 @@ const TurnRow = (props: TurnRowProps) => {
     const updateDescription = useUpdateDescription();
     const deletePrescription = useDeletePrescription();
     const getMessengerInfo = useGetMessengerInfo();
-    const safeCall = useSafeCall()
+    const safeCall = useSafeCall();
     const statistics = useTurnsStore(state => state.statistics);
     const turns = useTurnsStore(state => state.turns);
     const [actionLoading, setActionLoading] = useState(false);
@@ -111,7 +111,9 @@ const TurnRow = (props: TurnRowProps) => {
         false
     );
     const shouldShowRemoveTurnButton = useFeatureIsOn('turning.should-show-remove-turn-button');
-    const shouldShowSafeCallButton = useFeatureValue<any>('turning:show-safe-call-button', {ids:['']})
+    const shouldShowSafeCallButton = useFeatureValue<any>('turning:show-safe-call-button', {
+        ids: ['']
+    });
 
     const came = useCame();
     const removeTurn = useRemoveTurn();
@@ -130,7 +132,11 @@ const TurnRow = (props: TurnRowProps) => {
 
     const turn = useRef(turns.find(turn => turn.id === id));
     const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid';
-    const isShowSafeCall = shouldShowSafeCallButton?.ids?.includes('*') || shouldShowSafeCallButton?.ids?.includes(info?.doctor?.id)
+
+    const isShowSafeCall =
+        getMessengerInfo?.data?.data?.some(
+            (item: { type: string }) => item.type === 'secure_call'
+        ) || shouldShowSafeCallButton?.ids?.includes(info?.doctor?.id);
     const buttonStatusTurnText = {
         not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
@@ -426,14 +432,13 @@ const TurnRow = (props: TurnRowProps) => {
                     patient_name: name,
                     patient_family: family,
                     patient_cell: mobileNumber,
-                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`,
+                    patient_receipt_link: `${window._env_.P24_BASE_URL_CONSULT}/receipt/${info.center.id}/${id}/`
                 }
             });
-
         } catch (error) {
             if (axios.isAxiosError(error)) toast.error(error.response?.data?.message);
         }
-    }
+    };
 
     const visitProvider = (): 'paziresh24' | 'salamat' | 'tamin' => {
         const insuranceProvider =
@@ -632,49 +637,49 @@ const TurnRow = (props: TurnRowProps) => {
     ];
 
     const TurnDropDown = () => (
-            <div>
-                <DropDown
-                    element={<DotsIcon color="#000" />}
-                    items={[
-                        {
-                            id: 1,
-                            icon: <TrashIcon color="#000" />,
-                            name: 'حذف نسخه',
-                            action: () => setDeletePrescriptionModal(true),
-                            diabled: prescription.finalized
-                        },
-                        {
-                            id: 2,
-                            icon: (
-                                <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        clipRule="evenodd"
-                                        d="M13.25 3.75331C13.0406 3.75062 12.7983 3.74997 12.5147 3.74997H11C9.56458 3.74997 8.56347 3.75156 7.80812 3.85312C7.07435 3.95177 6.68577 4.13222 6.40901 4.40898C6.13225 4.68574 5.9518 5.07432 5.85315 5.80809C5.75159 6.56344 5.75 7.56455 5.75 8.99997V15C5.75 16.4354 5.75159 17.4365 5.85315 18.1919C5.9518 18.9256 6.13225 19.3142 6.40901 19.591C6.68577 19.8677 7.07435 20.0482 7.80812 20.1468C8.56347 20.2484 9.56458 20.25 11 20.25H13C14.4354 20.25 15.4365 20.2484 16.1919 20.1468C16.9257 20.0482 17.3142 19.8677 17.591 19.591C17.8678 19.3142 18.0482 18.9256 18.1469 18.1919C18.2484 17.4365 18.25 16.4354 18.25 15V9.48525C18.25 9.20166 18.2494 8.95944 18.2467 8.75005H18L17.948 8.75006C17.0495 8.75008 16.3003 8.75011 15.7055 8.67014C15.0777 8.58574 14.5109 8.40007 14.0555 7.9446C13.6 7.48913 13.4143 6.92233 13.3299 6.29453C13.2499 5.69975 13.25 4.95053 13.25 4.05205L13.25 4.00006V3.75331ZM14.75 3.98285V4.00006C14.75 4.96407 14.7516 5.61163 14.8165 6.09466C14.8786 6.55612 14.9858 6.75362 15.1161 6.88394C15.2464 7.01425 15.4439 7.12148 15.9054 7.18352C16.3884 7.24846 17.036 7.25005 18 7.25005H18.0172C17.8431 6.9184 17.5168 6.57741 16.7123 5.77294L16.227 5.28766C15.4226 4.48326 15.0816 4.15692 14.75 3.98285ZM12.6573 2.24993C13.7451 2.24941 14.501 2.24905 15.1924 2.53542C15.8838 2.8218 16.4181 3.35659 17.1869 4.12613L17.2877 4.227L17.773 4.71228L17.8738 4.81308C18.6434 5.58189 19.1782 6.11617 19.4645 6.80755C19.7509 7.49892 19.7506 8.25487 19.75 9.34264V9.34265L19.75 9.48525V15V15.0548V15.0548V15.0549C19.75 16.4224 19.75 17.5248 19.6335 18.3917C19.5125 19.2918 19.2536 20.0497 18.6517 20.6516C18.0497 21.2535 17.2919 21.5124 16.3918 21.6334C15.5248 21.75 14.4225 21.75 13.0549 21.75H13H11H10.9451C9.57754 21.75 8.47522 21.75 7.60825 21.6334C6.70814 21.5124 5.95027 21.2535 5.34835 20.6516C4.74643 20.0497 4.48754 19.2918 4.36652 18.3917C4.24996 17.5248 4.24998 16.4224 4.25 15.0548V15V8.99997V8.9451C4.24998 7.57751 4.24996 6.47519 4.36652 5.60822C4.48754 4.70811 4.74643 3.95024 5.34835 3.34832C5.95027 2.7464 6.70814 2.48751 7.60825 2.36649C8.47522 2.24993 9.57754 2.24995 10.9451 2.24997L11 2.24997H12.5147L12.6573 2.24993ZM12 10.2501C12.4142 10.2501 12.75 10.5858 12.75 11.0001V15.1894L13.9697 13.9697C14.2626 13.6768 14.7374 13.6768 15.0303 13.9697C15.3232 14.2626 15.3232 14.7375 15.0303 15.0304L12.5303 17.5304C12.2374 17.8233 11.7626 17.8233 11.4697 17.5304L8.96967 15.0304C8.67678 14.7375 8.67678 14.2626 8.96967 13.9697C9.26256 13.6768 9.73744 13.6768 10.0303 13.9697L11.25 15.1894V11.0001C11.25 10.5858 11.5858 10.2501 12 10.2501Z"
-                                        fill="#22282F"
-                                    />
-                                </svg>
-                            ),
-                            name: 'PDF نسخه',
-                            action: () => window.open(pdfLink.current),
-                            diabled: !prescription.finalized
-                        },
-                        shouldShowRemoveTurnButton && {
-                            id: 2,
-                            icon: <TrashIcon color="#000" />,
-                            name: 'لغو نوبت',
-                            action: () => setDeleteTurnModal(true),
-                            diabled: !!isDeletedTurn
-                        }
-                    ].filter((option: any) => !!option)}
-                />
-            </div>
+        <div>
+            <DropDown
+                element={<DotsIcon color="#000" />}
+                items={[
+                    {
+                        id: 1,
+                        icon: <TrashIcon color="#000" />,
+                        name: 'حذف نسخه',
+                        action: () => setDeletePrescriptionModal(true),
+                        diabled: prescription.finalized
+                    },
+                    {
+                        id: 2,
+                        icon: (
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    clipRule="evenodd"
+                                    d="M13.25 3.75331C13.0406 3.75062 12.7983 3.74997 12.5147 3.74997H11C9.56458 3.74997 8.56347 3.75156 7.80812 3.85312C7.07435 3.95177 6.68577 4.13222 6.40901 4.40898C6.13225 4.68574 5.9518 5.07432 5.85315 5.80809C5.75159 6.56344 5.75 7.56455 5.75 8.99997V15C5.75 16.4354 5.75159 17.4365 5.85315 18.1919C5.9518 18.9256 6.13225 19.3142 6.40901 19.591C6.68577 19.8677 7.07435 20.0482 7.80812 20.1468C8.56347 20.2484 9.56458 20.25 11 20.25H13C14.4354 20.25 15.4365 20.2484 16.1919 20.1468C16.9257 20.0482 17.3142 19.8677 17.591 19.591C17.8678 19.3142 18.0482 18.9256 18.1469 18.1919C18.2484 17.4365 18.25 16.4354 18.25 15V9.48525C18.25 9.20166 18.2494 8.95944 18.2467 8.75005H18L17.948 8.75006C17.0495 8.75008 16.3003 8.75011 15.7055 8.67014C15.0777 8.58574 14.5109 8.40007 14.0555 7.9446C13.6 7.48913 13.4143 6.92233 13.3299 6.29453C13.2499 5.69975 13.25 4.95053 13.25 4.05205L13.25 4.00006V3.75331ZM14.75 3.98285V4.00006C14.75 4.96407 14.7516 5.61163 14.8165 6.09466C14.8786 6.55612 14.9858 6.75362 15.1161 6.88394C15.2464 7.01425 15.4439 7.12148 15.9054 7.18352C16.3884 7.24846 17.036 7.25005 18 7.25005H18.0172C17.8431 6.9184 17.5168 6.57741 16.7123 5.77294L16.227 5.28766C15.4226 4.48326 15.0816 4.15692 14.75 3.98285ZM12.6573 2.24993C13.7451 2.24941 14.501 2.24905 15.1924 2.53542C15.8838 2.8218 16.4181 3.35659 17.1869 4.12613L17.2877 4.227L17.773 4.71228L17.8738 4.81308C18.6434 5.58189 19.1782 6.11617 19.4645 6.80755C19.7509 7.49892 19.7506 8.25487 19.75 9.34264V9.34265L19.75 9.48525V15V15.0548V15.0548V15.0549C19.75 16.4224 19.75 17.5248 19.6335 18.3917C19.5125 19.2918 19.2536 20.0497 18.6517 20.6516C18.0497 21.2535 17.2919 21.5124 16.3918 21.6334C15.5248 21.75 14.4225 21.75 13.0549 21.75H13H11H10.9451C9.57754 21.75 8.47522 21.75 7.60825 21.6334C6.70814 21.5124 5.95027 21.2535 5.34835 20.6516C4.74643 20.0497 4.48754 19.2918 4.36652 18.3917C4.24996 17.5248 4.24998 16.4224 4.25 15.0548V15V8.99997V8.9451C4.24998 7.57751 4.24996 6.47519 4.36652 5.60822C4.48754 4.70811 4.74643 3.95024 5.34835 3.34832C5.95027 2.7464 6.70814 2.48751 7.60825 2.36649C8.47522 2.24993 9.57754 2.24995 10.9451 2.24997L11 2.24997H12.5147L12.6573 2.24993ZM12 10.2501C12.4142 10.2501 12.75 10.5858 12.75 11.0001V15.1894L13.9697 13.9697C14.2626 13.6768 14.7374 13.6768 15.0303 13.9697C15.3232 14.2626 15.3232 14.7375 15.0303 15.0304L12.5303 17.5304C12.2374 17.8233 11.7626 17.8233 11.4697 17.5304L8.96967 15.0304C8.67678 14.7375 8.67678 14.2626 8.96967 13.9697C9.26256 13.6768 9.73744 13.6768 10.0303 13.9697L11.25 15.1894V11.0001C11.25 10.5858 11.5858 10.2501 12 10.2501Z"
+                                    fill="#22282F"
+                                />
+                            </svg>
+                        ),
+                        name: 'PDF نسخه',
+                        action: () => window.open(pdfLink.current),
+                        diabled: !prescription.finalized
+                    },
+                    shouldShowRemoveTurnButton && {
+                        id: 2,
+                        icon: <TrashIcon color="#000" />,
+                        name: 'لغو نوبت',
+                        action: () => setDeleteTurnModal(true),
+                        diabled: !!isDeletedTurn
+                    }
+                ].filter((option: any) => !!option)}
+            />
+        </div>
     );
 
     return (
@@ -698,8 +703,10 @@ const TurnRow = (props: TurnRowProps) => {
                                 possibilityBeingSecureCallButton &&
                                 bookStatus !== 'not_came' &&
                                 messengerName === 'rocketchat' && <ChatButton />}
-                                {info.center.id === CONSULT_CENTER_ID &&
-                            possibilityBeingSecureCallButton && isShowSafeCall && <SafeCallButton />}
+                            {info.center.id === CONSULT_CENTER_ID &&
+                                possibilityBeingSecureCallButton &&
+                                bookStatus !== 'not_came' &&
+                                isShowSafeCall && <SafeCallButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
                             )}
@@ -775,7 +782,9 @@ const TurnRow = (props: TurnRowProps) => {
                             possibilityBeingSecureCallButton &&
                             messengerName === 'rocketchat' && <ChatButton />}
                         {info.center.id === CONSULT_CENTER_ID &&
-                            possibilityBeingSecureCallButton &&isShowSafeCall && <SafeCallButton />}
+                            possibilityBeingSecureCallButton &&
+                            bookStatus !== 'not_came' &&
+                            isShowSafeCall && <SafeCallButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />
                         )}
