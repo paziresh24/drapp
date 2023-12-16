@@ -705,7 +705,7 @@ const TurnRow = (props: TurnRowProps) => {
                                 messengerName === 'rocketchat' && <ChatButton />}
                             {info.center.id === CONSULT_CENTER_ID &&
                                 possibilityBeingSecureCallButton &&
-                                bookStatus !== 'not_came' &&
+                                !isDeletedTurn &&
                                 isShowSafeCall && <SafeCallButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
@@ -783,7 +783,7 @@ const TurnRow = (props: TurnRowProps) => {
                             messengerName === 'rocketchat' && <ChatButton />}
                         {info.center.id === CONSULT_CENTER_ID &&
                             possibilityBeingSecureCallButton &&
-                            bookStatus !== 'not_came' &&
+                            !isDeletedTurn &&
                             isShowSafeCall && <SafeCallButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />

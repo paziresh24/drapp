@@ -17,11 +17,12 @@ import { useFeatureValue } from '@growthbook/growthbook-react';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import { useCreateSpecialities } from 'apps/drapp/src/apis/specialities/createSpecialities';
 import { useUpdateSpecialities } from 'apps/drapp/src/apis/specialities/updateSpecialities';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 export const ExpertisesWrapper = props => {
     const [info] = useDrApp();
-    const [specializations, setSpecializations] = useState([])
-    const [specialitiesListId, setSpecialitiesListId] = useState([])
+    const [specializations, setSpecializations] = useState([]);
+    const [specialitiesListId, setSpecialitiesListId] = useState([]);
     const getExpertises = useGetExpertises({ center_id: info.center.id });
     const providersApiDoctorList = useFeatureValue('profile:patch-expertises-api|doctor-list', {
         ids: ['']
@@ -75,7 +76,7 @@ export const ExpertisesWrapper = props => {
             !shouldUseProvider && setSpecializations(getExpertises.data.data);
         }
         shouldUseProvider &&
-        setSpecialitiesListId(
+            setSpecialitiesListId(
                 getExpertises?.data?.data.map(item => ({
                     expertise_id: item.id,
                     specialties_id: getSpecialities?.data?.data.providers_specialities.find(
@@ -85,7 +86,6 @@ export const ExpertisesWrapper = props => {
             );
     }, [getExpertises.status, getSpecialities.status]);
 
-
     const saveExpertises = () => {
         if (specializations.length > 3)
             return toast.error('حداکثر میتوانید 3 تخصص را انتخاب کنید.');
@@ -93,26 +93,36 @@ export const ExpertisesWrapper = props => {
         specializations.forEach(expertise => {
             if (!expertise.id) {
                 return expertisesPromises.push(
-                    createSpecialities.mutateAsync({
-                        academic_degree_id:expertise.degree.id,
-                        speciality_id: expertise.expertise.id,
-                        alias:expertise.alias_title
-                    },
+                    createSpecialities.mutateAsync(
+                        {
+                            academic_degree_id: expertise.degree.id,
+                            speciality_id: expertise.expertise.id,
+                            alias: expertise.alias_title
+                        },
                         {
                             onSuccess: () => {
+                                getSplunkInstance().sendEvent({
+                                    group: 'profile-expertise',
+                                    type: 'add-expertise',
+                                    event: {
+                                        academic_degree_id: expertise.degree.id,
+                                        speciality_id: expertise.expertise.id,
+                                        alias: expertise.alias_title
+                                    }
+                                });
                                 createExpertise.mutateAsync(
                                     {
                                         expertise_id: expertise.expertise.id,
                                         degree_id: expertise.degree.id,
                                         alias_title: expertise.alias_title
                                     },
-                                {
-                                    onError: err => {
-                                        toast.error(err.response.data.message);
-                                        return
+                                    {
+                                        onError: err => {
+                                            toast.error(err.response.data.message);
+                                            return;
+                                        }
                                     }
-                                }
-                                )
+                                );
                             },
                             onError: err => {
                                 toast.error(err.response.data.message);
@@ -123,28 +133,41 @@ export const ExpertisesWrapper = props => {
             }
 
             return expertisesPromises.push(
-                updateSpecialities.mutateAsync({
-                    id: expertise.id,
-                    academic_degree_id:expertise.degree.id,
-                    speciality_id: expertise.expertise.id,
-                    alias:expertise.alias_title,
-                },
+                updateSpecialities.mutateAsync(
+                    {
+                        id: expertise.id,
+                        academic_degree_id: expertise.degree.id,
+                        speciality_id: expertise.expertise.id,
+                        alias: expertise.alias_title
+                    },
                     {
                         onSuccess: () => {
+                            getSplunkInstance().sendEvent({
+                                group: 'profile-expertise',
+                                type: 'update-expertise',
+                                event: {
+                                    id: expertise.id,
+                                    academic_degree_id: expertise.degree.id,
+                                    speciality_id: expertise.expertise.id,
+                                    alias: expertise.alias_title
+                                }
+                            });
                             updateExpertise.mutateAsync(
                                 {
-                                    id: specialitiesListId.find(item => item?.specialties_id === expertise.id)?.expertise_id,
+                                    id: specialitiesListId.find(
+                                        item => item?.specialties_id === expertise.id
+                                    )?.expertise_id,
                                     expertise_id: expertise.expertise.id,
                                     degree_id: expertise.degree.id,
                                     alias_title: expertise.alias_title
                                 },
-                            {
-                                onError: err => {
-                                    toast.error(err.response.data.message);
-                                    return
+                                {
+                                    onError: err => {
+                                        toast.error(err.response.data.message);
+                                        return;
+                                    }
                                 }
-                            }
-                            )
+                            );
                         },
                         onError: err => {
                             toast.error(err.response.data.message);
@@ -157,13 +180,14 @@ export const ExpertisesWrapper = props => {
         Promise.allSettled(expertisesPromises).then(() => {
             getExpertises.remove();
             shouldUseProvider && getSpecialities.remove();
-            setTimeout(() => {getExpertises.refetch(); shouldUseProvider && getSpecialities.refetch()});
+            setTimeout(() => {
+                getExpertises.refetch();
+                shouldUseProvider && getSpecialities.refetch();
+            });
             props.setExpertiseAccordion(false);
             return toast.success('تخصص با موفقیت ذخیره شد.');
-
         });
     };
-
 
     return (
         <>
