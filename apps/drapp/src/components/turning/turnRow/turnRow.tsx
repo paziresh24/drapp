@@ -133,8 +133,9 @@ const TurnRow = (props: TurnRowProps) => {
     const turn = useRef(turns.find(turn => turn.id === id));
     const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid';
     const isShowSafeCall =
-        shouldShowSafeCallButton?.ids?.includes('*') ||
-        shouldShowSafeCallButton?.ids?.includes(info?.doctor?.id);
+        getMessengerInfo?.data?.data?.some(
+            (item: { type: string }) => item.type === 'secure_call'
+        ) || shouldShowSafeCallButton?.ids?.includes(info?.doctor?.id);
     const buttonStatusTurnText = {
         not_came: messengerName === 'rocketchat' ? 'پذیرش و شروع گفتگو' : 'پذیرش',
         not_visited: 'اعلام مراجعه',
@@ -703,6 +704,7 @@ const TurnRow = (props: TurnRowProps) => {
                                 messengerName === 'rocketchat' && <ChatButton />}
                             {info.center.id === CONSULT_CENTER_ID &&
                                 possibilityBeingSecureCallButton &&
+                                !isDeletedTurn &&
                                 isShowSafeCall && <SafeCallButton />}
                             {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                                 <VisitButton />
@@ -780,6 +782,7 @@ const TurnRow = (props: TurnRowProps) => {
                             messengerName === 'rocketchat' && <ChatButton />}
                         {info.center.id === CONSULT_CENTER_ID &&
                             possibilityBeingSecureCallButton &&
+                            !isDeletedTurn &&
                             isShowSafeCall && <SafeCallButton />}
                         {((!isDeletedTurn && bookStatus !== 'visited') || !paymentStatus) && (
                             <VisitButton />

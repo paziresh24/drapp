@@ -11,13 +11,14 @@ import { PlusLineIcon, CloseIcon } from '@paziresh24/shared/icon';
 import isEmpty from 'lodash/isEmpty';
 import { useRemoveSpecialities } from 'apps/drapp/src/apis/specialities/removeSpecialities';
 import { toast } from 'react-toastify';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 export const Expertises = props => {
     const [degree, setDegree] = useState(props.degree);
     const [expertise, setExpertise] = useState(props.expertise);
     const [aliasTitle, setAliasTitle] = useState(props.aliasTitle);
     const deleteExpertises = useDeleteExpertises();
-    const removeSpecialities = useRemoveSpecialities()
+    const removeSpecialities = useRemoveSpecialities();
     const [deleteExpertisesModal, setDeleteExpertisesModal] = useState(false);
 
     useEffect(() => {
@@ -70,20 +71,33 @@ export const Expertises = props => {
 
     const deleteAction = () => {
         if (props.id) {
-
             return removeSpecialities.mutate(
-                { id:props.id },
+                { id: props.id },
                 {
-                    onSuccess: async() => {
-                         await deleteExpertises.mutate({
-                            id: props.specialitiesListId.find(item => item.specialties_id ===props.id )?.expertise_id
-                        },{
+                    onSuccess: async () => {
+                        getSplunkInstance().sendEvent({
+                            group: 'profile-expertise',
+                            type: 'remove-expertise',
+                            event: {
+                                id: props.id,
+                                academic_degree_id: degree.id,
+                                speciality_id: expertise.id,
+                                alias: aliasTitle
+                            }
+                        });
+                        await deleteExpertises.mutate(
+                            {
+                                id: props.specialitiesListId.find(
+                                    item => item.specialties_id === props.id
+                                )?.expertise_id
+                            },
+                            {
                                 onError: err => {
                                     toast.error(err.response.data.message);
-                                    return
+                                    return;
                                 }
-                        }
-                        )
+                            }
+                        );
                         setDeleteExpertisesModal(false);
                         let visitesList = [...props.expertises];
                         visitesList.splice(props.index, 1);
@@ -151,7 +165,7 @@ export const Expertises = props => {
                 onChange={e => setAliasTitle(e.target.value)}
                 label="عنوان تخصص"
                 defaultValue={aliasTitle}
-                error={aliasTitle && aliasTitle?.length> 65 }
+                error={aliasTitle && aliasTitle?.length > 65}
                 errorText={'به ازای هر تخصص، حداکثر میتوانید 65 حرف را برای عنوان تخصص ثبت کنید.'}
             />
 

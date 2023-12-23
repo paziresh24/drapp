@@ -27,18 +27,20 @@ const ConsultMessenger = () => {
     }, []);
 
     const handleSubmit = () => {
-        const { eitaaNumber, whatsappNumber, eitaaId } = messengerRef.current;
+        const { eitaaNumber, whatsappNumber, eitaaId, isEnabledSecureCall } = messengerRef.current;
         setMessengerError({
-            ...(!!eitaaId.length && {
-                eitaaNumberError: !phoneNumberValidator(eitaaNumber)
+            ...((eitaaNumber || eitaaId) && {
+                eitaaNumberError: !phoneNumberValidator(eitaaNumber),
+                eitaaIdError: !isMessengerIdHasValid(eitaaId)
             }),
-            ...(!!eitaaNumber.length && { eitaaIdError: !isMessengerIdHasValid(eitaaId) }),
             ...(whatsappNumber && { whatsappNumberError: !phoneNumberValidator(whatsappNumber) })
         });
 
         if (
-            (phoneNumberValidator(eitaaNumber) && isMessengerIdHasValid(eitaaId)) ||
-            phoneNumberValidator(whatsappNumber)
+            (eitaaNumber || eitaaId
+                ? phoneNumberValidator(eitaaNumber) && isMessengerIdHasValid(eitaaId)
+                : true) &&
+            (whatsappNumber ? phoneNumberValidator(whatsappNumber) : true)
         ) {
             getSplunkInstance().sendEvent({
                 group: 'drapp-visit-online',
@@ -60,6 +62,10 @@ const ConsultMessenger = () => {
                     {
                         type: 'whatsapp',
                         channel: whatsappNumber
+                    },
+                    {
+                        type: 'secure_call',
+                        channel: isEnabledSecureCall ? '02125015000' : ''
                     }
                 ].filter(messenger => !!messenger.channel.length)
             );

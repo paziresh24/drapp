@@ -175,15 +175,14 @@ const Turning = () => {
                         overflow: getTurn.isLoading && 'hidden'
                     }}
                 >
+                    {getTurn.isError && (
+                        <div className="bg-red-500/10 w-full text-sm font-medium text-red-800 p-3">
+                            {`خطا در دریافت نوبت های ${info.center.name}: `}
+                            <span>{getTurn.error?.response?.data?.message}</span>
+                        </div>
+                    )}
                     {getTurn.isSuccess && isEmpty(getTurn?.data?.data) && (
                         <EmptyState text="نوبتی وجود ندارد" />
-                    )}
-
-                    {getTurn.isError && (
-                        <Error
-                            error={getTurn.error?.response?.data?.message}
-                            message={`خطا در دریافت نوبت های ${info.center.name}`}
-                        />
                     )}
 
                     <TurnsList loading={getTurn.isLoading || getTurn.isIdle} />
