@@ -33,3 +33,5 @@ RUN sed -i -e 's/\r$//' .env
 
 # Start Nginx server
 CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+
+##
