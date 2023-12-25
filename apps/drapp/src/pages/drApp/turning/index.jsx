@@ -21,8 +21,11 @@ import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.stor
 import paymentVector from '@assets/image/payment.svg';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { VacationToggle } from '../setting/vacation/toggle';
-import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { firebaseCloudMessaging } from 'apps/drapp/src/firebase/fcm';
+import notificationVector from '@assets/image/notification.svg';
+import { getCookie, setCookie } from '@paziresh24/utils/cookie';
 
 const Turning = () => {
     const history = useHistory();
@@ -55,7 +58,9 @@ const Turning = () => {
     const [prescriptionPendingModal, setPrescriptionPendingModal] = useState(false);
     const [referenceModal, setReferenceModal] = useState(false);
     const [paymentModal, setPaymentModal] = useState(false);
+    const [notificationModal, setNotificationModal] = useState(false);
     const paymentInfo = usePaymentSettingStore(state => state.setting);
+    const showNotificationModalRollout = useFeatureIsOn('notification:web-push-modal|enabled');
     const vacationToggleDoctorList = useFeatureValue(
         'turning.should-show-vacation-toggle|doctor-list',
         { ids: [] }
@@ -75,6 +80,15 @@ const Turning = () => {
             setPaymentModal(true);
         }
     }, [paymentInfo.active]);
+
+    useEffect(() => {
+        if (
+            showNotificationModalRollout &&
+            !localStorage.getItem('fcm_token') &&
+            !getCookie('DONT_SHOW_NOTIFICATION_MODAL')
+        )
+            setNotificationModal(true);
+    }, [showNotificationModalRollout]);
 
     useEffect(() => {
         if (location.state?.prescriptionInfo?.finalized) {
@@ -303,6 +317,39 @@ const Turning = () => {
                         }}
                     >
                         فعلا نه، بعدا فعال می کنم
+                    </Button>
+                </div>
+            </Modal>
+
+            <Modal
+                isOpen={notificationModal}
+                onClose={() => {
+                    setNotificationModal(false);
+                    setCookie(
+                        'DONT_SHOW_NOTIFICATION_MODAL',
+                        true,
+                        moment().add(1, 'days').startOf('day').toDate()
+                    );
+                }}
+            >
+                <div className="flex flex-col space-y-3 justify-center items-center">
+                    <img src={notificationVector} alt="" className="w-32 h-28" />
+                    <span className="font-medium leading-7">
+                        برای ارتباط بیشتر و دریافت اخبار به سایت پذیرش۲۴ اجازه ارسال پیام می‌دهید؟
+                    </span>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={() => {
+                            getSplunkInstance().sendEvent({
+                                group: 'notification-modal',
+                                type: 'click-grant-access'
+                            });
+                            setNotificationModal(false);
+                            firebaseCloudMessaging.init(info.doctor.user_id);
+                        }}
+                    >
+                        اجازه می‌دهم
                     </Button>
                 </div>
             </Modal>

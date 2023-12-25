@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { GrowthBook, GrowthBookProvider } from '@growthbook/growthbook-react';
 import { useEffect } from 'react';
 
-const growthbook = new GrowthBook({
+export const growthbook = new GrowthBook({
     apiHost: window._env_.P24_GROWTHBOOK_API_HOST,
     clientKey: window._env_.P24_GROWTHBOOK_CLIENT_KEY
 });
