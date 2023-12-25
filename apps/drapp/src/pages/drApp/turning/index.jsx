@@ -61,6 +61,10 @@ const Turning = () => {
     const [notificationModal, setNotificationModal] = useState(false);
     const paymentInfo = usePaymentSettingStore(state => state.setting);
     const showNotificationModalRollout = useFeatureIsOn('notification:web-push-modal|enabled');
+    const notificationModalText = useFeatureValue(
+        'notification:web-push-modal-text',
+        'برای ارتباط بیشتر و دریافت اخبار به سایت پذیرش۲۴ اجازه ارسال پیام می‌دهید؟'
+    );
     const vacationToggleDoctorList = useFeatureValue(
         'turning.should-show-vacation-toggle|doctor-list',
         { ids: [] }
@@ -334,9 +338,7 @@ const Turning = () => {
             >
                 <div className="flex flex-col space-y-3 justify-center items-center">
                     <img src={notificationVector} alt="" className="w-32 h-28" />
-                    <span className="font-medium leading-7">
-                        برای ارتباط بیشتر و دریافت اخبار به سایت پذیرش۲۴ اجازه ارسال پیام می‌دهید؟
-                    </span>
+                    <span className="font-medium leading-7">{notificationModalText}</span>
                     <Button
                         fullWidth
                         variant="contained"
