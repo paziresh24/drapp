@@ -31,6 +31,7 @@ import { useGetUser } from '../../apis/user/getUser';
 import { useGetProvider } from '../../apis/provider/getProvider';
 import { isEmbed } from '@paziresh24/shared/utils';
 import { useGetNotifyCell } from '../../apis/provider/getNotifyCell';
+import { growthbook } from '../../app';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -117,6 +118,9 @@ const PrivateRoute = props => {
             let doctor = doctorInfo.data.data ?? {};
 
             if (getUser.isSuccess) {
+                growthbook.setAttributes({
+                    user_id: getUser.data?.data?.users?.[0]?.id
+                });
                 doctor = {
                     ...doctor,
                     name: getUser.data.data?.users?.[0]?.name,

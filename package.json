@@ -49,6 +49,7 @@
         "classnames": "2.3.1",
         "core-js": "3.6.5",
         "craco-sass-resources-loader": "1.1.0",
+        "firebase": "10.7.1",
         "jalali-moment": "3.3.10",
         "leaflet": "1.8.0",
         "lodash": "4.17.21",
