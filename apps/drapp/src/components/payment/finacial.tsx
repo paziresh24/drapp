@@ -162,9 +162,9 @@ const Financial = () => {
                 {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
                     <div className="bg-orange-100 p-4 rounded-md">
                         <span className="text-sm font-medium text-orange-700">
-                            پزشک گرامى بعد از آخرين درخواست تسويه ى شما تعداد{' '}
-                            {(getBooks.data as any)?.meta?.total} نوبت به درخواست بيماران حذف شده
-                            است و هزينه ى نوبت ها از مانده حساب شما كسر شده است.
+                            پزشک گرامی بعد از آخرین درخواست تسویه ی شما،{' '}
+                            {(getBooks.data as any)?.meta?.total} نوبت به درخواست بیماران حذف و مبلغ
+                            نوبت ها از مانده حساب شما کسر گردیده است.
                         </span>
                         <div
                             onClick={() => setDeletedModal(true)}
