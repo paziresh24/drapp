@@ -119,6 +119,7 @@ const PrivateRoute = props => {
 
             if (getUser.isSuccess) {
                 growthbook.setAttributes({
+                    ...growthbook.getAttributes(),
                     user_id: getUser.data?.data?.users?.[0]?.id
                 });
                 doctor = {
