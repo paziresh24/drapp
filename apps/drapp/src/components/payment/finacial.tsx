@@ -12,6 +12,10 @@ import CartInfo from './cartInfo';
 import Modal from '@paziresh24/shared/ui/modal';
 import { convertTimeStampToPersianDate } from '@paziresh24/shared/utils';
 import Chips from '@paziresh24/shared/ui/chips';
+import { useGetBooks } from '../../apis/booking/books';
+import moment from 'jalali-moment';
+import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
 type Status =
     | 'system_reject'
@@ -24,15 +28,43 @@ type Status =
     | 'failed_request'
     | 'unknown';
 
+const nextYearDate = moment().add(1, 'jYear').unix();
+
 const Financial = () => {
     const [{ center }] = useDrApp();
     const getfinancial = useGetFinancial({ centerId: center.id });
     const submitSettlement = useSubmitSettlement();
     const confirmSettlement = useConfirmSettlement();
     const [inquiryModal, setInquiryModal] = useState(false);
+    const [deletedModal, setDeletedModal] = useState(false);
     const inventory =
         (getfinancial.data?.data?.doctor_share ?? 0) / 10 -
         (getfinancial.data?.data?.paid_cost ?? 0) / 10;
+    const shouldShowDeletedNotice = useFeatureIsOn('payment:deleted-books-notice|enabled');
+    const getBooks = useGetBooks(
+        {
+            center_id: center.id,
+            from: 0,
+            to: nextYearDate,
+            payment_status: [4, 5, 6, 7],
+            deleted_after: +(
+                getfinancial.data?.data?.doctor_payments?.filter(
+                    (item: any) => item.status === 'paid'
+                )[0]?.send_request_at ?? ''
+            ),
+            inserted_before: +(
+                getfinancial.data?.data?.doctor_payments?.filter(
+                    (item: any) => item.status === 'paid'
+                )[0]?.send_request_at ?? ''
+            )
+        },
+        {
+            enabled:
+                !!getfinancial.data?.data &&
+                center.id === CONSULT_CENTER_ID &&
+                shouldShowDeletedNotice
+        }
+    );
 
     const handleSubmit = async () => {
         try {
@@ -127,6 +159,21 @@ const Financial = () => {
                 >
                     درخواست تسویه حساب
                 </Button>
+                {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
+                    <div className="bg-orange-100 p-4 rounded-md">
+                        <span className="text-sm font-medium text-orange-700">
+                            پزشک گرامى بعد از آخرين درخواست تسويه ى شما تعداد{' '}
+                            {(getBooks.data as any)?.meta?.total} نوبت به درخواست بيماران حذف شده
+                            است و هزينه ى نوبت ها از مانده حساب شما كسر شده است.
+                        </span>
+                        <div
+                            onClick={() => setDeletedModal(true)}
+                            className="underline text-sm font-medium inline-block mr-1 text-orange-900 cursor-pointer"
+                        >
+                            مشاهده نوبت ها
+                        </div>
+                    </div>
+                )}
                 {getfinancial.data?.data?.doctor_payments?.length && (
                     <span className="text-sm font-bold">گزارش مالی</span>
                 )}
@@ -205,6 +252,27 @@ const Financial = () => {
                     >
                         رد کردن
                     </Button>
+                </div>
+            </Modal>
+            <Modal title="نوبت های حذف شده" isOpen={deletedModal} onClose={setDeletedModal}>
+                <div className="h-96 overflow-auto flex flex-col space-y-3">
+                    {getBooks.data?.data?.map((item: any) => (
+                        <div
+                            key={item.id}
+                            className="flex p-4 border border-slate-100 border-solid rounded-md flex-col space-y-1"
+                        >
+                            <span className="font-semibold">{item.display_name}</span>
+                            <div className="text-sm flex space-s-2">
+                                <span>
+                                    زمان نوبت:{' '}
+                                    {moment(item.from * 1000)
+                                        .locale('fa')
+                                        .format('jYYYY/jMM/jDD HH:mm')}
+                                </span>
+                                <span>کدپیگیری: {item.ref_id}</span>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </Modal>
         </>
