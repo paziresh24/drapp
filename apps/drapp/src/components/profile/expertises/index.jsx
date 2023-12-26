@@ -85,19 +85,6 @@ export const Expertises = props => {
                                 alias: aliasTitle
                             }
                         });
-                        await deleteExpertises.mutate(
-                            {
-                                id: props.specialitiesListId.find(
-                                    item => item.specialties_id === props.id
-                                )?.expertise_id
-                            },
-                            {
-                                onError: err => {
-                                    toast.error(err.response.data.message);
-                                    return;
-                                }
-                            }
-                        );
                         setDeleteExpertisesModal(false);
                         let visitesList = [...props.expertises];
                         visitesList.splice(props.index, 1);
@@ -180,7 +167,7 @@ export const Expertises = props => {
                         variant="primary"
                         theme="error"
                         onClick={deleteAction}
-                        loading={deleteExpertises.isLoading}
+                        loading={removeSpecialities.isLoading}
                     >
                         بله و حذف
                     </Button>
