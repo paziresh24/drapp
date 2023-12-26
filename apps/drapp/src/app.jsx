@@ -12,6 +12,7 @@ function App() {
     useEffect(() => {
         growthbook.loadFeatures({ autoRefresh: true });
         growthbook.setAttributes({
+            ...growthbook.getAttributes(),
             client_unique_identifier: localStorage.getItem('client_identifier')
         });
     }, []);
