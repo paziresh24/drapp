@@ -1,15 +1,16 @@
 import { Stack } from '@mui/material';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Modal from '@paziresh24/shared/ui/modal';
 import { memo, useEffect, useState } from 'react';
 import { Calendar, DayValue, utils } from '@hassanmojab/react-modern-calendar-datepicker';
 import moment from 'jalali-moment';
+import TextField from '../textField';
 
 interface Props {
     label: string;
     defaultValue?: string;
     onCahnge?: (value: string) => void;
+    minimumDate?: any;
 }
 
 export const dateObjectToFormattedDate = (dateObject: DayValue): string => {
@@ -27,7 +28,7 @@ export const formattedDateToDateObject = (formattedDate: string): DayValue => {
 };
 
 const DateInput = (props: Props) => {
-    const { label, defaultValue = '', onCahnge } = props;
+    const { label, defaultValue = '', onCahnge, minimumDate } = props;
     const [dateLabel, setDateLabel] = useState(defaultValue);
     const [openModal, setOpenModal] = useState(false);
 
@@ -42,17 +43,16 @@ const DateInput = (props: Props) => {
         }
     }, [defaultValue]);
 
+    const TextFieldWrapper = TextField as any;
+
     return (
         <>
-            <TextField
+            <TextFieldWrapper
                 label={label}
                 value={dateLabel}
-                fullWidth
-                inputProps={{ readOnly: true }}
+                readOnly
                 onClick={() => setOpenModal(true)}
-                InputLabelProps={{
-                    shrink: true
-                }}
+                className="[&>input]:cursor-pointer"
             />
             <Modal
                 title="انتخاب تاریخ"
@@ -67,7 +67,7 @@ const DateInput = (props: Props) => {
                         value={formattedDateToDateObject(dateLabel)}
                         onChange={date => setDateLabel(dateObjectToFormattedDate(date))}
                         shouldHighlightWeekends
-                        minimumDate={utils('fa').getToday()}
+                        minimumDate={minimumDate}
                         colorPrimary="#0070f3"
                         locale="fa"
                         calendarClassName="!shadow-none"

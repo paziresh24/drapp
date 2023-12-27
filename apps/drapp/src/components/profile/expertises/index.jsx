@@ -2,9 +2,7 @@ import styles from './expertises.module.scss';
 import Select from '@paziresh24/shared/ui/select';
 import degreeData from '@paziresh24/constants/degree.json';
 import expertisesData from '@paziresh24/constants/expertises.json';
-import TextField from '@paziresh24/shared/ui/textField';
 import { useEffect, useState } from 'react';
-import { useDeleteExpertises } from '@paziresh24/hooks/drapp/profile';
 import Modal from '@paziresh24/shared/ui/modal';
 import Button from '@paziresh24/shared/ui/button';
 import { PlusLineIcon, CloseIcon } from '@paziresh24/shared/icon';
@@ -12,12 +10,15 @@ import isEmpty from 'lodash/isEmpty';
 import { useRemoveSpecialities } from 'apps/drapp/src/apis/specialities/removeSpecialities';
 import { toast } from 'react-toastify';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import DateInput from '@paziresh24/shared/ui/dateInput';
+import TextField from '@paziresh24/shared/ui/textField';
+import moment from 'jalali-moment';
 
 export const Expertises = props => {
     const [degree, setDegree] = useState(props.degree);
     const [expertise, setExpertise] = useState(props.expertise);
     const [aliasTitle, setAliasTitle] = useState(props.aliasTitle);
-    const deleteExpertises = useDeleteExpertises();
+    const [achievedAt, setAchievedAt] = useState(props.achievedAt);
     const removeSpecialities = useRemoveSpecialities();
     const [deleteExpertisesModal, setDeleteExpertisesModal] = useState(false);
 
@@ -41,7 +42,8 @@ export const Expertises = props => {
                     expertise: {
                         id: expertise
                     },
-                    alias_title: aliasTitle
+                    alias_title: aliasTitle,
+                    achieved_at: achievedAt
                 };
                 setTimeout(() => {
                     props.setExpertise(visitesList);
@@ -60,14 +62,15 @@ export const Expertises = props => {
                     expertise: {
                         id: expertise
                     },
-                    alias_title: aliasTitle
+                    alias_title: aliasTitle,
+                    achieved_at: achievedAt
                 };
                 setTimeout(() => {
                     props.setExpertise(visitesList);
                 });
             });
         }
-    }, [degree, expertise, aliasTitle]);
+    }, [degree, expertise, aliasTitle, achievedAt]);
 
     const deleteAction = () => {
         if (props.id) {
@@ -82,7 +85,8 @@ export const Expertises = props => {
                                 id: props.id,
                                 academic_degree_id: degree.id,
                                 speciality_id: expertise.id,
-                                alias: aliasTitle
+                                alias: aliasTitle,
+                                achieved_at: achievedAt
                             }
                         });
                         setDeleteExpertisesModal(false);
@@ -91,6 +95,7 @@ export const Expertises = props => {
                         if (isEmpty(visitesList)) {
                             visitesList.push({
                                 alias_title: '',
+                                achieved_at: '',
                                 degree: { id: 0, name: '' },
                                 expertise: { id: 0, name: '' },
                                 id: ''
@@ -154,6 +159,13 @@ export const Expertises = props => {
                 defaultValue={aliasTitle}
                 error={aliasTitle && aliasTitle?.length > 65}
                 errorText={'به ازای هر تخصص، حداکثر میتوانید 65 حرف را برای عنوان تخصص ثبت کنید.'}
+            />
+            <DateInput
+                label="تاریخ اخذ مدرک"
+                defaultValue={achievedAt}
+                onCahnge={value => {
+                    setAchievedAt(value);
+                }}
             />
 
             <Modal

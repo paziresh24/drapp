@@ -552,7 +552,11 @@ export const Vacation = () => {
                 )}
                 <span className="text-sm font-medium">نوبت ها به</span>
                 <Stack direction="row" spacing={2}>
-                    <DateInput label="تاریخ" onCahnge={value => setTargetMoveDate(value)} />
+                    <DateInput
+                        label="تاریخ"
+                        onCahnge={value => setTargetMoveDate(value)}
+                        minimumDate={utils('fa').getToday()}
+                    />
                     <TimeInput label="ساعت" onCahnge={value => setTargetMoveTime(value)} />
                 </Stack>
                 <span className="text-sm font-medium">منتقل شود.</span>

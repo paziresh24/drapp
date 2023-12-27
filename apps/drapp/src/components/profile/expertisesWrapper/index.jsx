@@ -18,6 +18,7 @@ import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import { useCreateSpecialities } from 'apps/drapp/src/apis/specialities/createSpecialities';
 import { useUpdateSpecialities } from 'apps/drapp/src/apis/specialities/updateSpecialities';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import moment from 'jalali-moment';
 
 export const ExpertisesWrapper = props => {
     const [info] = useDrApp();
@@ -36,6 +37,7 @@ export const ExpertisesWrapper = props => {
         if (getSpecialities.isSuccess && !isEmpty(getSpecialities.data.data)) {
             setSpecializations(
                 getSpecialities.data.data?.providers_specialities?.map(items => ({
+                    achieved_at: items?.achieved_at,
                     alias_title: items?.alias,
                     degree: items?.academic_degree,
                     expertise: items?.speciality,
@@ -56,7 +58,10 @@ export const ExpertisesWrapper = props => {
                         {
                             academic_degree_id: expertise.degree.id,
                             speciality_id: expertise.expertise.id,
-                            alias: expertise.alias_title
+                            alias: expertise.alias_title,
+                            achieved_at: moment(expertise.achieved_at, 'jYYYY/MM/DD')
+                                .locale('en')
+                                .format('YYYY-MM-DD')
                         },
                         {
                             onSuccess: () => {
@@ -66,7 +71,8 @@ export const ExpertisesWrapper = props => {
                                     event: {
                                         academic_degree_id: expertise.degree.id,
                                         speciality_id: expertise.expertise.id,
-                                        alias: expertise.alias_title
+                                        alias: expertise.alias_title,
+                                        achieved_at: expertise.achieved_at
                                     }
                                 });
                             },
@@ -84,7 +90,10 @@ export const ExpertisesWrapper = props => {
                         id: expertise.id,
                         academic_degree_id: expertise.degree.id,
                         speciality_id: expertise.expertise.id,
-                        alias: expertise.alias_title
+                        alias: expertise.alias_title,
+                        achieved_at: moment(expertise.achieved_at, 'jYYYY/MM/DD')
+                            .locale('en')
+                            .format('YYYY-MM-DD')
                     },
                     {
                         onSuccess: () => {
@@ -95,7 +104,8 @@ export const ExpertisesWrapper = props => {
                                     id: expertise.id,
                                     academic_degree_id: expertise.degree.id,
                                     speciality_id: expertise.expertise.id,
-                                    alias: expertise.alias_title
+                                    alias: expertise.alias_title,
+                                    achieved_at: expertise.achieved_at
                                 }
                             });
                         },
@@ -128,6 +138,13 @@ export const ExpertisesWrapper = props => {
                             degree={expertise?.degree?.id}
                             expertise={expertise?.expertise?.id}
                             aliasTitle={expertise?.alias_title}
+                            achievedAt={
+                                expertise?.achieved_at
+                                    ? moment(expertise?.achieved_at, 'YYYY-MM-DD')
+                                          .locale('fa')
+                                          .format('jYYYY/jMM/jDD')
+                                    : undefined
+                            }
                             setExpertise={setSpecializations}
                             expertises={specializations}
                             index={index}
@@ -149,6 +166,7 @@ export const ExpertisesWrapper = props => {
                         setSpecializations(prev => [
                             ...prev,
                             {
+                                achieved_at: '',
                                 alias_title: '',
                                 degree: { id: 0, name: '' },
                                 expertise: { id: 0, name: '' },
