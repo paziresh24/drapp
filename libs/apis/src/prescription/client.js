@@ -3,7 +3,8 @@ import { baseURL } from '@paziresh24/utils/baseUrl';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const client = axios.create({
-    baseURL: baseURL('PRESCRIPTION_API')
+    baseURL: baseURL('PRESCRIPTION_API'),
+    withCredentials: true
 });
 
 client.interceptors.response.use(
