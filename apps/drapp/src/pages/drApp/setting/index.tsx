@@ -16,14 +16,6 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 const Setting = () => {
     const [{ center, doctor }] = useDrApp();
     const router = useHistory();
-    const vacationToggleDoctorList = useFeatureValue<{ ids: Array<string | number> }>(
-        'turning.should-show-vacation-toggle|doctor-list',
-        { ids: [] }
-    );
-    const shouldShowVactionToggle =
-        center.id === CONSULT_CENTER_ID &&
-        (vacationToggleDoctorList.ids.includes(doctor.user_id) ||
-            vacationToggleDoctorList.ids.includes('*'));
 
     useEffect(() => {
         sendEventForSetting({
@@ -123,8 +115,7 @@ const Setting = () => {
                 });
                 router.push('/setting/vacation');
             },
-            shouldShow:
-                ['office', 'consult'].includes(getCenterType(center)) && !shouldShowVactionToggle
+            shouldShow: ['office', 'consult'].includes(getCenterType(center))
         }
     ];
 
