@@ -17,6 +17,8 @@ import { useDeletePrescription } from '@paziresh24/hooks/prescription';
 import { sendEvent } from '@paziresh24/shared/utils/sendEvent';
 import Visit from '../turnsList/visit/index';
 import { Default, Mobile } from '@paziresh24/hooks/device';
+import { EditIcon  } from '@paziresh24/shared/icon';
+
 
 const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownShow }) => {
     const getPrescriptionPDF = useGetPrescriptionPDF({ id: turn.id });
@@ -152,6 +154,35 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                 <Button
                                     size="small"
                                     icon={<ChevronIcon color="#0070f3" />}
+                                    variant="secondary"
+                                    onClick={prescription}
+                                >
+                                    {turn.finalized ? 'مشاهده نسخه' : 'تجویز '}
+                                </Button>
+                            )}
+
+                            <div className={styles.action}>
+                                {pdfLink && (
+                                    <a
+                                        download={
+                                            turn.patientAdditionalData.name +
+                                            ' ' +
+                                            turn.patientAdditionalData.lastName
+                                        }
+                                        href={pdfLink}
+                                        ref={linkClick}
+                                    >
+                                        {' '}
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={styles.buttonAction}>
+                            {turn.pdf && (
+                                <Button
+                                    size="small"
+                                    icon={<EditIcon color="#0070f3" />}
                                     variant="secondary"
                                     onClick={prescription}
                                 >
