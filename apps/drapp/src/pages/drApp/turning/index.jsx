@@ -61,7 +61,8 @@ const Turning = () => {
     const [referenceModal, setReferenceModal] = useState(false);
     const [paymentModal, setPaymentModal] = useState(false);
     const [notificationModal, setNotificationModal] = useState(false);
-    const [secureCallnModal, setSecureCallModal] = useState(false);
+    const [secureCallModal, setSecureCallModal] = useState(false);
+    const [secureCallRulesModal, setSecureCallRulesModal] = useState(false);
     const paymentInfo = usePaymentSettingStore(state => state.setting);
     const showNotificationModalRollout = useFeatureIsOn('notification:web-push-modal|enabled');
     const notificationModalText = useFeatureValue(
@@ -80,6 +81,10 @@ const Turning = () => {
     const updateMessengers = useUpdateMessengers();
     const secureCallEnabledDoctoList = useFeatureValue('profile:secure-call|enabled', { ids: [] });
     const secureCallPopupText = useFeatureValue('profile:secure-call-popup-text', '');
+    const secureCallDescription = useFeatureValue('profile:secure-call-description', {
+        short_description: '',
+        description: []
+    });
 
     const shouldShowSecureCall =
         secureCallEnabledDoctoList.ids.includes(info.doctor?.user_id) ||
@@ -127,6 +132,7 @@ const Turning = () => {
         });
         toast.success('تماس امن فعال شد.');
         setSecureCallModal(false);
+        setSecureCallRulesModal(false);
     };
 
     useEffect(() => {
@@ -369,18 +375,14 @@ const Turning = () => {
                 </div>
             </Modal>
 
-            <Modal isOpen={secureCallnModal} onClose={setSecureCallModal}>
+            <Modal isOpen={secureCallModal} onClose={setSecureCallModal}>
                 <div className="flex flex-col space-y-2">
                     <div
                         className="flex flex-col"
                         dangerouslySetInnerHTML={{ __html: secureCallPopupText }}
                     ></div>
 
-                    <Button
-                        variant="contained"
-                        loading={updateMessengers.isLoading}
-                        onClick={enableSecureCallHandler}
-                    >
+                    <Button variant="contained" onClick={() => setSecureCallRulesModal(true)}>
                         فعال سازی تماس امن
                     </Button>
                     <Button
@@ -397,6 +399,20 @@ const Turning = () => {
                         فعلا نه، بعدا فعال می کنم
                     </Button>
                 </div>
+            </Modal>
+            <Modal title="تماس امن" isOpen={secureCallRulesModal} onClose={setSecureCallRulesModal}>
+                <ul className="list-disc mr-4 space-y-2 text-sm font-medium">
+                    {secureCallDescription.description?.map(item => (
+                        <li key={item}>{item}</li>
+                    ))}
+                </ul>
+                <Button
+                    variant="contained"
+                    loading={updateMessengers.isLoading}
+                    onClick={enableSecureCallHandler}
+                >
+                    خواندم
+                </Button>
             </Modal>
 
             <Modal
