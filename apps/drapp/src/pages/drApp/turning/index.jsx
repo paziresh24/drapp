@@ -16,7 +16,7 @@ import ReferenceModal from '@paziresh24/apps/prescription/components/molecules/r
 import NewTurn from '@components/turning/newTurn/newTurn';
 import Statistics from '@components/turning/statistics';
 import { useTurnsStore } from 'apps/drapp/src/store/turns.store';
-import { Button } from '@mui/material';
+import Button from '@mui/lab/LoadingButton';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 import paymentVector from '@assets/image/payment.svg';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
@@ -26,6 +26,8 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { firebaseCloudMessaging } from 'apps/drapp/src/firebase/fcm';
 import notificationVector from '@assets/image/notification.svg';
 import { getCookie, setCookie } from '@paziresh24/utils/cookie';
+import { useGetMessengerInfo, useUpdateMessengers } from '@paziresh24/hooks/drapp/profile';
+import { toast } from 'react-toastify';
 
 const Turning = () => {
     const history = useHistory();
@@ -59,6 +61,7 @@ const Turning = () => {
     const [referenceModal, setReferenceModal] = useState(false);
     const [paymentModal, setPaymentModal] = useState(false);
     const [notificationModal, setNotificationModal] = useState(false);
+    const [secureCallnModal, setSecureCallModal] = useState(false);
     const paymentInfo = usePaymentSettingStore(state => state.setting);
     const showNotificationModalRollout = useFeatureIsOn('notification:web-push-modal|enabled');
     const notificationModalText = useFeatureValue(
@@ -73,6 +76,14 @@ const Turning = () => {
         info.center.id === CONSULT_CENTER_ID &&
         (vacationToggleDoctorList.ids.includes(info.doctor.user_id) ||
             vacationToggleDoctorList.ids.includes('*'));
+    const getMessengerInfo = useGetMessengerInfo();
+    const updateMessengers = useUpdateMessengers();
+    const secureCallEnabledDoctoList = useFeatureValue('profile:secure-call|enabled', { ids: [] });
+    const secureCallPopupText = useFeatureValue('profile:secure-call-popup-text', '');
+
+    const shouldShowSecureCall =
+        secureCallEnabledDoctoList.ids.includes(info.doctor?.user_id) ||
+        secureCallEnabledDoctoList.ids.includes('*');
 
     useEffect(() => {
         if (
@@ -84,6 +95,39 @@ const Turning = () => {
             setPaymentModal(true);
         }
     }, [paymentInfo.active]);
+
+    useEffect(() => {
+        if (
+            info.center.id === CONSULT_CENTER_ID &&
+            getMessengerInfo.isSuccess &&
+            !getMessengerInfo.data?.data?.some(item => item.type === 'secure_call') &&
+            !getCookie('DONT_SHOW_SECURE_CALL_MODAL') &&
+            shouldShowSecureCall
+        ) {
+            setSecureCallModal(true);
+        }
+    }, [info.center.id, getMessengerInfo.status, getMessengerInfo.data]);
+
+    const enableSecureCallHandler = async () => {
+        await updateMessengers.mutateAsync({
+            online_channels: [
+                ...getMessengerInfo.data.data,
+                {
+                    type: 'secure_call',
+                    channel: '02125015000'
+                }
+            ]
+        });
+        getSplunkInstance().sendEvent({
+            group: ' active-safe-call',
+            type: 'active-successfully',
+            event: {
+                action: 'popup-active-button'
+            }
+        });
+        toast.success('تماس امن فعال شد.');
+        setSecureCallModal(false);
+    };
 
     useEffect(() => {
         if (
@@ -318,6 +362,36 @@ const Turning = () => {
                                 group: 'payment-popup',
                                 type: 'active-payment-later'
                             });
+                        }}
+                    >
+                        فعلا نه، بعدا فعال می کنم
+                    </Button>
+                </div>
+            </Modal>
+
+            <Modal isOpen={secureCallnModal} onClose={setSecureCallModal}>
+                <div className="flex flex-col space-y-2">
+                    <div
+                        className="flex flex-col"
+                        dangerouslySetInnerHTML={{ __html: secureCallPopupText }}
+                    ></div>
+
+                    <Button
+                        variant="contained"
+                        loading={updateMessengers.isLoading}
+                        onClick={enableSecureCallHandler}
+                    >
+                        فعال سازی تماس امن
+                    </Button>
+                    <Button
+                        className="!text-slate-400"
+                        onClick={() => {
+                            setSecureCallModal(false);
+                            setCookie(
+                                'DONT_SHOW_SECURE_CALL_MODAL',
+                                true,
+                                moment().add(1, 'days').startOf('day').toDate()
+                            );
                         }}
                     >
                         فعلا نه، بعدا فعال می کنم
