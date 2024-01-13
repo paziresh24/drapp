@@ -68,7 +68,6 @@ const Profile = () => {
     const messengerSectionRef = useRef(null);
     const [info, setInfo] = useDrApp();
     const [position, setPosition] = useState({ lat: 35.68818464807401, lng: 51.393077373504646 });
-    const doctorInfoUpdate = useDoctorInfoUpdate();
     const centerInfoUpdate = useCenterInfoUpdate();
     const [phoneNumber, setPhoneNumber] = useState([]);
     const updateCenterAccess = useUpdateCenterAccess();
@@ -98,7 +97,6 @@ const Profile = () => {
         eitaaIdError: false,
         whatsappNumberError: false
     });
-    const biographyRef = useRef();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [mapZoom, setMapZoom] = useState();
@@ -142,7 +140,7 @@ const Profile = () => {
             );
             return;
         }
-    }, [getMessengerInfo.status]);
+    }, [getMessengerInfo.status, getMessengerInfo?.data]);
 
     useEffect(() => {
         if (getMessengerInfo.isSuccess && router.location.search === '?active_doctor') {
@@ -152,67 +150,10 @@ const Profile = () => {
     }, [visitChanel]);
 
     const {
-        register: updateDoctorInfo,
-        handleSubmit: doctorInfoSubmit,
-        formState: { errors: doctorInfoErrors }
-    } = useForm();
-
-    const {
         register: updateCenterInfo,
         handleSubmit: centerInfoSubmit,
         formState: { errors: centerInfoErrors }
     } = useForm();
-
-    const {
-        register: bankInfoRegister,
-        handleSubmit: bankSubmit,
-        formState: { errors: bankInfoErrors }
-    } = useForm();
-
-    const updateDoctor = async data => {
-        doctorInfoUpdate.mutate(
-            {
-                name: data.name,
-                family: data.family,
-                national_code: data.national_code,
-                medical_code: data.medical_code,
-                biography: biographyRef?.current ?? info.doctor?.biography ?? '',
-                secretary_phone: data.secretary_phone,
-                center_id: info.center.id
-            },
-            {
-                onSuccess: res => {
-                    if (data.secretary_phone)
-                        getSplunkInstance().sendEvent({
-                            group: 'register',
-                            type: 'loading-/profile-entered-num-secretary',
-                            event: {
-                                secretary_number: data.secretary_phone
-                            }
-                        });
-                    if (!data.secretary_phone)
-                        getSplunkInstance().sendEvent({
-                            group: 'register',
-                            type: 'loading-/profile-dont-entered-num-secretary'
-                        });
-                    toast.success(res.message);
-
-                    setInfo(prev => ({
-                        ...prev,
-                        doctor: {
-                            ...prev.doctor,
-                            name: data.name,
-                            family: data.family,
-                            national_code: data.national_code,
-                            medical_code: data.medical_code,
-                            biography: biographyRef?.current ?? info.doctor?.biography ?? '',
-                            secretary_phone: data.secretary_phone
-                        }
-                    }));
-                }
-            }
-        );
-    };
 
     const updateCenter = data => {
         centerPromises.push(updateCenterAccess.mutateAsync({ accessIds: centerAccess }));

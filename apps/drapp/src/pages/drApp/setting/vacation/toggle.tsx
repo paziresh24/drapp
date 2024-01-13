@@ -45,6 +45,7 @@ export const VacationToggle = () => {
                 status: true,
                 user_center_id: info.center.user_center_id
             });
+            toast.success('نوبت دهی ویزیت آنلاین شما در ساعت کاری تعریف شده توسط شما فعال شد.');
         } catch (error) {
             setIsOn(prev => !prev);
 
@@ -65,6 +66,9 @@ export const VacationToggle = () => {
                 status: false,
                 user_center_id: info.center.user_center_id
             });
+            toast.info(
+                'پاسخ‌دهی به‌موقع برای برآورده کردن انتظارات بیماران بسیار مهم است لذا تنها در زمانی که قادر به پاسخگویی به بیماران در راس زمان نوبت‌ بیمار هستید وضعیت ویزیت آنلاین خود را فعال کنید.'
+            );
             setShouldShowconfilitModal(false);
         } catch (error) {
             setIsOn(prev => !prev);
