@@ -244,7 +244,7 @@ const Turning = () => {
                     }}
                 >
                     {getTurn.isError && (
-                        <div className="bg-red-500/10 w-full text-sm font-medium text-red-800 p-3">
+                        <div className="w-full p-3 text-sm font-medium text-red-800 bg-red-500/10">
                             {`خطا در دریافت نوبت های ${info.center.name}: `}
                             <span>{getTurn.error?.response?.data?.message}</span>
                         </div>
@@ -375,7 +375,17 @@ const Turning = () => {
                 </div>
             </Modal>
 
-            <Modal isOpen={secureCallModal} onClose={setSecureCallModal}>
+            <Modal
+                isOpen={secureCallModal}
+                onClose={() => {
+                    setSecureCallModal(false);
+                    setCookie(
+                        'DONT_SHOW_SECURE_CALL_MODAL',
+                        true,
+                        moment().add(1, 'days').startOf('day').toDate()
+                    );
+                }}
+            >
                 <div className="flex flex-col space-y-2">
                     <div
                         className="flex flex-col"
@@ -401,7 +411,7 @@ const Turning = () => {
                 </div>
             </Modal>
             <Modal title="تماس امن" isOpen={secureCallRulesModal} onClose={setSecureCallRulesModal}>
-                <ul className="list-disc mr-4 space-y-2 text-sm font-medium">
+                <ul className="mr-4 space-y-2 text-sm font-medium list-disc">
                     {secureCallDescription.description?.map(item => (
                         <li key={item}>{item}</li>
                     ))}
@@ -411,7 +421,7 @@ const Turning = () => {
                     loading={updateMessengers.isLoading}
                     onClick={enableSecureCallHandler}
                 >
-                    خواندم
+                    شرایط برقراری تماس امن را مطالعه کردم.
                 </Button>
             </Modal>
 
@@ -422,11 +432,11 @@ const Turning = () => {
                     setCookie(
                         'DONT_SHOW_NOTIFICATION_MODAL',
                         true,
-                        moment().add(1, 'days').startOf('day').toDate()
+                        moment().add(5, 'days').startOf('day').toDate()
                     );
                 }}
             >
-                <div className="flex flex-col space-y-3 justify-center items-center">
+                <div className="flex flex-col items-center justify-center space-y-3">
                     <img src={notificationVector} alt="" className="w-32 h-28" />
                     <span className="font-medium leading-7">{notificationModalText}</span>
                     <Button
