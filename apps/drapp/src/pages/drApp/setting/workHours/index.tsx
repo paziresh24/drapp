@@ -22,6 +22,7 @@ import axios from 'axios';
 import SelectTime from 'apps/drapp/src/components/setting/duration/selectTime';
 import { range } from 'lodash';
 import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
+import { Alert } from '@mui/material';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
@@ -123,20 +124,26 @@ const WorkHours = () => {
     };
 
     return (
-        <Container
-            maxWidth="sm"
-            className="h-full pt-4 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-md"
-        >
+        <Container maxWidth="sm" className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md">
             <Stack className="pb-32 space-y-5 md:pb-0">
-                {getCenterType(doctorInfo.center) !== 'consult' && (
-                    <SelectTime
-                        items={durationList}
-                        value={duration}
-                        onChange={handleSetDuration}
-                        label="مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟"
-                        isLoading={getWorkHoursRequest.isLoading}
-                        prefix="دقیقه"
-                    />
+                <SelectTime
+                    items={durationList}
+                    value={duration}
+                    onChange={handleSetDuration}
+                    label={
+                        getCenterType(doctorInfo.center) === 'consult'
+                            ? 'مدت زمان‌ ایده‌آل شما برای ارائه یک ویزیت جامع و پیوسته به یک بیمار چقدر است؟'
+                            : 'مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟'
+                    }
+                    isLoading={getWorkHoursRequest.isLoading}
+                    prefix="دقیقه"
+                />
+                {getCenterType(doctorInfo.center) === 'consult' && (
+                    <Alert severity="info" variant="standard" icon={false}>
+                        ویزیت آنلاین می‌بایست در زمان مقرر نوبت، در مدت زمان اعلامی شما به صورت جامع
+                        و پیوسته انجام شود. توجه داشته باشید که به مدت ۳ روز، پس از ویزیت بیمار برای
+                        پاسخگویی به سوالات احتمالی بیمار در دسترس باشید.
+                    </Alert>
                 )}
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />

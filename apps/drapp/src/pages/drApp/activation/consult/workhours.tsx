@@ -29,6 +29,9 @@ import ActivationModal from 'apps/drapp/src/components/activation/activationModa
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { weekDays } from 'apps/drapp/src/constants/weekDays';
 import uniq from 'lodash/uniq';
+import { Alert } from '@mui/material';
+
+const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
 const ConsultOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
@@ -44,6 +47,8 @@ const ConsultOfficeActivation = () => {
     const [questionActivation, setQuestionActivation] = useState(false);
     const selectedService = useActivationStore(state => state.selectedService);
     const getCentersDoctor = useGetCentersDoctor();
+    const duration = useConsultActivationStore(state => state.duration);
+    const setDuration = useConsultActivationStore(state => state.setDuration);
 
     const handleAdd = () => {
         if (
@@ -68,7 +73,7 @@ const ConsultOfficeActivation = () => {
         try {
             await activeConsult.mutateAsync({
                 workHours,
-                service_length: 3,
+                service_length: duration,
                 online_channels: visitChannel,
                 price: price * 10
             });
@@ -134,7 +139,7 @@ const ConsultOfficeActivation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="h-full pt-4 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
+            className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
             {isDesktop && (
                 <Button
@@ -146,6 +151,19 @@ const ConsultOfficeActivation = () => {
                 </Button>
             )}
             <Stack className="pb-32 space-y-5 md:pb-0">
+                <SelectTime
+                    items={durationList}
+                    label="مدت زمان‌ ایده‌آل شما برای ارائه یک ویزیت جامع و پیوسته به یک بیمار چقدر است؟"
+                    value={duration}
+                    onChange={setDuration}
+                    isLoading={getWorkHoursRequest.isLoading}
+                    prefix="دقیقه"
+                />
+                <Alert severity="info" variant="standard" icon={false}>
+                    ویزیت آنلاین می‌بایست در زمان مقرر نوبت، در مدت زمان اعلامی شما به صورت جامع و
+                    پیوسته انجام شود. توجه داشته باشید که به مدت ۳ روز، پس از ویزیت بیمار برای
+                    پاسخگویی به سوالات احتمالی بیمار در دسترس باشید.
+                </Alert>
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
                 <Button onClick={handleAdd} variant="contained" className="self-end">

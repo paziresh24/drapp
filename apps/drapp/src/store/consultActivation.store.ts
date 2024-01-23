@@ -21,7 +21,7 @@ interface ConsultActivationStore {
 export const useConsultActivationStore = create<ConsultActivationStore>(set => ({
     visitChannel: [],
     price: 0,
-    duration: 2,
+    duration: 10,
     workHours: [],
     setMessenger: visitChannel => set(state => ({ ...state, visitChannel })),
     setPrice: price => set(state => ({ ...state, price })),
