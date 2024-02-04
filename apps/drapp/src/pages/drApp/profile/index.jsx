@@ -412,17 +412,6 @@ const Profile = () => {
                             ))}
                         </ScrollContainer>
                     )}
-                    {info.doctor?.rate?.rate && (
-                        <div
-                            className={styles['doctor-rate']}
-                            onClick={() => router.push('/feedbacks')}
-                        >
-                            <StarIcon />
-                            <span>
-                                {info.doctor.rate.rate} از {info.doctor?.rate?.count ?? 0} نظر
-                            </span>
-                        </div>
-                    )}
                 </div>
             </div>
             <Accordion

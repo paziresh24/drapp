@@ -90,7 +90,7 @@ const SuperMenu = () => {
                             <b>{`${info.doctor.name} ${info.doctor.family}`}</b>
                             <PenIcon data-tip data-for="profileIcon" />
                         </span>
-                        {userCompleteProfile !== 100 ? (
+                        {userCompleteProfile !== 100 && (
                             <div className={styles['user-profile-complete-score']}>
                                 <div className={styles['status']}>
                                     <span>درصد تکمیل پروفایل: &nbsp; ٪{userCompleteProfile}</span>
@@ -99,24 +99,6 @@ const SuperMenu = () => {
                                     <span style={{ width: `${userCompleteProfile}%` }} />
                                 </div>
                             </div>
-                        ) : (
-                            <span>
-                                {info.doctor?.rate?.rate && (
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            gap: '0.4rem',
-                                            alignItems: 'center'
-                                        }}
-                                    >
-                                        <StarIcon color="#27bda0" />
-                                        <span>
-                                            {info.doctor.rate.rate} از{' '}
-                                            {info.doctor?.rate_info?.rates_count ?? 0} نظر
-                                        </span>
-                                    </div>
-                                )}
-                            </span>
                         )}
                     </div>
                 </div>
