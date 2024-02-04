@@ -55,7 +55,8 @@ export const MainMenuData = () => {
         },
         {
             title: 'نظرات بیماران',
-            path: '/feedbacks',
+            onClick: () =>
+                window.location.assign(`https://www.paziresh24.com/dr/${info.doctor.slug}#reviews`),
             icon: <MessageIcon color="#000" />,
             badge: getFeedbacks.isSuccess && calculateNoReplyComments(),
             shouldShow: true
