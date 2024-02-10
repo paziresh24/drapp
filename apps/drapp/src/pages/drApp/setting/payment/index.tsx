@@ -34,13 +34,13 @@ const PaymentPage = () => {
         card_number: formProps.cartNumber ?? ''
     });
     const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
-    const [tab, setTab] = useState(getSetting.active ? 0 : 1);
+    const [tab, setTab] = useState(getSetting?.active ? 0 : 1);
 
     useEffect(() => {
         getPaymentSetting.remove();
         getPaymentSetting.refetch();
-        setTab(getSetting.active ? 0 : 1);
-    }, [center, getSetting.active]);
+        setTab(getSetting?.active ? 0 : 1);
+    }, [center, getSetting?.active]);
 
     useEffect(() => {
         if (ibanInquiry.isSuccess) {
