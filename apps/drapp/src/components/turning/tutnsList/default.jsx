@@ -16,7 +16,7 @@ const checkPaymentStatus = turn => {
     )
         return 'refunded';
 
-    return 'paid';
+    return turn.payment_status;
 };
 
 const ListHeader = ({ title, count, onToggle, isOpen }) => {
