@@ -608,12 +608,12 @@ const TurnRow = (props: TurnRowProps) => {
                     {!paymentStatus && <span> - </span>}
                 </span>
             ),
-            isShow: type === 'book' && info.center.id === CONSULT_CENTER_ID
+            isShow: type === 'book'
         },
         {
             name: 'مبلغ ویزیت',
             component: <span>{paymentPrice ? `${addCommas(+paymentPrice / 10)} تومان` : '-'}</span>,
-            isShow: type === 'book' && info.center.id === CONSULT_CENTER_ID
+            isShow: type === 'book'
         },
         {
             name: 'کد پیگیری نوبت',

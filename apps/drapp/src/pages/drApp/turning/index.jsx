@@ -136,12 +136,15 @@ const Turning = () => {
     };
 
     useEffect(() => {
-        if (
-            showNotificationModalRollout &&
-            !localStorage.getItem('fcm_token') &&
-            !getCookie('DONT_SHOW_NOTIFICATION_MODAL')
-        )
-            setNotificationModal(true);
+        if ('Notification' in window) {
+            if (
+                Notification?.permission !== 'denied' &&
+                Notification?.permission !== 'granted' &&
+                showNotificationModalRollout &&
+                !getCookie('DONT_SHOW_NOTIFICATION_MODAL')
+            )
+                setNotificationModal(true);
+        }
     }, [showNotificationModalRollout]);
 
     useEffect(() => {
