@@ -605,6 +605,7 @@ const TurnRow = (props: TurnRowProps) => {
                 <span>
                     {paymentStatus === 'paid' && <span>پرداخت شده</span>}
                     {paymentStatus === 'refunded' && <span>استرداد شده</span>}
+                    {paymentStatus === 'not_paid' && <span>پرداخت نشده</span>}
                     {!paymentStatus && <span> - </span>}
                 </span>
             ),
