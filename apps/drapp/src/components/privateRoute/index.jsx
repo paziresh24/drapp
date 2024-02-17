@@ -97,21 +97,13 @@ const PrivateRoute = props => {
 
             setInfo(prev => ({
                 ...prev,
-                user: getMe.data.data
+                user: getMe?.data?.data
             }));
 
             getUser.refetch();
             getProvider.refetch();
         }
     }, [getCentersDoctor.status, centersDoctor, getMe.status]);
-
-    useEffect(() => {
-        if (getUser.isSuccess) {
-            setInfo(prev => ({
-                ...prev
-            }));
-        }
-    }, [getUser.status]);
 
     useEffect(() => {
         if (doctorInfo.isSuccess) {
@@ -139,7 +131,7 @@ const PrivateRoute = props => {
                     medical_code: getProvider.data?.data?.providers?.[0]?.employee_id,
                     biography: getProvider.data?.data?.providers?.[0]?.biography,
                     slug: getProvider.data?.data?.providers?.[0]?.slug,
-                    provider_id: getProvider.data.data?.providers?.[0]?.id
+                    provider_id: getProvider.data?.data?.providers?.[0]?.id
                 };
             }
 
@@ -155,7 +147,7 @@ const PrivateRoute = props => {
                 center: info.center
             };
 
-            Sentry.setUser({ user: doctor });
+            Sentry.setUser({ username: doctor.user_id });
 
             const doctorNotActiveOfficeAndConsult = !info.centers.some(
                 center =>
