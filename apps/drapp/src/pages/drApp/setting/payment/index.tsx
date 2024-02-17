@@ -261,7 +261,7 @@ const PaymentPage = () => {
                             isOpen={inquiryModal}
                         >
                             <span>آیا اطلاعات حساب مورد تایید می باشد؟ </span>
-                            <CartInfo info={ibanInquiry.data} />
+                            <CartInfo info={ibanInquiry?.data} />
                             <div className="flex mt-1 space-s-3">
                                 <Button
                                     fullWidth

@@ -7,9 +7,9 @@ interface CartInfoProps {
 
 export const CartInfo = ({ info }: CartInfoProps) => {
     return (
-        <div className="flex flex-col space-y-3 font-medium border border-dashed border-disabled p-4 rounded-lg">
+        <div className="flex flex-col p-4 space-y-3 font-medium border border-dashed rounded-lg border-disabled">
             <span>صاحب کارت: {info?.deposit_owners?.join('-')}</span>
-            {info?.amount_payable && <span>مبلغ قابل پرداخت : {info.amount_payable}</span>}
+            {info?.amount_payable && <span>مبلغ قابل پرداخت : {info?.amount_payable}</span>}
             {info?.card_number && (
                 <span>
                     شماره کارت:{' '}
@@ -20,7 +20,7 @@ export const CartInfo = ({ info }: CartInfoProps) => {
                 </span>
             )}
             {info?.shaba && <span>شماره شبا: {info?.shaba}</span>}
-            {info?.account_number && <span>شماره حساب: {info.account_number}</span>}
+            {info?.account_number && <span>شماره حساب: {info?.account_number}</span>}
             <div>
                 <span>نام بانک: </span>
                 <span>
@@ -38,7 +38,7 @@ export const CartInfo = ({ info }: CartInfoProps) => {
                     {info?.bank_name}{' '}
                 </span>
             </div>
-            {info?.account_status && <span>وضعیت حساب: {info.account_status}</span>}
+            {info?.account_status && <span>وضعیت حساب: {info?.account_status}</span>}
         </div>
     );
 };
