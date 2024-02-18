@@ -138,7 +138,11 @@ const SideBar = memo(() => {
                     name: 'نظرات بیماران',
                     shouldShow: true,
                     icon: <MessageIcon color="#000" />,
-                    link: '/feedbacks',
+                    onClick: () => {
+                        window.location.assign(
+                            `https://www.paziresh24.com/dr/${info.doctor.slug}#reviews`
+                        );
+                    },
                     badge: true
                 },
                 {
