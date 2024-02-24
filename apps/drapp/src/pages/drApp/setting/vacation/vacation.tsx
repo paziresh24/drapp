@@ -70,9 +70,10 @@ export const Vacation = () => {
     const [selectedMonth, setSelectedMonth] = useState<any>(
         monthData.find((month: any) => month.monthNum === moment().jMonth() + 1)?.persian_name
     );
+    const [selectedYear, setSelectedYear] = useState<any>(moment().locale('fa').year());
 
     useEffect(() => {
-        const currentMonthInfo = getFirstAndLastMonthDay(moment().jYear(), moment().jMonth() + 1);
+        const currentMonthInfo = getFirstAndLastMonthDay(selectedYear, moment().jMonth() + 1);
         setMonthInfo({
             from: currentMonthInfo.firstDayOfMonth,
             to: currentMonthInfo.lastDayOfMonth
@@ -351,7 +352,19 @@ export const Vacation = () => {
         const monthNumber = monthData.find(
             (month: any) => month.persian_name === monthName
         )?.monthNum;
-        const getMonthTimestamp = getFirstAndLastMonthDay(moment().jYear(), monthNumber!);
+        const getMonthTimestamp = getFirstAndLastMonthDay(selectedYear, monthNumber!);
+        setMonthInfo({
+            from: getMonthTimestamp.firstDayOfMonth,
+            to: getMonthTimestamp.lastDayOfMonth
+        });
+    };
+
+    const filterVacationAccordingToYear = (year: string) => {
+        setSelectedYear(year);
+        const monthNumber = monthData.find(
+            (month: any) => month.persian_name === selectedMonth
+        )?.monthNum;
+        const getMonthTimestamp = getFirstAndLastMonthDay(+year, monthNumber!);
         setMonthInfo({
             from: getMonthTimestamp.firstDayOfMonth,
             to: getMonthTimestamp.lastDayOfMonth
@@ -428,22 +441,44 @@ export const Vacation = () => {
                             <span className="text-[0.9rem] font-medium">
                                 لیست مرخصی های ثبت شده:
                             </span>
-                            <Select
-                                className="!w-1/4"
-                                variant="standard"
-                                label="جستجچو"
-                                value={selectedMonth}
-                                onChange={(e: any) =>
-                                    filterVacationAccordingToMonth(e.target.value)
-                                }
-                                inputProps={{ placeholder: 'فیلتر بر حسب تاریخ' }}
-                            >
-                                {monthData.map((month: any) => (
-                                    <MenuItem key={month.monthNum} value={month.persian_name}>
-                                        {month.persian_name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                            <div className="flex items-center space-s-2 w-2/5">
+                                <Select
+                                    className="!w-[40%]"
+                                    variant="standard"
+                                    label="جستجو"
+                                    value={selectedYear}
+                                    onChange={(e: any) =>
+                                        filterVacationAccordingToYear(e.target.value)
+                                    }
+                                    inputProps={{ placeholder: 'فیلتر بر حسب تاریخ' }}
+                                >
+                                    {[
+                                        moment().locale('fa').year() - 1,
+                                        moment().locale('fa').year(),
+                                        moment().locale('fa').year() + 1
+                                    ].map((year: any) => (
+                                        <MenuItem key={year} value={year}>
+                                            {year}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                                <Select
+                                    className="!w-[60%]"
+                                    variant="standard"
+                                    label="جستجو"
+                                    value={selectedMonth}
+                                    onChange={(e: any) =>
+                                        filterVacationAccordingToMonth(e.target.value)
+                                    }
+                                    inputProps={{ placeholder: 'فیلتر بر حسب تاریخ' }}
+                                >
+                                    {monthData.map((month: any) => (
+                                        <MenuItem key={month.monthNum} value={month.persian_name}>
+                                            {month.persian_name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </div>
                         </div>
                         {!getVacation.isRefetching && getVacation.isSuccess && (
                             <div className="h-auto md:h-[21rem] overflow-auto flex flex-col gap-2">

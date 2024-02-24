@@ -4,7 +4,8 @@ import { clearToken, getToken, setToken } from '@paziresh24/utils/localstorage';
 import axios from 'axios';
 
 export const apiGatewayClient = axios.create({
-    baseURL: window._env_.P24_API_GATEWAY_BASE_URL
+    baseURL: window._env_.P24_API_GATEWAY_BASE_URL,
+    withCredentials: true
 });
 
 // onRequest
@@ -12,14 +13,7 @@ apiGatewayClient.interceptors.request.use(
     config => {
         const token = getToken();
         if (token) {
-            config = {
-                ...config,
-                headers: {
-                    ...config.headers,
-                    'Authorization': 'Bearer ' + token,
-                    'Content-Type': 'application/json'
-                }
-            };
+            (config as any).headers['Authorization'] = 'Bearer ' + token;
         }
 
         return config;
