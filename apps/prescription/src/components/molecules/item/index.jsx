@@ -117,7 +117,9 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                     </td>
                     <td data-label="وضعیت نسخه:">
                         {turn?.insuranceType === 'tamin' &&
-                            turn.tamin_prescription.map(item => item.head_EPRSC_ID).join(' - ')}
+                            turn.tamin_prescription
+                                .map(item => item.trackingCode ?? '')
+                                .join(' - ')}
                         {turn?.insuranceType === 'salamat' &&
                             (turn[turn?.insuranceType + '_prescription']?.trackingCode ?? '')}
                     </td>
@@ -200,7 +202,7 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                     <span>
                                         {turn?.insuranceType === 'tamin' &&
                                             turn.tamin_prescription
-                                                .map(item => item.head_EPRSC_ID)
+                                                .map(item => item.trackingCode)
                                                 .join(' - ')}
                                         {turn?.insuranceType === 'salamat' &&
                                             (turn.salamat_prescription?.trackingCode ?? '')}
@@ -255,8 +257,8 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                 <span>
                                     {turn?.insuranceType === 'tamin' &&
                                         turn[turn?.insuranceType + '_prescription'].map(item => (
-                                            <span key={item.head_EPRSC_ID}>
-                                                {item.head_EPRSC_ID ?? '-'}
+                                            <span key={item.trackingCode}>
+                                                {item.trackingCode ?? '-'}
                                             </span>
                                         ))}
                                     {turn?.insuranceType === 'salamat' && (
