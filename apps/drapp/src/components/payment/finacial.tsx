@@ -166,7 +166,7 @@ const Financial = () => {
                         <span className="text-xs text-white"> تومان</span>
                     </div>
                 </div>
-                {settlementWarning.disabledSettlementButton && (
+                {!settlementWarning.disabledSettlementButton && (
                     <Button
                         variant="contained"
                         onClick={handleSubmit}
