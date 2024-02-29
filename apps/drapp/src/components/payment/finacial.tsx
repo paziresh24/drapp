@@ -15,7 +15,8 @@ import Chips from '@paziresh24/shared/ui/chips';
 import { useGetBooks } from '../../apis/booking/books';
 import moment from 'jalali-moment';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
-import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
+import { Alert } from '@mui/material';
 
 type Status =
     | 'system_reject'
@@ -41,6 +42,11 @@ const Financial = () => {
         (getfinancial.data?.data?.doctor_share ?? 0) / 10 -
         (getfinancial.data?.data?.paid_cost ?? 0) / 10;
     const shouldShowDeletedNotice = useFeatureIsOn('payment:deleted-books-notice|enabled');
+    const settlementWarning = useFeatureValue('payment:settlement-warning', {
+        title: '',
+        text: '',
+        disabledSettlementButton: false
+    });
     const getBooks = useGetBooks(
         {
             center_id: center.id,
@@ -129,6 +135,14 @@ const Financial = () => {
     return (
         <>
             <div className="flex flex-col space-y-4">
+                {settlementWarning.text && (
+                    <Alert severity="warning">
+                        <div className="flex flex-col">
+                            <span className="font-bold">{settlementWarning.title}</span>
+                            <span>{settlementWarning.text}</span>
+                        </div>
+                    </Alert>
+                )}
                 <div className="p-5 space-s-4 bg-gradient-to-br from-[#4f4f8f] to-[#1A1D4E] h-32 flex justify-evenly items-stretch rounded-xl shadow-lg">
                     <div className="flex flex-col items-center justify-center h-full space-y-2">
                         <span className="text-sm text-white opacity-80">کل درآمد</span>
@@ -152,15 +166,17 @@ const Financial = () => {
                         <span className="text-xs text-white"> تومان</span>
                     </div>
                 </div>
-                <Button
-                    variant="contained"
-                    onClick={handleSubmit}
-                    loading={submitSettlement.isLoading}
-                >
-                    درخواست تسویه حساب
-                </Button>
+                {settlementWarning.disabledSettlementButton && (
+                    <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        loading={submitSettlement.isLoading}
+                    >
+                        درخواست تسویه حساب
+                    </Button>
+                )}
                 {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
-                    <div className="bg-orange-100 p-4 rounded-md">
+                    <div className="p-4 bg-orange-100 rounded-md">
                         <span className="text-sm font-medium text-orange-700">
                             پزشک گرامی بعد از آخرین درخواست تسویه ی شما،{' '}
                             {(getBooks.data as any)?.meta?.total} نوبت به درخواست بیماران حذف و مبلغ
@@ -168,13 +184,13 @@ const Financial = () => {
                         </span>
                         <div
                             onClick={() => setDeletedModal(true)}
-                            className="underline text-sm font-medium inline-block mr-1 text-orange-900 cursor-pointer"
+                            className="inline-block mr-1 text-sm font-medium text-orange-900 underline cursor-pointer"
                         >
                             مشاهده نوبت ها
                         </div>
                     </div>
                 )}
-                {getfinancial.data?.data?.doctor_payments?.length && (
+                {getfinancial.data?.data?.doctor_payments?.length > 0 && (
                     <span className="text-sm font-bold">گزارش مالی</span>
                 )}
                 <div className="px-4 rounded-lg bg-slate-100">
@@ -255,14 +271,14 @@ const Financial = () => {
                 </div>
             </Modal>
             <Modal title="نوبت های حذف شده" isOpen={deletedModal} onClose={setDeletedModal}>
-                <div className="h-96 overflow-auto flex flex-col space-y-3">
+                <div className="flex flex-col space-y-3 overflow-auto h-96">
                     {getBooks.data?.data?.map((item: any) => (
                         <div
                             key={item.id}
-                            className="flex p-4 border border-slate-100 border-solid rounded-md flex-col space-y-1"
+                            className="flex flex-col p-4 space-y-1 border border-solid rounded-md border-slate-100"
                         >
                             <span className="font-semibold">{item.display_name}</span>
-                            <div className="text-sm flex space-s-2">
+                            <div className="flex text-sm space-s-2">
                                 <span>
                                     زمان نوبت:{' '}
                                     {moment(item.from * 1000)
