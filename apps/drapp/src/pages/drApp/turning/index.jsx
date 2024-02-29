@@ -314,7 +314,7 @@ const Turning = () => {
                                 {prescriptionPendingModal?.insuranceType === 'tamin' &&
                                     prescriptionPendingModal?.[
                                         prescriptionPendingModal?.insuranceType + '_prescriptions'
-                                    ]?.[0]?.head_EPRSC_ID}
+                                    ]?.[0]?.trackingCode}
                                 {''}
                                 با موفقیت ثبت شد.
                                 {'  '}

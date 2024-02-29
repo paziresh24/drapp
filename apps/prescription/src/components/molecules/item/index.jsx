@@ -255,8 +255,8 @@ const Item = ({ dropDownShowKey, turn, refetchData, dropDownShow, setDropDownSho
                                 <span>
                                     {turn?.insuranceType === 'tamin' &&
                                         turn[turn?.insuranceType + '_prescription'].map(item => (
-                                            <span key={item.head_EPRSC_ID}>
-                                                {item.head_EPRSC_ID ?? '-'}
+                                            <span key={item.trackingCode}>
+                                                {item.trackingCode ?? '-'}
                                             </span>
                                         ))}
                                     {turn?.insuranceType === 'salamat' && (
