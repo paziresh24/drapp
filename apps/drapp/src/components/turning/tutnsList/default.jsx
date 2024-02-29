@@ -76,7 +76,7 @@ const TurnRow = {
                 trackingCode:
                     turn.prescription &&
                     (turn.prescription?.insuranceType === 'tamin'
-                        ? turn.prescription.tamin_prescription.map(item => item.head_EPRSC_ID)
+                        ? turn.prescription.tamin_prescription.map(item => item.trackingCode)
                         : [turn.prescription.salamat_prescription?.trackingCode]),
                 sequenceNumber: turn.prescription?.salamat_prescription?.sequenceNumber
             }}
@@ -105,7 +105,7 @@ const TurnRow = {
                 provider: turn.insuranceType,
                 trackingCode:
                     turn?.insuranceType === 'tamin'
-                        ? turn.tamin_prescription.map(item => item.head_EPRSC_ID)
+                        ? turn.tamin_prescription.map(item => item.trackingCode)
                         : [turn.salamat_prescription?.trackingCode],
                 sequenceNumber: turn.salamat_prescription?.sequenceNumber
             }}

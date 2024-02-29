@@ -274,7 +274,7 @@ const Turning = () => {
                     {prescriptionSuccessedModal?.insuranceType === 'tamin' &&
                         prescriptionSuccessedModal?.[
                             prescriptionSuccessedModal?.insuranceType + '_prescriptions'
-                        ]?.[0]?.head_EPRSC_ID}
+                        ]?.[0]?.trackingCode}
                     {prescriptionSuccessedModal?.insuranceType === 'salamat' &&
                         prescriptionSuccessedModal[
                             prescriptionSuccessedModal?.insuranceType + '_prescription'
