@@ -29,6 +29,9 @@ import ActivationModal from 'apps/drapp/src/components/activation/activationModa
 import { useGetCentersDoctor } from 'apps/drapp/src/hooks/useGetCentersDoctor';
 import { weekDays } from 'apps/drapp/src/constants/weekDays';
 import uniq from 'lodash/uniq';
+import Modal from '@paziresh24/shared/ui/modal';
+import { useDrApp } from '@paziresh24/context/drapp';
+import { useFeatureValue } from '@growthbook/growthbook-react';
 import { Alert } from '@mui/material';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
@@ -36,19 +39,24 @@ const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].
 const ConsultOfficeActivation = () => {
     const { validationWorkHour, setDays, setHours, days, hours } = useWorkHoursValidation();
     const activeConsult = useActiveConsult();
-
+    const [{ doctor }] = useDrApp();
     const router = useHistory();
     const getWorkHoursRequest = useGetWorkHours({ center_id: 5532 });
     const addWorkHours = useConsultActivationStore(state => state.addWorkHours);
     const workHours = useConsultActivationStore(state => state.workHours);
     const removeWorkHours = useConsultActivationStore(state => state.removeWorkHours);
+    const duration = useConsultActivationStore(state => state.duration);
+    const setDuration = useConsultActivationStore(state => state.setDuration);
     const visitChannel = useConsultActivationStore(state => state.visitChannel);
     const price = useConsultActivationStore(state => state.price);
     const [questionActivation, setQuestionActivation] = useState(false);
     const selectedService = useActivationStore(state => state.selectedService);
     const getCentersDoctor = useGetCentersDoctor();
-    const duration = useConsultActivationStore(state => state.duration);
-    const setDuration = useConsultActivationStore(state => state.setDuration);
+    const [activationModal, setActivationModal] = useState(false);
+    const completedActivationNotice = useFeatureValue(
+        'onlinevisit:completed-activation-notice',
+        ''
+    );
 
     const handleAdd = () => {
         if (
@@ -73,7 +81,7 @@ const ConsultOfficeActivation = () => {
         try {
             await activeConsult.mutateAsync({
                 workHours,
-                service_length: duration,
+                service_length: 3,
                 online_channels: visitChannel,
                 price: price * 10
             });
@@ -84,6 +92,7 @@ const ConsultOfficeActivation = () => {
                     action: 3
                 }
             });
+
             uniq(workHours.map(({ day }) => weekDays.find(({ id }) => day === id)?.nameEn)).forEach(
                 day => {
                     getSplunkInstance().sendEvent({
@@ -117,7 +126,7 @@ const ConsultOfficeActivation = () => {
                 setQuestionActivation(true);
                 return;
             }
-            router.push('/');
+            setActivationModal(true);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast.warning(error.response?.data?.message);
@@ -139,7 +148,7 @@ const ConsultOfficeActivation = () => {
     return (
         <Container
             maxWidth="sm"
-            className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
+            className="h-full pt-4 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
             {isDesktop && (
                 <Button
@@ -151,19 +160,16 @@ const ConsultOfficeActivation = () => {
                 </Button>
             )}
             <Stack className="pb-32 space-y-5 md:pb-0">
-                <SelectTime
-                    items={durationList}
-                    label="مدت زمان‌ ایده‌آل شما برای ارائه یک ویزیت جامع و پیوسته به یک بیمار چقدر است؟"
-                    value={duration}
-                    onChange={setDuration}
-                    isLoading={getWorkHoursRequest.isLoading}
-                    prefix="دقیقه"
-                />
                 <Alert severity="info" variant="standard" icon={false}>
-                    ویزیت آنلاین می‌بایست در زمان مقرر نوبت، در مدت زمان اعلامی شما به صورت جامع و
+                    ویزیت آنلاین می‌بایست در زمان مقرر نوبت، در مدت زمان 10 دقیقه به صورت جامع و
                     پیوسته انجام شود. توجه داشته باشید که به مدت ۳ روز، پس از ویزیت بیمار برای
                     پاسخگویی به سوالات احتمالی بیمار در دسترس باشید.
+                    <p>
+                        توجه داشته باشید این مدت زمان به طور پیشفرض 10 دقیقه قرار داده شده است و
+                        قابل تغییر می‌باشد.
+                    </p>
                 </Alert>
+
                 <SelectDay selectedDays={days} onChange={setDays} />
                 <SelectHours defaultHours={hours} onChange={setHours} />
                 <Button onClick={handleAdd} variant="contained" className="self-end">
@@ -195,6 +201,21 @@ const ConsultOfficeActivation = () => {
                 }}
                 currentType="consult"
             />
+            <Modal
+                isOpen={activationModal}
+                onClose={setActivationModal}
+                title="ویزیت آنلاین شما با موفقیت فعال شد."
+            >
+                <div dangerouslySetInnerHTML={{ __html: completedActivationNotice }}></div>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        router.push('/');
+                    }}
+                >
+                    شروع نوبت دهی
+                </Button>
+            </Modal>
         </Container>
     );
 };
