@@ -4,6 +4,27 @@ import { getMessaging, getToken } from 'firebase/messaging';
 import app from './config';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
+const getOrRegisterServiceWorker = () => {
+    if ('serviceWorker' in navigator) {
+        return window.navigator.serviceWorker
+            .getRegistration('/firebase-cloud-messaging-push-scope')
+            .then((serviceWorker: any) => {
+                if (serviceWorker) {
+                    return serviceWorker;
+                }
+                return window.navigator.serviceWorker
+                    .register('/firebase-messaging-sw.js')
+                    .then((serviceWorker: any) => {
+                        console.log('success registering SW');
+                    })
+                    .catch(err => {
+                        console.log('registering failed', err);
+                    });
+            });
+    }
+    throw new Error('The browser doesn`t support service worker.');
+};
+
 const firebaseCloudMessaging = {
     init: async (id: string) => {
         if (getApps().length) {
@@ -12,9 +33,12 @@ const firebaseCloudMessaging = {
                 const status = await Notification.requestPermission();
 
                 if (status && status === 'granted') {
+                    const serviceWorkerRegistration = await getOrRegisterServiceWorker();
+
                     const currentToken = await getToken(messaging, {
                         vapidKey:
-                            'BLDC9m-xU9lW32bJyeCVCBPIDVpA3OD0T_V_bqe_uy0UuOO1r8HwuzhAX0qbXOhwxVduP_oiVkgfLmw9WlJnRaQ'
+                            'BLDC9m-xU9lW32bJyeCVCBPIDVpA3OD0T_V_bqe_uy0UuOO1r8HwuzhAX0qbXOhwxVduP_oiVkgfLmw9WlJnRaQ',
+                        serviceWorkerRegistration
                     });
                     if (currentToken) {
                         if (localStorage.getItem('fcm_token') !== currentToken) {
