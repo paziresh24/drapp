@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import styles from './header.module.scss';
 import { memo, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -19,6 +20,7 @@ import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '@hooks/useShouldShowActionBars';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { isEmbed } from '@paziresh24/shared/utils';
+import { Fragment } from 'apps/drapp/src/fragment';
 
 const Header = memo(() => {
     const history = useHistory();
@@ -409,6 +411,7 @@ const Header = memo(() => {
                     </Modal>
                 </div>
             </div>
+            {/* <Fragment name="InAppNotification" /> */}
         </header>
     );
 });
