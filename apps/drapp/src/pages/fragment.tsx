@@ -128,13 +128,23 @@ const APIRequest = ({
 
     const fetchRequest = async () => {
         onLoading(true);
+
         await axios[method.toLowerCase() as 'get' | 'post' | 'delete' | 'put' | 'patch'](
             `${provider}${endpoint}`,
-            body,
-            {
-                params,
-                withCredentials: sendCookies
-            }
+            ...(method === 'GET'
+                ? [
+                      {
+                          params,
+                          withCredentials: sendCookies
+                      }
+                  ]
+                : [
+                      body,
+                      {
+                          params,
+                          withCredentials: sendCookies
+                      }
+                  ])
         )
             .then((res: any) => {
                 onResponse(res.data);
