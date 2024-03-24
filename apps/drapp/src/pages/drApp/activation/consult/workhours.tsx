@@ -189,7 +189,7 @@ const ConsultOfficeActivation = () => {
                         onClick={handleSubmit}
                         loading={activeConsult.isLoading || getCentersDoctor.status.loading}
                     >
-                        ذخیره
+                        پایان فعال‌سازی
                     </Button>
                 </FixedWrapBottom>
             </Stack>

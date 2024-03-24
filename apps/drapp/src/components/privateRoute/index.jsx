@@ -158,7 +158,8 @@ const PrivateRoute = props => {
                 !window._env_.P24_IS_LOCAL_CENTER &&
                 doctorNotActiveOfficeAndConsult &&
                 info.centers.length === 1 &&
-                info.centers.find(center => +center.type_id === 1)
+                info.centers.find(center => +center.type_id === 1) &&
+                !history.location.pathname.startsWith('/activation')
             ) {
                 history.push('/activation');
             }
