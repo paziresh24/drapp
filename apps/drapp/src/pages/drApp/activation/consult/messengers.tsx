@@ -14,6 +14,8 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useUpdateMessengers } from '@paziresh24/hooks/drapp/profile';
 import { useChangeBookingStatus } from 'apps/drapp/src/apis/booking/changeBookingStatus';
+import axios from 'axios';
+import { growthbook } from 'apps/drapp/src/app';
 
 const ConsultMessenger = () => {
     const [info] = useDrApp();
@@ -92,7 +94,17 @@ const ConsultMessenger = () => {
                                     type: 'active-successfully'
                                 });
                             }
-                            router.push(`/setting/workhours`);
+                            axios
+                                .post(
+                                    'https://flags.paziresh24.com/api/flags/grp_yslu1nlu6rzdzw',
+                                    undefined,
+                                    { withCredentials: true }
+                                )
+                                .then(() => {
+                                    growthbook.refreshFeatures({ skipCache: true });
+                                });
+
+                            router.push(`/setting/workhours?activation-path=true`);
 
                             return;
                         },
