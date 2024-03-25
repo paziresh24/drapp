@@ -32,6 +32,7 @@ import { useGetProvider } from '../../apis/provider/getProvider';
 import { isEmbed } from '@paziresh24/shared/utils';
 import { useGetNotifyCell } from '../../apis/provider/getNotifyCell';
 import { growthbook } from '../../app';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -122,6 +123,11 @@ const PrivateRoute = props => {
                     cell: getUser.data?.data?.users?.[0]?.cell,
                     user_id: getUser.data?.data?.users?.[0]?.id
                 };
+
+                getSplunkInstance().sendEvent({
+                    group: 'UserEngagement',
+                    type: 'ActiveUsers'
+                });
             }
 
             if (getProvider.isSuccess) {

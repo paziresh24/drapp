@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { GrowthBook, GrowthBookProvider } from '@growthbook/growthbook-react';
 import { useEffect } from 'react';
 import PlasmicHost from './pages/fragment';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 export const growthbook = new GrowthBook({
     apiHost: window._env_.P24_GROWTHBOOK_API_HOST,
@@ -16,6 +17,30 @@ function App() {
             ...growthbook.getAttributes(),
             client_unique_identifier: localStorage.getItem('client_identifier')
         });
+    }, []);
+
+    useEffect(() => {
+        const sessionStartTime = Date.now();
+
+        const sendSessionDurationToSplunk = () => {
+            const sessionEndTime = Date.now();
+            const sessionDuration = sessionEndTime - sessionStartTime;
+
+            getSplunkInstance().sendEvent({
+                group: 'UserEngagement',
+                type: 'SessionDuration',
+                event: {
+                    duration: sessionDuration
+                }
+            });
+        };
+
+        window.addEventListener('beforeunload', sendSessionDurationToSplunk);
+
+        return () => {
+            window.removeEventListener('beforeunload', sendSessionDurationToSplunk);
+            sendSessionDurationToSplunk();
+        };
     }, []);
 
     return (
