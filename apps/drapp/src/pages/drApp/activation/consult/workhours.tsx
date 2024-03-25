@@ -33,6 +33,7 @@ import Modal from '@paziresh24/shared/ui/modal';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { useFeatureValue } from '@growthbook/growthbook-react';
 import { Alert } from '@mui/material';
+import { growthbook } from 'apps/drapp/src/app';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
@@ -210,6 +211,15 @@ const ConsultOfficeActivation = () => {
                 <Button
                     variant="contained"
                     onClick={() => {
+                        axios
+                            .post(
+                                'https://flags.paziresh24.com/api/flags/grp_yslu1nlu6rzdzw',
+                                undefined,
+                                { withCredentials: true }
+                            )
+                            .then(() => {
+                                growthbook.refreshFeatures({ skipCache: true });
+                            });
                         router.push('/');
                     }}
                 >

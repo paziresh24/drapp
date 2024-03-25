@@ -8,7 +8,7 @@ import SelectDay from '../../../../components/setting/workDays/selectDay';
 import SelectHours from '../../../../components/setting/workDays/selectHours';
 import Result from '../../../../components/setting/workDays/result';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkHoursStore } from 'apps/drapp/src/store/workhours.store';
 import { useGetWorkHours } from '@paziresh24/hooks/drapp/fillInfo';
 import { useDrApp } from '@paziresh24/context/drapp';
@@ -23,6 +23,9 @@ import SelectTime from 'apps/drapp/src/components/setting/duration/selectTime';
 import { range } from 'lodash';
 import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
 import { Alert } from '@mui/material';
+import queryString from 'query-string';
+import Modal from '@paziresh24/shared/ui/modal';
+import { useFeatureValue } from '@growthbook/growthbook-react';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
@@ -38,6 +41,11 @@ const WorkHours = () => {
     const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
     const duration = useWorkHoursStore(state => state.duration);
     const setDuration = useWorkHoursStore(state => state.setDuration);
+    const [activationModal, setActivationModal] = useState(false);
+    const completedActivationNotice = useFeatureValue(
+        'onlinevisit:completed-activation-notice',
+        ''
+    );
 
     useEffect(() => {
         getWorkHoursRequest.remove();
@@ -161,7 +169,34 @@ const WorkHours = () => {
                     values={workHours}
                     removeAction={handleRemoveWorkHours}
                 />
+                {queryString.parse(window.location.search)['activation-path'] && (
+                    <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            size="large"
+                            onClick={() => setActivationModal(true)}
+                        >
+                            پایان فعال‌سازی
+                        </Button>
+                    </FixedWrapBottom>
+                )}
             </Stack>
+            <Modal
+                isOpen={activationModal}
+                onClose={setActivationModal}
+                title="ویزیت آنلاین شما با موفقیت فعال شد."
+            >
+                <div dangerouslySetInnerHTML={{ __html: completedActivationNotice }}></div>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        router.replace('/');
+                    }}
+                >
+                    شروع نوبت دهی
+                </Button>
+            </Modal>
         </Container>
     );
 };
