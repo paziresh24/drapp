@@ -33,6 +33,8 @@ import { isEmbed } from '@paziresh24/shared/utils';
 import { useGetNotifyCell } from '../../apis/provider/getNotifyCell';
 import { growthbook } from '../../app';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import eruda from 'eruda';
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -60,6 +62,11 @@ const PrivateRoute = props => {
     const getNotifyCell = useGetNotifyCell({
         provider_id: getProvider.data?.data?.providers?.[0]?.id
     });
+    const showDebugger = useFeatureIsOn('debug');
+
+    useEffect(() => {
+        if (showDebugger) eruda.init();
+    }, [showDebugger]);
 
     useEffect(() => {
         setPage(props);
