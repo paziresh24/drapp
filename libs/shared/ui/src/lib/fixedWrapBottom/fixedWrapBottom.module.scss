@@ -1,4 +1,6 @@
 .wrapper {
+    display: flex;
+    gap: 0.5rem;
     @media screen and (max-width: 992px) {
         position: fixed;
         bottom: 4.5rem;
@@ -7,8 +9,6 @@
         padding: 1rem;
         background-color: #fff;
         z-index: 20;
-        display: flex;
-        grid-gap: 1rem;
         transition: all 0.5s ease;
         transform: translateY(20rem);
     }

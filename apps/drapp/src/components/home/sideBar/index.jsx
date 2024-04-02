@@ -92,7 +92,7 @@ const SideBar = memo(() => {
                     ]
                 },
                 {
-                    id: 7,
+                    id: 12,
                     name: 'رتبه من در پذیرش24',
                     shouldShow: info.center.type_id === 1 || info.center.id === '5532',
                     icon: (
@@ -375,7 +375,7 @@ const SideBar = memo(() => {
                             x="0px"
                             y="0px"
                             viewBox="0 0 1000 1000"
-                            enable-background="new 0 0 1000 1000"
+                            enableBackground="new 0 0 1000 1000"
                             className="w-6 h-6 opacity-60"
                         >
                             <g>

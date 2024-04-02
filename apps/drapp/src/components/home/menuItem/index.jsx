@@ -43,7 +43,9 @@ const MenuItem = ({ item }) => {
                     key={item?.id}
                     to={item?.link ?? '#'}
                     className={styles.menuContent}
-                    activeClassName={item?.link ? styles['active'] : undefined}
+                    {...(item?.link && {
+                        activeClassName: styles['active']
+                    })}
                     style={{
                         cursor: 'pointer',
                         display: 'flex',
