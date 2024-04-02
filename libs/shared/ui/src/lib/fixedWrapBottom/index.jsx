@@ -22,7 +22,7 @@ const FixedWrapBottom = ({ children, className = '' }) => {
                 }}
             >
                 <div
-                    className={classNames({
+                    className={classNames('border-t border-solid border-[#e8ecf0]', {
                         [styles['wrapper']]: true,
                         [className]: className,
                         '!bottom-0': isEmbed()
@@ -33,7 +33,7 @@ const FixedWrapBottom = ({ children, className = '' }) => {
             </CSSTransition>
         );
 
-    return <div className={className}>{children}</div>;
+    return <div className={classNames(className, styles['wrapper'])}>{children}</div>;
 };
 
 export default FixedWrapBottom;

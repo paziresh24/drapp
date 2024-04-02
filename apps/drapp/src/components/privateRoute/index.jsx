@@ -130,11 +130,6 @@ const PrivateRoute = props => {
                     cell: getUser.data?.data?.users?.[0]?.cell,
                     user_id: getUser.data?.data?.users?.[0]?.id
                 };
-
-                getSplunkInstance().sendEvent({
-                    group: 'UserEngagement',
-                    type: 'ActiveUsers'
-                });
             }
 
             if (getProvider.isSuccess) {
@@ -159,7 +154,10 @@ const PrivateRoute = props => {
                 doctor: doctor,
                 center: info.center
             };
-
+            getSplunkInstance().sendEvent({
+                group: 'UserEngagement',
+                type: 'ActiveUsers'
+            });
             Sentry.setUser({ username: doctor.user_id });
 
             const doctorNotActiveOfficeAndConsult = !info.centers.some(

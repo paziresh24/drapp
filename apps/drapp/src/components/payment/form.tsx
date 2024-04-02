@@ -3,6 +3,8 @@ import BankNumberField from '@paziresh24/shared/ui/bankNumberField';
 import { Dispatch, memo, SetStateAction, useEffect, useState } from 'react';
 import { numberToWords } from '@persian-tools/persian-tools';
 import PriceField from '@paziresh24/shared/ui/priceField';
+import { ErrorBoundary } from 'react-error-boundary';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 export interface PaymentFormProps {
     setPrice: Dispatch<SetStateAction<string>>;
@@ -77,53 +79,76 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
     return (
         <FormControl className="w-full space-y-4">
             <>
-                {selectBoxPrice && !customPrice && (
-                    <Autocomplete
-                        disablePortal
-                        options={costsOffice}
-                        fullWidth
-                        onChange={(e, newValue) => {
-                            setCustomPrice(newValue?.value === 'custom');
-                            if (newValue?.value !== 'custom') setPrice(newValue?.value ?? '');
-                        }}
-                        value={
-                            price
-                                ? {
-                                      label: costsOffice.find(item => item.value === price)?.label,
-                                      value: price
-                                  }
-                                : null
-                        }
-                        onFocus={() => setPriceFieldError(false)}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                error={priceFieldError}
-                                label={priceLable}
-                                helperText={
-                                    priceFieldError
-                                        ? 'لطفا مبلغ را وارد کنید.'
-                                        : price
-                                        ? `${numberToWords(+price)} تومان`
-                                        : ''
-                                }
-                                onClick={clickPriceFiled}
-                            />
-                        )}
-                    />
-                )}
-                {(!selectBoxPrice || customPrice) && (
-                    <PriceField
-                        label={priceLable}
-                        onChange={e => setPrice(e.target.value)}
-                        value={price}
-                        helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
-                        onClick={clickPriceFiled}
-                        onFocus={() => setPriceFieldError(false)}
-                        error={priceFieldError}
-                        autoFocus
-                    />
-                )}
+                <ErrorBoundary
+                    FallbackComponent={props => {
+                        setCustomPrice(true);
+                        return <></>;
+                    }}
+                    onError={(error, errorInfo) => {
+                        getSplunkInstance().sendEvent({
+                            group: 'frontend_error_logging',
+                            type: 'drapp-payment-page::unhandled_exceptions_with_error_boundary',
+                            event: {
+                                error: {
+                                    message: error.message,
+                                    stack: error.stack,
+                                    name: error.name
+                                },
+                                errorInfo
+                            }
+                        });
+                    }}
+                >
+                    {selectBoxPrice && !customPrice && (
+                        <Autocomplete
+                            disabledItemsFocusable
+                            disablePortal
+                            options={costsOffice}
+                            fullWidth
+                            onChange={(e, newValue) => {
+                                setCustomPrice(newValue?.value === 'custom');
+                                if (newValue?.value !== 'custom') setPrice(newValue?.value ?? '');
+                            }}
+                            value={
+                                price
+                                    ? {
+                                          label: costsOffice.find(item => item.value === price)
+                                              ?.label,
+                                          value: price.toString()
+                                      }
+                                    : null
+                            }
+                            onFocus={() => setPriceFieldError(false)}
+                            renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    error={priceFieldError}
+                                    label={priceLable}
+                                    helperText={
+                                        priceFieldError
+                                            ? 'لطفا مبلغ را وارد کنید.'
+                                            : price
+                                            ? `${numberToWords(+price)} تومان`
+                                            : ''
+                                    }
+                                    onClick={clickPriceFiled}
+                                />
+                            )}
+                        />
+                    )}
+                    {(!selectBoxPrice || customPrice) && (
+                        <PriceField
+                            label={priceLable}
+                            onChange={e => setPrice(e.target.value)}
+                            value={price}
+                            helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
+                            onClick={clickPriceFiled}
+                            onFocus={() => setPriceFieldError(false)}
+                            error={priceFieldError}
+                            autoFocus
+                        />
+                    )}
+                </ErrorBoundary>
                 {showBankNumberField && (
                     <BankNumberField
                         onChange={e => setCartNumber(e.target.value)}
