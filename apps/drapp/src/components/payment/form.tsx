@@ -146,6 +146,7 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                             onFocus={() => setPriceFieldError(false)}
                             error={priceFieldError}
                             autoFocus
+                            limit={7}
                         />
                     )}
                 </ErrorBoundary>
