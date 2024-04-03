@@ -124,13 +124,7 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                                     {...params}
                                     error={priceFieldError}
                                     label={priceLable}
-                                    helperText={
-                                        priceFieldError
-                                            ? 'لطفا مبلغ را وارد کنید.'
-                                            : price
-                                            ? `${numberToWords(+price)} تومان`
-                                            : ''
-                                    }
+                                    helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}
                                     onClick={clickPriceFiled}
                                 />
                             )}
@@ -138,7 +132,7 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                     )}
                     {(!selectBoxPrice || customPrice) && (
                         <PriceField
-                            label={priceLable}
+                            label={priceLable + ' (تومان)'}
                             onChange={e => setPrice(e.target.value)}
                             value={price}
                             helperText={priceFieldError ? 'لطفا مبلغ را وارد کنید.' : ''}

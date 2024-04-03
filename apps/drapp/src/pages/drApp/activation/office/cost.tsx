@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useDrApp } from '@paziresh24/context/drapp';
 import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import { addCommas, numberToWords, removeCommas } from '@persian-tools/persian-tools';
+import { addCommas } from '@persian-tools/persian-tools';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Modal from '@paziresh24/shared/ui/modal';

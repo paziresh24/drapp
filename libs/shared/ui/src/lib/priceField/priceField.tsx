@@ -25,7 +25,7 @@ export const PriceField = (props: PriceFieldProps) => {
                 ...InputProps,
                 inputComponent: PriceFieldFormatCustom as any
             }}
-            helperText={helperText ? helperText : value ? `${numberToWords(+value)} تومان` : ''}
+            helperText={helperText ? helperText : ''}
             {...rest}
         />
     );
