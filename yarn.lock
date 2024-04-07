@@ -3401,27 +3401,18 @@
   "resolved" "https://registry.npmjs.org/@plasmicapp/data-sources-context/-/data-sources-context-0.1.21.tgz"
   "version" "0.1.21"
 
-"@plasmicapp/data-sources@0.1.150":
-  "integrity" "sha512-GZxvEYVOflFV/VXFsGQ7cQbl6a7Q1Dxe7+TP6t12//KnN8HGrRAXOfuJmFvL2Wj8AVxHljNIMWwC26i80vpw8Q=="
-  "resolved" "https://registry.npmjs.org/@plasmicapp/data-sources/-/data-sources-0.1.150.tgz"
-  "version" "0.1.150"
+"@plasmicapp/data-sources@0.1.148":
+  "integrity" "sha512-SELTOGSQiwAOaGKXd7Ij4B7PSyuxk0HzkVY7i1MK6mijd+mhXl7OLvcYK7Y0VE4O8SWnxDEhQae+v21+Gsudvg=="
+  "resolved" "https://registry.npmjs.org/@plasmicapp/data-sources/-/data-sources-0.1.148.tgz"
+  "version" "0.1.148"
   dependencies:
     "@plasmicapp/data-sources-context" "0.1.21"
-    "@plasmicapp/host" "1.0.191"
+    "@plasmicapp/host" "1.0.190"
     "@plasmicapp/isomorphic-unfetch" "1.0.3"
     "@plasmicapp/query" "0.1.78"
     "fast-stringify" "^2.0.0"
 
-"@plasmicapp/host@>=1.0.0", "@plasmicapp/host@1.0.191":
-  "integrity" "sha512-2qD93nrgx4anUkDWMpWoCvbC70ADA3UDMODPizdDDnYvE8O+tOmrdC6u9N3JzSXPHya2Lb6dJftvmbTRX/vu4g=="
-  "resolved" "https://registry.npmjs.org/@plasmicapp/host/-/host-1.0.191.tgz"
-  "version" "1.0.191"
-  dependencies:
-    "@plasmicapp/query" "0.1.78"
-    "csstype" "^3.1.2"
-    "window-or-global" "^1.0.1"
-
-"@plasmicapp/host@1.0.190":
+"@plasmicapp/host@>=1.0.0", "@plasmicapp/host@1.0.190":
   "integrity" "sha512-g8SjtzNRbkMmVNFUppJQYf50QwGKAz9waEonjNDfuBVmRQjPpSgMUIEK73zy8ocSq3ZPejGsvAWK1rzyn6DfTA=="
   "resolved" "https://registry.npmjs.org/@plasmicapp/host/-/host-1.0.190.tgz"
   "version" "1.0.190"
@@ -3474,13 +3465,6 @@
   dependencies:
     "json-logic-js" "^2.0.2"
 
-"@plasmicapp/loader-splits@1.0.58":
-  "integrity" "sha512-iks91hRbDPKlruyV7x/HpBIZBajLeGmyjOna701WlxDqnu1mW8d/odqSqgUexkPuLEiEY4P+b+mzx/zWLc/9ow=="
-  "resolved" "https://registry.npmjs.org/@plasmicapp/loader-splits/-/loader-splits-1.0.58.tgz"
-  "version" "1.0.58"
-  dependencies:
-    "json-logic-js" "^2.0.2"
-
 "@plasmicapp/prepass@1.0.14":
   "integrity" "sha512-44gakTUs+yYS+ECBZFlbWulYP5p4aVipO6ZEwERcMiLhxIca7kUAzCvG6YPDEp+PJ6A+URK53CvJVmOs/YjKng=="
   "resolved" "https://registry.npmjs.org/@plasmicapp/prepass/-/prepass-1.0.14.tgz"
@@ -3488,14 +3472,6 @@
   dependencies:
     "@plasmicapp/query" "0.1.78"
     "@plasmicapp/react-ssr-prepass" "2.0.3"
-
-"@plasmicapp/prepass@1.0.15":
-  "integrity" "sha512-SGScIt98IxWe841Q+z+aI0TEAtEdN/c0+PKcFVew4uKNzYLCk3JMRSCpMPqVTGTcGUOZNM9X2UI+94uA4mD93g=="
-  "resolved" "https://registry.npmjs.org/@plasmicapp/prepass/-/prepass-1.0.15.tgz"
-  "version" "1.0.15"
-  dependencies:
-    "@plasmicapp/query" "0.1.78"
-    "@plasmicapp/react-ssr-prepass" "2.0.4"
 
 "@plasmicapp/query@^0.1.64", "@plasmicapp/query@>=0.1.0", "@plasmicapp/query@0.1.78":
   "integrity" "sha512-ld0rVA7FqqohmvTYkm9TrzqwJBNZ5YPB3PXd75owir5LTfHfZLRDpWmr6Q2OZBs5iCBJxA9y+W0H+jvIcC15VA=="
@@ -3509,22 +3485,17 @@
   "resolved" "https://registry.npmjs.org/@plasmicapp/react-ssr-prepass/-/react-ssr-prepass-2.0.3.tgz"
   "version" "2.0.3"
 
-"@plasmicapp/react-ssr-prepass@2.0.4":
-  "integrity" "sha512-TgF/heoVNozZOJK2Pnnqsa/M3bxgLtAoy32xxfJ7vbSjj5fEuYmWNnzdTmvdeYyEZihyCBtUt5gs6gPiqV8pbw=="
-  "resolved" "https://registry.npmjs.org/@plasmicapp/react-ssr-prepass/-/react-ssr-prepass-2.0.4.tgz"
-  "version" "2.0.4"
-
-"@plasmicapp/react-web@0.2.325":
-  "integrity" "sha512-u8uWnXQApLAda8Ya9puVpba9gwIrcIdkVCkDUQSNPiNYvGBA+B4MmYH2zITtdT1NJothciIxLJwU9SKlAojsiA=="
-  "resolved" "https://registry.npmjs.org/@plasmicapp/react-web/-/react-web-0.2.325.tgz"
-  "version" "0.2.325"
+"@plasmicapp/react-web@0.2.319":
+  "integrity" "sha512-GLoXQTfA+OfAJTzVqT9wCyEdhCkl0V+XkWDcc7/SAwSkgTahgFb/j6UvgVgT5pvPwmrB4XPQ66wz1w2HTD3y9w=="
+  "resolved" "https://registry.npmjs.org/@plasmicapp/react-web/-/react-web-0.2.319.tgz"
+  "version" "0.2.319"
   dependencies:
     "@plasmicapp/auth-react" "0.0.20"
-    "@plasmicapp/data-sources" "0.1.150"
+    "@plasmicapp/data-sources" "0.1.148"
     "@plasmicapp/data-sources-context" "0.1.21"
-    "@plasmicapp/host" "1.0.191"
-    "@plasmicapp/loader-splits" "1.0.58"
-    "@plasmicapp/prepass" "1.0.15"
+    "@plasmicapp/host" "1.0.190"
+    "@plasmicapp/loader-splits" "1.0.56"
+    "@plasmicapp/prepass" "1.0.14"
     "@plasmicapp/query" "0.1.78"
     "@react-aria/checkbox" "^3.11.2"
     "@react-aria/focus" "^3.14.3"
