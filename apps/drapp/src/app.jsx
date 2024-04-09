@@ -4,6 +4,7 @@ import { GrowthBook, GrowthBookProvider } from '@growthbook/growthbook-react';
 import { useEffect } from 'react';
 import PlasmicHost from './pages/fragment';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import { PlasmicRootProvider } from '@plasmicapp/react-web';
 
 export const growthbook = new GrowthBook({
     apiHost: window._env_.P24_GROWTHBOOK_API_HOST,
@@ -45,12 +46,14 @@ function App() {
 
     return (
         <GrowthBookProvider growthbook={growthbook}>
-            <Switch>
-                <Route path="/fragment" component={PlasmicHost} />
-                {routes.map(({ name, path, exact, component }) => (
-                    <Route key={name} path={path} exact={exact} component={component} />
-                ))}
-            </Switch>
+            <PlasmicRootProvider disableLoadingBoundary>
+                <Switch>
+                    <Route path="/fragment" component={PlasmicHost} />
+                    {routes.map(({ name, path, exact, component }) => (
+                        <Route key={name} path={path} exact={exact} component={component} />
+                    ))}
+                </Switch>
+            </PlasmicRootProvider>
         </GrowthBookProvider>
     );
 }
