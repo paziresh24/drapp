@@ -72,7 +72,8 @@ const CostConsultActivation = () => {
                 }}
             />
             <div className="bg-[#FFFCF5] border-2 border-solid border-[#FFECC7] rounded-lg leading-6 p-3 text-sm font-medium">
-                جهت دریافت مبالغ پرداختی بیماران، لطفا پس از تکمیل ثبت نام در قسمت تنظیمات پرداخت
+                لطفا توجه داشته باشید که، ۳۰ درصد از مبلغ هر  ویزیت به پذیرش۲۴ اختصاص می‌یابد. 
+همچنین جهت دریافت مبالغ پرداختی بیماران، لطفا پس از تکمیل ثبت نام در قسمت تنظیمات پرداخت
                 شماره کارت خود را وارد نمایید.
             </div>
             <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
