@@ -39,7 +39,7 @@
         "@persian-tools/persian-tools": "3.5.0",
         "@plasmicapp/cli": "0.1.327",
         "@plasmicapp/loader-react": "1.0.339",
-        "@plasmicapp/react-web": "0.2.319",
+        "@plasmicapp/react-web": "0.2.326",
         "@plasmicpkgs/plasmic-basic-components": "0.0.209",
         "@plasmicpkgs/plasmic-query": "0.0.208",
         "@plasmicpkgs/radix-ui": "0.0.44",
