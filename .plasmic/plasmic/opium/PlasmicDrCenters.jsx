@@ -19,7 +19,7 @@ import {
   useDollarState
 } from "@plasmicapp/react-web";
 import { useDataEnv } from "@plasmicapp/react-web/lib/host";
-import { Popover } from "@paziresh24/apps/drapp/fragment/components/popover"; // plasmic-import: IlOOTfrZMl-5/codeComponent
+import Popover from "@paziresh24/apps/drapp/fragment/components/popover"; // plasmic-import: IlOOTfrZMl-5/codeComponent
 import DrCenter from "../../DrCenter"; // plasmic-import: gnZ2lrwJIfnb/component
 import "@plasmicapp/react-web/lib/plasmic.css";
 import plasmic_fragment_design_system_css from "../fragment_design_system/plasmic.module.css"; // plasmic-import: h9Dbk9ygddw7UVEq1NNhKi/projectcss
