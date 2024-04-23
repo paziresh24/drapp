@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import PlasmicHost from './pages/fragment';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { PlasmicRootProvider } from '@plasmicapp/react-web';
-
+import GlobalContextsProvider from '../../../.plasmic/plasmic/opium/PlasmicGlobalContextsProvider';
 export const growthbook = new GrowthBook({
     apiHost: window._env_.P24_GROWTHBOOK_API_HOST,
     clientKey: window._env_.P24_GROWTHBOOK_CLIENT_KEY
@@ -47,12 +47,14 @@ function App() {
     return (
         <GrowthBookProvider growthbook={growthbook}>
             <PlasmicRootProvider disableLoadingBoundary>
-                <Switch>
-                    <Route path="/fragment" component={PlasmicHost} />
-                    {routes.map(({ name, path, exact, component }) => (
-                        <Route key={name} path={path} exact={exact} component={component} />
-                    ))}
-                </Switch>
+                <GlobalContextsProvider>
+                    <Switch>
+                        <Route path="/fragment" component={PlasmicHost} />
+                        {routes.map(({ name, path, exact, component }) => (
+                            <Route key={name} path={path} exact={exact} component={component} />
+                        ))}
+                    </Switch>
+                </GlobalContextsProvider>
             </PlasmicRootProvider>
         </GrowthBookProvider>
     );

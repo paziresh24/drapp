@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
-import { GlobalActionsProvider } from '@plasmicapp/host';
 import { ToastPosition, toast } from 'react-toastify';
-
+import { GlobalActionsProvider } from '@plasmicapp/react-web/lib/host';
 export const Fragment = ({ children }: React.PropsWithChildren) => {
     const actions = useMemo(
         () => ({

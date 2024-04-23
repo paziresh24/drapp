@@ -20,7 +20,6 @@ import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '@hooks/useShouldShowActionBars';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { isEmbed } from '@paziresh24/shared/utils';
-import { Fragment } from 'apps/drapp/src/fragment';
 
 const Header = memo(() => {
     const history = useHistory();

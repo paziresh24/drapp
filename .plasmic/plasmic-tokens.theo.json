@@ -11,16 +11,6 @@
       }
     },
     {
-      "name": "1",
-      "type": "spacing",
-      "value": "0.25rem",
-      "category": "spacing",
-      "meta": {
-        "projectId": "vJdoMCywiTRegdd4X7KNws",
-        "id": "5dNkhr-ReXw6"
-      }
-    },
-    {
       "name": "10",
       "type": "spacing",
       "value": "2.5rem",
@@ -41,16 +31,6 @@
       }
     },
     {
-      "name": "2",
-      "type": "spacing",
-      "value": "0.5rem",
-      "category": "spacing",
-      "meta": {
-        "projectId": "vJdoMCywiTRegdd4X7KNws",
-        "id": "eKnRjXu5Wl6q"
-      }
-    },
-    {
       "name": "3",
       "type": "spacing",
       "value": "0.75rem",
@@ -58,16 +38,6 @@
       "meta": {
         "projectId": "h9Dbk9ygddw7UVEq1NNhKi",
         "id": "vMUQwr5Jto1d"
-      }
-    },
-    {
-      "name": "3",
-      "type": "spacing",
-      "value": "0.75rem",
-      "category": "spacing",
-      "meta": {
-        "projectId": "vJdoMCywiTRegdd4X7KNws",
-        "id": "x0Zufqf8WCgT"
       }
     },
     {

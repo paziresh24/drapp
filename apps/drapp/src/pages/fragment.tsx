@@ -8,6 +8,7 @@ import { DatePicker } from '@paziresh24/apps/drapp/fragment/components/date-pick
 import { TimePicker } from '@paziresh24/apps/drapp/fragment/components/time-picker';
 import { Fragment } from '@paziresh24/apps/drapp/fragment/designSystemGlobalContext';
 import plasmicSplunkEvent from '@paziresh24/apps/drapp/fragment/plasmicSplunkEvent';
+import Popover from '../fragment/components/popover';
 
 export default function PlasmicHost() {
     return <PlasmicCanvasHost />;
@@ -69,6 +70,48 @@ registerComponent(TimePicker, {
             variableType: 'text',
             valueProp: 'value',
             onChangeProp: 'onChange'
+        }
+    }
+});
+
+registerComponent(Popover, {
+    name: 'Popover',
+    displayName: 'Fragment/Popover',
+    importPath: '@paziresh24/apps/drapp/fragment/components/popover',
+    figmaMappings: [{ figmaComponentName: 'Popover' }],
+    props: {
+        trigger: 'slot',
+        content: 'slot',
+        open: {
+            type: 'boolean',
+            defaultValue: false
+        },
+        onOpenChange: {
+            type: 'eventHandler',
+            argTypes: [
+                {
+                    name: 'open',
+                    type: 'boolean'
+                }
+            ]
+        }
+    },
+    refActions: {
+        open: {
+            argTypes: [],
+            displayName: 'Open'
+        },
+        close: {
+            argTypes: [],
+            displayName: 'Close'
+        }
+    },
+    states: {
+        open: {
+            type: 'writable',
+            variableType: 'boolean',
+            valueProp: 'open',
+            onChangeProp: 'onOpenChange'
         }
     }
 });

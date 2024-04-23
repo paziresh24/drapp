@@ -26,6 +26,7 @@ import { Alert } from '@mui/material';
 import queryString from 'query-string';
 import Modal from '@paziresh24/shared/ui/modal';
 import { useFeatureValue } from '@growthbook/growthbook-react';
+import { Fragment } from '../../../../fragment';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
 
@@ -130,6 +131,18 @@ const WorkHours = () => {
             }
         }
     };
+
+    // if (process.env.NODE_ENV === 'development') {
+    //     return (
+    //         <Fragment
+    //             name="HoursDaysOfWeek"
+    //             props={{
+    //                 centerId: doctorInfo.center.id,
+    //                 userCenterId: doctorInfo.center.user_center_id
+    //             }}
+    //         />
+    //     );
+    // }
 
     return (
         <Container maxWidth="sm" className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md">
