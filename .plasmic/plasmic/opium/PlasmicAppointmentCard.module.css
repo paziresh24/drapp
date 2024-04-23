@@ -259,31 +259,31 @@
   max-width: 100%;
   min-width: 0;
 }
-.اطلاعاتشخصبمار__fnR3F:global(.__wab_instance) {
+.patientPrivateData__fnR3F:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
 }
-.اطلاعاتشخصبمار___96092:global(.__wab_instance) {
+.patientPrivateData___96092:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
 }
-.اطلاعاتشخصبمار__zPkJj:global(.__wab_instance) {
+.patientPrivateData__zPkJj:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
 }
-.اطلاعاتشخصبمار__gWnzb:global(.__wab_instance) {
+.patientPrivateData__gWnzb:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
 }
-.اطلاعاتشخصبمار__mnyrV:global(.__wab_instance) {
+.patientPrivateData__mnyrV:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
 }
-.اطلاعاتشخصبمار__cUyjz:global(.__wab_instance) {
+.patientPrivateData__cUyjz:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
 }
-.اطلاعاتشخصبمار___6Z2Lw:global(.__wab_instance) {
+.patientPrivateData___6Z2Lw:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
 }
@@ -526,12 +526,12 @@
   width: auto;
   height: 1em;
 }
-.دمهتماسامن:global(.__wab_instance) {
+.safeCall:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
   flex-shrink: 0;
 }
-.دمهوضعتوزت:global(.__wab_instance) {
+.bookStatusButton:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
   width: 100%;

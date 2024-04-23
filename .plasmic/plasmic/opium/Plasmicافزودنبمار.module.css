@@ -81,13 +81,13 @@
   min-width: 0;
 }
 .verticalStackData {
+  display: flex;
   position: relative;
   flex-direction: column;
   width: 100%;
   height: auto;
   max-width: 100%;
   min-width: 0;
-  display: none;
   padding: 8px;
 }
 .verticalStackData > :global(.__wab_flex-container) {
