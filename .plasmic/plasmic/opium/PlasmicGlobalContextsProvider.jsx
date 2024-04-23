@@ -8,5 +8,21 @@ import { Fragment } from "@paziresh24/apps/drapp/fragment/designSystemGlobalCont
 
 export default function GlobalContextsProvider(props) {
   const { children, fragmentProps } = props;
-  return <Fragment {...fragmentProps}>{children}</Fragment>;
+  return (
+    <Fragment
+      {...fragmentProps}
+      apiConfig={
+        fragmentProps && "apiConfig" in fragmentProps
+          ? fragmentProps.apiConfig
+          : { withCredentials: true }
+      }
+      previewApiConfig={
+        fragmentProps && "previewApiConfig" in fragmentProps
+          ? fragmentProps.previewApiConfig
+          : undefined
+      }
+    >
+      {children}
+    </Fragment>
+  );
 }

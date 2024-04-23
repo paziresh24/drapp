@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ToastPosition, toast } from 'react-toastify';
 import { GlobalActionsProvider } from '@plasmicapp/react-web/lib/host';
 import axios from 'axios';
+import { getToken } from '@paziresh24/utils/localstorage';
 export const Fragment = ({
     children,
     previewApiConfig,
@@ -32,9 +33,11 @@ export const Fragment = ({
             ) => {
                 try {
                     let result;
+                    const token = getToken();
                     if (method === 'GET') {
                         result = await axios.get(url, {
                             params,
+                            ...(!!token && { headers: { Authorization: `Bearer ${token}` } }),
                             ...apiConfig,
                             ...previewApiConfig,
                             ...config
@@ -45,6 +48,7 @@ export const Fragment = ({
                             method.toLowerCase() as 'post' | 'delete' | 'put' | 'patch'
                         ](url, body, {
                             params,
+                            ...(!!token && { headers: { Authorization: `Bearer ${token}` } }),
                             ...apiConfig,
                             ...previewApiConfig,
                             ...config

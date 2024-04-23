@@ -25,7 +25,7 @@ import { getCenterType } from 'apps/drapp/src/functions/getCenterType';
 import { Alert } from '@mui/material';
 import queryString from 'query-string';
 import Modal from '@paziresh24/shared/ui/modal';
-import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { Fragment } from '../../../../fragment';
 
 const durationList = range(5, 61, 5).filter(number => ![25, 35, 40, 45, 50, 55].includes(number));
@@ -48,9 +48,13 @@ const WorkHours = () => {
         ''
     );
 
+    const useFragment = useFeatureIsOn('show-fragment-workhour-page');
+
     useEffect(() => {
-        getWorkHoursRequest.remove();
-        getWorkHoursRequest.refetch();
+        if (!useFragment) {
+            getWorkHoursRequest.remove();
+            getWorkHoursRequest.refetch();
+        }
     }, [doctorInfo.center]);
 
     useEffect(() => {
@@ -132,22 +136,22 @@ const WorkHours = () => {
         }
     };
 
-    // if (process.env.NODE_ENV === 'development') {
-    //     return (
-    //         <Container
-    //             maxWidth="sm"
-    //             className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md"
-    //         >
-    //             <Fragment
-    //                 name="HoursDaysOfWeek"
-    //                 props={{
-    //                     centerId: doctorInfo.center.id,
-    //                     userCenterId: doctorInfo.center.user_center_id
-    //                 }}
-    //             />
-    //         </Container>
-    //     );
-    // }
+    if (useFragment) {
+        return (
+            <Container
+                maxWidth="sm"
+                className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md"
+            >
+                <Fragment
+                    name="HoursDaysOfWeek"
+                    props={{
+                        centerId: doctorInfo.center.id,
+                        userCenterId: doctorInfo.center.user_center_id
+                    }}
+                />
+            </Container>
+        );
+    }
 
     return (
         <Container maxWidth="sm" className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md">

@@ -24,7 +24,7 @@ import {
 import { useDataEnv } from "@plasmicapp/react-web/lib/host";
 import Checkbox from "../../Checkbox"; // plasmic-import: WT38Ke_Z_eCs/component
 import Select from "../../Select"; // plasmic-import: OzXPMxUo1TiP/component
-import { Popover } from "@paziresh24/apps/drapp/fragment/components/popover"; // plasmic-import: IlOOTfrZMl-5/codeComponent
+import Popover from "@paziresh24/apps/drapp/fragment/components/popover"; // plasmic-import: IlOOTfrZMl-5/codeComponent
 import DaysOfWeek from "../../DaysOfWeek"; // plasmic-import: oTc6QTbblo0F/component
 import "@plasmicapp/react-web/lib/plasmic.css";
 import plasmic_fragment_design_system_css from "../fragment_design_system/plasmic.module.css"; // plasmic-import: h9Dbk9ygddw7UVEq1NNhKi/projectcss

@@ -14,6 +14,7 @@ import {
   generateStateOnChangeProp,
   generateStateValueProp,
   initializePlasmicStates,
+  set as $stateSet,
   useCurrentUser,
   useDollarState
 } from "@plasmicapp/react-web";
@@ -139,36 +140,65 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
         className={classNames("__wab_instance", sty.sideEffect)}
         onMount={async () => {
           const $steps = {};
-          $steps["runCode"] = true
+          $steps["getWorkhours"] = true
             ? (() => {
                 const actionArgs = {
-                  customFunction: async () => {
-                    return fetch(
-                      `https://api.paziresh24.com/V1/doctor/center/workhours?center_id=${$props.centerId}`,
-                      {
-                        method: "GET",
-                        headers: {
-                          "Content-Type": "application/json",
-                          authorization:
-                            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3AyNGRvY3RvcnMuZGFya3ViZS5hcHAvVjEvYXV0aC9sb2dpbiIsImlhdCI6MTcxMjQ4MjU3OCwiZXhwIjoxNzIwMjU4NTc4LCJuYmYiOjE3MTI0ODI1NzgsImp0aSI6InNkV2o4NEM1YjNDS0ZoYlIiLCJzdWIiOiIxODg2MDAyIiwibmFtZSI6Itiy2YfYsdmHIiwiZmFtaWx5Ijoi2KfYsdiv2KfZhtuMIiwiZ2VuZGVyIjoiZmVtYWxlIiwicm9sZSI6InVzZXIiLCJrZXkiOiJ1c2VyLWtleSIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsicHJvdmlkZXIiLCJjb25zdW1lciIsInVzZXIiXSwieC1oYXN1cmEtcHJvdmlkZXItaWQiOiIxNDk0MjM4In0.FaCzpy31LEDkwBL28_ZX3StyOt6oNfPAdmgliX2pWcM"
+                  args: [
+                    "GET",
+                    "https://api.paziresh24.com/V1/doctor/center/workhours",
+                    (() => {
+                      try {
+                        return { center_id: $props.centerId };
+                      } catch (e) {
+                        if (
+                          e instanceof TypeError ||
+                          e?.plasmicType === "PlasmicUndefinedDataError"
+                        ) {
+                          return undefined;
                         }
+                        throw e;
                       }
-                    )
-                      .then(response => response.json())
-                      .then(data => ($state.duration = data));
-                  }
+                    })()
+                  ]
                 };
-                return (({ customFunction }) => {
-                  return customFunction();
+                return $globalActions["Fragment.apiRequest"]?.apply(null, [
+                  ...actionArgs.args
+                ]);
+              })()
+            : undefined;
+          if (
+            $steps["getWorkhours"] != null &&
+            typeof $steps["getWorkhours"] === "object" &&
+            typeof $steps["getWorkhours"].then === "function"
+          ) {
+            $steps["getWorkhours"] = await $steps["getWorkhours"];
+          }
+          $steps["updateDuration"] = true
+            ? (() => {
+                const actionArgs = {
+                  variable: {
+                    objRoot: $state,
+                    variablePath: ["duration"]
+                  },
+                  operation: 0,
+                  value: $steps.getWorkhours.data
+                };
+                return (({ variable, value, startIndex, deleteCount }) => {
+                  if (!variable) {
+                    return;
+                  }
+                  const { objRoot, variablePath } = variable;
+                  $stateSet(objRoot, variablePath, value);
+                  return value;
                 })?.apply(null, [actionArgs]);
               })()
             : undefined;
           if (
-            $steps["runCode"] != null &&
-            typeof $steps["runCode"] === "object" &&
-            typeof $steps["runCode"].then === "function"
+            $steps["updateDuration"] != null &&
+            typeof $steps["updateDuration"] === "object" &&
+            typeof $steps["updateDuration"].then === "function"
           ) {
-            $steps["runCode"] = await $steps["runCode"];
+            $steps["updateDuration"] = await $steps["updateDuration"];
           }
         }}
       />
@@ -355,13 +385,14 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
           $steps["runCode5"] = $state.workhours.some(wh => wh.warning)
             ? (() => {
                 const actionArgs = {
-                  customFunction: async () => {
-                    return alert("در ثبت ساعت کاری با خطا مواجه هستید");
-                  }
+                  args: [
+                    "error",
+                    "\u062f\u0631 \u062b\u0628\u062a \u0633\u0627\u0639\u062a \u06a9\u0627\u0631\u06cc \u0628\u0627 \u062e\u0637\u0627 \u0645\u0648\u0627\u062c\u0647 \u0647\u0633\u062a\u06cc\u062f."
+                  ]
                 };
-                return (({ customFunction }) => {
-                  return customFunction();
-                })?.apply(null, [actionArgs]);
+                return $globalActions["Fragment.showToast"]?.apply(null, [
+                  ...actionArgs.args
+                ]);
               })()
             : undefined;
           if (
@@ -371,20 +402,16 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
           ) {
             $steps["runCode5"] = await $steps["runCode5"];
           }
-          $steps["runCode"] = $state.workhours.every(wh => !wh.warning)
+          $steps["saveWorkhours"] = $state.workhours.every(wh => !wh.warning)
             ? (() => {
                 const actionArgs = {
-                  customFunction: async () => {
-                    return fetch(
-                      "https://api.paziresh24.com/V1/doctor/center/workhours",
-                      {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                          authorization:
-                            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3AyNGRvY3RvcnMuZGFya3ViZS5hcHAvVjEvYXV0aC9sb2dpbiIsImlhdCI6MTcxMjQ4MjU3OCwiZXhwIjoxNzIwMjU4NTc4LCJuYmYiOjE3MTI0ODI1NzgsImp0aSI6InNkV2o4NEM1YjNDS0ZoYlIiLCJzdWIiOiIxODg2MDAyIiwibmFtZSI6Itiy2YfYsdmHIiwiZmFtaWx5Ijoi2KfYsdiv2KfZhtuMIiwiZ2VuZGVyIjoiZmVtYWxlIiwicm9sZSI6InVzZXIiLCJrZXkiOiJ1c2VyLWtleSIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsicHJvdmlkZXIiLCJjb25zdW1lciIsInVzZXIiXSwieC1oYXN1cmEtcHJvdmlkZXItaWQiOiIxNDk0MjM4In0.FaCzpy31LEDkwBL28_ZX3StyOt6oNfPAdmgliX2pWcM"
-                        },
-                        body: JSON.stringify({
+                  args: [
+                    "POST",
+                    "https://api.paziresh24.com/V1/doctor/center/workhours",
+                    undefined,
+                    (() => {
+                      try {
+                        return {
                           center_id: $props.centerId,
                           cost: 0,
                           duration: $state.duration.data.duration,
@@ -402,44 +429,33 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
                             )
                             .flat()
                             .filter(item => item != false)
-                        })
+                        };
+                      } catch (e) {
+                        if (
+                          e instanceof TypeError ||
+                          e?.plasmicType === "PlasmicUndefinedDataError"
+                        ) {
+                          return undefined;
+                        }
+                        throw e;
                       }
-                    );
-                  }
+                    })()
+                  ]
                 };
-                return (({ customFunction }) => {
-                  return customFunction();
-                })?.apply(null, [actionArgs]);
+                return $globalActions["Fragment.apiRequest"]?.apply(null, [
+                  ...actionArgs.args
+                ]);
               })()
             : undefined;
           if (
-            $steps["runCode"] != null &&
-            typeof $steps["runCode"] === "object" &&
-            typeof $steps["runCode"].then === "function"
+            $steps["saveWorkhours"] != null &&
+            typeof $steps["saveWorkhours"] === "object" &&
+            typeof $steps["saveWorkhours"].then === "function"
           ) {
-            $steps["runCode"] = await $steps["runCode"];
-          }
-          $steps["runCode2"] = $state.workhours.every(wh => !wh.warning)
-            ? (() => {
-                const actionArgs = {
-                  customFunction: async () => {
-                    return $steps.runCode.json();
-                  }
-                };
-                return (({ customFunction }) => {
-                  return customFunction();
-                })?.apply(null, [actionArgs]);
-              })()
-            : undefined;
-          if (
-            $steps["runCode2"] != null &&
-            typeof $steps["runCode2"] === "object" &&
-            typeof $steps["runCode2"].then === "function"
-          ) {
-            $steps["runCode2"] = await $steps["runCode2"];
+            $steps["saveWorkhours"] = await $steps["saveWorkhours"];
           }
           $steps["runCode3"] =
-            $steps.runCode2.status === "SUCCESS" &&
+            $steps.saveWorkhours.data.status === "SUCCESS" &&
             $state.workhours.every(wh => !wh.warning)
               ? (() => {
                   const actionArgs = {
@@ -461,11 +477,11 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
             $steps["runCode3"] = await $steps["runCode3"];
           }
           $steps["runCode4"] =
-            $steps.runCode2.status != "SUCCESS"
+            $steps.saveWorkhours.data.status != "SUCCESS"
               ? (() => {
                   const actionArgs = {
                     args: [
-                      undefined,
+                      "error",
                       "\u062f\u0631 \u062b\u0628\u062a \u0633\u0627\u0639\u062a \u06a9\u0627\u0631\u06cc \u0628\u0627 \u062e\u0637\u0627 \u0645\u0648\u0627\u062c\u0647 \u0647\u0633\u062a\u06cc\u062f."
                     ]
                   };
@@ -482,7 +498,7 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
             $steps["runCode4"] = await $steps["runCode4"];
           }
           $steps["runCode6"] =
-            $steps.runCode2.status === "SUCCESS" &&
+            $steps.saveWorkhours.data.status === "SUCCESS" &&
             $state.workhours.every(wh => !wh.warning)
               ? (() => {
                   const actionArgs = {
@@ -490,10 +506,7 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
                       return $$.splunkEvent({
                         token: "6d18640a-95c3-4368-a8d0-dc0beae3a44b",
                         group: "dr-app-workhour",
-                        data: {
-                          user_center_id: $props.userCenterId,
-                          cell: $props.cell
-                        },
+                        data: {},
                         type: "successful"
                       });
                     }
@@ -511,17 +524,14 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
             $steps["runCode6"] = await $steps["runCode6"];
           }
           $steps["runCode7"] =
-            $steps.runCode2.status != "SUCCESS"
+            $steps.saveWorkhours.data.status != "SUCCESS"
               ? (() => {
                   const actionArgs = {
                     customFunction: async () => {
                       return $$.splunkEvent({
                         token: "6d18640a-95c3-4368-a8d0-dc0beae3a44b",
                         group: "dr-app-workhour",
-                        data: {
-                          user_center_id: $props.user_center_id,
-                          cell: $props.cell
-                        },
+                        data: {},
                         type: "unsuccessful"
                       });
                     }
