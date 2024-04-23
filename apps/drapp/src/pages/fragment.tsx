@@ -77,6 +77,7 @@ registerComponent(TimePicker, {
 registerComponent(Popover, {
     name: 'Popover',
     displayName: 'Fragment/Popover',
+    isDefaultExport: true,
     importPath: '@paziresh24/apps/drapp/fragment/components/popover',
     figmaMappings: [{ figmaComponentName: 'Popover' }],
     props: {
@@ -118,7 +119,23 @@ registerComponent(Popover, {
 
 registerGlobalContext(Fragment, {
     name: 'Fragment',
-    props: {},
+    props: {
+        apiConfig: {
+            displayName: 'API Config',
+            type: 'object',
+            description: `e.g. { withCredentials: true }`,
+            helpText:
+                'Read about request configuration options at https://axios-http.com/docs/req_config'
+        },
+        previewApiConfig: {
+            displayName: 'Preview API Config',
+            type: 'object',
+            description: `e.g. { headers: { 'Authorization': 'XXX' } }`,
+            editOnly: true,
+            helpText:
+                'Read about request configuration options at https://axios-http.com/docs/req_config'
+        }
+    },
     providesData: true,
     globalActions: {
         showToast: {
@@ -160,6 +177,57 @@ registerGlobalContext(Fragment, {
                     type: {
                         type: 'number',
                         defaultValueHint: 3000
+                    }
+                }
+            ]
+        },
+        apiRequest: {
+            displayName: 'API Request',
+            parameters: [
+                {
+                    name: 'method',
+                    type: {
+                        type: 'choice',
+                        options: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
+                        defaultValueHint: 'GET',
+                        defaultValue: 'GET'
+                    }
+                },
+                {
+                    name: 'url',
+                    displayName: 'URL',
+                    type: {
+                        type: 'string',
+                        defaultValueHint: '/api/v1/users',
+                        required: true
+                    }
+                },
+                {
+                    displayName: 'Query Params',
+                    name: 'params',
+                    type: {
+                        type: 'object',
+                        description: `e.g. { id: 20 }`,
+                        helpText: 'It will append this to the end of the URL as ?key=value.'
+                    }
+                },
+                {
+                    displayName: 'Body',
+                    name: 'body',
+                    type: {
+                        type: 'object',
+                        helpText: 'It is not applicable for the GET method.',
+                        description: `e.g. { id: 20 }`
+                    }
+                },
+                {
+                    name: 'config',
+                    displayName: 'Request Config',
+                    type: {
+                        type: 'object',
+                        description: `e.g. { headers: { 'Authorization': 'XXX' } }`,
+                        helpText:
+                            'Read about request configuration options at https://axios-http.com/docs/req_config'
                     }
                 }
             ]

@@ -134,13 +134,18 @@ const WorkHours = () => {
 
     // if (process.env.NODE_ENV === 'development') {
     //     return (
-    //         <Fragment
-    //             name="HoursDaysOfWeek"
-    //             props={{
-    //                 centerId: doctorInfo.center.id,
-    //                 userCenterId: doctorInfo.center.user_center_id
-    //             }}
-    //         />
+    //         <Container
+    //             maxWidth="sm"
+    //             className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md"
+    //         >
+    //             <Fragment
+    //                 name="HoursDaysOfWeek"
+    //                 props={{
+    //                     centerId: doctorInfo.center.id,
+    //                     userCenterId: doctorInfo.center.user_center_id
+    //                 }}
+    //             />
+    //         </Container>
     //     );
     // }
 

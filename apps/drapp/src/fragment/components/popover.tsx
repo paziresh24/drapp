@@ -1,7 +1,7 @@
 import * as RadixPopover from '@radix-ui/react-popover';
 import { ReactNode, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
-const Popover = forwardRef(
+export const Popover = forwardRef(
     (
         {
             trigger,
@@ -43,7 +43,6 @@ const Popover = forwardRef(
         return (
             <RadixPopover.Root open={isOpen} onOpenChange={setIsOpen}>
                 <RadixPopover.Trigger>{trigger}</RadixPopover.Trigger>
-                <RadixPopover.Anchor />
                 <RadixPopover.Portal>
                     <RadixPopover.Content className="overflow-visible outline-none">
                         {content}
