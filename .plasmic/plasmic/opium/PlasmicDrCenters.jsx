@@ -19,7 +19,7 @@ import {
   useDollarState
 } from "@plasmicapp/react-web";
 import { useDataEnv } from "@plasmicapp/react-web/lib/host";
-import { Popover } from "@plasmicpkgs/radix-ui";
+import { Popover } from "@paziresh24/apps/drapp/fragment/components/popover"; // plasmic-import: IlOOTfrZMl-5/codeComponent
 import DrCenter from "../../DrCenter"; // plasmic-import: gnZ2lrwJIfnb/component
 import "@plasmicapp/react-web/lib/plasmic.css";
 import plasmic_fragment_design_system_css from "../fragment_design_system/plasmic.module.css"; // plasmic-import: h9Dbk9ygddw7UVEq1NNhKi/projectcss
@@ -58,10 +58,11 @@ function PlasmicDrCenters__RenderFunc(props) {
         onChangeProp: "onSelectedCenterChange"
       },
       {
-        path: "popoverCore.open",
+        path: "fragmentPopover.open",
         type: "private",
         variableType: "boolean",
-        initFunc: ({ $props, $state, $queries, $ctx }) => undefined
+        initFunc: ({ $props, $state, $queries, $ctx }) => false,
+        refName: "fragmentPopover"
       }
     ],
 
@@ -93,15 +94,10 @@ function PlasmicDrCenters__RenderFunc(props) {
       dr={"rtl"}
     >
       <Popover
-        data-plasmic-name={"popoverCore"}
-        data-plasmic-override={overrides.popoverCore}
-        className={classNames("__wab_instance", sty.popoverCore)}
-        onOpenChange={generateStateOnChangeProp($state, [
-          "popoverCore",
-          "open"
-        ])}
-        open={generateStateValueProp($state, ["popoverCore", "open"])}
-        overlay={
+        data-plasmic-name={"fragmentPopover"}
+        data-plasmic-override={overrides.fragmentPopover}
+        className={classNames("__wab_instance", sty.fragmentPopover)}
+        content={
           <Stack__
             as={"div"}
             hasGap={true}
@@ -151,25 +147,11 @@ function PlasmicDrCenters__RenderFunc(props) {
                 $steps["updateSelectedCenter2"] = true
                   ? (() => {
                       const actionArgs = {
-                        variable: {
-                          objRoot: $state,
-                          variablePath: ["popoverCore", "open"]
-                        },
-                        operation: 0,
-                        value: false
+                        tplRef: "fragmentPopover",
+                        action: "close"
                       };
-                      return (({
-                        variable,
-                        value,
-                        startIndex,
-                        deleteCount
-                      }) => {
-                        if (!variable) {
-                          return;
-                        }
-                        const { objRoot, variablePath } = variable;
-                        $stateSet(objRoot, variablePath, value);
-                        return value;
+                      return (({ tplRef, action, args }) => {
+                        return $refs?.[tplRef]?.[action]?.(...(args ?? []));
                       })?.apply(null, [actionArgs]);
                     })()
                   : undefined;
@@ -301,25 +283,11 @@ function PlasmicDrCenters__RenderFunc(props) {
                     $steps["updateSelectedCenter2"] = true
                       ? (() => {
                           const actionArgs = {
-                            variable: {
-                              objRoot: $state,
-                              variablePath: ["popoverCore", "open"]
-                            },
-                            operation: 0,
-                            value: false
+                            tplRef: "fragmentPopover",
+                            action: "close"
                           };
-                          return (({
-                            variable,
-                            value,
-                            startIndex,
-                            deleteCount
-                          }) => {
-                            if (!variable) {
-                              return;
-                            }
-                            const { objRoot, variablePath } = variable;
-                            $stateSet(objRoot, variablePath, value);
-                            return value;
+                          return (({ tplRef, action, args }) => {
+                            return $refs?.[tplRef]?.[action]?.(...(args ?? []));
                           })?.apply(null, [actionArgs]);
                         })()
                       : undefined;
@@ -351,135 +319,103 @@ function PlasmicDrCenters__RenderFunc(props) {
             })}
           </Stack__>
         }
-        themeResetClass={classNames(
-          projectcss.root_reset,
-          projectcss.plasmic_default_styles,
-          projectcss.plasmic_mixins,
-          projectcss.plasmic_tokens,
-          plasmic_fragment_design_system_css.plasmic_tokens
-        )}
-      >
-        <div
-          className={classNames(projectcss.all, sty.freeBox__dP8GQ)}
-          onClick={async event => {
-            const $steps = {};
-            $steps["updatePopoverCoreOpen"] = true
-              ? (() => {
-                  const actionArgs = {
-                    variable: {
-                      objRoot: $state,
-                      variablePath: ["popoverCore", "open"]
-                    },
-                    operation: 0,
-                    value: true
-                  };
-                  return (({ variable, value, startIndex, deleteCount }) => {
-                    if (!variable) {
-                      return;
-                    }
-                    const { objRoot, variablePath } = variable;
-                    $stateSet(objRoot, variablePath, value);
-                    return value;
-                  })?.apply(null, [actionArgs]);
-                })()
-              : undefined;
-            if (
-              $steps["updatePopoverCoreOpen"] != null &&
-              typeof $steps["updatePopoverCoreOpen"] === "object" &&
-              typeof $steps["updatePopoverCoreOpen"].then === "function"
-            ) {
-              $steps["updatePopoverCoreOpen"] = await $steps[
-                "updatePopoverCoreOpen"
-              ];
-            }
-          }}
-        >
-          <div
-            className={classNames(projectcss.all, sty.freeBox___4EVJx)}
-            dr={"rtl"}
-          >
+        onOpenChange={generateStateOnChangeProp($state, [
+          "fragmentPopover",
+          "open"
+        ])}
+        open={generateStateValueProp($state, ["fragmentPopover", "open"])}
+        ref={ref => {
+          $refs["fragmentPopover"] = ref;
+        }}
+        trigger={
+          <div className={classNames(projectcss.all, sty.freeBox__dP8GQ)}>
             <div
-              data-plasmic-name={"text"}
-              data-plasmic-override={overrides.text}
-              className={classNames(
-                projectcss.all,
-                projectcss.__wab_text,
-                sty.text
-              )}
+              className={classNames(projectcss.all, sty.freeBox___4EVJx)}
+              dr={"rtl"}
             >
-              <React.Fragment>
-                {(() => {
-                  try {
-                    return (() => {
-                      if ($state.selectedCenter == "all") return "کل نوبت‌ها";
-                      if ($state.selectedCenter == "5532")
-                        return "نوبت‌های آنلاین";
+              <div
+                data-plasmic-name={"text"}
+                data-plasmic-override={overrides.text}
+                className={classNames(
+                  projectcss.all,
+                  projectcss.__wab_text,
+                  sty.text
+                )}
+              >
+                <React.Fragment>
+                  {(() => {
+                    try {
+                      return (() => {
+                        if ($state.selectedCenter == "all") return "کل نوبت‌ها";
+                        if ($state.selectedCenter == "5532")
+                          return "نوبت‌های آنلاین";
+                        if (
+                          $state.selectedCenter !== "5532" &&
+                          $props.centers.find(
+                            center => center.id == $state.selectedCenter
+                          ).type_id == 1
+                        )
+                          return "نوبت‌های حضوری";
+                      })();
+                    } catch (e) {
                       if (
-                        $state.selectedCenter !== "5532" &&
-                        $props.centers.find(
-                          center => center.id == $state.selectedCenter
-                        ).type_id == 1
-                      )
-                        return "نوبت‌های حضوری";
-                    })();
-                  } catch (e) {
-                    if (
-                      e instanceof TypeError ||
-                      e?.plasmicType === "PlasmicUndefinedDataError"
-                    ) {
-                      return "\u06a9\u0644 \u0646\u0648\u0628\u062a\u200c\u0647\u0627";
+                        e instanceof TypeError ||
+                        e?.plasmicType === "PlasmicUndefinedDataError"
+                      ) {
+                        return "\u06a9\u0644 \u0646\u0648\u0628\u062a\u200c\u0647\u0627";
+                      }
+                      throw e;
                     }
-                    throw e;
+                  })()}
+                </React.Fragment>
+              </div>
+              {(() => {
+                try {
+                  return $state.fragmentPopover.open === false;
+                } catch (e) {
+                  if (
+                    e instanceof TypeError ||
+                    e?.plasmicType === "PlasmicUndefinedDataError"
+                  ) {
+                    return true;
                   }
-                })()}
-              </React.Fragment>
+                  throw e;
+                }
+              })() ? (
+                <ChevronDownIcon
+                  className={classNames(projectcss.all, sty.svg___57O6W)}
+                  role={"img"}
+                />
+              ) : null}
+              {(() => {
+                try {
+                  return $state.fragmentPopover.open === true;
+                } catch (e) {
+                  if (
+                    e instanceof TypeError ||
+                    e?.plasmicType === "PlasmicUndefinedDataError"
+                  ) {
+                    return true;
+                  }
+                  throw e;
+                }
+              })() ? (
+                <ChevronUpIcon
+                  className={classNames(projectcss.all, sty.svg__deGnp)}
+                  role={"img"}
+                />
+              ) : null}
             </div>
-            {(() => {
-              try {
-                return !$state.popoverCore.open;
-              } catch (e) {
-                if (
-                  e instanceof TypeError ||
-                  e?.plasmicType === "PlasmicUndefinedDataError"
-                ) {
-                  return true;
-                }
-                throw e;
-              }
-            })() ? (
-              <ChevronDownIcon
-                className={classNames(projectcss.all, sty.svg___57O6W)}
-                role={"img"}
-              />
-            ) : null}
-            {(() => {
-              try {
-                return $state.popoverCore.open === true;
-              } catch (e) {
-                if (
-                  e instanceof TypeError ||
-                  e?.plasmicType === "PlasmicUndefinedDataError"
-                ) {
-                  return true;
-                }
-                throw e;
-              }
-            })() ? (
-              <ChevronUpIcon
-                className={classNames(projectcss.all, sty.svg__deGnp)}
-                role={"img"}
-              />
-            ) : null}
           </div>
-        </div>
-      </Popover>
+        }
+      />
     </Stack__>
   );
 }
 
 const PlasmicDescendants = {
-  root: ["root", "popoverCore", "text"],
-  popoverCore: ["popoverCore", "text"],
+  root: ["root", "fragmentPopover", "text"],
+  fragmentPopover: ["fragmentPopover", "text"],
   text: ["text"]
 };
 
@@ -515,7 +451,7 @@ export const PlasmicDrCenters = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
-    popoverCore: makeNodeComponent("popoverCore"),
+    fragmentPopover: makeNodeComponent("fragmentPopover"),
     text: makeNodeComponent("text"),
     // Metadata about props expected for PlasmicDrCenters
     internalVariantProps: PlasmicDrCenters__VariantProps,

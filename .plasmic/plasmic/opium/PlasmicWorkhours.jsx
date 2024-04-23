@@ -24,7 +24,7 @@ import {
 import { useDataEnv } from "@plasmicapp/react-web/lib/host";
 import Checkbox from "../../Checkbox"; // plasmic-import: WT38Ke_Z_eCs/component
 import Select from "../../Select"; // plasmic-import: OzXPMxUo1TiP/component
-import { Popover } from "@plasmicpkgs/radix-ui";
+import { Popover } from "@paziresh24/apps/drapp/fragment/components/popover"; // plasmic-import: IlOOTfrZMl-5/codeComponent
 import DaysOfWeek from "../../DaysOfWeek"; // plasmic-import: oTc6QTbblo0F/component
 import "@plasmicapp/react-web/lib/plasmic.css";
 import plasmic_fragment_design_system_css from "../fragment_design_system/plasmic.module.css"; // plasmic-import: h9Dbk9ygddw7UVEq1NNhKi/projectcss
@@ -33,8 +33,8 @@ import sty from "./PlasmicWorkhours.module.css"; // plasmic-import: 2yLCE-L6JXEZ
 import Icon6Icon from "./icons/PlasmicIcon__Icon6"; // plasmic-import: 9z2THf0LJcnY/icon
 import Icon2Icon from "./icons/PlasmicIcon__Icon2"; // plasmic-import: ep-N6UwP60oB/icon
 import Icon5Icon from "./icons/PlasmicIcon__Icon5"; // plasmic-import: j_DyRtM8QKgI/icon
-import Icon3Icon from "./icons/PlasmicIcon__Icon3"; // plasmic-import: l5BVq9QEthSF/icon
 import Icon7Icon from "./icons/PlasmicIcon__Icon7"; // plasmic-import: D-8MfLPQxHwG/icon
+import Icon3Icon from "./icons/PlasmicIcon__Icon3"; // plasmic-import: l5BVq9QEthSF/icon
 
 export const PlasmicWorkhours__VariantProps = new Array();
 
@@ -81,11 +81,6 @@ function PlasmicWorkhours__RenderFunc(props) {
         path: "from[].value",
         type: "private",
         variableType: "text"
-      },
-      {
-        path: "popoverCore[].open",
-        type: "private",
-        variableType: "boolean"
       },
       {
         path: "selectedhoure",
@@ -135,16 +130,23 @@ function PlasmicWorkhours__RenderFunc(props) {
         ]
       },
       {
-        path: "popoverConflictHour[].open",
-        type: "private",
-        variableType: "boolean"
-      },
-      {
         path: "warning",
         type: "readonly",
         variableType: "boolean",
         initFunc: ({ $props, $state, $queries, $ctx }) => false,
         onChangeProp: "onWarningChange"
+      },
+      {
+        path: "fragmentPopover[].open",
+        type: "private",
+        variableType: "boolean",
+        refName: "fragmentPopover"
+      },
+      {
+        path: "popoverConflictHour2[].open",
+        type: "private",
+        variableType: "boolean",
+        refName: "popoverConflictHour2"
       }
     ],
 
@@ -656,18 +658,139 @@ function PlasmicWorkhours__RenderFunc(props) {
                 ) : null}
                 {(() => {
                   const child$Props = {
-                    className: classNames("__wab_instance", sty.popoverCore),
+                    className: classNames(
+                      "__wab_instance",
+                      sty.popoverConflictHour2
+                    ),
+                    content: (
+                      <div
+                        className={classNames(
+                          projectcss.all,
+                          sty.freeBox__zgb0A
+                        )}
+                      >
+                        <div
+                          data-plasmic-name={"text"}
+                          data-plasmic-override={overrides.text}
+                          className={classNames(
+                            projectcss.all,
+                            projectcss.__wab_text,
+                            sty.text
+                          )}
+                        >
+                          {
+                            "\u0633\u0627\u0639\u0627\u062a \u0628\u0627 \u06cc\u06a9\u062f\u06cc\u06af\u0631 \u0647\u0645\u200c\u067e\u0648\u0634\u0627\u0646\u06cc \u062f\u0627\u0631\u062f."
+                          }
+                        </div>
+                      </div>
+                    ),
+
                     onOpenChange: generateStateOnChangeProp($state, [
-                      "popoverCore",
+                      "popoverConflictHour2",
                       __plasmic_idx_0,
                       "open"
                     ]),
                     open: generateStateValueProp($state, [
-                      "popoverCore",
+                      "popoverConflictHour2",
                       __plasmic_idx_0,
                       "open"
                     ]),
-                    overlay: (
+                    ref: ref => {
+                      $refs["popoverConflictHour2"] = ref;
+                    },
+                    trigger: (() => {
+                      try {
+                        return ($state.warning =
+                          $state.listOfWorkhoureCopy.some((item, index) =>
+                            index !== currentIndex
+                              ? (new Date(
+                                  `2000-01-01T${currentItem.from}:00`
+                                ).getTime() >=
+                                  new Date(
+                                    `2000-01-01T${item.from}:00`
+                                  ).getTime() &&
+                                  new Date(
+                                    `2000-01-01T${currentItem.from}:00`
+                                  ).getTime() <
+                                    new Date(
+                                      `2000-01-01T${item.to}:00`
+                                    ).getTime()) ||
+                                (new Date(
+                                  `2000-01-01T${currentItem.to}:00`
+                                ).getTime() >
+                                  new Date(
+                                    `2000-01-01T${item.from}:00`
+                                  ).getTime() &&
+                                  new Date(
+                                    `2000-01-01T${currentItem.to}:00`
+                                  ).getTime() <=
+                                    new Date(
+                                      `2000-01-01T${item.to}:00`
+                                    ).getTime())
+                              : item.from === item.to
+                          ));
+                      } catch (e) {
+                        if (
+                          e instanceof TypeError ||
+                          e?.plasmicType === "PlasmicUndefinedDataError"
+                        ) {
+                          return true;
+                        }
+                        throw e;
+                      }
+                    })() ? (
+                      <div
+                        className={classNames(
+                          projectcss.all,
+                          sty.freeBox__sgEi
+                        )}
+                      >
+                        <Icon7Icon
+                          className={classNames(projectcss.all, sty.svg__mtbNp)}
+                          role={"img"}
+                        />
+                      </div>
+                    ) : null
+                  };
+                  initializeCodeComponentStates(
+                    $state,
+                    [
+                      {
+                        name: "open",
+                        plasmicStateName: "popoverConflictHour2[].open"
+                      }
+                    ],
+
+                    [__plasmic_idx_0],
+                    undefined ?? {},
+                    child$Props
+                  );
+                  initializePlasmicStates(
+                    $state,
+                    [
+                      {
+                        name: "popoverConflictHour2[].open",
+                        initFunc: ({ $props, $state, $queries }) => false
+                      }
+                    ],
+
+                    [__plasmic_idx_0]
+                  );
+                  return (
+                    <Popover
+                      data-plasmic-name={"popoverConflictHour2"}
+                      data-plasmic-override={overrides.popoverConflictHour2}
+                      {...child$Props}
+                    />
+                  );
+                })()}
+                {(() => {
+                  const child$Props = {
+                    className: classNames(
+                      "__wab_instance",
+                      sty.fragmentPopover
+                    ),
+                    content: (
                       <div
                         className={classNames(
                           projectcss.all,
@@ -720,41 +843,28 @@ function PlasmicWorkhours__RenderFunc(props) {
                                 "runEndedSelectedDay"
                               ];
                             }
-                            $steps["updatePopoverCore0Open"] = true
+                            $steps["runActionOnFragmentPopover"] = true
                               ? (() => {
                                   const actionArgs = {
-                                    variable: {
-                                      objRoot: $state,
-                                      variablePath: ["popoverCore", "0", "open"]
-                                    },
-                                    operation: 0,
-                                    value: false
+                                    tplRef: "fragmentPopover",
+                                    action: "close"
                                   };
-                                  return (({
-                                    variable,
-                                    value,
-                                    startIndex,
-                                    deleteCount
-                                  }) => {
-                                    if (!variable) {
-                                      return;
-                                    }
-                                    const { objRoot, variablePath } = variable;
-                                    $stateSet(objRoot, variablePath, value);
-                                    return value;
+                                  return (({ tplRef, action, args }) => {
+                                    return $refs?.[tplRef]?.[action]?.(
+                                      ...(args ?? [])
+                                    );
                                   })?.apply(null, [actionArgs]);
                                 })()
                               : undefined;
                             if (
-                              $steps["updatePopoverCore0Open"] != null &&
-                              typeof $steps["updatePopoverCore0Open"] ===
+                              $steps["runActionOnFragmentPopover"] != null &&
+                              typeof $steps["runActionOnFragmentPopover"] ===
                                 "object" &&
-                              typeof $steps["updatePopoverCore0Open"].then ===
-                                "function"
+                              typeof $steps["runActionOnFragmentPopover"]
+                                .then === "function"
                             ) {
-                              $steps["updatePopoverCore0Open"] = await $steps[
-                                "updatePopoverCore0Open"
-                              ];
+                              $steps["runActionOnFragmentPopover"] =
+                                await $steps["runActionOnFragmentPopover"];
                             }
                           }}
                           selectedDay={(() => {
@@ -774,128 +884,51 @@ function PlasmicWorkhours__RenderFunc(props) {
                       </div>
                     ),
 
-                    themeResetClass: classNames(
-                      projectcss.root_reset,
-                      projectcss.plasmic_default_styles,
-                      projectcss.plasmic_mixins,
-                      projectcss.plasmic_tokens,
-                      plasmic_fragment_design_system_css.plasmic_tokens
-                    )
-                  };
-                  initializeCodeComponentStates(
-                    $state,
-                    [
-                      {
-                        name: "open",
-                        plasmicStateName: "popoverCore[].open"
-                      }
-                    ],
-
-                    [__plasmic_idx_0],
-                    undefined ?? {},
-                    child$Props
-                  );
-                  initializePlasmicStates(
-                    $state,
-                    [
-                      {
-                        name: "popoverCore[].open",
-                        initFunc: ({ $props, $state, $queries }) => undefined
-                      }
-                    ],
-
-                    [__plasmic_idx_0]
-                  );
-                  return (
-                    <Popover
-                      data-plasmic-name={"popoverCore"}
-                      data-plasmic-override={overrides.popoverCore}
-                      {...child$Props}
-                    >
-                      {(() => {
-                        try {
-                          return currentIndex === 0;
-                        } catch (e) {
-                          if (
-                            e instanceof TypeError ||
-                            e?.plasmicType === "PlasmicUndefinedDataError"
-                          ) {
-                            return true;
-                          }
-                          throw e;
-                        }
-                      })() ? (
-                        <div
-                          className={classNames(
-                            projectcss.all,
-                            sty.freeBox__ouXTe
-                          )}
-                        >
-                          <Icon3Icon
-                            className={classNames(
-                              projectcss.all,
-                              sty.svg__uCtJt
-                            )}
-                            role={"img"}
-                          />
-                        </div>
-                      ) : null}
-                    </Popover>
-                  );
-                })()}
-                {(() => {
-                  const child$Props = {
-                    className: classNames(
-                      "__wab_instance",
-                      sty.popoverConflictHour
-                    ),
                     onOpenChange: generateStateOnChangeProp($state, [
-                      "popoverConflictHour",
+                      "fragmentPopover",
                       __plasmic_idx_0,
                       "open"
                     ]),
                     open: generateStateValueProp($state, [
-                      "popoverConflictHour",
+                      "fragmentPopover",
                       __plasmic_idx_0,
                       "open"
                     ]),
-                    overlay: (
+                    ref: ref => {
+                      $refs["fragmentPopover"] = ref;
+                    },
+                    trigger: (() => {
+                      try {
+                        return currentIndex === 0;
+                      } catch (e) {
+                        if (
+                          e instanceof TypeError ||
+                          e?.plasmicType === "PlasmicUndefinedDataError"
+                        ) {
+                          return true;
+                        }
+                        throw e;
+                      }
+                    })() ? (
                       <div
                         className={classNames(
                           projectcss.all,
-                          sty.freeBox__zgb0A
+                          sty.freeBox__ouXTe
                         )}
                       >
-                        <div
-                          data-plasmic-name={"text"}
-                          data-plasmic-override={overrides.text}
-                          className={classNames(
-                            projectcss.all,
-                            projectcss.__wab_text,
-                            sty.text
-                          )}
-                        >
-                          {
-                            "\u0633\u0627\u0639\u0627\u062a \u0628\u0627 \u06cc\u06a9\u062f\u06cc\u06af\u0631 \u0647\u0645\u200c\u067e\u0648\u0634\u0627\u0646\u06cc \u062f\u0627\u0631\u062f."
-                          }
-                        </div>
+                        <Icon3Icon
+                          className={classNames(projectcss.all, sty.svg__uCtJt)}
+                          role={"img"}
+                        />
                       </div>
-                    ),
-
-                    themeResetClass: classNames(
-                      projectcss.root_reset,
-                      projectcss.plasmic_default_styles,
-                      projectcss.plasmic_mixins,
-                      projectcss.plasmic_tokens,
-                      plasmic_fragment_design_system_css.plasmic_tokens
-                    )
+                    ) : null
                   };
                   initializeCodeComponentStates(
                     $state,
                     [
                       {
                         name: "open",
-                        plasmicStateName: "popoverConflictHour[].open"
+                        plasmicStateName: "fragmentPopover[].open"
                       }
                     ],
 
@@ -907,8 +940,8 @@ function PlasmicWorkhours__RenderFunc(props) {
                     $state,
                     [
                       {
-                        name: "popoverConflictHour[].open",
-                        initFunc: ({ $props, $state, $queries }) => undefined
+                        name: "fragmentPopover[].open",
+                        initFunc: ({ $props, $state, $queries }) => false
                       }
                     ],
 
@@ -916,67 +949,10 @@ function PlasmicWorkhours__RenderFunc(props) {
                   );
                   return (
                     <Popover
-                      data-plasmic-name={"popoverConflictHour"}
-                      data-plasmic-override={overrides.popoverConflictHour}
+                      data-plasmic-name={"fragmentPopover"}
+                      data-plasmic-override={overrides.fragmentPopover}
                       {...child$Props}
-                    >
-                      <div
-                        className={classNames(
-                          projectcss.all,
-                          sty.freeBox__sgEi
-                        )}
-                      >
-                        {(() => {
-                          try {
-                            return ($state.warning =
-                              $state.listOfWorkhoureCopy.some((item, index) =>
-                                index !== currentIndex
-                                  ? (new Date(
-                                      `2000-01-01T${currentItem.from}:00`
-                                    ).getTime() >=
-                                      new Date(
-                                        `2000-01-01T${item.from}:00`
-                                      ).getTime() &&
-                                      new Date(
-                                        `2000-01-01T${currentItem.from}:00`
-                                      ).getTime() <
-                                        new Date(
-                                          `2000-01-01T${item.to}:00`
-                                        ).getTime()) ||
-                                    (new Date(
-                                      `2000-01-01T${currentItem.to}:00`
-                                    ).getTime() >
-                                      new Date(
-                                        `2000-01-01T${item.from}:00`
-                                      ).getTime() &&
-                                      new Date(
-                                        `2000-01-01T${currentItem.to}:00`
-                                      ).getTime() <=
-                                        new Date(
-                                          `2000-01-01T${item.to}:00`
-                                        ).getTime())
-                                  : item.from === item.to
-                              ));
-                          } catch (e) {
-                            if (
-                              e instanceof TypeError ||
-                              e?.plasmicType === "PlasmicUndefinedDataError"
-                            ) {
-                              return true;
-                            }
-                            throw e;
-                          }
-                        })() ? (
-                          <Icon7Icon
-                            className={classNames(
-                              projectcss.all,
-                              sty.svg__mtbNp
-                            )}
-                            role={"img"}
-                          />
-                        ) : null}
-                      </div>
-                    </Popover>
+                    />
                   );
                 })()}
               </Stack__>
@@ -993,19 +969,19 @@ const PlasmicDescendants = {
     "checkbox",
     "to",
     "from",
-    "popoverCore",
-    "daysOfWeek",
-    "popoverConflictHour",
-    "text"
+    "popoverConflictHour2",
+    "text",
+    "fragmentPopover",
+    "daysOfWeek"
   ],
 
   checkbox: ["checkbox"],
   to: ["to"],
   from: ["from"],
-  popoverCore: ["popoverCore", "daysOfWeek"],
-  daysOfWeek: ["daysOfWeek"],
-  popoverConflictHour: ["popoverConflictHour", "text"],
-  text: ["text"]
+  popoverConflictHour2: ["popoverConflictHour2", "text"],
+  text: ["text"],
+  fragmentPopover: ["fragmentPopover", "daysOfWeek"],
+  daysOfWeek: ["daysOfWeek"]
 };
 
 function makeNodeComponent(nodeName) {
@@ -1043,10 +1019,10 @@ export const PlasmicWorkhours = Object.assign(
     checkbox: makeNodeComponent("checkbox"),
     to: makeNodeComponent("to"),
     from: makeNodeComponent("from"),
-    popoverCore: makeNodeComponent("popoverCore"),
-    daysOfWeek: makeNodeComponent("daysOfWeek"),
-    popoverConflictHour: makeNodeComponent("popoverConflictHour"),
+    popoverConflictHour2: makeNodeComponent("popoverConflictHour2"),
     text: makeNodeComponent("text"),
+    fragmentPopover: makeNodeComponent("fragmentPopover"),
+    daysOfWeek: makeNodeComponent("daysOfWeek"),
     // Metadata about props expected for PlasmicWorkhours
     internalVariantProps: PlasmicWorkhours__VariantProps,
     internalArgProps: PlasmicWorkhours__ArgProps

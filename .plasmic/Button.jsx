@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PlasmicButton } from "./plasmic/opium/PlasmicButton";
+import { PlasmicButton } from "./plasmic/fragment_design_system/PlasmicButton";
 
 function Button_(props, ref) {
   const { plasmicProps } = PlasmicButton.useBehavior(props, ref);
