@@ -387,7 +387,7 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
                 const actionArgs = {
                   args: [
                     "error",
-                    "\u062f\u0631 \u062b\u0628\u062a \u0633\u0627\u0639\u062a \u06a9\u0627\u0631\u06cc \u0628\u0627 \u062e\u0637\u0627 \u0645\u0648\u0627\u062c\u0647 \u0647\u0633\u062a\u06cc\u062f."
+                    "\u0633\u0627\u0639\u0627\u062a \u0628\u0627 \u06cc\u06a9\u062f\u06cc\u06af\u0631 \u0647\u0645\u200c\u067e\u0648\u0634\u0627\u0646\u06cc \u062f\u0627\u0631\u0646\u062f."
                   ]
                 };
                 return $globalActions["Fragment.showToast"]?.apply(null, [
