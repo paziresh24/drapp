@@ -17,7 +17,6 @@ import {
   get as $stateGet,
   initializeCodeComponentStates,
   initializePlasmicStates,
-  set as $stateSet,
   useCurrentUser,
   useDollarState
 } from "@plasmicapp/react-web";
@@ -257,46 +256,28 @@ function PlasmicWorkhours__RenderFunc(props) {
                       }).apply(null, eventArgs);
                       (async value => {
                         const $steps = {};
-                        $steps["updateListOfWorkhoureCopy"] = true
+                        $steps["runCode"] = true
                           ? (() => {
                               const actionArgs = {
-                                variable: {
-                                  objRoot: $state,
-                                  variablePath: ["listOfWorkhoureCopy"]
-                                },
-                                operation: 0,
-                                value: (() => {
-                                  let list = $state.listOfWorkhoureCopy;
-                                  list[currentIndex].to =
-                                    $state.to[currentIndex].value;
-                                  return list;
-                                })()
-                              };
-                              return (({
-                                variable,
-                                value,
-                                startIndex,
-                                deleteCount
-                              }) => {
-                                if (!variable) {
-                                  return;
+                                customFunction: async () => {
+                                  return (() => {
+                                    return ($state.listOfWorkhoureCopy[
+                                      currentIndex
+                                    ].to = $state.to[currentIndex].value);
+                                  })();
                                 }
-                                const { objRoot, variablePath } = variable;
-                                $stateSet(objRoot, variablePath, value);
-                                return value;
+                              };
+                              return (({ customFunction }) => {
+                                return customFunction();
                               })?.apply(null, [actionArgs]);
                             })()
                           : undefined;
                         if (
-                          $steps["updateListOfWorkhoureCopy"] != null &&
-                          typeof $steps["updateListOfWorkhoureCopy"] ===
-                            "object" &&
-                          typeof $steps["updateListOfWorkhoureCopy"].then ===
-                            "function"
+                          $steps["runCode"] != null &&
+                          typeof $steps["runCode"] === "object" &&
+                          typeof $steps["runCode"].then === "function"
                         ) {
-                          $steps["updateListOfWorkhoureCopy"] = await $steps[
-                            "updateListOfWorkhoureCopy"
-                          ];
+                          $steps["runCode"] = await $steps["runCode"];
                         }
                       }).apply(null, eventArgs);
                     },
@@ -391,46 +372,28 @@ function PlasmicWorkhours__RenderFunc(props) {
                       }).apply(null, eventArgs);
                       (async value => {
                         const $steps = {};
-                        $steps["updateListOfWorkhoureCopy"] = true
+                        $steps["runCode"] = true
                           ? (() => {
                               const actionArgs = {
-                                variable: {
-                                  objRoot: $state,
-                                  variablePath: ["listOfWorkhoureCopy"]
-                                },
-                                operation: 0,
-                                value: (() => {
-                                  let list = $state.listOfWorkhoureCopy;
-                                  list[currentIndex].from =
-                                    $state.from[currentIndex].value;
-                                  return list;
-                                })()
-                              };
-                              return (({
-                                variable,
-                                value,
-                                startIndex,
-                                deleteCount
-                              }) => {
-                                if (!variable) {
-                                  return;
+                                customFunction: async () => {
+                                  return (() => {
+                                    return ($state.listOfWorkhoureCopy[
+                                      currentIndex
+                                    ].from = $state.from[currentIndex].value);
+                                  })();
                                 }
-                                const { objRoot, variablePath } = variable;
-                                $stateSet(objRoot, variablePath, value);
-                                return value;
+                              };
+                              return (({ customFunction }) => {
+                                return customFunction();
                               })?.apply(null, [actionArgs]);
                             })()
                           : undefined;
                         if (
-                          $steps["updateListOfWorkhoureCopy"] != null &&
-                          typeof $steps["updateListOfWorkhoureCopy"] ===
-                            "object" &&
-                          typeof $steps["updateListOfWorkhoureCopy"].then ===
-                            "function"
+                          $steps["runCode"] != null &&
+                          typeof $steps["runCode"] === "object" &&
+                          typeof $steps["runCode"].then === "function"
                         ) {
-                          $steps["updateListOfWorkhoureCopy"] = await $steps[
-                            "updateListOfWorkhoureCopy"
-                          ];
+                          $steps["runCode"] = await $steps["runCode"];
                         }
                       }).apply(null, eventArgs);
                     },

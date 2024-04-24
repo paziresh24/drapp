@@ -3312,7 +3312,7 @@
 
 "@plasmicapp/cli@0.1.327":
   version "0.1.327"
-  resolved "https://registry.npmjs.org/@plasmicapp/cli/-/cli-0.1.327.tgz"
+  resolved "https://registry.yarnpkg.com/@plasmicapp/cli/-/cli-0.1.327.tgz#9c4dda4fe28612b48867fa4e967a394996d7c423"
   integrity sha512-7v3rfHF7iGxDYN0wdDN3AFHbhdagRz8CbAJcXoRYa/39X1eAnEjcubbATLxpYIPmvtlK1dlz6DcM/FuxBFYY7g==
 
 "@plasmicapp/data-sources-context@0.1.21":
