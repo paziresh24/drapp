@@ -31,7 +31,8 @@ export const PlasmicDaysOfWeek__VariantProps = new Array();
 
 export const PlasmicDaysOfWeek__ArgProps = new Array(
   "selectedDay",
-  "selectTrigger"
+  "selectTrigger",
+  "cancelTrigger"
 );
 
 const $$ = {};
@@ -370,6 +371,23 @@ function PlasmicDaysOfWeek__RenderFunc(props) {
             ) {
               $steps["updateSelectAllIsChecked"] = await $steps[
                 "updateSelectAllIsChecked"
+              ];
+            }
+            $steps["updateSelectAllIsChecked2"] = true
+              ? (() => {
+                  const actionArgs = { eventRef: $props["cancelTrigger"] };
+                  return (({ eventRef, args }) => {
+                    return eventRef?.(...(args ?? []));
+                  })?.apply(null, [actionArgs]);
+                })()
+              : undefined;
+            if (
+              $steps["updateSelectAllIsChecked2"] != null &&
+              typeof $steps["updateSelectAllIsChecked2"] === "object" &&
+              typeof $steps["updateSelectAllIsChecked2"].then === "function"
+            ) {
+              $steps["updateSelectAllIsChecked2"] = await $steps[
+                "updateSelectAllIsChecked2"
               ];
             }
           }}
