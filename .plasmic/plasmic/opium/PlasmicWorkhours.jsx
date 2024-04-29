@@ -348,9 +348,12 @@ function PlasmicWorkhours__RenderFunc(props) {
                           const duration = $props.duration;
                           const options = [];
                           const initialHour = currentItem.from.split(":")[0];
+                          const initialMinute = currentItem.from.split(":")[1];
                           for (let i = 1; i <= 24; i++) {
                             const totalMinutes =
-                              initialHour * 60 + i * duration;
+                              initialHour * 60 +
+                              initialMinute * 1 +
+                              i * duration;
                             const hour = Math.floor(totalMinutes / 60) % 24;
                             if (hour === 0) {
                               options.push("23:59");
@@ -525,10 +528,10 @@ function PlasmicWorkhours__RenderFunc(props) {
                     options: (() => {
                       try {
                         return (() => {
-                          const duration = $props.duration;
+                          const duration = 5;
                           const options = [];
                           const initialHour = 17;
-                          for (let i = 1; i <= 24; i++) {
+                          for (let i = 0; i < 288; i++) {
                             const totalMinutes =
                               initialHour * 60 + i * duration;
                             const hour = Math.floor(totalMinutes / 60) % 24;
