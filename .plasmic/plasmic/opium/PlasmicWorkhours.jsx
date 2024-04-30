@@ -692,6 +692,67 @@ function PlasmicWorkhours__RenderFunc(props) {
                     className={classNames(projectcss.all, sty.svg__mlgMh)}
                     onClick={async event => {
                       const $steps = {};
+                      $steps["updateWarning"] = true
+                        ? (() => {
+                            const actionArgs = {
+                              variable: {
+                                objRoot: $state,
+                                variablePath: ["warning"]
+                              },
+                              operation: 0,
+                              value: $state.listOfWorkhoureCopy
+                                .filter((_, index) => index !== currentIndex)
+                                .some((item, index) =>
+                                  index !== currentIndex
+                                    ? (new Date(
+                                        `2000-01-01T${currentItem.from}:00`
+                                      ).getTime() >=
+                                        new Date(
+                                          `2000-01-01T${item.from}:00`
+                                        ).getTime() &&
+                                        new Date(
+                                          `2000-01-01T${currentItem.from}:00`
+                                        ).getTime() <
+                                          new Date(
+                                            `2000-01-01T${item.to}:00`
+                                          ).getTime()) ||
+                                      (new Date(
+                                        `2000-01-01T${currentItem.to}:00`
+                                      ).getTime() >
+                                        new Date(
+                                          `2000-01-01T${item.from}:00`
+                                        ).getTime() &&
+                                        new Date(
+                                          `2000-01-01T${currentItem.to}:00`
+                                        ).getTime() <=
+                                          new Date(
+                                            `2000-01-01T${item.to}:00`
+                                          ).getTime())
+                                    : item.from === item.to
+                                )
+                            };
+                            return (({
+                              variable,
+                              value,
+                              startIndex,
+                              deleteCount
+                            }) => {
+                              if (!variable) {
+                                return;
+                              }
+                              const { objRoot, variablePath } = variable;
+                              $stateSet(objRoot, variablePath, value);
+                              return value;
+                            })?.apply(null, [actionArgs]);
+                          })()
+                        : undefined;
+                      if (
+                        $steps["updateWarning"] != null &&
+                        typeof $steps["updateWarning"] === "object" &&
+                        typeof $steps["updateWarning"].then === "function"
+                      ) {
+                        $steps["updateWarning"] = await $steps["updateWarning"];
+                      }
                       $steps["updateListOfWorkhoureCopy"] = true
                         ? (() => {
                             const actionArgs = {
@@ -742,66 +803,6 @@ function PlasmicWorkhours__RenderFunc(props) {
                         $steps["updateListOfWorkhoureCopy"] = await $steps[
                           "updateListOfWorkhoureCopy"
                         ];
-                      }
-                      $steps["updateWarning"] = true
-                        ? (() => {
-                            const actionArgs = {
-                              variable: {
-                                objRoot: $state,
-                                variablePath: ["warning"]
-                              },
-                              operation: 0,
-                              value: $state.listOfWorkhoureCopy.some(
-                                (item, index) =>
-                                  index !== currentIndex
-                                    ? (new Date(
-                                        `2000-01-01T${currentItem.from}:00`
-                                      ).getTime() >=
-                                        new Date(
-                                          `2000-01-01T${item.from}:00`
-                                        ).getTime() &&
-                                        new Date(
-                                          `2000-01-01T${currentItem.from}:00`
-                                        ).getTime() <
-                                          new Date(
-                                            `2000-01-01T${item.to}:00`
-                                          ).getTime()) ||
-                                      (new Date(
-                                        `2000-01-01T${currentItem.to}:00`
-                                      ).getTime() >
-                                        new Date(
-                                          `2000-01-01T${item.from}:00`
-                                        ).getTime() &&
-                                        new Date(
-                                          `2000-01-01T${currentItem.to}:00`
-                                        ).getTime() <=
-                                          new Date(
-                                            `2000-01-01T${item.to}:00`
-                                          ).getTime())
-                                    : item.from === item.to
-                              )
-                            };
-                            return (({
-                              variable,
-                              value,
-                              startIndex,
-                              deleteCount
-                            }) => {
-                              if (!variable) {
-                                return;
-                              }
-                              const { objRoot, variablePath } = variable;
-                              $stateSet(objRoot, variablePath, value);
-                              return value;
-                            })?.apply(null, [actionArgs]);
-                          })()
-                        : undefined;
-                      if (
-                        $steps["updateWarning"] != null &&
-                        typeof $steps["updateWarning"] === "object" &&
-                        typeof $steps["updateWarning"].then === "function"
-                      ) {
-                        $steps["updateWarning"] = await $steps["updateWarning"];
                       }
                     }}
                     role={"img"}
