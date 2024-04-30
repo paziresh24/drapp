@@ -382,7 +382,9 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
         className={classNames("__wab_instance", sty.button)}
         onClick={async event => {
           const $steps = {};
-          $steps["runCode5"] = $state.workhours.some(wh => wh.warning)
+          $steps["runCode5"] = $state.workhours.some(
+            wh => wh.checkboxIsChecked && wh.warning
+          )
             ? (() => {
                 const actionArgs = {
                   args: [
@@ -402,7 +404,9 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
           ) {
             $steps["runCode5"] = await $steps["runCode5"];
           }
-          $steps["saveWorkhours"] = $state.workhours.every(wh => !wh.warning)
+          $steps["saveWorkhours"] = $state.workhours.every(wh =>
+            wh.checkboxIsChecked ? !wh.warning : true
+          )
             ? (() => {
                 const actionArgs = {
                   args: [
@@ -456,7 +460,9 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
           }
           $steps["runCode3"] =
             $steps.saveWorkhours.data.status === "SUCCESS" &&
-            $state.workhours.every(wh => !wh.warning)
+            $state.workhours.every(wh =>
+              wh.checkboxIsChecked ? !wh.warning : true
+            )
               ? (() => {
                   const actionArgs = {
                     args: [
@@ -499,7 +505,9 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
           }
           $steps["runCode6"] =
             $steps.saveWorkhours.data.status === "SUCCESS" &&
-            $state.workhours.every(wh => !wh.warning)
+            $state.workhours.every(wh =>
+              wh.checkboxIsChecked ? !wh.warning : true
+            )
               ? (() => {
                   const actionArgs = {
                     customFunction: async () => {
