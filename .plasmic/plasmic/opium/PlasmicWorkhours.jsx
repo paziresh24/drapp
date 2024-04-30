@@ -700,36 +700,7 @@ function PlasmicWorkhours__RenderFunc(props) {
                                 variablePath: ["warning"]
                               },
                               operation: 0,
-                              value: $state.listOfWorkhoureCopy
-                                .filter((_, index) => index !== currentIndex)
-                                .some((item, index) =>
-                                  index !== currentIndex
-                                    ? (new Date(
-                                        `2000-01-01T${currentItem.from}:00`
-                                      ).getTime() >=
-                                        new Date(
-                                          `2000-01-01T${item.from}:00`
-                                        ).getTime() &&
-                                        new Date(
-                                          `2000-01-01T${currentItem.from}:00`
-                                        ).getTime() <
-                                          new Date(
-                                            `2000-01-01T${item.to}:00`
-                                          ).getTime()) ||
-                                      (new Date(
-                                        `2000-01-01T${currentItem.to}:00`
-                                      ).getTime() >
-                                        new Date(
-                                          `2000-01-01T${item.from}:00`
-                                        ).getTime() &&
-                                        new Date(
-                                          `2000-01-01T${currentItem.to}:00`
-                                        ).getTime() <=
-                                          new Date(
-                                            `2000-01-01T${item.to}:00`
-                                          ).getTime())
-                                    : item.from === item.to
-                                )
+                              value: false
                             };
                             return (({
                               variable,

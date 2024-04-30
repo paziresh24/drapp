@@ -488,7 +488,22 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
                   const actionArgs = {
                     args: [
                       "error",
-                      "\u062f\u0631 \u062b\u0628\u062a \u0633\u0627\u0639\u062a \u06a9\u0627\u0631\u06cc \u0628\u0627 \u062e\u0637\u0627 \u0645\u0648\u0627\u062c\u0647 \u0647\u0633\u062a\u06cc\u062f."
+                      (() => {
+                        try {
+                          return (
+                            $steps.saveWorkhours?.data?.message ??
+                            "در ثبت ساعت کاری با خطا مواجه هستید."
+                          );
+                        } catch (e) {
+                          if (
+                            e instanceof TypeError ||
+                            e?.plasmicType === "PlasmicUndefinedDataError"
+                          ) {
+                            return undefined;
+                          }
+                          throw e;
+                        }
+                      })()
                     ]
                   };
                   return $globalActions["Fragment.showToast"]?.apply(null, [
