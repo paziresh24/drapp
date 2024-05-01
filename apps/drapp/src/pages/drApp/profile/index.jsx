@@ -516,13 +516,19 @@ const Profile = () => {
                                     }))}
                             />
                         </div>
-                        <TextField
-                            label="آدرس مطب"
-                            error={centerInfoErrors.address}
-                            defaultValue={info.center.address}
-                            {...updateCenterInfo('address', { required: true })}
-                            onBlur={e => checkAddress(e.target.value)}
-                        />
+                        <div className="flex space-s-2 items-center">
+                            <span className="bottom-3 right-3 opacity-80 w-fit min-w-fit max-w-fit">
+                                {provincesData.find(item => item.id == province)?.name}،{' '}
+                                {citiesData.find(item => item.id == city)?.name}
+                            </span>
+                            <TextField
+                                label="آدرس مطب"
+                                error={centerInfoErrors.address}
+                                defaultValue={info.center.address}
+                                {...updateCenterInfo('address', { required: true })}
+                                onBlur={e => checkAddress(e.target.value)}
+                            />
+                        </div>
                         <CenterPhoneNumbers
                             phoneNumbers={info.center.tells}
                             onChange={setPhoneNumber}
