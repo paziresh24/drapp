@@ -466,7 +466,7 @@ const Profile = () => {
             )}
             {info.center.type_id === OFFICE_CENTER && (
                 <Accordion
-                    title="اطلاعات مطب"
+                    title="آدرس و شماره تلفن مطب"
                     icon={<LocationIcon color="#3F3F79" />}
                     open={centerInfoAccordion}
                     setOpen={setCenterInfoAccordion}
