@@ -35,6 +35,7 @@ import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
 import { useSafeCall } from 'apps/drapp/src/apis/onlineVisit/safeCall';
+import { useDeleteBooks } from '@paziresh24/apps/drapp/apis/booking/deleteBooks';
 
 type Prescription = {
     id: string;
@@ -116,7 +117,7 @@ const TurnRow = (props: TurnRowProps) => {
     });
 
     const came = useCame();
-    const removeTurn = useRemoveTurn();
+    const removeTurn = useDeleteBooks();
     const [nationalCodeValue, setNationalCode] = useState('');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const pdfLink = useRef(
@@ -253,7 +254,7 @@ const TurnRow = (props: TurnRowProps) => {
 
     const handleRemoveTurn = async () => {
         try {
-            await removeTurn.mutateAsync({ book_id: id });
+            await removeTurn.mutateAsync({ book_ids: [id] });
             toast.success('درخواست شما با موفقیت ثبت شد!');
             getSplunkInstance().sendEvent({
                 group: 'delete-book-drapp',
