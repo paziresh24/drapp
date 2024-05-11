@@ -41,6 +41,7 @@ const WorkHours = () => {
     const getWorkHoursRequest = useGetWorkHours({ center_id: doctorInfo.center.id });
     const removeWorkHours = useWorkHoursStore(state => state.removeWorkHours);
     const duration = useWorkHoursStore(state => state.duration);
+    const [previousDuration, setPreviousDuration] = useState(duration);
     const setDuration = useWorkHoursStore(state => state.setDuration);
     const [activationModal, setActivationModal] = useState(false);
     const completedActivationNotice = useFeatureValue(
@@ -51,16 +52,15 @@ const WorkHours = () => {
     const useFragment = useFeatureIsOn('show-fragment-workhour-page');
 
     useEffect(() => {
-        if (!useFragment) {
-            getWorkHoursRequest.remove();
-            getWorkHoursRequest.refetch();
-        }
+        getWorkHoursRequest.remove();
+        getWorkHoursRequest.refetch();
     }, [doctorInfo.center]);
 
     useEffect(() => {
         if (getWorkHoursRequest.isSuccess) {
             setWorkHours(getWorkHoursRequest.data.data.workhours);
             setDuration(getWorkHoursRequest.data.data.duration);
+            setPreviousDuration(getWorkHoursRequest.data.data.duration);
         }
     }, [getWorkHoursRequest.status]);
 
@@ -101,9 +101,12 @@ const WorkHours = () => {
         handleSubmit({ workHours: workHourClone, duration });
     };
 
-    const handleSetDuration = (duration: number) => {
-        setDuration(duration);
-        handleSubmit({ workHours, duration });
+    const handleSetDuration = (prevDuration: number, newDuration: number) => {
+        setPreviousDuration(prevDuration);
+        setDuration(newDuration);
+        handleSubmit({ workHours, duration: newDuration }).catch(() => {
+            setDuration(prevDuration);
+        });
     };
 
     const handleSubmit = async ({
@@ -132,26 +135,10 @@ const WorkHours = () => {
                         error: error.response?.data
                     }
                 });
+                return Promise.reject(error);
             }
         }
     };
-
-    if (useFragment) {
-        return (
-            <Container
-                maxWidth="sm"
-                className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md"
-            >
-                <Fragment
-                    name="HoursDaysOfWeek"
-                    props={{
-                        centerId: doctorInfo.center.id,
-                        userCenterId: doctorInfo.center.user_center_id
-                    }}
-                />
-            </Container>
-        );
-    }
 
     return (
         <Container maxWidth="sm" className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md">
@@ -159,7 +146,9 @@ const WorkHours = () => {
                 <SelectTime
                     items={durationList}
                     value={duration}
-                    onChange={handleSetDuration}
+                    onChange={newDuration => {
+                        handleSetDuration(duration, newDuration);
+                    }}
                     label={
                         getCenterType(doctorInfo.center) === 'consult'
                             ? 'مدت زمان‌ ایده‌آل شما برای ارائه یک ویزیت جامع و پیوسته به یک بیمار چقدر است؟'
@@ -175,22 +164,36 @@ const WorkHours = () => {
                         پاسخگویی به سوالات احتمالی بیمار در دسترس باشید.
                     </Alert>
                 )}
-                <SelectDay selectedDays={days} onChange={setDays} />
-                <SelectHours defaultHours={hours} onChange={setHours} />
-                <Button
-                    loading={isLoading}
-                    onClick={handleAdd}
-                    variant="contained"
-                    className="self-end"
-                >
-                    افزودن
-                </Button>
-                <Divider />
-                <Result
-                    isLoading={getWorkHoursRequest.isLoading}
-                    values={workHours}
-                    removeAction={handleRemoveWorkHours}
-                />
+                {useFragment && (
+                    <Fragment
+                        key={!isLoading ? duration : previousDuration}
+                        name="HoursDaysOfWeek"
+                        props={{
+                            centerId: doctorInfo.center.id,
+                            userCenterId: doctorInfo.center.user_center_id
+                        }}
+                    />
+                )}
+                {!useFragment && (
+                    <>
+                        <SelectDay selectedDays={days} onChange={setDays} />
+                        <SelectHours defaultHours={hours} onChange={setHours} />
+                        <Button
+                            loading={isLoading}
+                            onClick={handleAdd}
+                            variant="contained"
+                            className="self-end"
+                        >
+                            افزودن
+                        </Button>
+                        <Divider />
+                        <Result
+                            isLoading={getWorkHoursRequest.isLoading}
+                            values={workHours}
+                            removeAction={handleRemoveWorkHours}
+                        />
+                    </>
+                )}
                 {queryString.parse(window.location.search)['activation-path'] && (
                     <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
                         <Button

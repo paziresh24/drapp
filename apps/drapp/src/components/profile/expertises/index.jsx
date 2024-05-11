@@ -97,6 +97,9 @@ export const Expertises = props => {
                             });
                         }
                         props.setExpertise(visitesList);
+                    },
+                    onError: error => {
+                        toast.error(error.response.data.message);
                     }
                 }
             );

@@ -382,12 +382,14 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
         className={classNames("__wab_instance", sty.button)}
         onClick={async event => {
           const $steps = {};
-          $steps["runCode5"] = $state.workhours.some(wh => wh.warning)
+          $steps["runCode5"] = $state.workhours.some(
+            wh => wh.checkboxIsChecked && wh.warning
+          )
             ? (() => {
                 const actionArgs = {
                   args: [
                     "error",
-                    "\u062f\u0631 \u062b\u0628\u062a \u0633\u0627\u0639\u062a \u06a9\u0627\u0631\u06cc \u0628\u0627 \u062e\u0637\u0627 \u0645\u0648\u0627\u062c\u0647 \u0647\u0633\u062a\u06cc\u062f."
+                    "\u0633\u0627\u0639\u0627\u062a \u0628\u0627 \u06cc\u06a9\u062f\u06cc\u06af\u0631 \u0647\u0645\u200c\u067e\u0648\u0634\u0627\u0646\u06cc \u062f\u0627\u0631\u0646\u062f."
                   ]
                 };
                 return $globalActions["Fragment.showToast"]?.apply(null, [
@@ -402,7 +404,9 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
           ) {
             $steps["runCode5"] = await $steps["runCode5"];
           }
-          $steps["saveWorkhours"] = $state.workhours.every(wh => !wh.warning)
+          $steps["saveWorkhours"] = $state.workhours.every(wh =>
+            wh.checkboxIsChecked ? !wh.warning : true
+          )
             ? (() => {
                 const actionArgs = {
                   args: [
@@ -456,7 +460,9 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
           }
           $steps["runCode3"] =
             $steps.saveWorkhours.data.status === "SUCCESS" &&
-            $state.workhours.every(wh => !wh.warning)
+            $state.workhours.every(wh =>
+              wh.checkboxIsChecked ? !wh.warning : true
+            )
               ? (() => {
                   const actionArgs = {
                     args: [
@@ -482,7 +488,22 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
                   const actionArgs = {
                     args: [
                       "error",
-                      "\u062f\u0631 \u062b\u0628\u062a \u0633\u0627\u0639\u062a \u06a9\u0627\u0631\u06cc \u0628\u0627 \u062e\u0637\u0627 \u0645\u0648\u0627\u062c\u0647 \u0647\u0633\u062a\u06cc\u062f."
+                      (() => {
+                        try {
+                          return (
+                            $steps.saveWorkhours?.data?.message ??
+                            "در ثبت ساعت کاری با خطا مواجه هستید."
+                          );
+                        } catch (e) {
+                          if (
+                            e instanceof TypeError ||
+                            e?.plasmicType === "PlasmicUndefinedDataError"
+                          ) {
+                            return undefined;
+                          }
+                          throw e;
+                        }
+                      })()
                     ]
                   };
                   return $globalActions["Fragment.showToast"]?.apply(null, [
@@ -499,7 +520,9 @@ function PlasmicHoursDaysOfWeek__RenderFunc(props) {
           }
           $steps["runCode6"] =
             $steps.saveWorkhours.data.status === "SUCCESS" &&
-            $state.workhours.every(wh => !wh.warning)
+            $state.workhours.every(wh =>
+              wh.checkboxIsChecked ? !wh.warning : true
+            )
               ? (() => {
                   const actionArgs = {
                     customFunction: async () => {

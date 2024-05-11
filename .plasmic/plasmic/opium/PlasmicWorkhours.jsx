@@ -257,20 +257,64 @@ function PlasmicWorkhours__RenderFunc(props) {
                       }).apply(null, eventArgs);
                       (async value => {
                         const $steps = {};
-                        $steps["updateListOfWorkhoureCopy"] = true
+                        $steps["runCode"] = true
+                          ? (() => {
+                              const actionArgs = {
+                                customFunction: async () => {
+                                  return ($state.listOfWorkhoureCopy[
+                                    currentIndex
+                                  ].to = $state.to[currentIndex].value);
+                                }
+                              };
+                              return (({ customFunction }) => {
+                                return customFunction();
+                              })?.apply(null, [actionArgs]);
+                            })()
+                          : undefined;
+                        if (
+                          $steps["runCode"] != null &&
+                          typeof $steps["runCode"] === "object" &&
+                          typeof $steps["runCode"].then === "function"
+                        ) {
+                          $steps["runCode"] = await $steps["runCode"];
+                        }
+                        $steps["updateWarning"] = true
                           ? (() => {
                               const actionArgs = {
                                 variable: {
                                   objRoot: $state,
-                                  variablePath: ["listOfWorkhoureCopy"]
+                                  variablePath: ["warning"]
                                 },
                                 operation: 0,
-                                value: (() => {
-                                  let list = $state.listOfWorkhoureCopy;
-                                  list[currentIndex].to =
-                                    $state.to[currentIndex].value;
-                                  return list;
-                                })()
+                                value: $state.listOfWorkhoureCopy.some(
+                                  (item, index) =>
+                                    index !== currentIndex
+                                      ? (new Date(
+                                          `2000-01-01T${currentItem.from}:00`
+                                        ).getTime() >=
+                                          new Date(
+                                            `2000-01-01T${item.from}:00`
+                                          ).getTime() &&
+                                          new Date(
+                                            `2000-01-01T${currentItem.from}:00`
+                                          ).getTime() <
+                                            new Date(
+                                              `2000-01-01T${item.to}:00`
+                                            ).getTime()) ||
+                                        (new Date(
+                                          `2000-01-01T${currentItem.to}:00`
+                                        ).getTime() >
+                                          new Date(
+                                            `2000-01-01T${item.from}:00`
+                                          ).getTime() &&
+                                          new Date(
+                                            `2000-01-01T${currentItem.to}:00`
+                                          ).getTime() <=
+                                            new Date(
+                                              `2000-01-01T${item.to}:00`
+                                            ).getTime())
+                                      : item.from === item.to
+                                )
                               };
                               return (({
                                 variable,
@@ -288,14 +332,12 @@ function PlasmicWorkhours__RenderFunc(props) {
                             })()
                           : undefined;
                         if (
-                          $steps["updateListOfWorkhoureCopy"] != null &&
-                          typeof $steps["updateListOfWorkhoureCopy"] ===
-                            "object" &&
-                          typeof $steps["updateListOfWorkhoureCopy"].then ===
-                            "function"
+                          $steps["updateWarning"] != null &&
+                          typeof $steps["updateWarning"] === "object" &&
+                          typeof $steps["updateWarning"].then === "function"
                         ) {
-                          $steps["updateListOfWorkhoureCopy"] = await $steps[
-                            "updateListOfWorkhoureCopy"
+                          $steps["updateWarning"] = await $steps[
+                            "updateWarning"
                           ];
                         }
                       }).apply(null, eventArgs);
@@ -305,11 +347,18 @@ function PlasmicWorkhours__RenderFunc(props) {
                         return (() => {
                           const duration = $props.duration;
                           const options = [];
-                          const initialHour = 21;
+                          const initialHour = currentItem.from.split(":")[0];
+                          const initialMinute = currentItem.from.split(":")[1];
                           for (let i = 1; i <= 24; i++) {
                             const totalMinutes =
-                              initialHour * 60 + i * duration;
+                              initialHour * 60 +
+                              initialMinute * 1 +
+                              i * duration;
                             const hour = Math.floor(totalMinutes / 60) % 24;
+                            if (hour === 0) {
+                              options.push("23:59");
+                              break;
+                            }
                             const minute = totalMinutes % 60;
                             const formattedHour = `${
                               hour < 10 ? "0" : ""
@@ -391,20 +440,64 @@ function PlasmicWorkhours__RenderFunc(props) {
                       }).apply(null, eventArgs);
                       (async value => {
                         const $steps = {};
-                        $steps["updateListOfWorkhoureCopy"] = true
+                        $steps["runCode"] = true
+                          ? (() => {
+                              const actionArgs = {
+                                customFunction: async () => {
+                                  return ($state.listOfWorkhoureCopy[
+                                    currentIndex
+                                  ].from = $state.from[currentIndex].value);
+                                }
+                              };
+                              return (({ customFunction }) => {
+                                return customFunction();
+                              })?.apply(null, [actionArgs]);
+                            })()
+                          : undefined;
+                        if (
+                          $steps["runCode"] != null &&
+                          typeof $steps["runCode"] === "object" &&
+                          typeof $steps["runCode"].then === "function"
+                        ) {
+                          $steps["runCode"] = await $steps["runCode"];
+                        }
+                        $steps["updateWarning"] = true
                           ? (() => {
                               const actionArgs = {
                                 variable: {
                                   objRoot: $state,
-                                  variablePath: ["listOfWorkhoureCopy"]
+                                  variablePath: ["warning"]
                                 },
                                 operation: 0,
-                                value: (() => {
-                                  let list = $state.listOfWorkhoureCopy;
-                                  list[currentIndex].from =
-                                    $state.from[currentIndex].value;
-                                  return list;
-                                })()
+                                value: $state.listOfWorkhoureCopy.some(
+                                  (item, index) =>
+                                    index !== currentIndex
+                                      ? (new Date(
+                                          `2000-01-01T${currentItem.from}:00`
+                                        ).getTime() >=
+                                          new Date(
+                                            `2000-01-01T${item.from}:00`
+                                          ).getTime() &&
+                                          new Date(
+                                            `2000-01-01T${currentItem.from}:00`
+                                          ).getTime() <
+                                            new Date(
+                                              `2000-01-01T${item.to}:00`
+                                            ).getTime()) ||
+                                        (new Date(
+                                          `2000-01-01T${currentItem.to}:00`
+                                        ).getTime() >
+                                          new Date(
+                                            `2000-01-01T${item.from}:00`
+                                          ).getTime() &&
+                                          new Date(
+                                            `2000-01-01T${currentItem.to}:00`
+                                          ).getTime() <=
+                                            new Date(
+                                              `2000-01-01T${item.to}:00`
+                                            ).getTime())
+                                      : item.from === item.to
+                                )
                               };
                               return (({
                                 variable,
@@ -422,14 +515,12 @@ function PlasmicWorkhours__RenderFunc(props) {
                             })()
                           : undefined;
                         if (
-                          $steps["updateListOfWorkhoureCopy"] != null &&
-                          typeof $steps["updateListOfWorkhoureCopy"] ===
-                            "object" &&
-                          typeof $steps["updateListOfWorkhoureCopy"].then ===
-                            "function"
+                          $steps["updateWarning"] != null &&
+                          typeof $steps["updateWarning"] === "object" &&
+                          typeof $steps["updateWarning"].then === "function"
                         ) {
-                          $steps["updateListOfWorkhoureCopy"] = await $steps[
-                            "updateListOfWorkhoureCopy"
+                          $steps["updateWarning"] = await $steps[
+                            "updateWarning"
                           ];
                         }
                       }).apply(null, eventArgs);
@@ -437,10 +528,10 @@ function PlasmicWorkhours__RenderFunc(props) {
                     options: (() => {
                       try {
                         return (() => {
-                          const duration = $props.duration;
+                          const duration = 5;
                           const options = [];
                           const initialHour = 17;
-                          for (let i = 1; i <= 24; i++) {
+                          for (let i = 0; i < 288; i++) {
                             const totalMinutes =
                               initialHour * 60 + i * duration;
                             const hour = Math.floor(totalMinutes / 60) % 24;
@@ -601,6 +692,38 @@ function PlasmicWorkhours__RenderFunc(props) {
                     className={classNames(projectcss.all, sty.svg__mlgMh)}
                     onClick={async event => {
                       const $steps = {};
+                      $steps["updateWarning"] = true
+                        ? (() => {
+                            const actionArgs = {
+                              variable: {
+                                objRoot: $state,
+                                variablePath: ["warning"]
+                              },
+                              operation: 0,
+                              value: false
+                            };
+                            return (({
+                              variable,
+                              value,
+                              startIndex,
+                              deleteCount
+                            }) => {
+                              if (!variable) {
+                                return;
+                              }
+                              const { objRoot, variablePath } = variable;
+                              $stateSet(objRoot, variablePath, value);
+                              return value;
+                            })?.apply(null, [actionArgs]);
+                          })()
+                        : undefined;
+                      if (
+                        $steps["updateWarning"] != null &&
+                        typeof $steps["updateWarning"] === "object" &&
+                        typeof $steps["updateWarning"].then === "function"
+                      ) {
+                        $steps["updateWarning"] = await $steps["updateWarning"];
+                      }
                       $steps["updateListOfWorkhoureCopy"] = true
                         ? (() => {
                             const actionArgs = {
@@ -700,35 +823,34 @@ function PlasmicWorkhours__RenderFunc(props) {
                     },
                     trigger: (() => {
                       try {
-                        return ($state.warning =
-                          $state.listOfWorkhoureCopy.some((item, index) =>
-                            index !== currentIndex
-                              ? (new Date(
+                        return $state.listOfWorkhoureCopy.some((item, index) =>
+                          index !== currentIndex
+                            ? (new Date(
+                                `2000-01-01T${currentItem.from}:00`
+                              ).getTime() >=
+                                new Date(
+                                  `2000-01-01T${item.from}:00`
+                                ).getTime() &&
+                                new Date(
                                   `2000-01-01T${currentItem.from}:00`
-                                ).getTime() >=
+                                ).getTime() <
                                   new Date(
-                                    `2000-01-01T${item.from}:00`
-                                  ).getTime() &&
-                                  new Date(
-                                    `2000-01-01T${currentItem.from}:00`
-                                  ).getTime() <
-                                    new Date(
-                                      `2000-01-01T${item.to}:00`
-                                    ).getTime()) ||
-                                (new Date(
+                                    `2000-01-01T${item.to}:00`
+                                  ).getTime()) ||
+                              (new Date(
+                                `2000-01-01T${currentItem.to}:00`
+                              ).getTime() >
+                                new Date(
+                                  `2000-01-01T${item.from}:00`
+                                ).getTime() &&
+                                new Date(
                                   `2000-01-01T${currentItem.to}:00`
-                                ).getTime() >
+                                ).getTime() <=
                                   new Date(
-                                    `2000-01-01T${item.from}:00`
-                                  ).getTime() &&
-                                  new Date(
-                                    `2000-01-01T${currentItem.to}:00`
-                                  ).getTime() <=
-                                    new Date(
-                                      `2000-01-01T${item.to}:00`
-                                    ).getTime())
-                              : item.from === item.to
-                          ));
+                                    `2000-01-01T${item.to}:00`
+                                  ).getTime())
+                            : item.from === item.to
+                        );
                       } catch (e) {
                         if (
                           e instanceof TypeError ||
@@ -800,6 +922,48 @@ function PlasmicWorkhours__RenderFunc(props) {
                         <DaysOfWeek
                           data-plasmic-name={"daysOfWeek"}
                           data-plasmic-override={overrides.daysOfWeek}
+                          cancelTrigger={async () => {
+                            const $steps = {};
+                            $steps["updateFragmentPopover0Open"] = true
+                              ? (() => {
+                                  const actionArgs = {
+                                    variable: {
+                                      objRoot: $state,
+                                      variablePath: [
+                                        "fragmentPopover",
+                                        "0",
+                                        "open"
+                                      ]
+                                    },
+                                    operation: 0,
+                                    value: false
+                                  };
+                                  return (({
+                                    variable,
+                                    value,
+                                    startIndex,
+                                    deleteCount
+                                  }) => {
+                                    if (!variable) {
+                                      return;
+                                    }
+                                    const { objRoot, variablePath } = variable;
+                                    $stateSet(objRoot, variablePath, value);
+                                    return value;
+                                  })?.apply(null, [actionArgs]);
+                                })()
+                              : undefined;
+                            if (
+                              $steps["updateFragmentPopover0Open"] != null &&
+                              typeof $steps["updateFragmentPopover0Open"] ===
+                                "object" &&
+                              typeof $steps["updateFragmentPopover0Open"]
+                                .then === "function"
+                            ) {
+                              $steps["updateFragmentPopover0Open"] =
+                                await $steps["updateFragmentPopover0Open"];
+                            }
+                          }}
                           className={classNames(
                             "__wab_instance",
                             sty.daysOfWeek
@@ -843,28 +1007,44 @@ function PlasmicWorkhours__RenderFunc(props) {
                                 "runEndedSelectedDay"
                               ];
                             }
-                            $steps["runActionOnFragmentPopover"] = true
+                            $steps["updateFragmentPopover0Open"] = true
                               ? (() => {
                                   const actionArgs = {
-                                    tplRef: "fragmentPopover",
-                                    action: "close"
+                                    variable: {
+                                      objRoot: $state,
+                                      variablePath: [
+                                        "fragmentPopover",
+                                        "0",
+                                        "open"
+                                      ]
+                                    },
+                                    operation: 0,
+                                    value: false
                                   };
-                                  return (({ tplRef, action, args }) => {
-                                    return $refs?.[tplRef]?.[action]?.(
-                                      ...(args ?? [])
-                                    );
+                                  return (({
+                                    variable,
+                                    value,
+                                    startIndex,
+                                    deleteCount
+                                  }) => {
+                                    if (!variable) {
+                                      return;
+                                    }
+                                    const { objRoot, variablePath } = variable;
+                                    $stateSet(objRoot, variablePath, value);
+                                    return value;
                                   })?.apply(null, [actionArgs]);
                                 })()
                               : undefined;
                             if (
-                              $steps["runActionOnFragmentPopover"] != null &&
-                              typeof $steps["runActionOnFragmentPopover"] ===
+                              $steps["updateFragmentPopover0Open"] != null &&
+                              typeof $steps["updateFragmentPopover0Open"] ===
                                 "object" &&
-                              typeof $steps["runActionOnFragmentPopover"]
+                              typeof $steps["updateFragmentPopover0Open"]
                                 .then === "function"
                             ) {
-                              $steps["runActionOnFragmentPopover"] =
-                                await $steps["runActionOnFragmentPopover"];
+                              $steps["updateFragmentPopover0Open"] =
+                                await $steps["updateFragmentPopover0Open"];
                             }
                           }}
                           selectedDay={(() => {
