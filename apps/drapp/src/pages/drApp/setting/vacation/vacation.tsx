@@ -183,6 +183,7 @@ export const Vacation = () => {
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
+                    closeVacationModal();
                     getSplunkInstance().sendEvent({
                         group: 'vacation',
                         type: 'submit-vacation',
@@ -441,7 +442,7 @@ export const Vacation = () => {
                             <span className="text-[0.9rem] font-medium">
                                 لیست مرخصی های ثبت شده:
                             </span>
-                            <div className="flex items-center space-s-2 w-2/5">
+                            <div className="flex items-center w-2/5 space-s-2">
                                 <Select
                                     className="!w-[40%]"
                                     variant="standard"
