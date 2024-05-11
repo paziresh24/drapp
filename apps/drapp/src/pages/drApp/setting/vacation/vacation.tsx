@@ -183,6 +183,7 @@ export const Vacation = () => {
                 onSuccess: () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
+                    getVacation.refetch();
                     closeVacationModal();
                     getSplunkInstance().sendEvent({
                         group: 'vacation',
@@ -233,6 +234,7 @@ export const Vacation = () => {
                     toast.success('مرخصی شما ثبت شد.');
                     setShouldShowconfilitModal(false);
                     closeVacationModal();
+                    getVacation.refetch();
                     getSplunkInstance().sendEvent({
                         group: 'vacation',
                         type: 'submit-vacation',
@@ -268,6 +270,7 @@ export const Vacation = () => {
             {
                 onSuccess: () => {
                     toast.success('مرخصی شما حذف شد.');
+                    getVacation.refetch();
                     setShouldShowDeleteVacationModal(false);
                     getSplunkInstance().sendEvent({
                         group: 'vacation',

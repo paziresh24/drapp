@@ -32,6 +32,11 @@ export const PaymentSetting = () => {
             setInquiryModal(true);
             setShouldShowTipCostModal(false);
         }
+        if (ibanInquiry.isError) {
+            setShouldShowTipCostModal(false);
+            toast.error((ibanInquiry.error as any)?.response?.data?.message);
+            ibanInquiry.remove();
+        }
     }, [ibanInquiry.status]);
 
     useEffect(() => {
