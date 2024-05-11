@@ -18,8 +18,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMediaQuery } from 'react-responsive';
 import useShouldShowActionBars from '@hooks/useShouldShowActionBars';
-import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { isEmbed } from '@paziresh24/shared/utils';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import { getCookie } from '@paziresh24/utils/cookie';
 
 const Header = memo(() => {
     const history = useHistory();
@@ -34,6 +35,12 @@ const Header = memo(() => {
     const location = useLocation();
     const [hideToolTip, setHideToolTip] = useState(
         location.state?.afterLogin === true ? false : true
+    );
+    const activationOnlineVisit = useFeatureValue('onlinevisit:enable-activation', {
+        speciality_ids: []
+    });
+    const isEnabledActivationOnlineVisit = info?.doctor?.expertises?.some(item =>
+        activationOnlineVisit.speciality_ids.includes(item.expertise?.id)
     );
 
     useEffect(() => {
@@ -299,7 +306,7 @@ const Header = memo(() => {
                                 <div
                                     className={classNames({
                                         [styles.centerItem]: true,
-                                        [styles.disabled]: true
+                                        [styles.disabled]: !isEnabledActivationOnlineVisit
                                     })}
                                     aria-hidden
                                 >
@@ -330,11 +337,33 @@ const Header = memo(() => {
                                         </svg>
                                         <div className={styles.centerDetails}>
                                             <span className={styles.centerName}>ویزیت آنلاین</span>
-                                            <span className={styles.centerAddress}>
-                                                ظرفیت پزشکان ویزیت آنلاین تکمیل شده است.
-                                            </span>
+                                            {isEnabledActivationOnlineVisit ? (
+                                                <span className={styles.centerAddress}>
+                                                    ‌همین الان به پزشکان ویزیت آنلاین بپیوندید.
+                                                </span>
+                                            ) : (
+                                                <span className={styles.centerAddress}>
+                                                    ظرفیت پزشکان ویزیت آنلاین تکمیل شده است.
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
+                                    {isEnabledActivationOnlineVisit &&
+                                        (getCookie('CONSULT_ACTIVATION_PENDING') ? (
+                                            <span className="text-sm text-primary">
+                                                در حال بررسی
+                                            </span>
+                                        ) : (
+                                            <Button
+                                                size="small"
+                                                variant="contained"
+                                                onClick={() => {
+                                                    history.push('/activation/consult/rules');
+                                                }}
+                                            >
+                                                فعال سازی
+                                            </Button>
+                                        ))}
                                 </div>
                             )}
                             {isEmpty(info.centers.find(center => center.type_id === 1)) && (

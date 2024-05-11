@@ -8,10 +8,11 @@ import Container from '@mui/material/Container';
 
 import { useDrApp } from '@paziresh24/context/drapp';
 import { baseURL } from '@paziresh24/utils/baseUrl';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import { useActivationStore } from './activation.store';
+import { useFeatureValue } from '@growthbook/growthbook-react';
+import FixedWrapBottom from '@paziresh24/shared/ui/fixedWrapBottom';
 
 enum ActivationPaths {
     office = '/activation/office/center',
@@ -23,18 +24,42 @@ const Activation = () => {
     const [{ doctor: docotorInfo }] = useDrApp();
     const selectedService = useActivationStore(state => state.selectedService);
     const setSelectedService = useActivationStore(state => state.setSelectedService);
+    const activationOnlineVisit = useFeatureValue<any>('onlinevisit:enable-activation', {
+        speciality_ids: []
+    });
+    const isEnabledActivationOnlineVisit = docotorInfo?.expertises?.some((item: any) =>
+        activationOnlineVisit.speciality_ids.includes(item.expertise?.id)
+    );
 
     const handleSelectService = (service: ServicesType) => {
         if (selectedService.includes(service))
             return setSelectedService(() => selectedService.filter(s => s !== service));
         setSelectedService(prev => [...prev, service]);
 
-        getSplunkInstance().sendEvent({
-            group: 'activation',
-            type: `click-${service}`
-        });
+        if (!isEnabledActivationOnlineVisit) {
+            getSplunkInstance().sendEvent({
+                group: 'activation',
+                type: `click-${service}`
+            });
 
-        router.push(ActivationPaths[selectedService[0] ?? service]);
+            router.push(ActivationPaths[selectedService[0] ?? service]);
+        }
+    };
+
+    const handleSubmit = () => {
+        const url = ActivationPaths[selectedService[0]];
+        if (selectedService.length > 1)
+            getSplunkInstance().sendEvent({
+                group: 'activation',
+                type: `click-${selectedService.sort().reverse().join('&')}`
+            });
+        else
+            getSplunkInstance().sendEvent({
+                group: 'activation',
+                type: `click-${selectedService[0]}`
+            });
+
+        router.push(url);
     };
 
     return (
@@ -60,9 +85,9 @@ const Activation = () => {
                     <Typography fontSize={14} className="line-clamp-1">
                         {docotorInfo.expertises[0].alias_title
                             ? docotorInfo.expertises[0].alias_title
-                            : `$
-                        {docotorInfo.expertises[0].degree?.name ?? ''} $
-                        {docotorInfo.expertises[0].expertise?.name ?? ''}`}
+                            : `${docotorInfo.expertises[0].degree?.name ?? ''} ${
+                                  docotorInfo.expertises[0].expertise?.name ?? ''
+                              }`}
                     </Typography>
                 )}
                 <Button variant="outlined" size="small" onClick={() => router.push('/profile')}>
@@ -70,6 +95,11 @@ const Activation = () => {
                 </Button>
             </Stack>
             <Stack className="p-5">
+                {isEnabledActivationOnlineVisit && (
+                    <Typography fontSize={14} fontWeight="500">
+                        خدماتی که تمایل به فعالسازی آن دارید انتخاب نمایید.
+                    </Typography>
+                )}
                 <List className="space-y-3 !mt-3">
                     <Service
                         title="نوبت دهی مطب"
@@ -78,16 +108,39 @@ const Activation = () => {
                         selected={selectedService.includes('office')}
                         onSelect={handleSelectService}
                     />
-                    <Service
-                        title="ویزیت آنلاین"
-                        description="ظرفیت پزشکان ویزیت آنلاین تکمیل شده است."
-                        type="consult"
-                        selected={selectedService.includes('consult')}
-                        onSelect={handleSelectService}
-                        status="disable"
-                    />
+                    {isEnabledActivationOnlineVisit ? (
+                        <Service
+                            title="ویزیت آنلاین"
+                            description="ویزیت آنلاین بیماران از سراسر دنیا"
+                            type="consult"
+                            selected={selectedService.includes('consult')}
+                            onSelect={handleSelectService}
+                        />
+                    ) : (
+                        <Service
+                            title="ویزیت آنلاین"
+                            description="ظرفیت پزشکان ویزیت آنلاین تکمیل شده است."
+                            type="consult"
+                            selected={selectedService.includes('consult')}
+                            onSelect={handleSelectService}
+                            status="disable"
+                        />
+                    )}
                 </List>
             </Stack>
+            {isEnabledActivationOnlineVisit && (
+                <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        size="large"
+                        onClick={handleSubmit}
+                        disabled={!selectedService}
+                    >
+                        مرحله بعدی
+                    </Button>
+                </FixedWrapBottom>
+            )}
         </Container>
     );
 };
