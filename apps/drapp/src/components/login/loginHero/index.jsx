@@ -66,7 +66,7 @@ USER AGENT: ${navigator.userAgent}
                         پذیرش24، دستیار هوشمند پزشکان{' '}
                     </span>
                     <span className="font-normal text-base lg:text-lg mt-3 text-white text-opacity-75">
-                        پرونده الکترونیک، نسخه نویسی و مدیریت مطب تنها در یک پنل
+                        تنها پنل همه‌جانبه‌ی مدیریت حرفه‌ای امور پزشکان - نوبت‌دهی اینترنتی، نسخه نویسی و ...
                     </span>
 
                     {!centersConfig[window.location.hostname]?.hideDownloadBox && (
