@@ -531,8 +531,10 @@ function PlasmicWorkhours__RenderFunc(props) {
                         return (() => {
                           return (() => {
                             const duration = 5;
+                            const x = $props.duration;
+                            const maxMinutes = 1440 - x;
                             const options = [];
-                            for (let i = 0; i < 288; i++) {
+                            for (let i = 0; i * duration < maxMinutes; i++) {
                               const totalMinutes = i * duration;
                               const hour = Math.floor(totalMinutes / 60);
                               const minute = totalMinutes % 60;
