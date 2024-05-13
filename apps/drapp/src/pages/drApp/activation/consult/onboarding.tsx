@@ -27,25 +27,20 @@ export const Onboarding = () => {
         <>
             <Container
                 maxWidth="sm"
-                className="h-full md:h-auto md:p-5 rounded-md pt-4 bg-white md:mt-8 md:shadow-2xl md:shadow-slate-300 flex flex-col space-y-5"
+                className="flex flex-col h-full pt-4 space-y-5 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
             >
-                <span className="w-full block text-center p-2 font-medium">
+                <span className="block w-full p-2 font-medium text-center">
                     ویدیو آموزشی پزشک ویزیت آنلاین پذیرش۲۴
                 </span>
                 <div
-                    className="overflow-scroll md:rounded-lg h-[83%] max-[390px]:[&>div]:!h-[90%] [&>div]:!h-[98%]"
+                    className="overflow-scroll md:rounded-lg"
                     dangerouslySetInnerHTML={{ __html: videoIfram }}
                 />
-                <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        size="large"
-                        onClick={handleContinueButton}
-                    >
-                        ادامه
-                    </Button>
-                </FixedWrapBottom>
+                {/* <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]"> */}
+                <Button fullWidth variant="contained" size="large" onClick={handleContinueButton}>
+                    ادامه
+                </Button>
+                {/* </FixedWrapBottom> */}
             </Container>
         </>
     );
