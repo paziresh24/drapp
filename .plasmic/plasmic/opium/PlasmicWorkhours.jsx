@@ -349,7 +349,11 @@ function PlasmicWorkhours__RenderFunc(props) {
                           const options = [];
                           const initialHour = currentItem.from.split(":")[0];
                           const initialMinute = currentItem.from.split(":")[1];
-                          for (let i = 1; i <= 24; i++) {
+                          for (
+                            let i = 1;
+                            options[options.length] != "23:59";
+                            i++
+                          ) {
                             const totalMinutes =
                               initialHour * 60 +
                               initialMinute * 1 +
@@ -530,7 +534,7 @@ function PlasmicWorkhours__RenderFunc(props) {
                         return (() => {
                           const duration = 5;
                           const options = [];
-                          const initialHour = 17;
+                          const initialHour = 0;
                           for (let i = 0; i < 288; i++) {
                             const totalMinutes =
                               initialHour * 60 + i * duration;

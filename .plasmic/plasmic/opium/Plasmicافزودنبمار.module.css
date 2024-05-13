@@ -51,11 +51,7 @@
   width: auto;
   height: 1em;
 }
-.booktime:global(.__wab_instance):global(.__wab_instance) {
-  max-width: 100%;
-  position: relative;
-}
-.button__rk582:global(.__wab_instance) {
+.button:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
   width: 100%;
@@ -72,6 +68,10 @@
   object-fit: cover;
   width: auto;
   height: 1em;
+}
+.booktime:global(.__wab_instance):global(.__wab_instance) {
+  max-width: 100%;
+  position: relative;
 }
 .text__be5Rk {
   position: relative;
@@ -153,6 +153,17 @@
   width: auto;
   height: 1em;
 }
+.httpRestApiFetcher___81441:global(.__wab_instance) {
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  position: relative;
+  background: var(--token-Y3HOiwZmAcAF);
+  min-width: 0;
+}
+.text__q9TQt {
+  text-align: center;
+}
 .verticalStackFunction {
   display: flex;
   position: relative;
@@ -184,14 +195,6 @@
   > img {
   margin-top: var(--token-_c276Gs_1FIE);
 }
-.httpRestApiFetcher___81441:global(.__wab_instance) {
-  width: 100%;
-  max-width: 100%;
-  object-fit: cover;
-  position: relative;
-  background: var(--token-Y3HOiwZmAcAF);
-  min-width: 0;
-}
 .freeturnBook:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
@@ -210,7 +213,7 @@
   width: auto;
   height: 1em;
 }
-.preferBooktime2:global(.__wab_instance) {
+.preferBooktimeButton:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
   width: 100%;
@@ -235,28 +238,6 @@
   top: auto;
   width: 100%;
   min-width: 0;
-}
-.button__n0AEe:global(.__wab_instance) {
-  width: 100%;
-  min-width: 0;
-  display: none;
-}
-.text___9LDmR {
-  position: relative;
-  height: auto;
-  max-width: 100%;
-}
-.svg__hb8M {
-  position: relative;
-  object-fit: cover;
-  width: auto;
-  height: 1em;
-}
-.svg__lvBcR {
-  position: relative;
-  object-fit: cover;
-  width: auto;
-  height: 1em;
 }
 .freeBox__wlf3E {
   display: flex;
@@ -353,6 +334,25 @@
   object-fit: cover;
   position: relative;
   min-width: 0;
+}
+.freeBox___2Oylb {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  min-width: 0;
+}
+.svg__mnJpl {
+  position: relative;
+  object-fit: cover;
+  max-width: 100%;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 .freeBox__ldCoo {
   display: flex;
