@@ -357,7 +357,6 @@ function PlasmicWorkhours__RenderFunc(props) {
                               );
                               initialMinute = (initialMinute + duration) % 60;
                               if (initialHour >= 24) {
-                                options.push("23:59");
                                 break;
                               }
                               const formattedHour =
