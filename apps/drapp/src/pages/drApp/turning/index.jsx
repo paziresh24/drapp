@@ -28,6 +28,7 @@ import notificationVector from '@assets/image/notification.svg';
 import { getCookie, setCookie } from '@paziresh24/utils/cookie';
 import { useGetMessengerInfo, useUpdateMessengers } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
+import { BellIcon } from '@paziresh24/shared/icon';
 
 const Turning = () => {
     const history = useHistory();
@@ -61,6 +62,7 @@ const Turning = () => {
     const [referenceModal, setReferenceModal] = useState(false);
     const [paymentModal, setPaymentModal] = useState(false);
     const [notificationModal, setNotificationModal] = useState(false);
+    const [isShowNotificationPopup, setIsShowNotificationPopup] = useState(false);
     const [secureCallModal, setSecureCallModal] = useState(false);
     const [secureCallRulesModal, setSecureCallRulesModal] = useState(false);
     const paymentInfo = usePaymentSettingStore(state => state.setting);
@@ -69,6 +71,7 @@ const Turning = () => {
         'notification:web-push-modal-text',
         'برای ارتباط بیشتر و دریافت اخبار به سایت پذیرش۲۴ اجازه ارسال پیام می‌دهید؟'
     );
+    const notificationPopup = useFeatureValue('notification:popup', {});
     const vacationToggleDoctorList = useFeatureValue(
         'turning.should-show-vacation-toggle|doctor-list',
         { ids: [] }
@@ -146,6 +149,12 @@ const Turning = () => {
                 setNotificationModal(true);
         }
     }, [showNotificationModalRollout]);
+
+    useEffect(() => {
+        if (!isEmpty(notificationPopup) && !getCookie('DONT_SHOW_NOTIFICATION_POPUP')) {
+            setIsShowNotificationPopup(true);
+        }
+    }, [notificationPopup]);
 
     useEffect(() => {
         if (location.state?.prescriptionInfo?.finalized) {
@@ -456,6 +465,46 @@ const Turning = () => {
                     >
                         اجازه می‌دهم
                     </Button>
+                </div>
+            </Modal>
+
+            <Modal
+                isOpen={isShowNotificationPopup}
+                onClose={() => {
+                    setIsShowNotificationPopup(false);
+                    setCookie(
+                        'DONT_SHOW_NOTIFICATION_POPUP',
+                        true,
+                        moment().add(1, 'days').startOf('day').toDate()
+                    );
+                }}
+                title={notificationPopup.title}
+                icon={<BellIcon />}
+            >
+                <div className="flex flex-col items-center justify-center space-y-3">
+                    <span
+                        className="font-medium leading-7"
+                        dangerouslySetInnerHTML={{ __html: notificationPopup?.content }}
+                    />
+                    <div className="w-full flex flex-col gap-3">
+                        {notificationPopup?.actions?.map?.(item => (
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                onClick={() => {
+                                    setIsShowNotificationPopup(false);
+                                    setCookie(
+                                        'DONT_SHOW_NOTIFICATION_POPUP',
+                                        true,
+                                        moment().add(1, 'days').startOf('day').toDate()
+                                    );
+                                    history.push(item.link);
+                                }}
+                            >
+                                {item.title}
+                            </Button>
+                        ))}
+                    </div>
                 </div>
             </Modal>
 

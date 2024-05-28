@@ -54,6 +54,7 @@ export { ShareIcon } from './lib/public/share';
 export { MegaphoneIcon } from './lib/public/megaphone';
 export { CheckIcon } from './lib/public/check';
 export { DotsIcon } from './lib/public/dots';
+export { BellIcon } from './lib/public/bell';
 
 export {
     ArrowheadIcon,
