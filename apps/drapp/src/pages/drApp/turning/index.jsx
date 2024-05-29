@@ -29,7 +29,6 @@ import { getCookie, setCookie } from '@paziresh24/utils/cookie';
 import { useGetMessengerInfo, useUpdateMessengers } from '@paziresh24/hooks/drapp/profile';
 import { toast } from 'react-toastify';
 import { BellIcon } from '@paziresh24/shared/icon';
-import { title } from 'process';
 
 const Turning = () => {
     const history = useHistory();
