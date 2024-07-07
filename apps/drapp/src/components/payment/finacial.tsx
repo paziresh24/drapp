@@ -47,6 +47,11 @@ const Financial = () => {
         text: '',
         disabledSettlementButton: false
     });
+    const unannouncedAppointmentsPopupDuringSettlement = useFeatureIsOn(
+        'unannounced_appointments_popup_during_settlement'
+    );
+    const [unannouncedAppointmentsModal, setUnannouncedAppointmentsModal] = useState(false);
+
     const getBooks = useGetBooks(
         {
             center_id: center.id,
@@ -169,7 +174,11 @@ const Financial = () => {
                 {!settlementWarning.disabledSettlementButton && (
                     <Button
                         variant="contained"
-                        onClick={handleSubmit}
+                        onClick={() => {
+                            if (!unannouncedAppointmentsPopupDuringSettlement)
+                                return handleSubmit();
+                            return setUnannouncedAppointmentsModal(true);
+                        }}
                         loading={submitSettlement.isLoading}
                     >
                         درخواست تسویه حساب
@@ -289,6 +298,40 @@ const Financial = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+            </Modal>
+            <Modal
+                title=""
+                noHeader
+                noBodyPadding
+                isOpen={unannouncedAppointmentsModal}
+                onClose={setUnannouncedAppointmentsModal}
+                fullPage
+            >
+                <iframe
+                    src="https://opium-dashboard.paziresh24.com/uncertain-book-status-list/"
+                    frameBorder="0"
+                    className="h-full"
+                ></iframe>
+                <div className="min-h-[4rem] flex gap-3 p-4 border-t border-solid border-slate-200">
+                    <Button
+                        loading={submitSettlement.isLoading}
+                        onClick={() => {
+                            setUnannouncedAppointmentsModal(false);
+                            handleSubmit();
+                        }}
+                        variant="contained"
+                        fullWidth
+                    >
+                        تسویه حساب
+                    </Button>
+                    <Button
+                        onClick={() => setUnannouncedAppointmentsModal(false)}
+                        variant="outlined"
+                        fullWidth
+                    >
+                        انصراف
+                    </Button>
                 </div>
             </Modal>
         </>
