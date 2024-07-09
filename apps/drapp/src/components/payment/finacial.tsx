@@ -175,9 +175,12 @@ const Financial = () => {
                     <Button
                         variant="contained"
                         onClick={() => {
-                            if (!unannouncedAppointmentsPopupDuringSettlement)
-                                return handleSubmit();
-                            return setUnannouncedAppointmentsModal(true);
+                            if (
+                                unannouncedAppointmentsPopupDuringSettlement &&
+                                center.id == CONSULT_CENTER_ID
+                            )
+                                return setUnannouncedAppointmentsModal(true);
+                            return handleSubmit();
                         }}
                         loading={submitSettlement.isLoading}
                     >
