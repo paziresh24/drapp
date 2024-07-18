@@ -15,16 +15,22 @@ import * as serviceWorkerRegistration from '../../../serviceWorkerRegistration';
 import AppInstallBanner from '@components/appInstallBanner';
 import { sendEventWhenUseApp } from 'apps/drapp/src/functions/sendEventWhenUseApp';
 import { Mobile } from '@paziresh24/hooks/device';
+import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 
 const Auth = () => {
     const history = useHistory();
     const [focus, setFocus] = useState(false);
     const getLatestVersion = useGetLatestVersion();
+    const user = useGetInfo();
+
+    useEffect(() => {
+        user.refetch();
+    }, []);
 
     useEffect(() => {
         sendEventWhenUseApp();
-        if (getToken()) return history.replace(`/${window.location.search}`);
-    }, []);
+        if (user.data) return history.replace(`/${window.location.search}`);
+    }, [user.data]);
 
     useEffect(() => {
         if (

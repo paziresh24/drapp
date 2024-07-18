@@ -33,7 +33,6 @@ import LearnControl from '../learnControl/index';
 
 const PrivateRoute = props => {
     const [me, setMe] = useMe();
-    const [token, setToken] = useToken();
     const getMe = useGetMe();
     const history = useHistory();
     const { search } = useLocation();
@@ -50,11 +49,6 @@ const PrivateRoute = props => {
     } = useForm();
 
     useEffect(() => {
-        if (urlParams.access_token || token) {
-            urlParams.access_token && setToken(urlParams.access_token);
-            if (props.name !== 'Types') return setTimeout(() => getMe.refetch(), 0);
-            return;
-        }
         return clinicLogin.refetch();
     }, []);
 
@@ -93,7 +87,6 @@ const PrivateRoute = props => {
 
     useEffect(() => {
         if (clinicLogin.isSuccess) {
-            setToken(clinicLogin.data?.jwt);
             setTimeout(() => getMe.refetch());
             // localStorage.setItem('prescription_token', clinicLogin.data.jwt);
         }
@@ -105,11 +98,7 @@ const PrivateRoute = props => {
     // onRequest
     client.interceptors.request.use(
         config => {
-            const tokenRequest = token;
-            if (tokenRequest && config.url !== '/pwa-versions/latest') {
-                config.headers['Authorization'] = 'Bearer ' + tokenRequest;
-                config.headers['Content-Type'] = 'application/json';
-            }
+            config.headers['Content-Type'] = 'application/json';
             return config;
         },
         error => {
@@ -140,7 +129,7 @@ const PrivateRoute = props => {
 
     return (
         <>
-            {!otpConfirm && token && <Route {...props} />}
+            <Route {...props} />
             <LearnControl />
             <Modal
                 isOpen={otpConfirm}

@@ -11,11 +11,8 @@ const client = axios.create({
 // onRequest
 client.interceptors.request.use(
     config => {
-        const token = getToken();
-        if (token) {
-            config.headers['Authorization'] = 'Bearer ' + token;
-            config.headers['Content-Type'] = 'application/json';
-        }
+        config.headers['Content-Type'] = 'application/json';
+
         return config;
     },
     err => {
@@ -27,22 +24,14 @@ client.interceptors.request.use(
 client.interceptors.response.use(
     res => res.data,
     async err => {
-        const originalRequest = err.config;
         if (err.response?.status === 401 && window.location.pathname !== '/auth') {
-            try {
-                const { access_token } = await refreshToken();
-                setToken(access_token);
-                return client(originalRequest);
-            } catch (error) {
-                clearToken();
-                return window.location.replace(
-                    `/auth${
-                        window.location.pathname !== '/' || window.location.search
-                            ? `?url=${window.location.pathname + window.location.search}`
-                            : ''
-                    }`
-                );
-            }
+            return window.location.replace(
+                `/auth${
+                    window.location.pathname !== '/' || window.location.search
+                        ? `?url=${window.location.pathname + window.location.search}`
+                        : ''
+                }`
+            );
         }
         return Promise.reject(err);
     }

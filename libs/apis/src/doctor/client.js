@@ -13,11 +13,8 @@ const client = axios.create({
 
 client.interceptors.request.use(
     config => {
-        const token = queryString.parse(window.location.search).access_token;
-        if (token) {
-            config.headers['Authorization'] = 'Bearer ' + token;
-            config.headers['Content-Type'] = 'application/json';
-        }
+        config.headers['Content-Type'] = 'application/json';
+
         return config;
     },
     err => {

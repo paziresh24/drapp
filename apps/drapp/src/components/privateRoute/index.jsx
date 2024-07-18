@@ -210,8 +210,6 @@ const PrivateRoute = props => {
         }
     }, [insurancesRequest.status]);
 
-    if (urlParams.token) setToken(urlParams.token);
-
     useEffect(() => {
         if (
             getLatestVersion.isSuccess &&

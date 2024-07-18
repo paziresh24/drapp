@@ -101,7 +101,6 @@ const SalamatLogin = ({ step }) => {
             },
             {
                 onSuccess: data => {
-                    setToken(data.access_token);
                     getSplunkInstance().sendEvent({
                         group: 'login',
                         type: 'successful-salamat',

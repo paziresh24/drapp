@@ -66,7 +66,6 @@ export const ChangePhoneNumber = () => {
                     otp: code
                 });
             }
-            localStorage.setItem('token', data.access_token);
             window.location.reload();
         } catch (error) {
             toast.error(error.response?.data?.error ?? error.response.data.message);
