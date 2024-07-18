@@ -44,9 +44,9 @@ const Create = () => {
     useEffect(() => {
         addPrescription.reset();
         // getPrescription.remove();
-        if (params.token) {
-            setToken(params.token);
-        }
+        // if (params.token) {
+        //     setToken(params.token);
+        // }
 
         // if (validParams) {
         //     getPrescription.refetch();

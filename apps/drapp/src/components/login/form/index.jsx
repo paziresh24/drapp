@@ -39,8 +39,6 @@ const Form = ({ focus, setFocus }) => {
             },
             {
                 onSuccess: data => {
-                    setToken(data.access_token);
-
                     if (!forgot) {
                         getSplunkInstance().sendEvent({
                             group: 'login',

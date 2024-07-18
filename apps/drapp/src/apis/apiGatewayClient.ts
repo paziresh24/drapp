@@ -11,11 +11,6 @@ export const apiGatewayClient = axios.create({
 // onRequest
 apiGatewayClient.interceptors.request.use(
     config => {
-        const token = getToken();
-        if (token) {
-            (config as any).headers['Authorization'] = 'Bearer ' + token;
-        }
-
         return config;
     },
     err => {
@@ -31,20 +26,13 @@ apiGatewayClient.interceptors.response.use(
     async err => {
         const originalRequest = err.config;
         if (err.response?.status === 401 && window.location.pathname !== '/auth') {
-            try {
-                const { access_token } = (await refreshToken()) as any;
-                setToken(access_token);
-                return client(originalRequest);
-            } catch (error) {
-                clearToken();
-                return window.location.replace(
-                    `/auth${
-                        location.pathname !== '/' || location.search
-                            ? `?url=${location.pathname + location.search}`
-                            : ''
-                    }`
-                );
-            }
+            return window.location.replace(
+                `/auth${
+                    location.pathname !== '/' || location.search
+                        ? `?url=${location.pathname + location.search}`
+                        : ''
+                }`
+            );
         }
         return Promise.reject(err);
     }
