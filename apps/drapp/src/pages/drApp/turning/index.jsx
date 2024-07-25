@@ -514,7 +514,7 @@ const Turning = () => {
                                             link: item.link
                                         }
                                     });
-                                    history.push(item.link);
+                                    window.location.assign(item.link);
                                 }}
                             >
                                 {item.title}
