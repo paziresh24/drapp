@@ -18,11 +18,12 @@ import { formData } from '@paziresh24/shared/utils';
 import { baseURL } from '@paziresh24/utils/baseUrl';
 import NoImage from '@assets/image/noimage.png';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
-import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { useUpdateProvider } from 'apps/drapp/src/apis/provider/patchProvider';
 import { useGetProvider } from 'apps/drapp/src/apis/provider/getProvider';
 import { useGetUser } from 'apps/drapp/src/apis/user/getUser';
 import { useUpdateUser } from 'apps/drapp/src/apis/user/patchUser';
+import { useUploadImage } from '@paziresh24/apps/drapp/apis/user/upload-image';
 
 export const Info = ({ avatar = true }) => {
     const [info, setInfo] = useDrApp();
@@ -32,6 +33,8 @@ export const Info = ({ avatar = true }) => {
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
     const uploadPorfile = useUploadPorfile();
+    const uploadImage = useUploadImage();
+    const useNewUploadApi = useFeatureIsOn('use-new-upload-image-api');
 
     const notifyCellDoctorList = useFeatureValue('profile:notify-cell-api|doctor-list', {
         ids: ['']
@@ -88,7 +91,7 @@ export const Info = ({ avatar = true }) => {
         <div className="flex flex-col items-center h-full gap-5 p-4 bg-white">
             {avatar && (
                 <div className="relative w-24 h-24 rounded-full">
-                    {!uploadPorfile.isLoading ? (
+                    {!uploadPorfile.isLoading && !uploadImage.isLoading ? (
                         <>
                             <div className="relative">
                                 <input
@@ -97,23 +100,40 @@ export const Info = ({ avatar = true }) => {
                                     accept="image/png, image/jpg, image/jpeg, image/bmp"
                                     className="absolute invisible hidden"
                                     onChange={e =>
-                                        uploadPorfile.mutate(
-                                            formData({
-                                                file: e.target.files[0],
-                                                center_id: info.center.id
-                                            }),
-                                            {
-                                                onSuccess: data => {
-                                                    setInfo(prev => ({
-                                                        ...prev,
-                                                        doctor: {
-                                                            ...prev.doctor,
-                                                            image: data.data.url
-                                                        }
-                                                    }));
-                                                }
-                                            }
-                                        )
+                                        useNewUploadApi
+                                            ? uploadImage.mutate(e.target.files[0], {
+                                                  onSuccess: () => {
+                                                      setInfo(prev => ({
+                                                          ...prev,
+                                                          doctor: {
+                                                              ...prev.doctor,
+                                                              image:
+                                                                  window._env_
+                                                                      .P24_API_GATEWAY_BASE_URL +
+                                                                  `/v1/rokhnama/image?user_id=${
+                                                                      info.user?.id
+                                                                  }&version=${Math.random()}`
+                                                          }
+                                                      }));
+                                                  }
+                                              })
+                                            : uploadPorfile.mutate(
+                                                  formData({
+                                                      file: e.target.files[0],
+                                                      center_id: info.center.id
+                                                  }),
+                                                  {
+                                                      onSuccess: data => {
+                                                          setInfo(prev => ({
+                                                              ...prev,
+                                                              doctor: {
+                                                                  ...prev.doctor,
+                                                                  image: data.data.url
+                                                              }
+                                                          }));
+                                                      }
+                                                  }
+                                              )
                                     }
                                 />
                                 <label htmlFor="selectImage">
@@ -126,7 +146,7 @@ export const Info = ({ avatar = true }) => {
                                     uploadPorfile?.data?.data?.url
                                         ? baseURL('UPLOADER') + uploadPorfile?.data?.data?.url
                                         : null ?? info.doctor.image
-                                        ? baseURL('UPLOADER') + info.doctor.image
+                                        ? info.doctor.image
                                         : null ?? NoImage
                                 }
                                 alt="avatar"

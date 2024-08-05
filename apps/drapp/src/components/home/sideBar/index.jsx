@@ -266,11 +266,7 @@ const SideBar = memo(() => {
                         >
                             <div className="flex flex-col w-[4.5rem] h-[4.5rem] justify-center items-center">
                                 <img
-                                    src={
-                                        info.doctor.image
-                                            ? baseURL('UPLOADER') + info.doctor?.image
-                                            : null ?? NoImage
-                                    }
+                                    src={info.doctor.image ? info.doctor?.image : null ?? NoImage}
                                     style={{
                                         minWidth: open ? '4.5rem' : '2.5rem',
                                         width: open ? '4.5rem' : '2.5rem',

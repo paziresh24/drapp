@@ -35,6 +35,7 @@ import { growthbook } from '../../app';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import eruda from 'eruda';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { baseURL } from '@paziresh24/utils/baseUrl';
 
 const PrivateRoute = props => {
     const [info, setInfo] = useDrApp();
@@ -56,6 +57,9 @@ const PrivateRoute = props => {
     const getPaymentSetting = useGetPaymentSetting({ center_id: info?.center?.id });
     const insurancesRequest = useInsurances();
     const getMe = useGetInfo();
+
+    const useNewUploadApi = useFeatureIsOn('use-new-upload-image-api');
+    console.log(useNewUploadApi);
 
     const getUser = useGetUser();
     const getProvider = useGetProvider({ user_id: getMe.data?.data?.id });
@@ -122,13 +126,15 @@ const PrivateRoute = props => {
                     ...growthbook.getAttributes(),
                     user_id: getUser.data?.data?.users?.[0]?.id
                 });
+
                 doctor = {
                     ...doctor,
                     name: getUser.data.data?.users?.[0]?.name,
                     family: getUser.data.data?.users?.[0]?.family,
                     national_code: getUser.data?.data?.users?.[0]?.national_code,
                     cell: getUser.data?.data?.users?.[0]?.cell,
-                    user_id: getUser.data?.data?.users?.[0]?.id
+                    user_id: getUser.data?.data?.users?.[0]?.id,
+                    image: baseURL('UPLOADER') + doctor.image
                 };
             }
 
@@ -197,6 +203,18 @@ const PrivateRoute = props => {
             }));
         }
     }, [getNotifyCell.status]);
+
+    useEffect(() => {
+        if (useNewUploadApi) {
+            setInfo(prev => ({
+                ...prev,
+                doctor: {
+                    ...prev.doctor,
+                    image: `https://apigw.paziresh24.com/v1/rokhnama/image?user_id=${getUser.data?.data?.users?.[0]?.id}`
+                }
+            }));
+        }
+    }, [useNewUploadApi]);
 
     useEffect(() => {
         if (insurancesRequest.isSuccess) {

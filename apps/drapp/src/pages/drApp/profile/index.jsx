@@ -61,6 +61,8 @@ import { phoneNumberValidator } from '@persian-tools/persian-tools';
 import { isMessengerIdHasValid } from 'apps/drapp/src/functions/isMessengerIdHasValid';
 import Info from './info';
 import CenterPhoneNumbers from '@components/profile/centerPhoneNumbers';
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { useUploadImage } from '@paziresh24/apps/drapp/apis/user/upload-image';
 
 const Profile = () => {
     const router = useHistory();
@@ -73,6 +75,8 @@ const Profile = () => {
     const updateCenterAccess = useUpdateCenterAccess();
     const getCenterAccess = useGetCenterAccess({ center_id: info.center.id });
     const [centerAccess, setCenterAccess] = useState([]);
+    const uploadImage = useUploadImage();
+    const useNewUploadApi = useFeatureIsOn('use-new-upload-image-api');
 
     const uploadPorfile = useUploadPorfile();
     const uploadGallery = useUploadGallery();
@@ -340,7 +344,7 @@ const Profile = () => {
                     )}
                 </div>
                 <div className={styles['image-wrapper']}>
-                    {!uploadPorfile.isLoading ? (
+                    {!uploadPorfile.isLoading && !uploadImage.isLoading ? (
                         <>
                             <div className={styles['select-profile-image']}>
                                 <input
@@ -348,23 +352,40 @@ const Profile = () => {
                                     id="selectImage"
                                     accept="image/png, image/jpg, image/jpeg, image/bmp"
                                     onChange={e =>
-                                        uploadPorfile.mutate(
-                                            formData({
-                                                file: e.target.files[0],
-                                                center_id: info.center.id
-                                            }),
-                                            {
-                                                onSuccess: data => {
-                                                    setInfo(prev => ({
-                                                        ...prev,
-                                                        doctor: {
-                                                            ...prev.doctor,
-                                                            image: data.data.url
-                                                        }
-                                                    }));
-                                                }
-                                            }
-                                        )
+                                        useNewUploadApi
+                                            ? uploadImage.mutate(e.target.files[0], {
+                                                  onSuccess: () => {
+                                                      setInfo(prev => ({
+                                                          ...prev,
+                                                          doctor: {
+                                                              ...prev.doctor,
+                                                              image:
+                                                                  window._env_
+                                                                      .P24_API_GATEWAY_BASE_URL +
+                                                                  `/v1/rokhnama/image?user_id=${
+                                                                      info.user?.id
+                                                                  }&version=${Math.random()}`
+                                                          }
+                                                      }));
+                                                  }
+                                              })
+                                            : uploadPorfile.mutate(
+                                                  formData({
+                                                      file: e.target.files[0],
+                                                      center_id: info.center.id
+                                                  }),
+                                                  {
+                                                      onSuccess: data => {
+                                                          setInfo(prev => ({
+                                                              ...prev,
+                                                              doctor: {
+                                                                  ...prev.doctor,
+                                                                  image: data.data.url
+                                                              }
+                                                          }));
+                                                      }
+                                                  }
+                                              )
                                     }
                                 />
                                 <label htmlFor="selectImage">
@@ -377,7 +398,7 @@ const Profile = () => {
                                     uploadPorfile?.data?.data?.url
                                         ? baseURL('UPLOADER') + uploadPorfile?.data?.data?.url
                                         : null ?? info.doctor.image
-                                        ? baseURL('UPLOADER') + info.doctor.image
+                                        ? info.doctor.image
                                         : null ?? NoImage
                                 }
                                 alt="avatar"

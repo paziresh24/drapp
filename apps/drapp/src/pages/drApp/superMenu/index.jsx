@@ -68,11 +68,7 @@ const SuperMenu = () => {
             <div className={styles['userInfoWrapper']}>
                 <div className={styles['info']}>
                     <img
-                        src={
-                            info.doctor.image
-                                ? baseURL('UPLOADER') + info.doctor.image
-                                : null ?? NoImage
-                        }
+                        src={info.doctor.image ? info.doctor.image : null ?? NoImage}
                         onClick={() => {
                             history.push('/profile');
                         }}

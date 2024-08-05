@@ -74,10 +74,7 @@ const Activation = () => {
                 bgcolor="#fff"
                 spacing={1}
             >
-                <Avatar
-                    src={docotorInfo?.image && baseURL('UPLOADER') + docotorInfo?.image}
-                    sx={{ width: 90, height: 90 }}
-                />
+                <Avatar src={docotorInfo?.image} sx={{ width: 90, height: 90 }} />
                 <Typography fontWeight="500">
                     {docotorInfo.name} {docotorInfo.family}
                 </Typography>
