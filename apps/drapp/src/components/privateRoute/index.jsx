@@ -44,9 +44,7 @@ const PrivateRoute = props => {
     const [centersDoctor, setCentersDoctor] = useState([]);
     const getCentersDoctor = useGetCentersDoctor();
     const getLevels = useGetLevels();
-    const doctorInfo = useGetDoctorInfo({
-        center_id: centersDoctor?.[centersDoctor?.length - 1]?.id
-    });
+    const doctorInfo = useGetDoctorInfo({});
     const history = useHistory();
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
@@ -59,7 +57,6 @@ const PrivateRoute = props => {
     const getMe = useGetInfo();
 
     const useNewUploadApi = useFeatureIsOn('use-new-upload-image-api');
-    console.log(useNewUploadApi);
 
     const getUser = useGetUser();
     const getProvider = useGetProvider({ user_id: getMe.data?.data?.id });
