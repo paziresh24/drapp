@@ -46,7 +46,7 @@ export const messengersListData = (props: MwssengerDataParams) => {
                         name: 'راهنما',
                         type: 'text',
                         action: () =>
-                            window.open('https://community.paziresh24.com/t/topic/1055', '_blank')
+                            window.open('https://opium-dashboard.paziresh24.com/help-eitaa/', '_blank')
                     }
                 }
             ]
