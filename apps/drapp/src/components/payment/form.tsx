@@ -155,7 +155,7 @@ export const PaymentForm = memo((props: PaymentFormProps) => {
                         helperText={
                             cartNumberFieldError
                                 ? 'لطفا شماره کارت معتبر وارد کنید.'
-                                : 'جهت واریز مبالغ بیعانه به حساب شما'
+                                : '.لطفا از درج شماره کارت بانک سامان(بلوبانک) خودداری کنید.'
                         }
                     />
                 )}
