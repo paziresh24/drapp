@@ -261,7 +261,7 @@ const LabsList = ({
                         {services.map(
                             service =>
                                 isLabs(service) &&
-                                (type !== 'drugs' ? (
+                                (type !== 'drugs' && type !== 'equipment' ? (
                                     <LabsItem
                                         key={service.id}
                                         service={service}
@@ -282,6 +282,7 @@ const LabsList = ({
                                         readOnly={readOnly}
                                         noDate={noDate}
                                         noFavorite={noFavorite}
+                                        noInstructions={type === 'equipment'}
                                     />
                                 ))
                         )}

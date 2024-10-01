@@ -19,6 +19,7 @@ const Frequent = ({
         provider: insuranceType,
         ...(type === 'drugs' && { serviceType: serviceTypeList[type][insuranceType] }),
         ...(type === 'lab' && { serviceType: serviceTypeList[type][insuranceType] }),
+        ...(type === 'equipment' && { serviceType: serviceTypeList[type][insuranceType] }),
         ...(type === 'imaging' && {
             serviceType: insuranceType === 'tamin' ? typeId : 3
         }),

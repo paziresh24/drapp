@@ -40,12 +40,16 @@ export const Search = ({
         _limit: 10,
         ...(type === 'drugs' && { type: serviceTypeList[type][insuranceType] }),
         ...(type === 'lab' && { type: serviceTypeList[type][insuranceType] }),
+        ...(type === 'equipment' && {
+            type: serviceTypeList[type][insuranceType]
+        }),
         ...(type === 'imaging' && {
             type: insuranceType === 'tamin' ? typeId : 3
         }),
         ...(type === 'others' && {
             type_nin: insuranceType === 'tamin' ? [79, 80, 81, 83, 84, 85] : [1, 2, 3]
         }),
+
         ...(isIrc && { isIrc: true }),
         provider: insuranceType
     });
@@ -249,6 +253,9 @@ export const SearchFullPage = ({
         _limit: 10,
         ...(type === 'drugs' && { type: serviceTypeList[type][insuranceType] }),
         ...(type === 'lab' && { type: serviceTypeList[type][insuranceType] }),
+        ...(type === 'equipment' && {
+            type: serviceTypeList[type][insuranceType]
+        }),
         ...(type === 'imaging' && {
             type: insuranceType === 'tamin' ? typeId : 3
         }),

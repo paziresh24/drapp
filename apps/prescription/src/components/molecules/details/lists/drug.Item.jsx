@@ -19,7 +19,8 @@ const DrugItem = ({
     services,
     setServices,
     noDate,
-    noFavorite
+    noFavorite,
+    noInstructions
 }) => {
     const [isOpenDescription, setIsOpenDescription] = useState(false);
     const [isOpenDetailsForm, setIsOpenDetailsForm] = useState(false);
@@ -118,19 +119,21 @@ const DrugItem = ({
                             editable={!readOnly}
                         />
                     </td>
-                    <td data-label="طریقه مصرف">
-                        <SelectBox
-                            serviceId={service.id}
-                            service={service}
-                            value={service.how_to_use}
-                            field="how_to_use"
-                            type="Instructions"
-                            insuranceType={insuranceType}
-                            services={services}
-                            setServices={setServices}
-                            editable={!readOnly}
-                        />
-                    </td>
+                    {!noInstructions && (
+                        <td data-label="طریقه مصرف">
+                            <SelectBox
+                                serviceId={service.id}
+                                service={service}
+                                value={service.how_to_use}
+                                field="how_to_use"
+                                type="Instructions"
+                                insuranceType={insuranceType}
+                                services={services}
+                                setServices={setServices}
+                                editable={!readOnly}
+                            />
+                        </td>
+                    )}
                     <td data-label="میزان مصرف">
                         <SelectBox
                             serviceId={service.id}
@@ -333,12 +336,14 @@ const DrugItem = ({
                             type="Consumption"
                             insuranceType={insuranceType}
                         />
-                        <SelectBox
-                            value={service.how_to_use}
-                            editable={false}
-                            type="Instructions"
-                            insuranceType={insuranceType}
-                        />
+                        {!noInstructions && (
+                            <SelectBox
+                                value={service.how_to_use}
+                                editable={false}
+                                type="Instructions"
+                                insuranceType={insuranceType}
+                            />
+                        )}
                         <SelectBox
                             value={service.use_instruction}
                             editable={false}
@@ -390,18 +395,20 @@ const DrugItem = ({
                         setServices={setServices}
                         editable={!readOnly}
                     />
-                    <SelectBox
-                        serviceId={service.id}
-                        service={service}
-                        value={service.how_to_use}
-                        field="how_to_use"
-                        type="Instructions"
-                        simple={false}
-                        insuranceType={insuranceType}
-                        services={services}
-                        setServices={setServices}
-                        editable={!readOnly}
-                    />
+                    {!noInstructions && (
+                        <SelectBox
+                            serviceId={service.id}
+                            service={service}
+                            value={service.how_to_use}
+                            field="how_to_use"
+                            type="Instructions"
+                            simple={false}
+                            insuranceType={insuranceType}
+                            services={services}
+                            setServices={setServices}
+                            editable={!readOnly}
+                        />
+                    )}
                     <SelectBox
                         serviceId={service.id}
                         service={service}

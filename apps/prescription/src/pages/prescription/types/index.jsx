@@ -182,6 +182,17 @@ const Types = () => {
             ) {
                 return setType('others');
             }
+
+            if (
+                prescriptionInfo.insuranceType === 'salamat' &&
+                services_clone.some(service =>
+                    serviceTypeList['equipment'][prescriptionInfo.insuranceType].includes(
+                        service.service_type
+                    )
+                )
+            ) {
+                return setType('equipment');
+            }
         }
     }, [getItemServices.status, prescriptionInfo]);
 
@@ -190,7 +201,7 @@ const Types = () => {
             <div className={styles['wrapper']}>
                 <div className={styles['types']}>
                     {prescriptionInfo && <Info />}
-                    {prescriptionInfo && (
+                    {prescriptionInfo?.insuranceType && (
                         <>
                             <Tabs activeTab={type}>
                                 <Tab
@@ -251,6 +262,22 @@ const Types = () => {
                                 >
                                     <Service type="others" />
                                 </Tab>
+                                {prescriptionInfo?.insuranceType === 'salamat' && (
+                                    <Tab
+                                        keyTab="equipment"
+                                        title="تجهیزات"
+                                        numberBadge={
+                                            getItemServices.isSuccess &&
+                                            services.filter(service =>
+                                                serviceTypeList['equipment'][
+                                                    prescriptionInfo.insuranceType
+                                                ].includes(+service.service_type)
+                                            ).length
+                                        }
+                                    >
+                                        <Service type="equipment" />
+                                    </Tab>
+                                )}
                             </Tabs>
                             <LabsList
                                 services={services}

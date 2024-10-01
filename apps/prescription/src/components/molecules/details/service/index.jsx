@@ -9,6 +9,7 @@ import { useSelectType } from '@paziresh24/context/prescription/selectType-conte
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import ImagingDetails from './../serviceDetails/details/Imaging';
 import { useServices } from '@paziresh24/context/prescription/services-context';
+import EquipmentDetails from '../serviceDetails/details/Equipment';
 
 const Service = ({ type }) => {
     const [prescriptionInfo] = useSelectPrescription();
@@ -46,6 +47,13 @@ const Service = ({ type }) => {
                     )}
                     {type === 'others' && (
                         <OthersDetails
+                            services={services}
+                            setServices={setServices}
+                            insuranceType={prescriptionInfo.insuranceType}
+                        />
+                    )}
+                    {type === 'equipment' && (
+                        <EquipmentDetails
                             services={services}
                             setServices={setServices}
                             insuranceType={prescriptionInfo.insuranceType}
