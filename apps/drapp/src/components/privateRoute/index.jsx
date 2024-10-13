@@ -173,7 +173,8 @@ const PrivateRoute = props => {
                 doctorNotActiveOfficeAndConsult &&
                 info.centers.length === 1 &&
                 info.centers.find(center => +center.type_id === 1) &&
-                !history.location.pathname.startsWith('/activation')
+                !history.location.pathname.startsWith('/activation') &&
+                !history.location.pathname.startsWith('/profile')
             ) {
                 history.push('/activation');
             }
