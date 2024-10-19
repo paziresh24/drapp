@@ -79,7 +79,8 @@ export const getSplunkInstance = () =>
                 user_agent: window.navigator.userAgent
             },
             user_information: window.user_information,
-            current_url: window.location.href
+            current_url: window.location.href,
+            referrer: document.referrer
         }
     });
 
