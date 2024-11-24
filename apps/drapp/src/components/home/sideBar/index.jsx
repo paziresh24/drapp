@@ -102,11 +102,9 @@ const SideBar = memo(() => {
                         </div>
                     ),
                     onClick: () => {
-                        history.push('/forough');
-                        getSplunkInstance().sendEvent({
-                            group: 'forough',
-                            type: 'click'
-                        });
+                        window.location.assign(
+                            `https://www.paziresh24.com/dashboard/apps/sanje/my-performance/`
+                        );
                     }
                 },
                 {

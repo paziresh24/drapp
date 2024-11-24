@@ -36,13 +36,10 @@ export const MainMenuData = () => {
         },
         {
             title: 'رتبه من در پذیرش24',
-            onClick: () => {
-                router.push('/forough');
-                getSplunkInstance().sendEvent({
-                    group: 'forough',
-                    type: 'click'
-                });
-            },
+            onClick: () =>
+                window.location.assign(
+                    `https://www.paziresh24.com/dashboard/apps/sanje/my-performance/`
+                ),
             icon: <Statistics color="#000" />,
             badge: 'جدید',
             shouldShow: true
