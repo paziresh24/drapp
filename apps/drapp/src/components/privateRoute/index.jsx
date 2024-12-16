@@ -55,6 +55,7 @@ const PrivateRoute = props => {
     const getPaymentSetting = useGetPaymentSetting({ center_id: info?.center?.id });
     const insurancesRequest = useInsurances();
     const getMe = useGetInfo();
+    const useNewActivationPage = useFeatureIsOn('use-new-activation-page');
 
     const useNewUploadApi = useFeatureIsOn('use-new-upload-image-api');
 
@@ -176,7 +177,11 @@ const PrivateRoute = props => {
                 !history.location.pathname.startsWith('/activation') &&
                 !history.location.pathname.startsWith('/profile')
             ) {
-                history.push('/activation');
+                if (useNewActivationPage) {
+                    location.assign('https://opium-dashboard.paziresh24.com/activation-page/');
+                } else {
+                    history.push('/activation');
+                }
             }
         }
         if (doctorInfo.isError) {

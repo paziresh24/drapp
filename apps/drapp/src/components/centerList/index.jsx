@@ -12,7 +12,7 @@ import isEmpty from 'lodash/isEmpty';
 import { getCookie } from '@paziresh24/utils/cookie';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { removeZeroStartNumber } from '../../functions/removeZeroStartNumber';
-import { useFeatureValue } from '@growthbook/growthbook-react';
+import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 
 export const CenterList = ({ enabled = false }) => {
     const history = useHistory();
@@ -26,6 +26,7 @@ export const CenterList = ({ enabled = false }) => {
     const isEnabledActivationOnlineVisit = info?.doctor?.expertises?.some(item =>
         activationOnlineVisit.speciality_ids.includes(item.expertise?.id)
     );
+    const useNewActivationPage = useFeatureIsOn('use-new-activation-page');
 
     document.querySelector('body').addEventListener('click', e => {
         if (isCenterSelectOpen === true) {
@@ -201,7 +202,13 @@ export const CenterList = ({ enabled = false }) => {
                                         size="small"
                                         variant="contained"
                                         onClick={() => {
-                                            history.push('/activation/office/center');
+                                            if (useNewActivationPage) {
+                                                location.assign(
+                                                    'https://opium-dashboard.paziresh24.com/activation-page/office/center/'
+                                                );
+                                            } else {
+                                                history.push('/activation/office/center');
+                                            }
                                         }}
                                     >
                                         فعال سازی
@@ -263,7 +270,13 @@ export const CenterList = ({ enabled = false }) => {
                                         size="small"
                                         variant="contained"
                                         onClick={() => {
-                                            history.push('/activation/consult/rules');
+                                            if (useNewActivationPage) {
+                                                location.assign(
+                                                    'https://opium-dashboard.paziresh24.com/activation-page/consult/rules/'
+                                                );
+                                            } else {
+                                                history.push('/activation/consult/rules');
+                                            }
                                         }}
                                     >
                                         فعال سازی

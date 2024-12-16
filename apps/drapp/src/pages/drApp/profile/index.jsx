@@ -77,6 +77,7 @@ const Profile = () => {
     const [centerAccess, setCenterAccess] = useState([]);
     const uploadImage = useUploadImage();
     const useNewUploadApi = useFeatureIsOn('use-new-upload-image-api');
+    const useNewProfilePage = useFeatureIsOn('use-new-profile-page');
 
     const uploadPorfile = useUploadPorfile();
     const uploadGallery = useUploadGallery();
@@ -267,6 +268,15 @@ const Profile = () => {
             setIsDropdownOpen(false);
         }
     });
+
+    if (useNewProfilePage) {
+        return (
+            <iframe
+                className="h-full w-full"
+                src="https://opium-dashboard.paziresh24.com/profile-page/"
+            />
+        );
+    }
 
     return (
         <div className={styles['wrapper']}>
