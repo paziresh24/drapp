@@ -163,26 +163,6 @@ const PrivateRoute = props => {
                 type: 'ActiveUsers'
             });
             Sentry.setUser({ username: doctor.user_id });
-
-            const doctorNotActiveOfficeAndConsult = !info.centers.some(
-                center =>
-                    center.id === '5532' || (center?.type_id === 1 && center?.is_active_booking)
-            );
-            if (
-                !window._env_.P24_IS_PROXY_CENTER &&
-                !window._env_.P24_IS_LOCAL_CENTER &&
-                doctorNotActiveOfficeAndConsult &&
-                info.centers.length === 1 &&
-                info.centers.find(center => +center.type_id === 1) &&
-                !history.location.pathname.startsWith('/activation') &&
-                !history.location.pathname.startsWith('/profile')
-            ) {
-                if (useNewActivationPage) {
-                    location.assign('https://opium-dashboard.paziresh24.com/activation-page/');
-                } else {
-                    history.push('/activation');
-                }
-            }
         }
         if (doctorInfo.isError) {
             if (centersDoctor.length <= info.centers.length) {
@@ -192,6 +172,29 @@ const PrivateRoute = props => {
             }
         }
     }, [doctorInfo.status, getUser.status, getProvider.status]);
+
+    useEffect(() => {
+        const doctorNotActiveOfficeAndConsult = !info?.centers?.some?.(
+            center => center.id === '5532' || (center?.type_id === 1 && center?.is_active_booking)
+        );
+        if (
+            !window._env_.P24_IS_PROXY_CENTER &&
+            !window._env_.P24_IS_LOCAL_CENTER &&
+            doctorNotActiveOfficeAndConsult &&
+            info?.centers?.length === 1 &&
+            info?.centers?.find?.(center => +center.type_id === 1) &&
+            (useNewActivationPage ? true : !history.location.pathname.startsWith('/activation')) &&
+            !history.location.pathname.startsWith('/profile') &&
+            getUser.data?.data?.users?.[0]?.id &&
+            growthbook.ready
+        ) {
+            if (useNewActivationPage) {
+                location.assign('https://opium-dashboard.paziresh24.com/activation-page/');
+            } else {
+                history.push('/activation');
+            }
+        }
+    }, [growthbook.ready, getUser.data?.data?.users?.[0]?.id, useNewActivationPage, info.centers]);
 
     useEffect(() => {
         if (getNotifyCell.isSuccess) {
