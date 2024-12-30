@@ -189,7 +189,7 @@ const PrivateRoute = props => {
             growthbook.ready
         ) {
             if (useNewActivationPage) {
-                location.assign('https://opium-dashboard.paziresh24.com/activation-page/');
+                window.location.assign('https://opium-dashboard.paziresh24.com/activation-page/');
             } else {
                 history.push('/activation');
             }

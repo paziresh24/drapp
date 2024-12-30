@@ -203,7 +203,7 @@ export const CenterList = ({ enabled = false }) => {
                                         variant="contained"
                                         onClick={() => {
                                             if (useNewActivationPage) {
-                                                location.assign(
+                                                window.location.assign(
                                                     'https://opium-dashboard.paziresh24.com/activation-page/office/center/'
                                                 );
                                             } else {
@@ -271,7 +271,7 @@ export const CenterList = ({ enabled = false }) => {
                                         variant="contained"
                                         onClick={() => {
                                             if (useNewActivationPage) {
-                                                location.assign(
+                                                window.location.assign(
                                                     'https://opium-dashboard.paziresh24.com/activation-page/consult/rules/'
                                                 );
                                             } else {
