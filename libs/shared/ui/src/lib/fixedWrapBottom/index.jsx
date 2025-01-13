@@ -1,8 +1,5 @@
-import styles from './fixedWrapBottom.module.scss';
-import { CSSTransition } from 'react-transition-group';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { isMobile } from 'react-device-detect';
 import { isEmbed } from '@paziresh24/shared/utils';
 
 const FixedWrapBottom = ({ children, className = '' }) => {
@@ -12,28 +9,19 @@ const FixedWrapBottom = ({ children, className = '' }) => {
         setShow(true);
     }, []);
 
-    if (isMobile)
-        return (
-            <CSSTransition
-                in={show}
-                timeout={300}
-                classNames={{
-                    enterDone: styles['show']
-                }}
-            >
-                <div
-                    className={classNames('border-t border-solid border-[#e8ecf0]', {
-                        [styles['wrapper']]: true,
-                        [className]: className,
-                        '!bottom-0': isEmbed()
-                    })}
-                >
-                    {children}
-                </div>
-            </CSSTransition>
-        );
-
-    return <div className={classNames(className, styles['wrapper'])}>{children}</div>;
+    return (
+        <div
+            className={classNames(
+                className,
+                'fixed bottom-[4.5rem] right-0 p-3 border-t border-solid border-[#e8ecf0]  bg-white w-full z-50 flex gap-2 sm:p-0 sm:bg-transparent sm:border-none sm:static',
+                {
+                    '!bottom-0': isEmbed()
+                }
+            )}
+        >
+            {children}
+        </div>
+    );
 };
 
 export default FixedWrapBottom;
