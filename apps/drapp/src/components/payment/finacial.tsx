@@ -186,7 +186,16 @@ const Financial = () => {
                     >
                         درخواست تسویه حساب
                     </Button>
-                )}
+                )}        
+              <a href="https://www.sadrun.ir/paziresh24/" target="_blank">
+                <Button
+                    variant="contained"
+                >
+پیوستن به جمع سهامداران پذیرش ۲۴
+                </Button>
+            </a>
+
+              
                 {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
                     <div className="p-4 bg-orange-100 rounded-md">
                         <span className="text-sm font-medium text-orange-700">
