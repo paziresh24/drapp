@@ -1,7 +1,7 @@
 import Button from '@mui/lab/LoadingButton';
 import { useDrApp } from '@paziresh24/context/drapp';
 import { addCommas } from '@persian-tools/persian-tools';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useGetFinancial } from '../../apis/payment/getFinancial';
 import { useSubmitSettlement } from '../../apis/payment/submitSettlement';
 import { useConfirmSettlement } from '../../apis/payment/confirmSettlement';
@@ -17,6 +17,7 @@ import moment from 'jalali-moment';
 import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { Alert } from '@mui/material';
+import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 
 type Status =
     | 'system_reject'
@@ -51,6 +52,13 @@ const Financial = () => {
         'unannounced_appointments_popup_during_settlement'
     );
     const [unannouncedAppointmentsModal, setUnannouncedAppointmentsModal] = useState(false);
+
+    useEffect(() => {
+        getSplunkInstance().sendEvent({
+            group: 'paziresh24-stock-button',
+            type: 'paziresh24-stock-button-view'
+        });
+    }, []);
 
     const getBooks = useGetBooks(
         {
@@ -186,13 +194,23 @@ const Financial = () => {
                     >
                         درخواست تسویه حساب
                     </Button>
-                )}        
-                          <a href="https://www.sadrun.ir/paziresh24/" target="_blank" className="w-full">
-                <Button variant="contained" className="w-full">پیوستن به جمع سهامداران پذیرش ۲۴
-</Button>
-            </a>
+                )}
+                <a
+                    href="https://www.sadrun.ir/paziresh24/"
+                    target="_blank"
+                    className="w-full"
+                    onClick={() => {
+                        getSplunkInstance().sendEvent({
+                            group: 'paziresh24-stock-button',
+                            type: 'paziresh24-stock-button-click'
+                        });
+                    }}
+                >
+                    <Button variant="contained" className="w-full">
+                        پیوستن به جمع سهامداران پذیرش ۲۴
+                    </Button>
+                </a>
 
-              
                 {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
                     <div className="p-4 bg-orange-100 rounded-md">
                         <span className="text-sm font-medium text-orange-700">
