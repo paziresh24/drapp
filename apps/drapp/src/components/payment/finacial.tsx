@@ -187,12 +187,9 @@ const Financial = () => {
                         درخواست تسویه حساب
                     </Button>
                 )}        
-              <a href="https://www.sadrun.ir/paziresh24/" target="_blank">
-                <Button
-                    variant="contained"
-                >
-پیوستن به جمع سهامداران پذیرش ۲۴
-                </Button>
+                          <a href="https://www.sadrun.ir/paziresh24/" target="_blank" className="w-full">
+                <Button variant="contained" className="w-full">پیوستن به جمع سهامداران پذیرش ۲۴
+</Button>
             </a>
 
               
