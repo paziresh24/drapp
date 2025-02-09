@@ -195,7 +195,7 @@ const Financial = () => {
                         درخواست تسویه حساب
                     </Button>
                 )}
-                <a
+               {/* <a
                     href="https://www.sadrun.ir/paziresh24/"
                     target="_blank"
                     className="w-full"
@@ -209,7 +209,8 @@ const Financial = () => {
                     <Button variant="contained" className="w-full">
                         پیوستن به جمع سهامداران پذیرش ۲۴
                     </Button>
-                </a>
+                </a> */}
+          
 
                 {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
                     <div className="p-4 bg-orange-100 rounded-md">
