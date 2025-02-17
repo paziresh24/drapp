@@ -18,6 +18,7 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { Alert } from '@mui/material';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
+import {useGetUser} from '../../apis/user/getuser'
 
 type Status =
     | 'system_reject'
@@ -35,6 +36,7 @@ const nextYearDate = moment().add(1, 'jYear').unix();
 const Financial = () => {
     const [{ center }] = useDrApp();
     const getfinancial = useGetFinancial({ centerId: center.id });
+    const getUserInfo = useGetUser();
     const submitSettlement = useSubmitSettlement();
     const confirmSettlement = useConfirmSettlement();
     const [inquiryModal, setInquiryModal] = useState(false);
@@ -195,8 +197,8 @@ const Financial = () => {
                         درخواست تسویه حساب
                     </Button>
                 )}
-               {/* <a
-                    href="https://www.sadrun.ir/paziresh24/"
+                <a
+                    href=`https://www.sadrun.ir/paziresh24/mobile?=${getUserInfo.data?.data?.cell}`
                     target="_blank"
                     className="w-full"
                     onClick={() => {
@@ -209,7 +211,7 @@ const Financial = () => {
                     <Button variant="contained" className="w-full">
                         پیوستن به جمع سهامداران پذیرش ۲۴
                     </Button>
-                </a> */}
+                </a>
           
 
                 {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
