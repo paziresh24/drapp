@@ -196,7 +196,7 @@ const Financial = () => {
                     </Button>
                 )}
                 <a
-                    href={`https://www.sadrun.ir/paziresh24/mobile?=${doctor.cell}`}
+                    href={`https://www.sadrun.ir/paziresh24?mobile=${doctor.cell}`}
                     target="_blank"
                     className="w-full"
                     onClick={() => {
