@@ -18,7 +18,6 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { Alert } from '@mui/material';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
-import {useGetUser} from '../../apis/user/getuser'
 
 type Status =
     | 'system_reject'
@@ -34,9 +33,8 @@ type Status =
 const nextYearDate = moment().add(1, 'jYear').unix();
 
 const Financial = () => {
-    const [{ center }] = useDrApp();
+    const [{ center, doctor }] = useDrApp();
     const getfinancial = useGetFinancial({ centerId: center.id });
-    const getUserInfo = useGetUser();
     const submitSettlement = useSubmitSettlement();
     const confirmSettlement = useConfirmSettlement();
     const [inquiryModal, setInquiryModal] = useState(false);
@@ -198,7 +196,7 @@ const Financial = () => {
                     </Button>
                 )}
                 <a
-                    href=`https://www.sadrun.ir/paziresh24/mobile?=${getUserInfo.data?.data?.cell}`
+                    href={`https://www.sadrun.ir/paziresh24/mobile?=${doctor.cell}`}
                     target="_blank"
                     className="w-full"
                     onClick={() => {
@@ -212,7 +210,6 @@ const Financial = () => {
                         پیوستن به جمع سهامداران پذیرش ۲۴
                     </Button>
                 </a>
-          
 
                 {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
                     <div className="p-4 bg-orange-100 rounded-md">
