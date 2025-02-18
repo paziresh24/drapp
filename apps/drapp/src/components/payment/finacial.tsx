@@ -33,7 +33,7 @@ type Status =
 const nextYearDate = moment().add(1, 'jYear').unix();
 
 const Financial = () => {
-    const [{ center }] = useDrApp();
+    const [{ center, doctor }] = useDrApp();
     const getfinancial = useGetFinancial({ centerId: center.id });
     const submitSettlement = useSubmitSettlement();
     const confirmSettlement = useConfirmSettlement();
@@ -195,8 +195,8 @@ const Financial = () => {
                         درخواست تسویه حساب
                     </Button>
                 )}
-               {/* <a
-                    href="https://www.sadrun.ir/paziresh24/"
+                <a
+                    href={`https://www.sadrun.ir/paziresh24/mobile?=${doctor.cell}`}
                     target="_blank"
                     className="w-full"
                     onClick={() => {
@@ -209,8 +209,7 @@ const Financial = () => {
                     <Button variant="contained" className="w-full">
                         پیوستن به جمع سهامداران پذیرش ۲۴
                     </Button>
-                </a> */}
-          
+                </a>
 
                 {(getBooks.data as any)?.meta?.total > 0 && shouldShowDeletedNotice && (
                     <div className="p-4 bg-orange-100 rounded-md">
