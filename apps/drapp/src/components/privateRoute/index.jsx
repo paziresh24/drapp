@@ -122,7 +122,11 @@ const PrivateRoute = props => {
             if (getUser.isSuccess) {
                 growthbook.setAttributes({
                     ...growthbook.getAttributes(),
-                    user_id: getUser.data?.data?.users?.[0]?.id
+                    user_id: getUser.data?.data?.users?.[0]?.id,
+                    user_center_ids: info.centers?.map(item => item.user_center_id),
+                    center_ids: info.centers?.map(item => item.id),
+                    slug: doctor?.slug,
+                    cell: doctor?.cell
                 });
 
                 doctor = {
