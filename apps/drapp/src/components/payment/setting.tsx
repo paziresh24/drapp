@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import { usePaymentSettingStore } from '../../store/paymentSetting.store';
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
 export const PaymentSetting = () => {
     const { validate, submit, isLoading, ...formProps } = usePaymentForm();
@@ -22,6 +23,7 @@ export const PaymentSetting = () => {
     const ibanInquiry = useIbanInquiry({
         card_number: formProps.cartNumber ?? ''
     });
+    const disabled = useFeatureIsOn('disabled-finacial');
     const centerType = center.id === CONSULT_CENTER_ID ? 'consult' : 'office';
     const router = useHistory();
     const [shouldShowTipCostModal, setShouldShowTipCostModal] = useState(false);
@@ -148,6 +150,7 @@ export const PaymentSetting = () => {
                     variant="contained"
                     size="large"
                     loading={isLoading || ibanInquiry.isLoading}
+                    disabled={disabled}
                     onClick={() => {
                         if (
                             validate({
