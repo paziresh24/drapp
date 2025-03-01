@@ -116,6 +116,14 @@ const PrivateRoute = props => {
     }, [getCentersDoctor.status, centersDoctor, getMe.status]);
 
     useEffect(() => {
+        growthbook.setAttributes({
+            ...growthbook.getAttributes(),
+            center_id: info.center?.id,
+            user_center_id: info.center?.user_center_id
+        });
+    }, [info?.center]);
+
+    useEffect(() => {
         if (doctorInfo.isSuccess) {
             let doctor = doctorInfo.data.data ?? {};
 
