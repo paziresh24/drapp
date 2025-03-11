@@ -7,6 +7,8 @@ import { Alert, Tab, Tabs, Typography } from '@mui/material';
 import Financial from 'apps/drapp/src/components/payment/finacial';
 import { PaymentSetting } from 'apps/drapp/src/components/payment/setting';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 const PaymentPage = () => {
     const [{ center }] = useDrApp();
@@ -14,12 +16,20 @@ const PaymentPage = () => {
     const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
     const [tab, setTab] = useState(getSetting?.active ? 0 : 1);
     const disabled = useFeatureIsOn('disabled-finacial');
+    const { search } = useLocation();
+    const urlParams = queryString.parse(search);
 
     useEffect(() => {
         getPaymentSetting.remove();
         getPaymentSetting.refetch();
         setTab(getSetting?.active ? 0 : 1);
     }, [center, getSetting?.active]);
+
+    useEffect(() => {
+        if (urlParams.section == 'setting') {
+            setTab(1);
+        }
+    }, [urlParams]);
 
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
         setTab(newValue);
