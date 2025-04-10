@@ -43,7 +43,7 @@ const PaymentPage = () => {
         >
             {disabled && (
     <Alert icon={false} className="!bg-amber-600/20 mt-3 !text-amber-900">
-        <Typography fontSize="0.9rem" fontWeight="medium" className="flex flex-wrap items-center gap-1">
+        <Typography fontSize="0.9rem" fontWeight="medium">
             پزشک گرامی، این صفحه دیگر به‌روزرسانی نمی‌شود. برای{' '}
             {tab === 0 ? 'مشاهده گزارش‌های مالی' : 'ویرایش مبلغ ویزیت'}، لطفاً به بخش{' '}
             <a
