@@ -4,6 +4,7 @@ import { useDrApp } from '@paziresh24/context/drapp';
 import { usePaymentSettingStore } from 'apps/drapp/src/store/paymentSetting.store';
 import { useGetPaymentSetting } from 'apps/drapp/src/apis/payment/getPaymentSetting';
 import { Alert, Tab, Tabs, Typography } from '@mui/material';
+import LaunchIcon from '@mui/icons-material/Launch'; // آیکون لینک خارجی
 import Financial from 'apps/drapp/src/components/payment/finacial';
 import { PaymentSetting } from 'apps/drapp/src/components/payment/setting';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
@@ -41,21 +42,27 @@ const PaymentPage = () => {
             className="flex flex-col h-full !px-4 pt-2 md:pt-1 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
             {disabled && (
-                <Alert icon={false} className="!bg-amber-600/20 mt-3 !text-amber-900">
-                    <Typography fontSize="0.9rem" fontWeight="medium">
-                        پزشک گرامی، این صفحه دیگر به‌روزرسانی نمی‌شود. برای ویرایش و مشاهده گزارش
-                        مالی، لطفاً{' '}
-                        <a
-                            className="underline underline-offset-4 !text-primary"
-                            href="https://www.paziresh24.com/dashboard/apps/katibe/bills/"
-                            target="_blank"
-                        >
-                            اینجا
-                        </a>{' '}
-                        کلیک کنید.
-                    </Typography>
-                </Alert>
-            )}
+    <Alert icon={false} className="!bg-amber-600/20 mt-3 !text-amber-900">
+        <Typography fontSize="0.9rem" fontWeight="medium" className="flex flex-wrap items-center gap-1">
+            پزشک گرامی، این صفحه دیگر به‌روزرسانی نمی‌شود. برای{' '}
+            {tab === 0 ? 'مشاهده گزارش‌های مالی' : 'ویرایش مبلغ ویزیت'}، لطفاً به بخش{' '}
+            <a
+                className="underline underline-offset-4 text-primary inline-flex items-center gap-1"
+                href={
+                    tab === 0
+                        ? 'https://www.paziresh24.com/dashboard/apps/katibe/bills/'
+                        : 'https://www.paziresh24.com/dashboard/apps/drapp/service/'
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                {tab === 0 ? 'مدیریت مالی' : 'نوبت‌دهی › خدمات'}
+                <LaunchIcon fontSize="inherit" />
+            </a>{' '}
+            مراجعه کنید.
+        </Typography>
+    </Alert>
+)}
             <Tabs
                 variant="fullWidth"
                 className="border-b border-solid border-slate-200"
