@@ -63,7 +63,7 @@ const PaymentPage = () => {
         </Typography>
     </Alert>
 )}
-          {!disabled && center?.id && (
+          {!disabled && (
     <Alert icon={false} className="!bg-yellow-100 mt-3 !text-yellow-900">
         <Typography fontSize="0.9rem" fontWeight="medium">
             ⚠️ توجه: سرویس پرداخت اینترنتی فعلی در پایان خرداد ۱۴۰۳ غیرفعال خواهد شد.
@@ -72,7 +72,7 @@ const PaymentPage = () => {
             <a
                 className="underline underline-offset-4 text-primary inline-flex items-center gap-1 mt-2"
                 href={
-                    center?.id === 5532
+                    center?.id === "5532"
                         ? 'https://opium-dashboard.paziresh24.com/introducing-a-new-payment-service-online-visit/'
                         : 'https://opium-dashboard.paziresh24.com/introducing-a-new-payment-service-office/'
                 }
