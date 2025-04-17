@@ -63,6 +63,29 @@ const PaymentPage = () => {
         </Typography>
     </Alert>
 )}
+          {!disabled && center?.id && (
+    <Alert icon={false} className="!bg-yellow-100 mt-3 !text-yellow-900">
+        <Typography fontSize="0.9rem" fontWeight="medium">
+            ⚠️ توجه: سرویس پرداخت اینترنتی فعلی در پایان خرداد ۱۴۰۳ غیرفعال خواهد شد.
+            برای بهره‌مندی از امکاناتی مانند تسویه‌حساب خودکار درآمد، مشاهده لحظه‌ای تراکنش‌ها و سایر قابلیت‌ها، لطفاً هرچه سریع‌تر به سرویس جدید پرداخت پذیرش۲۴ منتقل شوید.
+            <br />
+            <a
+                className="underline underline-offset-4 text-primary inline-flex items-center gap-1 mt-2"
+                href={
+                    center?.id === 5532
+                        ? 'https://opium-dashboard.paziresh24.com/introducing-a-new-payment-service-online-visit/'
+                        : 'https://opium-dashboard.paziresh24.com/introducing-a-new-payment-service-office/'
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                👉 آشنایی با سرویس جدید و فعال‌سازی
+                <LaunchIcon fontSize="inherit" />
+            </a>
+        </Typography>
+    </Alert>
+)}
+
             <Tabs
                 variant="fullWidth"
                 className="border-b border-solid border-slate-200"
