@@ -42,54 +42,53 @@ const PaymentPage = () => {
             className="flex flex-col h-full !px-4 pt-2 md:pt-1 bg-white rounded-md md:h-auto md:p-5 md:mt-8 md:shadow-2xl md:shadow-slate-300"
         >
             {disabled && (
-    <Alert icon={false} className="!bg-blue-100 mt-3 !text-blue-900">
-        <Typography fontSize="0.9rem" fontWeight="medium">
-            {tab === 0 ? (
-                <>
-                    <strong>اطلاعیه مهم</strong>
-                    <br />
-                    پزشک گرامی، شما به سیستم پرداخت جدید پذیرش۲۴ منتقل شده‌اید.
-                    <br />
-                    ✅ از این پس، پرداخت‌های نوبت‌های جدید در سیستم جدید ثبت می‌شوند و در بخش «
-                    <a
-                        className="underline underline-offset-4 text-primary inline-flex items-center gap-1"
-                        href="https://www.paziresh24.com/dashboard/apps/katibe/bills/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        مدیریت مالی
-                        <LaunchIcon fontSize="inherit" />
-                    </a>
-                    » قابل مشاهده هستند.
-                    <br />
-                    💰 برای دریافت مبالغ تسویه‌نشده مربوط به نوبت‌های ثبت‌شده در سیستم قبلی،
-                    در همین صفحه با کلیک روی دکمه «درخواست تسویه حساب» درخواست خود را ثبت کنید تا
-                    وجه مربوطه به حساب شما واریز شود.
-                </>
-            ) : (
-                <>
-                    <strong>اطلاعیه مهم</strong>
-                    <br />
-                    پزشک گرامی، شما به سیستم پرداخت جدید پذیرش۲۴ منتقل شده‌اید.
-                    <br />
-                    ✅ از این پس، برای ویرایش مبلغ به بخش «
-                    <a
-                        className="underline underline-offset-4 text-primary inline-flex items-center gap-1"
-                        href="https://www.paziresh24.com/dashboard/apps/drapp/service/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        نوبت‌دهی › خدمات
-                        <LaunchIcon fontSize="inherit" />
-                    </a>
-                    » مراجعه کنید.
-                </>
+                <Alert icon={false} className="!bg-blue-100 mt-3 !text-blue-900">
+                    <Typography fontSize="0.9rem" fontWeight="medium" lineHeight="1.68rem">
+                        {tab === 0 ? (
+                            <>
+                                <strong>اطلاعیه مهم</strong>
+                                <br />
+                                پزشک گرامی، شما به سیستم پرداخت جدید پذیرش۲۴ منتقل شده‌اید.
+                                <br />✅ از این پس، پرداخت‌های نوبت‌های جدید در سیستم جدید ثبت
+                                می‌شوند و در بخش «
+                                <a
+                                    className="underline underline-offset-4 text-primary inline-flex items-center gap-1"
+                                    href="https://www.paziresh24.com/dashboard/apps/katibe/bills/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    مدیریت مالی
+                                    <LaunchIcon fontSize="inherit" />
+                                </a>
+                                » قابل مشاهده هستند.
+                                <br />
+                                💰 برای دریافت مبالغ تسویه‌نشده مربوط به نوبت‌های ثبت‌شده در سیستم
+                                قبلی، در همین صفحه با کلیک روی دکمه «درخواست تسویه حساب» درخواست خود
+                                را ثبت کنید تا وجه مربوطه به حساب شما واریز شود.
+                            </>
+                        ) : (
+                            <>
+                                <strong>اطلاعیه مهم</strong>
+                                <br />
+                                پزشک گرامی، شما به سیستم پرداخت جدید پذیرش۲۴ منتقل شده‌اید.
+                                <br />✅ از این پس، برای ویرایش مبلغ به بخش «
+                                <a
+                                    className="underline underline-offset-4 text-primary inline-flex items-center gap-1"
+                                    href="https://www.paziresh24.com/dashboard/apps/drapp/service/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    نوبت‌دهی › خدمات
+                                    <LaunchIcon fontSize="inherit" />
+                                </a>
+                                » مراجعه کنید.
+                            </>
+                        )}
+                    </Typography>
+                </Alert>
             )}
-        </Typography>
-    </Alert>
-)}
 
-          {/*  {!disabled && (
+            {!disabled && (
                 <Alert icon={false} className="!bg-yellow-100 mt-3 !text-yellow-900">
                     <Typography fontSize="0.9rem" fontWeight="medium">
                         ⚠️ سرویس پرداخت فعلی تا پایان خرداد ۱۴۰۴ غیرفعال می‌شود.
@@ -112,7 +111,7 @@ const PaymentPage = () => {
                         </a>
                     </Typography>
                 </Alert>
-            )} */}
+            )}
             <Tabs
                 variant="fullWidth"
                 className="border-b border-solid border-slate-200"
