@@ -88,7 +88,7 @@ const PaymentPage = () => {
                 </Alert>
             )}
 
-            {!disabled && (
+          {/*  {!disabled && (
                 <Alert icon={false} className="!bg-yellow-100 mt-3 !text-yellow-900">
                     <Typography fontSize="0.9rem" fontWeight="medium">
                         ⚠️ سرویس پرداخت فعلی تا پایان خرداد ۱۴۰۴ غیرفعال می‌شود.
@@ -111,7 +111,7 @@ const PaymentPage = () => {
                         </a>
                     </Typography>
                 </Alert>
-            )}
+            )} */}
             <Tabs
                 variant="fullWidth"
                 className="border-b border-solid border-slate-200"
