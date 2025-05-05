@@ -17,6 +17,7 @@ const PaymentPage = () => {
     const getPaymentSetting = useGetPaymentSetting({ center_id: center?.id });
     const [tab, setTab] = useState(getSetting?.active ? 0 : 1);
     const disabled = useFeatureIsOn('disabled-finacial');
+    const inviteDrToNewPaymentService = useFeatureIsOn('invite-dr-to-new-payment-service'); // ویژگی جدید
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
 
@@ -88,7 +89,7 @@ const PaymentPage = () => {
                 </Alert>
             )}
 
-            {!disabled && (
+           {(!disabled && inviteDrToNewPaymentService) && (
                 <Alert icon={false} className="!bg-yellow-100 mt-3 !text-yellow-900">
                     <Typography fontSize="0.9rem" fontWeight="medium">
                         ⚠️ سرویس پرداخت فعلی تا پایان خرداد ۱۴۰۴ غیرفعال می‌شود.
@@ -111,7 +112,7 @@ const PaymentPage = () => {
                         </a>
                     </Typography>
                 </Alert>
-            )}
+            )} 
             <Tabs
                 variant="fullWidth"
                 className="border-b border-solid border-slate-200"
