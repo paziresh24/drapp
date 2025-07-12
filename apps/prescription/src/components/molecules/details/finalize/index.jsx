@@ -24,7 +24,8 @@ import { usePaziresh } from '@paziresh24/hooks/drapp/turning';
 import { prescriptionType } from '@paziresh24/constants/prescriptionType';
 import { serviceType } from '@paziresh24/constants/serviceType';
 import deletedSalamatServices from '../../../../constants/deletedSalamatServices';
-
+import axios from 'axios';
+import { useGetItemServices } from '@paziresh24/hooks/prescription';
 const Finalize = () => {
     const { search } = useLocation();
     const urlParams = queryString.parse(search);
@@ -51,7 +52,9 @@ const Finalize = () => {
     const [deliverConfirmModal, setDeliverConfirmModal] = useState(false);
     const [authForm, setAuthForm] = useState(false);
     const [referenceModal, setReferenceModal] = useState(false);
-
+    const getItemServices = useGetItemServices({
+        prescriptionId: prescriptionInfo?.id
+    });
     const visitDescription = useRef();
     const referenceFeedback = useRef();
     const isFinalize = useRef(false);
@@ -68,6 +71,26 @@ const Finalize = () => {
     useEffect(() => {
         startPrescribeDateTime.current = new Date();
     }, []);
+
+    useEffect(() => {
+        if (
+            !prescriptionInfo.finalized &&
+            getItemServices.isSuccess &&
+            urlParams['oauth-redirected']
+        ) {
+            if (
+                services.some(item => item.service_type === serviceType.TAMIN.SERVICES_OF_DOCTORS)
+            ) {
+                isServiceWithVisitTamin = true;
+            }
+            if (
+                prescriptionInfo.insuranceType === 'salamat' &&
+                prescriptionInfo.salamat_prescription.isReference
+            )
+                return setReferenceModal(true);
+            submitServices();
+        }
+    }, [prescriptionInfo?.finalized, getItemServices.isSuccess]);
 
     useLayoutEffect(() => {
         return () => {
@@ -123,12 +146,32 @@ const Finalize = () => {
         });
     };
 
-    const finalizePrescriptionAction = () => {
-        return finalizePrescription.mutateAsync({
-            prescriptionId: prescriptionInfo.id,
-            referenceFeedback: referenceFeedback?.current?.value,
-            shouldIgnoreSms: info.center?.type_id !== 1 && info.center?.id !== '5532'
-        });
+    const finalizePrescriptionAction = async () => {
+        try {
+            return await finalizePrescription.mutateAsync({
+                prescriptionId: prescriptionInfo.id,
+                referenceFeedback: referenceFeedback?.current?.value,
+                shouldIgnoreSms: info.center?.type_id !== 1 && info.center?.id !== '5532'
+            });
+        } catch (error) {
+            if (error.response.data.message.includes('توکن بیمه تامین اجتماعی')) {
+                toast.loading('برای احرازهویت به سایت تامین اجتماعی منتقل می‌شوید...');
+                const data = await axios.get(
+                    `https://prescription-workflow.paziresh24.com/webhook/prod/presc/tamin/challenge?doctor_medical_code=${
+                        info?.doctor.medical_code
+                    }&redirect_back=${encodeURIComponent(
+                        window.location.href +
+                            `${
+                                window.location.href?.includes('?') ? '&' : '?'
+                            }oauth-redirected=true`
+                    )}`
+                );
+
+                window.location.href = data?.data?.redirect_url;
+                return Promise.reject({});
+            }
+            return Promise.reject(error);
+        }
     };
 
     const submitVisit = async () => {
