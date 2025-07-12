@@ -150,7 +150,6 @@ export const PaymentSetting = () => {
                     variant="contained"
                     size="large"
                     loading={isLoading || ibanInquiry.isLoading}
-                    disabled={disabled}
                     onClick={() => {
                         if (
                             validate({
