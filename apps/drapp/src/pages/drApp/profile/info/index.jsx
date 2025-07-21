@@ -20,8 +20,6 @@ import NoImage from '@assets/image/noimage.png';
 import { Overlay } from '@paziresh24/shared/ui/overlay';
 import { useFeatureIsOn, useFeatureValue } from '@growthbook/growthbook-react';
 import { useUpdateProvider } from 'apps/drapp/src/apis/provider/patchProvider';
-import { useGetProvider } from 'apps/drapp/src/apis/provider/getProvider';
-import { useGetUser } from 'apps/drapp/src/apis/user/getUser';
 import { useUpdateUser } from 'apps/drapp/src/apis/user/patchUser';
 import { useUploadImage } from '@paziresh24/apps/drapp/apis/user/upload-image';
 
