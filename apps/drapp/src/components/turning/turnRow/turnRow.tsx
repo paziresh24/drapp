@@ -133,7 +133,6 @@ const TurnRow = (props: TurnRowProps) => {
 
     const turn = useRef(turns.find(turn => turn.id === id));
     const showTurnStatusButton = paymentStatus && paymentStatus !== 'not_paid';
-
     const isShowSafeCall =
         getMessengerInfo?.data?.data?.some(
             (item: { type: string }) => item.type === 'secure_call'
