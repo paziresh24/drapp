@@ -73,21 +73,7 @@ const Finalize = () => {
     }, []);
 
     useEffect(() => {
-        if (
-            !prescriptionInfo.finalized &&
-            getItemServices.isSuccess &&
-            urlParams['oauth-redirected']
-        ) {
-            if (
-                services.some(item => item.service_type === serviceType.TAMIN.SERVICES_OF_DOCTORS)
-            ) {
-                isServiceWithVisitTamin = true;
-            }
-            if (
-                prescriptionInfo.insuranceType === 'salamat' &&
-                prescriptionInfo.salamat_prescription.isReference
-            )
-                return setReferenceModal(true);
+        if (!prescriptionInfo.finalized && urlParams['oauth-redirected']) {
             submitServices();
         }
     }, [prescriptionInfo?.finalized, getItemServices.isSuccess]);

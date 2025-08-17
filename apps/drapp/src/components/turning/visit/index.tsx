@@ -54,9 +54,29 @@ const Visit = ({ isOpen, onClose, provider, prescriptionId, bookId, refetchData 
                                             toast.error(error.response?.data?.message);
                                     }
                                 },
-                                onError: error => {
-                                    if (axios.isAxiosError(error))
+                                onError: async error => {
+                                    if (axios.isAxiosError(error)) {
+                                        if (
+                                            error?.response?.data?.message?.includes(
+                                                'توکن بیمه تامین اجتماعی'
+                                            )
+                                        ) {
+                                            toast.loading(
+                                                'برای احرازهویت به سایت تامین اجتماعی منتقل می‌شوید...'
+                                            );
+                                            const data = await axios.get(
+                                                `https://prescription-workflow.paziresh24.com/webhook/prod/presc/tamin/challenge?doctor_medical_code=${
+                                                    info?.doctor.medical_code
+                                                }&redirect_back=${encodeURIComponent(
+                                                    `https://dr.paziresh24.com/prescription/patient/${prescriptionId}?oauth-redirected=true`
+                                                )}`
+                                            );
+
+                                            window.location.href = data?.data?.redirect_url;
+                                            return Promise.reject({});
+                                        }
                                         toast.warn(error.response?.data?.message);
+                                    }
                                 }
                             }
                         );
