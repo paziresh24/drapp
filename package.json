@@ -52,7 +52,7 @@
         "@typescript-eslint/eslint-plugin": "5.29.0",
         "@typescript-eslint/parser": "5.29.0",
         "autoprefixer": "10.4.2",
-        "axios": "1.6.7",
+        "axios": "1.13.0",
         "babel-loader": "8.1.0",
         "classnames": "2.3.1",
         "core-js": "3.6.5",
