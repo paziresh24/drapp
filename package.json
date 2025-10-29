@@ -64,7 +64,7 @@
         "lodash": "4.17.21",
         "ncp": "2.0.0",
         "plyr-react": "3.2.1",
-        "postcss": "8.4.5",
+        "postcss": "8.4.31",
         "postcss-import": "14.0.2",
         "postcss-nesting": "10.0.2",
         "prettier": "2.6.2",
