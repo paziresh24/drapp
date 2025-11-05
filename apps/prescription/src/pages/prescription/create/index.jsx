@@ -1,5 +1,6 @@
 import queryString from 'query-string';
 import isEmpty from 'lodash/lodash';
+import axios from 'axios';
 
 // HOOKS
 import { useEffect, useState } from 'react';
@@ -85,11 +86,29 @@ const Create = () => {
                     }
                     return history.replace(`/prescription/patient/${data.result?.id}`);
                 },
-                onError: e => {
+                onError: async e => {
+                    if (
+                        e?.response?.data?.message?.includes('توکن بیمه تامین اجتماعی')
+                    ) {
+                        toast.loading(
+                            'برای احرازهویت به سایت تامین اجتماعی منتقل می‌شوید...'
+                        );
+                        const data = await axios.get(
+                            `https://prescription-workflow.paziresh24.com/webhook/prod/presc/tamin/challenge?doctor_medical_code=${
+                                info?.doctor.medical_code
+                            }&redirect_back=${encodeURIComponent(
+                                window.location.href +
+                                    `${window.location.href?.includes('?') ? '&' : '?'}oauth-redirected=true`
+                            )}`
+                        );
+
+                        window.location.href = data?.data?.redirect_url;
+                        return Promise.reject({});
+                    }
                     if (e.response.data.message === 'کد تایید دو مرحله‌ای را ارسال کنید') {
                         return setOtpConfirm(true);
                     }
-                    toast.error(e.response.data.message);
+                    toast.warn(e.response?.data?.message);
                     if (
                         e.response.data.message ===
                         'بیمار دارای بیمه تامین اجتماعی می‌باشد. برای تجویز، از قسمت بیمه‌های من احراز هویت کنید.'
