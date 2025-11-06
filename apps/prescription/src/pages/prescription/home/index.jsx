@@ -28,6 +28,7 @@ import TexFiled from '@paziresh24/shared/ui/textField';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import { CalendarIcon } from '@paziresh24/shared/icon';
 import { useSelectPrescription } from '@paziresh24/context/prescription/selectPrescription-context';
 import { DeliverCase } from '../../../components/molecules/deliver/deliverCase';
@@ -412,11 +413,29 @@ const Home = props => {
                     setRefrenceConfirmModal(false);
                     return history.push(`/prescription/patient/${addPrescription.data.result.id}`);
                 },
-                onError: () => {
+                onError: async e => {
+                    if (
+                        e?.response?.data?.message?.includes('توکن تامین اجتماعی')
+                    ) {
+                        toast.loading(
+                            'برای احرازهویت به سایت تامین اجتماعی منتقل می‌شوید...'
+                        );
+                        const data = await axios.get(
+                            `https://prescription-workflow.paziresh24.com/webhook/prod/presc/tamin/challenge?doctor_medical_code=${
+                                info?.doctor.medical_code
+                            }&redirect_back=${encodeURIComponent(
+                                window.location.href +
+                                    `${window.location.href?.includes('?') ? '&' : '?'}oauth-redirected=true`
+                            )}`
+                        );
+
+                        window.location.href = data?.data?.redirect_url;
+                        return Promise.reject({});
+                    }
                     setRefrenceConfirmModal(false);
                     !toast.isActive('add') &&
                         toast.error(
-                            addPrescription.error.response?.data.message ||
+                            e?.response?.data?.message ||
                                 'خطا در دریافت اطلاعات.',
                             {
                                 toastId: 'add'
