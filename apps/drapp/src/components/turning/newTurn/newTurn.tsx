@@ -165,7 +165,7 @@ const NewTurn = () => {
     const showError = useCallback(async (error: unknown) => {
         if (axios.isAxiosError(error)) {
             if (
-                error?.response?.data?.message?.includes('توکن بیمه تامین اجتماعی')
+                error?.response?.data?.message?.includes('توکن تامین اجتماعی')
             ) {
                 toast.loading(
                     'برای احرازهویت به سایت تامین اجتماعی منتقل می‌شوید...'
