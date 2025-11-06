@@ -26,6 +26,7 @@ const Wrapper = ({ children }) => {
     const [page] = usePage();
 
     const router = useHistory();
+    const location = useLocation();
 
     useEffect(() => {
         window.addEventListener('offline', () => {
@@ -56,7 +57,7 @@ const Wrapper = ({ children }) => {
             >
                 {isLogined && !isMobile && !isEmbed() && shouldShowActionBars && <SideBar />}
                 <div className={styles['article']}>
-                    {isLogined && <Header />}
+                    {isLogined && location.pathname !== '/setting/workhours' && <Header />}
                     {children}
                     {isLogined && !isEmbed() && shouldShowActionBars && <BottomBar />}
                 </div>

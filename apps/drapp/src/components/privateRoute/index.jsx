@@ -28,9 +28,7 @@ import CONSULT_CENTER_ID from '@paziresh24/constants/consultCenterId';
 import OFFICE_CENTER from '@paziresh24/constants/officeCenter';
 import { useGetInfo } from '@paziresh24/hooks/drapp/home';
 import { useGetUser } from '../../apis/user/getUser';
-import { useGetProvider } from '../../apis/provider/getProvider';
 import { isEmbed } from '@paziresh24/shared/utils';
-import { useGetNotifyCell } from '../../apis/provider/getNotifyCell';
 import { growthbook } from '../../app';
 import { getSplunkInstance } from '@paziresh24/shared/ui/provider';
 import eruda from 'eruda';
@@ -60,10 +58,6 @@ const PrivateRoute = props => {
     const useNewUploadApi = useFeatureIsOn('use-new-upload-image-api');
 
     const getUser = useGetUser();
-    const getProvider = useGetProvider({ user_id: getMe.data?.data?.id });
-    const getNotifyCell = useGetNotifyCell({
-        provider_id: getProvider.data?.data?.providers?.[0]?.id
-    });
     const showDebugger = useFeatureIsOn('debug');
 
     useEffect(() => {
@@ -111,7 +105,6 @@ const PrivateRoute = props => {
             }));
 
             getUser.refetch();
-            getProvider.refetch();
         }
     }, [getCentersDoctor.status, centersDoctor, getMe.status]);
 
@@ -148,17 +141,6 @@ const PrivateRoute = props => {
                 };
             }
 
-            if (getProvider.isSuccess) {
-                getNotifyCell.refetch();
-                doctor = {
-                    ...doctor,
-                    medical_code: getProvider.data?.data?.providers?.[0]?.employee_id,
-                    biography: getProvider.data?.data?.providers?.[0]?.biography,
-                    slug: getProvider.data?.data?.providers?.[0]?.slug,
-                    provider_id: getProvider.data?.data?.providers?.[0]?.id
-                };
-            }
-
             setInfo(prev => ({
                 ...prev,
                 doctor
@@ -183,7 +165,7 @@ const PrivateRoute = props => {
                 setIsError(true);
             }
         }
-    }, [doctorInfo.status, getUser.status, getProvider.status]);
+    }, [doctorInfo.status, getUser.status]);
 
     useEffect(() => {
         const doctorNotActiveOfficeAndConsult = !info?.centers?.some?.(
@@ -207,20 +189,6 @@ const PrivateRoute = props => {
             }
         }
     }, [growthbook.ready, getUser.data?.data?.users?.[0]?.id, useNewActivationPage, info.centers]);
-
-    useEffect(() => {
-        if (getNotifyCell.isSuccess) {
-            setInfo(prev => ({
-                ...prev,
-                doctor: {
-                    ...prev.doctor,
-                    notify_cell: getNotifyCell.data.data?.providers?.[0]?.notify_cell
-                        ? `0${getNotifyCell.data.data?.providers?.[0]?.notify_cell}`
-                        : null
-                }
-            }));
-        }
-    }, [getNotifyCell.status]);
 
     useEffect(() => {
         if (useNewUploadApi) {

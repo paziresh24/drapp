@@ -141,88 +141,10 @@ const WorkHours = () => {
     };
 
     return (
-        <Container maxWidth="sm" className="pt-4 bg-white rounded-md md:p-5 md:mt-8 md:shadow-md">
-            <Stack className="pb-32 space-y-5 md:pb-0">
-                <SelectTime
-                    items={durationList}
-                    value={duration}
-                    onChange={newDuration => {
-                        handleSetDuration(duration, newDuration);
-                    }}
-                    label={
-                        getCenterType(doctorInfo.center) === 'consult'
-                            ? 'مدت زمان‌ ایده‌آل شما برای ارائه یک ویزیت جامع و پیوسته به یک بیمار چقدر است؟'
-                            : 'مدت زمان هر ویزیت بیمار در مطب شما چقدر است؟'
-                    }
-                    isLoading={getWorkHoursRequest.isLoading}
-                    prefix="دقیقه"
-                />
-                {getCenterType(doctorInfo.center) === 'consult' && (
-                    <Alert severity="info" variant="standard" icon={false}>
-                        ویزیت آنلاین می‌بایست در زمان مقرر نوبت، در مدت زمان اعلامی شما به صورت جامع
-                        و پیوسته انجام شود. توجه داشته باشید که به مدت ۳ روز، پس از ویزیت بیمار برای
-                        پاسخگویی به سوالات احتمالی بیمار در دسترس باشید.
-                    </Alert>
-                )}
-                {useFragment && (
-                    <Fragment
-                        key={!isLoading ? duration : previousDuration}
-                        name="HoursDaysOfWeek"
-                        props={{
-                            centerId: doctorInfo.center.id,
-                            userCenterId: doctorInfo.center.user_center_id
-                        }}
-                    />
-                )}
-                {!useFragment && (
-                    <>
-                        <SelectDay selectedDays={days} onChange={setDays} />
-                        <SelectHours defaultHours={hours} onChange={setHours} />
-                        <Button
-                            loading={isLoading}
-                            onClick={handleAdd}
-                            variant="contained"
-                            className="self-end"
-                        >
-                            افزودن
-                        </Button>
-                        <Divider />
-                        <Result
-                            isLoading={getWorkHoursRequest.isLoading}
-                            values={workHours}
-                            removeAction={handleRemoveWorkHours}
-                        />
-                    </>
-                )}
-                {queryString.parse(window.location.search)['activation-path'] && (
-                    <FixedWrapBottom className="border-t border-solid !bottom-0 border-[#e8ecf0]">
-                        <Button
-                            fullWidth
-                            variant="outlined"
-                            size="large"
-                            onClick={() => setActivationModal(true)}
-                        >
-                            پایان فعال‌سازی
-                        </Button>
-                    </FixedWrapBottom>
-                )}
-            </Stack>
-            <Modal
-                isOpen={activationModal}
-                onClose={setActivationModal}
-                title="ویزیت آنلاین شما با موفقیت فعال شد."
-            >
-                <div dangerouslySetInnerHTML={{ __html: completedActivationNotice }}></div>
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        router.replace('/');
-                    }}
-                >
-                    شروع نوبت دهی
-                </Button>
-            </Modal>
-        </Container>
+        <iframe
+            className="h-full w-full"
+            src={`https://opium-dashboard.paziresh24.com/workhours/?user_id=${doctorInfo?.user?.id}`}
+        />
     );
 };
 

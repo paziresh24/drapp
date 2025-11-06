@@ -113,7 +113,7 @@ const NewTurn = () => {
             }
             createAction();
         } catch (error) {
-            showError(error);
+            await showError(error);
         }
     }, [nationalCode]);
 
@@ -129,7 +129,7 @@ const NewTurn = () => {
             }
             visitAction();
         } catch (error) {
-            showError(error);
+            await showError(error);
         }
     }, [nationalCode]);
 
@@ -143,7 +143,7 @@ const NewTurn = () => {
             });
             typeAction === 'create' ? createAction() : visitAction();
         } catch (error) {
-            showError(error);
+            await showError(error);
         }
     }, [patientCell]);
 
@@ -162,8 +162,26 @@ const NewTurn = () => {
         }
     };
 
-    const showError = useCallback((error: unknown) => {
+    const showError = useCallback(async (error: unknown) => {
         if (axios.isAxiosError(error)) {
+            if (
+                error?.response?.data?.message?.includes('توکن بیمه تامین اجتماعی')
+            ) {
+                toast.loading(
+                    'برای احرازهویت به سایت تامین اجتماعی منتقل می‌شوید...'
+                );
+                const data = await axios.get(
+                    `https://prescription-workflow.paziresh24.com/webhook/prod/presc/tamin/challenge?doctor_medical_code=${
+                        info?.doctor.medical_code
+                    }&redirect_back=${encodeURIComponent(
+                        window.location.href +
+                            `${window.location.href?.includes('?') ? '&' : '?'}oauth-redirected=true`
+                    )}`
+                );
+
+                window.location.href = data?.data?.redirect_url;
+                return Promise.reject({});
+            }
             toast.error(error.response?.data?.message);
             if (
                 error.response?.data?.message ===
@@ -178,7 +196,7 @@ const NewTurn = () => {
                 router.push('/providers');
             }
         }
-    }, []);
+    }, [info?.doctor.medical_code]);
 
     const handleDeletePrescription = async () => {
         try {

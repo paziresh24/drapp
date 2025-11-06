@@ -218,7 +218,7 @@ const TurnRow = (props: TurnRowProps) => {
                 prescriptionInfo: result
             });
         } catch (error) {
-            errorCatch(error);
+            await errorCatch(error);
             setPrescriptionLoading(false);
         }
     };
@@ -339,7 +339,7 @@ const TurnRow = (props: TurnRowProps) => {
             setVisitModal(true);
             setActionLoading(false);
         } catch (error) {
-            errorCatch(error);
+            await errorCatch(error);
             setActionLoading(false);
         }
     };
@@ -386,8 +386,26 @@ const TurnRow = (props: TurnRowProps) => {
         }
     };
 
-    const errorCatch = (error: any) => {
+    const errorCatch = async (error: any) => {
         if (axios.isAxiosError(error)) {
+            if (
+                error?.response?.data?.message?.includes('توکن بیمه تامین اجتماعی')
+            ) {
+                toast.loading(
+                    'برای احرازهویت به سایت تامین اجتماعی منتقل می‌شوید...'
+                );
+                const data = await axios.get(
+                    `https://prescription-workflow.paziresh24.com/webhook/prod/presc/tamin/challenge?doctor_medical_code=${
+                        info?.doctor.medical_code
+                    }&redirect_back=${encodeURIComponent(
+                        window.location.href +
+                            `${window.location.href?.includes('?') ? '&' : '?'}oauth-redirected=true`
+                    )}`
+                );
+
+                window.location.href = data?.data?.redirect_url;
+                return Promise.reject({});
+            }
             toast.error(error.response?.data?.message);
             if (
                 error.response?.data?.message ===
