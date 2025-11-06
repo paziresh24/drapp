@@ -88,7 +88,7 @@ const Create = () => {
                 },
                 onError: async e => {
                     if (
-                        e?.response?.data?.message?.includes('توکن بیمه تامین اجتماعی')
+                        e?.response?.data?.message?.includes('توکن تامین اجتماعی')
                     ) {
                         toast.loading(
                             'برای احرازهویت به سایت تامین اجتماعی منتقل می‌شوید...'
