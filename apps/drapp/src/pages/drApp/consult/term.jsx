@@ -16,7 +16,7 @@ const ConsultTerm = () => {
         <div className={styles['iframeWrapper']}>
             {loading && <Overlay />}
             <iframe
-                src={`${window._env_.P24_BASE_URL_CONSULT}/home/talking-with-consult-patient/`}
+                src="https://providers.paziresh24.com/app/rules"
                 title="consult"
                 ref={iframe}
                 className={styles['iframe']}
